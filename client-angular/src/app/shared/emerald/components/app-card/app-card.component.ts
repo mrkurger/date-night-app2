@@ -1,30 +1,20 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (app-card.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule } from '@nebular/theme';
 import type { Ad } from '../../../../core/models/ad.interface';
 
 /**
- * /*DEPRECATED:Emerald*/ AppCard Component
+ * AppCard Component
  *
- * A wrapper for the /*DEPRECATED:Emerald*/.js AppCard component.
  * This component displays an advertiser card with various layouts and features.
- *
- * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/AppCard
+ * It uses Nebular UI components for consistent styling.
  */
 @Component({
   selector: 'nb-card',
   templateUrl: './app-card.component.html',
   styleUrls: ['./app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule],
 })
 export class AppCardComponent implements OnInit {
   @Input() ad!: Ad;

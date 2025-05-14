@@ -15,16 +15,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import {
-  NbButtonModule,
-  NbIconModule,
-  NbContextMenuModule,
-  NbMenuModule,
-  NbSpinnerModule,
-  NbCardModule,
-  NbUserModule,
-  NbBadgeModule,
-} from '@nebular/theme';
+
 
 export interface Review {
   _id: string;
@@ -46,18 +37,7 @@ export interface Review {
 @Component({
   selector: 'app-reviews-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbButtonModule,
-    NbIconModule,
-    NbContextMenuModule,
-    NbMenuModule,
-    NbSpinnerModule,
-    NbCardModule,
-    NbUserModule,
-    NbBadgeModule,
-  ],
+  imports: [CommonModule, RouterModule, NbButtonModule, NbIconModule, NbContextMenuModule, NbMenuModule, NbSpinnerModule, NbCardModule, NbUserModule, NbBadgeModule],
   template: `
     <div class="reviews-list-container">
       <!-- Loading State -->

@@ -21,16 +21,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 
 export interface ReportDialogData {
   userId?: string;
@@ -44,17 +35,7 @@ export interface ReportDialogData {
 
 @Component({
   selector: 'app-report-dialog',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbSelectModule, NbSpinnerModule, NbIconModule],
   template: `
     <nb-card class="report-dialog">
       <nb-card-header class="dialog-header">

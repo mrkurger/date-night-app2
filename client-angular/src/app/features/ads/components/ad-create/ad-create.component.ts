@@ -8,29 +8,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  NbButtonModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbInputModule,
-  NbSelectModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-ad-create',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbButtonModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbInputModule,
-    NbSelectModule,
-    RouterLink,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, RouterLink],
   templateUrl: './ad-create.component.html',
   styleUrls: ['./ad-create.component.scss'],
 })

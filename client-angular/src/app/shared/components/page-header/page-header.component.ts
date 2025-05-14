@@ -4,13 +4,7 @@ import { NbBadgeModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbUserModule,
-  NbBadgeModule,
-} from '@nebular/theme';
+
 import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 
 export interface HeaderAction {
@@ -31,16 +25,7 @@ export interface HeaderAction {
 @Component({
   selector: 'app-page-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbUserModule,
-    NbBadgeModule,
-    BreadcrumbsComponent,
-  ],
+  imports: [CommonModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbUserModule, NbBadgeModule, BreadcrumbsComponent],
   template: `
     <div
       class="page-header"

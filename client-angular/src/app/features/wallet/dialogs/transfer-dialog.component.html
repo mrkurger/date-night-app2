@@ -13,7 +13,7 @@
           [status]="f.amount.dirty ? (f.amount.invalid ? 'danger' : 'success') : 'basic'"
           placeholder="Enter amount"
         />
-        <nb-form-field-control>
+        
           <span *ngIf="f.amount.valid && f.amount.dirty" class="text-success"
             >Amount looks good!</span
           >
@@ -25,7 +25,7 @@
             <span *ngIf="f.amount.errors?.['min']">Amount must be greater than 0</span>
             <span *ngIf="f.amount.errors?.['max']">Amount exceeds your balance</span>
           </span>
-        </nb-form-field-control>
+        
       </nb-form-field>
 
       <nb-form-field>
@@ -37,7 +37,7 @@
           [status]="f.recipient.dirty ? (f.recipient.invalid ? 'danger' : 'success') : 'basic'"
           placeholder="Enter recipient's username or email"
         />
-        <nb-form-field-control>
+        
           <span *ngIf="f.recipient.valid && f.recipient.dirty" class="text-success"
             >Recipient found!</span
           >
@@ -48,7 +48,7 @@
             <span *ngIf="f.recipient.errors?.['required']">Recipient is required</span>
             <span *ngIf="f.recipient.errors?.['userNotFound']">User not found</span>
           </span>
-        </nb-form-field-control>
+        
       </nb-form-field>
 
       <nb-form-field>

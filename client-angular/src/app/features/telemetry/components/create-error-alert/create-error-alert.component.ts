@@ -4,14 +4,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbButtonModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 import { ErrorCategory } from '../../../../core/models/error.model';
 
 /**
@@ -20,16 +13,7 @@ import { ErrorCategory } from '../../../../core/models/error.model';
 @Component({
   selector: 'app-create-error-alert',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbButtonModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbButtonModule, NbIconModule],
   template: `
     <nb-card>
       <nb-card-header>

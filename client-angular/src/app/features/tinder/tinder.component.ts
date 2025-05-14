@@ -18,18 +18,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbDialogModule,
-  NbDialogService,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbToggleModule,
-  NbSpinnerModule,
-} from '@nebular/theme';
+
 
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -44,22 +33,7 @@ import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbDialogModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbToggleModule,
-    NbSpinnerModule,
-    MainLayoutComponent,
-    TinderCardComponent,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbDialogModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbSpinnerModule, MainLayoutComponent, TinderCardComponent],
 })
 export class TinderComponent implements OnInit {
   /**

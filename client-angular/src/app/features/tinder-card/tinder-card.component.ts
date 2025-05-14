@@ -25,13 +25,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../core/models/ad.model';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbBadgeModule,
-  NbTagModule,
-} from '@nebular/theme';
+
 
 // Import Hammer types
 declare let Hammer: any;
@@ -47,15 +41,7 @@ interface HammerManager {
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbTagModule,
-  ],
+  imports: [CommonModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule, NbTagModule],
 })
 export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;

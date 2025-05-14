@@ -1,7 +1,7 @@
 import { NbIconModule } from '@nebular/theme';
 import { NbSelectModule } from '@nebular/theme';
 import { NbFormFieldModule } from '@nebular/theme';
-import { NbPaginatorModule } from '@nebular/theme';
+
 import { NbBadgeModule } from '@nebular/theme';
 import { NbCardModule } from '@nebular/theme';
 // ===================================================
@@ -28,24 +28,7 @@ import { ErrorCategory } from '../../../../core/interceptors/http-error.intercep
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbSpinnerModule,
-  NbTableModule,
-  NbBadgeModule,
-  NbToggleModule,
-  NbTooltipModule,
-  NbTreeGridModule,
-  NbTreeGridDataSource,
-  NbTreeGridDataSourceBuilder,
-  NbDialogService,
-} from '@nebular/theme';
+
 import { NbErrorComponent } from '../../../../shared/components/custom-nebular-components/nb-error/nb-error.component';
 
 // Define interfaces for pagination and sorting
@@ -62,28 +45,7 @@ interface ErrorData {
 @Component({
   selector: 'app-error-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NgxChartsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbDatepickerModule,
-    NbSpinnerModule,
-    NbTableModule,
-    NbBadgeModule,
-    NbToggleModule,
-    NbTooltipModule,
-    NbTreeGridModule,
-    NbErrorComponent,
-    AppSortComponent,
-    AppSortHeaderComponent,
-  
-    NbPaginatorModule,],
+  imports: [CommonModule, ReactiveFormsModule, NgxChartsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbSpinnerModule, NbTableModule, NbBadgeModule, NbToggleModule, NbTooltipModule, NbTreeGridModule, NbErrorComponent, AppSortComponent, AppSortHeaderComponent],
   templateUrl: './error-dashboard.component.html',
   styleUrls: ['./error-dashboard.component.scss'],
 })

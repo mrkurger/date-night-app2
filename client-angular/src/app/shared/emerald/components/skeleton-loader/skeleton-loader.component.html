@@ -1,99 +1,161 @@
-<!-- Emerald SkeletonLoader Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/SkeletonLoader -->
+<!-- Skeleton Loader Component -->
+<!-- Using Nebular components -->
 
-<div class="emerald-skeleton-container">
+<div class="nb-skeleton-container">
   <ng-container *ngFor="let item of [].constructor(count); let i = index">
-    <!-- Text Skeleton -->
-    <div
-      *ngIf="type === 'text'"
-      class="emerald-skeleton emerald-skeleton--text"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-      [ngStyle]="{
-        width: width || '100%',
-        height: height || '16px',
-        'border-radius': borderRadius || '4px',
-      }"
-    ></div>
+    <!-- Simple Skeleton Types -->
+    <ng-container *ngIf="['text', 'circle', 'rectangle'].includes(type)">
+      <nb-skeleton
+        *ngIf="type === 'text'"
+        [height]="height || '16px'"
+        [width]="width || '100%'"
+        [animated]="animated"
+      >
+      </nb-skeleton>
 
-    <!-- Circle Skeleton -->
-    <div
-      *ngIf="type === 'circle'"
-      class="emerald-skeleton emerald-skeleton--circle"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-      [ngStyle]="{ width: width || '48px', height: height || '48px', 'border-radius': '50%' }"
-    ></div>
+      <nb-skeleton
+        *ngIf="type === 'circle'"
+        shape="circle"
+        [height]="height || '48px'"
+        [width]="width || '48px'"
+        [animated]="animated"
+      >
+      </nb-skeleton>
 
-    <!-- Rectangle Skeleton -->
-    <div
-      *ngIf="type === 'rectangle'"
-      class="emerald-skeleton emerald-skeleton--rectangle"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-      [ngStyle]="{
-        width: width || '100%',
-        height: height || '200px',
-        'border-radius': borderRadius || '8px',
-      }"
-    ></div>
+      <nb-skeleton
+        *ngIf="type === 'rectangle'"
+        [height]="height || '200px'"
+        [width]="width || '100%'"
+        [animated]="animated"
+      >
+      </nb-skeleton>
+    </ng-container>
 
     <!-- Card Skeleton -->
-    <div
-      *ngIf="type === 'card'"
-      class="emerald-skeleton-card"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-    >
-      <div class="emerald-skeleton emerald-skeleton--rectangle emerald-skeleton-card__media"></div>
-      <div class="emerald-skeleton-card__content">
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__title"></div>
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__subtitle"></div>
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__text"></div>
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-card__text"></div>
+    <div *ngIf="type === 'card'" class="nb-skeleton-card">
+      <nb-skeleton class="nb-skeleton-card__media" [animated]="animated"></nb-skeleton>
+      <div class="nb-skeleton-card__content">
+        <nb-skeleton
+          class="nb-skeleton-card__title"
+          height="24px"
+          width="80%"
+          [animated]="animated"
+        ></nb-skeleton>
+        <nb-skeleton
+          class="nb-skeleton-card__subtitle"
+          height="16px"
+          width="60%"
+          [animated]="animated"
+        ></nb-skeleton>
+        <nb-skeleton
+          class="nb-skeleton-card__text"
+          height="12px"
+          width="100%"
+          [animated]="animated"
+        ></nb-skeleton>
+        <nb-skeleton
+          class="nb-skeleton-card__text"
+          height="12px"
+          width="80%"
+          [animated]="animated"
+        ></nb-skeleton>
       </div>
     </div>
 
     <!-- Profile Skeleton -->
-    <div
-      *ngIf="type === 'profile'"
-      class="emerald-skeleton-profile"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-    >
-      <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-profile__avatar"></div>
-      <div class="emerald-skeleton-profile__content">
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-profile__name"></div>
-        <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-profile__info"></div>
+    <div *ngIf="type === 'profile'" class="nb-skeleton-profile">
+      <nb-skeleton
+        class="nb-skeleton-profile__avatar"
+        shape="circle"
+        height="64px"
+        width="64px"
+        [animated]="animated"
+      ></nb-skeleton>
+      <div class="nb-skeleton-profile__content">
+        <nb-skeleton
+          class="nb-skeleton-profile__name"
+          height="20px"
+          width="60%"
+          [animated]="animated"
+        ></nb-skeleton>
+        <nb-skeleton
+          class="nb-skeleton-profile__info"
+          height="14px"
+          width="40%"
+          [animated]="animated"
+        ></nb-skeleton>
       </div>
     </div>
 
     <!-- List Skeleton -->
-    <div
-      *ngIf="type === 'list'"
-      class="emerald-skeleton-list"
-      [ngClass]="{ 'emerald-skeleton--animated': animated }"
-    >
-      <div class="emerald-skeleton-list__item">
-        <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
-        <div class="emerald-skeleton-list__content">
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div
-            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
-          ></div>
+    <div *ngIf="type === 'list'" class="nb-skeleton-list">
+      <div class="nb-skeleton-list__item">
+        <nb-skeleton
+          class="nb-skeleton-list__icon"
+          shape="circle"
+          height="40px"
+          width="40px"
+          [animated]="animated"
+        ></nb-skeleton>
+        <div class="nb-skeleton-list__content">
+          <nb-skeleton
+            class="nb-skeleton-list__title"
+            height="16px"
+            width="60%"
+            [animated]="animated"
+          ></nb-skeleton>
+          <nb-skeleton
+            class="nb-skeleton-list__subtitle"
+            height="12px"
+            width="40%"
+            [animated]="animated"
+          ></nb-skeleton>
         </div>
       </div>
-      <div class="emerald-skeleton-list__item">
-        <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
-        <div class="emerald-skeleton-list__content">
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div
-            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
-          ></div>
+      <div class="nb-skeleton-list__item">
+        <nb-skeleton
+          class="nb-skeleton-list__icon"
+          shape="circle"
+          height="40px"
+          width="40px"
+          [animated]="animated"
+        ></nb-skeleton>
+        <div class="nb-skeleton-list__content">
+          <nb-skeleton
+            class="nb-skeleton-list__title"
+            height="16px"
+            width="60%"
+            [animated]="animated"
+          ></nb-skeleton>
+          <nb-skeleton
+            class="nb-skeleton-list__subtitle"
+            height="12px"
+            width="40%"
+            [animated]="animated"
+          ></nb-skeleton>
         </div>
       </div>
-      <div class="emerald-skeleton-list__item">
-        <div class="emerald-skeleton emerald-skeleton--circle emerald-skeleton-list__icon"></div>
-        <div class="emerald-skeleton-list__content">
-          <div class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__title"></div>
-          <div
-            class="emerald-skeleton emerald-skeleton--text emerald-skeleton-list__subtitle"
-          ></div>
+      <div class="nb-skeleton-list__item">
+        <nb-skeleton
+          class="nb-skeleton-list__icon"
+          shape="circle"
+          height="40px"
+          width="40px"
+          [animated]="animated"
+        ></nb-skeleton>
+        <div class="nb-skeleton-list__content">
+          <nb-skeleton
+            class="nb-skeleton-list__title"
+            height="16px"
+            width="60%"
+            [animated]="animated"
+          ></nb-skeleton>
+          <nb-skeleton
+            class="nb-skeleton-list__subtitle"
+            height="12px"
+            width="40%"
+            [animated]="animated"
+          ></nb-skeleton>
         </div>
       </div>
     </div>

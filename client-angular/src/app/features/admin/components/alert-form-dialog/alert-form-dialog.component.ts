@@ -4,16 +4,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 import {
   Alert,
   AlertSeverity,
@@ -26,17 +17,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 @Component({
   selector: 'app-alert-form-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbCheckboxModule, NbIconModule],
   template: `
     <nb-card>
       <nb-card-header>

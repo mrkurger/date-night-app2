@@ -23,14 +23,7 @@ import {
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 import { Subscription } from 'rxjs';
 import { Ad } from '../../core/models/ad.interface';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbFormFieldModule,
-  NbLayoutModule,
-} from '@nebular/theme';
+
 
 // Mock data for demonstration
 const MOCK_ADS: Ad[] = [
@@ -174,18 +167,7 @@ const MOCK_ADS: Ad[] = [
 @Component({
   selector: 'app-preferences-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbLayoutModule,
-    AdCardComponent,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbFormFieldModule, NbLayoutModule, AdCardComponent],
   template: `
     <div class="preferences-demo-container">
       <nb-card class="settings-card">

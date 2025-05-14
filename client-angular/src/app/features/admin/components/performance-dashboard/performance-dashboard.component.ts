@@ -1,7 +1,7 @@
 import { NbDatepickerModule } from '@nebular/theme';
 import { NbSelectModule } from '@nebular/theme';
 import { NbFormFieldModule } from '@nebular/theme';
-import { NbPaginatorModule } from '@nebular/theme';
+
 import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -19,19 +19,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbTabsetModule,
-  NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbSpinnerModule,
-  NbTagModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
@@ -44,25 +32,7 @@ import { AppSortEvent } from '../../../../shared/components/custom-nebular-compo
 @Component({
   selector: 'app-performance-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbTabsetModule,
-    NbTableModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbDatepickerModule,
-    NbSpinnerModule,
-    NbTagModule,
-    NbIconModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
-    ReactiveFormsModule,
-    NgxChartsModule,
-  
-    NbPaginatorModule,],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbTabsetModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbSpinnerModule, NbTagModule, NbIconModule, AppSortComponent, AppSortHeaderComponent, ReactiveFormsModule, NgxChartsModule],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
 })

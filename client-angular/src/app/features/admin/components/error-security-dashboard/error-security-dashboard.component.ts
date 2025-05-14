@@ -5,18 +5,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbTabsetModule,
-  NbListModule,
-  NbBadgeModule,
-  NbProgressBarModule,
-  NbAlertModule,
-  NbToastrService,
-} from '@nebular/theme';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 interface ErrorLog {
@@ -71,20 +60,7 @@ interface SecurityMetrics {
 @Component({
   selector: 'app-error-security-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbTabsetModule,
-    NbListModule,
-    NbBadgeModule,
-    NbProgressBarModule,
-    NbAlertModule,
-    NgxChartsModule,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbTabsetModule, NbListModule, NbBadgeModule, NbProgressBarModule, NbAlertModule, NgxChartsModule],
   template: `
     <div class="error-security-dashboard">
       <!-- Security Metrics Overview -->

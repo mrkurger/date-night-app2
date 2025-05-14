@@ -39,14 +39,14 @@
                   {{ balance.currency }} ({{ balance.available | currency: balance.currency }})
                 </nb-option>
               </nb-select>
-              <nb-form-field-control>
+              
                 <span
                   *ngIf="withdrawForm.get('currency')?.errors?.['required']"
                   class="text-danger"
                 >
                   Please select a currency
                 </span>
-              </nb-form-field-control>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -65,15 +65,10 @@
                     : 'basic'
                 "
               />
-              <nb-hint *ngIf="selectedBalance">
+              
                 Available: {{ selectedBalance.available | currency: selectedBalance.currency }}
-              </nb-hint>
-              <nb-error
-                *ngIf="
-                  withdrawForm.get('amount')?.invalid &&
-                  (withdrawForm.get('amount')?.dirty || withdrawForm.get('amount')?.touched)
-                "
-              >
+              
+              
                 <span *ngIf="withdrawForm.get('amount')?.errors?.required" class="text-danger">
                   Amount is required
                 </span>
@@ -83,7 +78,7 @@
                 <span *ngIf="withdrawForm.get('amount')?.errors?.max" class="text-danger">
                   Amount exceeds your balance
                 </span>
-              </nb-error>
+              
             </nb-form-field>
 
             <nb-form-field *ngIf="filteredPaymentMethods.length > 0">
@@ -104,15 +99,9 @@
                   {{ getPaymentMethodLabel(method) }}
                 </nb-option>
               </nb-select>
-              <nb-error
-                *ngIf="
-                  withdrawForm.get('paymentMethodId')?.invalid &&
-                  (withdrawForm.get('paymentMethodId')?.dirty ||
-                    withdrawForm.get('paymentMethodId')?.touched)
-                "
-              >
+              
                 Payment method is required.
-              </nb-error>
+              
             </nb-form-field>
             <nb-alert
               status="warning"
@@ -178,14 +167,14 @@
                   {{ balance.currency }} ({{ balance.available | currency: balance.currency }})
                 </nb-option>
               </nb-select>
-              <nb-form-field-control>
+              
                 <span
                   *ngIf="cryptoWithdrawForm.get('currency')?.errors?.['required']"
                   class="text-danger"
                 >
                   Please select a currency
                 </span>
-              </nb-form-field-control>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -204,16 +193,10 @@
                     : 'basic'
                 "
               />
-              <nb-hint *ngIf="cryptoWithdrawForm.get('currency')?.value">
+              
                 Available: {{ cryptoMaxAmount }} {{ cryptoWithdrawForm.get('currency')?.value }}
-              </nb-hint>
-              <nb-error
-                *ngIf="
-                  cryptoWithdrawForm.get('amount')?.invalid &&
-                  (cryptoWithdrawForm.get('amount')?.dirty ||
-                    cryptoWithdrawForm.get('amount')?.touched)
-                "
-              >
+              
+              
                 <span
                   *ngIf="cryptoWithdrawForm.get('amount')?.errors?.required"
                   class="text-danger"
@@ -227,7 +210,7 @@
                   Amount exceeds available balance ({{ cryptoMaxAmount }}
                   {{ cryptoWithdrawForm.get('currency')?.value }}).
                 </span>
-              </nb-error>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -248,15 +231,9 @@
                   {{ network.name }} <span *ngIf="network.fee">(Fee: {{ network.fee }})</span>
                 </nb-option>
               </nb-select>
-              <nb-error
-                *ngIf="
-                  cryptoWithdrawForm.get('network')?.invalid &&
-                  (cryptoWithdrawForm.get('network')?.dirty ||
-                    cryptoWithdrawForm.get('network')?.touched)
-                "
-              >
+              
                 Network is required.
-              </nb-error>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -274,13 +251,7 @@
                     : 'basic'
                 "
               />
-              <nb-error
-                *ngIf="
-                  cryptoWithdrawForm.get('address')?.invalid &&
-                  (cryptoWithdrawForm.get('address')?.dirty ||
-                    cryptoWithdrawForm.get('address')?.touched)
-                "
-              >
+              
                 <span
                   *ngIf="cryptoWithdrawForm.get('address')?.errors?.required"
                   class="text-danger"
@@ -293,7 +264,7 @@
                 >
                   Address is too short
                 </span>
-              </nb-error>
+              
             </nb-form-field>
 
             <nb-form-field *ngIf="requiresMemo(cryptoWithdrawForm.get('currency')?.value)">
@@ -311,20 +282,13 @@
                     : 'basic'
                 "
               />
-              <nb-hint
-                >Some networks require a
+              Some networks require a
                 {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} for the
-                transaction.</nb-hint
-              >
-              <nb-error
-                *ngIf="
-                  cryptoWithdrawForm.get('memo')?.invalid &&
-                  (cryptoWithdrawForm.get('memo')?.dirty || cryptoWithdrawForm.get('memo')?.touched)
-                "
-              >
+                transaction.
+              
                 {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} is required for this
                 currency/network.
-              </nb-error>
+              
             </nb-form-field>
 
             <nb-form-field>

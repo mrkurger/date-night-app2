@@ -26,21 +26,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbRadioModule,
-  NbTabsetModule,
-  NbSpinnerModule,
-  NbStepperModule,
-  NbCheckboxModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 import { WalletService, PaymentMethod } from '../../../core/services/wallet.service';
 import { PaymentService } from '../../../core/services/payment.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -50,23 +36,7 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './add-payment-method-dialog.component.html',
   styleUrls: ['./add-payment-method-dialog.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbRadioModule,
-    NbTabsetModule,
-    NbSpinnerModule,
-    NbStepperModule,
-    NbCheckboxModule,
-    NbAlertModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbRadioModule, NbTabsetModule, NbSpinnerModule, NbStepperModule, NbCheckboxModule, NbAlertModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPaymentMethodDialogComponent implements OnInit {

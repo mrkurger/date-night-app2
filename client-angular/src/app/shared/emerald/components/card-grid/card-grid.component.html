@@ -1,5 +1,5 @@
-<!-- Emerald CardGrid Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/CardGrid -->
+<!-- Card Grid Component -->
+<!-- Using Nebular components -->
 
 <!-- Loading State -->
 <div *ngIf="loading" class="nb-card-grid" [ngStyle]="getGridStyle()">
@@ -8,7 +8,13 @@
     class="nb-card-grid__item"
     [ngClass]="{ 'nb-card-grid__item--animated': animated }"
   >
-    <nb-skeleton type="card" [animated]="true"></nb-skeleton>
+    <nb-card>
+      <nb-card-body>
+        <nb-skeleton height="200px"></nb-skeleton>
+        <nb-skeleton height="1.5rem" width="80%"></nb-skeleton>
+        <nb-skeleton height="1rem" width="60%"></nb-skeleton>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
 
@@ -29,22 +35,49 @@
           ></ng-container>
         </ng-container>
         <ng-template #defaultTemplate>
-          <nb-card
-            *ngIf="item.title"
-            [title]="item.title"
-            [subtitle]="item.subtitle"
-            [description]="item.description"
-            [imageUrl]="item.imageUrl"
-            [avatarUrl]="item.avatarUrl"
-            [avatarName]="item.avatarName"
-            [isOnline]="item.isOnline"
-            [tags]="item.tags"
-            [actions]="item.actions"
-            [itemId]="item.id"
-            [layout]="cardLayout"
-            (click)="handleCardClick(item.id)"
-            (actionClick)="handleActionClick($event)"
-          ></nb-card>
+          <nb-card *ngIf="item.title" (click)="handleCardClick(item.id)">
+            <nb-card-header *ngIf="item.title">{{ item.title }}</nb-card-header>
+            <nb-card-body>
+              <div *ngIf="item.imageUrl" class="nb-card-image">
+                <img [src]="item.imageUrl" [alt]="item.title" />
+              </div>
+              <div *ngIf="item.subtitle" class="nb-card-subtitle">{{ item.subtitle }}</div>
+              <div *ngIf="item.description" class="nb-card-description">{{ item.description }}</div>
+              <div *ngIf="item.avatarUrl || item.avatarName" class="nb-card-avatar">
+                <nb-user
+                  [name]="item.avatarName"
+                  [picture]="item.avatarUrl"
+                  [title]="item.subtitle"
+                  [showTitle]="false"
+                  size="medium"
+                  [badgeStatus]="item.isOnline ? 'success' : 'basic'"
+                  [badgePosition]="'bottom right'"
+                ></nb-user>
+              </div>
+              <div *ngIf="item.tags && item.tags.length" class="nb-card-tags">
+                <nb-badge
+                  *ngFor="let tag of item.tags"
+                  [text]="tag.label"
+                  [status]="tag.status || 'primary'"
+                  position="top right"
+                >
+                </nb-badge>
+              </div>
+            </nb-card-body>
+            <nb-card-footer *ngIf="item.actions && item.actions.length">
+              <nb-actions size="medium">
+                <nb-action
+                  *ngFor="let action of item.actions"
+                  [icon]="action.icon"
+                  [disabled]="action.disabled"
+                  (click)="
+                    handleActionClick({ id: item.id, action: action.id }); $event.stopPropagation()
+                  "
+                >
+                </nb-action>
+              </nb-actions>
+            </nb-card-footer>
+          </nb-card>
           <div *ngIf="!item.title" class="nb-card-grid__default-item">
             {{ item.name || item.label || 'Item' }}
           </div>
@@ -74,22 +107,49 @@
       <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
     </ng-container>
     <ng-template #defaultTemplate>
-      <nb-card
-        *ngIf="item.title"
-        [title]="item.title"
-        [subtitle]="item.subtitle"
-        [description]="item.description"
-        [imageUrl]="item.imageUrl"
-        [avatarUrl]="item.avatarUrl"
-        [avatarName]="item.avatarName"
-        [isOnline]="item.isOnline"
-        [tags]="item.tags"
-        [actions]="item.actions"
-        [itemId]="item.id"
-        [layout]="cardLayout"
-        (click)="handleCardClick(item.id)"
-        (actionClick)="handleActionClick($event)"
-      ></nb-card>
+      <nb-card *ngIf="item.title" (click)="handleCardClick(item.id)">
+        <nb-card-header *ngIf="item.title">{{ item.title }}</nb-card-header>
+        <nb-card-body>
+          <div *ngIf="item.imageUrl" class="nb-card-image">
+            <img [src]="item.imageUrl" [alt]="item.title" />
+          </div>
+          <div *ngIf="item.subtitle" class="nb-card-subtitle">{{ item.subtitle }}</div>
+          <div *ngIf="item.description" class="nb-card-description">{{ item.description }}</div>
+          <div *ngIf="item.avatarUrl || item.avatarName" class="nb-card-avatar">
+            <nb-user
+              [name]="item.avatarName"
+              [picture]="item.avatarUrl"
+              [title]="item.subtitle"
+              [showTitle]="false"
+              size="medium"
+              [badgeStatus]="item.isOnline ? 'success' : 'basic'"
+              [badgePosition]="'bottom right'"
+            ></nb-user>
+          </div>
+          <div *ngIf="item.tags && item.tags.length" class="nb-card-tags">
+            <nb-badge
+              *ngFor="let tag of item.tags"
+              [text]="tag.label"
+              [status]="tag.status || 'primary'"
+              position="top right"
+            >
+            </nb-badge>
+          </div>
+        </nb-card-body>
+        <nb-card-footer *ngIf="item.actions && item.actions.length">
+          <nb-actions size="medium">
+            <nb-action
+              *ngFor="let action of item.actions"
+              [icon]="action.icon"
+              [disabled]="action.disabled"
+              (click)="
+                handleActionClick({ id: item.id, action: action.id }); $event.stopPropagation()
+              "
+            >
+            </nb-action>
+          </nb-actions>
+        </nb-card-footer>
+      </nb-card>
       <div *ngIf="!item.title" class="nb-card-grid__default-item">
         {{ item.name || item.label || 'Item' }}
       </div>
@@ -100,7 +160,7 @@
 <!-- Empty State -->
 <div *ngIf="!loading && items.length === 0" class="nb-card-grid__empty">
   <div class="nb-card-grid__empty-content">
-    <i class="fas fa-search"></i>
+    <nb-icon icon="search-outline" pack="eva"></nb-icon>
     <p>No items found</p>
   </div>
 </div>

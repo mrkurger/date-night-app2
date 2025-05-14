@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
-import { NbSpinnerModule, NbCardModule, NbAlertModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-auth-callback',
@@ -43,8 +43,7 @@ import { NbSpinnerModule, NbCardModule, NbAlertModule } from '@nebular/theme';
     `,
   ],
   standalone: true,
-  imports: [CommonModule,
-    NbCardModule],
+  imports: [CommonModule, NbCardModule],
 })
 export class AuthCallbackComponent implements OnInit {
   constructor(

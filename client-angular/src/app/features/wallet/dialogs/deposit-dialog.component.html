@@ -20,9 +20,9 @@
           </nb-option>
         </nb-select>
         <div *ngIf="f.currency.valid && f.currency.dirty">Currency selected.</div>
-        <nb-error *ngIf="f.currency.invalid && (f.currency.dirty || f.currency.touched)">
+        
           <span *ngIf="f.currency.errors?.required">Currency is required.</span>
-        </nb-error>
+        
       </nb-form-field>
 
       <nb-form-field>
@@ -36,12 +36,12 @@
           [status]="f.amount.dirty ? (f.amount.invalid ? 'danger' : 'success') : 'basic'"
         />
         <div *ngIf="f.amount.valid && f.amount.dirty">Amount looks good.</div>
-        <nb-error *ngIf="f.amount.invalid && (f.amount.dirty || f.amount.touched)">
+        
           <span *ngIf="f.amount.errors?.required">Amount is required.</span>
           <span *ngIf="f.amount.errors?.min"
             >Amount must be greater than {{ f.amount.errors?.min.min }}.</span
           >
-        </nb-error>
+        
       </nb-form-field>
 
       <nb-form-field *ngIf="context.paymentMethods && context.paymentMethods.length > 0">
@@ -57,16 +57,10 @@
             {{ getPaymentMethodLabel(method) }}
           </nb-radio>
         </nb-radio-group>
-        <nb-hint *ngIf="f.paymentMethodId.valid && f.paymentMethodId.dirty"
-          >Payment method selected.</nb-hint
-        >
-        <nb-error
-          *ngIf="
-            f.paymentMethodId.invalid && (f.paymentMethodId.dirty || f.paymentMethodId.touched)
-          "
-        >
+        Payment method selected.
+        
           <span *ngIf="f.paymentMethodId.errors?.required">Payment method is required.</span>
-        </nb-error>
+        
       </nb-form-field>
       <div *ngIf="!context.paymentMethods || context.paymentMethods.length === 0">
         <nb-alert status="warning"

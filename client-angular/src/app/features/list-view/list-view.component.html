@@ -352,13 +352,8 @@ consistent UI # ===================================================
 <!-- Sort Menu Template -->
 <ng-template #sortMenu>
   <nb-menu>
-    <nb-menu-item
-      *ngFor="let option of sortOptions"
-      [title]="option.label"
-      [icon]="currentSort === option.value ? 'checkmark-outline' : ''"
-      (click)="changeSort(option.value)"
-    >
-    </nb-menu-item>
+    
+    
   </nb-menu>
 </ng-template>
 

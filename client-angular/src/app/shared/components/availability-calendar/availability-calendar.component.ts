@@ -1,14 +1,7 @@
 import { NbIconModule } from '@nebular/theme';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbDatepickerModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 import {
   FormBuilder,
   FormGroup,
@@ -82,17 +75,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
 @Component({
   selector: 'app-availability-calendar',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbDatepickerModule,
-    NbDatepickerModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbSelectModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbDatepickerModule, NbFormFieldModule, NbInputModule, NbButtonModule, NbSelectModule, NbIconModule],
   template: `
     <div class="availability-calendar">
       <form [formGroup]="availabilityForm">

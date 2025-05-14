@@ -147,7 +147,7 @@ const mediaController = {
 
 export async function someHandler(req, res) {
   try {
-    const result = await doSomething();
+    const result = await mediaService.processMedia();
     return sendSuccess(res, result);
   } catch (err) {
     return sendError(res, err, err.status || 500);

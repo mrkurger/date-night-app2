@@ -21,16 +21,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NB_DIALOG_CONFIG,
-  NbToastrService,
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-} from '@nebular/theme';
+
 
 import { WalletService } from '../../../core/services/wallet.service';
 
@@ -57,16 +48,7 @@ export interface WalletTransaction {
 @Component({
   selector: 'app-transaction-details-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    ClipboardModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-  
-    NbBadgeModule,],
+  imports: [CommonModule, ClipboardModule, NbCardModule, NbButtonModule, NbIconModule, FormsModule, ReactiveFormsModule, NbBadgeModule],
   templateUrl: './transaction-details-dialog.component.html',
   styleUrls: ['./transaction-details-dialog.component.scss'],
 })

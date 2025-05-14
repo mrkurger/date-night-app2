@@ -3,15 +3,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbToastrService,
-} from '@nebular/theme';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 interface RevenueData {
@@ -30,17 +22,7 @@ interface TimeSeriesData {
 @Component({
   selector: 'app-revenue-analytics',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbTabsetModule,
-    NgxChartsModule,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbSpinnerModule, NbTabsetModule, NgxChartsModule],
   templateUrl: './revenue-analytics.component.html',
   styleUrls: ['./revenue-analytics.component.scss'],
 })

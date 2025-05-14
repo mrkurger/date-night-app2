@@ -2,7 +2,7 @@ import { NbIconModule } from '@nebular/theme';
 import { NbSelectModule } from '@nebular/theme';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule, NbSelectModule } from '@nebular/theme';
+
 import { NbPaginationChangeEvent } from './nb-paginator.module';
 
 @Component({

@@ -1,33 +1,27 @@
-import { EventEmitter } from '@angular/core';
-import { Output } from '@angular/core';
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (page-header.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NbButtonModule, NbIconModule, NbUserModule, NbBreadcrumbModule } from '@nebular/theme';
 
 /**
- * /*DEPRECATED:Emerald*/ PageHeader Component
+ * Page Header Component
  *
- * A wrapper for the /*DEPRECATED:Emerald*/.js PageHeader component.
  * This component displays a page header with title, breadcrumbs, and actions.
- *
- * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/PageHeader
+ * It uses Nebular UI components for consistent styling.
  */
 @Component({
   selector: 'nb-header',
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbButtonModule,
+    NbIconModule,
+    NbUserModule,
+    NbBreadcrumbModule,
+  ],
 })
 export class PageHeaderComponent {
   @Input() title = '';
@@ -52,6 +46,78 @@ export class PageHeaderComponent {
     if (action.action) {
       action.action();
     }
+  }
+
+  /**
+   * Convert Font Awesome icon classes to Nebular icon names
+   * This method maps Font Awesome icon classes to Nebular's Eva Icons
+   */
+  getIconName(iconClass: string): string {
+    // Map common Font Awesome icons to Eva Icons
+    const iconMap: Record<string, string> = {
+      'fa-plus': 'plus-outline',
+      'fa-edit': 'edit-outline',
+      'fa-trash': 'trash-2-outline',
+      'fa-save': 'save-outline',
+      'fa-times': 'close-outline',
+      'fa-check': 'checkmark-outline',
+      'fa-arrow-left': 'arrow-back-outline',
+      'fa-arrow-right': 'arrow-forward-outline',
+      'fa-search': 'search-outline',
+      'fa-user': 'person-outline',
+      'fa-cog': 'settings-outline',
+      'fa-home': 'home-outline',
+      'fa-bell': 'bell-outline',
+      'fa-calendar': 'calendar-outline',
+      'fa-envelope': 'email-outline',
+      'fa-file': 'file-outline',
+      'fa-download': 'download-outline',
+      'fa-upload': 'upload-outline',
+      'fa-link': 'link-2-outline',
+      'fa-heart': 'heart-outline',
+      'fa-star': 'star-outline',
+      'fa-info-circle': 'info-outline',
+      'fa-question-circle': 'question-mark-circle-outline',
+      'fa-exclamation-circle': 'alert-circle-outline',
+      'fa-chevron-right': 'chevron-right-outline',
+      'fa-chevron-left': 'chevron-left-outline',
+      'fa-chevron-up': 'chevron-up-outline',
+      'fa-chevron-down': 'chevron-down-outline',
+      'fas fa-plus': 'plus-outline',
+      'fas fa-edit': 'edit-outline',
+      'fas fa-trash': 'trash-2-outline',
+      'fas fa-save': 'save-outline',
+      'fas fa-times': 'close-outline',
+      'fas fa-check': 'checkmark-outline',
+      'fas fa-arrow-left': 'arrow-back-outline',
+      'fas fa-arrow-right': 'arrow-forward-outline',
+      'fas fa-search': 'search-outline',
+      'fas fa-user': 'person-outline',
+      'fas fa-cog': 'settings-outline',
+      'fas fa-home': 'home-outline',
+      'fas fa-bell': 'bell-outline',
+      'fas fa-calendar': 'calendar-outline',
+      'fas fa-envelope': 'email-outline',
+      'fas fa-file': 'file-outline',
+      'fas fa-download': 'download-outline',
+      'fas fa-upload': 'upload-outline',
+      'fas fa-link': 'link-2-outline',
+      'fas fa-heart': 'heart-outline',
+      'fas fa-star': 'star-outline',
+      'fas fa-info-circle': 'info-outline',
+      'fas fa-question-circle': 'question-mark-circle-outline',
+      'fas fa-exclamation-circle': 'alert-circle-outline',
+      'fas fa-chevron-right': 'chevron-right-outline',
+      'fas fa-chevron-left': 'chevron-left-outline',
+      'fas fa-chevron-up': 'chevron-up-outline',
+      'fas fa-chevron-down': 'chevron-down-outline',
+    };
+
+    // Extract the icon name from the class (handles both 'fa-icon' and 'fas fa-icon' formats)
+    const iconName = iconClass.includes('fa-') ? iconClass.split('fa-')[1].trim() : iconClass;
+
+    // Return the mapped icon or a default if not found
+    return iconMap[iconClass] || iconMap[`fa-${iconName}`] || 'question-mark-circle-outline';
   }
 }
 

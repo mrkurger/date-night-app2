@@ -12,12 +12,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {
-  NbButtonModule,
-  NbIconModule,
-  NbCheckboxModule,
-  NbProgressBarModule,
-} from '@nebular/theme';
+
 
 export interface ChecklistItem {
   id: string;
@@ -39,15 +34,7 @@ export interface ChecklistItem {
   templateUrl: './onboarding-checklist.component.html',
   styleUrls: ['./onboarding-checklist.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    NbCheckboxModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, FormsModule, NbButtonModule, NbIconModule, NbProgressBarModule, NbCheckboxModule, RouterModule],
 })
 export class OnboardingChecklistComponent implements OnInit {
   @Input() items: ChecklistItem[] = [];

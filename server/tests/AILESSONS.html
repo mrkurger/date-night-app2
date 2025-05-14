@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests AI Lessons</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #f9f9f9;
+            --card-background: #fff;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--card-background);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+        }
+
+        .lesson {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--card-background);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .lesson-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .lesson-category {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+            background-color: #3498db;
+            color: white;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        .navigation {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .navigation a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tests AI Lessons</h1>
+            <p>Insights and lessons learned from AI-assisted development of the testing infrastructure.</p>
+        </header>
+
+        <h2>Testing Patterns</h2>
+
+        <div class="lesson">
+            <div class="lesson-title">Mock Objects for Express Middleware Testing</div>
+            <span class="lesson-category">Testing</span>
+            <p>When testing Express middleware, it's crucial to properly mock the request and response objects with all methods that might be used in the middleware.</p>
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>Express response objects have many methods that might need mocking: <code>status</code>, <code>json</code>, <code>send</code>, <code>setHeader</code>, etc.</li>
+                <li>Missing mock methods will cause tests to fail with "is not a function" errors</li>
+                <li>Mock methods should return the response object to allow for method chaining</li>
+                <li>Using Jest's <code>mockReturnValue(res)</code> enables proper chaining in tests</li>
+            </ul>
+            <h3>Example Implementation:</h3>
+            <pre><code>const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  res.send = jest.fn().mockReturnValue(res);
+  res.setHeader = jest.fn().mockReturnValue(res);
+  res.cookie = jest.fn().mockReturnValue(res);
+  res.clearCookie = jest.fn().mockReturnValue(res);
+  res.redirect = jest.fn().mockReturnValue(res);
+  res.locals = {};
+  return res;
+};</code></pre>
+        </div>
+
+        <div class="lesson">
+            <div class="lesson-title">Testing Security Headers</div>
+            <span class="lesson-category">Security</span>
+            <p>Security headers are critical for web application security, and testing them properly requires specific approaches.</p>
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>Security headers should be tested individually to ensure each one is set correctly</li>
+                <li>Some headers may have environment-specific values (e.g., HSTS in production)</li>
+                <li>For headers with complex values, use <code>expect.stringContaining()</code> or <code>expect.any(String)</code> matchers</li>
+                <li>Test both positive cases (headers that should be set) and negative cases (headers that should not be set in certain conditions)</li>
+            </ul>
+        </div>
+
+        <div class="lesson">
+            <div class="lesson-title">In-Memory MongoDB for Testing</div>
+            <span class="lesson-category">Database</span>
+            <p>Using mongodb-memory-server for testing provides isolation and speed benefits.</p>
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>In-memory databases provide isolated test environments</li>
+                <li>Tests run faster without external database dependencies</li>
+                <li>Each test suite can have its own database instance</li>
+                <li>Proper setup and teardown is essential for test reliability</li>
+            </ul>
+        </div>
+
+        <h2>Dependencies</h2>
+        <div class="lesson">
+            <div class="lesson-title">Testing Dependencies</div>
+            <span class="lesson-category">Dependencies</span>
+            <p>The testing infrastructure relies on several key dependencies:</p>
+            <ul>
+                <li><strong>Jest</strong>: Primary testing framework</li>
+                <li><strong>jest-extended</strong>: Additional matchers for more expressive tests</li>
+                <li><strong>supertest</strong>: HTTP assertions for API testing</li>
+                <li><strong>mongodb-memory-server</strong>: In-memory MongoDB for database tests</li>
+                <li><strong>babel-jest</strong>: For transpiling modern JavaScript in tests</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="CHANGELOG.html">Changelog</a>
+            <a href="GLOSSARY.html">Glossary</a>
+            <a href="../_docs_index.html">Documentation Index</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -21,33 +21,14 @@ import { CommonModule } from '@angular/common';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 // Nebular Modules
-import {
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbTooltipModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbFormFieldModule, NbInputModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTooltipModule],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

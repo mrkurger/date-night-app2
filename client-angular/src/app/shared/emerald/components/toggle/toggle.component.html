@@ -1,5 +1,5 @@
-<!-- Emerald Toggle Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/Toggle -->
+<!-- Toggle Component -->
+<!-- Using Nebular components -->
 
 <div
   class="nb-toggle-container"
@@ -10,46 +10,24 @@
   }"
 >
   <!-- Label (Left Position) -->
-  <label *ngIf="label && labelPosition === 'left'" [for]="id" class="nb-toggle__label">
+  <label *ngIf="label && labelPosition === 'left'" [for]="name" class="nb-toggle__label">
     {{ label }}
     <span *ngIf="required" class="nb-toggle__required">*</span>
   </label>
 
-  <!-- Toggle Switch -->
-  <div
-    class="nb-toggle"
-    [ngClass]="{
-      'nb-toggle--small': size === 'small',
-      'nb-toggle--medium': size === 'medium',
-      'nb-toggle--large': size === 'large',
-      'nb-toggle--primary': color === 'primary',
-      'nb-toggle--success': color === 'success',
-      'nb-toggle--warning': color === 'warning',
-      'nb-toggle--danger': color === 'danger',
-      'nb-toggle--info': color === 'info',
-      'nb-toggle--checked': value,
-      'nb-toggle--disabled': disabled,
-    }"
-  >
-    <input
-      type="checkbox"
-      [id]="id"
-      [name]="name"
-      [checked]="value"
-      [disabled]="disabled"
-      [required]="required"
-      [attr.aria-label]="ariaLabel || label"
-      class="nb-toggle__input"
-      (change)="toggle()"
-    />
-
-    <div class="nb-toggle__track">
-      <div class="nb-toggle__thumb"></div>
-    </div>
-  </div>
+  <!-- Nebular Toggle Switch -->
+  <nb-toggle
+    [name]="name"
+    [checked]="value"
+    [disabled]="disabled"
+    [required]="required"
+    [status]="color"
+    [attr.aria-label]="ariaLabel || label"
+    (checkedChange)="toggle($event)"
+  ></nb-toggle>
 
   <!-- Label (Right Position) -->
-  <label *ngIf="label && labelPosition === 'right'" [for]="id" class="nb-toggle__label">
+  <label *ngIf="label && labelPosition === 'right'" [for]="name" class="nb-toggle__label">
     {{ label }}
     <span *ngIf="required" class="nb-toggle__required">*</span>
   </label>

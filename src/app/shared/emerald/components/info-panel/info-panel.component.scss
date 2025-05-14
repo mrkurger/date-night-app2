@@ -1,0 +1,30 @@
+// Emerald InfoPanel Component Styles
+// Documentation: https://docs-emerald.condorlabs.io/InfoPanel
+
+.info-panel {
+  background-color: var(--color-white); // replaced $color-white
+  border-radius: var(--border-radius-md); // replaced $border-radius-md
+  box-shadow: var(--shadow-md); // replaced $shadow-md
+  padding: var(--space-4); // replaced $spacing-4
+  color: var(--color-neutral-900); // replaced $color-dark-gray-1
+
+  &--success {
+    background-color: var(--color-success); // replaced $color-success
+    color: var(--color-white); // replaced $color-white
+  }
+
+  &--warning {
+    background-color: var(--color-warning); // replaced $color-warning
+    color: var(--color-white); // replaced $color-white
+  }
+
+  &--danger {
+    background-color: var(--color-danger); // replaced $danger
+    color: var(--color-white); // replaced $color-white
+  }
+
+  &--info {
+    background-color: var(--color-info); // replaced $color-info
+    color: var(--color-white); // replaced $color-white
+  }
+}

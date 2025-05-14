@@ -224,9 +224,9 @@ export { locationController };
 
 export async function someHandler(req, res) {
   try {
-    const result = await doSomething();
-    return sendSuccess(res, result);
-  } catch (err) {
-    return sendError(res, err, err.status || 500);
+    // TODO: Implement location handler
+    return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
+  } catch (error) {
+    return sendError(res, error, 500);
   }
 }

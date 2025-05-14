@@ -5,16 +5,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbFormFieldModule,
-  NbAlertModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 
@@ -23,19 +14,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './request-password.component.html',
   styleUrls: ['./request-password.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbAlertModule,
-    NbTooltipModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbAlertModule, NbTooltipModule],
 })
 export class RequestPasswordComponent {
   requestForm: FormGroup;

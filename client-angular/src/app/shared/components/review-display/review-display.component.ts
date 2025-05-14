@@ -15,13 +15,7 @@ import { Component } from '@angular/core';
 // ===================================================
 
 import { CommonModule } from '@angular/common';
-import {
-  NbButtonModule,
-  NbIconModule,
-  NbCardModule,
-  NbTooltipModule,
-  NbBadgeModule,
-} from '@nebular/theme';
+
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 
@@ -65,16 +59,7 @@ export interface Review {
 @Component({
   selector: 'app-review-display',
   standalone: true,
-  imports: [
-    CommonModule,
-    StarRatingComponent,
-    TimeAgoPipe,
-    NbButtonModule,
-    NbIconModule,
-    NbCardModule,
-    NbTooltipModule,
-    NbBadgeModule,
-  ],
+  imports: [CommonModule, StarRatingComponent, TimeAgoPipe, NbButtonModule, NbIconModule, NbCardModule, NbTooltipModule, NbBadgeModule],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],
 })

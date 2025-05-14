@@ -23,7 +23,7 @@ export const formatServerUrl = (url, defaultUrl = 'http://localhost:3000') => {
     // Try to parse the URL to validate it
     const urlObject = new URL(url);
     return urlObject.toString();
-  } catch (_) {
+  } catch (error) {
     // If URL is invalid or missing protocol, try to fix it
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       return `http://${url}`;

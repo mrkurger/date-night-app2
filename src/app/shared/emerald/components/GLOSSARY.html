@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emerald UI Components Glossary</title>
+  <style>
+    :root {
+      --primary: #ff4d7e;
+      --secondary: #6c63ff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--dark);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    
+    h1 {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    
+    .component {
+      background-color: var(--light);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .component h2 {
+      margin-top: 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    
+    .component-icon {
+      margin-right: 10px;
+      background-color: var(--primary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .description {
+      margin-bottom: 20px;
+    }
+    
+    .props-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .props-table th, .props-table td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    
+    .props-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    
+    .props-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .type {
+      font-family: monospace;
+      color: var(--secondary);
+    }
+    
+    .default {
+      font-family: monospace;
+      color: var(--info);
+    }
+    
+    .required {
+      color: var(--danger);
+      font-weight: bold;
+    }
+    
+    .example {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    
+    code {
+      font-family: monospace;
+      background-color: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: bold;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    
+    .tag-component {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .tag-ui {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    .tag-form {
+      background-color: var(--success);
+      color: white;
+    }
+    
+    .tag-layout {
+      background-color: var(--info);
+      color: white;
+    }
+    
+    .tag-navigation {
+      background-color: var(--warning);
+      color: black;
+    }
+    
+    .search-container {
+      margin-bottom: 30px;
+    }
+    
+    #search {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    .alphabet-nav {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 5px;
+    }
+    
+    .alphabet-nav a {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background-color: var(--light);
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: bold;
+    }
+    
+    .alphabet-nav a:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--secondary);
+    }
+    
+    /* Tooltip styles */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted #666;
+      cursor: help;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Emerald UI Components Glossary</h1>
+  
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search components, props, or descriptions...">
+  </div>
+  
+  <div class="alphabet-nav">
+    <a href="#A">A</a>
+    <a href="#F">F</a>
+    <a href="#C">C</a>
+    <a href="#I">I</a>
+    <a href="#L">L</a>
+    <a href="#P">P</a>
+    <a href="#S">S</a>
+    <a href="#T">T</a>
+    <!-- Add more letters as needed -->
+  </div>
+  
+  <div class="tags-container">
+    <span class="tag tag-component">Component</span>
+    <span class="tag tag-ui">UI Element</span>
+    <span class="tag tag-form">Form Control</span>
+    <span class="tag tag-layout">Layout</span>
+    <span class="tag tag-navigation">Navigation</span>
+  </div>
+  
+  <h2 id="A">A</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">A</span>
+      AppCard
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+      <span class="tag tag-layout">Layout</span>
+    </div>
+    <div class="description">
+      <p>
+        A card component for displaying advertiser information with various layouts and features.
+        This component has been migrated from Emerald UI to use Nebular's card, badge, button, and icon components.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>ad</td>
+        <td class="type">Ad</td>
+        <td class="default">required</td>
+        <td>The advertisement data to display</td>
+      </tr>
+      <tr>
+        <td>layout</td>
+        <td class="type">'tinder' | 'netflix' | 'list'</td>
+        <td class="default">'netflix'</td>
+        <td>The layout style of the card</td>
+      </tr>
+      <tr>
+        <td>showActions</td>
+        <td class="type">boolean</td>
+        <td class="default">true</td>
+        <td>Whether to show action buttons</td>
+      </tr>
+      <tr>
+        <td>showDescription</td>
+        <td class="type">boolean</td>
+        <td class="default">true</td>
+        <td>Whether to show the description</td>
+      </tr>
+      <tr>
+        <td>isOnline</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the advertiser is online</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>viewDetails</td>
+        <td class="type">EventEmitter<string></td>
+        <td>Emitted when the card is clicked</td>
+      </tr>
+      <tr>
+        <td>like</td>
+        <td class="type">EventEmitter<string></td>
+        <td>Emitted when the like button is clicked</td>
+      </tr>
+      <tr>
+        <td>chat</td>
+        <td class="type">EventEmitter<string></td>
+        <td>Emitted when the chat button is clicked</td>
+      </tr>
+      <tr>
+        <td>share</td>
+        <td class="type">EventEmitter<string></td>
+        <td>Emitted when the share button is clicked</td>
+      </tr>
+      <tr>
+        <td>swiped</td>
+        <td class="type">EventEmitter<{ direction: 'left' | 'right'; adId: string }></td>
+        <td>Emitted when the card is swiped (Tinder layout)</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;nb-card
+  [ad]="adData"
+  layout="netflix"
+  [showActions]="true"
+  [showDescription]="true"
+  [isOnline]="true"
+  (viewDetails)="onViewDetails($event)"
+  (like)="onLike($event)"
+  (chat)="onChat($event)"
+  (swiped)="onSwiped($event)"
+&gt;&lt;/nb-card&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="component">
+    <h2>
+      <span class="component-icon">A</span>
+      Avatar
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+    </div>
+    <div class="description">
+      <p>
+        A user avatar component that displays a user's image or initials with optional dropdown menu.
+        This component has been migrated from Emerald UI to use Nebular's icon and context menu components.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>imageUrl</td>
+        <td class="type">string</td>
+        <td class="default">'/assets/img/default-profile.jpg'</td>
+        <td>URL for the avatar image</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>User name (used for initials if no image)</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td class="type">'small' | 'medium' | 'large'</td>
+        <td class="default">'medium'</td>
+        <td>Size of the avatar</td>
+      </tr>
+      <tr>
+        <td>isOnline</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to show an online status indicator</td>
+      </tr>
+      <tr>
+        <td>showDropdown</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to show a dropdown menu</td>
+      </tr>
+      <tr>
+        <td>dropdownItems</td>
+        <td class="type">Array<DropdownItem></td>
+        <td class="default">[]</td>
+        <td>Items to display in the dropdown menu</td>
+      </tr>
+      <tr>
+        <td>useNebularContextMenu</td>
+        <td class="type">boolean</td>
+        <td class="default">true</td>
+        <td>Whether to use Nebular's context menu or custom dropdown</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>avatarClick</td>
+        <td class="type">EventEmitter<void></td>
+        <td>Emitted when the avatar is clicked</td>
+      </tr>
+      <tr>
+        <td>itemClick</td>
+        <td class="type">EventEmitter<DropdownItem></td>
+        <td>Emitted when a dropdown item is clicked</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;nb-user
+  imageUrl="https://example.com/avatar.jpg"
+  name="John Doe"
+  size="medium"
+  [isOnline]="true"
+  [showDropdown]="true"
+  [dropdownItems]="[
+    { id: 'profile', label: 'Profile', icon: 'fa-user', route: '/profile' },
+    { id: 'settings', label: 'Settings', icon: 'fa-cog', route: '/settings' },
+    { divider: true },
+    { id: 'logout', label: 'Logout', icon: 'fa-sign-out-alt' }
+  ]"
+  (avatarClick)="onAvatarClick()"
+  (itemClick)="onItemClick($event)"
+&gt;&lt;/nb-user&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="P">P</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">P</span>
+      PageHeader
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+      <span class="tag tag-navigation">Navigation</span>
+    </div>
+    <div class="description">
+      <p>
+        A page header component that displays a title, subtitle, breadcrumbs, and action buttons.
+        This component has been migrated from Emerald UI to use Nebular's breadcrumbs, buttons, and user components.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>The title of the page</td>
+      </tr>
+      <tr>
+        <td>subtitle</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>The subtitle of the page</td>
+      </tr>
+      <tr>
+        <td>breadcrumbs</td>
+        <td class="type">Array<{label: string, url?: string}></td>
+        <td class="default">[]</td>
+        <td>Breadcrumb navigation items</td>
+      </tr>
+      <tr>
+        <td>actions</td>
+        <td class="type">Array<HeaderAction></td>
+        <td class="default">[]</td>
+        <td>Action buttons to display in the header</td>
+      </tr>
+      <tr>
+        <td>backLink</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>URL for the back navigation link</td>
+      </tr>
+      <tr>
+        <td>backgroundImage</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>URL for a background image</td>
+      </tr>
+      <tr>
+        <td>avatarUrl</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>URL for an avatar image</td>
+      </tr>
+      <tr>
+        <td>avatarName</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>Name for the avatar (used for initials if no image)</td>
+      </tr>
+      <tr>
+        <td>avatarIsOnline</td>
+        <td class="type">boolean</td>
+        <td class="default">undefined</td>
+        <td>Whether the avatar should show an online status indicator</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>actionClick</td>
+        <td class="type">EventEmitter<HeaderAction></td>
+        <td>Emitted when an action button is clicked</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;nb-header
+  title="Dashboard"
+  subtitle="Welcome to your dashboard"
+  [breadcrumbs]="[
+    { label: 'Home', url: '/' },
+    { label: 'Dashboard' }
+  ]"
+  [actions]="[
+    { 
+      id: 'add', 
+      label: 'Add Item', 
+      icon: 'fa-plus', 
+      variant: 'primary' 
+    },
+    { 
+      id: 'refresh', 
+      label: 'Refresh', 
+      icon: 'fa-sync', 
+      variant: 'secondary' 
+    }
+  ]"
+  backLink="/home"
+  (actionClick)="onActionClick($event)"
+&gt;&lt;/nb-header&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="L">L</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">L</span>
+      Label
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+    </div>
+    <div class="description">
+      <p>
+        A label/tag component for displaying status, categories, or other metadata.
+        This component has been migrated from Emerald UI to use Nebular's tag component.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>text</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>The text to display in the label</td>
+      </tr>
+      <tr>
+        <td>variant</td>
+        <td class="type">'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'</td>
+        <td class="default">'primary'</td>
+        <td>The color variant of the label</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td class="type">'small' | 'medium' | 'large'</td>
+        <td class="default">'medium'</td>
+        <td>The size of the label</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>Optional icon to display before the text</td>
+      </tr>
+      <tr>
+        <td>rounded</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to use rounded corners</td>
+      </tr>
+      <tr>
+        <td>outlined</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to use an outlined style</td>
+      </tr>
+      <tr>
+        <td>pill</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to use a pill shape (fully rounded)</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;nb-tag
+  text="New"
+  variant="success"
+  size="medium"
+  icon="star-outline"
+  [outlined]="true"
+  [pill]="true"
+&gt;&lt;/nb-tag&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="I">I</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">I</span>
+      InfoPanel
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+      <span class="tag tag-layout">Layout</span>
+    </div>
+    <div class="description">
+      <p>
+        A panel component that displays information in a structured format.
+        This component has been migrated from Emerald UI to use Nebular's card, badge, progress bar, and accordion components.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>The title of the panel</td>
+      </tr>
+      <tr>
+        <td>subtitle</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>The subtitle of the panel</td>
+      </tr>
+      <tr>
+        <td>items</td>
+        <td class="type">Array<InfoPanelItem></td>
+        <td class="default">[]</td>
+        <td>The items to display in the panel</td>
+      </tr>
+      <tr>
+        <td>variant</td>
+        <td class="type">'default' | 'bordered' | 'shadowed'</td>
+        <td class="default">'default'</td>
+        <td>The visual style of the panel</td>
+      </tr>
+      <tr>
+        <td>collapsible</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the panel can be collapsed</td>
+      </tr>
+      <tr>
+        <td>initiallyCollapsed</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the panel starts collapsed</td>
+      </tr>
+    </table>
+    
+    <h3>InfoPanelItem Interface</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td class="type">string</td>
+        <td>The label for the item</td>
+      </tr>
+      <tr>
+        <td>value</td>
+        <td class="type">string | number | boolean</td>
+        <td>The value of the item</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+        <td class="type">string</td>
+        <td>Optional icon for the item</td>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td class="type">'text' | 'badge' | 'progress' | 'boolean'</td>
+        <td>The type of value display</td>
+      </tr>
+      <tr>
+        <td>variant</td>
+        <td class="type">'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'</td>
+        <td>The color variant for badges and progress bars</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;app-info-panel
+  title="User Information"
+  subtitle="Personal details"
+  [items]="[
+    { label: 'Name', value: 'John Doe', icon: 'fa-user' },
+    { label: 'Email', value: 'john.doe@example.com', icon: 'fa-envelope' },
+    { label: 'Status', value: 'Active', type: 'badge', variant: 'success' },
+    { label: 'Profile Completion', value: 75, type: 'progress', variant: 'primary' },
+    { label: 'Verified', value: true, type: 'boolean' }
+  ]"
+  variant="bordered"
+  [collapsible]="true"
+&gt;&lt;/app-info-panel&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="F">F</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">F</span>
+      FloatingActionButton
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+      <span class="tag tag-navigation">Navigation</span>
+    </div>
+    <div class="description">
+      <p>
+        A floating action button (FAB) is a circular button that represents the primary action in an application.
+        It floats above the UI and is used for promoting a primary action. This component has been migrated
+        from Emerald UI to use Nebular's button components and styling.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td class="type">'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'</td>
+        <td class="default">'primary'</td>
+        <td>The color theme of the button</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+        <td class="type">string</td>
+        <td class="default">'plus'</td>
+        <td>The icon to display inside the button</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td class="type">'small' | 'medium' | 'large'</td>
+        <td class="default">'medium'</td>
+        <td>The size of the button</td>
+      </tr>
+      <tr>
+        <td>position</td>
+        <td class="type">'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center'</td>
+        <td class="default">'bottom-right'</td>
+        <td>The position of the button on the screen</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the button is disabled</td>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>Accessible label for the button</td>
+      </tr>
+      <tr>
+        <td>tooltipText</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>Text to display in the tooltip</td>
+      </tr>
+      <tr>
+        <td>showTooltip</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether to show the tooltip</td>
+      </tr>
+      <tr>
+        <td>menuItems</td>
+        <td class="type">Array<{id: string, label: string, icon: string}></td>
+        <td class="default">[]</td>
+        <td>Items to display in the menu when the button is clicked</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>click</td>
+        <td class="type">EventEmitter<MouseEvent></td>
+        <td>Emitted when the button is clicked</td>
+      </tr>
+      <tr>
+        <td>menuItemClick</td>
+        <td class="type">EventEmitter<{id: string, event: MouseEvent}></td>
+        <td>Emitted when a menu item is clicked</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;app-floating-action-button
+  color="primary"
+  icon="plus"
+  size="medium"
+  position="bottom-right"
+  [menuItems]="[
+    { id: 'add', label: 'Add Item', icon: 'plus' },
+    { id: 'edit', label: 'Edit', icon: 'edit' }
+  ]"
+  (click)="onFabClick($event)"
+  (menuItemClick)="onMenuItemClick($event)"
+&gt;&lt;/app-floating-action-button&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="C">C</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">C</span>
+      CardGrid
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-layout">Layout</span>
+      <span class="tag tag-ui">UI Element</span>
+    </div>
+    <div class="description">
+      <p>
+        A grid layout for displaying cards in a responsive grid. Supports different layouts including
+        standard grid, masonry, and Netflix-style horizontal scrolling. This component has been migrated
+        from Emerald UI to use Nebular's card components and layout system.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>items</td>
+        <td class="type">Array<any></td>
+        <td class="default">[]</td>
+        <td>The items to display in the grid</td>
+      </tr>
+      <tr>
+        <td>layout</td>
+        <td class="type">'grid' | 'masonry' | 'netflix'</td>
+        <td class="default">'grid'</td>
+        <td>The layout style of the grid</td>
+      </tr>
+      <tr>
+        <td>columns</td>
+        <td class="type">number</td>
+        <td class="default">3</td>
+        <td>Number of columns in the grid</td>
+      </tr>
+      <tr>
+        <td>gap</td>
+        <td class="type">number</td>
+        <td class="default">24</td>
+        <td>Gap between grid items in pixels</td>
+      </tr>
+      <tr>
+        <td>loading</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the grid is in a loading state</td>
+      </tr>
+      <tr>
+        <td>animated</td>
+        <td class="type">boolean</td>
+        <td class="default">true</td>
+        <td>Whether to animate the grid items when they appear</td>
+      </tr>
+      <tr>
+        <td>cardLayout</td>
+        <td class="type">'horizontal' | 'vertical'</td>
+        <td class="default">'vertical'</td>
+        <td>Layout orientation for the cards</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>itemClick</td>
+        <td class="type">EventEmitter<any></td>
+        <td>Emitted when a grid item is clicked</td>
+      </tr>
+      <tr>
+        <td>cardClick</td>
+        <td class="type">EventEmitter<string></td>
+        <td>Emitted when a card is clicked, with the card ID</td>
+      </tr>
+      <tr>
+        <td>actionClick</td>
+        <td class="type">EventEmitter<{id: string, action: string}></td>
+        <td>Emitted when a card action is clicked</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;app-card-grid
+  [items]="cardItems"
+  layout="grid"
+  [columns]="3"
+  [gap]="24"
+  [loading]="isLoading"
+  [animated]="true"
+  (itemClick)="onItemClick($event)"
+  (cardClick)="onCardClick($event)"
+  (actionClick)="onActionClick($event)"
+&gt;&lt;/app-card-grid&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="S">S</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">S</span>
+      SkeletonLoader
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+    </div>
+    <div class="description">
+      <p>
+        A skeleton loader component that displays placeholder content while data is being loaded.
+        This component has been migrated from Emerald UI to use Nebular's nb-skeleton component.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td class="type">'text' | 'circle' | 'rectangle' | 'card' | 'profile' | 'list'</td>
+        <td class="default">'text'</td>
+        <td>The type of skeleton to display</td>
+      </tr>
+      <tr>
+        <td>count</td>
+        <td class="type">number</td>
+        <td class="default">1</td>
+        <td>Number of skeleton items to display</td>
+      </tr>
+      <tr>
+        <td>animated</td>
+        <td class="type">boolean</td>
+        <td class="default">true</td>
+        <td>Whether to animate the skeleton</td>
+      </tr>
+      <tr>
+        <td>width</td>
+        <td class="type">string</td>
+        <td class="default">null</td>
+        <td>Width of the skeleton (CSS value)</td>
+      </tr>
+      <tr>
+        <td>height</td>
+        <td class="type">string</td>
+        <td class="default">null</td>
+        <td>Height of the skeleton (CSS value)</td>
+      </tr>
+      <tr>
+        <td>borderRadius</td>
+        <td class="type">string</td>
+        <td class="default">null</td>
+        <td>Border radius of the skeleton (CSS value)</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;!-- Simple text skeleton --&gt;
+&lt;app-skeleton-loader 
+  type="text"
+  [count]="3"
+  [animated]="true"
+&gt;&lt;/app-skeleton-loader&gt;
+
+&lt;!-- Card skeleton --&gt;
+&lt;app-skeleton-loader 
+  type="card"
+  [animated]="true"
+&gt;&lt;/app-skeleton-loader&gt;
+
+&lt;!-- Custom dimensions --&gt;
+&lt;app-skeleton-loader 
+  type="rectangle"
+  width="200px"
+  height="100px"
+  borderRadius="8px"
+  [animated]="true"
+&gt;&lt;/app-skeleton-loader&gt;</code></pre>
+    </div>
+  </div>
+  
+  <h2 id="T">T</h2>
+  
+  <div class="component">
+    <h2>
+      <span class="component-icon">T</span>
+      Toggle
+    </h2>
+    <div class="tags-container">
+      <span class="tag tag-component">Component</span>
+      <span class="tag tag-ui">UI Element</span>
+      <span class="tag tag-form">Form Control</span>
+    </div>
+    <div class="description">
+      <p>
+        A toggle switch component that allows users to switch between two states.
+        This component has been migrated from Emerald UI to use Nebular's nb-toggle component.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>Label text for the toggle</td>
+      </tr>
+      <tr>
+        <td>labelPosition</td>
+        <td class="type">'left' | 'right'</td>
+        <td class="default">'right'</td>
+        <td>Position of the label relative to the toggle</td>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td class="type">'primary' | 'success' | 'warning' | 'danger' | 'info'</td>
+        <td class="default">'primary'</td>
+        <td>Color of the toggle when checked</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the toggle is disabled</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>Name attribute for the toggle input</td>
+      </tr>
+      <tr>
+        <td>required</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the toggle is required</td>
+      </tr>
+      <tr>
+        <td>ariaLabel</td>
+        <td class="type">string</td>
+        <td class="default">undefined</td>
+        <td>ARIA label for accessibility</td>
+      </tr>
+      <tr>
+        <td>value</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Current value of the toggle</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>change</td>
+        <td class="type">EventEmitter<boolean></td>
+        <td>Emitted when the toggle value changes</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;app-toggle
+  label="Enable notifications"
+  labelPosition="right"
+  color="primary"
+  [disabled]="false"
+  [required]="true"
+  [(ngModel)]="notificationsEnabled"
+  (change)="onNotificationsToggle($event)"
+&gt;&lt;/app-toggle&gt;</code></pre>
+    </div>
+    </div>
+    <div class="description">
+      <p>
+        A toggle switch component that can be used as a boolean input control. This component has been
+        migrated from Emerald UI to use Nebular's nb-toggle component.
+      </p>
+    </div>
+    
+    <h3>Properties</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td class="type">string</td>
+        <td class="default">auto-generated</td>
+        <td>The ID of the toggle input</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>The name of the toggle input</td>
+      </tr>
+      <tr>
+        <td>value</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>The current value of the toggle</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the toggle is disabled</td>
+      </tr>
+      <tr>
+        <td>required</td>
+        <td class="type">boolean</td>
+        <td class="default">false</td>
+        <td>Whether the toggle is required</td>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td class="type">'primary' | 'success' | 'warning' | 'danger' | 'info'</td>
+        <td class="default">'primary'</td>
+        <td>The color theme of the toggle</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td class="type">'small' | 'medium' | 'large'</td>
+        <td class="default">'medium'</td>
+        <td>The size of the toggle</td>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>The label text for the toggle</td>
+      </tr>
+      <tr>
+        <td>labelPosition</td>
+        <td class="type">'left' | 'right'</td>
+        <td class="default">'right'</td>
+        <td>The position of the label relative to the toggle</td>
+      </tr>
+      <tr>
+        <td>ariaLabel</td>
+        <td class="type">string</td>
+        <td class="default">''</td>
+        <td>Accessible label for the toggle</td>
+      </tr>
+    </table>
+    
+    <h3>Events</h3>
+    <table class="props-table">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>valueChange</td>
+        <td class="type">EventEmitter<boolean></td>
+        <td>Emitted when the toggle value changes</td>
+      </tr>
+    </table>
+    
+    <h3>Example</h3>
+    <div class="example">
+      <pre><code>&lt;app-toggle
+  label="Enable notifications"
+  labelPosition="right"
+  color="primary"
+  size="medium"
+  [value]="notificationsEnabled"
+  [disabled]="false"
+  [required]="true"
+  (valueChange)="onNotificationsToggle($event)"
+&gt;&lt;/app-toggle&gt;</code></pre>
+    </div>
+  </div>
+  
+  <a href="#" class="back-to-top">↑</a>
+  
+  <script>
+    // Simple search functionality
+    document.getElementById('search').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const components = document.querySelectorAll('.component');
+      
+      components.forEach(component => {
+        const text = component.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          component.style.display = 'block';
+        } else {
+          component.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

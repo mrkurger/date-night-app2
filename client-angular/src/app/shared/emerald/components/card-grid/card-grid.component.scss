@@ -1,12 +1,8 @@
-@use 'src/styles/design-system/index.scss' as ds;
-@use '../../core/design/variables' as *;
+@use '@nebular/theme/styles/theming' as *;
 @use 'sass:color';
 
-
-// Border radius variables
-
-// Emerald CardGrid Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/CardGrid
+// Card Grid Component Styles
+// Using Nebular theme variables
 
 .nb-card-grid {
   display: grid;
@@ -21,16 +17,16 @@
     &--animated {
       animation: fadeIn 0.5s ease forwards;
 
-      @for var(--i) /* TODO: Verify correct CSS variable */ from 1 through 20 {
-        &:nth-child(#{var(--i) /* TODO: Verify correct CSS variable */}) {
-          animation-delay: #{var(--i) /* TODO: Verify correct CSS variable */ * 0.05}s;
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
         }
       }
     }
 
     &--masonry {
       break-inside: avoid;
-      margin-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
+      margin-bottom: nb-theme(layout-small-padding);
     }
   }
 
@@ -42,7 +38,7 @@
   }
 
   &__netflix-row {
-    margin-bottom: emerald.var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    margin-bottom: nb-theme(layout-padding);
   }
 
   &__netflix-items {
@@ -50,7 +46,7 @@
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */; // Space for scrollbar
+    padding-bottom: nb-theme(layout-small-padding); // Space for scrollbar
 
     // Hide scrollbar but keep functionality
     &::-webkit-scrollbar {
@@ -58,17 +54,17 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: emerald.var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
-      border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
+      background: nb-theme(background-basic-color-3);
+      border-radius: nb-theme(btn-round-border-radius);
     }
 
     &::-webkit-scrollbar-thumb {
-      background: emerald.var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
-      border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
+      background: nb-theme(color-primary-400);
+      border-radius: nb-theme(btn-round-border-radius);
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: emerald.var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
+      background: nb-theme(color-primary-500);
     }
   }
 
@@ -80,7 +76,7 @@
   // Masonry layout styles
   &--masonry {
     columns: 3;
-    column-gap: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    column-gap: nb-theme(layout-padding);
 
     @media (max-width: 1024px) {
       columns: 2;
@@ -93,23 +89,23 @@
 
   // Default item style when no template is provided
   &__default-item {
-    background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
-    border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
-    padding: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: nb-theme(background-basic-color-1);
+    border-radius: nb-theme(card-border-radius);
+    padding: nb-theme(card-padding);
+    box-shadow: nb-theme(shadow-sm);
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     font-weight: 500;
-    color: emerald.var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
+    color: nb-theme(text-basic-color);
   }
 
   // Empty state styles
   &__empty {
     width: 100%;
-    padding: emerald.var(--spacing-8) /* TODO: Verify correct CSS variable */ 0;
+    padding: nb-theme(layout-padding) 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,11 +113,11 @@
 
   &__empty-content {
     text-align: center;
-    color: emerald.var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
+    color: nb-theme(text-hint-color);
 
-    i {
+    nb-icon {
       font-size: 1.875rem;
-      margin-bottom: emerald.var(--spacing-4) /* TODO: Verify correct CSS variable */;
+      margin-bottom: nb-theme(layout-small-padding);
     }
 
     p {
@@ -141,6 +137,45 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+// Card image styles
+.nb-card-image {
+  margin-bottom: nb-theme(layout-small-padding);
+  border-radius: nb-theme(card-border-radius);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// Card subtitle styles
+.nb-card-subtitle {
+  color: nb-theme(text-hint-color);
+  font-size: 0.875rem;
+  margin-bottom: nb-theme(layout-small-padding);
+}
+
+// Card description styles
+.nb-card-description {
+  color: nb-theme(text-basic-color);
+  margin-bottom: nb-theme(layout-small-padding);
+}
+
+// Card avatar styles
+.nb-card-avatar {
+  margin-bottom: nb-theme(layout-small-padding);
+}
+
+// Card tags styles
+.nb-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: nb-theme(layout-small-padding);
 }
 
 // Responsive adjustments

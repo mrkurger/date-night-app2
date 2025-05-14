@@ -24,7 +24,11 @@
             "tsConfig": "client-angular/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["client-angular/src/favicon.ico", "client-angular/src/assets"],
-            "styles": ["client-angular/src/styles.scss"],
+            "styles": [
+              "/node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "/node_modules/eva-icons/style/eva-icons.css",
+              "client-angular/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -75,11 +79,16 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "client-angular/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": ["client-angular/src/favicon.ico", "client-angular/src/assets"],
-            "styles": ["client-angular/src/styles.scss"],
+            "main": "src/test.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },

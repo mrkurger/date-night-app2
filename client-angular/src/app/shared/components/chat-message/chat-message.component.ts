@@ -10,14 +10,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbCardModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbButtonModule,
-  NbUserModule,
-  NbBadgeModule,
-} from '@nebular/theme';
+
 import { ChatMessage } from '../../../core/services/chat.service';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -28,18 +21,7 @@ import { FileSizePipe } from '../../pipes/file-size.pipe';
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbButtonModule,
-    NbUserModule,
-    NbBadgeModule,
-    TimeAgoPipe,
-    LinkifyPipe,
-    FileSizePipe,
-  ],
+  imports: [CommonModule, NbCardModule, NbIconModule, NbSpinnerModule, NbButtonModule, NbUserModule, NbBadgeModule, TimeAgoPipe, LinkifyPipe, FileSizePipe],
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

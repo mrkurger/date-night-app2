@@ -3,13 +3,7 @@ import { NbSelectModule } from '@nebular/theme';
 import { NbFormFieldModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbFormFieldModule,
-  NbSelectComponent,
-} from '@nebular/theme';
+
 
 /**
  * Pager Component

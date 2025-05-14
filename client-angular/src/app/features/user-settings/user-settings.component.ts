@@ -7,20 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbTabsetModule,
-  NbSpinnerModule,
-  NbToggleModule,
-  NbLayoutModule,
-} from '@nebular/theme';
+
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ThemeService } from '../../core/services/theme.service';
@@ -34,23 +21,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-user-settings',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbRadioModule,
-    NbTabsetModule,
-    NbSpinnerModule,
-    NbToggleModule,
-    NbLayoutModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbCheckboxModule, NbRadioModule, NbTabsetModule, NbSpinnerModule, NbToggleModule, NbLayoutModule],
   template: `
     <nb-layout>
       <nb-layout-column>

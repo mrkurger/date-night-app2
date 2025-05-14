@@ -4,7 +4,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Subscription } from 'rxjs';
-import { NbIconModule, NbButtonModule, NbToggleModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================

@@ -7,14 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbTagModule,
-  NbBadgeModule,
-} from '@nebular/theme';
+
 
 import { environment } from '../../../environments/environment';
 import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
@@ -47,17 +40,7 @@ export interface Favorite {
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbTagModule,
-    NbBadgeModule,
-    CardGridComponent,
-    LoadingSpinnerComponent,
-  ],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTagModule, NbBadgeModule, CardGridComponent, LoadingSpinnerComponent],
   template: `
     <div class="favorites-container">
       <nb-card>

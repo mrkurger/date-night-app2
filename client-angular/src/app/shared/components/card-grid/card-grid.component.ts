@@ -1,7 +1,7 @@
 import { NbCardModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
+
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 /**

@@ -16,13 +16,7 @@ import { RouterModule } from '@angular/router';
 import { Ad } from '../../../core/models/ad.interface';
 import { UserPreferencesService } from '../../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
-import {
-  NbIconModule,
-  NbButtonModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbCardModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-ad-card',
@@ -200,15 +194,7 @@ import {
     `,
   ],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbIconModule,
-    NbButtonModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbCardModule,
-  ],
+  imports: [CommonModule, RouterModule, NbIconModule, NbButtonModule, NbTooltipModule, NbBadgeModule, NbCardModule],
 })
 export class AdCardComponent implements OnInit, OnDestroy {
   @Input() ad!: Ad;

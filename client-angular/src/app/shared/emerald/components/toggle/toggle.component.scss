@@ -1,3 +1,5 @@
+@use '@nebular/theme/styles/theming' as *;
+
 .nb-toggle-container {
   display: flex;
   align-items: center;
@@ -25,129 +27,10 @@
   }
 }
 
-.nb-toggle {
-  position: relative;
-  display: inline-block;
-
-  // Toggle Sizes
-  &--small {
-    width: 36px;
-    height: 20px;
-
-    .nb-toggle__thumb {
-      width: 16px;
-      height: 16px;
-    }
-
-    &.nb-toggle--checked .nb-toggle__thumb {
-      transform: translateX(16px);
-    }
-  }
-
-  &--medium {
-    width: 48px;
-    height: 24px;
-
-    .nb-toggle__thumb {
-      width: 20px;
-      height: 20px;
-    }
-
-    &.nb-toggle--checked .nb-toggle__thumb {
-      transform: translateX(24px);
-    }
-  }
-
-  &--large {
-    width: 60px;
-    height: 30px;
-
-    .nb-toggle__thumb {
-      width: 26px;
-      height: 26px;
-    }
-
-    &.nb-toggle--checked .nb-toggle__thumb {
-      transform: translateX(30px);
-    }
-  }
-
-  // Toggle Colors
-  &--primary {
-    &.nb-toggle--checked .nb-toggle__track {
-      background-color: var(--primary); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  &--success {
-    &.nb-toggle--checked .nb-toggle__track {
-      background-color: var(--success); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  &--warning {
-    &.nb-toggle--checked .nb-toggle__track {
-      background-color: var(--warning); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  &--danger {
-    &.nb-toggle--checked .nb-toggle__track {
-      background-color: var(--danger); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  &--info {
-    &.nb-toggle--checked .nb-toggle__track {
-      background-color: var(--info); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  // Toggle Input
-  &__input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
-
-    &:focus + .nb-toggle__track {
-      box-shadow: 0 0 0 2px rgba(var(--primary), 0.3); /* TODO: Verify correct CSS variable */
-    }
-  }
-
-  // Toggle Track
-  &__track {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--neutral-300); /* TODO: Verify correct CSS variable */
-    transition: background-color 0.2s ease;
-    border-radius: 34px;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-
-    .nb-toggle--disabled & {
-      cursor: not-allowed;
-    }
-  }
-
-  // Toggle Thumb
-  &__thumb {
-    background-color: var(--neutral-100); /* TODO: Verify correct CSS variable */
-    border-radius: 50%;
-    transition: transform 0.2s ease;
-    box-shadow: var(--shadow-sm); /* TODO: Verify correct CSS variable */
-  }
-}
-
 // Toggle Label
 .nb-toggle__label {
-  font-size: 0.875rem;
-  color: var(--neutral-700); /* TODO: Verify correct CSS variable */
+  font-size: nb-theme(text-button-small-font-size);
+  color: nb-theme(text-basic-color);
   cursor: pointer;
 
   .nb-toggle-container--disabled & {
@@ -157,6 +40,6 @@
 
 // Required Indicator
 .nb-toggle__required {
-  color: var(--danger); /* TODO: Verify correct CSS variable */
+  color: nb-theme(color-danger-500);
   margin-left: 2px;
 }

@@ -1,0 +1,106 @@
+// Replaced ds.$color-primary with var(--color-primary)
+&--primary {
+  background-color: var(--color-primary); // was ds.$color-primary
+  color: var(--color-white); // was ds.$color-white
+
+  &:hover {
+    background-color: var(--color-primary-dark); // was ds.$color-primary-dark
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(var(--color-primary), 0.5); // was ds.$color-primary
+    outline-offset: 2px;
+  }
+}
+
+// Replaced ds.$color-primary with var(--color-primary)
+&--secondary {
+  background-color: transparent;
+  color: var(--color-primary); // was ds.$color-primary
+  border: 1px solid var(--color-primary); // was ds.$color-primary
+
+  &:hover {
+    background-color: rgba(var(--color-primary), 0.05); // was ds.$color-primary
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(var(--color-primary), 0.5); // was ds.$color-primary
+    outline-offset: 2px;
+  }
+}
+
+// Replaced ds.$border-radius-md with var(--border-radius-md)
+border-radius: var(--border-radius-md); // was ds.$border-radius-md
+
+// Replaced ds.$spacing-2 and ds.$spacing-4 with var(--spacing-2) and var(--spacing-4)
+padding: var(--spacing-2) var(--spacing-4); // was ds.$spacing-2 ds.$spacing-4
+
+// Replaced ds.$transition-fast and ds.$transition-timing-default with var(--transition-fast) and var(--transition-timing-default)
+transition: all var(--transition-fast) var(--transition-timing-default); // was ds.$transition-fast ds.$transition-timing-default
+
+// Button styles
+&__button {
+  // Replaced ds.$border-radius-md with var(--border-radius-md)
+  border-radius: var(--border-radius-md); // was ds.$border-radius-md
+  // Replaced ds.$spacing-2 and ds.$spacing-4 with var(--spacing-2) and var(--spacing-4)
+  padding: var(--spacing-2) var(--spacing-4); // was ds.$spacing-2 ds.$spacing-4
+  // Replaced ds.$transition-fast and ds.$transition-timing-default with var(--transition-fast) and var(--transition-timing-default)
+  transition: all var(--transition-fast) var(--transition-timing-default); // was ds.$transition-fast ds.$transition-timing-default
+
+  // Primary button modifier
+  &--primary {
+    background-color: var(--color-primary); // was ds.$color-primary
+    color: var(--color-white); // was ds.$color-white
+
+    &:hover {
+      background-color: var(--color-primary-dark); // was ds.$color-primary-dark
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--color-primary), 0.5); // was ds.$color-primary
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  // Secondary button modifier
+  &--secondary {
+    background-color: transparent;
+    color: var(--color-primary); // was ds.$color-primary
+    border: 1px solid var(--color-primary); // was ds.$color-primary
+
+    &:hover {
+      background-color: rgba(var(--color-primary), 0.05); // was ds.$color-primary
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--color-primary), 0.5); // was ds.$color-primary
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: var(--breakpoint-tablet)) {
+  .component-name {
+    border-radius: var(--border-radius-md); // was ds.$border-radius-md
+    &__header,
+    &__content,
+    &__actions {
+      padding: var(--spacing-3); // was ds.$spacing-3
+    }
+    &__actions {
+      flex-direction: column;
+    }
+    &__button {
+      width: 100%;
+    }
+  }
+}

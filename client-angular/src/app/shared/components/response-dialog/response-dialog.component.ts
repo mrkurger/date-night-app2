@@ -19,16 +19,7 @@ import {
   ReactiveFormsModule,
   FormControl,
 } from '@angular/forms';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-} from '@nebular/theme';
+
 import { SharedModule } from '../../shared.module';
 
 export interface ResponseDialogData {
@@ -113,16 +104,7 @@ export interface ResponseDialogData {
     `,
   ],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule],
 })
 export class ResponseDialogComponent implements OnInit {
   responseForm: FormGroup;

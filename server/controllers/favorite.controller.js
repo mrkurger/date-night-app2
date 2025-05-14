@@ -523,12 +523,8 @@ class FavoriteController {
 }
 
 export async function someHandler(req, res) {
-  try {
-    const result = await doSomething();
-    return sendSuccess(res, result);
-  } catch (err) {
-    return sendError(res, err, err.status || 500);
-  }
+  // TODO: Implement this handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
 }
 
 const favoriteController = new FavoriteController();

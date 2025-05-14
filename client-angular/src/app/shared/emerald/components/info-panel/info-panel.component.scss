@@ -1,86 +1,35 @@
+@use '@nebular/theme/styles/theming' as *;
+
+// Card variants
+.nb-card-bordered {
+  border: 1px solid nb-theme(border-basic-color-3);
+}
+
+.nb-card-shadowed {
+  box-shadow: nb-theme(shadow);
+}
+
+// Info panel styles
 .nb-info-panel {
-  background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
-  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
-  overflow: hidden;
-
-  // Panel Variants
-  &--bordered {
-    border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
-  }
-
-  &--shadowed {
-    box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
-  }
-
-  // Panel Header
-  &__header {
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
-
-    .nebular-info-panel--collapsible & {
-      cursor: pointer;
-
-      &:hover {
-        background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
-      }
-    }
-  }
-
   &__title-container {
     flex: 1;
   }
 
   &__title {
     margin: 0;
-    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
-    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
-    color: var(--color-black) /* TODO: Verify correct CSS variable */;
+    font-size: nb-theme(text-heading-6-font-size);
+    font-weight: nb-theme(text-heading-6-font-weight);
+    color: nb-theme(text-basic-color);
   }
 
   &__subtitle {
     margin: 4px 0 0;
-    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
-    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
-  }
-
-  // Collapse Toggle
-  &__toggle {
-    background: none;
-    border: none;
-    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-
-    &:hover {
-      color: var(--color-black) /* TODO: Verify correct CSS variable */;
-    }
-  }
-
-  // Panel Content
-  &__content {
-    transition:
-      max-height 0.3s ease,
-      opacity 0.3s ease;
-    max-height: 1000px;
-    opacity: 1;
-    overflow: hidden;
-
-    .nebular-info-panel--collapsed & {
-      max-height: 0;
-      opacity: 0;
-    }
+    font-size: nb-theme(text-caption-font-size);
+    color: nb-theme(text-hint-color);
   }
 
   &__items {
-    padding: 16px;
+    padding: 0;
   }
 
   // Panel Item
@@ -97,112 +46,26 @@
     flex: 1;
     display: flex;
     align-items: center;
-    color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
-    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
-  }
+    color: nb-theme(text-hint-color);
+    font-size: nb-theme(text-caption-font-size);
 
-  &__item-icon {
-    margin-right: 8px;
-    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
-    width: 16px;
-    text-align: center;
+    nb-icon {
+      margin-right: 8px;
+    }
   }
 
   &__item-value {
     flex: 1;
     text-align: right;
-    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
-    color: var(--color-black) /* TODO: Verify correct CSS variable */;
-    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
-  }
-
-  // Badge Value
-  &__badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
-    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
-    font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
-
-    &--primary {
-      background-color: #dbeafe; /* primary-100 */
-      color: #1d4ed8; /* primary-700 */
-    }
-
-    &--success {
-      background-color: #dcfce7; /* success-100 */
-      color: #15803d; /* success-700 */
-    }
-
-    &--warning {
-      background-color: #fef3c7; /* warning-100 */
-      color: #b45309; /* warning-700 */
-    }
-
-    &--danger {
-      background-color: #fee2e2; /* danger-100 */
-      color: #b91c1c; /* danger-700 */
-    }
-
-    &--info {
-      background-color: #e0f2fe; /* info-100 */
-      color: #0369a1; /* info-700 */
-    }
-
-    &--neutral {
-      background-color: #e5e7eb; /* neutral-200 */
-      color: #374151; /* neutral-700 */
-    }
+    font-weight: nb-theme(text-subtitle-font-weight);
+    color: nb-theme(text-basic-color);
+    font-size: nb-theme(text-caption-font-size);
   }
 
   // Progress Value
   &__progress {
-    position: relative;
-    height: 8px;
     width: 100px;
-    background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
-    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
-    overflow: hidden;
     display: inline-block;
-  }
-
-  &__progress-bar {
-    height: 100%;
-    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
-
-    &--primary {
-      background-color: var(--primary) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--success {
-      background-color: var(--color-success) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--warning {
-      background-color: var(--color-warning) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--danger {
-      background-color: var(--danger) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--info {
-      background-color: var(--color-info) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--neutral {
-      background-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
-    }
-  }
-
-  &__progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
-    color: var(--color-black) /* TODO: Verify correct CSS variable */;
-    text-shadow: 0 0 2px rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.8);
   }
 
   // Boolean Value
@@ -210,18 +73,5 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-
-    &--true {
-      background-color: var(--success-light) /* TODO: Verify correct CSS variable */;
-      color: var(--color-success) /* TODO: Verify correct CSS variable */;
-    }
-
-    &--false {
-      background-color: var(--danger-100) /* TODO: Verify correct CSS variable */;
-      color: var(--danger) /* TODO: Verify correct CSS variable */;
-    }
   }
 }

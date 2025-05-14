@@ -82,59 +82,23 @@ const socialLinks = [
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    NbCardModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbCheckboxModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbRadioModule,
-    NbAlertModule,
-    NbTooltipModule,
-    // Nebular Auth
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), NbCardModule, NbInputModule, NbButtonModule, NbIconModule, NbCheckboxModule, NbSpinnerModule, NbFormFieldModule, NbRadioModule, NbAlertModule, NbTooltipModule, // Nebular Auth
     NbAuthModule.forRoot({
       strategies: [
         NbOAuth2AuthStrategy.setup({
-          name: 'google',
-    authorize: {
-            endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-    redirectUri: `${window.location.origin}/auth/callback`,
-    token: {
-            endpoint: `${environment.apiUrl}/auth/google/callback`,
-    redirectUri: `${window.location.origin}/auth/callback`,
-    NbOAuth2AuthStrategy.setup({
-          name: 'facebook',
-    authorize: {
-            endpoint: 'https://www.facebook.com/v10.0/dialog/oauth',
-    redirectUri: `${window.location.origin}/auth/callback`,
-    token: {
-            endpoint: `${environment.apiUrl}/auth/facebook/callback`,
-    redirectUri: `${window.location.origin}/auth/callback`,
-    NbOAuth2AuthStrategy.setup({
-          name: 'apple',
-    authorize: {
-            endpoint: 'https://appleid.apple.com/auth/authorize',
-    redirectUri: `${window.location.origin}/auth/callback`,
-    token: {
-            endpoint: `${environment.apiUrl}/auth/apple/callback`,
-    redirectUri: `${window.location.origin}/auth/callback`,
-    NbOAuth2AuthStrategy.setup({
-          name: 'microsoft',
-    authorize: {
-            endpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    redirectUri: `${window.location.origin}/auth/callback`,
-    token: {
-            endpoint: `${environment.apiUrl}/auth/microsoft/callback`,
-    redirectUri: `${window.location.origin}/auth/callback`
-    LoginComponent,
-    RegisterComponent,
-    RequestPasswordComponent,
-    ResetPasswordComponent,
-    AuthLayoutComponent,],
+          name: 'google', authorize: {
+            endpoint: 'https://accounts.google.com/o/oauth2/v2/auth', redirectUri: `${window.location.origin}/auth/callback`, token: {
+            endpoint: `${environment.apiUrl}/auth/google/callback`, NbOAuth2AuthStrategy.setup({
+          name: 'facebook', authorize: {
+            endpoint: 'https://www.facebook.com/v10.0/dialog/oauth', token: {
+            endpoint: `${environment.apiUrl}/auth/facebook/callback`, NbOAuth2AuthStrategy.setup({
+          name: 'apple', authorize: {
+            endpoint: 'https://appleid.apple.com/auth/authorize', token: {
+            endpoint: `${environment.apiUrl}/auth/apple/callback`, NbOAuth2AuthStrategy.setup({
+          name: 'microsoft', authorize: {
+            endpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize', token: {
+            endpoint: `${environment.apiUrl}/auth/microsoft/callback`, redirectUri: `${window.location.origin}/auth/callback`
+    LoginComponent, RegisterComponent, RequestPasswordComponent, ResetPasswordComponent, AuthLayoutComponent],
     }),
 
     // Components

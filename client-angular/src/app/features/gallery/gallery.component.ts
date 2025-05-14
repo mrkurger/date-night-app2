@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
-import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-gallery',
@@ -84,16 +84,7 @@ import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
     `,
   ],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule, RouterModule, SharedModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emerald UI Components Changelog</title>
+  <style>
+    :root {
+      --primary: #ff4d7e;
+      --secondary: #6c63ff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--dark);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    
+    h1 {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    
+    .version {
+      background-color: var(--light);
+      border-left: 4px solid var(--primary);
+      padding: 10px 15px;
+      margin-bottom: 20px;
+    }
+    
+    .date {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    
+    .tag-feature {
+      background-color: var(--success);
+      color: white;
+    }
+    
+    .tag-fix {
+      background-color: var(--info);
+      color: white;
+    }
+    
+    .tag-breaking {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .tag-refactor {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    code {
+      background-color: #f5f5f5;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    
+    .component-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .component-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Emerald UI Components Changelog</h1>
+  
+  <div class="version">
+    <h2>Version 2.0.0</h2>
+    <div class="date">June 10, 2024</div>
+  </div>
+  
+  <h3>Major Changes</h3>
+  <ul>
+    <li>
+      <span class="tag tag-breaking">BREAKING</span>
+      Migrated from custom Emerald UI components to Nebular UI framework components
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      Updated all component styling to use Nebular theme variables instead of custom CSS variables
+    </li>
+  </ul>
+  
+  <h3>Component Updates</h3>
+  <ul>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./floating-action-button/floating-action-button.component.html" class="component-link">FloatingActionButton</a>: 
+      Replaced custom implementation with Nebular button components and styling
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./card-grid/card-grid.component.html" class="component-link">CardGrid</a>: 
+      Updated to use Nebular card components and layout system
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./toggle/toggle.component.html" class="component-link">Toggle</a>: 
+      Replaced custom toggle implementation with Nebular's nb-toggle component
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./skeleton-loader/skeleton-loader.component.html" class="component-link">SkeletonLoader</a>: 
+      Replaced custom skeleton implementation with Nebular's nb-skeleton component
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./page-header/page-header.component.html" class="component-link">PageHeader</a>: 
+      Updated to use Nebular's breadcrumbs, buttons, and user components
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./avatar/avatar.component.html" class="component-link">Avatar</a>: 
+      Updated to use Nebular's icon and context menu components
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./toggle/toggle.component.html" class="component-link">Toggle</a>: 
+      Replaced custom toggle implementation with Nebular's nb-toggle component
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./info-panel/info-panel.component.html" class="component-link">InfoPanel</a>: 
+      Updated to use Nebular's card, badge, progress bar, and accordion components
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./app-card/app-card.component.html" class="component-link">AppCard</a>: 
+      Replaced custom implementation with Nebular's card, badge, button, and icon components
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      <a href="./label/label.component.html" class="component-link">Label</a>: 
+      Replaced custom implementation with Nebular's tag component
+    </li>
+  </ul>
+  
+  <h3>Style Updates</h3>
+  <ul>
+    <li>
+      <span class="tag tag-feature">FEATURE</span>
+      Added support for Nebular's theming system, enabling better dark mode support
+    </li>
+    <li>
+      <span class="tag tag-fix">FIX</span>
+      Improved accessibility by using Nebular's built-in accessibility features
+    </li>
+    <li>
+      <span class="tag tag-refactor">REFACTOR</span>
+      Standardized component naming from <code>emerald-*</code> to <code>nb-*</code> prefix
+    </li>
+  </ul>
+  
+  <h3>Migration Guide</h3>
+  <p>
+    When using these components, please note the following changes:
+  </p>
+  <ul>
+    <li>Component selectors remain the same for backward compatibility</li>
+    <li>CSS classes have changed from <code>emerald-*</code> to <code>nb-*</code></li>
+    <li>Some prop names may have changed to match Nebular's API</li>
+    <li>Theme customization should now be done through Nebular's theming system</li>
+  </ul>
+</body>
+</html>

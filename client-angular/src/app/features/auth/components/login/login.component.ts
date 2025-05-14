@@ -17,33 +17,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule, NbAlertModule, NbTooltipModule],
   template: `
     <div class="login-container">
       <nb-card>

@@ -2,27 +2,12 @@ import { NbIconModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {
-  NbSidebarModule,
-  NbLayoutModule,
-  NbButtonModule,
-  NbIconModule,
-  NbMenuModule,
-  NbSidebarService,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbSidebarModule,
-    NbLayoutModule,
-    NbButtonModule,
-    NbIconModule,
-    NbMenuModule,
-  ],
+  imports: [CommonModule, RouterModule, NbSidebarModule, NbLayoutModule, NbButtonModule, NbIconModule, NbMenuModule],
   template: `
     <nb-layout>
       <nb-layout-header fixed>

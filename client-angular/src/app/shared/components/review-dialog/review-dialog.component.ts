@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbDialogRef, NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+
 import { ReviewFormComponent } from '../review-form/review-form.component';
 
 export interface ReviewData {

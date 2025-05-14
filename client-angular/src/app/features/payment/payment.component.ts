@@ -18,19 +18,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 // Nebular imports
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbLayoutModule,
-  NbListModule,
-  NbBadgeModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 
 import { PaymentService, SubscriptionPrice } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -57,21 +45,7 @@ interface StripeCardElement {
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbLayoutModule,
-    NbListModule,
-    NbBadgeModule,
-    NbAlertModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbLayoutModule, NbListModule, NbBadgeModule, NbAlertModule],
 })
 export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;

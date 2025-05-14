@@ -18,20 +18,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbToastrService,
-  NbCardModule,
-  NbTabsetModule,
-  NbInputModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NB_DIALOG_CONFIG,
-} from '@nebular/theme';
+
 import { SharedModule } from '../../../shared/shared.module';
 import { WalletService } from '../../../core/services/wallet.service';
 
@@ -126,21 +113,7 @@ export interface WithdrawalRequest {
   templateUrl: './withdraw-dialog.component.html',
   styleUrls: ['./withdraw-dialog.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbTabsetModule,
-    NbInputModule,
-    NbButtonModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbFormFieldModule,
-    NbIconModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbTabsetModule, NbInputModule, NbButtonModule, NbSelectModule, NbSpinnerModule, NbAlertModule, NbFormFieldModule, NbIconModule, SharedModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawDialogComponent implements OnInit {

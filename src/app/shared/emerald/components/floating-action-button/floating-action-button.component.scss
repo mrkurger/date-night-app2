@@ -1,0 +1,35 @@
+@use '@nebular/theme/styles/theming' as *;
+@use 'sass:color';
+
+// Floating Action Button Styles
+// Using Nebular theme variables
+
+.nb-fab {
+  position: fixed;
+  bottom: nb-theme(layout-padding);
+  right: nb-theme(layout-padding);
+  z-index: nb-theme(z-index-fixed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: nb-theme(color-primary-500);
+  color: nb-theme(text-control-color);
+  box-shadow: nb-theme(shadow-md);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+
+  &:hover {
+    background-color: nb-theme(color-primary-600);
+    box-shadow: nb-theme(shadow-lg);
+  }
+
+  // Icon
+  &__icon {
+    font-size: 1.5rem;
+  }
+}

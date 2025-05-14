@@ -13,7 +13,7 @@ import { NbSelectModule } from '@nebular/theme';
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbSelectModule, NbIconModule, NbButtonModule } from '@nebular/theme';
+
 
 /**
  * Pagination Component

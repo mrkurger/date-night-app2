@@ -1,12 +1,3 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (toggle.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -19,33 +10,9 @@ import { NbToggleModule } from '@nebular/theme';
  * This component displays a toggle switch for boolean values.
  */
 @Component({
-  selector: 'nb-toggle',
-  template: `
-    <nb-toggle
-      [checked]="value"
-      [disabled]="disabled"
-      [status]="color"
-      [labelPosition]="labelPosition"
-      [name]="name"
-      [required]="required"
-      [aria-label]="ariaLabel || label"
-      (checkedChange)="toggle($event)"
-    >
-      {{ label }}
-      <span *ngIf="required" class="required-indicator">*</span>
-    </nb-toggle>
-  `,
-  styles: [
-    `
-      :host {
-        display: inline-block;
-      }
-      .required-indicator {
-        color: var(--color-danger-500);
-        margin-left: 0.25rem;
-      }
-    `,
-  ],
+  selector: 'app-toggle',
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
   standalone: true,
   imports: [CommonModule, NbToggleModule],
   providers: [

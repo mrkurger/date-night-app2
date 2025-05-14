@@ -1,98 +1,118 @@
-<!-- Emerald InfoPanel Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/InfoPanel -->
+<!-- InfoPanel Component -->
+<!-- Using Nebular components -->
 
-<div
-  class="emerald-info-panel"
+<nb-card
   [ngClass]="{
-    'emerald-info-panel--bordered': variant === 'bordered',
-    'emerald-info-panel--shadowed': variant === 'shadowed',
-    'emerald-info-panel--collapsible': collapsible,
-    'emerald-info-panel--collapsed': isCollapsed,
+    'nb-card-bordered': variant === 'bordered',
+    'nb-card-shadowed': variant === 'shadowed',
   }"
 >
-  <!-- Panel Header -->
-  <div class="emerald-info-panel__header" (click)="toggleCollapse()">
-    <div class="emerald-info-panel__title-container">
-      <h3 class="emerald-info-panel__title">{{ title }}</h3>
-      <p *ngIf="subtitle" class="emerald-info-panel__subtitle">{{ subtitle }}</p>
-    </div>
+  <!-- For non-collapsible panels -->
+  <ng-container *ngIf="!collapsible">
+    <nb-card-header>
+      <div class="nb-info-panel__title-container">
+        <h3 class="nb-info-panel__title">{{ title }}</h3>
+        <p *ngIf="subtitle" class="nb-info-panel__subtitle">{{ subtitle }}</p>
+      </div>
+    </nb-card-header>
 
-    <!-- Collapse Toggle -->
-    <button
-      *ngIf="collapsible"
-      class="emerald-info-panel__toggle"
-      [attr.aria-expanded]="!isCollapsed"
-      [attr.aria-label]="isCollapsed ? 'Expand panel' : 'Collapse panel'"
-    >
-      <i
-        class="fas"
-        [ngClass]="{ 'fa-chevron-down': !isCollapsed, 'fa-chevron-right': isCollapsed }"
-      ></i>
-    </button>
-  </div>
-
-  <!-- Panel Content -->
-  <div class="emerald-info-panel__content">
-    <div class="emerald-info-panel__items">
-      <div *ngFor="let item of items" class="emerald-info-panel__item">
-        <!-- Item Label -->
-        <div class="emerald-info-panel__item-label">
-          <i *ngIf="item.icon" class="emerald-info-panel__item-icon {{ item.icon }}"></i>
-          <span>{{ item.label }}</span>
-        </div>
-
-        <!-- Item Value -->
-        <div class="emerald-info-panel__item-value">
-          <!-- Text Value -->
-          <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
-
-          <!-- Badge Value -->
-          <span
-            *ngIf="item.type === 'badge'"
-            class="emerald-info-panel__badge"
-            [ngClass]="{
-              'emerald-info-panel__badge--primary': item.variant === 'primary',
-              'emerald-info-panel__badge--success': item.variant === 'success',
-              'emerald-info-panel__badge--warning': item.variant === 'warning',
-              'emerald-info-panel__badge--danger': item.variant === 'danger',
-              'emerald-info-panel__badge--info': item.variant === 'info',
-              'emerald-info-panel__badge--neutral': item.variant === 'neutral' || !item.variant,
-            }"
-          >
-            {{ item.value }}
-          </span>
-
-          <!-- Progress Value -->
-          <div *ngIf="item.type === 'progress'" class="emerald-info-panel__progress">
-            <div
-              class="emerald-info-panel__progress-bar"
-              [ngClass]="{
-                'emerald-info-panel__progress-bar--primary': item.variant === 'primary',
-                'emerald-info-panel__progress-bar--success': item.variant === 'success',
-                'emerald-info-panel__progress-bar--warning': item.variant === 'warning',
-                'emerald-info-panel__progress-bar--danger': item.variant === 'danger',
-                'emerald-info-panel__progress-bar--info': item.variant === 'info',
-                'emerald-info-panel__progress-bar--neutral':
-                  item.variant === 'neutral' || !item.variant,
-              }"
-              [style.width.%]="item.value"
-            ></div>
-            <span class="emerald-info-panel__progress-text">{{ item.value }}%</span>
+    <nb-card-body>
+      <div class="nb-info-panel__items">
+        <div *ngFor="let item of items" class="nb-info-panel__item">
+          <!-- Item Label -->
+          <div class="nb-info-panel__item-label">
+            <nb-icon *ngIf="item.icon" [icon]="getIconName(item.icon)" pack="eva"></nb-icon>
+            <span>{{ item.label }}</span>
           </div>
 
-          <!-- Boolean Value -->
-          <span *ngIf="item.type === 'boolean'" class="emerald-info-panel__boolean">
-            <i
-              class="fas"
-              [ngClass]="{
-                'fa-check emerald-info-panel__boolean--true': item.value,
-                'fa-times emerald-info-panel__boolean--false': !item.value,
-              }"
-            >
-            </i>
-          </span>
+          <!-- Item Value -->
+          <div class="nb-info-panel__item-value">
+            <!-- Text Value -->
+            <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
+
+            <!-- Badge Value -->
+            <nb-badge
+              *ngIf="item.type === 'badge'"
+              [text]="item.value.toString()"
+              [status]="item.variant || 'basic'"
+              position="centered"
+            ></nb-badge>
+
+            <!-- Progress Value -->
+            <div *ngIf="item.type === 'progress'" class="nb-info-panel__progress">
+              <nb-progress-bar
+                [value]="item.value as number"
+                [status]="item.variant || 'basic'"
+                [displayValue]="true"
+              ></nb-progress-bar>
+            </div>
+
+            <!-- Boolean Value -->
+            <span *ngIf="item.type === 'boolean'" class="nb-info-panel__boolean">
+              <nb-icon
+                [icon]="item.value ? 'checkmark-outline' : 'close-outline'"
+                [status]="item.value ? 'success' : 'danger'"
+                pack="eva"
+              ></nb-icon>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </nb-card-body>
+  </ng-container>
+
+  <!-- For collapsible panels -->
+  <nb-accordion *ngIf="collapsible">
+    <nb-accordion-item [expanded]="!initiallyCollapsed">
+      <nb-accordion-item-header>
+        <div class="nb-info-panel__title-container">
+          <h3 class="nb-info-panel__title">{{ title }}</h3>
+          <p *ngIf="subtitle" class="nb-info-panel__subtitle">{{ subtitle }}</p>
+        </div>
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <div class="nb-info-panel__items">
+          <div *ngFor="let item of items" class="nb-info-panel__item">
+            <!-- Item Label -->
+            <div class="nb-info-panel__item-label">
+              <nb-icon *ngIf="item.icon" [icon]="getIconName(item.icon)" pack="eva"></nb-icon>
+              <span>{{ item.label }}</span>
+            </div>
+
+            <!-- Item Value -->
+            <div class="nb-info-panel__item-value">
+              <!-- Text Value -->
+              <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
+
+              <!-- Badge Value -->
+              <nb-badge
+                *ngIf="item.type === 'badge'"
+                [text]="item.value.toString()"
+                [status]="item.variant || 'basic'"
+                position="centered"
+              ></nb-badge>
+
+              <!-- Progress Value -->
+              <div *ngIf="item.type === 'progress'" class="nb-info-panel__progress">
+                <nb-progress-bar
+                  [value]="item.value as number"
+                  [status]="item.variant || 'basic'"
+                  [displayValue]="true"
+                ></nb-progress-bar>
+              </div>
+
+              <!-- Boolean Value -->
+              <span *ngIf="item.type === 'boolean'" class="nb-info-panel__boolean">
+                <nb-icon
+                  [icon]="item.value ? 'checkmark-outline' : 'close-outline'"
+                  [status]="item.value ? 'success' : 'danger'"
+                  pack="eva"
+                ></nb-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+</nb-card>

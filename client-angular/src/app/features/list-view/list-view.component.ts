@@ -16,35 +16,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angul
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {
-  NbIconModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbTooltipModule,
-  NbSpinnerModule,
-  NbMenuModule,
-  NbTagModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbDialogService,
-  NbSidebarModule,
-  NbCardModule,
-  NbListModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbActionsModule,
-  NbLayoutModule,
-  NbContextMenuModule,
-  NbSearchModule,
-  NbToggleModule,
-  NbAccordionModule,
-  NbPopoverModule,
-  NbTabsetModule,
-  NbUserModule,
-} from '@nebular/theme';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { AdService } from '../../core/services/ad.service';
@@ -86,39 +58,7 @@ interface SavedFilter {
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NbIconModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbTooltipModule,
-    NbSpinnerModule,
-    NbMenuModule,
-    NbTagModule,
-    NbDatepickerModule,
-    NbDialogModule,
-    NbSidebarModule,
-    NbCardModule,
-    NbListModule,
-    NbBadgeModule,
-    NbAlertModule,
-    NbActionsModule,
-    NbLayoutModule,
-    NbContextMenuModule,
-    NbSearchModule,
-    NbToggleModule,
-    NbAccordionModule,
-    NbPopoverModule,
-    NbTabsetModule,
-    NbUserModule,
-    NbEvaIconsModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbCheckboxModule, NbTooltipModule, NbSpinnerModule, NbMenuModule, NbTagModule, NbDatepickerModule, NbDialogModule, NbSidebarModule, NbCardModule, NbListModule, NbBadgeModule, NbAlertModule, NbActionsModule, NbLayoutModule, NbContextMenuModule, NbSearchModule, NbToggleModule, NbAccordionModule, NbPopoverModule, NbTabsetModule, NbUserModule, NbEvaIconsModule],
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
   // View template references

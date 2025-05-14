@@ -26,15 +26,9 @@
                     : 'basic'
                 "
               />
-              <nb-hint
-                *ngIf="
-                  addPaymentMethodForm.get('nameOnCard')?.hasError('required') &&
-                  addPaymentMethodForm.get('nameOnCard')?.touched
-                "
-                class="status-danger"
-              >
+              
                 Name on card is required.
-              </nb-hint>
+              
             </nb-form-field>
 
             <!-- Placeholder for Stripe Card Element -->
@@ -71,15 +65,9 @@
                     : 'basic'
                 "
               />
-              <nb-hint
-                *ngIf="
-                  addPaymentMethodForm.get('accountHolderName')?.hasError('required') &&
-                  addPaymentMethodForm.get('accountHolderName')?.touched
-                "
-                class="status-danger"
-              >
+              
                 Account holder name is required.
-              </nb-hint>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -97,15 +85,9 @@
                     : 'basic'
                 "
               />
-              <nb-hint
-                *ngIf="
-                  addPaymentMethodForm.get('accountNumber')?.hasError('required') &&
-                  addPaymentMethodForm.get('accountNumber')?.touched
-                "
-                class="status-danger"
-              >
+              
                 Account number is required.
-              </nb-hint>
+              
             </nb-form-field>
 
             <nb-form-field>
@@ -123,15 +105,9 @@
                     : 'basic'
                 "
               />
-              <nb-hint
-                *ngIf="
-                  addPaymentMethodForm.get('routingNumber')?.hasError('required') &&
-                  addPaymentMethodForm.get('routingNumber')?.touched
-                "
-                class="status-danger"
-              >
+              
                 Routing number or IBAN is required.
-              </nb-hint>
+              
             </nb-form-field>
             <nb-alert status="warning" class="mt-3">
               Bank account details are handled securely. In a live environment, these would be

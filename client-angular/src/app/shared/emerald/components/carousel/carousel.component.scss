@@ -1,12 +1,7 @@
-@use 'src/styles/design-system/index.scss' as ds;
-@use '../../core/design/variables' as *;
+@use '@nebular/theme/styles/theming' as *;
 @use 'sass:color';
-// Define variables locally for testing
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-// Emerald Carousel Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/Carousel
+// Carousel Component Styles using Nebular Theme
 
 .nebular-carousel {
   position: relative;

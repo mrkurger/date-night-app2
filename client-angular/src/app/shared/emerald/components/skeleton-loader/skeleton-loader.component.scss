@@ -1,24 +1,17 @@
-@use '../../core/design/variables' as *;
+@use '@nebular/theme/styles/theming' as *;
 @use 'sass:color';
 
+// Skeleton Loader Component Styles
+// Using Nebular theme variables
 
-// Shadow variables
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  0 10px 15px -3px rgba(0, 0, 0, 0.1),
-  0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-// Emerald SkeletonLoader Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/SkeletonLoader
-
-.nebular-skeleton-container {
+.nb-skeleton-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: nb-theme(layout-small-padding);
 }
 
-.nebular-skeleton {
-  background-color: emerald.var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+.nb-skeleton {
+  background-color: nb-theme(background-basic-color-3);
   overflow: hidden;
   position: relative;
 
@@ -30,17 +23,22 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(emerald.var(--color-white) /* TODO: Verify correct CSS variable */, 0.2), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(nb-theme(background-basic-color-1), 0.2),
+      transparent
+    );
     animation: skeleton-loading 1.5s infinite;
   }
 
   // Text Skeleton
   &--text {
     height: 16px;
-    border-radius: 4px;
+    border-radius: nb-theme(border-radius);
 
     &:not(:last-child) {
-      margin-bottom: 8px;
+      margin-bottom: nb-theme(layout-small-padding);
     }
   }
 
@@ -55,18 +53,18 @@
   &--rectangle {
     width: 100%;
     height: 200px;
-    border-radius: 8px;
+    border-radius: nb-theme(card-border-radius);
   }
 }
 
 // Card Skeleton
-.nebular-skeleton-card {
+.nb-skeleton-card {
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: nb-theme(card-border-radius);
   overflow: hidden;
-  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
-  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
+  background-color: nb-theme(background-basic-color-1);
+  box-shadow: nb-theme(shadow-sm);
 
   &__media {
     height: 160px;
@@ -74,7 +72,7 @@
   }
 
   &__content {
-    padding: 16px;
+    padding: nb-theme(card-padding);
   }
 
   &__title {
@@ -100,18 +98,18 @@
 }
 
 // Profile Skeleton
-.nebular-skeleton-profile {
+.nb-skeleton-profile {
   display: flex;
   align-items: center;
-  padding: 16px;
-  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
+  padding: nb-theme(card-padding);
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(card-border-radius);
+  box-shadow: nb-theme(shadow-sm);
 
   &__avatar {
     width: 64px;
     height: 64px;
-    margin-right: 16px;
+    margin-right: nb-theme(layout-padding);
   }
 
   &__content {
@@ -121,7 +119,7 @@
   &__name {
     height: 20px;
     width: 60%;
-    margin-bottom: 8px;
+    margin-bottom: nb-theme(layout-small-padding);
   }
 
   &__info {
@@ -131,19 +129,19 @@
 }
 
 // List Skeleton
-.nebular-skeleton-list {
+.nb-skeleton-list {
   display: flex;
   flex-direction: column;
-  background-color: emerald.var(--color-white) /* TODO: Verify correct CSS variable */;
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */;
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(card-border-radius);
+  box-shadow: nb-theme(shadow-sm);
   overflow: hidden;
 
   &__item {
     display: flex;
     align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid emerald.var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+    padding: nb-theme(card-padding);
+    border-bottom: 1px solid nb-theme(border-basic-color-3);
 
     &:last-child {
       border-bottom: none;
@@ -153,7 +151,7 @@
   &__icon {
     width: 40px;
     height: 40px;
-    margin-right: 16px;
+    margin-right: nb-theme(layout-padding);
   }
 
   &__content {
@@ -163,7 +161,7 @@
   &__title {
     height: 16px;
     width: 60%;
-    margin-bottom: 8px;
+    margin-bottom: nb-theme(layout-small-padding);
   }
 
   &__subtitle {

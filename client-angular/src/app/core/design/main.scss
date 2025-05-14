@@ -38,8 +38,7 @@
 @forward 'micro-interactions';
 @forward 'dark-mode';
 
-/* Import emerald-ui integration */
-@forward 'emerald-ui-integration';
+/* Nebular UI integration is handled through the theme module */
 
 /* Reset and base styles */
 *,

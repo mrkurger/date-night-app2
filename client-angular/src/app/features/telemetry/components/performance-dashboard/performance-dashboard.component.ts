@@ -1,7 +1,7 @@
 import { NbIconModule } from '@nebular/theme';
 import { NbSelectModule } from '@nebular/theme';
 import { NbFormFieldModule } from '@nebular/theme';
-import { NbPaginatorModule } from '@nebular/theme';
+
 import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -15,19 +15,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import {
-  NbCardModule,
-  NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbTagModule,
-} from '@nebular/theme';
+
 import {
   TelemetryService,
   PerformanceTelemetry,
@@ -51,24 +39,7 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
 @Component({
   selector: 'app-performance-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbTableModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbDatepickerModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbTabsetModule,
-    NbTagModule,
-    ReactiveFormsModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
-  
-    NbPaginatorModule,],
+  imports: [CommonModule, NbCardModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTabsetModule, NbTagModule, ReactiveFormsModule, AppSortComponent, AppSortHeaderComponent],
   template: `
     <div class="dashboard-container">
       <h1>Performance Monitoring Dashboard</h1>

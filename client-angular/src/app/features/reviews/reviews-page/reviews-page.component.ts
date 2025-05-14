@@ -21,21 +21,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { NbButtonModule, NbIconModule, NbCardModule, NbLayoutModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-reviews-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbButtonModule,
-    NbIconModule,
-    NbCardModule,
-    NbLayoutModule,
-    ReviewsListComponent,
-    ReviewFormComponent,
-  ],
+  imports: [CommonModule, RouterModule, NbButtonModule, NbIconModule, NbCardModule, NbLayoutModule, ReviewsListComponent, ReviewFormComponent],
   template: `
     <div class="reviews-page-container">
       <nb-card class="reviews-header-card">

@@ -17,13 +17,7 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbTagModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 import { Review } from '../../../core/models/review.interface';
 import { ReviewService } from '../../../core/services/review.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
@@ -35,17 +29,7 @@ import { DialogService } from '../../../core/services/dialog.service';
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbTagModule,
-    NbTooltipModule,
-    RouterModule,
-    StarRatingComponent,
-    TimeAgoPipe,
-  ],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule, NbTooltipModule, RouterModule, StarRatingComponent, TimeAgoPipe],
   template: `
     <div class="reviews-container">
       <h3 class="reviews-title">

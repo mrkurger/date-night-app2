@@ -13,17 +13,7 @@ import {
   ReactiveFormsModule,
   FormBuilder,
 } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbSelectModule,
-  NbFormFieldModule,
-  NbSpinnerModule,
-  NbIconModule,
-  NB_DIALOG_CONFIG,
-} from '@nebular/theme';
+
 import { Subscription } from 'rxjs';
 import { WalletService } from '../../../core/services/wallet.service';
 import { SharedModule } from '../../../shared/shared.module';
@@ -46,18 +36,7 @@ export interface TransferDialogData {
   templateUrl: './transfer-dialog.component.html',
   styleUrls: ['./transfer-dialog.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbSpinnerModule,
-    NbIconModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbFormFieldModule, NbSpinnerModule, NbIconModule, SharedModule],
 })
 export class TransferDialogComponent implements OnInit, OnDestroy {
   transferForm: FormGroup;

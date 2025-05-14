@@ -1,0 +1,34 @@
+@use '../../../../core/design/emerald-tokens' as emerald;
+@use 'sass:color';
+
+// Emerald Skeleton Loader Styles
+// Documentation: https://docs-emerald.condorlabs.io/SkeletonLoader
+
+.emerald-skeleton-loader {
+  display: block;
+  width: 100%;
+  height: 1em;
+  background-color: var(--color-neutral-100);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+
+  // Animation
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient(90deg, transparent, rgba(var(--color-white), 0.2), transparent);
+    animation: emerald-skeleton-loader-shimmer 1.5s infinite;
+  }
+}
+
+@keyframes emerald-skeleton-loader-shimmer {
+  100% {
+    left: 100%;
+  }
+}

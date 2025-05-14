@@ -15,39 +15,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
-import {
-  NbCardModule,
-  NbSpinnerModule,
-  NbTableModule,
-  NbTreeGridModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbButtonModule,
-  NbSortDirection,
-  NbSortRequest,
-  NbTreeGridDataSourceBuilder,
-  NbSelectModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-ad-stats',
   templateUrl: './ad-stats.component.html',
   styleUrls: ['./ad-stats.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    DatePipe,
-    NbCardModule,
-    NbSpinnerModule,
-    NbTableModule,
-    NbTreeGridModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbButtonModule,
-    NbSelectModule,
-  ],
+  imports: [CommonModule, DatePipe, NbCardModule, NbSpinnerModule, NbTableModule, NbTreeGridModule, NbInputModule, NbFormFieldModule, NbIconModule, NbButtonModule, NbSelectModule],
 })
 export class AdStatsComponent implements OnInit {
   // Make Math available to the template

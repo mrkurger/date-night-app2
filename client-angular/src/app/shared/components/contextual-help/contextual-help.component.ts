@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+
 
 export interface HelpItem {
   id: string;

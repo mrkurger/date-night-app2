@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Lessons - Emerald to Nebular Migration</title>
+  <style>
+    :root {
+      --primary: #ff4d7e;
+      --secondary: #6c63ff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--dark);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    
+    h1 {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    
+    .section {
+      background-color: var(--light);
+      border-left: 4px solid var(--primary);
+      padding: 15px 20px;
+      margin-bottom: 30px;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    .section h2 {
+      margin-top: 0;
+      border-bottom: none;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 12px;
+    }
+    
+    code {
+      background-color: #f5f5f5;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    
+    pre {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: monospace;
+      line-height: 1.4;
+    }
+    
+    .tip {
+      background-color: rgba(var(--info), 0.1);
+      border-left: 4px solid var(--info);
+      padding: 10px 15px;
+      margin: 15px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    .warning {
+      background-color: rgba(var(--warning), 0.1);
+      border-left: 4px solid var(--warning);
+      padding: 10px 15px;
+      margin: 15px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Lessons: Migrating from Emerald UI to Nebular</h1>
+  
+  <div class="section">
+    <h2>Migration Strategy</h2>
+    <p>
+      When migrating from a custom UI component library to a standardized framework like Nebular,
+      we found the following approach to be most effective:
+    </p>
+    <ol>
+      <li>
+        <strong>Analyze the existing components</strong> - Understand the structure, styling, and functionality
+        of each component before attempting to replace it.
+      </li>
+      <li>
+        <strong>Identify Nebular equivalents</strong> - Find the closest matching Nebular components that
+        can replace the custom components with minimal changes to the API.
+      </li>
+      <li>
+        <strong>Update styling</strong> - Replace custom CSS variables and styling with Nebular theme variables
+        to ensure consistent theming across the application.
+      </li>
+      <li>
+        <strong>Preserve API compatibility</strong> - Maintain the same component selectors and input/output
+        properties to minimize changes required in consuming components.
+      </li>
+      <li>
+        <strong>Test thoroughly</strong> - Verify that the migrated components behave the same way as the
+        original components in all scenarios.
+      </li>
+    </ol>
+  </div>
+  
+  <div class="section">
+    <h2>Theming System Transition</h2>
+    <p>
+      Transitioning from a custom theming system to Nebular's theming system involved:
+    </p>
+    <ul>
+      <li>
+        <strong>Understanding Nebular's theme structure</strong> - Nebular uses a hierarchical theme system
+        with predefined variables for colors, typography, spacing, etc.
+      </li>
+      <li>
+        <strong>Mapping custom variables to Nebular variables</strong> - We created a mapping between
+        Emerald UI's custom variables and Nebular's theme variables.
+      </li>
+      <li>
+        <strong>Using the <code>nb-theme()</code> function</strong> - Instead of using CSS variables directly,
+        we used Nebular's <code>nb-theme()</code> function to access theme variables.
+      </li>
+    </ul>
+    
+    <div class="tip">
+      <strong>Tip:</strong> When migrating CSS variables to a theme system, create a mapping table to ensure
+      consistent replacement across all components.
+    </div>
+    
+    <h3>Variable Mapping Example</h3>
+    <table>
+      <tr>
+        <th>Emerald UI Variable</th>
+        <th>Nebular Theme Variable</th>
+      </tr>
+      <tr>
+        <td><code>var(--color-primary)</code></td>
+        <td><code>nb-theme(color-primary-500)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-success)</code></td>
+        <td><code>nb-theme(color-success-500)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-warning)</code></td>
+        <td><code>nb-theme(color-warning-500)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-danger)</code></td>
+        <td><code>nb-theme(color-danger-500)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-info)</code></td>
+        <td><code>nb-theme(color-info-500)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-neutral-200)</code></td>
+        <td><code>nb-theme(background-basic-color-3)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--color-white)</code></td>
+        <td><code>nb-theme(background-basic-color-1)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--border-radius-lg)</code></td>
+        <td><code>nb-theme(border-radius)</code></td>
+      </tr>
+      <tr>
+        <td><code>var(--shadow-md)</code></td>
+        <td><code>nb-theme(shadow-md)</code></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="section">
+    <h2>Component Adaptation Patterns</h2>
+    
+    <h3>Direct Replacement</h3>
+    <p>
+      For some components, we could directly replace the custom implementation with a Nebular component:
+    </p>
+    <pre>
+<!-- Toggle: Before -->
+&lt;div class="emerald-toggle"&gt;
+  &lt;input type="checkbox" [checked]="value" (change)="toggle()" /&gt;
+  &lt;div class="emerald-toggle__track"&gt;
+    &lt;div class="emerald-toggle__thumb"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<!-- Toggle: After -->
+&lt;nb-toggle
+  [checked]="value"
+  [status]="color"
+  (checkedChange)="toggle()"
+&gt;&lt;/nb-toggle&gt;</pre>
+
+    <p>
+      For the toggle component, we created a wrapper that maintains the original API while using Nebular's component:
+    </p>
+    <pre>
+@Component({
+  selector: 'app-toggle',
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NbToggleModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ToggleComponent),
+      multi: true,
+    },
+  ],
+})
+export class ToggleComponent implements ControlValueAccessor {
+  @Input() label?: string;
+  @Input() labelPosition: 'left' | 'right' = 'right';
+  @Input() color: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
+  @Input() disabled = false;
+  @Input() name?: string;
+  @Input() required = false;
+  @Input() ariaLabel?: string;
+
+  @Output() change = new EventEmitter<boolean>();
+
+  value = false;
+
+  // ControlValueAccessor methods
+  onChange = (value: any): void => {};
+  onTouched = (value: any): void => {};
+
+  toggle(checked: boolean): void {
+    if (this.disabled) return;
+
+    this.value = checked;
+    this.onChange(this.value);
+    this.onTouched(this.value);
+    this.change.emit(this.value);
+  }
+
+  // ... other ControlValueAccessor methods
+}</pre>
+
+    <p>
+      Similarly, for the skeleton loader component, we replaced custom skeleton elements with Nebular's nb-skeleton:
+    </p>
+    <pre>
+<!-- Skeleton: Before -->
+&lt;div
+  class="emerald-skeleton emerald-skeleton--text"
+  [ngClass]="{ 'emerald-skeleton--animated': animated }"
+  [ngStyle]="{
+    width: width || '100%',
+    height: height || '16px',
+    'border-radius': borderRadius || '4px',
+  }"
+&gt;&lt;/div&gt;
+
+<!-- Skeleton: After -->
+&lt;nb-skeleton 
+  [height]="height || '16px'"
+  [width]="width || '100%'"
+  [animated]="animated"
+&gt;&lt;/nb-skeleton&gt;</pre>
+    
+    <h3>Wrapper Pattern</h3>
+    <p>
+      For more complex components, we wrapped Nebular components while preserving the original API:
+    </p>
+    <pre>
+<!-- Card Grid: Before -->
+&lt;div class="emerald-card-grid"&gt;
+  &lt;div *ngFor="let item of items" class="emerald-card-grid__item"&gt;
+    &lt;!-- Custom card implementation --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<!-- Card Grid: After -->
+&lt;div class="nb-card-grid"&gt;
+  &lt;div *ngFor="let item of items" class="nb-card-grid__item"&gt;
+    &lt;nb-card&gt;
+      &lt;nb-card-header&gt;{{ item.title }}&lt;/nb-card-header&gt;
+      &lt;nb-card-body&gt;
+        &lt;!-- Content using Nebular components --&gt;
+      &lt;/nb-card-body&gt;
+    &lt;/nb-card&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+    <p>
+      Similarly, for the page header component, we replaced custom elements with Nebular components:
+    </p>
+    <pre>
+<!-- Page Header: Before -->
+&lt;div class="nb-header__breadcrumbs"&gt;
+  &lt;ul class="nb-header__breadcrumbs-list"&gt;
+    &lt;li *ngFor="let crumb of breadcrumbs; let last = last" class="nb-header__breadcrumb"&gt;
+      &lt;a *ngIf="!last && crumb.url" [routerLink]="crumb.url" class="nb-header__breadcrumb-link"&gt;
+        {{ crumb.label }}
+      &lt;/a&gt;
+      &lt;span *ngIf="last || !crumb.url"&gt;{{ crumb.label }}&lt;/span&gt;
+      &lt;i *ngIf="!last" class="fas fa-chevron-right nb-header__breadcrumb-separator"&gt;&lt;/i&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+<!-- Page Header: After -->
+&lt;nb-breadcrumbs&gt;
+  &lt;nb-breadcrumb 
+    *ngFor="let crumb of breadcrumbs"
+    [routerLink]="crumb.url ? crumb.url : []"
+    [disabled]="!crumb.url"&gt;
+    {{ crumb.label }}
+  &lt;/nb-breadcrumb&gt;
+&lt;/nb-breadcrumbs&gt;</pre>
+
+    <p>
+      For the app card component, we replaced custom elements with Nebular components and updated the styling:
+    </p>
+    <pre>
+<!-- App Card: Before -->
+&lt;div class="emerald-app-card"&gt;
+  &lt;div class="emerald-app-card__media" [style.background-image]="'url(' + backgroundImageUrl + ')'"&gt;
+    &lt;div class="emerald-app-card__status-label emerald-app-card__status-label--online"&gt;
+      &lt;span class="emerald-app-card__status-indicator"&gt;&lt;/span&gt;
+      &lt;span&gt;Online&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="emerald-app-card__content-overlay"&gt;
+      &lt;div class="emerald-app-card__content"&gt;
+        &lt;h3 class="emerald-app-card__title"&gt;{{ ad.title }}&lt;/h3&gt;
+        &lt;p class="emerald-app-card__description"&gt;{{ getTruncatedDescription() }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<!-- App Card: After -->
+&lt;nb-card&gt;
+  &lt;div class="nb-card-media" [style.background-image]="'url(' + backgroundImageUrl + ')'"&gt;
+    &lt;nb-badge 
+      [text]="isOnline ? 'Online' : 'Offline'" 
+      [status]="isOnline ? 'success' : 'danger'"
+      position="top-left"&gt;
+    &lt;/nb-badge&gt;
+    &lt;div class="nb-card-content-overlay"&gt;
+      &lt;nb-card-body class="nb-card-content"&gt;
+        &lt;h3 class="nb-card-title"&gt;{{ ad.title }}&lt;/h3&gt;
+        &lt;p class="nb-card-description"&gt;{{ getTruncatedDescription() }}&lt;/p&gt;
+      &lt;/nb-card-body&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;nb-card-footer class="nb-card-actions"&gt;
+    &lt;button nbButton status="primary" shape="round" (click)="onLike($event)"&gt;
+      &lt;nb-icon icon="heart-outline"&gt;&lt;/nb-icon&gt;
+    &lt;/button&gt;
+  &lt;/nb-card-footer&gt;
+&lt;/nb-card&gt;</pre>
+
+    <p>
+      For the label component, we replaced custom implementation with Nebular's tag component:
+    </p>
+    <pre>
+<!-- Label: Before -->
+&lt;span class="label label--success"&gt;
+  &lt;i *ngIf="icon" class="fas {{ icon }}"&gt;&lt;/i&gt;
+  {{ text }}
+&lt;/span&gt;
+
+<!-- Label: After -->
+&lt;nb-tag
+  [text]="text"
+  [status]="variant"
+  [size]="size"
+  [appearance]="outlined ? 'outline' : 'filled'"
+  [removable]="false"
+&gt;
+  &lt;nb-icon *ngIf="icon" [icon]="icon"&gt;&lt;/nb-icon&gt;
+&lt;/nb-tag&gt;</pre>
+    
+    <div class="warning">
+      <strong>Warning:</strong> When wrapping third-party components, be careful about event propagation
+      and make sure to properly forward all events and properties.
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Testing Considerations</h2>
+    <p>
+      When migrating components to a new UI framework, consider these testing approaches:
+    </p>
+    <ul>
+      <li>
+        <strong>Visual regression testing</strong> - Ensure the components look the same after migration
+      </li>
+      <li>
+        <strong>Functional testing</strong> - Verify that all interactions work as expected
+      </li>
+      <li>
+        <strong>Accessibility testing</strong> - Check that the components maintain or improve accessibility
+      </li>
+      <li>
+        <strong>Performance testing</strong> - Measure any performance impacts from the migration
+      </li>
+    </ul>
+  </div>
+  
+  <div class="section">
+    <h2>Advanced Integration Techniques</h2>
+    
+    <h3>Context Menu Integration</h3>
+    <p>
+      For the Avatar component, we integrated Nebular's context menu while maintaining backward compatibility:
+    </p>
+    <pre>
+// Component class
+export class AvatarComponent implements OnInit {
+  @Input() dropdownItems: DropdownItem[] = [];
+  @Input() useNebularContextMenu = true;
+  
+  contextMenuItems: any[] = [];
+  
+  ngOnInit(): void {
+    // Convert dropdown items to Nebular context menu format
+    this.contextMenuItems = this.convertToContextMenuItems();
+    
+    // Subscribe to menu item clicks
+    this.nbMenuService.onItemClick()
+      .subscribe(({ item }) => {
+        if (item.id) {
+          const originalItem = this.dropdownItems.find(i => i.id === item.id);
+          if (originalItem) {
+            this.itemClick.emit(originalItem);
+            if (originalItem.action) {
+              originalItem.action();
+            }
+          }
+        }
+      });
+  }
+  
+  private convertToContextMenuItems(): any[] {
+    return this.dropdownItems.map(item => {
+      if (item.divider) {
+        return { title: '-', divider: true };
+      }
+      
+      return {
+        id: item.id,
+        title: item.label,
+        icon: item.icon ? this.getIconName(item.icon) : undefined,
+        link: item.route,
+      };
+    });
+  }
+}</pre>
+
+    <h3>Icon Mapping System</h3>
+    <p>
+      We created a reusable icon mapping system to convert Font Awesome icons to Nebular's Eva Icons:
+    </p>
+    <pre>
+/**
+ * Convert Font Awesome icon classes to Nebular icon names
+ */
+getIconName(iconClass: string): string {
+  // Map common Font Awesome icons to Eva Icons
+  const iconMap: Record<string, string> = {
+    'fa-user': 'person-outline',
+    'fa-cog': 'settings-outline',
+    'fa-sign-out-alt': 'log-out-outline',
+    'fa-bell': 'bell-outline',
+    // ... more mappings
+  };
+  
+  // Extract the icon name from the class
+  const iconName = iconClass.includes('fa-') 
+    ? iconClass.split('fa-')[1].trim() 
+    : iconClass;
+    
+  // Return the mapped icon or a default
+  return iconMap[iconClass] || iconMap[`fa-${iconName}`] || 'question-mark-circle-outline';
+}</pre>
+  </div>
+
+  <div class="section">
+    <h2>Lessons Learned</h2>
+    <ul>
+      <li>
+        <strong>Start with simpler components</strong> - Begin the migration with simpler components to
+        establish patterns before tackling more complex ones.
+      </li>
+      <li>
+        <strong>Create a style guide</strong> - Develop a style guide for the migration to ensure consistency
+        across all components.
+      </li>
+      <li>
+        <strong>Incremental migration</strong> - Migrate components incrementally rather than all at once
+        to minimize risk.
+      </li>
+      <li>
+        <strong>Document changes</strong> - Keep detailed documentation of all changes made during the migration
+        for future reference.
+      </li>
+      <li>
+        <strong>Leverage framework features</strong> - Take advantage of the features provided by the new
+        framework rather than trying to replicate the exact behavior of the old components.
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

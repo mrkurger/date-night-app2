@@ -18,18 +18,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbTagModule,
-  NbBadgeModule,
-  NbLayoutModule,
-} from '@nebular/theme';
+
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -60,22 +49,7 @@ import { Ad } from '../../core/models/ad.interface';
   templateUrl: './advertiser-profile.component.html',
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbTagModule,
-    NbBadgeModule,
-    NbLayoutModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbTagModule, NbBadgeModule, NbLayoutModule],
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;

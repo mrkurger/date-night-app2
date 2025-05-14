@@ -12,7 +12,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NbButtonModule, NbIconModule, NbProgressBarModule } from '@nebular/theme';
+
 
 export interface OnboardingStep {
   id: string;
@@ -30,14 +30,7 @@ export interface OnboardingStep {
   templateUrl: './onboarding.component.html',
   styleUrls: ['./onboarding.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, FormsModule, NbButtonModule, NbIconModule, NbProgressBarModule, RouterModule],
 })
 export class OnboardingComponent implements OnInit {
   @Input() steps: OnboardingStep[] = [];

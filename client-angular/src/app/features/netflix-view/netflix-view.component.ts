@@ -38,26 +38,7 @@ import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
 // Import Nebular components
-import {
-  NbCardModule,
-  NbLayoutModule,
-  NbButtonModule,
-  NbIconModule,
-  NbBadgeModule,
-  NbToggleModule,
-  NbDialogModule,
-  NbSelectModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbUserModule,
-  NbTagModule,
-  NbSpinnerModule,
-  NbDialogService,
-  NbTableModule,
-  NbDatepickerModule,
-  NbSortDirection,
-  NbSortRequest,
-} from '@nebular/theme';
+
 import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
@@ -76,27 +57,8 @@ interface GetAdsResponse {
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
-  imports: [CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
-    NbLayoutModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbToggleModule,
-    NbDialogModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbUserModule,
-    NbTagModule,
-    NbSpinnerModule,
-    NbTableModule,
-    NbDatepickerModule,
-    AppSortComponent,
-    AppSortHeaderComponent
-    NbCardModule,],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, NbLayoutModule, NbButtonModule, NbIconModule, NbBadgeModule, NbToggleModule, NbDialogModule, NbSelectModule, NbFormFieldModule, NbInputModule, NbUserModule, NbTagModule, NbSpinnerModule, NbTableModule, NbDatepickerModule, AppSortComponent, AppSortHeaderComponent
+    NbCardModule],
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows

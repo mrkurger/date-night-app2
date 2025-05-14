@@ -12,17 +12,7 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbInputModule,
-  NbToggleModule,
-  NbSelectModule,
-  NbLayoutModule,
-  NbFormFieldModule,
-  NbSpinnerModule,
-} from '@nebular/theme';
+
 
 /**
  * Design System Demo Component
@@ -33,20 +23,7 @@ import {
 @Component({
   selector: 'app-design-system-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbInputModule,
-    NbToggleModule,
-    NbSelectModule,
-    NbLayoutModule,
-    NbFormFieldModule,
-    NbSpinnerModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbInputModule, NbToggleModule, NbSelectModule, NbLayoutModule, NbFormFieldModule, NbSpinnerModule],
   template: `
     <nb-card>
       <nb-card-header>

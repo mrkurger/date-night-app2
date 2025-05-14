@@ -1,0 +1,44 @@
+// Use :host to scope styles to this Angular component
+:host {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-12) 0;
+  margin-bottom: var(--spacing-12);
+
+  // Section: Dark primary background
+  background-color: var(--color-primary-dark);
+
+  // Section: Large font
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-4);
+
+  // Section: Medium font
+  font-size: var(--font-size-lg);
+
+  margin-top: var(--spacing-6);
+  padding: var(--spacing-3) var(--spacing-6);
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast) var(--transition-timing-default);
+
+  background-color: rgba(var(--color-white), 0.9);
+
+  background-color: var(--color-dark-gray-1);
+  color: var(--color-light-gray-1);
+
+  background-color: var(--color-dark-gray-2);
+  margin-bottom: var(--spacing-16);
+  padding-bottom: var(--spacing-12);
+  border-bottom: 1px solid var(--color-light-gray-2);
+  border-bottom-color: var(--color-dark-gray-1);
+
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-8);
+
+  bottom: var(--spacing-3);
+
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-full);
+}

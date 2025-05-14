@@ -19,17 +19,7 @@ import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // Nebular Components
-import {
-  NbDialogService,
-  NbDialogModule,
-  NbIconModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbMenuModule,
-  NbTooltipModule,
-  NbTabsetModule,
-} from '@nebular/theme';
+
 
 // Custom Components
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
@@ -73,24 +63,7 @@ const TYPING_INDICATOR_DELAY = 500; // ms
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbIconModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbMenuModule,
-    NbTooltipModule,
-    NbTabsetModule,
-    NbDialogModule,
-    AvatarComponent,
-    SkeletonLoaderComponent,
-    AppSortComponent,
-    AppSortHeaderComponent,
-  
-    NbBadgeModule,
-    NbUserModule,],
+  imports: [CommonModule, FormsModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbMenuModule, NbTooltipModule, NbTabsetModule, NbDialogModule, AvatarComponent, SkeletonLoaderComponent, AppSortComponent, AppSortHeaderComponent, NbBadgeModule, NbUserModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })

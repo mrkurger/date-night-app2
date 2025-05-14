@@ -22,17 +22,7 @@ import { RouterModule, Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbSelectModule,
-  NbToggleModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -43,20 +33,7 @@ import { UserProfile } from '../../core/models/user.interface';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbSelectModule,
-    NbToggleModule,
-    NbAlertModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule, NbSelectModule, NbToggleModule, NbAlertModule],
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;

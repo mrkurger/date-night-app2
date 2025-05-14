@@ -11,7 +11,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbButtonModule, NbIconModule, NbProgressBarModule, NbCardModule } from '@nebular/theme';
+
 import { AdvertiserRatings } from '../../../core/models/review.interface';
 import { ReviewService } from '../../../core/services/review.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
@@ -19,15 +19,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 @Component({
   selector: 'app-review-summary',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    RouterModule,
-    StarRatingComponent,
-    NbCardModule,
-  ],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbProgressBarModule, RouterModule, StarRatingComponent, NbCardModule],
   template: `
     <nb-card class="review-summary-card">
       <nb-card-header>

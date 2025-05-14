@@ -6,17 +6,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbTagModule,
-  NbBadgeModule,
-  NbToastrService,
-} from '@nebular/theme';
+
 
 interface ReportedContent {
   id: string;
@@ -32,18 +22,7 @@ interface ReportedContent {
 @Component({
   selector: 'app-content-moderation',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbTabsetModule,
-    NbTagModule,
-    NbBadgeModule,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbSpinnerModule, NbTabsetModule, NbTagModule, NbBadgeModule],
   template: `
     <div class="content-moderation">
       <nb-card>

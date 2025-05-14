@@ -1,18 +1,6 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (label.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, Input, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbTagComponent } from '@nebular/theme';
+import { NbIconModule, NbTagModule, NbTagComponent } from '@nebular/theme';
 
 /**
  * Label Component
@@ -25,16 +13,21 @@ import { NbTagComponent } from '@nebular/theme';
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbTagComponent
-    NbTagModule,
-    NbIconModule,],
+  imports: [CommonModule, NbTagComponent, NbTagModule, NbIconModule],
 })
 export class LabelComponent {
   @Input() text = '';
   @Input() variant: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() icon?: string;
-  @Input() rounded = false;
+
+  @Input()
+  @HostBinding('class.rounded')
+  rounded = false;
+
   @Input() outlined = false;
-  @Input() pill = false;
+
+  @Input()
+  @HostBinding('class.pill')
+  pill = false;
 }

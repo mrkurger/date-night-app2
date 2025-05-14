@@ -16,12 +16,12 @@
           <nb-form-field>
             <input nbInput fullWidth id="title" formControlName="title" placeholder="Enter title" />
             <nb-icon nbPrefix icon="edit-2-outline"></nb-icon>
-            <nb-error *ngIf="f.title.errors?.required && (f.title.dirty || f.title.touched)">
+            
               Title is required
-            </nb-error>
-            <nb-error *ngIf="f.title.errors?.maxlength">
+            
+            
               Title must be less than 100 characters
-            </nb-error>
+            
           </nb-form-field>
         </div>
 
@@ -36,16 +36,12 @@
               placeholder="Enter description"
               rows="4"
             ></textarea>
-            <nb-error
-              *ngIf="
-                f.description.errors?.required && (f.description.dirty || f.description.touched)
-              "
-            >
+            
               Description is required
-            </nb-error>
-            <nb-error *ngIf="f.description.errors?.maxlength">
+            
+            
               Description must be less than 1000 characters
-            </nb-error>
+            
           </nb-form-field>
         </div>
 
@@ -61,10 +57,10 @@
               placeholder="Enter price"
             />
             <nb-icon nbPrefix icon="pricetags-outline"></nb-icon>
-            <nb-error *ngIf="f.price.errors?.required && (f.price.dirty || f.price.touched)">
+            
               Price is required
-            </nb-error>
-            <nb-error *ngIf="f.price.errors?.min"> Price must be greater than 0 </nb-error>
+            
+             Price must be greater than 0 
           </nb-form-field>
         </div>
 
@@ -79,11 +75,9 @@
             >
               <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
             </nb-select>
-            <nb-error
-              *ngIf="f.location.errors?.required && (f.location.dirty || f.location.touched)"
-            >
+            
               Location is required
-            </nb-error>
+            
           </nb-form-field>
         </div>
 
@@ -100,11 +94,9 @@
                 {{ category }}
               </nb-option>
             </nb-select>
-            <nb-error
-              *ngIf="f.category.errors?.required && (f.category.dirty || f.category.touched)"
-            >
+            
               Category is required
-            </nb-error>
+            
           </nb-form-field>
         </div>
 
@@ -119,13 +111,9 @@
               placeholder="Enter contact information"
             />
             <nb-icon nbPrefix icon="phone-outline"></nb-icon>
-            <nb-error
-              *ngIf="
-                f.contactInfo.errors?.required && (f.contactInfo.dirty || f.contactInfo.touched)
-              "
-            >
+            
               Contact information is required
-            </nb-error>
+            
           </nb-form-field>
         </div>
 

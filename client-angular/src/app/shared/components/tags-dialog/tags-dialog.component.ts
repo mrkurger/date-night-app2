@@ -16,17 +16,7 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbDialogModule,
-  NbCardModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbTagModule,
-  NbFormFieldModule,
-  NB_DIALOG_CONFIG,
-} from '@nebular/theme';
+
 
 export interface TagsDialogData {
   title: string;
@@ -42,17 +32,7 @@ export interface TagsDialogData {
 @Component({
   selector: 'app-tags-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbTagModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbTagModule],
   template: `
     <nb-card>
       <nb-card-header class="dialog-header">

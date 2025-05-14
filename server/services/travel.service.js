@@ -22,7 +22,7 @@ const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });
 
 export async function route(from, to) {
   // reuse geocode cache
-  const [a, b] = await Promise.all([geocode(from), geocode(to)]);
+  const [fromLocation, toLocation] = await Promise.all([geocode(from), geocode(to)]);
   // … compute route …
 }
 

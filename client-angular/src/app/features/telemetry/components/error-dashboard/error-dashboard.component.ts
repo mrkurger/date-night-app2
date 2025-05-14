@@ -1,26 +1,13 @@
 import { NbIconModule } from '@nebular/theme';
 import { NbSelectModule } from '@nebular/theme';
 import { NbFormFieldModule } from '@nebular/theme';
-import { NbPaginatorModule } from '@nebular/theme';
+
 import { NbTagModule } from '@nebular/theme';
 import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbIconModule,
-  NbTagModule,
-  NbSpinnerModule,
-  NbDatepickerModule,
-  NbSortDirection,
-  NbSortRequest,
-} from '@nebular/theme';
+
 import {
   AppSortComponent,
   AppSortHeaderComponent,
@@ -43,21 +30,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-error-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbTableModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbIconModule,
-    NbTagModule,
-    NbSpinnerModule,
-    NbDatepickerModule,
-  
-    NbPaginatorModule,],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbIconModule, NbTagModule, NbSpinnerModule, NbDatepickerModule],
   template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>

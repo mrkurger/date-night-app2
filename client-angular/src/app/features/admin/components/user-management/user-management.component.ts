@@ -4,38 +4,14 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbInputModule,
-  NbSelectModule,
-  NbTagModule,
-  NbTableModule,
-  NbSpinnerModule,
-  NbActionsModule,
-  NbDialogService,
-  NbToastrService,
-} from '@nebular/theme';
+
 import { UserService } from '../../../../core/services/user.service';
 import { User } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbInputModule,
-    NbSelectModule,
-    NbTagModule,
-    NbTableModule,
-    NbSpinnerModule,
-    NbActionsModule,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbInputModule, NbSelectModule, NbTagModule, NbTableModule, NbSpinnerModule, NbActionsModule],
   template: `
     <nb-card>
       <nb-card-header class="d-flex justify-content-between align-items-center">

@@ -12,19 +12,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbDialogModule,
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbButtonModule,
-  NbRadioModule,
-  NbSpinnerModule,
-  NbIconModule,
-} from '@nebular/theme';
+
 import { WalletService, PaymentMethod, WalletBalance } from '../../../core/services/wallet.service';
 import { NbToastrService } from '@nebular/theme';
 
@@ -47,20 +35,7 @@ interface DepositDialogConfig {
   templateUrl: './deposit-dialog.component.html',
   styleUrls: ['./deposit-dialog.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbDialogModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbButtonModule,
-    NbRadioModule,
-    NbSpinnerModule,
-    NbIconModule,
-  
-    NbAlertModule,],
+  imports: [CommonModule, ReactiveFormsModule, NbDialogModule, NbCardModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbButtonModule, NbRadioModule, NbSpinnerModule, NbIconModule, NbAlertModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DepositDialogComponent implements OnInit {

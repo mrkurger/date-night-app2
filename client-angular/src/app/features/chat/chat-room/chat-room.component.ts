@@ -20,16 +20,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import {
-  NbCardModule,
-  NbUserModule,
-  NbActionsModule,
-  NbContextMenuModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-} from '@nebular/theme';
+
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ChatService, ChatMessage, ChatRoom } from '../../../core/services/chat.service';
@@ -46,21 +37,7 @@ interface ChatUser {
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NbCardModule,
-    NbUserModule,
-    NbActionsModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    ChatMessageComponent,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NbCardModule, NbUserModule, NbActionsModule, NbContextMenuModule, NbIconModule, NbFormFieldModule, NbInputModule, NbButtonModule, ChatMessageComponent],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })

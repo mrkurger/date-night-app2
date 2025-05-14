@@ -4,14 +4,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { ThemeService } from '../../core/services/theme.service';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbProgressBarModule,
-  NbLayoutModule,
-} from '@nebular/theme';
+
 
 /**
  * Micro-interactions Demo Component
@@ -22,15 +15,7 @@ import {
 @Component({
   selector: 'app-micro-interactions-demo',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbProgressBarModule,
-    NbLayoutModule,
-  ],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbProgressBarModule, NbLayoutModule],
   template: `
     <div [class]="bem.block()">
       <header [class]="bem.element('header')">

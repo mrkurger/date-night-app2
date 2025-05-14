@@ -16,20 +16,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
 
-import {
-  NbCardModule,
-  NbTabsetModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSelectModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbDatepickerModule,
-  NbSpinnerModule,
-  NbTableModule,
-  NbListModule,
-  NbTreeGridModule,
-} from '@nebular/theme';
+
 
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
 import {
@@ -81,22 +68,7 @@ type ErrorColumnKey =
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NbCardModule,
-    NbTabsetModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbDatepickerModule,
-    NbSpinnerModule,
-    NbTableModule,
-    NbListModule,
-    NbTreeGridModule,
-    ErrorDetailsDialogComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NbCardModule, NbTabsetModule, NbButtonModule, NbIconModule, NbSelectModule, NbInputModule, NbFormFieldModule, NbDatepickerModule, NbSpinnerModule, NbTableModule, NbListModule, NbTreeGridModule, ErrorDetailsDialogComponent],
   template: `
     <div class="dashboard-container">
       <h1>Telemetry Dashboard</h1>

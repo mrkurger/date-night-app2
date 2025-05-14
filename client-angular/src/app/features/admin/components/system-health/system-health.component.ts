@@ -3,15 +3,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbProgressBarModule,
-  NbSpinnerModule,
-  NbBadgeModule,
-  NbToastrService,
-} from '@nebular/theme';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Subject, interval } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,17 +27,7 @@ interface TimeSeriesData {
 @Component({
   selector: 'app-system-health',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    NbSpinnerModule,
-    NbBadgeModule,
-    NgxChartsModule,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbProgressBarModule, NbSpinnerModule, NbBadgeModule, NgxChartsModule],
   template: `
     <div class="system-health">
       <div class="row">

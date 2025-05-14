@@ -12,15 +12,7 @@ import { NbFormFieldModule } from '@nebular/theme';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbCheckboxModule,
-} from '@nebular/theme';
+
 
 export interface ReviewData {
   rating: number;
@@ -32,17 +24,7 @@ export interface ReviewData {
 @Component({
   selector: 'app-review-form',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbCheckboxModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbIconModule, NbSpinnerModule, NbCheckboxModule],
   template: `
     <div class="review-form-container">
       <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>

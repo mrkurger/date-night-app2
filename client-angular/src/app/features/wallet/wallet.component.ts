@@ -25,31 +25,7 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 // Nebular Imports (will be expanded as needed)
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbTabsetModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbToggleModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSpinnerModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbMenuModule,
-  NbActionsModule,
-  NbDialogService,
-  NbToastrService,
-  NbListModule,
-  NbAlertModule,
-  NbTagModule,
-  NbUserModule,
-  NbAccordionModule,
-  NbDatepickerModule,
-} from '@nebular/theme';
+
 
 import {
   WalletService,
@@ -80,34 +56,7 @@ type TransactionStatus = 'pending' | 'completed' | 'failed' | 'cancelled' | null
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbTabsetModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbRadioModule,
-    NbToggleModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbSpinnerModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbMenuModule,
-    NbActionsModule,
-    NbListModule,
-    NbAlertModule,
-    NbTagModule,
-    NbUserModule,
-    NbAccordionModule,
-    QRCodeModule,
-    NbDatepickerModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbTabsetModule, NbSelectModule, NbCheckboxModule, NbRadioModule, NbToggleModule, NbInputModule, NbFormFieldModule, NbSpinnerModule, NbTooltipModule, NbBadgeModule, NbMenuModule, NbActionsModule, NbListModule, NbAlertModule, NbTagModule, NbUserModule, NbAccordionModule, QRCodeModule, NbDatepickerModule],
 })
 export class WalletComponent implements OnInit {
   wallet: Wallet | null = null;

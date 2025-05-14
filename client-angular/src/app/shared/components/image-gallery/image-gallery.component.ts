@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbIconModule, NbButtonModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-image-gallery',

@@ -12,16 +12,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbFormFieldModule,
-  NbTooltipModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 
@@ -43,19 +34,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbTooltipModule,
-    NbAlertModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbTooltipModule, NbAlertModule],
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;

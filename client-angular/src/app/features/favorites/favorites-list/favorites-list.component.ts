@@ -7,23 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbMenuModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSpinnerModule,
-  NbToggleModule,
-  NbTooltipModule,
-  NbDialogModule,
-  NbDialogService,
-  NbSelectModule,
-  NbTagModule,
-  NbCheckboxModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 import {
   FavoriteService,
   Favorite,
@@ -40,29 +24,7 @@ import { NbContextMenuModule } from '@nebular/theme';
 @Component({
   selector: 'app-favorites-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbMenuModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbSpinnerModule,
-    NbToggleModule,
-    NbTooltipModule,
-    NbDialogModule,
-    NbSelectModule,
-    NbTagModule,
-    NbCheckboxModule,
-    FavoriteButtonComponent,
-    NbAlertModule,
-    NbSpinnerModule,
-    NbContextMenuModule,
-  ],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbMenuModule, NbInputModule, NbFormFieldModule, NbSpinnerModule, NbToggleModule, NbTooltipModule, NbDialogModule, NbSelectModule, NbTagModule, NbCheckboxModule, FavoriteButtonComponent, NbAlertModule, NbContextMenuModule],
   template: `
     <div class="favorites-container">
       <div class="favorites-header">

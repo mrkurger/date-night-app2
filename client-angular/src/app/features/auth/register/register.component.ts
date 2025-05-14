@@ -16,15 +16,7 @@ import { NgIf } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
-import {
-  NbButtonModule,
-  NbCheckboxModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbInputModule,
-  NbCardModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 import { finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
@@ -45,19 +37,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss', './social-login.scss'],
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbAlertModule,
-    RouterLink,
-    NgIf,
-    NbCheckboxModule,
-    NbIconModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, NbCardModule, NbFormFieldModule, NbInputModule, NbButtonModule, NbAlertModule, RouterLink, NgIf, NbCheckboxModule, NbIconModule],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

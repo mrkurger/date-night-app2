@@ -10,7 +10,7 @@ import { NbIconModule } from '@nebular/theme';
 // ===================================================
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule } from '@nebular/theme';
+
 import { IconComponent } from '../icon/icon.component';
 
 /**

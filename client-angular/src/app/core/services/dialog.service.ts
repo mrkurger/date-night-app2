@@ -1,13 +1,7 @@
 import { NbCardModule } from '@nebular/theme';
 import { Injectable, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbDialogService,
-  NbDialogConfig,
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-} from '@nebular/theme';
+
 import { Observable } from 'rxjs';
 import {
   ReviewDialogComponent,

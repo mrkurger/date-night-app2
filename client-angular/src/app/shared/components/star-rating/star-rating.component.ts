@@ -1,7 +1,7 @@
 import { NbIconModule } from '@nebular/theme';
 import { EventEmitter, Output, Input, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbIconModule, NbTooltipModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-star-rating',

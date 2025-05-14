@@ -1,28 +1,13 @@
 import { NbToggleModule } from '@nebular/theme';
 import { NbIconModule } from '@nebular/theme';
-import { NbPaginatorModule } from '@nebular/theme';
+
 import { NbTagModule } from '@nebular/theme';
 import { NbBadgeModule } from '@nebular/theme';
 import { NbCardModule } from '@nebular/theme';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbToggleModule,
-  NbIconModule,
-  NbDialogModule,
-  NbTagModule,
-  NbBadgeModule,
-  NbTooltipModule,
-  NbTabsetModule,
-  NbDialogService,
-} from '@nebular/theme';
+
 import {
   /*DEPRECATED:NbPaginatorComponent*/,
   AppSortComponent,
@@ -44,24 +29,8 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
 @Component({
   selector: 'app-alert-management',
   standalone: true,
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbTableModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbToggleModule,
-    NbIconModule,
-    NbDialogModule,
-    NbTagModule,
-    NbBadgeModule,
-    NbTooltipModule,
-    NbTabsetModule,
-    AppSortComponent,
-    AppSortHeaderComponent
-    NbPaginatorModule,],
+  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbIconModule, NbDialogModule, NbTagModule, NbBadgeModule, NbTooltipModule, NbTabsetModule, AppSortComponent, AppSortHeaderComponent
+    NbPaginatorModule],
   template: `
     <div class="alert-management-container">
       <h1>Alert Management</h1>

@@ -17,7 +17,7 @@ import { NotificationService } from '../../../core/services/notification.service
 import { DialogService } from '../../../core/services/dialog.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+
 
 @Component({
   selector: 'app-favorite-button',

@@ -12,14 +12,7 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbDialogModule,
-  NbCardModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-} from '@nebular/theme';
+
 
 export interface NotesDialogData {
   title: string;
@@ -31,15 +24,7 @@ export interface NotesDialogData {
 @Component({
   selector: 'app-notes-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbDialogModule,
-    NbCardModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-  ],
+  imports: [CommonModule, FormsModule, NbDialogModule, NbCardModule, NbButtonModule, NbFormFieldModule, NbInputModule],
   template: `
     <nb-card>
       <nb-card-header>{{ data.title }}</nb-card-header>

@@ -15,22 +15,13 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import {
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,
-    CommonModule,
-    NbCardModule
-    NbAlertModule,
-    NbFormFieldModule,],
+  imports: [ReactiveFormsModule, CommonModule, NbCardModule
+    NbAlertModule, NbFormFieldModule],
   template: `
     <div class="register-container">
       <nb-card>

@@ -10,7 +10,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule } from '@nebular/theme';
+
 
 /**
  * Feature Tour Component

@@ -1,75 +1,80 @@
-<!-- Emerald FloatingActionButton Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton -->
+<!-- Floating Action Button Component -->
+<!-- Using Nebular styling -->
 
 <div
-  class="emerald-fab-container"
+  class="nb-fab-container"
   [ngClass]="{
-    'emerald-fab-container--bottom-right': position === 'bottom-right',
-    'emerald-fab-container--bottom-left': position === 'bottom-left',
-    'emerald-fab-container--top-right': position === 'top-right',
-    'emerald-fab-container--top-left': position === 'top-left',
-    'emerald-fab-container--center': position === 'center',
+    'nb-fab-container--bottom-right': position === 'bottom-right',
+    'nb-fab-container--bottom-left': position === 'bottom-left',
+    'nb-fab-container--top-right': position === 'top-right',
+    'nb-fab-container--top-left': position === 'top-left',
+    'nb-fab-container--center': position === 'center',
   }"
 >
   <!-- Main Floating Action Button -->
   <button
-    class="emerald-fab"
+    class="nb-fab"
     [ngClass]="{
-      'emerald-fab--primary': color === 'primary',
-      'emerald-fab--secondary': color === 'secondary',
-      'emerald-fab--success': color === 'success',
-      'emerald-fab--danger': color === 'danger',
-      'emerald-fab--warning': color === 'warning',
-      'emerald-fab--info': color === 'info',
-      'emerald-fab--small': size === 'small',
-      'emerald-fab--medium': size === 'medium',
-      'emerald-fab--large': size === 'large',
-      'emerald-fab--open': menuOpen,
+      'nb-fab--primary': color === 'primary',
+      'nb-fab--secondary': color === 'secondary',
+      'nb-fab--success': color === 'success',
+      'nb-fab--danger': color === 'danger',
+      'nb-fab--warning': color === 'warning',
+      'nb-fab--info': color === 'info',
+      'nb-fab--small': size === 'small',
+      'nb-fab--medium': size === 'medium',
+      'nb-fab--large': size === 'large',
+      'nb-fab--open': menuOpen,
     }"
     [disabled]="disabled"
     (click)="toggleMenu($event)"
     [attr.aria-label]="label"
+    nbButton
+    [status]="color"
+    shape="round"
   >
-    <i class="fas {{ icon }}"></i>
+    <nb-icon [icon]="icon" pack="fas"></nb-icon>
 
     <!-- Tooltip -->
-    <span *ngIf="showTooltip && tooltipText" class="emerald-fab__tooltip">
-      {{ tooltipText }}
+    <span *ngIf="showTooltip && tooltipText" class="nb-fab__tooltip" nbTooltip="{{ tooltipText }}">
     </span>
   </button>
 
   <!-- Menu Items -->
   <div
     *ngIf="hasMenu"
-    class="emerald-fab-menu"
+    class="nb-fab-menu"
     [ngClass]="{
-      'emerald-fab-menu--bottom-right': position === 'bottom-right',
-      'emerald-fab-menu--bottom-left': position === 'bottom-left',
-      'emerald-fab-menu--top-right': position === 'top-right',
-      'emerald-fab-menu--top-left': position === 'top-left',
-      'emerald-fab-menu--center': position === 'center',
-      'emerald-fab-menu--open': menuOpen,
+      'nb-fab-menu--bottom-right': position === 'bottom-right',
+      'nb-fab-menu--bottom-left': position === 'bottom-left',
+      'nb-fab-menu--top-right': position === 'top-right',
+      'nb-fab-menu--top-left': position === 'top-left',
+      'nb-fab-menu--center': position === 'center',
+      'nb-fab-menu--open': menuOpen,
     }"
   >
     <button
       *ngFor="let item of menuItems"
-      class="emerald-fab-menu__item"
+      class="nb-fab-menu__item"
       [ngClass]="{
-        'emerald-fab-menu__item--primary': color === 'primary',
-        'emerald-fab-menu__item--secondary': color === 'secondary',
-        'emerald-fab-menu__item--success': color === 'success',
-        'emerald-fab-menu__item--danger': color === 'danger',
-        'emerald-fab-menu__item--warning': color === 'warning',
-        'emerald-fab-menu__item--info': color === 'info',
+        'nb-fab-menu__item--primary': color === 'primary',
+        'nb-fab-menu__item--secondary': color === 'secondary',
+        'nb-fab-menu__item--success': color === 'success',
+        'nb-fab-menu__item--danger': color === 'danger',
+        'nb-fab-menu__item--warning': color === 'warning',
+        'nb-fab-menu__item--info': color === 'info',
       }"
       (click)="onMenuItemClick(item, $event)"
       [attr.aria-label]="item.label"
+      nbButton
+      [status]="color"
+      ghost
     >
-      <i class="fas {{ item.icon }}"></i>
-      <span class="emerald-fab-menu__item-label">{{ item.label }}</span>
+      <nb-icon [icon]="item.icon" pack="fas"></nb-icon>
+      <span class="nb-fab-menu__item-label">{{ item.label }}</span>
     </button>
   </div>
 
   <!-- Backdrop for closing menu when clicking outside -->
-  <div *ngIf="menuOpen" class="emerald-fab-backdrop" (click)="closeMenu()"></div>
+  <div *ngIf="menuOpen" class="nb-fab-backdrop" (click)="closeMenu()"></div>
 </div>

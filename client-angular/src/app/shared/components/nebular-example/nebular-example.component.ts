@@ -6,17 +6,7 @@ import { NbCardModule } from '@nebular/theme';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbAlertModule,
-  NbBadgeModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbUserModule,
-  NbTagModule,
-} from '@nebular/theme';
+
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 /**
@@ -26,20 +16,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 @Component({
   selector: 'app-nebular-example',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbAlertModule,
-    NbBadgeModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbUserModule,
-    NbTagModule,
-    StarRatingComponent,
-  ],
+  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbAlertModule, NbBadgeModule, NbFormFieldModule, NbInputModule, NbUserModule, NbTagModule, StarRatingComponent],
   template: `
     <div class="nebular-example">
       <nb-card>

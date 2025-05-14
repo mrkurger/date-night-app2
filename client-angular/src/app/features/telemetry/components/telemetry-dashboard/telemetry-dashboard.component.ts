@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbTabsetModule, NbCardModule } from '@nebular/theme';
+
 import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
@@ -23,13 +23,7 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbTabsetModule,
-    NbCardModule,
-    ErrorDashboardComponent,
-    PerformanceDashboardComponent,
-  ],
+  imports: [CommonModule, NbTabsetModule, NbCardModule, ErrorDashboardComponent, PerformanceDashboardComponent],
   template: `
     <nb-card>
       <nb-card-header>

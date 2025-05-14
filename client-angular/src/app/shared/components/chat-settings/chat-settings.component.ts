@@ -23,17 +23,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbToggleModule,
-  NbSpinnerModule,
-  NbAlertModule,
-} from '@nebular/theme';
+
 import { environment } from '../../../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -47,20 +37,7 @@ export interface ChatSettings {
 @Component({
   selector: 'app-chat-settings',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbToggleModule,
-    NbSpinnerModule,
-    NbAlertModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbSpinnerModule, NbAlertModule],
   template: `
     <nb-card>
       <nb-card-header>
