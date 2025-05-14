@@ -3,7 +3,7 @@ name: Trivy Security Scan
 on:
   push:
     branches:
-      - "**" # Runs on all branches
+      - "**" # Triggers on any branch where commits are pushed
 
 jobs:
   trivy-scan:
@@ -11,11 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout the branch where the commit was made
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          # Target only the branch that triggered this workflow
+          ref: ${{ github.ref }}
 
-      # Step 2: Set up Trivy
+      # Step 2: Install Trivy
       - name: Install Trivy
         run: |
           sudo apt-get update
@@ -25,14 +28,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # Step 3: Scan filesystem for vulnerabilities
+      # Step 3: Scan the repository for vulnerabilities
       - name: Scan Repository
         run: trivy fs --exit-code 1 --severity HIGH,CRITICAL .
 
-      # Step 4: Scan for secrets
+      # Step 4: Scan for secrets in the codebase
       - name: Scan for Secrets
         run: trivy fs --security-checks secret --exit-code 1 .
 
-      # Step 5: Scan dependencies (e.g., npm, pip, Maven)
+      # Step 5: Scan dependencies for vulnerabilities
       - name: Scan Dependencies
         run: trivy fs --security-checks vuln --exit-code 1 .
