@@ -23,3 +23,5 @@ jobs:
           JF_USER: ${{ secrets.JF_USER }}           # Your JFrog username/email
           #JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}   # Or use JF_ACCESS_TOKEN below
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }} # Use instead of password if you prefer
+          JF_GIT_TOKEN: ${{ secrets.JF_GIT_TOKEN }}       # GitHub token for Frogbot to create PRs/issues. Must have repo permissions
+
