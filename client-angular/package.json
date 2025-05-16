@@ -82,7 +82,7 @@
     "@angular/cli": "19.2.10",
     "@angular/compiler-cli": "19.2.10",
     "@babel/plugin-transform-runtime": "7.27.1",
-    "@babel/runtime": "7.24.0",
+    "@babel/runtime": "7.27.1",
     "@compodoc/compodoc": "1.1.26",
     "@eslint/eslintrc": "^3.0.0",
     "@eslint/js": "^9.0.0",
