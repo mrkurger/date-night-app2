@@ -1,0 +1,24 @@
+name: Frogbot Security Scan
+
+on:
+  pull_request:
+    branches: [ master ]  # Scan PRs targeting master, adjust if needed
+  workflow_dispatch:      # Allow manual runs
+
+jobs:
+  frogbot-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Run Frogbot
+      - name: Run Frogbot scan
+        uses: jfrog/frogbot@v2
+        with:
+          jfrog-url: "${{ secrets.JF_URL }}"
+          jfrog-user: "${{ secrets.JF_USER }}"
+          jfrog-access-token: "${{ secrets.JF_ACCESS_TOKEN }}" # Or jfrog-access-token: "${{ secrets.JF_ACCESS_TOKEN }}"
+          # Optionally: configure more Frogbot options here
