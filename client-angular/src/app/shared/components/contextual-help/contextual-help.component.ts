@@ -1,5 +1,7 @@
-import { NbIconModule } from '@nebular/theme';
+
 import { Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -12,7 +14,6 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-
 
 export interface HelpItem {
   id: string;
@@ -29,7 +30,12 @@ export interface HelpItem {
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTooltipModule
+  ],
 })
 export class ContextualHelpComponent implements OnInit {
   @Input() helpItems: HelpItem[] = [];

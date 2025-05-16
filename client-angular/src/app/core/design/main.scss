@@ -275,8 +275,8 @@ $grid-columns: 12 !default;
 
 @for $i from 1 through $grid-columns {
   .col-#{$i} {
-    flex: 0 0 percentage($i / $grid-columns);
-    max-width: percentage($i / $grid-columns);
+    flex: 0 0 calc(($i / $grid-columns) * 100%);
+    max-width: calc(($i / $grid-columns) * 100%);
     padding-right: calc(var(--grid-gutter-width) / 2);
     padding-left: calc(var(--grid-gutter-width) / 2);
   }
@@ -285,8 +285,8 @@ $grid-columns: 12 !default;
 @media (min-width: var(--breakpoint-mobile)) {
   @for $i from 1 through $grid-columns {
     .col-sm-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
@@ -294,8 +294,8 @@ $grid-columns: 12 !default;
 @media (min-width: var(--breakpoint-tablet)) {
   @for $i from 1 through $grid-columns {
     .col-md-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
@@ -303,8 +303,8 @@ $grid-columns: 12 !default;
 @media (min-width: var(--breakpoint-desktop)) {
   @for $i from 1 through $grid-columns {
     .col-lg-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
@@ -312,8 +312,8 @@ $grid-columns: 12 !default;
 @media (min-width: var(--breakpoint-desktop-large)) {
   @for $i from 1 through $grid-columns {
     .col-xl-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }

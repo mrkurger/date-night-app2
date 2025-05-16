@@ -92,17 +92,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)
-    TelemetryDashboardComponent,
-    ErrorDashboardComponent,
-    PerformanceDashboardComponent,
-    UserManagementComponent,
-    RevenueAnalyticsComponent,
-    ContentModerationComponent,
-    SystemHealthComponent,
-    AuditLogComponent,
-    AdminSettingsComponent,
-    ErrorSecurityDashboardComponent,],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class AdminRoutingModule {}

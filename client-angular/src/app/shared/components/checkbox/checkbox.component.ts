@@ -1,3 +1,6 @@
+import {
+  
+} from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -28,7 +31,11 @@ import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-checkbox',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IconComponent
+  ],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

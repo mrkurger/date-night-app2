@@ -1,5 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,10 +7,11 @@ import { NbFormFieldModule } from '@nebular/theme';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 
 export interface ReviewData {
   rating: number;
@@ -24,7 +23,8 @@ export interface ReviewData {
 @Component({
   selector: 'app-review-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbIconModule, NbSpinnerModule, NbCheckboxModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   template: `
     <div class="review-form-container">
       <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>

@@ -17,7 +17,8 @@ import { environment } from '../../../environments/environment';
 export interface ChatMessage {
   id: string;
   roomId: string;
-  sender: string;
+  sender: string | ChatParticipant;
+  senderId?: string; // ID of the sender (for convenience)
   receiver: string;
   content: string;
   message?: string; // Legacy support
@@ -25,19 +26,44 @@ export interface ChatMessage {
   read: boolean;
   isEncrypted?: boolean;
   createdAt?: Date;
-  attachments?: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: number;
-    url: string;
-  }>;
+  type?: 'text' | 'system' | 'image' | 'file' | 'notification';
+  expiresAt?: Date | number | string;
+  encryptionData?: {
+    iv: string;
+    authTag?: string;
+  };
+  attachments?:
+    | Array<{
+        id: string;
+        name: string;
+        type: string;
+        size: number;
+        url: string;
+        timestamp?: Date | string;
+      }>
+    | Array<{
+        url: string;
+        type: string;
+        name?: string;
+        size?: number;
+        timestamp?: Date | string;
+      }>;
 }
 
 export interface ChatParticipant {
   id: string;
   username: string;
   avatar?: string;
+  profileImage?: string; // Alias for avatar
+  imageUrl?: string; // Another alias for avatar
+  name?: string; // Alias for username
+  status?: string; // Online status
+  online?: boolean; // Online status as boolean
+  unreadCount?: number; // Number of unread messages
+  lastMessage?: {
+    content: string;
+    timestamp: Date | string;
+  };
 }
 
 export interface ChatRoom {

@@ -7,33 +7,26 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbCheckboxModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  NbCardModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbCheckboxModule,
-  NbSpinnerModule,
-  NbFormFieldModule,
-  NbRadioModule,
-  NbLayoutModule,
-  NbAlertModule,
-  NbTooltipModule,
-} from '@nebular/theme';
-
-import {
-  NbAuthModule,
-  NbAuthOAuth2JWTToken,
-  NbOAuth2AuthStrategy,
-  NbOAuth2ClientAuthMethod,
-  NbOAuth2GrantType,
-  NbOAuth2ResponseType,
-  NbPasswordAuthStrategy,
-} from '@nebular/auth';
 
 // Components
 import { LoginComponent } from './login/login.component';
@@ -57,49 +50,25 @@ const routes: Routes = [
   },
 ];
 
-const socialLinks = [
-  {
-    url: '/auth/google',
-    icon: 'google',
-    title: 'Google',
-  },
-  {
-    url: '/auth/facebook',
-    icon: 'facebook',
-    title: 'Facebook',
-  },
-  {
-    url: '/auth/apple',
-    icon: 'apple',
-    title: 'Apple',
-  },
-  {
-    url: '/auth/microsoft',
-    icon: 'microsoft',
-    title: 'Microsoft',
-  },
-];
-
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), NbCardModule, NbInputModule, NbButtonModule, NbIconModule, NbCheckboxModule, NbSpinnerModule, NbFormFieldModule, NbRadioModule, NbAlertModule, NbTooltipModule, // Nebular Auth
-    NbAuthModule.forRoot({
-      strategies: [
-        NbOAuth2AuthStrategy.setup({
-          name: 'google', authorize: {
-            endpoint: 'https://accounts.google.com/o/oauth2/v2/auth', redirectUri: `${window.location.origin}/auth/callback`, token: {
-            endpoint: `${environment.apiUrl}/auth/google/callback`, NbOAuth2AuthStrategy.setup({
-          name: 'facebook', authorize: {
-            endpoint: 'https://www.facebook.com/v10.0/dialog/oauth', token: {
-            endpoint: `${environment.apiUrl}/auth/facebook/callback`, NbOAuth2AuthStrategy.setup({
-          name: 'apple', authorize: {
-            endpoint: 'https://appleid.apple.com/auth/authorize', token: {
-            endpoint: `${environment.apiUrl}/auth/apple/callback`, NbOAuth2AuthStrategy.setup({
-          name: 'microsoft', authorize: {
-            endpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize', token: {
-            endpoint: `${environment.apiUrl}/auth/microsoft/callback`, redirectUri: `${window.location.origin}/auth/callback`
-    LoginComponent, RegisterComponent, RequestPasswordComponent, ResetPasswordComponent, AuthLayoutComponent],
-    }),
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    NbCardModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbCheckboxModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbLayoutModule,
+    NbBadgeModule,
+    NbTagModule,
+    NbSelectModule,
 
     // Components
     LoginComponent,
@@ -108,6 +77,7 @@ const socialLinks = [
     RequestPasswordComponent,
     ResetPasswordComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   // No exports needed for standalone components
 })
 export class AuthModule {}

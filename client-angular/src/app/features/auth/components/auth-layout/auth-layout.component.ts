@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// Using direct imports from @nebular/theme instead of the shared module
 import {
   NbLayoutModule,
   NbCardModule,
@@ -11,11 +10,15 @@ import {
   NbTooltipModule,
 } from '@nebular/theme';
 
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     RouterOutlet,

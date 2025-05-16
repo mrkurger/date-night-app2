@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import { NbSpinnerModule } from '@nebular/theme';
 

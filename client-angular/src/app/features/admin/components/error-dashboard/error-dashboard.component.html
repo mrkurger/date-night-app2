@@ -21,20 +21,8 @@
       <nb-form-field>
         <nb-form-field-label>Date Range</nb-form-field-label>
         <div class="date-range-inputs">
-          <input
-            nbInput
-            formControlName="startDate"
-            [nbDatepicker]="startPicker"
-            placeholder="Start date"
-          />
-          <nb-datepicker #startPicker></nb-datepicker>
-          <input
-            nbInput
-            formControlName="endDate"
-            [nbDatepicker]="endPicker"
-            placeholder="End date"
-          />
-          <nb-datepicker #endPicker></nb-datepicker>
+          <input type="date" formControlName="startDate" placeholder="Start date" />
+          <input type="date" formControlName="endDate" placeholder="End date" />
         </div>
       </nb-form-field>
 
@@ -105,7 +93,7 @@
     <nb-card-body>
       <div class="table-container" *ngIf="!loading; else loadingTemplate">
         <app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
-          <table nbTable [nbTreeGrid]="dataSource">
+          <table>
             <!-- Timestamp Column -->
             <ng-container nbTreeGridColumnDef="timestamp">
               <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>

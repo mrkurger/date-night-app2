@@ -226,8 +226,8 @@ export const URLValidator = {
         return '/';
       }
 
-      if (path === 'https://git.new/some:path/:') {
-        console.warn('Invalid route pattern:', path, new Error('Missing parameter name'));
+      if (path === 'https://git.new/some:path/:' || path.includes('https://git.new/')) {
+        console.warn('Invalid route pattern:', path, new Error('Skipping git.new URL pattern'));
         return '/';
       }
 

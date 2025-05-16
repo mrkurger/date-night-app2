@@ -1,8 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,16 +7,23 @@ import { NbCardModule } from '@nebular/theme';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-
 import {
   TelemetryService,
   PerformanceTelemetry,
 } from '../../../../core/services/telemetry.service';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
-import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+
+// Custom pagination event interface
+interface PaginationChangeEvent {
+  page: number;
+  pageSize: number;
+}
+
 import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
@@ -39,7 +41,14 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
 @Component({
   selector: 'app-performance-dashboard',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTabsetModule, NbTagModule, ReactiveFormsModule, AppSortComponent, AppSortHeaderComponent],
+  imports: [
+    CommonModule,
+    NebularModule,
+    ReactiveFormsModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="dashboard-container">
       <h1>Performance Monitoring Dashboard</h1>
@@ -142,43 +151,94 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
               <nb-spinner></nb-spinner>
             </div>
 
-            <table nbTable *ngIf="!loading">
-              <thead>
-                <tr>
-                  <th>Timestamp</th>
-                  <th>Method</th>
-                  <th>URL</th>
-                  <th>Duration (ms)</th>
-                  <th>TTFB (ms)</th>
-                  <th>Response Size</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of performanceData">
-                  <td>{{ item.timestamp | date: 'medium' }}</td>
-                  <td>{{ item.method }}</td>
-                  <td>{{ item.url }}</td>
-                  <td [ngClass]="getDurationClass(item.duration)">
-                    {{ item.duration | number: '1.0-0' }}
-                  </td>
-                  <td>{{ item.ttfb | number: '1.0-0' }}</td>
-                  <td>{{ formatBytes(item.responseSize) }}</td>
-                  <td>
-                    <button nbButton ghost (click)="viewPerformanceDetails(item)">
-                      <nb-icon icon="eye-outline"></nb-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <app-sort (sortChange)="onSortChange($event)">
+              <table nbTable *ngIf="!loading">
+                <thead>
+                  <tr>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'timestamp'"
+                        [direction]="sortDirection"
+                      >
+                        Timestamp
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'method'"
+                        [direction]="sortDirection"
+                      >
+                        Method
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header [active]="sortField === 'url'" [direction]="sortDirection">
+                        URL
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'duration'"
+                        [direction]="sortDirection"
+                      >
+                        Duration (ms)
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header [active]="sortField === 'ttfb'" [direction]="sortDirection">
+                        TTFB (ms)
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'responseSize'"
+                        [direction]="sortDirection"
+                      >
+                        Response Size
+                      </app-sort-header>
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of performanceData">
+                    <td>{{ item.timestamp | date: 'medium' }}</td>
+                    <td>{{ item.method }}</td>
+                    <td>{{ item.url }}</td>
+                    <td [ngClass]="getDurationClass(item.duration)">
+                      {{ item.duration | number: '1.0-0' }}
+                    </td>
+                    <td>{{ item.ttfb | number: '1.0-0' }}</td>
+                    <td>{{ formatBytes(item.responseSize) }}</td>
+                    <td>
+                      <button nbButton ghost (click)="viewPerformanceDetails(item)">
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </app-sort>
 
-            <nb-paginator
-              [total]="totalItems"
-              [pageSize]="pageSize"
-              [page]="pageIndex + 1"
-              (pageChange)="onPageChange($event)"
-            ></nb-paginator>
+            <div class="pagination">
+              <button
+                nbButton
+                ghost
+                [disabled]="pageIndex === 0"
+                (click)="onPageChange({ page: pageIndex, pageSize: pageSize })"
+              >
+                Previous
+              </button>
+              <span>Page {{ pageIndex + 1 }}</span>
+              <button
+                nbButton
+                ghost
+                [disabled]="(pageIndex + 1) * pageSize >= totalItems"
+                (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })"
+              >
+                Next
+              </button>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
@@ -280,6 +340,10 @@ export class PerformanceDashboardComponent implements OnInit {
   // Performance statistics
   performanceStats$: Observable<any>;
 
+  // Sorting
+  sortField = 'timestamp';
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
+
   constructor(
     private telemetryService: TelemetryService,
     private fb: FormBuilder,
@@ -287,15 +351,16 @@ export class PerformanceDashboardComponent implements OnInit {
     this.filterForm = this.fb.group({
       url: [''],
       method: [''],
-      minDuration: [null],
+      minDuration: [''],
       fromDate: [null],
       toDate: [null],
     });
+
+    this.performanceStats$ = this.getPerformanceStatistics();
   }
 
   ngOnInit(): void {
     this.loadDashboardData();
-    this.performanceStats$ = this.getPerformanceStatistics();
   }
 
   /**
@@ -309,7 +374,9 @@ export class PerformanceDashboardComponent implements OnInit {
       .getPerformanceStatistics({
         ...filters,
         page: this.pageIndex,
-        limit: this.pageSize,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
       })
       .pipe(
         catchError((error) => {
@@ -363,7 +430,7 @@ export class PerformanceDashboardComponent implements OnInit {
   /**
    * Handle page change event from paginator
    */
-  onPageChange(event: NbPaginationChangeEvent): void {
+  onPageChange(event: PaginationChangeEvent): void {
     this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
     this.loadDashboardData();
@@ -462,5 +529,11 @@ export class PerformanceDashboardComponent implements OnInit {
     // eslint-disable-next-line no-console
     console.log('View performance details:', item);
     // Implementation for performance details dialog would go here
+  }
+
+  onSortChange(event: AppSortEvent): void {
+    this.sortField = event.active;
+    this.sortDirection = event.direction;
+    this.loadDashboardData();
   }
 }

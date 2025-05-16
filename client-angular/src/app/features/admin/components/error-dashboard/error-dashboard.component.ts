@@ -1,9 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+import {  } from '../../../../shared/nebular.module';
+import { NbTableModule, NbDialogService } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,7 +9,15 @@ import { NbCardModule } from '@nebular/theme';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  TemplateRef,
+  Input,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
@@ -29,8 +33,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
 
-import { NbErrorComponent } from '../../../../shared/components/custom-nebular-components/nb-error/nb-error.component';
-
 // Define interfaces for pagination and sorting
 interface ErrorData {
   timestamp: Date;
@@ -40,12 +42,28 @@ interface ErrorData {
   url: string;
   userMessage: string;
   technicalMessage: string;
+  method?: string;
+  response?: any;
+  context?: {
+    requestDetails?: {
+      headers?: any;
+      body?: any;
+    };
+  };
 }
 
 @Component({
   selector: 'app-error-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxChartsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbSpinnerModule, NbTableModule, NbBadgeModule, NbToggleModule, NbTooltipModule, NbTreeGridModule, NbErrorComponent, AppSortComponent, AppSortHeaderComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgxChartsModule,
+
+    AppSortComponent,
+    AppSortHeaderComponent,
+  ],
   templateUrl: './error-dashboard.component.html',
   styleUrls: ['./error-dashboard.component.scss'],
 })
@@ -62,12 +80,15 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   totalErrors = 0;
   errorCategories = Object.values(ErrorCategory);
   displayedColumns = ['timestamp', 'category', 'message', 'count', 'actions'];
-  dataSource: NbTreeGridDataSource<ErrorData>;
+  dataSource: any;
   selectedError: ErrorData | null = null;
 
   // Chart data
   errorTrendData: any[] = [];
   errorDistributionData: any[] = [];
+  errorsByCategory: any[] = [];
+  errorsByStatusCode: any[] = [];
+  errorsOverTime: any[] = [];
 
   // Sorting
   sortColumn = '';
@@ -80,7 +101,6 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
     private telemetryService: TelemetryService,
     private telemetrySocketService: TelemetrySocketService,
     private dialogService: NbDialogService,
-    private dataSourceBuilder: NbTreeGridDataSourceBuilder<ErrorData>,
   ) {
     this.initializeFilterForm();
   }
@@ -158,7 +178,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (data) => {
-          this.dataSource = this.dataSourceBuilder.create(this.transformData(data.errors));
+          this.dataSource = this.transformData(data.errors);
           this.errorTrendData = this.transformTrendData(data.trends);
           this.errorDistributionData = this.transformDistributionData(data.distribution);
           this.totalErrors = data.total;
@@ -244,9 +264,15 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
   /**
    * Handle page change event from paginator
    */
-  onPageChange(event: NbPaginationChangeEvent): void {
-    this.currentPage = event.page;
-    this.pageSize = event.pageSize;
+  onPageChange(event: any): void {
+    // Convert the event to NbPaginationChangeEvent format
+    const paginationEvent: NbPaginationChangeEvent = {
+      page: event.page || 1,
+      pageSize: event.pageSize || this.pageSize,
+    };
+
+    this.currentPage = paginationEvent.page;
+    this.pageSize = paginationEvent.pageSize;
     this.loadDashboardData();
   }
 

@@ -1,15 +1,27 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
+import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbTableModule,
+  NbDialogModule,
+  NbDialogService,
+  NbTabsetModule,
+  NbPaginatorModule,
+} from '@nebular/theme';
 
-import { NbTagModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {
-  /*DEPRECATED:NbPaginatorComponent*/,
   AppSortComponent,
   AppSortHeaderComponent,
 } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
@@ -29,6 +41,7 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
 @Component({
   selector: 'app-alert-management',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbIconModule, NbDialogModule, NbTagModule, NbBadgeModule, NbTooltipModule, NbTabsetModule, AppSortComponent, AppSortHeaderComponent
     NbPaginatorModule],
   template: `

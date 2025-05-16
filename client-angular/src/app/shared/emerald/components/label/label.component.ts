@@ -1,6 +1,10 @@
 import { Component, Input, HostBinding } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { NbIconModule, NbTagModule, NbTagComponent } from '@nebular/theme';
+import {
+  NbTagComponent
+} from '@nebular/theme';
 
 /**
  * Label Component
@@ -13,7 +17,12 @@ import { NbIconModule, NbTagModule, NbTagComponent } from '@nebular/theme';
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbTagComponent, NbTagModule, NbIconModule],
+  imports: [
+    CommonModule,
+    NbTagComponent,
+    NbTagModule,
+    NbIconModule
+  ],
 })
 export class LabelComponent {
   @Input() text = '';

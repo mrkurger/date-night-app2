@@ -1,21 +1,36 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
 
 @Component({
   selector: 'app-ad-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   templateUrl: './ad-create.component.html',
-  styleUrls: ['./ad-create.component.scss'],
+  styles: [
+    `
+      .ad-form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+    `,
+  ],
 })
 export class AdCreateComponent implements OnInit {
   adForm: FormGroup;

@@ -72,7 +72,7 @@ consistent UI # ===================================================
         </div>
 
         <!-- Sort Dropdown -->
-        <button nbButton ghost [nbContextMenu]="sortMenu" nbContextMenuTag="sort-menu">
+        <button nbButton ghost [nbContextMenu]="sortMenuItems" nbContextMenuTag="sort-menu">
           <nb-icon icon="sort-outline"></nb-icon>
           <span>Sort: {{ getCurrentSortLabel() }}</span>
           <nb-icon icon="chevron-down-outline"></nb-icon>
@@ -351,10 +351,7 @@ consistent UI # ===================================================
 
 <!-- Sort Menu Template -->
 <ng-template #sortMenu>
-  <nb-menu>
-    
-    
-  </nb-menu>
+  <nb-menu [items]="sortMenuItems"></nb-menu>
 </ng-template>
 
 <!-- Save Filter Dialog Template -->
@@ -367,8 +364,8 @@ consistent UI # ===================================================
       </nb-form-field>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton status="basic" (click)="dialog.close()">Cancel</button>
-      <button nbButton status="primary" (click)="dialog.close(newFilterName)">Save</button>
+      <button nbButton status="basic" (click)="closeDialog()">Cancel</button>
+      <button nbButton status="primary" (click)="closeDialogWithValue(newFilterName)">Save</button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

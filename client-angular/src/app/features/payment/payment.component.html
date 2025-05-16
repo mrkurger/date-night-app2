@@ -120,18 +120,18 @@
             fullWidth
             id="name"
             formControlName="name"
-            [status]="
+            class="{{
               paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched
-                ? 'danger'
-                : 'basic'
-            "
+                ? 'input-error'
+                : ''
+            }}"
           />
-          <nb-alert
-            status="danger"
+          <div
+            class="error-message"
             *ngIf="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched"
           >
             Name is required
-          </nb-alert>
+          </div>
         </nb-form-field>
 
         <nb-form-field>
@@ -141,36 +141,33 @@
             fullWidth
             id="email"
             formControlName="email"
-            [status]="
+            class="{{
               paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched
-                ? 'danger'
-                : 'basic'
-            "
+                ? 'input-error'
+                : ''
+            }}"
           />
-          <nb-alert
-            status="danger"
+          <div
+            class="error-message"
             *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched"
           >
             Valid email is required
-          </nb-alert>
+          </div>
         </nb-form-field>
 
         <nb-form-field>
           <label for="card-element">Credit or Debit Card</label>
           <div id="card-element" class="card-element" #cardElement></div>
-          <nb-alert status="danger" *ngIf="cardErrors">{{ cardErrors }}</nb-alert>
+          <div class="error-message" *ngIf="cardErrors">{{ cardErrors }}</div>
         </nb-form-field>
 
         <div class="form-actions">
           <button
-            nbButton
-            status="success"
-            size="large"
-            fullWidth
+            class="btn-success btn-large btn-full-width"
             type="submit"
             [disabled]="paymentForm.invalid || loading"
           >
-            <nb-spinner *ngIf="loading" size="small"></nb-spinner>
+            <span *ngIf="loading" class="spinner-small"></span>
             Subscribe Now
           </button>
         </div>

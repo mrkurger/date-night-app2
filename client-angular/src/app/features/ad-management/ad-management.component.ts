@@ -1,59 +1,28 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (ad-management.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router, RouterOutlet } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
-  NbTabsetModule,
   NbButtonModule,
   NbIconModule,
   NbLayoutModule,
 } from '@nebular/theme';
-import { AdService } from '../../core/services/ad.service';
-import { AuthService } from '../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-ad-management',
   templateUrl: './ad-management.component.html',
   styleUrls: ['./ad-management.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     RouterModule,
-    RouterOutlet,
     NbCardModule,
-    NbTabsetModule,
     NbButtonModule,
     NbIconModule,
     NbLayoutModule,
   ],
 })
-export class AdManagementComponent implements OnInit {
-  ads: any[] = [];
-  loading = false;
-  error = '';
-  isAdmin = false;
-
-  constructor(
-    private adService: AdService,
-    private authService: AuthService,
-    public router: Router,
-  ) {}
-
-  ngOnInit(): void {
-    this.checkUserRole();
-  }
-
-  private checkUserRole(): void {
-    const user = this.authService.getCurrentUser();
-    this.isAdmin = user?.roles?.includes('admin') || false;
-  }
+export class AdManagementComponent {
+  // Component logic here
 }

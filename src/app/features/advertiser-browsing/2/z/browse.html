@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advertiser Browse - Static Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>Browse Advertisers</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+          <li><a href="user-profile.html">Profile</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="filters">
+        <input type="text" placeholder="Search..." class="search-box" />
+        <select class="filter-select">
+          <option>All Categories</option>
+          <option>Dining</option>
+          <option>Entertainment</option>
+          <option>Travel</option>
+        </select>
+        <select class="filter-select">
+          <option>All Locations</option>
+          <option>New York</option>
+          <option>Los Angeles</option>
+          <option>Chicago</option>
+        </select>
+        <button class="filter-btn">Filter</button>
+      </section>
+      <section class="ads-grid">
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/2.jpeg"
+              alt="Advertiser 1"
+              class="ad-image"
+            />
+            <span class="badge vip">VIP</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Romantic Dinner for Two</h2>
+            <div class="ad-category">Dining</div>
+            <div class="ad-location">New York</div>
+            <div class="ad-description">
+              Enjoy a candlelit dinner at the city's top-rated restaurant. Includes wine pairing and
+              dessert.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#romantic</span>
+              <span class="tag">#dinner</span>
+              <span class="tag">#nyc</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/3.jpeg"
+              alt="Advertiser 2"
+              class="ad-image"
+            />
+            <span class="badge online">Online</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Comedy Night Tickets</h2>
+            <div class="ad-category">Entertainment</div>
+            <div class="ad-location">Los Angeles</div>
+            <div class="ad-description">
+              Laugh the night away with two tickets to the hottest comedy club in LA. VIP seating
+              included.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#comedy</span>
+              <span class="tag">#la</span>
+              <span class="tag">#nightout</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/4.jpeg"
+              alt="Advertiser 3"
+              class="ad-image"
+            />
+            <span class="badge">Featured</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Skyline Tours</h2>
+            <div class="ad-category">Travel</div>
+            <div class="ad-location">Chicago</div>
+            <div class="ad-description">
+              See the city from above with a private helicopter tour for two. Includes champagne.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#skyline</span>
+              <span class="tag">#tour</span>
+              <span class="tag">#chicago</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/5.jpeg"
+              alt="Advertiser 4"
+              class="ad-image"
+            />
+            <span class="badge">New</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Wine Tasting</h2>
+            <div class="ad-category">Dining</div>
+            <div class="ad-location">San Francisco</div>
+            <div class="ad-description">
+              Sample the region's best wines with a guided tasting experience. Cheese pairings
+              included.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#wine</span>
+              <span class="tag">#tasting</span>
+              <span class="tag">#sf</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/6.jpeg"
+              alt="Advertiser 5"
+              class="ad-image"
+            />
+            <span class="badge">Popular</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Art Gallery Night</h2>
+            <div class="ad-category">Entertainment</div>
+            <div class="ad-location">Miami</div>
+            <div class="ad-description">
+              Explore the latest exhibits with a private guide. Includes drinks and hors d'oeuvres.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#art</span>
+              <span class="tag">#gallery</span>
+              <span class="tag">#miami</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/7.jpeg"
+              alt="Advertiser 6"
+              class="ad-image"
+            />
+            <span class="badge">Online</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Cooking Class</h2>
+            <div class="ad-category">Dining</div>
+            <div class="ad-location">Seattle</div>
+            <div class="ad-description">
+              Learn to cook a gourmet meal together with a local chef. All skill levels welcome.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#cooking</span>
+              <span class="tag">#class</span>
+              <span class="tag">#seattle</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/8.jpeg"
+              alt="Advertiser 7"
+              class="ad-image"
+            />
+            <span class="badge">VIP</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Luxury Spa Day</h2>
+            <div class="ad-category">Wellness</div>
+            <div class="ad-location">Las Vegas</div>
+            <div class="ad-description">
+              Relax and rejuvenate with a full day of spa treatments for two. Includes lunch and
+              champagne.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#spa</span>
+              <span class="tag">#luxury</span>
+              <span class="tag">#vegas</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-header">
+            <img
+              src="../client-angular/src/assets/img/stranda.jpeg"
+              alt="Advertiser 8"
+              class="ad-image"
+            />
+            <span class="badge">Featured</span>
+          </div>
+          <div class="ad-card-body">
+            <h2 class="ad-title">Mountain Getaway</h2>
+            <div class="ad-category">Travel</div>
+            <div class="ad-location">Stranda</div>
+            <div class="ad-description">
+              Escape to the mountains for a weekend of adventure and relaxation. Includes guided
+              hikes and spa access.
+            </div>
+            <div class="ad-tags">
+              <span class="tag">#mountain</span>
+              <span class="tag">#getaway</span>
+              <span class="tag">#stranda</span>
+            </div>
+          </div>
+          <div class="ad-card-footer">
+            <button class="btn btn-primary">View</button>
+            <button class="btn btn-favorite" title="Add to favorites">♥</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="main-footer">
+      <p>&copy; 2025 Date Night App</p>
+    </footer>
+    <script src="carousel.js"></script>
+  </body>
+</html>

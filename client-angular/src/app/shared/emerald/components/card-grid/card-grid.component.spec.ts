@@ -1,4 +1,4 @@
-import { NbCardModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,6 +9,8 @@ import { NbCardModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, Input, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule

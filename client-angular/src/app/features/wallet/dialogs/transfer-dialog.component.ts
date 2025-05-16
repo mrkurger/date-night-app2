@@ -1,10 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Input, OnDestroy, OnInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -13,14 +7,25 @@ import {
   ReactiveFormsModule,
   FormBuilder,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbSelectModule,
+  NbFormFieldModule,
+  NbSpinnerModule,
+  NbIconModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+} from '@nebular/theme';
 
 import { Subscription } from 'rxjs';
-import { WalletService } from '../../../core/services/wallet.service';
-import { SharedModule } from '../../../shared/shared.module';
-import { WalletBalance } from '../../../core/services/wallet.service';
+import { WalletService, WalletBalance } from '../../../core/services/wallet.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-
 import { UserService } from '../../../core/services/user.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { User } from '../../../core/models/user.interface';
@@ -36,7 +41,22 @@ export interface TransferDialogData {
   templateUrl: './transfer-dialog.component.html',
   styleUrls: ['./transfer-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbFormFieldModule, NbSpinnerModule, NbIconModule, SharedModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbSpinnerModule,
+    NbIconModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,
+  ],
 })
 export class TransferDialogComponent implements OnInit, OnDestroy {
   transferForm: FormGroup;

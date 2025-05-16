@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary - Angular Client Fix Scripts</title>
+  <style>
+    :root {
+      --primary-color: #3366ff;
+      --secondary-color: #0095ff;
+      --background-color: #f7f9fc;
+      --text-color: #222b45;
+      --code-background: #edf1f7;
+      --border-color: #e4e9f2;
+      --success-color: #00d68f;
+      --warning-color: #ffaa00;
+      --danger-color: #ff3d71;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--primary-color);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background-color: var(--code-background);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+
+    pre {
+      background-color: var(--code-background);
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .term {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .term h3 {
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .term-type {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .function {
+      background-color: rgba(0, 149, 255, 0.1);
+      color: var(--secondary-color);
+    }
+
+    .script {
+      background-color: rgba(51, 102, 255, 0.1);
+      color: var(--primary-color);
+    }
+
+    .concept {
+      background-color: rgba(0, 214, 143, 0.1);
+      color: var(--success-color);
+    }
+
+    .nav {
+      margin-bottom: 2rem;
+    }
+
+    .nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .alphabet-nav {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+    }
+
+    .alphabet-nav a {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      margin: 0.25rem;
+      border-radius: 3px;
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    .alphabet-nav a:hover {
+      background-color: var(--code-background);
+    }
+
+    .alphabet-section {
+      margin-top: 3rem;
+    }
+
+    .alphabet-section h2 {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.9rem;
+      color: #8f9bb3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Glossary - Angular Client Fix Scripts</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="nav">
+      <a href="../_docs_index.html">Documentation Home</a>
+      <a href="AILESSONS.html">AI Lessons</a>
+      <a href="CHANGELOG.html">Changelog</a>
+    </div>
+
+    <div class="card">
+      <h2>Overview</h2>
+      <p>
+        This glossary provides definitions for functions, scripts, and concepts used in the Angular client fix scripts.
+        Use the alphabetical navigation below to quickly find terms.
+      </p>
+    </div>
+
+    <div class="alphabet-nav">
+      <a href="#A">A</a>
+      <a href="#C">C</a>
+      <a href="#E">E</a>
+      <a href="#F">F</a>
+      <a href="#N">N</a>
+      <a href="#S">S</a>
+    </div>
+
+    <div class="alphabet-section" id="A">
+      <h2>A</h2>
+      
+      <div class="term">
+        <h3>
+          Angular Standalone Components
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A feature in Angular that allows components to be used without declaring them in an NgModule.
+          Standalone components include their own imports array that specifies all the dependencies they need.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule
+  ],
+  template: `...`
+})</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="C">
+      <h2>C</h2>
+      
+      <div class="term">
+        <h3>
+          Content Security Policy (CSP)
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A security standard that helps prevent cross-site scripting (XSS) and other code injection attacks.
+          It specifies which resources (scripts, styles, fonts, etc.) are allowed to be loaded by the browser.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self'; 
+  style-src 'self' 'unsafe-inline' https://unpkg.com;"&gt;</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          ChatMessage Interface
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          An interface that defines the structure of chat message objects in the application.
+          It includes properties like sender, content, timestamp, and encryption data.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>export interface ChatMessage {
+  id: string;
+  roomId: string;
+  sender: string | ChatParticipant;
+  content: string;
+  timestamp: Date;
+  // Other properties...
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="E">
+      <h2>E</h2>
+      
+      <div class="term">
+        <h3>
+          Eva Icons
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A library of open-source icons used by Nebular and many Angular applications.
+          It provides a set of consistent, customizable icons that can be used in the UI.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>&lt;nb-icon icon="home-outline"&gt;&lt;/nb-icon&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="F">
+      <h2>F</h2>
+      
+      <div class="term">
+        <h3>
+          fix-all-issues.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          The main script that runs all the fix scripts in sequence. It orchestrates the execution of individual fix scripts to address all issues in the Angular client.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-all-issues.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-chat-message-interface.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that updates the ChatMessage interface in chat.service.ts to include all required properties used in components.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-chat-message-interface.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-css-paths.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that creates placeholder CSS files for eva-icons and Nebular themes to prevent build errors when these files are referenced but not found.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-css-paths.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-index-html.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that updates the index.html file to include Eva Icons CSS and proper Content Security Policy.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-index-html.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-nebular-imports.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that consolidates multiple Nebular imports in component files into a single import statement.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-nebular-imports.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-remaining-nebular-issues.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that fixes formatting and missing imports in components that use Nebular.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-remaining-nebular-issues.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          fix-styles.cjs
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that fixes styles.scss issues and adds CSS variables for Nebular theme.
+        </p>
+        <p>
+          <strong>Usage:</strong>
+        </p>
+        <pre><code>node scripts/fix-styles.cjs</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          findTsFiles
+          <span class="term-type function">Function</span>
+        </h3>
+        <p>
+          A function used in several scripts to recursively find all TypeScript files in a directory.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>function findTsFiles(dir, fileList = []) {
+  const files = fs.readdirSync(dir);
+  
+  files.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (stat.isDirectory()) {
+      findTsFiles(filePath, fileList);
+    } else if (file.endsWith('.ts') && !file.endsWith('.spec.ts')) {
+      fileList.push(filePath);
+    }
+  });
+  
+  return fileList;
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="N">
+      <h2>N</h2>
+      
+      <div class="term">
+        <h3>
+          Nebular
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A UI library for Angular applications that provides a set of reusable components, themes, and utilities.
+          It includes components like cards, buttons, forms, and more.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>&lt;nb-card&gt;
+  &lt;nb-card-header&gt;Card Title&lt;/nb-card-header&gt;
+  &lt;nb-card-body&gt;Card Content&lt;/nb-card-body&gt;
+&lt;/nb-card&gt;</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          NbDialogRef
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A reference to a dialog opened by Nebular's dialog service. It provides methods to close the dialog and retrieve data from it.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>constructor(public dialogRef: NbDialogRef&lt;MyDialogComponent&gt;) {}
+
+closeDialog() {
+  this.dialogRef.close(result);
+}</code></pre>
+      </div>
+
+      <div class="term">
+        <h3>
+          NbTagComponent
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          A Nebular component used to display tags or labels. It can be used with NbTagList and NbTagInput for tag input functionality.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>&lt;nb-tag-list&gt;
+  &lt;nb-tag *ngFor="let tag of tags" [text]="tag" removable&gt;&lt;/nb-tag&gt;
+  &lt;input nbTagInput [separatorKeys]="separatorKeysCodes"&gt;
+&lt;/nb-tag-list&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="S">
+      <h2>S</h2>
+      
+      <div class="term">
+        <h3>
+          separatorKeysCodes
+          <span class="term-type concept">Concept</span>
+        </h3>
+        <p>
+          An array of key codes used by NbTagInput to determine which keys should trigger the creation of a new tag.
+          Common values include Enter (13) and comma (188).
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>readonly separatorKeysCodes: number[] = [13, 188]; // Enter and comma</code></pre>
+      </div>
+    </div>
+
+    <footer>
+      <p>Last updated: May 2024</p>
+    </footer>
+  </div>
+</body>
+</html>

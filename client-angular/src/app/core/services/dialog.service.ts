@@ -1,4 +1,12 @@
-import { NbCardModule } from '@nebular/theme';
+import {
+  NbDialogService,
+  NbDialogRef,
+  NbDialogConfig,
+  NbCardModule,
+  NbButtonModule,
+} from '@nebular/theme';
+import { NebularModule } from '../../shared/nebular.module';
+
 import { Injectable, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

@@ -332,6 +332,95 @@ typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</p
     </div>
     
     <div class="lesson">
+      <h3>Nebular Component Import Patterns - May 15, 2025</h3>
+      <p>
+        When working with Nebular UI components in Angular standalone components, we discovered several important patterns:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>Complete Imports:</strong> Always import all Nebular modules used in the component template</li>
+        <li><strong>Consolidated Import Statements:</strong> Group related Nebular imports together for better readability</li>
+        <li><strong>Injection Tokens:</strong> Remember to import and use proper injection tokens like <code>NB_DIALOG_CONFIG</code></li>
+        <li><strong>Service Types:</strong> Import service types like <code>NbDialogRef</code> explicitly</li>
+      </ul>
+      
+      <pre>
+// Good practice - consolidated imports
+import { 
+  NbIconModule, 
+  NbCardModule, 
+  NbButtonModule,
+  NbDialogRef,
+  NB_DIALOG_CONFIG
+} from '@nebular/theme';
+
+// Good practice - proper injection in constructor
+constructor(
+  private dialogRef: NbDialogRef&lt;MyComponent&gt;,
+  @Inject(NB_DIALOG_CONFIG) public data: MyDialogData
+) {}</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When using standalone components, always include all required Nebular modules in the imports array, even if they're imported elsewhere in the application.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>SASS Module System in Angular - May 15, 2025</h3>
+      <p>
+        We encountered and resolved issues with the SASS module system in Angular, particularly with map functions:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>Explicit Module Imports:</strong> Always import SASS built-in modules explicitly</li>
+        <li><strong>Map Module:</strong> The 'map' module is not imported by default and must be explicitly imported</li>
+        <li><strong>Namespace Imported Modules:</strong> Use namespaces to avoid conflicts</li>
+        <li><strong>Modern SASS Syntax:</strong> Use @use instead of @import for better modularity</li>
+      </ul>
+      
+      <pre>
+// Required for using map functions
+@use 'sass:map';
+
+// Accessing map values
+$primary-color: map.get($colors, 'primary');</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> Always include <code>@use 'sass:map';</code> at the top of SCSS files that use map functions like map.get().
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>Content Security Policy for Angular Apps - May 15, 2025</h3>
+      <p>
+        We improved the Content Security Policy configuration to allow loading resources from CDNs:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>External Resources:</strong> CSP must explicitly allow all external resources</li>
+        <li><strong>CDN Domains:</strong> Each CDN domain must be listed in the appropriate directive</li>
+        <li><strong>Font Sources:</strong> Font sources need special consideration in the CSP</li>
+        <li><strong>Meta vs Headers:</strong> Some CSP directives only work via HTTP headers</li>
+      </ul>
+      
+      <pre>
+&lt;meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; 
+           script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; 
+           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; 
+           font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://unpkg.com data:;"
+/&gt;</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When adding external resources like CDN-hosted CSS, always update the CSP to allow loading from those domains.
+      </div>
+    </div>
+    
+    <div class="lesson">
       <h3>Babel Runtime Module Resolution - May 13, 2025</h3>
       <p>
         We encountered and resolved an issue with missing Babel runtime helpers in Angular tests.

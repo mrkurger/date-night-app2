@@ -1,17 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (reviews-page.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ReviewsListComponent, Review } from '../reviews-list/reviews-list.component';
 import { ReviewFormComponent, ReviewData } from '../review-form/review-form.component';
@@ -22,11 +13,11 @@ import { NotificationService } from '../../../core/services/notification.service
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-
 @Component({
   selector: 'app-reviews-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbButtonModule, NbIconModule, NbCardModule, NbLayoutModule, ReviewsListComponent, ReviewFormComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent],
   template: `
     <div class="reviews-page-container">
       <nb-card class="reviews-header-card">

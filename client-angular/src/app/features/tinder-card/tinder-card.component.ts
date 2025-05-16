@@ -1,7 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -22,10 +20,24 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../core/models/ad.model';
-
 
 // Import Hammer types
 declare let Hammer: any;
@@ -41,7 +53,16 @@ interface HammerManager {
   templateUrl: './tinder-card.component.html',
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule, NbTagModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbTagModule
+  ],
 })
 export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;

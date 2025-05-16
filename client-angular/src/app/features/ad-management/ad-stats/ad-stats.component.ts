@@ -1,7 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,18 +7,26 @@ import { NbCardModule } from '@nebular/theme';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
-
+import { NebularModule } from "../../shared/nebular.module";
+import {
+  NbTableModule,
+  NbTreeGridDataSourceBuilder,
+  NbSortDirection,
+  NbSortRequest,
+  
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-stats',
   templateUrl: './ad-stats.component.html',
   styleUrls: ['./ad-stats.component.scss'],
   standalone: true,
-  imports: [CommonModule, DatePipe, NbCardModule, NbSpinnerModule, NbTableModule, NbTreeGridModule, NbInputModule, NbFormFieldModule, NbIconModule, NbButtonModule, NbSelectModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, DatePipe, NebularModule],
 })
 export class AdStatsComponent implements OnInit {
   // Make Math available to the template

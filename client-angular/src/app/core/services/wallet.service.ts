@@ -36,10 +36,12 @@ export interface WalletTransaction {
   updatedAt?: string | Date;
 }
 
+export type PaymentMethodType = 'card' | 'bank_account' | 'crypto' | 'crypto_address' | 'paypal';
+
 export interface PaymentMethod {
   id: string;
   _id?: string;
-  type: string;
+  type: PaymentMethodType;
   currency: string;
   isDefault: boolean;
   name?: string;
@@ -56,6 +58,10 @@ export interface PaymentMethod {
     lastFour: string;
     accountType: string;
     country?: string;
+    accountNumber?: string;
+    routingNumber?: string;
+    accountHolder?: string;
+    memoName?: string;
   };
   cryptoDetails?: {
     currency: string;

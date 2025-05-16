@@ -18,7 +18,6 @@
  * }
  */
 
-
 @use 'sass:color';
 @use 'sass:map';
 
@@ -56,62 +55,60 @@
 
 // Dark mode color map
 // Maps light mode colors to dark mode colors
+$color-map: (
   // Background colors
-
-/* TODO: Move this to :root or a selector if needed */
---color-white: var(--color-dark-gray-3),
-/* TODO: Move this to :root or a selector if needed */
---color-light-gray-1: var(--color-dark-gray-2),
+  '--color-white': var(--color-dark-gray-3),
+  '--color-light-gray-1': var(--color-dark-gray-2),
   // Text colors
   // Primary colors
-  // Secondary colors
+   // Secondary colors
 );
 
 // Get dark mode color
 // Returns the dark mode equivalent of a light mode color
-@function color(var(--light-color) /* TODO: Verify correct CSS variable */) {
-  @if map.has-key(var(--color-map) /* TODO: Verify correct CSS variable */, var(--light-color) /* TODO: Verify correct CSS variable */) {
-    @return map.get(var(--color-map) /* TODO: Verify correct CSS variable */, var(--light-color) /* TODO: Verify correct CSS variable */);
+@function color($light-color) {
+  @if map.has-key($color-map, $light-color) {
+    @return map.get($color-map, $light-color);
   } @else {
-    @return var(--light-color) /* TODO: Verify correct CSS variable */;
+    @return $light-color;
   }
 }
 
 // Dark mode color mixin
 // Applies a color property in light mode and its dark mode equivalent in dark mode
-@mixin color(var(--property) /* TODO: Verify correct CSS variable */, var(--light-color) /* TODO: Verify correct CSS variable */) {
+@mixin color-mode($property, $light-color) {
   & {
-    #{var(--property) /* TODO: Verify correct CSS variable */}: var(--light-color) /* TODO: Verify correct CSS variable */;
+    #{$property}: $light-color;
   }
 
   @include mode {
-    #{var(--property) /* TODO: Verify correct CSS variable */}: color(var(--light-color) /* TODO: Verify correct CSS variable */);
+    #{$property}: color($light-color);
   }
 }
 
 // Dark mode background mixin
 // Applies a background-color in light mode and its dark mode equivalent in dark mode
-@mixin background(var(--light-color) /* TODO: Verify correct CSS variable */) {
-  @include color(background-color, var(--light-color) /* TODO: Verify correct CSS variable */);
+@mixin background($light-color) {
+  @include color-mode('background-color', $light-color);
 }
 
 // Dark mode text mixin
 // Applies a color in light mode and its dark mode equivalent in dark mode
-@mixin text(var(--light-color) /* TODO: Verify correct CSS variable */) {
-  @include color(color, var(--light-color) /* TODO: Verify correct CSS variable */);
+@mixin text($light-color) {
+  @include color-mode('color', $light-color);
 }
 
 // Dark mode border mixin
 // Applies a border-color in light mode and its dark mode equivalent in dark mode
-@mixin border(var(--light-color) /* TODO: Verify correct CSS variable */) {
-  @include color(border-color, var(--light-color) /* TODO: Verify correct CSS variable */);
+@mixin border($light-color) {
+  @include color-mode('border-color', $light-color);
 }
 
 // Dark mode shadow mixin
 // Applies a box-shadow in light mode and a darker shadow in dark mode
-@mixin shadow(var(--shadow) /* TODO: Verify correct CSS variable */) {
+@mixin shadow($shadow) {
   & {
-    box-shadow: var(--shadow) /* TODO: Verify correct CSS variable */;
+    box-shadow: $shadow;
   }
 
   @include mode {
@@ -124,48 +121,48 @@
 @mixin root-variables {
   :root {
     // Light mode variables
-    --color-bg-primary: #{var(--color-white)};
-    --color-bg-secondary: #{var(--color-light-gray-1)};
-    --color-bg-tertiary: #{var(--color-light-gray-2)};
-    --color-text-primary: #{var(--color-dark-gray-3)};
-    --color-text-secondary: #{var(--color-dark-gray-2)};
-    --color-text-tertiary: #{var(--color-dark-gray-1)};
-    --color-border-primary: #{var(--color-light-gray-2)};
-    --color-border-secondary: #{var(--color-medium-gray-1)};
-    --shadow-card: #{var(--shadow-sm)};
-    --shadow-dropdown: #{var(--shadow-md)};
-    --shadow-modal: #{var(--shadow-lg)};
+    --color-bg-primary: var(--color-white);
+    --color-bg-secondary: var(--color-light-gray-1);
+    --color-bg-tertiary: var(--color-light-gray-2);
+    --color-text-primary: var(--color-dark-gray-3);
+    --color-text-secondary: var(--color-dark-gray-2);
+    --color-text-tertiary: var(--color-dark-gray-1);
+    --color-border-primary: var(--color-light-gray-2);
+    --color-border-secondary: var(--color-medium-gray-1);
+    --shadow-card: var(--shadow-sm);
+    --shadow-dropdown: var(--shadow-md);
+    --shadow-modal: var(--shadow-lg);
   }
 
   .dark-mode {
     // Dark mode variables
-    --color-bg-primary: #{var(--color-dark-gray-3)};
-    --color-bg-secondary: #{var(--color-dark-gray-2)};
-    --color-bg-tertiary: #{var(--color-dark-gray-1)};
-    --color-text-primary: #{var(--color-light-gray-1)};
-    --color-text-secondary: #{var(--color-light-gray-2)};
-    --color-text-tertiary: #{var(--color-medium-gray-1)};
-    --color-border-primary: #{var(--color-dark-gray-1)};
-    --color-border-secondary: #{var(--color-dark-gray-2)};
-    --shadow-card: 0 0 0 1px rgba(#{var(--color-white)}, 0.1);
-    --shadow-dropdown: 0 0 0 1px rgba(#{var(--color-white)}, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
-    --shadow-modal: 0 0 0 1px rgba(#{var(--color-white)}, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
+    --color-bg-primary: var(--color-dark-gray-3);
+    --color-bg-secondary: var(--color-dark-gray-2);
+    --color-bg-tertiary: var(--color-dark-gray-1);
+    --color-text-primary: var(--color-light-gray-1);
+    --color-text-secondary: var(--color-light-gray-2);
+    --color-text-tertiary: var(--color-medium-gray-1);
+    --color-border-primary: var(--color-dark-gray-1);
+    --color-border-secondary: var(--color-dark-gray-2);
+    --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.1);
+    --shadow-dropdown: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
   }
 
   @media (prefers-color-scheme: dark) {
     body:not(.light-mode) {
       // Dark mode variables
-      --color-bg-primary: #{var(--color-dark-gray-3)};
-      --color-bg-secondary: #{var(--color-dark-gray-2)};
-      --color-bg-tertiary: #{var(--color-dark-gray-1)};
-      --color-text-primary: #{var(--color-light-gray-1)};
-      --color-text-secondary: #{var(--color-light-gray-2)};
-      --color-text-tertiary: #{var(--color-medium-gray-1)};
-      --color-border-primary: #{var(--color-dark-gray-1)};
-      --color-border-secondary: #{var(--color-dark-gray-2)};
-      --shadow-card: 0 0 0 1px rgba(#{var(--color-white)}, 0.1);
-      --shadow-dropdown: 0 0 0 1px rgba(#{var(--color-white)}, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
-      --shadow-modal: 0 0 0 1px rgba(#{var(--color-white)}, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
+      --color-bg-primary: var(--color-dark-gray-3);
+      --color-bg-secondary: var(--color-dark-gray-2);
+      --color-bg-tertiary: var(--color-dark-gray-1);
+      --color-text-primary: var(--color-light-gray-1);
+      --color-text-secondary: var(--color-light-gray-2);
+      --color-text-tertiary: var(--color-medium-gray-1);
+      --color-border-primary: var(--color-dark-gray-1);
+      --color-border-secondary: var(--color-dark-gray-2);
+      --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      --shadow-dropdown: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
+      --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 15px rgba(0, 0, 0, 0.3);
     }
   }
 }

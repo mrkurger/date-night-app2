@@ -1,6 +1,4 @@
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { OnDestroy, OnInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -23,7 +21,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NetflixViewComponent, TinderComponent, ListViewComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule],
 })
 export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

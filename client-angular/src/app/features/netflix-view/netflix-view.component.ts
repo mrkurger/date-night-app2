@@ -1,10 +1,3 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbUserModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -26,7 +19,21 @@ import {
   ViewChild,
   TemplateRef,
   Input,
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbLayoutModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -37,13 +44,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
-// Import Nebular components
-
-import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
-import { ErrorCategory } from '../../core/interceptors/http-error.interceptor';
-import { TelemetryService, ErrorTelemetry } from '../../core/services/telemetry.service';
+// AppSortComponent is imported but not used in the template
+// import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
 interface GetAdsResponse {
   ads: Ad[];
@@ -57,8 +59,23 @@ interface GetAdsResponse {
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, NbLayoutModule, NbButtonModule, NbIconModule, NbBadgeModule, NbToggleModule, NbDialogModule, NbSelectModule, NbFormFieldModule, NbInputModule, NbUserModule, NbTagModule, NbSpinnerModule, NbTableModule, NbDatepickerModule, AppSortComponent, AppSortHeaderComponent
-    NbCardModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbLayoutModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbCardModule,
+  ],
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
@@ -90,8 +107,6 @@ export class NetflixViewComponent implements OnInit {
     },
   };
 
-  @ViewChild('filtersDialog') filtersDialog!: TemplateRef<any>;
-
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,
@@ -99,7 +114,6 @@ export class NetflixViewComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private dialogService: NbDialogService,
   ) {
     this.filterForm = this.fb.group({
       category: [''],
@@ -364,9 +378,9 @@ export class NetflixViewComponent implements OnInit {
    * @param event The action event from the AppCard component
    * @param adId The ID of the ad
    */
-  onCardAction(event: { id: string; itemId?: string }, adId: string): void {
-    // Use the itemId from the event if available, otherwise use the provided adId
-    const targetAdId = event.itemId || adId;
+  onCardAction(event: { id: string; itemId?: string }): void {
+    // Use the itemId from the event
+    const targetAdId = event.itemId;
 
     switch (event.id) {
       case 'view':
@@ -475,12 +489,8 @@ export class NetflixViewComponent implements OnInit {
    * Open the filters modal
    */
   openFilters(): void {
-    this.dialogService.open(this.filtersDialog, {
-      context: {},
-      hasBackdrop: true,
-      closeOnBackdropClick: true,
-      closeOnEsc: true,
-    });
+    // Apply filters directly
+    this.applyFilters();
   }
 
   /**

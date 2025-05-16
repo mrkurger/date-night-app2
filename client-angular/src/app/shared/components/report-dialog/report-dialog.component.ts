@@ -1,9 +1,16 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbIconModule,
+} from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+
+import { Component, Inject } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -22,7 +29,6 @@ import {
   FormControl,
 } from '@angular/forms';
 
-
 export interface ReportDialogData {
   userId?: string;
   advertiserId?: string;
@@ -35,7 +41,18 @@ export interface ReportDialogData {
 
 @Component({
   selector: 'app-report-dialog',
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbSelectModule, NbSpinnerModule, NbIconModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbIconModule,
+  ],
   template: `
     <nb-card class="report-dialog">
       <nb-card-header class="dialog-header">
@@ -152,7 +169,9 @@ export class ReportDialogComponent {
   constructor(
     private dialogRef: NbDialogRef<ReportDialogComponent>,
     private fb: FormBuilder,
+    @Inject('REPORT_DIALOG_DATA') public injectedData?: ReportDialogData,
   ) {
+    this.data = injectedData || {};
     this.reportForm = this.fb.group({
       reason: ['', Validators.required],
       details: ['', [Validators.required, Validators.maxLength(500)]],

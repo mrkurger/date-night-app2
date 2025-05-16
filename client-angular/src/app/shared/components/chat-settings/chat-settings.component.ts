@@ -1,9 +1,3 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -14,6 +8,7 @@ import { NbCardModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -22,6 +17,17 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbSpinnerModule,
+  NbAlertModule,
+} from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../../environments/environment';
@@ -37,7 +43,20 @@ export interface ChatSettings {
 @Component({
   selector: 'app-chat-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbSpinnerModule, NbAlertModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbSpinnerModule,
+    NbAlertModule,
+  ],
   template: `
     <nb-card>
       <nb-card-header>

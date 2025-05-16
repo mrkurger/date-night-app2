@@ -1,8 +1,14 @@
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbDialogRef,
+  NbDialogModule,
+  NbCardModule,
+  NbButtonModule,
+  NbFormFieldModule,
+  NbInputModule,
+} from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+
+import { Component, OnInit, Inject } from '@angular/core';
 // ===================================================
 // This file contains settings for component configuration (notes-dialog.component)
 //
@@ -12,7 +18,6 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 
 export interface NotesDialogData {
   title: string;
@@ -24,7 +29,15 @@ export interface NotesDialogData {
 @Component({
   selector: 'app-notes-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, NbDialogModule, NbCardModule, NbButtonModule, NbFormFieldModule, NbInputModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbDialogModule,
+    NbCardModule,
+    NbButtonModule,
+    NbFormFieldModule,
+    NbInputModule,
+  ],
   template: `
     <nb-card>
       <nb-card-header>{{ data.title }}</nb-card-header>
@@ -67,10 +80,15 @@ export class NotesDialogComponent implements OnInit {
   notes: string = '';
   data: NotesDialogData;
 
-  constructor(protected dialogRef: NbDialogRef<NotesDialogComponent>) {}
+  constructor(
+    protected dialogRef: NbDialogRef<NotesDialogComponent>,
+    @Inject('NOTES_DIALOG_DATA') public injectedData?: NotesDialogData,
+  ) {}
 
   ngOnInit() {
-    this.data = this.dialogRef.componentRef?.instance['data'];
+    // Use injected data if available, otherwise try to get it from the dialog ref
+    this.data = this.injectedData ||
+      this.dialogRef.componentRef?.instance['data'] || { title: 'Notes', notes: '' };
     this.notes = this.data?.notes || '';
   }
 

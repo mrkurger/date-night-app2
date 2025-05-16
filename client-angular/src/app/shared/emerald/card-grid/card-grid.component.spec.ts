@@ -1,4 +1,4 @@
-import { NbCardModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,6 +8,8 @@ import { NbCardModule } from '@nebular/theme';
 // - MOCK_ITEMS: Mock items data for testing
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../nebular.module';
+
 // import { By } from '@angular/platform-browser';
 import {
   // DebugElement, // Commented out as it's currently unused

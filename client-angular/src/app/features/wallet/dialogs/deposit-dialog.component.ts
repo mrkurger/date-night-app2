@@ -1,8 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import {
   Component,
   OnInit,
@@ -12,9 +7,22 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-
 import { WalletService, PaymentMethod, WalletBalance } from '../../../core/services/wallet.service';
-import { NbToastrService } from '@nebular/theme';
+import {
+  NbToastrService,
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbDialogModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbButtonModule,
+  NbRadioModule,
+  NbSpinnerModule,
+  NbIconModule,
+  NbAlertModule,
+} from '@nebular/theme';
 
 interface DepositRequest {
   amount: number;
@@ -28,6 +36,7 @@ interface DepositDialogConfig {
   balances: WalletBalance[];
   paymentMethods: PaymentMethod[];
   selectedCurrency?: string;
+  currencies?: string[];
 }
 
 @Component({
@@ -35,7 +44,21 @@ interface DepositDialogConfig {
   templateUrl: './deposit-dialog.component.html',
   styleUrls: ['./deposit-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbDialogModule, NbCardModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbButtonModule, NbRadioModule, NbSpinnerModule, NbIconModule, NbAlertModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbDialogModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbRadioModule,
+    NbSpinnerModule,
+    NbIconModule,
+    NbAlertModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DepositDialogComponent implements OnInit {
@@ -46,6 +69,7 @@ export class DepositDialogComponent implements OnInit {
     protected ref: NbDialogRef<DepositDialogComponent>,
     private fb: FormBuilder,
     private walletService: WalletService,
+    private notificationService: NbToastrService,
     @Inject(NB_DIALOG_CONFIG) public context: DepositDialogConfig,
     private cdr: ChangeDetectorRef,
   ) {
@@ -90,7 +114,7 @@ export class DepositDialogComponent implements OnInit {
         this.notificationService.success('Deposit successful!');
         this.ref.close({ success: true, amount: formData.amount, currency: formData.currency });
       } else {
-        this.notificationService.error(
+        this.notificationService.danger(
           result?.error || 'Failed to process deposit. Please try again.',
         );
       }
@@ -111,7 +135,7 @@ export class DepositDialogComponent implements OnInit {
       } else if (typeof error === 'string') {
         message = error;
       }
-      this.notificationService.error(message);
+      this.notificationService.danger(message);
     } finally {
       this.isSubmitting = false;
       this.cdr.markForCheck();

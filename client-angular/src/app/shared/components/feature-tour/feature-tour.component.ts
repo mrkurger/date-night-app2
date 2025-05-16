@@ -1,4 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
+
 import {
   Component,
   ElementRef,
@@ -9,8 +9,9 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../nebular.module';
 
+import { CommonModule } from '@angular/common';
 
 /**
  * Feature Tour Component
@@ -52,7 +53,11 @@ export interface TourStep {
   templateUrl: './feature-tour.component.html',
   styleUrls: ['./feature-tour.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule
+  ],
 })
 export class FeatureTourComponent implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = [];

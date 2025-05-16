@@ -8,9 +8,10 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { NgModule, Component } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NbDialogModule } from '@nebular/theme';
 
 // Import all review-related components
 import { ReviewFormComponent } from '../components/review-form/review-form.component';
@@ -29,16 +30,17 @@ import { StarRatingComponent } from '../components/star-rating/star-rating.compo
  * and interacting with reviews.
  */
 @NgModule({
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     ReactiveFormsModule,
-    NbDialogModule,
     ReviewListComponent,
     ReviewSummaryComponent,
     ReviewDialogComponent,
     ResponseDialogComponent,
     ReportDialogComponent,
     StarRatingComponent
-    ReviewFormComponent,],
+    ReviewFormComponent,
+    NebularModule],
   exports: [
     // Export all components for use in other modules
     ReviewFormComponent,

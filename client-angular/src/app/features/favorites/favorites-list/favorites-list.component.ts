@@ -1,9 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,13 +14,25 @@ import { NotificationService } from '../../../core/services/notification.service
 import { FavoriteButtonComponent } from '../../../shared/components/favorite-button/favorite-button.component';
 import { NotesDialogComponent } from '../../../shared/components/notes-dialog/notes-dialog.component';
 import { Subject } from 'rxjs';
+import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { NbContextMenuModule } from '@nebular/theme';
+
+// Import NebularModule directly for standalone components if not already present
+import { NebularModule } from '../../../shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({
   selector: 'app-favorites-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbMenuModule, NbInputModule, NbFormFieldModule, NbSpinnerModule, NbToggleModule, NbTooltipModule, NbDialogModule, NbSelectModule, NbTagModule, NbCheckboxModule, FavoriteButtonComponent, NbAlertModule, NbContextMenuModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NebularModule, // Ensure NebularModule is imported here
+    // FavoriteButtonComponent is imported but not used in the template
+    // FavoriteButtonComponent,
+  ],
   template: `
     <div class="favorites-container">
       <div class="favorites-header">
@@ -148,7 +156,7 @@ import { NbContextMenuModule } from '@nebular/theme';
                   </nb-tag>
 
                   <nb-tag status="basic" icon="calendar-outline">
-                    Added {{ favorite.dateAdded | date }}
+                    Added {{ favorite.dateAdded || favorite.createdAt | date }}
                   </nb-tag>
 
                   <nb-tag
@@ -187,7 +195,7 @@ import { NbContextMenuModule } from '@nebular/theme';
                     {
                       title: 'View Details',
                       icon: 'eye-outline',
-                      link: ['/ads', favorite.ad._id],
+                      link: '/ads/' + this.getAdIdAsString(favorite.ad),
                     },
                     {
                       title: 'Edit Notes',
@@ -419,8 +427,11 @@ export class FavoritesListComponent implements OnInit {
   /**
    * Convert ad ID to string regardless of its type
    */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  getAdIdAsString(adId: any): string {
+    if (!adId) return '';
+    if (typeof adId === 'string') return adId;
+    if (adId._id) return adId._id;
+    return JSON.stringify(adId);
   }
 
   get isFiltered(): boolean {
@@ -432,6 +443,13 @@ export class FavoritesListComponent implements OnInit {
       this.selectedTagFilters.length > 0
     );
   }
+
+  // Batch actions menu items
+  batchActions: NbMenuItem[] = [
+    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },
+    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },
+    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },
+  ];
 
   constructor(
     private favoriteService: FavoriteService,

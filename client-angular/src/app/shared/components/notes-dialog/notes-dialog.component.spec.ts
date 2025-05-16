@@ -1,15 +1,15 @@
 import { Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  NbDialogModule,
   NB_DIALOG_CONFIG,
   NbDialogRef,
-  NbFormFieldModule,
-  NbInputModule,
+  
 } from '@nebular/theme';
 import { NotesDialogComponent, NotesDialogData } from './notes-dialog.component';
 

@@ -1,10 +1,6 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
 
-import { NbTagModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -12,6 +8,7 @@ import {
   AppSortComponent,
   AppSortHeaderComponent,
 } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
@@ -30,7 +27,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-error-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbIconModule, NbTagModule, NbSpinnerModule, NbDatepickerModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NebularModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>
@@ -131,70 +135,61 @@ import { FormGroup, FormBuilder } from '@angular/forms';
               <nb-spinner></nb-spinner>
             </div>
 
-            <table nbTable [nbSort]="sort" [dataSource]="errors" *ngIf="!loading">
-              <tr nbTableHeaderRow *nbTableHeaderRowDef="displayedColumns"></tr>
-              <tr nbTableRow *nbTableRowDef="let row; columns: displayedColumns"></tr>
-
-              <ng-container nbColumnDef="timestamp">
-                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Timestamp</th>
-                <td nbTableCell *nbTableCellDef="let error">
-                  {{ error.timestamp | date: 'medium' }}
-                </td>
-              </ng-container>
-
-              <ng-container nbColumnDef="errorCode">
-                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Error Code</th>
-                <td nbTableCell *nbTableCellDef="let error">{{ error.errorCode }}</td>
-              </ng-container>
-
-              <ng-container nbColumnDef="category">
-                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Category</th>
-                <td nbTableCell *nbTableCellDef="let error">
-                  <nb-tag
-                    [status]="getCategoryStatus(error.context?.category)"
-                    [text]="error.context?.category || 'unknown'"
-                  >
-                  </nb-tag>
-                </td>
-              </ng-container>
-
-              <ng-container nbColumnDef="statusCode">
-                <th nbTableHeaderCell nbSortHeader *nbTableHeaderCellDef>Status</th>
-                <td nbTableCell *nbTableCellDef="let error">{{ error.statusCode }}</td>
-              </ng-container>
-
-              <ng-container nbColumnDef="userMessage">
-                <th nbTableHeaderCell *nbTableHeaderCellDef>User Message</th>
-                <td nbTableCell *nbTableCellDef="let error">{{ error.userMessage }}</td>
-              </ng-container>
-
-              <ng-container nbColumnDef="url">
-                <th nbTableHeaderCell *nbTableHeaderCellDef>URL</th>
-                <td nbTableCell *nbTableCellDef="let error">{{ error.url }}</td>
-              </ng-container>
-
-              <ng-container nbColumnDef="actions">
-                <th nbTableHeaderCell *nbTableHeaderCellDef></th>
-                <td nbTableCell *nbTableCellDef="let error">
-                  <button nbButton ghost (click)="viewErrorDetails(error)">
-                    <nb-icon icon="eye-outline"></nb-icon>
-                  </button>
-                </td>
-              </ng-container>
-            </table>
+            <app-sort (sortChange)="sortData($event)">
+              <table class="table" *ngIf="!loading">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of displayedColumns">
+                      <app-sort-header
+                        [active]="sortField === column.toLowerCase()"
+                        [direction]="sortDirection"
+                      >
+                        {{ column }}
+                      </app-sort-header>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let error of errors">
+                    <td>{{ error.timestamp | date: 'medium' }}</td>
+                    <td>{{ error.statusCode || 'N/A' }}</td>
+                    <td>{{ error.category }}</td>
+                    <td>{{ error.type }}</td>
+                    <td>{{ error.message }}</td>
+                    <td>{{ error.count }}</td>
+                    <td>
+                      <button nbButton ghost size="small" (click)="viewErrorDetails(error)">
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </app-sort>
 
             <div class="no-data-message" *ngIf="!loading && errors.length === 0">
               No errors found matching the current filters.
             </div>
 
-            <nb-paginator
-              [total]="totalErrors"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 25, 50]"
-              (pageChange)="pageChanged($event)"
-              *ngIf="!loading && errors.length > 0"
-            >
-            </nb-paginator>
+            <div class="pagination" *ngIf="!loading && errors.length > 0">
+              <button
+                nbButton
+                ghost
+                [disabled]="currentPage === 1"
+                (click)="pageChanged({ page: currentPage - 1, pageSize: pageSize })"
+              >
+                Previous
+              </button>
+              <span>Page {{ currentPage }}</span>
+              <button
+                nbButton
+                ghost
+                [disabled]="currentPage * pageSize >= totalErrors"
+                (click)="pageChanged({ page: currentPage + 1, pageSize: pageSize })"
+              >
+                Next
+              </button>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
@@ -294,7 +289,7 @@ export class ErrorDashboardComponent implements OnInit {
 
   // Sorting
   sortField = 'timestamp';
-  sortDirection: NbSortDirection = NbSortDirection.DESCENDING;
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
 
   // Table columns
   displayedColumns = [
@@ -419,8 +414,8 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle sort change event
    */
-  sortData(sort: NbSortRequest): void {
-    this.sortField = sort.column;
+  sortData(sort: AppSortEvent): void {
+    this.sortField = sort.active;
     this.sortDirection = sort.direction;
     this.loadErrors();
   }

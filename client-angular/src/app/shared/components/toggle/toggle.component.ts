@@ -1,12 +1,17 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { NbToggleModule } from '@nebular/theme';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-toggle',
   standalone: true,
-  imports: [CommonModule, NbToggleModule],
+  imports: [
+    CommonModule,
+    NbToggleModule
+  ],
   template: `
     <nb-toggle
       [checked]="value"

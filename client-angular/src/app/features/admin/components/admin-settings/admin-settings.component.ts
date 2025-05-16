@@ -1,10 +1,11 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { NebularModule } from "../../../shared/nebular.module";
+import {
+  NbToastrService,
+  
+} from '@nebular/theme';
 
 interface AppSettings {
   general: {
@@ -38,7 +39,8 @@ interface AppSettings {
 @Component({
   selector: 'app-admin-settings',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbInputModule, NbSelectModule, NbToggleModule, NbAccordionModule, NbSpinnerModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   template: `
     <div class="admin-settings">
       <nb-card>

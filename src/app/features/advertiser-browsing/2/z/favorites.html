@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites - Static Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>Favorites</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="browse.html">Browse</a></li>
+          <li><a href="user-profile.html">Profile</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="tabs-container">
+        <div class="tabs-list">
+          <button class="tab active" data-tab="all">All Favorites</button>
+          <button class="tab" data-tab="group1">VIP Group</button>
+          <button class="tab" data-tab="group2">Comedy Lovers</button>
+          <button class="tab add-group" title="Add Group">+</button>
+        </div>
+        <div class="tab-actions">
+          <button class="btn btn-secondary" title="Rename Group">Rename</button>
+          <button class="btn btn-danger" title="Remove Group">Remove</button>
+        </div>
+        <div class="tabs-content">
+          <div class="tab-panel active" data-tab="all">
+            <div class="ads-grid">
+              <!-- Example favorite cards -->
+              <div class="ad-card">
+                <div class="ad-card-header">
+                  <img
+                    src="../client-angular/src/assets/img/2.jpeg"
+                    alt="Advertiser 1"
+                    class="ad-image"
+                  />
+                  <span class="badge vip">VIP</span>
+                </div>
+                <div class="ad-card-body">
+                  <h2 class="ad-title">Romantic Dinner for Two</h2>
+                  <div class="ad-category">Dining</div>
+                  <div class="ad-location">New York</div>
+                  <div class="ad-description">
+                    Enjoy a candlelit dinner at the city's top-rated restaurant. Includes wine
+                    pairing and dessert.
+                  </div>
+                  <div class="ad-tags">
+                    <span class="tag">#romantic</span>
+                    <span class="tag">#dinner</span>
+                    <span class="tag">#nyc</span>
+                  </div>
+                </div>
+                <div class="ad-card-footer">
+                  <button class="btn btn-primary">View</button>
+                  <button class="btn btn-favorite" title="Remove from favorites">♥</button>
+                  <button class="btn btn-secondary" title="Add to group">+</button>
+                </div>
+              </div>
+              <div class="ad-card">
+                <div class="ad-card-header">
+                  <img
+                    src="../client-angular/src/assets/img/3.jpeg"
+                    alt="Advertiser 2"
+                    class="ad-image"
+                  />
+                  <span class="badge online">Online</span>
+                </div>
+                <div class="ad-card-body">
+                  <h2 class="ad-title">Comedy Night Tickets</h2>
+                  <div class="ad-category">Entertainment</div>
+                  <div class="ad-location">Los Angeles</div>
+                  <div class="ad-description">
+                    Laugh the night away with two tickets to the hottest comedy club in LA. VIP
+                    seating included.
+                  </div>
+                  <div class="ad-tags">
+                    <span class="tag">#comedy</span>
+                    <span class="tag">#la</span>
+                    <span class="tag">#nightout</span>
+                  </div>
+                </div>
+                <div class="ad-card-footer">
+                  <button class="btn btn-primary">View</button>
+                  <button class="btn btn-favorite" title="Remove from favorites">♥</button>
+                  <button class="btn btn-secondary" title="Add to group">+</button>
+                </div>
+              </div>
+              <!-- Add more favorite cards as needed -->
+            </div>
+          </div>
+          <div class="tab-panel" data-tab="group1">
+            <div class="ads-grid">
+              <!-- Example: Only VIP cards here -->
+              <div class="ad-card">
+                <div class="ad-card-header">
+                  <img
+                    src="../client-angular/src/assets/img/4.jpeg"
+                    alt="Advertiser 3"
+                    class="ad-image"
+                  />
+                  <span class="badge vip">VIP</span>
+                </div>
+                <div class="ad-card-body">
+                  <h2 class="ad-title">Romantic Dinner for Two</h2>
+                  <div class="ad-category">Dining</div>
+                  <div class="ad-location">New York</div>
+                  <div class="ad-description">
+                    Enjoy a candlelit dinner at the city's top-rated restaurant. Includes wine
+                    pairing and dessert.
+                  </div>
+                  <div class="ad-tags">
+                    <span class="tag">#romantic</span>
+                    <span class="tag">#dinner</span>
+                    <span class="tag">#nyc</span>
+                  </div>
+                </div>
+                <div class="ad-card-footer">
+                  <button class="btn btn-primary">View</button>
+                  <button class="btn btn-favorite" title="Remove from favorites">♥</button>
+                  <button class="btn btn-secondary" title="Add to group">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab="group2">
+            <div class="ads-grid">
+              <!-- Example: Only comedy cards here -->
+              <div class="ad-card">
+                <div class="ad-card-header">
+                  <img
+                    src="../client-angular/src/assets/img/5.jpeg"
+                    alt="Advertiser 4"
+                    class="ad-image"
+                  />
+                  <span class="badge online">Online</span>
+                </div>
+                <div class="ad-card-body">
+                  <h2 class="ad-title">Comedy Night Tickets</h2>
+                  <div class="ad-category">Entertainment</div>
+                  <div class="ad-location">Los Angeles</div>
+                  <div class="ad-description">
+                    Laugh the night away with two tickets to the hottest comedy club in LA. VIP
+                    seating included.
+                  </div>
+                  <div class="ad-tags">
+                    <span class="tag">#comedy</span>
+                    <span class="tag">#la</span>
+                    <span class="tag">#nightout</span>
+                  </div>
+                </div>
+                <div class="ad-card-footer">
+                  <button class="btn btn-primary">View</button>
+                  <button class="btn btn-favorite" title="Remove from favorites">♥</button>
+                  <button class="btn btn-secondary" title="Add to group">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="main-footer">
+      <p>&copy; 2025 Date Night App</p>
+    </footer>
+    <script>
+      // Simple tab switching logic
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          const tabName = this.getAttribute('data-tab');
+          document.querySelectorAll('.tab-panel').forEach(panel => {
+            panel.classList.toggle('active', panel.getAttribute('data-tab') === tabName);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

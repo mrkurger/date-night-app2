@@ -1,5 +1,6 @@
-import { NbCardModule } from '@nebular/theme';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -23,7 +24,8 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule, NbTabsetModule, NbCardModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
   template: `
     <nb-card>
       <nb-card-header>

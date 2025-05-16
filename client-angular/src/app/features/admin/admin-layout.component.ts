@@ -1,13 +1,29 @@
-import { NbIconModule } from '@nebular/theme';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbLayoutModule,
+  NbSidebarModule,
+  NbButtonModule,
+  NbIconModule,
+  NbMenuModule,
+  NbSidebarService,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbSidebarModule, NbLayoutModule, NbButtonModule, NbIconModule, NbMenuModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbSidebarModule,
+    NbLayoutModule,
+    NbButtonModule,
+    NbIconModule,
+    NbMenuModule,
+  ],
   template: `
     <nb-layout>
       <nb-layout-header fixed>
@@ -82,6 +98,6 @@ export class AdminLayoutComponent {
   constructor(private sidebarService: NbSidebarService) {}
 
   toggleSidebar() {
-    this.sidebarService.toggle();
+    this.sidebarService.toggle(true, 'left');
   }
 }

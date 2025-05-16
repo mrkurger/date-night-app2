@@ -1,4 +1,6 @@
 import { Input } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -10,7 +12,6 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbSpinnerModule } from '@nebular/theme';
 
 /**
  * Skeleton Loader Component
@@ -41,7 +42,10 @@ import { NbSpinnerModule } from '@nebular/theme';
     `,
   ],
   standalone: true,
-  imports: [CommonModule, NbSpinnerModule],
+  imports: [
+    CommonModule,
+    NbSpinnerModule
+  ],
 })
 export class SkeletonLoaderComponent {
   @Input() type: 'small' | 'medium' | 'large' = 'medium';

@@ -1,5 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,14 +9,28 @@ import { NbCardModule } from '@nebular/theme';
 // - DEFAULT_VIEW_MODE: Default view mode (default: 'grid')
 //   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
-
 
 @Component({
   selector: 'app-gallery',
@@ -84,7 +98,18 @@ import { UserPreferencesService } from '../../core/services/user-preferences.ser
     `,
   ],
   standalone: true,
-  imports: [CommonModule, RouterModule, SharedModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbTooltipModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SharedModule
+  ],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

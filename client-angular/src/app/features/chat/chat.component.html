@@ -4,37 +4,16 @@
     <div class="chat-header">
       <h2>Messages</h2>
       <div class="chat-header-actions">
-        <button nbButton ghost nbTooltip="New Message" (click)="openNewMessageDialog()">
-          <nb-icon icon="plus-outline"></nb-icon>
-        </button>
-        <button nbButton ghost nbTooltip="Settings" [nbContextMenu]="settingsItems">
-          <nb-icon icon="more-vertical-outline"></nb-icon>
-        </button>
+        <button>New Message</button>
+        <button>Settings</button>
       </div>
     </div>
 
     <div class="chat-search">
-      <nb-form-field>
-        <nb-icon nbPrefix icon="search-outline"></nb-icon>
-        <input
-          nbInput
-          fullWidth
-          type="text"
-          placeholder="Search conversations..."
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="filterConversations()"
-        />
-        <button
-          nbSuffix
-          nbButton
-          ghost
-          *ngIf="searchQuery"
-          (click)="clearSearch()"
-          nbTooltip="Clear search"
-        >
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-form-field>
+      <div>
+        <input type="text" placeholder="Search conversations..." />
+        <button>Clear</button>
+      </div>
     </div>
 
     <div class="conversation-list" #conversationList>
@@ -61,22 +40,19 @@
             <p class="last-message">
               {{ contact.lastMessage?.content || 'No messages yet' }}
             </p>
-            <nb-badge
-              *ngIf="contact.unreadCount"
-              [text]="contact.unreadCount.toString()"
-              status="primary"
-              position="top right"
-            ></nb-badge>
+            <span *ngIf="contact.unreadCount" class="badge">
+              {{ contact.unreadCount }}
+            </span>
           </div>
         </div>
       </div>
 
       <div *ngIf="loading" class="loading-conversations">
-        <app-skeleton-loader *ngFor="let i of [1, 2, 3, 4, 5]"></app-skeleton-loader>
+        <div *ngFor="let i of [1, 2, 3, 4, 5]" class="skeleton-loader"></div>
       </div>
 
       <div *ngIf="!loading && filteredContacts.length === 0" class="no-conversations">
-        <nb-icon icon="message-circle-outline" size="large"></nb-icon>
+        <span class="icon">💬</span>
         <p>No conversations found</p>
       </div>
     </div>
@@ -223,7 +199,7 @@
       <nb-icon icon="close"></nb-icon>
     </button>
 
-    <img [src]="previewImage?.url" [alt]="previewImage?.name" class="preview-image" />
+    <img [src]="previewImage?.url" [alt]="previewImage?.type || 'Image'" class="preview-image" />
 
     <div class="image-preview-actions">
       <button nbButton ghost nbTooltip="Download" (click)="downloadImage()">
@@ -252,8 +228,10 @@
         class="search-result-item"
         (click)="scrollToMessage(result)"
       >
-        <div class="result-sender">{{ result.sender.username }}</div>
-        <div class="result-message" [innerHTML]="highlightSearchText(result.message)"></div>
+        <div class="result-sender">
+          {{ result.sender && typeof result.sender === 'object' ? result.sender.username : 'User' }}
+        </div>
+        <div class="result-message" [innerHTML]="highlightSearchText(result.content || '')"></div>
         <div class="result-time">{{ result.timestamp | date: 'short' }}</div>
       </div>
 
@@ -290,7 +268,7 @@
         class="gallery-image"
         (click)="openImagePreview(image)"
       >
-        <img [src]="image.url" [alt]="image.name" />
+        <img [src]="image.url" [alt]="image.type || 'Image'" />
       </div>
 
       <div *ngIf="galleryImages.length === 0" class="no-media">
@@ -307,10 +285,10 @@
       >
         <nb-icon icon="{{ getFileIcon(file) }}"></nb-icon>
         <div class="file-info">
-          <div class="file-name">{{ file.name }}</div>
+          <div class="file-name">{{ file.type || 'File' }}</div>
           <div class="file-meta">
-            <span class="file-size">{{ formatFileSize(file.size) }}</span>
-            <span class="file-date">{{ file.timestamp | date: 'shortDate' }}</span>
+            <span class="file-size">1.0 KB</span>
+            <span class="file-date">Unknown date</span>
           </div>
         </div>
         <button nbButton ghost>

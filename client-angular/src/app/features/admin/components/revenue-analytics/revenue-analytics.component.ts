@@ -1,6 +1,6 @@
-import { NbSelectModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +22,7 @@ interface TimeSeriesData {
 @Component({
   selector: 'app-revenue-analytics',
   standalone: true,
-  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbSpinnerModule, NbTabsetModule, NgxChartsModule],
+  imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
   templateUrl: './revenue-analytics.component.html',
   styleUrls: ['./revenue-analytics.component.scss'],
 })
@@ -43,7 +43,7 @@ export class RevenueAnalyticsComponent implements OnInit {
   revenueByPlan: RevenueData[] = [];
   churnRate: RevenueData[] = [];
 
-  constructor(private toastrService: NbToastrService) {}
+  constructor() {}
 
   ngOnInit() {
     this.loadData();

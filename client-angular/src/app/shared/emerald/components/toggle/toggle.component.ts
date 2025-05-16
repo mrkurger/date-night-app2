@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NbToggleModule } from '@nebular/theme';
 
 /**
  * Toggle Component
@@ -14,7 +15,10 @@ import { NbToggleModule } from '@nebular/theme';
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbToggleModule],
+  imports: [
+    CommonModule,
+    NbToggleModule
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

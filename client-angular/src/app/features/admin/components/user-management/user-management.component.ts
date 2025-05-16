@@ -1,17 +1,18 @@
-import { NbSelectModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {  } from '../../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { UserService } from '../../../../core/services/user.service';
 import { User } from '../../../../core/models/user.model';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbInputModule, NbSelectModule, NbTagModule, NbTableModule, NbSpinnerModule, NbActionsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, FormsModule, ],
   template: `
     <nb-card>
       <nb-card-header class="d-flex justify-content-between align-items-center">
@@ -33,7 +34,7 @@ import { User } from '../../../../core/models/user.model';
       </nb-card-header>
 
       <nb-card-body>
-        <table nbTable [nbTreeGrid]="false" [loading]="loading">
+        <table class="table" [class.loading]="loading">
           <thead>
             <tr>
               <th>Username</th>

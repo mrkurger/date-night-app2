@@ -4,11 +4,19 @@
 // This file contains all Nebular module imports and exports
 // for consistent UI components across the application
 // ===================================================
-import { NgModule, ModuleWithProviders, Type } from '@angular/core';
+import { NgModule, ModuleWithProviders, Type, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   NbThemeModule,
+  NbMenuModule,
+  NbToastrModule,
+  NbDialogModule,
+  NbSidebarModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbWindowModule,
   NbLayoutModule,
   NbButtonModule,
   NbCardModule,
@@ -18,19 +26,13 @@ import {
   NbUserModule,
   NbActionsModule,
   NbContextMenuModule,
-  NbMenuModule,
-  NbToastrModule,
-  NbDialogModule,
   NbSpinnerModule,
   NbChatModule,
-  NbSidebarModule,
   NbListModule,
   NbSelectModule,
   NbAccordionModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
   NbToggleModule,
   NbPopoverModule,
   NbTooltipModule,
@@ -39,7 +41,6 @@ import {
   NbBadgeModule,
   NbAlertModule,
   NbSearchModule,
-  NbWindowModule,
   NbTagModule,
   NbTreeGridModule,
   NbStepperModule,
@@ -50,6 +51,12 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 // Import custom Nebular-compatible components/modules
 import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
 import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+
+// Custom component ID generator to avoid collisions
+export function customComponentIdGenerator(componentType: any): string {
+  // Add a prefix to the component ID to make it unique
+  return `custom-${componentType.name}-${Math.random().toString(36).substring(2, 8)}`;
+}
 
 /**
  * Core Nebular modules that need to be configured at the root level
@@ -85,6 +92,7 @@ const FEATURE_NEBULAR_MODULES: Array<Type<any>> = [
   NbAccordionModule,
   NbCheckboxModule,
   NbRadioModule,
+  NbDatepickerModule,
   NbToggleModule,
   NbPopoverModule,
   NbTooltipModule,
@@ -130,6 +138,13 @@ const CUSTOM_NEBULAR_MODULES = [];
     ...FEATURE_NEBULAR_MODULES,
     ...CUSTOM_NEBULAR_MODULES,
     NbErrorComponent,
+  ],
+  providers: [
+    // Provide the custom component ID generator
+    {
+      provide: 'componentIdGenerator',
+      useValue: customComponentIdGenerator,
+    },
   ],
 })
 export class NebularModule {}

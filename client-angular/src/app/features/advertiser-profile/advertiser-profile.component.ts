@@ -1,11 +1,20 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -49,7 +58,23 @@ import { Ad } from '../../core/models/ad.interface';
   templateUrl: './advertiser-profile.component.html',
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbTagModule, NbBadgeModule, NbLayoutModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbLayoutModule,
+  ],
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;

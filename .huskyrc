@@ -1,3 +1,1 @@
-#!/bin/sh
-# Skip husky hooks in CI environments
 export HUSKY=0

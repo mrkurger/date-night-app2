@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NbIconModule, NbButtonModule, NbTooltipModule } from '@nebular/theme';
 
 import { of, throwError } from 'rxjs';
 import { FavoriteButtonComponent } from './favorite-button.component';

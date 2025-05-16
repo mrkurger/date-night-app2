@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,7 @@ import {
   templateUrl: './ad-browser.component.html',
   styleUrls: ['./ad-browser.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     NbCardModule,

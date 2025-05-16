@@ -1,9 +1,16 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -18,11 +25,23 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule, NbAlertModule, NbTooltipModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    RouterLink,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+  ],
   template: `
     <div class="login-container">
       <nb-card>

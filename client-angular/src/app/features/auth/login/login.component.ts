@@ -1,8 +1,16 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -22,13 +30,25 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 // Nebular Modules
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbFormFieldModule, NbInputModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTooltipModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+  ],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

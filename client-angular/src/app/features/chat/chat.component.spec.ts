@@ -42,6 +42,21 @@ declare global {
 }
 
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { ChatComponent } from './chat.component';
 import {
   ChatService,
@@ -59,16 +74,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
-  NbDialogModule,
   NbDialogRef,
-  NbIconModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbMenuModule,
-  NbTooltipModule,
-  NbTabsetModule,
   NbDialogService,
+  
 } from '@nebular/theme';
 import { customMatchers } from '../../testing/custom-matchers';
 import { User } from '../../core/models/user.interface';

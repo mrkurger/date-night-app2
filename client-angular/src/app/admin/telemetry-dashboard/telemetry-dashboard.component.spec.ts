@@ -1,4 +1,6 @@
 import { Input } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -19,16 +21,8 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  NbTabsetModule,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
   NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbSpinnerModule,
+  
 } from '@nebular/theme';
 
 import { TelemetryService } from '../../core/services/telemetry.service';

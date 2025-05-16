@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
 /**
  * Carousel Component
@@ -13,7 +14,11 @@ import { NbButtonModule, NbIconModule } from '@nebular/theme';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule
+  ],
 })
 export class CarouselComponent implements OnInit, OnDestroy {
   @Input() items: CarouselItem[] = [];

@@ -1,22 +1,27 @@
 /// <reference types="jasmine" />
 
 import { OnInit } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbLayoutModule,
-  NbTagModule,
-  NbBadgeModule,
-  NbToggleModule,
-} from '@nebular/theme';
 
 import { NetflixViewComponent } from './netflix-view.component';
 import { AdService } from '../../core/services/ad.service';

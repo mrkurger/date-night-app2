@@ -1,7 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,14 +7,36 @@ import { NbCardModule } from '@nebular/theme';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 // Nebular imports
-
 
 import { PaymentService, SubscriptionPrice } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -45,7 +63,8 @@ interface StripeCardElement {
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbLayoutModule, NbListModule, NbBadgeModule, NbAlertModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;

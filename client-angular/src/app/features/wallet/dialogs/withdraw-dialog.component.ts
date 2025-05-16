@@ -1,8 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import {
   Component,
   OnInit,
@@ -18,6 +13,23 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbTabsetModule,
+  NbInputModule,
+  NbButtonModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbToastrService,
+} from '@nebular/theme';
 
 import { SharedModule } from '../../../shared/shared.module';
 import { WalletService } from '../../../core/services/wallet.service';
@@ -30,23 +42,27 @@ export interface WalletBalance {
   locked?: number;
 }
 
-export type PaymentMethodType = 'card' | 'bank_account' | 'crypto' | 'paypal';
+export type PaymentMethodType = 'card' | 'bank_account' | 'crypto' | 'crypto_address' | 'paypal';
 
 export interface CardDetails {
   brand: string;
   last4: string;
-  expMonth: number;
-  expYear: number;
+  lastFour?: string;
+  expMonth?: number;
+  expYear?: number;
+  expiryMonth?: number;
+  expiryYear?: number;
 }
 
 export interface BankDetails {
-  accountNumber: string;
-  routingNumber: string;
+  accountNumber?: string;
+  routingNumber?: string;
   bankName: string;
-  accountType: 'checking' | 'savings';
+  accountType: string;
   accountHolder?: string;
   lastFour?: string;
   memoName?: string;
+  country?: string;
 }
 
 export interface CryptoDetails {
@@ -70,6 +86,10 @@ export interface PaymentMethod {
   details: PaymentMethodDetails;
   currency?: string;
   isDefault?: boolean;
+  // Add these properties to fix the errors
+  bankDetails?: BankDetails;
+  cardDetails?: CardDetails;
+  cryptoDetails?: CryptoDetails;
 }
 
 export interface WalletCryptoNetwork {
@@ -113,7 +133,24 @@ export interface WithdrawalRequest {
   templateUrl: './withdraw-dialog.component.html',
   styleUrls: ['./withdraw-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbTabsetModule, NbInputModule, NbButtonModule, NbSelectModule, NbSpinnerModule, NbAlertModule, NbFormFieldModule, NbIconModule, SharedModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbInputModule,
+    NbButtonModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawDialogComponent implements OnInit {
@@ -124,8 +161,26 @@ export class WithdrawDialogComponent implements OnInit {
   withdrawalForm: FormGroup;
   loading = false;
 
+  // Fiat withdrawal
+  withdrawForm: FormGroup;
+  fiatBalances: WalletBalance[] = [];
+  filteredPaymentMethods: PaymentMethod[] = [];
+  selectedBalance: WalletBalance = { currency: '', available: 0, total: 0, pending: 0 };
+  showFeeEstimate = false;
+  feeEstimate = '';
+  netAmount = '';
+  processingWithdrawal = false;
+
+  // Crypto withdrawal
+  cryptoWithdrawForm: FormGroup;
+  cryptoBalances: WalletBalance[] = [];
+  availableCryptoNetworks: WalletCryptoNetwork[] = [];
+  cryptoMaxAmount = 0;
+  processingCryptoWithdrawal = false;
+  loadingInitialData = false;
+
   constructor(
-    @Inject(NB_DIALOG_CONFIG) public config: WithdrawalDialogConfig,
+    @Inject(NB_DIALOG_CONFIG) private config: WithdrawalDialogConfig,
     private dialogRef: NbDialogRef<WithdrawDialogComponent>,
     private walletService: WalletService,
     private toastr: NbToastrService,
@@ -142,13 +197,206 @@ export class WithdrawDialogComponent implements OnInit {
     if (this.balances.length > 0) {
       this.selectedCurrency = this.balances[0].currency;
     }
+
+    // Initialize fiat and crypto balances
+    this.fiatBalances = this.balances.filter((b) => !this.isCryptoCurrency(b.currency));
+    this.cryptoBalances = this.balances.filter((b) => this.isCryptoCurrency(b.currency));
+
+    if (this.fiatBalances.length > 0) {
+      this.selectedBalance = this.fiatBalances[0];
+    }
+
+    if (this.cryptoBalances.length > 0) {
+      this.cryptoMaxAmount = this.cryptoBalances[0].available;
+    }
+
+    // Initialize filtered payment methods
+    this.filterPaymentMethods();
+  }
+
+  /**
+   * Check if a currency is a cryptocurrency
+   */
+  isCryptoCurrency(currency: string): boolean {
+    const cryptoCurrencies = [
+      'BTC',
+      'ETH',
+      'USDT',
+      'XRP',
+      'LTC',
+      'BCH',
+      'BNB',
+      'DOT',
+      'LINK',
+      'ADA',
+    ];
+    return cryptoCurrencies.includes(currency);
+  }
+
+  /**
+   * Filter payment methods based on selected currency
+   */
+  filterPaymentMethods(): void {
+    if (!this.selectedCurrency || !this.paymentMethods.length) {
+      this.filteredPaymentMethods = [];
+      return;
+    }
+
+    this.filteredPaymentMethods = this.paymentMethods.filter((method) => {
+      // For fiat currencies, filter by currency and type
+      if (!this.isCryptoCurrency(this.selectedCurrency)) {
+        return (
+          (method.currency === this.selectedCurrency || !method.currency) &&
+          (method.type === 'bank_account' || method.type === 'card')
+        );
+      }
+
+      // For cryptocurrencies, filter by currency and type
+      return (
+        method.type === 'crypto' && (!method.currency || method.currency === this.selectedCurrency)
+      );
+    });
+  }
+
+  /**
+   * Handle tab change
+   */
+  handleTabChange(event: any): void {
+    this.selectedTabIndex = event.tabTitle === 'Cryptocurrency' ? 1 : 0;
+  }
+
+  /**
+   * Handle balance selection
+   */
+  onBalanceSelect(currency: string): void {
+    if (this.selectedTabIndex === 0) {
+      // Fiat tab
+      this.selectedBalance = this.fiatBalances.find((b) => b.currency === currency) || {
+        currency: '',
+        available: 0,
+        total: 0,
+        pending: 0,
+      };
+      this.filterPaymentMethods();
+    } else {
+      // Crypto tab
+      const selectedBalance = this.cryptoBalances.find((b) => b.currency === currency);
+      if (selectedBalance) {
+        this.cryptoMaxAmount = selectedBalance.available;
+      }
+    }
+  }
+
+  /**
+   * Get payment method label for display
+   */
+  getPaymentMethodLabel(method: PaymentMethod): string {
+    if (method.type === 'bank_account' && method.bankDetails) {
+      return `${method.bankDetails.bankName} (${method.bankDetails.lastFour || '****'})`;
+    } else if (method.type === 'card' && method.cardDetails) {
+      return `${method.cardDetails.brand} (${method.cardDetails.last4 || '****'})`;
+    } else if (method.type === 'crypto' && method.cryptoDetails) {
+      const address = method.cryptoDetails.address;
+      const shortAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+      return `${method.cryptoDetails.currency} (${shortAddress})`;
+    }
+    return method.name || 'Unknown payment method';
+  }
+
+  /**
+   * Submit fiat withdrawal
+   */
+  submitFiatWithdrawal(): void {
+    if (this.withdrawForm.invalid) return;
+
+    this.processingWithdrawal = true;
+    // Implementation would go here
+
+    setTimeout(() => {
+      this.processingWithdrawal = false;
+      this.toastr.success('Withdrawal request submitted successfully');
+      this.dialogRef.close(true);
+      this.cd.markForCheck();
+    }, 2000);
+  }
+
+  /**
+   * Submit crypto withdrawal
+   */
+  submitCryptoWithdrawal(): void {
+    if (this.cryptoWithdrawForm.invalid) return;
+
+    this.processingCryptoWithdrawal = true;
+    // Implementation would go here
+
+    setTimeout(() => {
+      this.processingCryptoWithdrawal = false;
+      this.toastr.success('Crypto withdrawal request submitted successfully');
+      this.dialogRef.close(true);
+      this.cd.markForCheck();
+    }, 2000);
+  }
+
+  /**
+   * Check if a currency requires a memo
+   */
+  requiresMemo(currency: string): boolean {
+    const memoRequiredCurrencies = ['XRP', 'XLM', 'EOS', 'BNB'];
+    return memoRequiredCurrencies.includes(currency);
+  }
+
+  /**
+   * Get memo name for a currency
+   */
+  getMemoName(currency: string): string {
+    const memoNames = {
+      XRP: 'Destination Tag',
+      XLM: 'Memo',
+      EOS: 'Memo',
+      BNB: 'Memo',
+    };
+    return memoNames[currency as keyof typeof memoNames] || 'Memo';
+  }
+
+  /**
+   * Close dialog and open add payment method dialog
+   */
+  closeAndOpenAddPaymentMethod(event: Event): void {
+    event.preventDefault();
+    this.dialogRef.close({ openAddPaymentMethod: true });
+  }
+
+  /**
+   * Close the dialog
+   */
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   private initForm(): void {
+    // Initialize the main withdrawal form
     this.withdrawalForm = this.formBuilder.group({
       amount: ['', [Validators.required, Validators.min(0.01)]],
       paymentMethodId: ['', Validators.required],
       memo: [''],
+    });
+
+    // Initialize fiat withdrawal form
+    this.withdrawForm = this.formBuilder.group({
+      currency: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(0.01)]],
+      paymentMethodId: ['', Validators.required],
+      description: [''],
+    });
+
+    // Initialize crypto withdrawal form
+    this.cryptoWithdrawForm = this.formBuilder.group({
+      currency: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(0.00001)]],
+      network: ['', Validators.required],
+      address: ['', [Validators.required, Validators.minLength(10)]],
+      memo: [''],
+      description: [''],
     });
   }
 

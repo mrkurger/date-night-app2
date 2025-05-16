@@ -1,13 +1,26 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+
+
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
 
 import { environment } from '../../../environments/environment';
 import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
@@ -40,7 +53,18 @@ export interface Favorite {
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbTagModule, NbBadgeModule, CardGridComponent, LoadingSpinnerComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbTagModule,
+    NbBadgeModule,
+    CardGridComponent,
+    LoadingSpinnerComponent
+  ],
   template: `
     <div class="favorites-container">
       <nb-card>

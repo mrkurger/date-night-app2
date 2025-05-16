@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbButtonModule, NbIconModule, NbUserModule, NbBreadcrumbModule } from '@nebular/theme';
+import {
+  NbBreadcrumbModule
+} from '@nebular/theme';
 
 /**
  * Page Header Component

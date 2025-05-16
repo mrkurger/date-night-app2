@@ -1,143 +1,180 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (ad-form.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NbToastrService } from '@nebular/theme';
-import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  NbCardModule,
+  NbFormFieldModule,
+  NbSelectModule,
+  NbIconModule,
+  NbButtonModule,
+  NbInputModule,
+  NbCheckboxModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbAlertModule,
+} from '@nebular/theme';
+
+import { Ad } from '../../../core/models/ad.interface';
+import { CategoryService } from '../../../core/services/category.service';
 import { LocationService } from '../../../core/services/location.service';
-import { NorwayCity } from '../../../core/constants/norway-locations';
-import { NebularModule } from '../../../shared/nebular.module';
-import { NbErrorComponent } from '../../../shared/components/custom-nebular-components/nb-error/nb-error.component';
 
 @Component({
   selector: 'app-ad-form',
+  templateUrl: './ad-form.component.html',
+  styleUrls: ['./ad-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, NebularModule, NbErrorComponent
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
     NbCardModule,
     NbFormFieldModule,
     NbSelectModule,
-    NbIconModule,],
-  templateUrl: './ad-form.component.html',
-  styleUrls: ['./ad-form.component.scss'],
+    NbIconModule,
+    NbButtonModule,
+    NbInputModule,
+    NbCheckboxModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbAlertModule,
+  ],
 })
 export class AdFormComponent implements OnInit {
-  @Input() initialData?: any;
-  @Output() formSubmit = new EventEmitter<any>();
+  @Input() ad: Ad | null = null;
+  @Input() submitButtonText = 'Save';
+  @Input() isSubmitting = false;
+  @Input() error: string | null = null;
+  @Output() formSubmit = new EventEmitter<Ad>();
+  @Output() formCancel = new EventEmitter<void>();
 
   adForm: FormGroup;
-  isEditMode = false;
-  adId: string | null = null;
-  loading = false;
-  categories = ['Escort', 'Stripper', 'Massage', 'Companion', 'Other'];
-  counties: string[] = [];
-  cities: NorwayCity[] = [];
+  categories: string[] = [];
+  locations: string[] = [];
+  uploadedImages: File[] = [];
+  imagePreviewUrls: string[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private toastrService: NbToastrService,
-    private locationService: LocationService,
+    private categoryService: CategoryService,
+    private locationService: LocationService
   ) {
     this.adForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
-      price: [null, [Validators.required, Validators.min(0)]],
-      location: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(2000)]],
+      price: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
-      images: [[]],
-      isActive: [true],
+      location: ['', Validators.required],
       isTouring: [false],
-      tourDates: [[]],
-      services: [[]],
-      contactInfo: ['', Validators.required],
+      tags: [''],
+      contactEmail: ['', [Validators.email]],
+      contactPhone: [''],
+      isActive: [true],
     });
   }
 
   ngOnInit(): void {
-    if (this.initialData) {
-      this.adForm.patchValue(this.initialData);
-    }
+    this.loadCategories();
+    this.loadLocations();
 
-    this.loading = true;
-    this.locationService.getCounties().subscribe((counties) => {
-      this.counties = counties;
-      this.loading = false;
-    });
+    if (this.ad) {
+      this.adForm.patchValue({
+        title: this.ad.title,
+        description: this.ad.description,
+        price: this.ad.price || 0,
+        category: this.ad.category,
+        location: this.ad.location,
+        isTouring: this.ad.isTouring || false,
+        tags: this.ad.tags ? this.ad.tags.join(', ') : '',
+        contactEmail: this.ad.contactEmail || '',
+        contactPhone: this.ad.contactPhone || '',
+        isActive: this.ad.isActive !== false,
+      });
 
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          this.adId = params.get('id');
-          this.isEditMode = !!this.adId;
-
-          if (this.isEditMode && this.adId) {
-            this.loading = true;
-            return of({
-              title: 'Sample Ad',
-              description: 'This is a sample ad description',
-              category: 'Escort',
-              price: 200,
-              county: 'Oslo',
-              city: 'Oslo',
-              isActive: true,
-            });
-          }
-          return of(null);
-        }),
-        tap((ad) => {
-          if (ad) {
-            this.adForm.patchValue(ad);
-            if (ad.county) {
-              this.loadCitiesForCounty(ad.county);
-            }
-          }
-          this.loading = false;
-        }),
-      )
-      .subscribe();
-  }
-
-  onCountyChange(): void {
-    const county = this.adForm.get('county')?.value;
-    if (county) {
-      this.loadCitiesForCounty(county);
-      this.adForm.get('city')?.setValue('');
+      if (this.ad.images && this.ad.images.length > 0) {
+        this.imagePreviewUrls = this.ad.images.map(img => 
+          typeof img === 'string' ? img : img.url
+        );
+      }
     }
   }
 
-  private loadCitiesForCounty(county: string): void {
-    this.locationService.getCitiesByCounty(county).subscribe((cities) => {
-      this.cities = cities;
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+      }
     });
+  }
+
+  loadLocations(): void {
+    this.locationService.getLocations().subscribe({
+      next: (locations) => {
+        this.locations = locations;
+      },
+      error: (err) => {
+        console.error('Error loading locations:', err);
+      }
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        if (file.type.match('image.*')) {
+          this.uploadedImages.push(file);
+          
+          // Create preview
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.imagePreviewUrls.push(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+
+  removeImage(index: number): void {
+    this.imagePreviewUrls.splice(index, 1);
+    if (index < this.uploadedImages.length) {
+      this.uploadedImages.splice(index, 1);
+    }
   }
 
   onSubmit(): void {
     if (this.adForm.valid) {
-      this.formSubmit.emit(this.adForm.value);
+      const formData = this.adForm.value;
+      
+      // Process tags
+      const tags = formData.tags
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag);
+      
+      const adData: Ad = {
+        ...formData,
+        tags,
+        // Keep existing images if any
+        images: this.ad?.images || [],
+        // Add ID if editing
+        _id: this.ad?._id,
+      };
+      
+      this.formSubmit.emit(adData);
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.adForm.controls).forEach(key => {
+        this.adForm.get(key)?.markAsTouched();
+      });
     }
   }
 
-  get f() {
-    return this.adForm.controls;
-  }
-
   onCancel(): void {
-    this.router.navigate(['../list'], { relativeTo: this.route });
+    this.formCancel.emit();
   }
 }

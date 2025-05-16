@@ -1,7 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
@@ -15,7 +16,6 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-
 
 /**
  * App Card Component
@@ -72,7 +72,14 @@ import { CommonModule } from '@angular/common';
   `,
   styleUrls: ['./app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbBadgeModule, NbIconModule, NbButtonModule],
+  imports: [
+    CommonModule,
+    NbBadgeModule,
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbTooltipModule
+  ],
 })
 export class AppCardComponent {
   /**

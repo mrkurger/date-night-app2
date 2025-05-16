@@ -1,436 +1,104 @@
 <div class="wallet-container">
-  <div class="wallet-header">
-    <h1 class="wallet-title">My Wallet</h1>
-    <div class="wallet-actions">
-      <button nbButton status="primary" (click)="openDepositDialog()">
-        <nb-icon icon="plus-outline"></nb-icon>
-        Deposit
-      </button>
-      <button nbButton status="info" (click)="openWithdrawDialog()">
-        <nb-icon icon="arrow-forward-outline"></nb-icon>
-        Withdraw
-      </button>
-      <button nbButton status="basic" (click)="openTransferDialog()">
-        <nb-icon icon="swap-outline"></nb-icon>
-        Transfer
-      </button>
-    </div>
-  </div>
+  <nb-card>
+    <nb-card-header>
+      <h3>My Wallet</h3>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="balance-section">
+        <h4>Current Balance</h4>
+        <div class="balance-amount">{{ formatCurrency(balance) }}</div>
+        <div class="action-buttons">
+          <button nbButton status="success" (click)="openDepositDialog()">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Deposit
+          </button>
+          <button nbButton status="info" (click)="openWithdrawDialog()">
+            <nb-icon icon="arrow-upward-outline"></nb-icon>
+            Withdraw
+          </button>
+          <button nbButton status="primary" (click)="openTransferDialog()">
+            <nb-icon icon="swap-outline"></nb-icon>
+            Transfer
+          </button>
+        </div>
+      </div>
 
-  <!-- Loading spinner -->
-  <div class="loading-container" *ngIf="loading.wallet">
-    <nb-spinner status="primary" size="large"></nb-spinner>
-    <p>Loading wallet data...</p>
-  </div>
-
-  <!-- Wallet content -->
-  <div class="wallet-content" *ngIf="!loading.wallet">
-    <!-- Balance overview -->
-    <div class="balance-overview">
-      <nb-card class="total-balance-card">
-        <nb-card-header>
-          <h5 class="card-title">Total Balance</h5>
-          <p class="card-subtitle">Available funds</p>
-        </nb-card-header>
-        <nb-card-body>
-          <h2 class="total-balance">{{ getTotalBalance() }}</h2>
-        </nb-card-body>
-      </nb-card>
-
-      <!-- Individual balances -->
-      <div class="currency-balances">
-        <nb-card *ngFor="let balance of balances" class="currency-balance-card">
-          <nb-card-header>
-            <h5 class="card-title">{{ balance.currency }}</h5>
-            <p class="card-subtitle">
-              <span *ngIf="balance.pending > 0"
-                >{{ walletService.formatCurrency(balance.pending, balance.currency) }} pending</span
-              >
-            </p>
-          </nb-card-header>
+      <div class="transactions-section">
+        <h4>Recent Transactions</h4>
+        <nb-card *ngIf="transactions.length > 0">
+          <nb-list>
+            <nb-list-item *ngFor="let transaction of transactions" (click)="openTransactionDetails(transaction)">
+              <div class="transaction-item">
+                <div class="transaction-icon">
+                  <nb-icon [icon]="getTransactionTypeIcon(transaction.type)"></nb-icon>
+                </div>
+                <div class="transaction-details">
+                  <div class="transaction-type">{{ transaction.type }}</div>
+                  <div class="transaction-date">{{ formatDate(transaction.createdAt) }}</div>
+                </div>
+                <div class="transaction-amount">
+                  {{ formatCurrency(transaction.amount) }}
+                </div>
+                <div class="transaction-status">
+                  <nb-badge [text]="transaction.status" [status]="getTransactionStatusClass(transaction.status)"></nb-badge>
+                </div>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card>
+        <nb-card *ngIf="transactions.length === 0">
           <nb-card-body>
-            <h3>{{ walletService.formatCurrency(balance.available, balance.currency) }}</h3>
+            <div class="empty-state">
+              <nb-icon icon="credit-card-outline" status="basic"></nb-icon>
+              <p>No transactions yet</p>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
-    </div>
 
-    <!-- Tabs for different wallet sections -->
-    <nb-tabset fullWidth class="wallet-tabs">
-      <!-- Transactions tab -->
-      <nb-tab tabTitle="Transactions">
-        <div class="transactions-container">
-          <!-- Filters -->
-          <div class="transactions-filters">
-            <nb-select placeholder="Type" [(ngModel)]="selectedType">
-              <nb-option [value]="null">All Types</nb-option>
-              <nb-option value="deposit">Deposit</nb-option>
-              <nb-option value="withdrawal">Withdrawal</nb-option>
-              <nb-option value="transfer">Transfer</nb-option>
-              <nb-option value="payment">Payment</nb-option>
-              <nb-option value="refund">Refund</nb-option>
-            </nb-select>
-
-            <nb-select placeholder="Status" [(ngModel)]="selectedStatus">
-              <nb-option [value]="null">All Statuses</nb-option>
-              <nb-option value="pending">Pending</nb-option>
-              <nb-option value="completed">Completed</nb-option>
-              <nb-option value="failed">Failed</nb-option>
-              <nb-option value="cancelled">Cancelled</nb-option>
-            </nb-select>
-
-            <input nbInput placeholder="From Date" [nbDatepicker]="fromDatePicker" />
-            <nb-datepicker #fromDatePicker></nb-datepicker>
-
-            <input nbInput placeholder="To Date" [nbDatepicker]="toDatePicker" />
-            <nb-datepicker #toDatePicker></nb-datepicker>
-          </div>
-
-          <!-- Transactions table -->
-          <div class="transactions-table-container">
-            <div class="loading-overlay" *ngIf="loading.transactions">
-              <nb-spinner status="primary" size="medium"></nb-spinner>
-            </div>
-
-            <nb-card *ngIf="!loading.transactions && transactions.length > 0">
-              <nb-list>
-                <nb-list-item class="transaction-header">
-                  <div class="transaction-date">Date</div>
-                  <div class="transaction-type">Type</div>
-                  <div class="transaction-amount">Amount</div>
-                  <div class="transaction-status">Status</div>
-                  <div class="transaction-actions">Actions</div>
-                </nb-list-item>
-
-                <nb-list-item *ngFor="let transaction of transactions" class="transaction-row">
-                  <div class="transaction-date">
-                    {{ transaction.createdAt | date: 'medium' }}
-                  </div>
-                  <div class="transaction-type">
-                    <span
-                      class="transaction-type-badge"
-                      [ngClass]="getTransactionTypeClass(transaction.type)"
-                    >
-                      {{ transaction.type | titlecase }}
-                    </span>
-                  </div>
-                  <div class="transaction-amount">
-                    <span
-                      [ngClass]="{
-                        'positive-amount': transaction.amount > 0,
-                        'negative-amount': transaction.amount < 0,
-                      }"
-                    >
-                      {{ formatTransactionAmount(transaction) }}
-                    </span>
-                  </div>
-                  <div class="transaction-status">
-                    <span
-                      class="transaction-status-badge"
-                      [ngClass]="getTransactionStatusClass(transaction.status)"
-                    >
-                      {{ transaction.status | titlecase }}
-                    </span>
-                  </div>
-                  <div class="transaction-actions">
-                    <button
-                      nbButton
-                      ghost
-                      size="small"
-                      (click)="openTransactionDetailsDialog(transaction)"
-                      nbTooltip="View Details"
-                    >
-                      <nb-icon icon="info-outline"></nb-icon>
-                    </button>
-                  </div>
-                </nb-list-item>
-              </nb-list>
-            </nb-card>
-
-            <div class="no-data-message" *ngIf="!loading.transactions && transactions.length === 0">
-              <nb-icon icon="credit-card-outline"></nb-icon>
-              <p>No transactions found</p>
-              <button nbButton status="primary" (click)="openDepositDialog()">
-                Make Your First Deposit
-              </button>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination-container" *ngIf="totalPages > 1">
-              <div class="pagination-controls">
-                <button
-                  nbButton
-                  ghost
-                  [disabled]="currentPage === 1"
-                  (click)="onPageChange(currentPage - 1)"
-                >
-                  <nb-icon icon="arrow-ios-back-outline"></nb-icon>
-                </button>
-                <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
-                <button
-                  nbButton
-                  ghost
-                  [disabled]="currentPage === totalPages"
-                  (click)="onPageChange(currentPage + 1)"
-                >
-                  <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
-                </button>
-              </div>
-              <div class="page-size-selector">
-                <nb-select [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
-                  <nb-option [value]="10">10 per page</nb-option>
-                  <nb-option [value]="20">20 per page</nb-option>
-                  <nb-option [value]="50">50 per page</nb-option>
-                  <nb-option [value]="100">100 per page</nb-option>
-                </nb-select>
-              </div>
-            </div>
-          </div>
+      <div class="payment-methods-section">
+        <div class="section-header">
+          <h4>Payment Methods</h4>
+          <button nbButton ghost size="small" (click)="openAddPaymentMethodDialog()">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Add New
+          </button>
         </div>
-      </nb-tab>
-
-      <!-- Payment Methods tab -->
-      <nb-tab tabTitle="Payment Methods">
-        <div class="payment-methods-container">
-          <div class="payment-methods-header">
-            <h2>Payment Methods</h2>
-            <button nbButton status="primary" (click)="openAddPaymentMethodDialog()">
-              <nb-icon icon="plus-outline"></nb-icon> Add Payment Method
-            </button>
-          </div>
-
-          <!-- Loading spinner -->
-          <div class="loading-container" *ngIf="loading.paymentMethods">
-            <nb-spinner status="primary" size="medium"></nb-spinner>
-            <p>Loading payment methods...</p>
-          </div>
-
-          <!-- Payment methods list -->
-          <div class="payment-methods-list" *ngIf="!loading.paymentMethods">
-            <!-- No payment methods message -->
-            <div class="no-data-message" *ngIf="paymentMethods.length === 0">
-              <nb-icon icon="credit-card-off-outline"></nb-icon>
-              <p>No payment methods found</p>
-              <button nbButton status="primary" (click)="openAddPaymentMethodDialog()">
-                Add Payment Method
-              </button>
-            </div>
-
-            <!-- Payment methods cards -->
-            <nb-card *ngFor="let method of paymentMethods" class="payment-method-card">
-              <nb-card-header>
-                <nb-user
-                  [name]="getPaymentMethodDisplayName(method)"
-                  [title]="method.type | titlecase"
-                  size="large"
-                >
-                  <nb-icon
-                    [icon]="getPaymentMethodIcon(method)"
-                    pack="eva"
-                    class="payment-method-icon"
-                  ></nb-icon>
-                </nb-user>
-                <span *ngIf="method.isDefault" class="default-badge">Default</span>
-              </nb-card-header>
-
-              <nb-card-body>
-                <!-- Card details -->
-                <div *ngIf="method.type === 'card' && method.cardDetails">
-                  <p>
-                    Expires: {{ method.cardDetails.expiryMonth }}/{{
-                      method.cardDetails.expiryYear
-                    }}
-                  </p>
+        <nb-card *ngIf="paymentMethods.length > 0">
+          <nb-list>
+            <nb-list-item *ngFor="let method of paymentMethods">
+              <div class="payment-method-item">
+                <div class="payment-method-icon">
+                  <nb-icon [icon]="getPaymentMethodIcon(method.type)"></nb-icon>
                 </div>
-
-                <!-- Bank account details -->
-                <div *ngIf="method.type === 'bank_account' && method.bankDetails">
-                  <p>
-                    {{ method.bankDetails.bankName }} ({{ method.bankDetails.lastFour }}) -
-                    {{ method.bankDetails.accountType }}
-                  </p>
-                  <p *ngIf="method.bankDetails.country">
-                    Country: {{ method.bankDetails.country }}
-                  </p>
-                </div>
-
-                <!-- Crypto address details -->
-                <div *ngIf="method.type === 'crypto_address' && method.cryptoDetails">
-                  <p *ngIf="method.cryptoDetails.address" class="crypto-address">
-                    {{ method.cryptoDetails.address | slice: 0 : 10 }}...{{
-                      method.cryptoDetails.address | slice: -10
-                    }}
-                    <button
-                      nbButton
-                      ghost
-                      status="primary"
-                      ngxClipboard
-                      [attr.data-clipboard-text]="method.cryptoDetails.address"
-                      (click)="copyToClipboard(method.cryptoDetails.address)"
-                      nbTooltip="Copy Address"
-                    >
-                      <nb-icon icon="copy-outline"></nb-icon>
-                    </button>
-                  </p>
-                  <p *ngIf="method.cryptoDetails.network">
-                    Network: {{ method.cryptoDetails.network }}
-                  </p>
-                  <div *ngIf="method.cryptoDetails.memo">
-                    <p>Memo: {{ method.cryptoDetails.memo }}</p>
+                <div class="payment-method-details">
+                  <div class="payment-method-name">{{ method.name }}</div>
+                  <div class="payment-method-info">
+                    <span *ngIf="method.cardDetails">•••• {{ method.cardDetails.last4 }}</span>
                   </div>
                 </div>
-              </nb-card-body>
-
-              <nb-card-footer class="actions-footer">
-                <button nbButton status="danger" ghost (click)="removePaymentMethod(method._id)">
-                  <nb-icon icon="trash-2-outline"></nb-icon> Remove
-                </button>
-                <button
-                  nbButton
-                  status="primary"
-                  (click)="setDefaultPaymentMethod(method._id)"
-                  [disabled]="method.isDefault"
-                >
-                  <nb-icon icon="star-outline"></nb-icon> Set as Default
-                </button>
-              </nb-card-footer>
-            </nb-card>
-          </div>
-        </div>
-      </nb-tab>
-
-      <!-- Settings tab -->
-      <nb-tab tabTitle="Settings">
-        <div class="settings-container">
-          <h2>Wallet Settings</h2>
-
-          <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-            <!-- Default Currency -->
-            <nb-form-field class="full-width">
-              <label class="label">Default Currency</label>
-              <nb-select formControlName="defaultCurrency" placeholder="Select Default Currency">
-                <nb-option
-                  *ngFor="let currency of walletService.SUPPORTED_CURRENCIES"
-                  [value]="currency"
-                >
-                  {{ currency }}
-                </nb-option>
-                <nb-option
-                  *ngFor="let currency of walletService.SUPPORTED_CRYPTOCURRENCIES"
-                  [value]="currency"
-                >
-                  {{ currency }}
-                </nb-option>
-              </nb-select>
-              <div class="form-field-hint">
-                This currency will be used as the default for all transactions
+                <div class="payment-method-actions">
+                  <nb-badge *ngIf="method.isDefault" text="Default" status="success"></nb-badge>
+                  <button nbButton ghost size="small" (click)="setDefaultPaymentMethod(method)" *ngIf="!method.isDefault">
+                    Set Default
+                  </button>
+                  <button nbButton ghost status="danger" size="small" (click)="removePaymentMethod(method)">
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </button>
+                </div>
               </div>
-            </nb-form-field>
-
-            <!-- Auto Withdrawal Settings -->
-            <div formGroupName="autoWithdrawal" class="settings-section">
-              <h3>Automatic Withdrawal</h3>
-
-              <nb-checkbox formControlName="enabled" status="primary">
-                Enable Automatic Withdrawal
-              </nb-checkbox>
-
-              <div
-                *ngIf="settingsForm.get('autoWithdrawal.enabled')?.value"
-                class="auto-withdrawal-details"
-              >
-                <nb-form-field class="full-width">
-                  <label class="label">Threshold Amount (NOK)</label>
-                  <input
-                    nbInput
-                    type="number"
-                    formControlName="threshold"
-                    min="10000"
-                    placeholder="e.g., 10000"
-                  />
-                  <nb-form-field-hint
-                    >Withdrawal will be triggered when your balance exceeds this
-                    amount</nb-form-field-hint
-                  >
-                  <ng-container
-                    *ngIf="
-                      settingsForm.get('autoWithdrawal.threshold')?.invalid &&
-                      (settingsForm.get('autoWithdrawal.threshold')?.dirty ||
-                        settingsForm.get('autoWithdrawal.threshold')?.touched)
-                    "
-                  >
-                    <p
-                      class="caption status-danger"
-                      *ngIf="settingsForm.get('autoWithdrawal.threshold')?.hasError('min')"
-                    >
-                      Minimum threshold is 100 NOK
-                    </p>
-                  </ng-container>
-                </nb-form-field>
-
-                <nb-form-field class="full-width">
-                  <label class="label">Payment Method</label>
-                  <nb-select formControlName="paymentMethodId" placeholder="Select Payment Method">
-                    <nb-option *ngFor="let method of paymentMethods" [value]="method._id">
-                      {{ getPaymentMethodDisplayName(method) }}
-                    </nb-option>
-                  </nb-select>
-                  <nb-form-field-hint
-                    >Select the payment method to use for automatic withdrawals</nb-form-field-hint
-                  >
-                </nb-form-field>
-              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card>
+        <nb-card *ngIf="paymentMethods.length === 0">
+          <nb-card-body>
+            <div class="empty-state">
+              <nb-icon icon="credit-card-outline" status="basic"></nb-icon>
+              <p>No payment methods added yet</p>
             </div>
-
-            <!-- Notification Preferences -->
-            <div formGroupName="notificationPreferences" class="settings-section">
-              <h3>Notification Preferences</h3>
-
-              <div formGroupName="email" class="notification-group">
-                <h4>Email Notifications</h4>
-                <nb-checkbox formControlName="deposit" status="primary"> Deposits </nb-checkbox>
-                <nb-checkbox formControlName="withdrawal" status="primary">
-                  Withdrawals
-                </nb-checkbox>
-                <nb-checkbox formControlName="payment" status="primary"> Payments </nb-checkbox>
-              </div>
-
-              <div formGroupName="push" class="notification-group">
-                <h4>Push Notifications</h4>
-                <nb-checkbox formControlName="deposit" status="primary"> Deposits </nb-checkbox>
-                <nb-checkbox formControlName="withdrawal" status="primary">
-                  Withdrawals
-                </nb-checkbox>
-                <nb-checkbox formControlName="payment" status="primary"> Payments </nb-checkbox>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button
-                nbButton
-                status="primary"
-                type="submit"
-                [disabled]="settingsForm.invalid || loading.wallet"
-                [nbSpinner]="loading.wallet"
-                nbSpinnerStatus="control"
-              >
-                Save Settings
-              </button>
-            </div>
-          </form>
-        </div>
-      </nb-tab>
-    </nb-tabset>
-  </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </nb-card-body>
+  </nb-card>
 </div>
-
-<!-- Floating Action Button for quick deposit -->
-<button
-  nbButton
-  status="primary"
-  class="floating-action-button"
-  (click)="openDepositDialog()"
-  *ngIf="!loading.wallet"
->
-  <nb-icon icon="plus-outline"></nb-icon>
-</button>

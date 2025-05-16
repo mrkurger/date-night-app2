@@ -1,3 +1,7 @@
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG
+} from '@nebular/theme';
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

@@ -118,7 +118,7 @@
     <nb-card-body>
       <div class="table-container" *ngIf="!isLoading; else loadingTemplate">
         <app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
-          <table nb-table [dataSource]="slowestEndpoints">
+          <table class="table">
             <!-- URL Column -->
             <ng-container matColumnDef="url">
               <th mat-header-cell *matHeaderCellDef>
@@ -182,13 +182,25 @@
           </table>
         </app-sort>
 
-        <nb-paginator
-          [length]="totalEndpoints"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10, 25, 50]"
-          (page)="onPageChange($event)"
-        >
-        </nb-paginator>
+        <div class="pagination">
+          <button
+            nbButton
+            ghost
+            [disabled]="pageIndex === 0"
+            (click)="onPageChange({ page: pageIndex, pageSize: pageSize })"
+          >
+            Previous
+          </button>
+          <span>Page {{ pageIndex + 1 }}</span>
+          <button
+            nbButton
+            ghost
+            [disabled]="(pageIndex + 1) * pageSize >= totalEndpoints"
+            (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </nb-card-body>
   </nb-card>

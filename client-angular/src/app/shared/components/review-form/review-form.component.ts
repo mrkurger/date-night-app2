@@ -8,6 +8,8 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {

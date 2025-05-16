@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog - Angular Client Fix Scripts</title>
+  <style>
+    :root {
+      --primary-color: #3366ff;
+      --secondary-color: #0095ff;
+      --background-color: #f7f9fc;
+      --text-color: #222b45;
+      --code-background: #edf1f7;
+      --border-color: #e4e9f2;
+      --success-color: #00d68f;
+      --warning-color: #ffaa00;
+      --danger-color: #ff3d71;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--primary-color);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background-color: var(--code-background);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+
+    pre {
+      background-color: var(--code-background);
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .version {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .version h3 {
+      margin-top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .version-date {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #8f9bb3;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .feature {
+      color: var(--success-color);
+      font-weight: bold;
+    }
+
+    .fix {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    .improvement {
+      color: var(--secondary-color);
+      font-weight: bold;
+    }
+
+    .breaking {
+      color: var(--danger-color);
+      font-weight: bold;
+    }
+
+    .nav {
+      margin-bottom: 2rem;
+    }
+
+    .nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.9rem;
+      color: #8f9bb3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Changelog - Angular Client Fix Scripts</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="nav">
+      <a href="../_docs_index.html">Documentation Home</a>
+      <a href="AILESSONS.html">AI Lessons</a>
+      <a href="GLOSSARY.html">Glossary</a>
+    </div>
+
+    <div class="card">
+      <h2>Overview</h2>
+      <p>
+        This document tracks all notable changes to the Angular client fix scripts.
+        Each version includes details about new features, bug fixes, and improvements.
+      </p>
+    </div>
+
+    <div class="version">
+      <h3>
+        Version 1.0.0
+        <span class="version-date">May 24, 2024</span>
+      </h3>
+      <p>Initial release of the Angular client fix scripts.</p>
+      
+      <h4>Added</h4>
+      <ul>
+        <li><span class="feature">New:</span> Created <code>fix-all-issues.cjs</code> script to run all fixes in sequence</li>
+        <li><span class="feature">New:</span> Created <code>fix-css-paths.cjs</code> script to create placeholder CSS files</li>
+        <li><span class="feature">New:</span> Created <code>fix-index-html.cjs</code> script to update index.html with Eva Icons and CSP</li>
+        <li><span class="feature">New:</span> Created <code>fix-styles.cjs</code> script to add CSS variables for Nebular theme</li>
+        <li><span class="feature">New:</span> Created <code>fix-nebular-imports.cjs</code> script to consolidate Nebular imports</li>
+        <li><span class="feature">New:</span> Created <code>fix-remaining-nebular-issues.cjs</code> script to fix component formatting</li>
+        <li><span class="feature">New:</span> Created <code>fix-chat-message-interface.cjs</code> script to update the ChatMessage interface</li>
+        <li><span class="feature">New:</span> Added comprehensive README.md with usage instructions</li>
+      </ul>
+
+      <h4>Fixed</h4>
+      <ul>
+        <li><span class="fix">Fix:</span> Eva Icons CSS loading issues by adding CDN link in index.html</li>
+        <li><span class="fix">Fix:</span> Nebular module imports in component files</li>
+        <li><span class="fix">Fix:</span> Component imports array formatting in standalone components</li>
+        <li><span class="fix">Fix:</span> Added missing CSS variables for Nebular theme in styles.scss</li>
+        <li><span class="fix">Fix:</span> Updated Content Security Policy to allow loading from CDNs</li>
+        <li><span class="fix">Fix:</span> Updated ChatMessage interface with missing properties</li>
+        <li><span class="fix">Fix:</span> Fixed issues with NbTagComponent and separatorKeys</li>
+        <li><span class="fix">Fix:</span> Fixed dialog reference issues in components</li>
+      </ul>
+
+      <h4>Improved</h4>
+      <ul>
+        <li><span class="improvement">Improved:</span> Script execution with detailed logging</li>
+        <li><span class="improvement">Improved:</span> Error handling in all scripts</li>
+        <li><span class="improvement">Improved:</span> Documentation with usage examples and troubleshooting tips</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>Last updated: May 2024</p>
+    </footer>
+  </div>
+</body>
+</html>

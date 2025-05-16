@@ -22,6 +22,7 @@ import {
   PrivacySettings,
 } from '../models/user.interface';
 import { Router } from '@angular/router';
+import { FingerprintService } from './fingerprint.service'; // Import FingerprintService
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,7 @@ export class AuthService implements NbRoleProvider {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private fingerprintService: FingerprintService, // Inject FingerprintService
   ) {
     this.checkAuthStatus();
   }
@@ -74,18 +76,74 @@ export class AuthService implements NbRoleProvider {
    * Login with email and password
    */
   login(credentials: LoginDTO): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
-      .pipe(tap((response) => this.handleAuthResponse(response)));
+    return new Observable((observer) => {
+      this.fingerprintService
+        .collectFingerprint()
+        .then((fingerprint) => {
+          const loginPayload = {
+            ...credentials,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          };
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/login`, loginPayload, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            });
+        })
+        .catch((err) => {
+          console.error('Error collecting fingerprint during login:', err);
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            });
+        });
+    });
   }
 
   /**
    * Register new user
    */
   register(userData: RegisterDTO): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
-      .pipe(tap((response) => this.handleAuthResponse(response)));
+    return new Observable((observer) => {
+      this.fingerprintService
+        .collectFingerprint()
+        .then((fingerprint) => {
+          const registerPayload = {
+            ...userData,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          };
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/register`, registerPayload, {
+              withCredentials: true,
+            })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            });
+        })
+        .catch((err) => {
+          console.error('Error collecting fingerprint during registration:', err);
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            });
+        });
+    });
   }
 
   /**

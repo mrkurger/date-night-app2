@@ -13,26 +13,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AdminRoutingModule } from './admin-routing.module';
 
 // Nebular imports
+import { NebularModule } from "../shared/nebular.module";
 import {
-  NbTabsetModule,
-  NbCardModule,
-  NbButtonModule,
   NbTableModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbDatepickerModule,
-  NbSpinnerModule,
-  NbTagModule,
-  NbIconModule,
-  NbListModule,
-  NbUserModule,
-  NbActionsModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbContextMenuModule,
-  NbSecurityModule,
-  NbLayoutModule,
+  
 } from '@nebular/theme';
 
 // Charts
@@ -66,35 +50,19 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
  * Protected by AdminGuard for admin-only access.
  */
 @NgModule({
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbTableModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbDatepickerModule,
-    NbSpinnerModule,
-    NbTagModule,
-    NbIconModule,
-    NbListModule,
-    NbUserModule,
-    NbActionsModule,
-    NbSearchModule,
-    NbSidebarModule,
-    NbContextMenuModule,
-    NbSecurityModule,
-    NbLayoutModule,
-    ErrorDashboardComponent,
-    PerformanceDashboardComponent,
-    UserManagementComponent,
-    RevenueAnalyticsComponent,
-    ContentModerationComponent,
-    SystemHealthComponent,
+    NebularModule,
+    // Import standalone components
     AuditLogComponent,
-    AdminSettingsComponent
-    TelemetryDashboardComponent,],
+    AdminSettingsComponent,
+    PerformanceDashboardComponent,
+    TelemetryDashboardComponent,
+    ContentModerationComponent
+  ],
+  // Only declare non-standalone components
+  declarations: [],
 })
 export class AdminModule {}

@@ -1,11 +1,6 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {  } from '../../shared/nebular.module';
+import { NbDialogService } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -18,7 +13,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
 
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -33,7 +27,15 @@ import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-
   templateUrl: './tinder.component.html',
   styleUrls: ['./tinder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbDialogModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbSpinnerModule, MainLayoutComponent, TinderCardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    
+    MainLayoutComponent,
+    TinderCardComponent,
+  ],
 })
 export class TinderComponent implements OnInit {
   /**
@@ -165,11 +167,19 @@ export class TinderComponent implements OnInit {
    * Get card media array
    */
   getCardMedia(ad: Ad): { type: 'image' | 'video'; url: string; thumbnail?: string }[] {
-    return ad.media.map((media) => ({
-      type: media.type as 'image' | 'video',
-      url: media.url,
-      thumbnail: media.thumbnail,
-    }));
+    return ad.media.map((media) => {
+      const result: { type: 'image' | 'video'; url: string; thumbnail?: string } = {
+        type: media.type as 'image' | 'video',
+        url: media.url,
+      };
+
+      // Only add thumbnail if it exists in the media object
+      if ('thumbnail' in media) {
+        result.thumbnail = (media as any).thumbnail;
+      }
+
+      return result;
+    });
   }
 
   /**
@@ -185,15 +195,17 @@ export class TinderComponent implements OnInit {
   onSwipe(event: { direction: 'left' | 'right' | 'up'; itemId: string }): void {
     if (!this.currentAd) return;
 
+    const adId = this.getAdIdAsString(this.currentAd._id);
+
     switch (event.direction) {
       case 'right':
-        this.likeAd(this.currentAd._id);
+        this.likeAd(adId);
         break;
       case 'left':
-        this.dislikeAd(this.currentAd._id);
+        this.dislikeAd(adId);
         break;
       case 'up':
-        this.superlikeAd(this.currentAd._id);
+        this.superlikeAd(adId);
         break;
     }
   }
@@ -204,15 +216,17 @@ export class TinderComponent implements OnInit {
   onCardAction(event: { action: string; itemId: string }): void {
     if (!this.currentAd) return;
 
+    const adId = this.getAdIdAsString(this.currentAd._id);
+
     switch (event.action) {
       case 'like':
-        this.likeAd(this.currentAd._id);
+        this.likeAd(adId);
         break;
       case 'dislike':
-        this.dislikeAd(this.currentAd._id);
+        this.dislikeAd(adId);
         break;
       case 'superlike':
-        this.superlikeAd(this.currentAd._id);
+        this.superlikeAd(adId);
         break;
     }
   }
@@ -227,7 +241,7 @@ export class TinderComponent implements OnInit {
   /**
    * Like an ad
    */
-  private likeAd(adId: string): void {
+  likeAd(adId: string): void {
     this.cardState = 'like';
     this.adService.likeAd(adId).subscribe({
       next: () => {
@@ -245,7 +259,7 @@ export class TinderComponent implements OnInit {
   /**
    * Dislike an ad
    */
-  private dislikeAd(adId: string): void {
+  dislikeAd(adId: string): void {
     this.cardState = 'dislike';
     this.adService.dislikeAd(adId).subscribe({
       next: () => {
@@ -261,7 +275,7 @@ export class TinderComponent implements OnInit {
   /**
    * Superlike an ad
    */
-  private superlikeAd(adId: string): void {
+  superlikeAd(adId: string): void {
     this.cardState = 'superlike';
     this.adService.superlikeAd(adId).subscribe({
       next: () => {

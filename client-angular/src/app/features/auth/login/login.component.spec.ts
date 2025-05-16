@@ -1,4 +1,19 @@
 import { Input } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -14,16 +29,7 @@ import { AuthResponse } from '@core/models/auth.model';
 import { createSpyObject } from '../../../testing/test-utils';
 
 // Nebular Imports
-import {
-  NbThemeModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 describe('LoginComponent', () => {

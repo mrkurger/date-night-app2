@@ -162,6 +162,29 @@ const userSchema = new mongoose.Schema(
       email: { type: Boolean, default: false },
       address: { type: Boolean, default: false },
     },
+
+    // New fields for enhanced fingerprinting and tracking
+    knownDeviceFingerprints: [
+      {
+        type: Map,
+        of: String,
+      },
+    ],
+    knownIpAddresses: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    knownCryptoAddresses: [
+      {
+        currency: { type: String, trim: true },
+        address: { type: String, trim: true },
+        network: { type: String, trim: true }, // e.g., 'mainnet', 'testnet', 'bsc', 'erc20'
+        _id: false, // Don't create an _id for subdocuments in this array
+      },
+    ],
+
     safetySettings: {
       emergencyContacts: [
         {
@@ -234,6 +257,9 @@ const userSchema = new mongoose.Schema(
 // Add geospatial index for location-based queries
 userSchema.index({ currentLocation: '2dsphere' });
 userSchema.index({ 'travelPlan.location': '2dsphere' });
+userSchema.index({ knownIpAddresses: 1 }); // Index for querying by known IPs - Mongoose will handle array indexing
+userSchema.index({ 'knownCryptoAddresses.address': 1 }); // Index for querying by crypto addresses
+userSchema.index({ knownDeviceFingerprints: 1 }); // Index for the map type within an array
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {

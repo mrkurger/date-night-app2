@@ -11,7 +11,7 @@
     </button>
   </nb-card-header>
   <nb-card-body>
-    <nb-tabset (changeTab)="handleTabChange($event)" fullWidth [selectedIndex]="selectedTabIndex">
+    <nb-tabset (changeTab)="handleTabChange($event)" fullWidth>
       <!-- Fiat Currency Withdrawal Tab -->
       <nb-tab tabTitle="Fiat Currency" [active]="selectedTabIndex === 0">
         <ng-container *ngIf="fiatBalances.length > 0; else noFiatBalances">
@@ -39,14 +39,10 @@
                   {{ balance.currency }} ({{ balance.available | currency: balance.currency }})
                 </nb-option>
               </nb-select>
-              
-                <span
-                  *ngIf="withdrawForm.get('currency')?.errors?.['required']"
-                  class="text-danger"
-                >
-                  Please select a currency
-                </span>
-              
+
+              <span *ngIf="withdrawForm.get('currency')?.errors?.['required']" class="text-danger">
+                Please select a currency
+              </span>
             </nb-form-field>
 
             <nb-form-field>
@@ -65,20 +61,18 @@
                     : 'basic'
                 "
               />
-              
-                Available: {{ selectedBalance.available | currency: selectedBalance.currency }}
-              
-              
-                <span *ngIf="withdrawForm.get('amount')?.errors?.required" class="text-danger">
-                  Amount is required
-                </span>
-                <span *ngIf="withdrawForm.get('amount')?.errors?.min" class="text-danger">
-                  Amount must be greater than 0
-                </span>
-                <span *ngIf="withdrawForm.get('amount')?.errors?.max" class="text-danger">
-                  Amount exceeds your balance
-                </span>
-              
+
+              Available: {{ selectedBalance.available | currency: selectedBalance.currency }}
+
+              <span *ngIf="withdrawForm.get('amount')?.errors?.required" class="text-danger">
+                Amount is required
+              </span>
+              <span *ngIf="withdrawForm.get('amount')?.errors?.min" class="text-danger">
+                Amount must be greater than 0
+              </span>
+              <span *ngIf="withdrawForm.get('amount')?.errors?.max" class="text-danger">
+                Amount exceeds your balance
+              </span>
             </nb-form-field>
 
             <nb-form-field *ngIf="filteredPaymentMethods.length > 0">
@@ -99,9 +93,8 @@
                   {{ getPaymentMethodLabel(method) }}
                 </nb-option>
               </nb-select>
-              
-                Payment method is required.
-              
+
+              Payment method is required.
             </nb-form-field>
             <nb-alert
               status="warning"
@@ -167,14 +160,13 @@
                   {{ balance.currency }} ({{ balance.available | currency: balance.currency }})
                 </nb-option>
               </nb-select>
-              
-                <span
-                  *ngIf="cryptoWithdrawForm.get('currency')?.errors?.['required']"
-                  class="text-danger"
-                >
-                  Please select a currency
-                </span>
-              
+
+              <span
+                *ngIf="cryptoWithdrawForm.get('currency')?.errors?.['required']"
+                class="text-danger"
+              >
+                Please select a currency
+              </span>
             </nb-form-field>
 
             <nb-form-field>
@@ -193,24 +185,19 @@
                     : 'basic'
                 "
               />
-              
-                Available: {{ cryptoMaxAmount }} {{ cryptoWithdrawForm.get('currency')?.value }}
-              
-              
-                <span
-                  *ngIf="cryptoWithdrawForm.get('amount')?.errors?.required"
-                  class="text-danger"
-                >
-                  Amount is required
-                </span>
-                <span *ngIf="cryptoWithdrawForm.get('amount')?.errors?.min" class="text-danger">
-                  Minimum amount is {{ cryptoWithdrawForm.get('amount')?.errors?.min.min }}.
-                </span>
-                <span *ngIf="cryptoWithdrawForm.get('amount')?.errors?.max" class="text-danger">
-                  Amount exceeds available balance ({{ cryptoMaxAmount }}
-                  {{ cryptoWithdrawForm.get('currency')?.value }}).
-                </span>
-              
+
+              Available: {{ cryptoMaxAmount }} {{ cryptoWithdrawForm.get('currency')?.value }}
+
+              <span *ngIf="cryptoWithdrawForm.get('amount')?.errors?.required" class="text-danger">
+                Amount is required
+              </span>
+              <span *ngIf="cryptoWithdrawForm.get('amount')?.errors?.min" class="text-danger">
+                Minimum amount is {{ cryptoWithdrawForm.get('amount')?.errors?.min.min }}.
+              </span>
+              <span *ngIf="cryptoWithdrawForm.get('amount')?.errors?.max" class="text-danger">
+                Amount exceeds available balance ({{ cryptoMaxAmount }}
+                {{ cryptoWithdrawForm.get('currency')?.value }}).
+              </span>
             </nb-form-field>
 
             <nb-form-field>
@@ -231,9 +218,8 @@
                   {{ network.name }} <span *ngIf="network.fee">(Fee: {{ network.fee }})</span>
                 </nb-option>
               </nb-select>
-              
-                Network is required.
-              
+
+              Network is required.
             </nb-form-field>
 
             <nb-form-field>
@@ -251,20 +237,16 @@
                     : 'basic'
                 "
               />
-              
-                <span
-                  *ngIf="cryptoWithdrawForm.get('address')?.errors?.required"
-                  class="text-danger"
-                >
-                  Address is required
-                </span>
-                <span
-                  *ngIf="cryptoWithdrawForm.get('address')?.errors?.minlength"
-                  class="text-danger"
-                >
-                  Address is too short
-                </span>
-              
+
+              <span *ngIf="cryptoWithdrawForm.get('address')?.errors?.required" class="text-danger">
+                Address is required
+              </span>
+              <span
+                *ngIf="cryptoWithdrawForm.get('address')?.errors?.minlength"
+                class="text-danger"
+              >
+                Address is too short
+              </span>
             </nb-form-field>
 
             <nb-form-field *ngIf="requiresMemo(cryptoWithdrawForm.get('currency')?.value)">
@@ -283,12 +265,10 @@
                 "
               />
               Some networks require a
-                {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} for the
-                transaction.
-              
-                {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} is required for this
-                currency/network.
-              
+              {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} for the transaction.
+
+              {{ getMemoName(cryptoWithdrawForm.get('currency')?.value) }} is required for this
+              currency/network.
             </nb-form-field>
 
             <nb-form-field>

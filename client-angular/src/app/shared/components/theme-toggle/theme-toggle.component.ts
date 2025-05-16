@@ -1,9 +1,10 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Subscription } from 'rxjs';
+import { NbIconModule, NbButtonModule, NbToggleModule } from '@nebular/theme';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE

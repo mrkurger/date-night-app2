@@ -1,6 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 import { Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -29,7 +31,17 @@ import { DialogService } from '../../../core/services/dialog.service';
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule, NbTooltipModule, RouterModule, StarRatingComponent, TimeAgoPipe],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTagModule,
+    NbTooltipModule,
+    RouterModule,
+    StarRatingComponent,
+    TimeAgoPipe
+  ],
   template: `
     <div class="reviews-container">
       <h3 class="reviews-title">

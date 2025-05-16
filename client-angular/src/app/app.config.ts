@@ -21,8 +21,9 @@ import { CoreModule } from './core/core.module';
 import { NebularModule } from './shared/nebular.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './core/config/socket.config';
-import { NbThemeModule } from '@nebular/theme';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbThemeModule } from '@nebular/theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,8 +31,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: true,
-      registrationStrategy: 'registerImmediately',
+      enabled: false, // Disable in development mode to prevent 404 errors
+      registrationStrategy: 'registerWhenStable:30000',
     }),
     importProvidersFrom(
       CoreModule,

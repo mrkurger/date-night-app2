@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule } from '@nebular/theme';
+
 import type { Ad } from '../../../../core/models/ad.interface';
 
 /**
@@ -14,7 +16,13 @@ import type { Ad } from '../../../../core/models/ad.interface';
   templateUrl: './app-card.component.html',
   styleUrls: ['./app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule
+  ],
 })
 export class AppCardComponent implements OnInit {
   @Input() ad!: Ad;

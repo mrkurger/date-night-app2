@@ -1,10 +1,23 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 import { OnDestroy } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -23,7 +36,6 @@ import {
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 import { Subscription } from 'rxjs';
 import { Ad } from '../../core/models/ad.interface';
-
 
 // Mock data for demonstration
 const MOCK_ADS: Ad[] = [
@@ -167,7 +179,19 @@ const MOCK_ADS: Ad[] = [
 @Component({
   selector: 'app-preferences-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbFormFieldModule, NbLayoutModule, AdCardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbLayoutModule,
+    AdCardComponent
+  ],
   template: `
     <div class="preferences-demo-container">
       <nb-card class="settings-card">

@@ -11,7 +11,10 @@ export interface User {
     lastName?: string;
     avatar?: string;
     bio?: string;
-    location?: string;
+    location?: {
+      city?: string;
+      country?: string;
+    };
   };
   preferences?: {
     emailNotifications: boolean;

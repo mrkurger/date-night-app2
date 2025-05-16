@@ -22,7 +22,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './touring.component.html',
   styleUrls: ['./touring.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
 })
 export class TouringComponent implements OnInit {
   touringAds: TouringAd[] = [];

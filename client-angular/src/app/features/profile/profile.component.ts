@@ -1,10 +1,6 @@
-import { NbToggleModule } from '@nebular/theme';
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { Input } from '@angular/core';
+import { NebularModule } from '../shared/nebular.module';
+
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
@@ -22,8 +18,6 @@ import { RouterModule, Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-
-
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserProfile } from '../../core/models/user.interface';
@@ -33,7 +27,7 @@ import { UserProfile } from '../../core/models/user.interface';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule, NbSelectModule, NbToggleModule, NbAlertModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, NebularModule],
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
@@ -79,7 +73,20 @@ export class ProfileComponent implements OnInit {
       )
       .subscribe((user) => {
         if (user) {
-          this.userProfile = user as UserProfile;
+          // Convert User to UserProfile
+          this.userProfile = {
+            firstName: user.profile?.firstName,
+            lastName: user.profile?.lastName,
+            avatar: user.profile?.avatar,
+            bio: user.profile?.bio,
+            location: user.profile?.location,
+            preferences: user.preferences || {
+              emailNotifications: true,
+              pushNotifications: true,
+              theme: 'light',
+              language: 'en',
+            },
+          };
           this.updateFormValues();
         }
       });
@@ -92,11 +99,11 @@ export class ProfileComponent implements OnInit {
       firstName: this.userProfile.firstName || '',
       lastName: this.userProfile.lastName || '',
       bio: this.userProfile.bio || '',
-      phoneNumber: this.userProfile.phoneNumber || '',
+      phoneNumber: '',
       'location.city': this.userProfile.location?.city || '',
       'location.country': this.userProfile.location?.country || '',
-      'preferences.notifications': this.userProfile.preferences?.notifications ?? true,
-      'preferences.darkMode': this.userProfile.preferences?.darkMode ?? false,
+      'preferences.notifications': this.userProfile.preferences?.pushNotifications ?? true,
+      'preferences.darkMode': false,
       'preferences.language': this.userProfile.preferences?.language || 'en',
     });
   }
@@ -165,7 +172,20 @@ export class ProfileComponent implements OnInit {
       .subscribe((response) => {
         if (response) {
           this.successMessage = 'Profile updated successfully';
-          this.userProfile = response;
+          // Convert User to UserProfile
+          this.userProfile = {
+            firstName: response.profile?.firstName,
+            lastName: response.profile?.lastName,
+            avatar: response.profile?.avatar,
+            bio: response.profile?.bio,
+            location: response.profile?.location,
+            preferences: response.preferences || {
+              emailNotifications: true,
+              pushNotifications: true,
+              theme: 'light',
+              language: 'en',
+            },
+          };
         }
       });
   }

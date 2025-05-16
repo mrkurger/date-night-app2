@@ -1,6 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
@@ -15,11 +17,15 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-error-message',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbCardModule
+  ],
   template: `
     <nb-card status="danger" class="error-container">
       <nb-card-body>

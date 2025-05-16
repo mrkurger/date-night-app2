@@ -49,6 +49,7 @@ export interface Favorite {
   priority: 'low' | 'normal' | 'high';
   createdAt: string;
   updatedAt: string;
+  dateAdded?: string; // Legacy support
   selected?: boolean; // Added for UI selection state
 }
 

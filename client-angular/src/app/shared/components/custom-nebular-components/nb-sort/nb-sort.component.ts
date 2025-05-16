@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NebularModule } from '../../../nebular.module';
 import { CommonModule } from '@angular/common';
 import { NbIconModule } from '@nebular/theme';
+
 import { AppSortEvent } from './nb-sort.module';
 
 // Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)

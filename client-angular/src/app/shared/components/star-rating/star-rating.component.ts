@@ -1,12 +1,17 @@
-import { NbIconModule } from '@nebular/theme';
-import { EventEmitter, Output, Input, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+import { EventEmitter, Output, Input, Component } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-star-rating',
   standalone: true,
-  imports: [CommonModule, NbIconModule, NbTooltipModule],
+  imports: [
+    CommonModule,
+    NbIconModule,
+    NbTooltipModule
+  ],
   template: `
     <div class="star-rating" [class.small]="small" [class.readonly]="readonly">
       <span

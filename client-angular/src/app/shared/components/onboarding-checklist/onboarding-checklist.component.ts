@@ -1,4 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,10 +9,11 @@ import { NbIconModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
 
 export interface ChecklistItem {
   id: string;
@@ -34,7 +35,15 @@ export interface ChecklistItem {
   templateUrl: './onboarding-checklist.component.html',
   styleUrls: ['./onboarding-checklist.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NbButtonModule, NbIconModule, NbProgressBarModule, NbCheckboxModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
+    NbCheckboxModule,
+    RouterModule
+  ],
 })
 export class OnboardingChecklistComponent implements OnInit {
   @Input() items: ChecklistItem[] = [];

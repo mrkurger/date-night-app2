@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wallet - Static Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>Wallet</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="browse.html">Browse</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+          <li><a href="user-profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="wallet-balance-section">
+        <h2>Current Balance</h2>
+        <div class="wallet-balance">$120.00</div>
+        <div class="wallet-actions">
+          <button class="btn btn-primary">Add Funds</button>
+          <button class="btn btn-secondary">Withdraw</button>
+        </div>
+      </section>
+      <section class="wallet-history-section">
+        <h3>Transaction History</h3>
+        <table class="wallet-history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2025-05-10</td>
+              <td>Added Funds</td>
+              <td>+ $50.00</td>
+              <td><span class="badge online">Completed</span></td>
+            </tr>
+            <tr>
+              <td>2025-05-02</td>
+              <td>Payment for "Romantic Dinner for Two"</td>
+              <td>- $30.00</td>
+              <td><span class="badge">Completed</span></td>
+            </tr>
+            <tr>
+              <td>2025-04-28</td>
+              <td>Added Funds</td>
+              <td>+ $100.00</td>
+              <td><span class="badge online">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer class="main-footer">
+      <p>&copy; 2025 Date Night App</p>
+    </footer>
+  </body>
+</html>

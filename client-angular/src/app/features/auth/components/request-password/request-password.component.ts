@@ -1,7 +1,21 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component } from '@angular/core';
+
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +28,20 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './request-password.component.html',
   styleUrls: ['./request-password.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbAlertModule, NbTooltipModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbAlertModule,
+    NbTooltipModule
+  ],
 })
 export class RequestPasswordComponent {
   requestForm: FormGroup;

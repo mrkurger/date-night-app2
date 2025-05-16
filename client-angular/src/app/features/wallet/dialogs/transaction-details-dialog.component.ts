@@ -1,17 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Inject } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (transaction-details-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Inject, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -20,8 +7,25 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbBadgeModule,
+  NbToastrService,
+  NbGlobalPosition,
+  NbGlobalPhysicalPosition,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbTagModule,
+} from '@nebular/theme';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-
 
 import { WalletService } from '../../../core/services/wallet.service';
 
@@ -47,10 +51,27 @@ export interface WalletTransaction {
 
 @Component({
   selector: 'app-transaction-details-dialog',
-  standalone: true,
-  imports: [CommonModule, ClipboardModule, NbCardModule, NbButtonModule, NbIconModule, FormsModule, ReactiveFormsModule, NbBadgeModule],
   templateUrl: './transaction-details-dialog.component.html',
   styleUrls: ['./transaction-details-dialog.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ClipboardModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbTagModule,
+  ],
 })
 export class TransactionDetailsDialogComponent {
   constructor(

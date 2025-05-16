@@ -36,36 +36,29 @@
     <!-- Tinder Card Area -->
     <div class="swipe-area" *ngIf="!loading && !error && currentAd">
       <!-- Current Card -->
-      <app-tinder-card
+      <nb-tinder-card
         [title]="currentAd.title"
         [subtitle]="getLocationString(currentAd)"
         [description]="currentAd.description"
         [media]="getCardMedia(currentAd)"
         [tags]="currentAd.tags"
-        [itemId]="getAdIdAsString(currentAd._id)"
-        [age]="currentAd.age.toString()"
-        [state]="cardState"
-        [swipeable]="true"
-        (swipe)="onSwipe($event)"
-        (actionClick)="onCardAction($event)"
-        (mediaChange)="onMediaChange($event)"
+        (like)="likeAd(getAdIdAsString(currentAd._id))"
+        (dislike)="dislikeAd(getAdIdAsString(currentAd._id))"
+        (superlike)="superlikeAd(getAdIdAsString(currentAd._id))"
       >
-      </app-tinder-card>
+      </nb-tinder-card>
     </div>
 
     <!-- Next Card Preview (for smooth transitions) -->
     <div class="next-card-preview" *ngIf="nextAd">
-      <app-tinder-card
+      <nb-tinder-card
         [title]="nextAd.title"
         [subtitle]="getLocationString(nextAd)"
         [description]="nextAd.description"
         [media]="getCardMedia(nextAd)"
         [tags]="nextAd.tags"
-        [itemId]="getAdIdAsString(nextAd._id)"
-        [age]="nextAd.age.toString()"
-        [swipeable]="false"
       >
-      </app-tinder-card>
+      </nb-tinder-card>
     </div>
   </div>
 

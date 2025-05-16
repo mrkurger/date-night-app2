@@ -1,6 +1,15 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+} from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -50,7 +59,7 @@ export interface ResponseDialogData {
               [placeholder]="data?.placeholder || 'Enter your response'"
               [rows]="4"
             ></textarea>
-            <nb-form-field-control>
+            <div class="form-field-errors">
               <span *ngIf="responseForm.get('response')?.errors?.['required']" class="text-danger">
                 Response is required
               </span>
@@ -60,7 +69,7 @@ export interface ResponseDialogData {
               <span *ngIf="responseForm.get('response')?.errors?.['maxlength']" class="text-danger">
                 Response cannot exceed {{ data?.maxLength }} characters
               </span>
-            </nb-form-field-control>
+            </div>
           </nb-form-field>
         </form>
       </nb-card-body>
@@ -104,7 +113,16 @@ export interface ResponseDialogData {
     `,
   ],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbIconModule, NbSpinnerModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+  ],
 })
 export class ResponseDialogComponent implements OnInit {
   responseForm: FormGroup;

@@ -39,7 +39,7 @@
       *ngFor="let room of rooms"
       [class.unread]="hasUnreadMessages(room)"
       [class.pinned]="room.pinned"
-      (click)="goToRoom(room._id)"
+      (click)="goToRoom(room.id)"
     >
       <!-- Room Avatar -->
       <div class="chat-room-item__avatar">

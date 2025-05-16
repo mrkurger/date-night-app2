@@ -20,14 +20,8 @@ import { ChatSettingsComponent } from '../../shared/components/chat-settings/cha
 import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 
 @NgModule({
-  declarations: [
-    ],
-  imports: [SharedModule, ChatRoutingModule
-    ChatComponent,
-    ChatListComponent,
-    ChatRoomComponent,
-    ChatMessageComponent,
-    ChatSettingsComponent,],
+  declarations: [],
+  imports: [SharedModule, ChatRoutingModule],
   providers: [LinkifyPipe],
 })
 export class ChatModule {}

@@ -1,4 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,6 +9,8 @@ import { NbIconModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 
 import { IconComponent } from '../icon/icon.component';
@@ -22,7 +24,12 @@ import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, IconComponent],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    IconComponent
+  ],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,9 +1,9 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, Input, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { CommonModule } from '@angular/common';
 
 export interface InfoPanelItem {
   label: string;
@@ -22,7 +22,14 @@ export interface InfoPanelItem {
 @Component({
   selector: 'app-info-panel',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbIconModule, NbBadgeModule, NbProgressBarModule, NbAccordionModule],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbProgressBarModule,
+    NbAccordionModule
+  ],
   template: `
     <nb-card [class]="'info-panel info-panel--' + variant">
       <nb-accordion *ngIf="collapsible">

@@ -109,8 +109,8 @@ export class UserService {
    * Update user profile with form data (supports file uploads)
    * @param formData Form data with profile updates
    */
-  updateProfile(formData: FormData): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.apiUrl}/profile`, formData).pipe(
+  updateProfile(formData: FormData): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/profile`, formData).pipe(
       tap((user) => {
         // Update current user if it's the logged-in user
         if (this.currentUser && this.currentUser._id === user._id) {

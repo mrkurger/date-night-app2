@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbIconModule, NbContextMenuModule, NbMenuService } from '@nebular/theme';
+import {
+  NbMenuService
+} from '@nebular/theme';
 
 /**
  * Avatar Component
@@ -14,7 +18,13 @@ import { NbIconModule, NbContextMenuModule, NbMenuService } from '@nebular/theme
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NbIconModule, NbContextMenuModule],
+  imports: [
+    CommonModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbUserModule,
+    RouterModule
+  ],
 })
 export class AvatarComponent implements OnInit {
   @Input() imageUrl = '/assets/img/default-profile.jpg';

@@ -1,10 +1,22 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { ThemeService } from '../../core/services/theme.service';
-
 
 /**
  * Micro-interactions Demo Component
@@ -15,7 +27,8 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-micro-interactions-demo',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbSpinnerModule, NbProgressBarModule, NbLayoutModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule],
   template: `
     <div [class]="bem.block()">
       <header [class]="bem.element('header')">

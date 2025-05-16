@@ -1,18 +1,20 @@
 import { Component, Inject } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import {
-  NbToggleModule,
-  NbIconModule,
-  NbSelectModule,
-  NbFormFieldModule,
-  NbTagModule,
-  NbCardModule,
-  NbDialogModule,
-  NbButtonModule,
-  NbInputModule,
   NbDialogRef,
   NB_DIALOG_CONFIG,
   NbTagInputAddEvent,
+  NbDialogModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbTagModule,
+  NbToggleModule,
+  NbCardModule,
 } from '@nebular/theme';
 
 import {
@@ -217,7 +219,7 @@ export class FavoriteDialogComponent {
   favoriteForm: FormGroup;
   tags: string[] = [];
   isEdit = false;
-  readonly separatorKeysCodes = [13, 188] as const;
+  readonly separatorKeysCodes: number[] = [13, 188]; // Enter and comma
 
   constructor(
     private fb: FormBuilder,
@@ -248,8 +250,10 @@ export class FavoriteDialogComponent {
     }
   }
 
-  removeTag(tag: string): void {
-    const index = this.tags.indexOf(tag);
+  removeTag(tag: any): void {
+    // Handle both string and NbTagComponent
+    const tagValue = typeof tag === 'string' ? tag : tag.text;
+    const index = this.tags.indexOf(tagValue);
     if (index >= 0) {
       this.tags.splice(index, 1);
       this.favoriteForm.patchValue({ tags: this.tags });

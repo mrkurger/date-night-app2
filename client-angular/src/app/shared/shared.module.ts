@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
+import { NebularModule } from './nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbSidebarModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbToastrModule,
-  NbWindowModule,
   NbCardModule,
   NbButtonModule,
   NbInputModule,
@@ -39,7 +36,6 @@ import {
   NbSpinnerModule,
   NbSearchModule,
 } from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 // Import custom components
 import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
@@ -103,8 +99,9 @@ const CUSTOM_MODULES = [];
     ...NEBULAR_MODULES,
     ...CUSTOM_MODULES,
     ...CUSTOM_COMPONENTS,
-  
-    NbErrorComponent,],
+    NbErrorComponent,
+    NebularModule,
+  ],
   exports: [
     CommonModule,
     FormsModule,

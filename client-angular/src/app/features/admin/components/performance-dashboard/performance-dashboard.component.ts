@@ -1,11 +1,5 @@
-import { NbDatepickerModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -26,13 +20,25 @@ import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { NbPaginationChangeEvent } from '../../../../shared/components/custom-nebular-components/nb-paginator/nb-paginator.module';
+// Custom pagination event interface
+interface PaginationChangeEvent {
+  page: number;
+  pageSize: number;
+}
 import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Component({
   selector: 'app-performance-dashboard',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbTabsetModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbDatepickerModule, NbSpinnerModule, NbTagModule, NbIconModule, AppSortComponent, AppSortHeaderComponent, ReactiveFormsModule, NgxChartsModule],
+  imports: [
+    CommonModule,
+    NebularModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+    ReactiveFormsModule,
+    NgxChartsModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
 })
@@ -56,6 +62,10 @@ export class PerformanceDashboardComponent implements OnInit {
   // Pagination
   pageSize = 10;
   pageIndex = 0;
+
+  // Sorting
+  sortColumn = 'avgDuration';
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
   totalEndpoints = 0;
 
   // Filtering
@@ -213,7 +223,7 @@ export class PerformanceDashboardComponent implements OnInit {
   /**
    * Handle page change event from paginator
    */
-  onPageChange(event: NbPaginationChangeEvent): void {
+  onPageChange(event: PaginationChangeEvent): void {
     this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
     this.loadDashboardData();

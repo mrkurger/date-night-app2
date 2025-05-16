@@ -9,6 +9,8 @@
 // ===================================================
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,16 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
 // Nebular imports
-import {
-  NbThemeModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbTooltipModule,
-} from '@nebular/theme';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 

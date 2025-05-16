@@ -1,8 +1,9 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+
+import { Component, Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { CommonModule } from '@angular/common';
 
 /**
  * Label Component
@@ -13,7 +14,11 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-label',
   standalone: true,
-  imports: [CommonModule, NbTagModule, NbIconModule],
+  imports: [
+    CommonModule,
+    NbTagModule,
+    NbIconModule
+  ],
   template: `
     <nb-tag
       [text]="text"

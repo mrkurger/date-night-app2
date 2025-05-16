@@ -1,18 +1,24 @@
 import { Input } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbCheckboxModule,
-  NbSpinnerModule,
-  NbRadioModule,
-} from '@nebular/theme';
+
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {

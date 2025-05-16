@@ -1,10 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // LIST VIEW COMPONENT
 // ===================================================
@@ -12,12 +5,21 @@ import { NbCardModule } from '@nebular/theme';
 // using Nebular components and services
 // ===================================================
 
-import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  TemplateRef,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+// Import NebularModule which contains all Nebular components
+import { NebularModule } from '../shared/nebular.module';
+import { NbDialogService } from '@nebular/theme';
 
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -58,7 +60,8 @@ interface SavedFilter {
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbCheckboxModule, NbTooltipModule, NbSpinnerModule, NbMenuModule, NbTagModule, NbDatepickerModule, NbDialogModule, NbSidebarModule, NbCardModule, NbListModule, NbBadgeModule, NbAlertModule, NbActionsModule, NbLayoutModule, NbContextMenuModule, NbSearchModule, NbToggleModule, NbAccordionModule, NbPopoverModule, NbTabsetModule, NbUserModule, NbEvaIconsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule],
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
   // View template references
@@ -86,6 +89,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     { value: 'popularityDesc', label: 'Most Popular', direction: 'desc' },
   ];
   currentSort = 'newest';
+
+  // Sort menu items for NbMenu
+  sortMenuItems = this.sortOptions.map((option) => ({
+    title: option.label,
+    data: { value: option.value },
+  }));
 
   // Search debouncing
   private searchTimeout: ReturnType<typeof setTimeout>;
@@ -318,12 +327,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/ads', adId]);
   }
 
-  shareAd(adId: string): void {
+  shareAd(adId: any): void {
     // Implement share functionality
     this.notificationService.info('Share', 'Sharing functionality coming soon!');
   }
 
-  likeAd(adId: string, event?: Event): void {
+  likeAd(adId: any, event?: Event): void {
     if (event) {
       event.stopPropagation();
     }
@@ -337,7 +346,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.notificationService.success('Success', 'Ad added to favorites!');
   }
 
-  startChat(adId: string, event?: Event): void {
+  startChat(adId: any, event?: Event): void {
     if (event) {
       event.stopPropagation();
     }
@@ -347,9 +356,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const ad = this.ads.find((a) => a._id === adId);
+    const adIdStr = typeof adId === 'string' ? adId : adId._id || '';
+    const ad = this.ads.find((a) => a._id === adIdStr);
     if (ad) {
-      this.chatService.createAdRoom(adId).subscribe({
+      this.chatService.createAdRoom(adIdStr).subscribe({
         next: (room) => {
           this.router.navigate(['/chat'], { queryParams: { id: room.id } });
         },
@@ -516,8 +526,26 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Dialog reference for the currently open dialog
+  private currentDialogRef: any = null;
+
+  // Close dialog without a value
+  closeDialog(): void {
+    if (this.currentDialogRef) {
+      this.currentDialogRef.close();
+    }
+  }
+
+  // Close dialog with a value
+  closeDialogWithValue(value: any): void {
+    if (this.currentDialogRef) {
+      this.currentDialogRef.close(value);
+    }
+  }
+
   saveCurrentFilter(): void {
-    this.dialog.open(this.saveFilterDialog).onClose.subscribe((name) => {
+    this.currentDialogRef = this.dialog.open(this.saveFilterDialog);
+    this.currentDialogRef.onClose.subscribe((name) => {
       if (name) {
         const filter: SavedFilter = {
           id: Date.now().toString(),

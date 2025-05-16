@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbIconModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -21,7 +23,11 @@ export interface Breadcrumb {
 @Component({
   selector: 'app-breadcrumbs',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbIconModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbIconModule
+  ],
   template: `
     <nav class="breadcrumbs" aria-label="breadcrumb">
       <ol>

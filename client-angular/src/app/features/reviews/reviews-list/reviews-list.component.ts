@@ -1,21 +1,10 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbUserModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (reviews-list.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-
 
 export interface Review {
   _id: string;
@@ -37,7 +26,8 @@ export interface Review {
 @Component({
   selector: 'app-reviews-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbButtonModule, NbIconModule, NbContextMenuModule, NbMenuModule, NbSpinnerModule, NbCardModule, NbUserModule, NbBadgeModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule, NebularModule],
   template: `
     <div class="reviews-list-container">
       <!-- Loading State -->

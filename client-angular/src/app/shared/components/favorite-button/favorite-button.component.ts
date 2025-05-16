@@ -1,4 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,7 +8,9 @@ import { NbIconModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
+import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 import { FavoriteService } from '../../../core/services/favorite.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -17,7 +18,6 @@ import { NotificationService } from '../../../core/services/notification.service
 import { DialogService } from '../../../core/services/dialog.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-favorite-button',

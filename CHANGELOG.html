@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Night App - Changelog</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    .entry {
+      margin-bottom: 20px;
+      padding-left: 15px;
+      border-left: 3px solid #3498db;
+    }
+    .date {
+      color: #7f8c8d;
+      font-size: 0.9em;
+    }
+    code {
+      background-color: #f8f8f8;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #e0e0e0;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      margin-right: 5px;
+    }
+    .tag.fix { background-color: #f8d7da; }
+    .tag.feature { background-color: #d4edda; }
+    .tag.improvement { background-color: #d1ecf1; }
+    .tag.breaking { background-color: #f8d7da; color: #721c24; }
+    .tag.security { background-color: #fff3cd; }
+    .tag.performance { background-color: #e2e3e5; }
+    .tag.docs { background-color: #f8f9fa; }
+  </style>
+</head>
+<body>
+  <h1>Date Night App - Changelog</h1>
+  
+  <h2>2025-05-15</h2>
+  
+  <div class="entry">
+    <h3>Frontend Compilation Fixes <span class="tag fix">Fix</span></h3>
+    <p class="date">May 15, 2025</p>
+    <p>Fixed issues preventing the frontend from compiling and running:</p>
+    <ul>
+      <li>Created missing <code>fix-project.sh</code> script to handle common project issues</li>
+      <li>Fixed SASS map module import in <code>tokens.scss</code> by adding <code>@use 'sass:map';</code></li>
+      <li>Added Eva Icons CSS to <code>index.html</code> via CDN</li>
+      <li>Updated Content Security Policy to allow loading resources from unpkg.com</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <h3>Project Setup Improvements <span class="tag improvement">Improvement</span></h3>
+    <p class="date">May 15, 2025</p>
+    <p>Improved project setup and configuration:</p>
+    <ul>
+      <li>Created comprehensive <code>fix-project.sh</code> script that handles:
+        <ul>
+          <li>Making scripts executable</li>
+          <li>Fixing Husky Git hooks issues</li>
+          <li>Checking for and installing missing dependencies</li>
+          <li>Fixing ESLint dependency conflicts</li>
+          <li>Fixing CSP issues</li>
+          <li>Checking MongoDB setup</li>
+          <li>Fixing test-related issues</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,9 +1,15 @@
-import { NbUserModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { NebularModule } from '../../nebular.module';
+import {
+  NbMenuItem,
+  NbMenuService,
+  NbUserModule,
+  NbContextMenuModule,
+  NbBadgeModule,
+  NbIconModule,
+} from '@nebular/theme';
 
 export interface AvatarMenuItem extends NbMenuItem {
   data?: any;
@@ -18,7 +24,14 @@ export interface AvatarMenuItem extends NbMenuItem {
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbUserModule, NbContextMenuModule, NbBadgeModule, NbIconModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NbUserModule,
+    NbContextMenuModule,
+    NbBadgeModule,
+    NbIconModule,
+  ],
   template: `
     <div class="avatar" [class]="'avatar--' + size">
       <nb-user

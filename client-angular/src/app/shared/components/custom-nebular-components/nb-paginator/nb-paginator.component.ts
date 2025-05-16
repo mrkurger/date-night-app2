@@ -1,6 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
+
+
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 
 import { NbPaginationChangeEvent } from './nb-paginator.module';
@@ -8,7 +10,12 @@ import { NbPaginationChangeEvent } from './nb-paginator.module';
 @Component({
   selector: 'nb-paginator',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbSelectModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule
+  ],
   template: `
     <div class="paginator-container">
       <div class="paginator-range-actions">

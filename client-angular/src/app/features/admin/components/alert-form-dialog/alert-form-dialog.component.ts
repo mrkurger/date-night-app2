@@ -1,7 +1,21 @@
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, Input } from '@angular/core';
+
+
+import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -17,7 +31,18 @@ import { AlertService } from '../../../../core/services/alert.service';
 @Component({
   selector: 'app-alert-form-dialog',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbCheckboxModule, NbIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbIconModule
+  ],
   template: `
     <nb-card>
       <nb-card-header>

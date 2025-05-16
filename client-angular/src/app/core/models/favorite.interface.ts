@@ -5,6 +5,9 @@ export interface Favorite {
   _id: string;
   user: string | User;
   ad: string | Ad;
+  adId?: string; // Reference to the ad ID
+  title?: string; // Title from the ad
+  dateAdded?: Date | string; // Alias for createdAt
   notes?: string;
   notificationsEnabled: boolean;
   tags: string[];

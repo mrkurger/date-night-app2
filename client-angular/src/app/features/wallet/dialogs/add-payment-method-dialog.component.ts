@@ -1,7 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -17,6 +13,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
+  Inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -26,6 +23,25 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbRadioModule,
+  NbTabsetModule,
+  NbSpinnerModule,
+  NbStepperModule,
+  NbCheckboxModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+} from '@nebular/theme';
 
 import { WalletService, PaymentMethod } from '../../../core/services/wallet.service';
 import { PaymentService } from '../../../core/services/payment.service';
@@ -36,7 +52,27 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './add-payment-method-dialog.component.html',
   styleUrls: ['./add-payment-method-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbRadioModule, NbTabsetModule, NbSpinnerModule, NbStepperModule, NbCheckboxModule, NbAlertModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbRadioModule,
+    NbTabsetModule,
+    NbSpinnerModule,
+    NbStepperModule,
+    NbCheckboxModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPaymentMethodDialogComponent implements OnInit {

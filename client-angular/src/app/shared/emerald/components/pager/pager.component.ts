@@ -1,5 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,8 +12,9 @@ import { NbSelectModule } from '@nebular/theme';
 //   Related to: pager.component.html
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../../shared/nebular.module';
 
+import { CommonModule } from '@angular/common';
 
 /**
  * Pagination Component
@@ -26,7 +27,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './pager.component.html',
   styleUrls: ['./pager.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbSelectModule, NbIconModule, NbButtonModule],
+  imports: [
+    CommonModule,
+    NbSelectModule,
+    NbIconModule,
+    NbButtonModule
+  ],
 })
 export class PagerComponent implements OnChanges {
   /**

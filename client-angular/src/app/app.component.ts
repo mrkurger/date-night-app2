@@ -1,21 +1,37 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbUserModule } from '@nebular/theme';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NotificationComponent } from './shared/components/notification/notification.component';
-import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
-import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
-
-import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ThemeService } from './core/services/theme.service';
 import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
+import { NebularModule } from './shared/nebular.module';
+import {
+  NbSidebarService,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbActionsModule,
+  NbUserModule,
+  NbButtonModule,
+  NbIconModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, NbLayoutModule, NbIconModule, NbEvaIconsModule, NbSidebarModule, NbMenuModule, NbContextMenuModule, NbActionsModule, NbUserModule, NbSearchModule, NbButtonModule, NotificationComponent, AlertNotificationsComponent, DebugInfoComponent, ThemeToggleComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NebularModule,
+    ThemeToggleComponent,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbMenuModule,
+    NbActionsModule,
+    NbUserModule,
+    NbButtonModule,
+    NbIconModule,
+  ],
   template: `
     <nb-layout>
       <nb-layout-header fixed>

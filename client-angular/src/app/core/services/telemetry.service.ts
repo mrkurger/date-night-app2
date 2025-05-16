@@ -37,6 +37,9 @@ export interface PerformanceTelemetry {
   type: string;
   duration: number;
   url?: string;
+  method?: string;
+  ttfb?: number;
+  responseSize?: number;
   metadata?: TelemetryMetadata;
 }
 

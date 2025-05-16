@@ -11,8 +11,30 @@
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
 
-// Removed: @import url('https://unpkg.com/@nebular/theme@15.0.0/styles/prebuilt/default.css');
-// Removed: @import url('https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css');
+:root {
+  --nb-theme-margin: 1rem;
+  --nb-theme-margin-lg: 1.5rem;
+  --nb-theme-margin-xs: 0.25rem;
+  --nb-theme-spacing: 0.5rem;
+  --nb-theme-form-field-spacing: 0.75rem;
+  --nb-theme-card-margin-bottom: 1.5rem;
+  --nb-theme-card-border-radius: 0.5rem;
+  --nb-theme-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --nb-theme-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --nb-theme-transition-duration: 0.2s;
+  --nb-theme-transition-timing-function: ease-in-out;
+  --nb-theme-button-border-radius: 0.25rem;
+  --nb-theme-button-padding: 0.5rem 1rem;
+  --nb-theme-border-radius: 0.25rem;
+  --nb-theme-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --nb-theme-padding: 1rem;
+  --color-danger-default: #ff3d71;
+  --color-primary-default: #3366ff;
+  --color-basic-600: #8f9bb3;
+}
+
+
+// Nebular theme and Eva Icons are now loaded via index.html
 
 // Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
 

@@ -1,7 +1,21 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+
+
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -34,7 +48,20 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NbCardModule, NbButtonModule, NbInputModule, NbIconModule, NbSpinnerModule, NbFormFieldModule, NbTooltipModule, NbAlertModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbTooltipModule,
+    NbAlertModule
+  ],
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;

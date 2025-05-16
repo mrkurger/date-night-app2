@@ -1,7 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,11 +10,11 @@ import { NbCardModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
-
-
 
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
 import {
@@ -68,7 +66,24 @@ type ErrorColumnKey =
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NbCardModule, NbTabsetModule, NbButtonModule, NbIconModule, NbSelectModule, NbInputModule, NbFormFieldModule, NbDatepickerModule, NbSpinnerModule, NbTableModule, NbListModule, NbTreeGridModule, ErrorDetailsDialogComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbListModule,
+    NbTreeGridModule,
+    ErrorDetailsDialogComponent
+  ],
   template: `
     <div class="dashboard-container">
       <h1>Telemetry Dashboard</h1>

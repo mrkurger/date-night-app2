@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 import {
-  NbCardModule,
-  NbIconModule,
-  NbBadgeModule,
   NbProgressBarModule,
-  NbAccordionModule,
+  
 } from '@nebular/theme';
 
 /**

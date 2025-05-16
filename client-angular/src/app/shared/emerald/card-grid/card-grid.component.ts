@@ -1,5 +1,5 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,8 +10,9 @@ import { NbCardModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../nebular.module';
 
+import { CommonModule } from '@angular/common';
 
 /**
  * Card Grid Component
@@ -78,7 +79,12 @@ import { CommonModule } from '@angular/common';
   `,
   styleUrls: ['./card-grid.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbSpinnerModule, NbIconModule],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbSpinnerModule,
+    NbIconModule
+  ],
 })
 export class CardGridComponent {
   /**

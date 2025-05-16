@@ -1,9 +1,8 @@
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NebularModule } from "../../shared/nebular.module";
 
 import { MapComponent } from '../../../shared/components/map/map.component';
 
@@ -12,7 +11,7 @@ import { MapComponent } from '../../../shared/components/map/map.component';
   templateUrl: './travel-itinerary.component.html',
   styleUrls: ['./travel-itinerary.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbFormFieldModule, NbInputModule, NbDatepickerModule, NbButtonModule, MapComponent],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule, MapComponent],
 })
 export class TravelItineraryComponent implements OnInit {
   travelForm: FormGroup;

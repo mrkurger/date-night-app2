@@ -1,4 +1,4 @@
-import { NbCardModule } from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,6 +9,8 @@ import { NbCardModule } from '@nebular/theme';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -19,7 +21,15 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 @Component({
   selector: 'app-review-summary',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbProgressBarModule, RouterModule, StarRatingComponent, NbCardModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
+    RouterModule,
+    StarRatingComponent,
+    NbCardModule
+  ],
   template: `
     <nb-card class="review-summary-card">
       <nb-card-header>

@@ -1,19 +1,28 @@
 import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  NbCardModule,
-  NbIconModule,
-  NbButtonModule,
-  NbMenuModule,
-  NbSpinnerModule,
-  NbToggleModule,
-  NbDialogModule,
   NbDialog,
   NbDialogService,
+  
 } from '@nebular/theme';
 import { NbDividerModule } from '../../../shared/mocks/nb-divider.module';
 import { of, throwError } from 'rxjs';

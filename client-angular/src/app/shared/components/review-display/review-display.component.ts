@@ -1,6 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
+
+
 import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
@@ -59,7 +61,16 @@ export interface Review {
 @Component({
   selector: 'app-review-display',
   standalone: true,
-  imports: [CommonModule, StarRatingComponent, TimeAgoPipe, NbButtonModule, NbIconModule, NbCardModule, NbTooltipModule, NbBadgeModule],
+  imports: [
+    CommonModule,
+    StarRatingComponent,
+    TimeAgoPipe,
+    NbButtonModule,
+    NbIconModule,
+    NbCardModule,
+    NbTooltipModule,
+    NbBadgeModule
+  ],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],
 })

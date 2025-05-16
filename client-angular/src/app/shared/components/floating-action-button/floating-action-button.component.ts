@@ -1,7 +1,8 @@
-import { NbIconModule } from '@nebular/theme';
-import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { CommonModule } from '@angular/common';
 
 export interface FabMenuItem extends NbMenuItem {
   data?: any;
@@ -16,7 +17,13 @@ export interface FabMenuItem extends NbMenuItem {
 @Component({
   selector: 'app-fab',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTooltipModule,
+    NbContextMenuModule
+  ],
   template: `
     <button
       nbButton

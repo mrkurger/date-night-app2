@@ -1,4 +1,6 @@
 import { Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Component } from '@angular/core';
 /// <reference types="jasmine" />
 
@@ -6,12 +8,8 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
   NB_DIALOG_CONFIG,
+  
 } from '@nebular/theme';
 import { ResponseDialogComponent, ResponseDialogData } from './response-dialog.component';
 

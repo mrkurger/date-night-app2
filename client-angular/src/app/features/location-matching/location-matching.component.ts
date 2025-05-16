@@ -1,30 +1,8 @@
-import { Input } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (location-matching.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {
-  NbButtonModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbDatepickerModule,
-  NbTooltipModule,
-} from '@nebular/theme';
 import { MapComponent } from '../../shared/components/map/map.component';
 import { GeocodingService } from '../../core/services/geocoding.service';
 import { LocationService } from '../../core/services/location.service';
@@ -64,21 +42,8 @@ interface LocationMatchResult {
   templateUrl: './location-matching.component.html',
   styleUrls: ['./location-matching.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NbButtonModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbDatepickerModule,
-    NbTooltipModule,
-    MapComponent,
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MapComponent],
 })
 export class LocationMatchingComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;

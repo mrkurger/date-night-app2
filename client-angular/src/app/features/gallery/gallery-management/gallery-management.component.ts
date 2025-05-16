@@ -27,7 +27,11 @@ interface Media {
   templateUrl: './gallery-management.component.html',
   styleUrls: ['./gallery-management.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
 })
 export class GalleryManagementComponent implements OnInit {
   @Input() adId: string;

@@ -86,7 +86,39 @@
             <input type="text" id="glossary-search" placeholder="Search glossary..." />
           </div>
 
-          <div class="glossary-entries"></div>
+          <div class="glossary-entries">
+            <!-- Example entries - will be replaced by auto-generation -->
+            <div class="glossary-entry" id="onSubmit">
+              <h3>onSubmit</h3>
+              <div class="entry-meta">Method • ProfileComponent</div>
+              <div class="entry-description">
+                <p>Handles the form submission for updating the user profile. Validates the form data, maps it to the correct User model structure, and sends it to the API.</p>
+                <p>Returns: void</p>
+              </div>
+            </div>
+            
+            <div class="glossary-entry" id="onFileSelected">
+              <h3>onFileSelected</h3>
+              <div class="entry-meta">Method • ProfileComponent</div>
+              <div class="entry-description">
+                <p>Handles the file selection event when a user chooses a new profile image. Validates the file type and size, then uploads it to the server.</p>
+                <p>Parameters:</p>
+                <ul>
+                  <li>event: Event - The file input change event</li>
+                </ul>
+                <p>Returns: void</p>
+              </div>
+            </div>
+            
+            <div class="glossary-entry" id="updateFormValues">
+              <h3>updateFormValues</h3>
+              <div class="entry-meta">Method • ProfileComponent</div>
+              <div class="entry-description">
+                <p>Updates the form values based on the current user profile data. Maps the nested User model structure to the form fields.</p>
+                <p>Returns: void</p>
+              </div>
+            </div>
+          </div>
         </article>
       </div>
     </main>

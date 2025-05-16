@@ -1,12 +1,11 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbBadgeModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { NebularModule } from "../../../shared/nebular.module";
+import {
+  NbToastrService,
+  
+} from '@nebular/theme';
 
 interface ReportedContent {
   id: string;
@@ -22,7 +21,8 @@ interface ReportedContent {
 @Component({
   selector: 'app-content-moderation',
   standalone: true,
-  imports: [CommonModule, FormsModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbSpinnerModule, NbTabsetModule, NbTagModule, NbBadgeModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, FormsModule, NebularModule],
   template: `
     <div class="content-moderation">
       <nb-card>
@@ -39,7 +39,7 @@ interface ReportedContent {
         </nb-card-header>
 
         <nb-card-body>
-          <table nbTable [nbTreeGrid]="false" [loading]="loading">
+          <table nbTable>
             <thead>
               <tr>
                 <th>Type</th>

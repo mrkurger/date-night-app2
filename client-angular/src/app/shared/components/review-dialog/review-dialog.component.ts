@@ -1,6 +1,7 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Component } from '@angular/core';
+import { NbDialogRef, NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+
+import { Component, Inject } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -77,12 +78,14 @@ export interface ReviewDialogData {
   ],
 })
 export class ReviewDialogComponent {
-  constructor(private dialogRef: NbDialogRef<ReviewDialogComponent>) {}
-
-  data: ReviewDialogData = {
-    advertiserId: '',
-    advertiserName: '',
-  };
+  constructor(
+    private dialogRef: NbDialogRef<ReviewDialogComponent>,
+    @Inject('REVIEW_DIALOG_DATA')
+    public data: ReviewDialogData = {
+      advertiserId: '',
+      advertiserName: '',
+    },
+  ) {}
 
   onReviewSubmitted(review: ReviewData): void {
     this.dialogRef.close(review);

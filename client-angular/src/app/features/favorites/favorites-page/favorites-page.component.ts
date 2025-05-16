@@ -1,12 +1,4 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbSelectModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbTagModule } from '@nebular/theme';
-import { NbAlertModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
-import { Input } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Input, OnInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -20,7 +12,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 import {
   FavoriteService,
@@ -39,6 +30,9 @@ import { AppSortComponent } from '../../../shared/components/custom-nebular-comp
 import { AppSortHeaderComponent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortEvent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
+// Import NebularModule directly for standalone components
+import { NebularModule } from '../../../shared/nebular.module';
+
 /**
  * Interface for saved filter presets
  */
@@ -56,7 +50,20 @@ interface FilterPreset {
 @Component({
   selector: 'app-favorites-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbButtonModule, NbIconModule, NbTagModule, NbSpinnerModule, NbTabsetModule, NbCardModule, NbMenuModule, NbCheckboxModule, NbToggleModule, NbTooltipModule, NbToastrModule, NbDialogModule, NbDatepickerModule, NbContextMenuModule, NbActionsModule, NbListModule, NbAccordionModule, NbPopoverModule, NbProgressBarModule, NbAlertModule, NbBadgeModule, NbLayoutModule, NbSidebarModule, NbUserModule, NbSearchModule, NbWindowModule, NbStepperModule, NbTreeGridModule, NbTableModule, FavoriteButtonComponent, LoadingSpinnerComponent, AppSortComponent, AppSortHeaderComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NebularModule,
+
+    // These components are imported but not used in the template
+    // FavoriteButtonComponent,
+    // LoadingSpinnerComponent,
+    // AppSortComponent,
+    // AppSortHeaderComponent,
+  ],
   template: `
     <div class="favorites-page">
       <div class="favorites-header">
@@ -360,8 +367,12 @@ interface FilterPreset {
               <div class="favorite-content">
                 <div class="favorite-header">
                   <h3>
-                    <a [routerLink]="['/ads', getAdIdAsString(favorite.adId)]">
-                      {{ favorite.title }}
+                    <a [routerLink]="['/ads', getAdIdAsString(favorite.ad)]">
+                      {{
+                        favorite.ad && typeof favorite.ad !== 'string'
+                          ? favorite.ad.title
+                          : 'View Ad'
+                      }}
                     </a>
                   </h3>
 
@@ -431,7 +442,7 @@ interface FilterPreset {
                   </nb-tag>
 
                   <nb-tag status="basic" icon="calendar-outline">
-                    Added {{ favorite.dateAdded | date }}
+                    Added {{ favorite.dateAdded || favorite.createdAt | date }}
                   </nb-tag>
 
                   <nb-tag
@@ -1306,8 +1317,11 @@ export class FavoritesPageComponent implements OnInit {
   /**
    * Convert ad ID to string regardless of its type
    */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  getAdIdAsString(adId: any): string {
+    if (!adId) return '';
+    if (typeof adId === 'string') return adId;
+    if (adId._id) return adId._id;
+    return JSON.stringify(adId);
   }
 
   toggleTagFilter(tag: string): void {

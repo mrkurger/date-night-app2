@@ -7,14 +7,14 @@
       <div class="ad-details">
         <h2 class="ad-title">{{ adTitle }}</h2>
         <a [routerLink]="['/ad-details', adId]" class="ad-link">
-          View Ad <i class="fas fa-external-link-alt"></i>
+          View Ad <nb-icon icon="external-link-outline"></nb-icon>
         </a>
       </div>
     </div>
 
     <div class="reviews-actions" *ngIf="!showReviewForm">
       <button class="btn btn-primary" (click)="showAddReviewForm()" *ngIf="!hasReviewed">
-        <i class="fas fa-star"></i>
+        <nb-icon icon="star-outline"></nb-icon>
         Write a Review
       </button>
     </div>

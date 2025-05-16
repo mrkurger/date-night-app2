@@ -156,12 +156,10 @@ export class EditProfileComponent implements OnInit {
       this.userService.getUserProfile(currentUser._id).subscribe({
         next: (user) => {
           this.profileForm.patchValue({
-            username: user.username,
-            email: user.email,
             bio: user.bio || '',
-            location: user.location || '',
-            website: user.website || '',
-            phone: user.phone || '',
+            location: user.location?.city || '',
+            website: '',
+            phone: '',
           });
         },
         error: (error) => {

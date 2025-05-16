@@ -1,10 +1,9 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
 
 interface Ad {
   id: number;
@@ -19,7 +18,8 @@ interface Ad {
 @Component({
   selector: 'app-ad-detail',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbCardModule, NbIconModule],
+  imports: [CommonModule, NebularModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './ad-detail.component.html',
   styleUrls: ['./ad-detail.component.scss'],
 })

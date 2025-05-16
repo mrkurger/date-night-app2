@@ -1,4 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,12 +21,18 @@ import { ChatService, ChatRoom, ChatParticipant } from '../../../core/services/c
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
-import { NbButtonModule, NbIconModule, NbBadgeModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    TimeAgoPipe,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule
+  ],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })

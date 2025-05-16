@@ -1,4 +1,7 @@
 import {
+  
+} from '@nebular/theme';
+import {
   Component,
   OnInit,
   Input,
@@ -36,7 +39,10 @@ export interface CalendarDate {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

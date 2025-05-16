@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from "../../../shared/nebular.module";
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,14 +11,15 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { NbTabsetModule } from '@nebular/theme';
+
 import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule, NbTabsetModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
   template: `
     <div class="telemetry-dashboard-container">
       <h1>Application Telemetry Dashboard</h1>

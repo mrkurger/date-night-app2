@@ -1,7 +1,3 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbUserModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import {
   Component,
   OnInit,
@@ -10,7 +6,23 @@ import {
   ElementRef,
   AfterViewChecked,
   ChangeDetectorRef,
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -37,7 +49,19 @@ interface ChatUser {
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NbCardModule, NbUserModule, NbActionsModule, NbContextMenuModule, NbIconModule, NbFormFieldModule, NbInputModule, NbButtonModule, ChatMessageComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NbCardModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    ChatMessageComponent,
+  ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })

@@ -1,5 +1,7 @@
-import { NbIconModule } from '@nebular/theme';
+
 import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
@@ -14,11 +16,14 @@ import { Component } from '@angular/core';
 // ===================================================
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-image-gallery',
   standalone: true,
-  imports: [CommonModule, NbIconModule, NbButtonModule],
+  imports: [
+    CommonModule,
+    NbIconModule,
+    NbButtonModule
+  ],
   template: `
     <div class="gallery-container">
       <div class="gallery-main" *ngIf="images.length > 0">

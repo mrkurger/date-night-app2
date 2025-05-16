@@ -8,9 +8,11 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { NgModule, Component } from '@angular/core';
+import { NebularModule } from "../../../../../../../../shared/nebular.module";
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbCardModule, NbButtonModule, NbIconModule, NbLayoutModule } from '@nebular/theme';
+
 // Standalone components are imported but not declared in the module
 import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -19,17 +21,15 @@ import { TinderComponent } from './tinder/tinder.component';
 import { AdDetailsComponent } from './ad-details/ad-details.component';
 
 @NgModule({
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbLayoutModule,
     ProfileComponent,
     GalleryComponent,
     TinderComponent,
     AdDetailsComponent
-    ChatComponent,],
+    ChatComponent,
+    NebularModule],
   declarations: [],
 })
 export class FeaturesModule {}

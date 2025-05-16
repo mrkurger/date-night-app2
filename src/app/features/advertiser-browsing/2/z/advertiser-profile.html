@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advertiser Profile - Static Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>Advertiser Profile</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="browse.html">Browse</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+          <li><a href="user-profile.html">Profile</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="profile-section advertiser-profile">
+        <div class="profile-avatar">
+          <img src="../client-angular/src/assets/img/3.jpeg" alt="Advertiser Avatar" />
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name">Bella's Bistro</h2>
+          <div class="profile-meta">Advertiser since Feb 2022</div>
+          <div class="profile-location">Brooklyn, NY</div>
+          <div class="profile-bio">
+            Award-winning Italian cuisine. Perfect for date nights, anniversaries, and special
+            occasions. VIP experiences available!
+          </div>
+          <div class="profile-actions">
+            <button class="btn btn-primary">Contact</button>
+            <button class="btn btn-secondary">View Offers</button>
+          </div>
+        </div>
+      </section>
+      <section class="profile-gallery">
+        <h3>Gallery</h3>
+        <div class="gallery-images">
+          <img src="../client-angular/src/assets/img/4.jpeg" alt="Gallery 1" />
+          <img src="../client-angular/src/assets/img/5.jpeg" alt="Gallery 2" />
+          <!-- Add more images as needed -->
+        </div>
+      </section>
+      <section class="profile-services">
+        <h3>Featured Services</h3>
+        <div class="ads-grid">
+          <div class="ad-card">
+            <div class="ad-card-header">
+              <img src="../client-angular/src/assets/img/6.jpeg" alt="Service 1" class="ad-image" />
+              <span class="badge vip">VIP</span>
+            </div>
+            <div class="ad-card-body">
+              <h2 class="ad-title">Private Chef's Table</h2>
+              <div class="ad-category">Dining</div>
+              <div class="ad-location">Brooklyn</div>
+              <div class="ad-description">
+                An exclusive multi-course tasting menu with wine pairings, hosted by our head chef.
+              </div>
+              <div class="ad-tags">
+                <span class="tag">#exclusive</span>
+                <span class="tag">#chefstable</span>
+              </div>
+            </div>
+            <div class="ad-card-footer">
+              <button class="btn btn-primary">Book Now</button>
+              <button class="btn btn-favorite" title="Add to favorites">♥</button>
+            </div>
+          </div>
+          <!-- Add more service cards as needed -->
+        </div>
+      </section>
+      <section class="profile-reviews">
+        <h3>Recent Reviews</h3>
+        <div class="review-list">
+          <div class="review">
+            <div class="review-author">Jane D.</div>
+            <div class="review-rating">★★★★★</div>
+            <div class="review-text">
+              Absolutely magical experience! The food and service were top notch.
+            </div>
+          </div>
+          <div class="review">
+            <div class="review-author">Mike S.</div>
+            <div class="review-rating">★★★★☆</div>
+            <div class="review-text">Great atmosphere and delicious food. Will return!</div>
+          </div>
+          <!-- Add more reviews as needed -->
+        </div>
+      </section>
+    </main>
+    <footer class="main-footer">
+      <p>&copy; 2025 Date Night App</p>
+    </footer>
+  </body>
+</html>

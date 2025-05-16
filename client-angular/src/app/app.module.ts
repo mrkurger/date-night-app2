@@ -1,18 +1,10 @@
 import { NgModule } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
-import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbSidebarModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbToastrModule,
-  NbWindowModule,
-} from '@nebular/theme';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

@@ -1,8 +1,20 @@
-import { NbIconModule } from '@nebular/theme';
-import { NbFormFieldModule } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -37,7 +49,19 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss', './social-login.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NbCardModule, NbFormFieldModule, NbInputModule, NbButtonModule, NbAlertModule, RouterLink, NgIf, NbCheckboxModule, NbIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbAlertModule,
+    RouterLink,
+    NgIf,
+    NbIconModule,
+  ],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

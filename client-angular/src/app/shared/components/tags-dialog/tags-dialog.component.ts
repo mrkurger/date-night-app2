@@ -1,15 +1,17 @@
 import { Component, Inject } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import {
-  NbIconModule,
-  NbFormFieldModule,
-  NbTagModule,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
   NbDialogRef,
   NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbTagModule,
 } from '@nebular/theme';
 
 export interface TagsDialogData {

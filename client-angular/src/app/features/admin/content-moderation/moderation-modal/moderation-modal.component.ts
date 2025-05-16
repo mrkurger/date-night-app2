@@ -22,7 +22,10 @@ import { ContentSanitizerService } from '../../../../core/services/content-sanit
   templateUrl: './moderation-modal.component.html',
   styleUrls: ['./moderation-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
 })
 export class ModerationModalComponent implements OnChanges {
   @Input() media: PendingMedia | null = null;
