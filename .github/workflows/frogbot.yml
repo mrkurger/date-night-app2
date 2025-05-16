@@ -2,7 +2,7 @@ name: Frogbot Security Scan
 
 on:
   pull_request:
-    branches: [ main ] # Change if your default branch is different
+    branches: [ main; Nebular-UI-Refactor ] # Change if your default branch is different
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,6 @@ jobs:
         env:
           JF_URL: ${{ secrets.JF_URL }}             # Full JFrog Platform URL (e.g. https://mycompany.jfrog.io/)
           JF_USER: ${{ secrets.JF_USER }}           # Your JFrog username/email
-          #JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}   # Or use JF_ACCESS_TOKEN below
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }} # Use instead of password if you prefer
           JF_GIT_TOKEN: ${{ secrets.JF_GIT_TOKEN }}       # GitHub token for Frogbot to create PRs/issues. Must have repo permissions
 
