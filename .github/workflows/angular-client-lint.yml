@@ -22,6 +22,11 @@ on:
       - 'client-angular/**'
   # Allows manual triggering of the workflow from the Actions tab.
   workflow_dispatch:
+    inputs:
+      node-version:
+        description: 'Specify Node.js version'
+        required: false
+        default: '22.14.0'
 
 # Defines the jobs to be run in the workflow.
 jobs:
@@ -41,21 +46,20 @@ jobs:
     # Defines a build matrix for running the job with different Node.js versions.
     strategy:
       matrix:
-        # NOTE: Your project's package.json requires Node 22.14.0 (npm 10.9.2).
-        # This workflow uses Node 20.x as per the failing job's log ('lint (20.x)').
-        # Consider aligning these versions for consistency.
-        node-version: ['22.x']
+        # Pin the Node.js version for consistency with package.json.
+        node-version: ['22.14.0']
 
     # Defines the sequence of steps for the job.
     steps:
       # Step 1: Check out the repository code.
-      # 'uses' specifies an action to run. 'actions/checkout@v4' is a standard GitHub action.
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js.
-      # Uses the Node.js version from the build matrix.
-      # Caches npm dependencies for faster subsequent runs.
+      # Step 2: Validate Node.js version compatibility.
+      - name: Debug Node.js Version
+        run: node --version
+
+      # Step 3: Set up Node.js.
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -63,28 +67,36 @@ jobs:
           # Enable caching of npm packages.
           cache: 'npm'
           # Specify the path to the package-lock.json file for cache invalidation.
-          cache-dependency-path: client-angular/package-lock.json
+          cache-dependency-path: |
+            client-angular/package-lock.json
+            client-angular/yarn.lock
 
-      # Step 3: Install project dependencies.
-      # 'npm ci' is recommended for CI environments as it provides faster and more reliable builds
-      # by installing dependencies exactly as defined in package-lock.json.
-      # This command runs in the 'client-angular' directory due to 'defaults.run.working-directory'.
+      # Step 4: Debug directory structure.
+      - name: Debug Directory Structure
+        run: ls -la client-angular
+
+      # Step 5: Check for package-lock.json before installing dependencies.
+      - name: Check for package-lock.json
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "Error: package-lock.json not found in client-angular."
+            exit 1
+          fi
+
+      # Step 6: Install project dependencies.
       - name: Install Dependencies
         run: npm ci
 
-      # Step 4: Configure Angular ESLint.
-      # 'npx ng add @angular-eslint/schematics' installs necessary ESLint packages (if not already present)
-      # and, crucially, updates 'angular.json' to configure the 'lint' target for your project.
-      # '--skip-confirmation' attempts to run non-interactively, suitable for CI.
-      # This command also runs in the 'client-angular' directory.
-      - name: Configure Angular ESLint (ng add @angular-eslint/schematics)
-        run: npx ng add @angular-eslint/schematics --skip-confirmation
+      # Step 7: Check for ESLint configuration.
+      - name: Check for ESLint Configuration
+        run: |
+          if [ ! -f .eslintrc.json ]; then
+            echo "ESLint configuration not found, running ng add."
+            npx ng add @angular-eslint/schematics --skip-confirmation
+          else
+            echo "ESLint configuration found, skipping ng add."
+          fi
 
-      # Step 5: Run the linter.
-      # 'npx ng lint client-angular' executes the linting process for the project named 'client-angular'.
-      # This command also runs in the 'client-angular' directory.
-      # If 'client-angular' is the default project in your angular.json, 'npx ng lint' might suffice.
+      # Step 8: Run the linter.
       - name: Run ESLint
         run: npx ng lint client-angular
-        # If you have multiple projects and 'client-angular' is not the default,
-        # explicitly naming it (as done here) is correct.
