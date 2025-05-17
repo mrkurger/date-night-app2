@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Module Changelog</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2a3f5f;
+        }
+        .changelog-entry {
+            margin-bottom: 30px;
+            border-left: 4px solid #3366cc;
+            padding-left: 15px;
+        }
+        .date {
+            color: #666;
+            font-style: italic;
+        }
+        .changes {
+            margin-top: 10px;
+        }
+        .change-item {
+            margin-bottom: 8px;
+        }
+        .fixed {
+            color: #2e7d32;
+        }
+        .added {
+            color: #1565c0;
+        }
+        .changed {
+            color: #f57c00;
+        }
+        .removed {
+            color: #c62828;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .nav {
+            margin-bottom: 30px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #3366cc;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../../../_docs_index.html">Main Documentation</a>
+        <a href="../../../_glossary.html">Global Glossary</a>
+        <a href="./AILESSONS.html">AI Lessons</a>
+        <a href="./GLOSSARY.html">Module Glossary</a>
+    </div>
+
+    <h1>Shared Module Changelog</h1>
+    
+    <div class="changelog-entry">
+        <h2>2025-05-16: Fixed Component ID Collision Issues</h2>
+        <div class="date">May 16, 2025</div>
+        <div class="changes">
+            <div class="change-item fixed">
+                <strong>Fixed:</strong> Component ID generation collision detected errors (NG0912) for Nebular components
+            </div>
+            <div class="change-item added">
+                <strong>Added:</strong> Custom component ID generator to avoid collisions between Nebular components
+            </div>
+            <div class="change-item changed">
+                <strong>Changed:</strong> Updated NebularModule to use the custom component ID generator
+            </div>
+            <div class="change-item fixed">
+                <strong>Fixed:</strong> Service worker registration failure (NG05604) by disabling it in development mode
+            </div>
+            <div class="change-item added">
+                <strong>Added:</strong> Placeholder ngsw-worker.js file to prevent 404 errors during development
+            </div>
+        </div>
+        <h3>Technical Details</h3>
+        <p>
+            The application was experiencing multiple "Component ID generation collision detected" errors (NG0912) for Nebular components.
+            This was fixed by implementing a custom component ID generator that adds a unique prefix and random string to each component ID.
+        </p>
+        <p>
+            The service worker registration was failing with a 404 error because the ngsw-worker.js file was missing.
+            This was fixed by creating a placeholder file and disabling the service worker in development mode.
+        </p>
+        <p>
+            Code changes:
+        </p>
+        <pre><code>
+// Custom component ID generator to avoid collisions
+export function customComponentIdGenerator(componentType: any): string {
+  // Add a prefix to the component ID to make it unique
+  return `custom-${componentType.name}-${Math.random().toString(36).substring(2, 8)}`;
+}
+
+// Provider in NebularModule
+providers: [
+  // Provide the custom component ID generator
+  {
+    provide: 'componentIdGenerator',
+    useValue: customComponentIdGenerator,
+  },
+],
+        </code></pre>
+    </div>
+</body>
+</html>

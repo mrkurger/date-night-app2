@@ -1,5 +1,3 @@
-
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
@@ -13,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 // ===================================================
@@ -34,8 +32,16 @@ import { CommonModule } from '@angular/common';
   selector: 'app-register',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [ReactiveFormsModule, CommonModule, NbCardModule
-    NbAlertModule, NbFormFieldModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NbCardModule,
+    ,
+    ,
+    ,
+    NbAlertModule,
+    NbFormFieldModule,
+  ],
   template: `
     <div class="register-container">
       <nb-card>

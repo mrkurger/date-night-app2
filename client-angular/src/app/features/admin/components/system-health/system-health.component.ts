@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NbToastrService, NbCardModule, NbProgressBarModule, NbBadgeModule } from '@nebular/theme';
-import {  } from '../../../../shared/nebular.module';
+import {} from '../../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ interface TimeSeriesData {
     CommonModule,
     FormsModule,
     NgxChartsModule,
-    
+
     NbCardModule,
     NbProgressBarModule,
     NbBadgeModule,

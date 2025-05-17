@@ -8,10 +8,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-toggle',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbToggleModule
-  ],
+  imports: [CommonModule, NbToggleModule],
   template: `
     <nb-toggle
       [checked]="value"

@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
@@ -13,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -60,7 +58,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
     NbSpinnerModule,
     NbFormFieldModule,
     NbTooltipModule,
-    NbAlertModule
+    NbAlertModule,
   ],
 })
 export class ResetPasswordComponent implements OnInit {

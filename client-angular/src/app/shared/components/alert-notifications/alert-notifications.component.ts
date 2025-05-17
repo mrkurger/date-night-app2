@@ -6,10 +6,7 @@ import { NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'app-alert-notifications',
   standalone: true,
-  imports: [
-    CommonModule,
-    NebularModule
-  ],
+  imports: [CommonModule, NebularModule],
   template: '',
   styles: [],
 })

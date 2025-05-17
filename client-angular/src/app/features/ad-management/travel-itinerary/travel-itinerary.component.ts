@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NebularModule } from "../../shared/nebular.module";
+import { NebularModule } from '../../shared/nebular.module';
 
 import { MapComponent } from '../../../shared/components/map/map.component';
 

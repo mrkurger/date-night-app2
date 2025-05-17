@@ -11,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

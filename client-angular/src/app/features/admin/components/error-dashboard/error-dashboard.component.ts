@@ -1,4 +1,4 @@
-import {  } from '../../../../shared/nebular.module';
+import {} from '../../../../shared/nebular.module';
 import { NbTableModule, NbDialogService } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE

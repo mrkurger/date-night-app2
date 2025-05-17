@@ -23,11 +23,7 @@ export interface Breadcrumb {
 @Component({
   selector: 'app-breadcrumbs',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbIconModule
-  ],
+  imports: [CommonModule, RouterModule, NbIconModule],
   template: `
     <nav class="breadcrumbs" aria-label="breadcrumb">
       <ol>

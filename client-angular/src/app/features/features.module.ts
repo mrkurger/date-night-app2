@@ -8,7 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { NgModule, Component } from '@angular/core';
-import { NebularModule } from "../../../../../../../../shared/nebular.module";
+import { NebularModule } from '../../../../../../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -27,9 +27,13 @@ import { AdDetailsComponent } from './ad-details/ad-details.component';
     ProfileComponent,
     GalleryComponent,
     TinderComponent,
-    AdDetailsComponent
+    AdDetailsComponent,
+    ,
+    ,
+    ,
     ChatComponent,
-    NebularModule],
+    NebularModule,
+  ],
   declarations: [],
 })
 export class FeaturesModule {}

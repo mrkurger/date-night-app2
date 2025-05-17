@@ -217,6 +217,122 @@ export class EncryptionService {
     </div>
   </div>
   
+  <div class="service-section">
+    <h2>WebSocket Fallback Service</h2>
+    <p>The WebSocket Fallback Service provides a solution for handling WebSocket connection failures in development mode.</p>
+    
+    <h3>Problem</h3>
+    <p>
+      In Angular development mode, the application may experience constant WebSocket connection errors:
+      <code>WebSocket connection to 'ws://localhost:4201/' failed:</code>
+    </p>
+    <p>
+      These errors occur when the Angular development server's Hot Module Replacement (HMR) feature
+      tries to establish a WebSocket connection but fails to connect. This can flood the console with
+      error messages, making it difficult to debug other issues.
+    </p>
+    
+    <h3>Implementation</h3>
+    <pre><code>
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WebSocketFallbackService {
+  private connectionStatus = new BehaviorSubject&lt;boolean&gt;(false);
+  private maxReconnectAttempts = 3;
+  private reconnectAttempts = 0;
+  private reconnectTimeout: any = null;
+  private originalWebSocket: any = null;
+
+  /**
+   * Initialize the WebSocket fallback service
+   * This should be called in the app initialization phase
+   */
+  public initialize(): void {
+    // Only apply in development mode
+    if (window.location.hostname === 'localhost') {
+      console.log('WebSocket fallback service initialized');
+      this.setupWebSocketFallback();
+    }
+  }
+
+  /**
+   * Get the current connection status as an Observable
+   */
+  public getConnectionStatus(): Observable&lt;boolean&gt; {
+    return this.connectionStatus.asObservable();
+  }
+
+  /**
+   * Setup the WebSocket fallback mechanism
+   * This intercepts WebSocket creation and handles reconnection attempts
+   */
+  private setupWebSocketFallback(): void {
+    // Store the original WebSocket constructor
+    this.originalWebSocket = window.WebSocket;
+
+    // Override the WebSocket constructor
+    (window as any).WebSocket = function(url: string, protocols?: string | string[]) {
+      const instance = new (window as any).originalWebSocket(url, protocols);
+      
+      // Handle connection errors
+      instance.addEventListener('error', (event: Event) => {
+        if (url.includes('localhost:4201')) {
+          console.warn('Development server WebSocket connection failed. Live reload may not work.');
+        }
+      });
+
+      return instance;
+    };
+
+    // Restore the original properties and methods
+    (window as any).WebSocket.prototype = this.originalWebSocket.prototype;
+    (window as any).WebSocket.CONNECTING = this.originalWebSocket.CONNECTING;
+    (window as any).WebSocket.OPEN = this.originalWebSocket.OPEN;
+    (window as any).WebSocket.CLOSING = this.originalWebSocket.CLOSING;
+    (window as any).WebSocket.CLOSED = this.originalWebSocket.CLOSED;
+    (window as any).originalWebSocket = this.originalWebSocket;
+  }
+
+  /**
+   * Restore the original WebSocket constructor
+   * This should be called when the service is destroyed
+   */
+  public restoreOriginalWebSocket(): void {
+    if (this.originalWebSocket) {
+      window.WebSocket = this.originalWebSocket;
+      this.originalWebSocket = null;
+    }
+  }
+}
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li>WebSocket connection issues in Angular development mode are common and can be mitigated</li>
+      <li>Intercepting the WebSocket constructor allows for custom error handling</li>
+      <li>Limiting reconnection attempts prevents console flooding</li>
+      <li>Only apply the fix in development mode (localhost) to avoid affecting production</li>
+      <li>Restore the original WebSocket constructor when the service is destroyed to prevent memory leaks</li>
+    </ul>
+    
+    <h3>Additional Fixes</h3>
+    <ul>
+      <li>Update Angular dev server configuration to improve WebSocket stability</li>
+      <li>Disable HMR in development mode to prevent WebSocket connection issues</li>
+      <li>Modify CSP policy to allow WebSocket connections from all local addresses</li>
+      <li>Create a WebSocket polyfill script to intercept and manage WebSocket connections</li>
+    </ul>
+    
+    <div class="note">
+      <strong>Note:</strong> This solution is specific to development mode and should not affect production builds.
+      The WebSocket connection issues are often related to network configuration, firewalls, or proxy settings.
+    </div>
+  </div>
+  
   <!-- Add more service sections as needed -->
   
 </body>

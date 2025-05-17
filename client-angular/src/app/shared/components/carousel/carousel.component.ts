@@ -1,4 +1,3 @@
-
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -16,11 +15,7 @@ export interface CarouselItem {
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule
-  ],
+  imports: [CommonModule, NbButtonModule, NbIconModule],
   template: `
     <div class="carousel" [class.carousel--fullscreen]="fullscreen">
       <div class="carousel__container">

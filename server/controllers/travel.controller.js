@@ -5,7 +5,7 @@ import { asyncHandler } from '../middleware/asyncHandler.js';
 // eslint-disable-next-line no-unused-vars
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Travel Controller for handling travel-related API endpoints

@@ -35,12 +35,16 @@ import { StarRatingComponent } from '../components/star-rating/star-rating.compo
     ReactiveFormsModule,
     ReviewListComponent,
     ReviewSummaryComponent,
+    ,
     ReviewDialogComponent,
     ResponseDialogComponent,
     ReportDialogComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    ,
+    ,
     ReviewFormComponent,
-    NebularModule],
+    NebularModule,
+  ],
   exports: [
     // Export all components for use in other modules
     ReviewFormComponent,

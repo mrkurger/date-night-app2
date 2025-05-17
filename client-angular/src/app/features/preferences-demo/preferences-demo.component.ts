@@ -1,5 +1,3 @@
-
-
 import { OnDestroy } from '@angular/core';
 import {
   NbCardModule,
@@ -13,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { OnInit } from '@angular/core';
@@ -190,7 +188,7 @@ const MOCK_ADS: Ad[] = [
     NbSelectModule,
     NbFormFieldModule,
     NbLayoutModule,
-    AdCardComponent
+    AdCardComponent,
   ],
   template: `
     <div class="preferences-demo-container">

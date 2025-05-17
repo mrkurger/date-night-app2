@@ -10,7 +10,7 @@
 import Location from '../models/location.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Controller for managing locations

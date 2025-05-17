@@ -3,7 +3,7 @@
 // ES Module imports for the functions and objects to be tested.
 // The path '../../middleware/url-validator.js' assumes this test file is in 'server/tests/unit/middleware/'.
 // Adjust if your directory structure for tests is different.
-import { urlValidatorMiddleware, URLValidator } from '../../../../middleware/url-validator.js';
+import { urlValidatorMiddleware, URLValidator } from '../../../middleware/url-validator.js'; // Corrected path
 
 // --- Mocking Express Request, Response, and Next ---
 // These functions create simplified versions of Express objects for testing middleware in isolation.

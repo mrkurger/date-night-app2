@@ -1,5 +1,3 @@
-
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -32,7 +30,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -61,7 +59,7 @@ interface HammerManager {
     NbButtonModule,
     NbIconModule,
     NbBadgeModule,
-    NbTagModule
+    NbTagModule,
   ],
 })
 export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {

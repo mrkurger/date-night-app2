@@ -8,10 +8,7 @@ import { IconService } from '../../../core/services/icon.service';
 @Component({
   selector: 'app-nebular-icon',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbIconModule
-  ],
+  imports: [CommonModule, NbIconModule],
   template: `
     <nb-icon
       [icon]="getIconName()"
@@ -46,7 +43,7 @@ import { IconService } from '../../../core/services/icon.service';
 export class NebularIconComponent {
   /**
    * The name of the icon. Can be either:
-   * 1. A /*DEPRECATED:Material*/ icon name (e.g. 'favorite', 'delete')
+   * 1. A Material icon name (e.g. 'favorite', 'delete') (DEPRECATED) (DEPRECATED) (DEPRECATED) (DEPRECATED)
    * 2. An Eva icon name (e.g. 'heart', 'trash-2')
    */
   @Input() name: string = '';
@@ -78,7 +75,7 @@ export class NebularIconComponent {
   }
 
   /**
-   * Gets the icon name, converting from /*DEPRECATED:Material*/ names if necessary
+   * Gets the icon name, converting from Material names if necessary (DEPRECATED)
    */
   getIconName(): string {
     return this.iconService.getIconName(this.name, this.filled);

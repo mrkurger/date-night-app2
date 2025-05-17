@@ -1,5 +1,3 @@
-
-
 import { EventEmitter } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -69,7 +67,7 @@ export interface Review {
     NbIconModule,
     NbCardModule,
     NbTooltipModule,
-    NbBadgeModule
+    NbBadgeModule,
   ],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],

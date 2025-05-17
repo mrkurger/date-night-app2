@@ -25,8 +25,7 @@ const MODULES = [
 ];
 
 @NgModule({
-  imports: [...MODULES, ...COMPONENTS
-    NbErrorComponent,],
+  imports: [...MODULES, ...COMPONENTS, , , , NbErrorComponent],
   exports: [...MODULES, ...COMPONENTS],
 })
 export class SharedModule {}

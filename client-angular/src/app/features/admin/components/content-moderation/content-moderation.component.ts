@@ -1,11 +1,8 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NebularModule } from "../../../shared/nebular.module";
-import {
-  NbToastrService,
-  
-} from '@nebular/theme';
+import { NebularModule } from '../../../shared/nebular.module';
+import { NbToastrService } from '@nebular/theme';
 
 interface ReportedContent {
   id: string;

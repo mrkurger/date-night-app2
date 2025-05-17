@@ -1,10 +1,6 @@
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG
-} from '@nebular/theme';
+import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 
 import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
 

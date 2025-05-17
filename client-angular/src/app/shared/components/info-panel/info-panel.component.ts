@@ -1,5 +1,3 @@
-
-
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -28,7 +26,7 @@ export interface InfoPanelItem {
     NbIconModule,
     NbBadgeModule,
     NbProgressBarModule,
-    NbAccordionModule
+    NbAccordionModule,
   ],
   template: `
     <nb-card [class]="'info-panel info-panel--' + variant">

@@ -1,4 +1,3 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -28,7 +27,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
     NbProgressBarModule,
     RouterModule,
     StarRatingComponent,
-    NbCardModule
+    NbCardModule,
   ],
   template: `
     <nb-card class="review-summary-card">

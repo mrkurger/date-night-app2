@@ -13,17 +13,17 @@ import { Component } from '@angular/core';
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  /*DEPRECATED:NbPaginatorComponent*/,
-  AppSortComponent as /*DEPRECATED:NbSortComponent*/,
-  AppSortHeaderComponent as /*DEPRECATED:NbSortHeaderComponent*/,
+  // DEPRECATED:NbPaginatorComponent
+  AppSortComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
 } from '../../shared/components/custom-nebular-components';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  NbTableModule,
-  
-} from '@nebular/theme';
+import { NbTableModule } from '@nebular/theme';
 
 import { TelemetryService } from '../../core/services/telemetry.service';
 import { TelemetryDashboardComponent } from './telemetry-dashboard.component';

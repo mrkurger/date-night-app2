@@ -9,7 +9,7 @@
 // ===================================================
 import paymentService from '../services/payment.service.js';
 import { AppError } from '../middleware/errorHandler.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Payment Controller for handling payment-related API endpoints

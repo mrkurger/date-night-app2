@@ -1,5 +1,3 @@
-
-
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
@@ -13,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -41,7 +39,7 @@ import { AlertService } from '../../../../core/services/alert.service';
     NbInputModule,
     NbSelectModule,
     NbCheckboxModule,
-    NbIconModule
+    NbIconModule,
   ],
   template: `
     <nb-card>

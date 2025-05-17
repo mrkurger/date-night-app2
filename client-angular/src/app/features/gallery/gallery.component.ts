@@ -1,5 +1,3 @@
-
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -22,7 +20,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -108,7 +106,7 @@ import { UserPreferencesService } from '../../core/services/user-preferences.ser
     NbTooltipModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
   ],
 })
 export class GalleryComponent implements OnInit, OnDestroy {

@@ -1,5 +1,3 @@
-
-
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -14,13 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-pager',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbFormFieldModule
-  ],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbSelectModule, NbFormFieldModule],
   template: `
     <nav
       class="pager"

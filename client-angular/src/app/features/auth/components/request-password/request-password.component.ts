@@ -1,5 +1,3 @@
-
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
@@ -13,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -40,7 +38,7 @@ import { finalize } from 'rxjs/operators';
     NbSpinnerModule,
     NbFormFieldModule,
     NbAlertModule,
-    NbTooltipModule
+    NbTooltipModule,
   ],
 })
 export class RequestPasswordComponent {

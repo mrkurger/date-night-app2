@@ -20,11 +20,7 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule
-  ],
+  imports: [CommonModule, RouterModule, SharedModule],
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];

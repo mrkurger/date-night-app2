@@ -36,10 +36,7 @@ const NB_MODULES = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ...NB_MODULES,
-    NebularModule],
+  imports: [CommonModule, ...NB_MODULES, NebularModule],
   exports: [...NB_MODULES],
 })
 export class NebularSharedModule {}

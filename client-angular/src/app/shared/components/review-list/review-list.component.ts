@@ -1,5 +1,3 @@
-
-
 import { Input } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -40,7 +38,7 @@ import { DialogService } from '../../../core/services/dialog.service';
     NbTooltipModule,
     RouterModule,
     StarRatingComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
   ],
   template: `
     <div class="reviews-container">

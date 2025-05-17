@@ -1,5 +1,3 @@
-
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -82,7 +80,7 @@ type ErrorColumnKey =
     NbTableModule,
     NbListModule,
     NbTreeGridModule,
-    ErrorDetailsDialogComponent
+    ErrorDetailsDialogComponent,
   ],
   template: `
     <div class="dashboard-container">

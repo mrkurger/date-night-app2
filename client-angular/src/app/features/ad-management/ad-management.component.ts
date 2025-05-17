@@ -1,10 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbLayoutModule,
-} from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbIconModule, NbLayoutModule } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,14 +9,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./ad-management.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbLayoutModule,
-  ],
+  imports: [CommonModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbLayoutModule],
 })
 export class AdManagementComponent {
   // Component logic here

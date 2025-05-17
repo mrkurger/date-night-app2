@@ -11,7 +11,7 @@ import Favorite from '../models/favorite.model.js';
 import Ad from '../models/ad.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Controller for managing user favorites

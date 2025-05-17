@@ -1,7 +1,7 @@
 import SafetyService from '../services/safety.service.js';
 import User from '../models/user.model.js';
 import SafetyCheckin from '../models/safety-checkin.model.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 const safetyService = new SafetyService();
 

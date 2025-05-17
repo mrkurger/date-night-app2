@@ -1,4 +1,3 @@
-
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -15,12 +14,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 @Component({
   selector: 'app-card-grid',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbSpinnerModule,
-    LoadingSpinnerComponent
-  ],
+  imports: [CommonModule, NbCardModule, NbSpinnerModule, LoadingSpinnerComponent],
   template: `
     <div
       class="card-grid"

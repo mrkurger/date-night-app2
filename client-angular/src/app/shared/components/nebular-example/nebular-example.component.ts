@@ -1,5 +1,3 @@
-
-
 import { Component } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -27,7 +25,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
     NbInputModule,
     NbUserModule,
     NbTagModule,
-    StarRatingComponent
+    StarRatingComponent,
   ],
   template: `
     <div class="nebular-example">

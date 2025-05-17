@@ -1,5 +1,3 @@
-
-
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -34,7 +32,7 @@ export interface HeaderAction {
     NbIconModule,
     NbUserModule,
     NbBadgeModule,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
   ],
   template: `
     <div

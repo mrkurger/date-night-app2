@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NebularModule } from "../../../shared/nebular.module";
+import { NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

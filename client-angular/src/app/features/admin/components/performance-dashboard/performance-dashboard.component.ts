@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NebularModule } from "../../../shared/nebular.module";
+import { NebularModule } from '../../../shared/nebular.module';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================

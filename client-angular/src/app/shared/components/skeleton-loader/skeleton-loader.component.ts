@@ -1,6 +1,4 @@
-import {
-  
-} from '@nebular/theme';
+import {} from '@nebular/theme';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

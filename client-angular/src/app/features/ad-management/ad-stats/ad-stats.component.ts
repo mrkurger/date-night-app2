@@ -11,13 +11,12 @@ import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
-import { NebularModule } from "../../shared/nebular.module";
+import { NebularModule } from '../../shared/nebular.module';
 import {
   NbTableModule,
   NbTreeGridDataSourceBuilder,
   NbSortDirection,
   NbSortRequest,
-  
 } from '@nebular/theme';
 
 @Component({

@@ -1,4 +1,3 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -42,7 +41,7 @@ export interface ChecklistItem {
     NbIconModule,
     NbProgressBarModule,
     NbCheckboxModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class OnboardingChecklistComponent implements OnInit {

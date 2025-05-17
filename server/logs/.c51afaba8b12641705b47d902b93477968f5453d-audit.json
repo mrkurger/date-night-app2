@@ -54,6 +54,11 @@
             "date": 1747353917266,
             "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-16.log",
             "hash": "a871d1f39b120fb585e503b09c49b0bdec50cef23dac329df89308fdf210ca8d"
+        },
+        {
+            "date": 1747432833384,
+            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-17.log",
+            "hash": "800f1f257ebfa57993ffb0e81995b25d000b17ca6564bc0aea38922cc226af77"
         }
     ],
     "hashType": "sha256"

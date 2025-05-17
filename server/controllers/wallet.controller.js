@@ -9,7 +9,7 @@
 // ===================================================
 import walletService from '../services/wallet.service.js';
 import { AppError } from '../middleware/errorHandler.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Wallet Controller for handling wallet-related API endpoints

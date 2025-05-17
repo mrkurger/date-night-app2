@@ -1,4 +1,3 @@
-
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
@@ -12,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -58,11 +57,7 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
   ],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbSpinnerModule
-  ],
+  imports: [CommonModule, NbCardModule, NbSpinnerModule],
 })
 export class AuthCallbackComponent implements OnInit {
   constructor(

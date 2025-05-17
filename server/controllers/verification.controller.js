@@ -12,7 +12,7 @@ import User from '../models/user.model.js';
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 // Helper function to ensure uploads directory exists
 const ensureUploadsDirectory = () => {

@@ -1,5 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {  } from '../../../../shared/nebular.module';
+import {} from '../../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
   selector: 'app-user-management',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule, ],
+  imports: [CommonModule, FormsModule],
   template: `
     <nb-card>
       <nb-card-header class="d-flex justify-content-between align-items-center">

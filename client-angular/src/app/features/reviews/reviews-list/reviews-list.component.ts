@@ -1,5 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NebularModule } from "../../shared/nebular.module";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import { NebularModule } from '../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 

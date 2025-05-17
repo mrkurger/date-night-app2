@@ -42,8 +42,29 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
   selector: 'app-alert-management',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbTableModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbToggleModule, NbIconModule, NbDialogModule, NbTagModule, NbBadgeModule, NbTooltipModule, NbTabsetModule, AppSortComponent, AppSortHeaderComponent
-    NbPaginatorModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTableModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbIconModule,
+    NbDialogModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+    ,
+    ,
+    ,
+    NbPaginatorModule,
+  ],
   template: `
     <div class="alert-management-container">
       <h1>Alert Management</h1>

@@ -1,4 +1,3 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -37,7 +36,7 @@ export interface OnboardingStep {
     NbButtonModule,
     NbIconModule,
     NbProgressBarModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class OnboardingComponent implements OnInit {

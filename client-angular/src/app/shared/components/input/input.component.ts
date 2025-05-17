@@ -1,6 +1,4 @@
-import {
-  
-} from '@nebular/theme';
+import {} from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -36,12 +34,7 @@ import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IconComponent
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconComponent],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

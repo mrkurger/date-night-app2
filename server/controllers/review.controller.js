@@ -1,7 +1,7 @@
 import Review from '../models/review.model.js';
 import User from '../models/user.model.js';
 import Ad from '../models/ad.model.js';
-import { sendSuccess, sendError } from '../utils/response.js';
+import { sendError } from '../utils/response.js';
 
 export async function someHandler(req, res) {
   // TODO: Implement review handler

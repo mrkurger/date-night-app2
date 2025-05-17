@@ -11,7 +11,7 @@ import {
   NbLayoutModule,
   NbBadgeModule,
   NbTagModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CommonModule } from '@angular/common';
@@ -26,13 +26,7 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
   selector: 'app-chat-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    TimeAgoPipe,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule
-  ],
+  imports: [CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })

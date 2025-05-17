@@ -1,4 +1,3 @@
-
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -17,13 +16,7 @@ export interface FabMenuItem extends NbMenuItem {
 @Component({
   selector: 'app-fab',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbContextMenuModule
-  ],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
   template: `
     <button
       nbButton

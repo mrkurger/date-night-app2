@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Module AI Lessons</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2a3f5f;
+        }
+        .lesson {
+            margin-bottom: 30px;
+            border-left: 4px solid #3366cc;
+            padding-left: 15px;
+        }
+        .date {
+            color: #666;
+            font-style: italic;
+        }
+        .content {
+            margin-top: 10px;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .nav {
+            margin-bottom: 30px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #3366cc;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .tip {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../../../_docs_index.html">Main Documentation</a>
+        <a href="../../../_glossary.html">Global Glossary</a>
+        <a href="./CHANGELOG.html">Changelog</a>
+        <a href="./GLOSSARY.html">Module Glossary</a>
+    </div>
+
+    <h1>Shared Module AI Lessons</h1>
+    
+    <div class="lesson">
+        <h2>Angular Component ID Collision Resolution</h2>
+        <div class="date">May 16, 2025</div>
+        <div class="content">
+            <h3>Problem</h3>
+            <p>
+                When using Angular libraries like Nebular that have many components, you may encounter "Component ID generation collision detected" errors (NG0912).
+                This happens when two components with the same selector generate the same component ID.
+            </p>
+            
+            <h3>Solution</h3>
+            <p>
+                The solution is to provide a custom component ID generator that ensures each component gets a unique ID.
+                This can be done by adding a prefix and a random string to the component ID.
+            </p>
+            
+            <pre><code>
+// Custom component ID generator to avoid collisions
+export function customComponentIdGenerator(componentType: any): string {
+  // Add a prefix to the component ID to make it unique
+  return `custom-${componentType.name}-${Math.random().toString(36).substring(2, 8)}`;
+}
+
+// Provider in NebularModule
+providers: [
+  // Provide the custom component ID generator
+  {
+    provide: 'componentIdGenerator',
+    useValue: customComponentIdGenerator,
+  },
+],
+            </code></pre>
+            
+            <div class="tip">
+                <strong>Tip:</strong> When using third-party component libraries, always check if they provide a way to customize component IDs.
+                This can help avoid collisions, especially when using multiple versions of the same library or components with similar selectors.
+            </div>
+        </div>
+    </div>
+    
+    <div class="lesson">
+        <h2>Service Worker Configuration in Development Mode</h2>
+        <div class="date">May 16, 2025</div>
+        <div class="content">
+            <h3>Problem</h3>
+            <p>
+                Angular's Service Worker can cause 404 errors during development if the ngsw-worker.js file is missing.
+                This happens because the service worker is enabled by default in the application configuration.
+            </p>
+            
+            <h3>Solution</h3>
+            <p>
+                The solution is to disable the service worker in development mode and provide a placeholder ngsw-worker.js file.
+                This prevents 404 errors while still allowing the service worker to be used in production.
+            </p>
+            
+            <pre><code>
+// In app.config.ts
+provideServiceWorker('ngsw-worker.js', {
+  enabled: false, // Disable in development mode to prevent 404 errors
+  registrationStrategy: 'registerWhenStable:30000',
+}),
+            </code></pre>
+            
+            <p>
+                Create a placeholder ngsw-worker.js file in the src directory:
+            </p>
+            
+            <pre><code>
+// This is a placeholder for the Angular Service Worker
+// The actual file will be generated during the build process
+// This file is needed to prevent 404 errors during development
+
+console.log('Service Worker Placeholder Loaded');
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+  // Let the browser handle the request normally
+  event.respondWith(fetch(event.request));
+});
+            </code></pre>
+            
+            <div class="warning">
+                <strong>Warning:</strong> Always ensure that service workers are properly configured for production builds.
+                The placeholder file should only be used during development.
+            </div>
+        </div>
+    </div>
+    
+    <div class="lesson">
+        <h2>Debugging Angular Console Errors</h2>
+        <div class="date">May 16, 2025</div>
+        <div class="content">
+            <h3>Approach</h3>
+            <p>
+                When debugging Angular console errors, it's important to:
+            </p>
+            <ol>
+                <li>Identify the error type and message</li>
+                <li>Look for patterns in repeated errors</li>
+                <li>Check if the errors are coming from third-party libraries</li>
+                <li>Understand the component lifecycle and when errors occur</li>
+                <li>Use browser developer tools to trace the error source</li>
+            </ol>
+            
+            <h3>Common Error Types</h3>
+            <ul>
+                <li><strong>NG0912:</strong> Component ID generation collision</li>
+                <li><strong>NG05604:</strong> Service worker registration failure</li>
+                <li><strong>NG0100:</strong> Expression has changed after it was checked</li>
+                <li><strong>NG0200-NG0299:</strong> Template errors</li>
+                <li><strong>NG0300-NG0399:</strong> Dependency injection errors</li>
+            </ul>
+            
+            <div class="tip">
+                <strong>Tip:</strong> Always check the Angular error documentation at https://angular.dev/errors/ for detailed explanations and solutions.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

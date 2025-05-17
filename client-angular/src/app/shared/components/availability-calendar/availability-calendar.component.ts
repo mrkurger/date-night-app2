@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -85,7 +84,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
     NbInputModule,
     NbButtonModule,
     NbSelectModule,
-    NbIconModule
+    NbIconModule,
   ],
   template: `
     <div class="availability-calendar">

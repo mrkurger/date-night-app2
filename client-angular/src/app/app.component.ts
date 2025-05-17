@@ -5,6 +5,7 @@ import { ThemeService } from './core/services/theme.service';
 import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
 import { NebularModule } from './shared/nebular.module';
+import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
 import {
   NbSidebarService,
   NbLayoutModule,
@@ -146,9 +147,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private themeService: ThemeService,
     private sidebarService: NbSidebarService,
+    private webSocketFallbackService: WebSocketFallbackService,
   ) {}
 
   ngOnInit() {
+    // Initialize WebSocket fallback service
+    this.webSocketFallbackService.initialize();
+
     // Subscribe to theme changes
     this.subscription = this.themeService.theme$.subscribe((theme) => {
       // Theme service will handle the actual theme switching
@@ -168,5 +173,8 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    // Restore original WebSocket
+    this.webSocketFallbackService.restoreOriginalWebSocket();
   }
 }

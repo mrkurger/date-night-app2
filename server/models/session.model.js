@@ -23,7 +23,7 @@ try {
       },
     });
   }
-} catch (e) {
+} catch (_) {
   // Fallback to defining pointSchema if import fails
   pointSchema = new mongoose.Schema({
     type: {

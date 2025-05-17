@@ -1,4 +1,3 @@
-
 import { Input } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
 
@@ -30,12 +29,7 @@ export interface HelpItem {
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbTooltipModule
-  ],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
 })
 export class ContextualHelpComponent implements OnInit {
   @Input() helpItems: HelpItem[] = [];

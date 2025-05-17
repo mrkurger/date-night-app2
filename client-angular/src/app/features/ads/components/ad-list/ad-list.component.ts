@@ -45,10 +45,7 @@ import { RouterLink } from '@angular/router';
     `,
   ],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink
-  ],
+  imports: [CommonModule, RouterLink],
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];

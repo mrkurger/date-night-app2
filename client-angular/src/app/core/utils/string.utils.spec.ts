@@ -11,6 +11,7 @@ import {
   slugify,
   maskString,
   formatPhoneNumber,
+  extractDomain,
 } from './string.utils';
 
 describe('String Utilities', () => {
@@ -155,6 +156,31 @@ describe('String Utilities', () => {
     it('should handle empty strings', () => {
       expect(formatPhoneNumber('')).toBe('');
       expect(formatPhoneNumber(null as any)).toBe('');
+    });
+  });
+
+  describe('extractDomain', () => {
+    it('should extract domain from URLs correctly', () => {
+      expect(extractDomain('https://www.example.com/path')).toBe('example.com');
+      expect(extractDomain('http://subdomain.example.com')).toBe('example.com');
+      expect(extractDomain('example.com')).toBe('example.com');
+      expect(extractDomain('www.example.co.uk')).toBe('example.co.uk');
+    });
+
+    it('should include subdomains when specified', () => {
+      expect(extractDomain('https://www.example.com', true)).toBe('www.example.com');
+      expect(extractDomain('http://sub.domain.example.com', true)).toBe('sub.domain.example.com');
+    });
+
+    it('should handle special cases', () => {
+      expect(extractDomain('https://example.com.au')).toBe('example.com.au');
+      expect(extractDomain('https://something.co.uk')).toBe('something.co.uk');
+    });
+
+    it('should handle invalid URLs', () => {
+      expect(extractDomain('')).toBe('');
+      expect(extractDomain(null as any)).toBe('');
+      expect(extractDomain('not a url')).toBe('not a url');
     });
   });
 });

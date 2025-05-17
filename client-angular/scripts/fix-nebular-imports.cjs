@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // @ts-check
-/* eslint-disable @typescript-eslint/no-var-requires */
+ 
 
 /**
  * This script fixes Nebular component imports in Angular components

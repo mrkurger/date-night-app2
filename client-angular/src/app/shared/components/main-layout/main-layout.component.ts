@@ -1,6 +1,4 @@
-import {
-  
-} from '@nebular/theme';
+import {} from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -28,11 +26,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ThemeToggleComponent
-  ],
+  imports: [CommonModule, RouterModule, ThemeToggleComponent],
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

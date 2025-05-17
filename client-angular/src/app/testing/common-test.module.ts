@@ -16,21 +16,19 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { NgModule, Component, Input } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+
+// Import Nebular modules directly for testing
+import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@nebular/theme';
 
 // Mock components
 @Component({
   selector: 'app-main-layout',
   template: '<ng-content></ng-content>',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule
-  ],
+  imports: [CommonModule, NbCardModule],
 })
 export class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -80,7 +78,10 @@ export class MockSkeletonLoaderComponent {
     MockMainLayoutComponent,
     MockAppCardComponent,
     MockSkeletonLoaderComponent,
-    NebularModule
+    NbCardModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
   ],
   exports: [
     CommonModule,

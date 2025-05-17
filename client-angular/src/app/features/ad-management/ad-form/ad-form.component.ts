@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -56,11 +63,14 @@ export class AdFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {
     this.adForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(2000)]],
+      description: [
+        '',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(2000)],
+      ],
       price: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
       location: ['', Validators.required],
@@ -91,8 +101,8 @@ export class AdFormComponent implements OnInit {
       });
 
       if (this.ad.images && this.ad.images.length > 0) {
-        this.imagePreviewUrls = this.ad.images.map(img => 
-          typeof img === 'string' ? img : img.url
+        this.imagePreviewUrls = this.ad.images.map((img) =>
+          typeof img === 'string' ? img : img.url,
         );
       }
     }
@@ -105,7 +115,7 @@ export class AdFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading categories:', err);
-      }
+      },
     });
   }
 
@@ -116,7 +126,7 @@ export class AdFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading locations:', err);
-      }
+      },
     });
   }
 
@@ -127,7 +137,7 @@ export class AdFormComponent implements OnInit {
         const file = input.files[i];
         if (file.type.match('image.*')) {
           this.uploadedImages.push(file);
-          
+
           // Create preview
           const reader = new FileReader();
           reader.onload = (e: any) => {
@@ -149,13 +159,13 @@ export class AdFormComponent implements OnInit {
   onSubmit(): void {
     if (this.adForm.valid) {
       const formData = this.adForm.value;
-      
+
       // Process tags
       const tags = formData.tags
         .split(',')
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag);
-      
+
       const adData: Ad = {
         ...formData,
         tags,
@@ -164,11 +174,11 @@ export class AdFormComponent implements OnInit {
         // Add ID if editing
         _id: this.ad?._id,
       };
-      
+
       this.formSubmit.emit(adData);
     } else {
       // Mark all fields as touched to show validation errors
-      Object.keys(this.adForm.controls).forEach(key => {
+      Object.keys(this.adForm.controls).forEach((key) => {
         this.adForm.get(key)?.markAsTouched();
       });
     }
