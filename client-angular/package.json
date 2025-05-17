@@ -131,5 +131,8 @@
     "@octokit/request-error": "6.0.1",
     "@octokit/core": "6.1.5",
     "@octokit/graphql": "8.0.1"
+  },
+  "resolutions": {
+    "@babel/runtime": "7.27.1"
   }
 }
