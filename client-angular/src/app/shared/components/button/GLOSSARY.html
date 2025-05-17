@@ -89,8 +89,23 @@
   <h3>onClick</h3>
   <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/button/button.component.ts">Source</a></p>
   <div class="entry-description">
-    <p>Button Component A customizable button component that follows the DateNight.io design system. Supports different variants, sizes, and states. / @Component({ selector: 'app-button', standalone: true, imports: [CommonModule, IconComponent], templateUrl: './button.component.html', styleUrls: ['./button.component.scss'], changeDetection: ChangeDetectionStrategy.OnPush, }) export class ButtonComponent { /** The button variant determines its visual style. - 'primary': Filled button with primary color - 'secondary': Outlined button with primary color - 'tertiary': Text-only button with primary color - 'danger': Filled button with error color @default 'primary' / @Input() variant: 'primary' | 'secondary' | 'tertiary' | 'danger' = 'primary'; /** The button size. - 'small': Compact size - 'medium': Default size - 'large': Larger size @default 'medium' / @Input() size: 'small' | 'medium' | 'large' = 'medium'; /** Whether the button is disabled. @default false / @Input() disabled = false; /** Whether the button is in a loading state. When true, shows a loading indicator and disables the button. @default false / @Input() loading = false; /** Whether the button should take the full width of its container. @default false / @Input() fullWidth = false; /** The button type attribute. @default 'button' / @Input() type: 'button' | 'submit' | 'reset' = 'button'; /** Optional icon name to display before the button text. Uses the app-icon component. / @Input() iconLeft?: string; /** Optional icon name to display after the button text. Uses the app-icon component. / @Input() iconRight?: string; /** Aria label for accessibility. If not provided, the button text will be used. / @Input() ariaLabel?: string; /** Event emitted when the button is clicked. / @Output() buttonClick = new EventEmitter<MouseEvent>(); /** Handles the button click event. Prevents the event from propagating if the button is disabled or loading.</p>
+    <p>Button Component A customizable button component that follows the DateNight.io design system. Uses Nebular's button system with custom styling. / @Component({ selector: 'app-button', standalone: true, imports: [ CommonModule, NbButtonModule, NbIconModule, IconComponent ], templateUrl: './button.component.html', styleUrls: ['./button.component.scss'], changeDetection: ChangeDetectionStrategy.OnPush, }) export class ButtonComponent { /** The button status determines its visual style. Maps to Nebular's button status system. / @Input() status: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'basic' = 'primary'; /** The button size. Maps directly to Nebular's size system. / @Input() size: 'tiny' | 'small' | 'medium' | 'large' | 'giant' = 'medium'; /** The button appearance. Maps to Nebular's button appearance system. / @Input() appearance: 'filled' | 'outline' | 'ghost' | 'hero' = 'filled'; /** Whether the button is disabled. / @Input() disabled = false; /** Whether the button is in a loading state. When true, shows a loading indicator and disables the button. / @Input() loading = false; /** Whether the button should take the full width of its container. / @Input() fullWidth = false; /** The button type attribute. / @Input() type: 'button' | 'submit' | 'reset' = 'button'; /** Optional icon name to display before the button text. / @Input() iconLeft?: string; /** Optional icon name to display after the button text. / @Input() iconRight?: string; /** Aria label for accessibility. / @Input() ariaLabel?: string; /** Event emitted when the button is clicked. / @Output() buttonClick = new EventEmitter<MouseEvent>(); /** Handles the button click event. Prevents the event from propagating if the button is disabled or loading.</p>
   </div>
+  
+  
+  
+</div>
+</div>
+  
+  
+  
+</div>
+</div>
+  
+  
+  
+</div>
+</div>
   
 <h4>Parameters</h4>
 <table class="params-table">

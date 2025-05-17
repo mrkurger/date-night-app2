@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deprecated Code - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Deprecated Code</h1>
+
+      <h1>Deprecated Code</h1>
+<p>This document lists deprecated code in the Date Night App project. Deprecated code should be avoided in new development and eventually removed from the codebase.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#client-side-deprecated-code">Client-side Deprecated Code</a><ul>
+<li><a href="#angularjs-components">AngularJS Components</a></li>
+<li><a href="#legacy-services">Legacy Services</a></li>
+<li><a href="#deprecated-ui-components">Deprecated UI Components</a></li>
+</ul>
+</li>
+<li><a href="#server-side-deprecated-code">Server-side Deprecated Code</a><ul>
+<li><a href="#legacy-api-endpoints">Legacy API Endpoints</a></li>
+<li><a href="#deprecated-middleware">Deprecated Middleware</a></li>
+<li><a href="#deprecated-models">Deprecated Models</a></li>
+</ul>
+</li>
+<li><a href="#deprecated-configuration">Deprecated Configuration</a></li>
+</ul>
+<h2>Client-side Deprecated Code</h2>
+<h3>AngularJS Components</h3>
+<p>The following AngularJS components have been replaced by Angular components and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>client/app/components/ad-list</code></td>
+<td><code>client-angular/src/app/features/ads/components/ad-list</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/components/ad-detail</code></td>
+<td><code>client-angular/src/app/features/ads/components/ad-detail</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/components/login</code></td>
+<td><code>client-angular/src/app/features/auth/login</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/components/register</code></td>
+<td><code>client-angular/src/app/features/auth/register</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h3>Legacy Services</h3>
+<p>The following services have been replaced and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>client/app/services/auth.service.js</code></td>
+<td><code>client-angular/src/app/core/services/auth.service.ts</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/services/ad.service.js</code></td>
+<td><code>client-angular/src/app/core/services/ad.service.ts</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/services/chat.service.js</code></td>
+<td><code>client-angular/src/app/core/services/chat.service.ts</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h3>Deprecated UI Components</h3>
+<p>The following UI components have been replaced by Emerald components and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>client/app/shared/card</code></td>
+<td><code>client-angular/src/app/shared/emerald/app-card</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/shared/grid</code></td>
+<td><code>client-angular/src/app/shared/emerald/card-grid</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>client/app/shared/tinder-card</code></td>
+<td><code>client-angular/src/app/shared/emerald/tinder-card</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h2>Server-side Deprecated Code</h2>
+<h3>Legacy API Endpoints</h3>
+<p>The following API endpoints have been replaced and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/api/ads</code></td>
+<td><code>/api/v1/ads</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>/api/users</code></td>
+<td><code>/api/v1/users</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>/api/auth</code></td>
+<td><code>/api/v1/auth</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h3>Deprecated Middleware</h3>
+<p>The following middleware components have been replaced and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Middleware</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>server/middleware/old-auth.js</code></td>
+<td><code>server/middleware/auth.js</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>server/middleware/old-upload.js</code></td>
+<td><code>server/middleware/upload.js</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h3>Deprecated Models</h3>
+<p>The following models have been updated and the old versions should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>server/models/old-user.model.js</code></td>
+<td><code>server/models/user.model.js</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>server/models/old-ad.model.js</code></td>
+<td><code>server/models/ad.model.js</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h2>Deprecated Configuration</h2>
+<p>The following configuration files have been replaced and should not be used:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Replacement</th>
+<th>Removal Timeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>server/config/old-database.js</code></td>
+<td><code>server/config/database.js</code></td>
+<td>Q3 2024</td>
+</tr>
+<tr>
+<td><code>server/config/old-passport.js</code></td>
+<td><code>server/config/passport.js</code></td>
+<td>Q3 2024</td>
+</tr>
+</tbody></table>
+<h2>Deprecated Dependencies</h2>
+<p>The following npm dependencies have been deprecated and should be replaced:</p>
+<table>
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Replacement</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>inflight@1.0.6</code></td>
+<td><code>lru-cache</code></td>
+<td>Removed</td>
+<td>This module is not supported and leaks memory</td>
+</tr>
+<tr>
+<td><code>rimraf@3.0.2</code></td>
+<td><code>rimraf@5.0.5</code></td>
+<td>Updated</td>
+<td>Versions prior to v4 are no longer supported</td>
+</tr>
+<tr>
+<td><code>abab@2.0.6</code></td>
+<td>Native <code>atob()</code> and <code>btoa()</code> methods</td>
+<td>Removed</td>
+<td>Use platform&#39;s native methods instead</td>
+</tr>
+<tr>
+<td><code>glob@7.2.3</code></td>
+<td><code>glob@10.3.10</code></td>
+<td>Updated</td>
+<td>Versions prior to v9 are no longer supported</td>
+</tr>
+<tr>
+<td><code>domexception@4.0.0</code></td>
+<td>Native <code>DOMException</code></td>
+<td>Removed</td>
+<td>Use platform&#39;s native DOMException</td>
+</tr>
+<tr>
+<td><code>@humanwhocodes/object-schema@2.0.3</code></td>
+<td><code>@eslint/object-schema@2.1.6</code></td>
+<td>Updated</td>
+<td>Use @eslint/object-schema instead</td>
+</tr>
+<tr>
+<td><code>@humanwhocodes/config-array@0.11.14</code></td>
+<td><code>@eslint/config-array@0.20.0</code></td>
+<td>Updated</td>
+<td>Use @eslint/config-array instead</td>
+</tr>
+<tr>
+<td><code>eslint@8.56.0</code></td>
+<td><code>eslint@9.24.0</code></td>
+<td>Updated</td>
+<td>Version 8.56.0 is no longer supported</td>
+</tr>
+</tbody></table>
+<h2>Deprecation Process</h2>
+<p>When deprecating code:</p>
+<ol>
+<li>Add a <code>@deprecated</code> tag with a reason and suggested alternative in the code comments</li>
+<li>Add the deprecated code to this document</li>
+<li>Create a migration plan for removing the deprecated code</li>
+<li>Set a timeline for removal</li>
+</ol>
+<p>Example deprecation comment:</p>
+<pre><code class="language-javascript">/**
+ * @deprecated Since version 2.0.0. Use NewComponent instead.
+ * This component will be removed in version 3.0.0.
+ */
+</code></pre>
+<h2>Reporting Deprecated Code</h2>
+<p>If you find code that should be deprecated but is not listed in this document, please report it by:</p>
+<ol>
+<li>Adding a comment with <code>@deprecated</code> tag in the code</li>
+<li>Adding an entry to this document</li>
+<li>Creating an issue in the project&#39;s issue tracker</li>
+</ol>
+<h2>Dependency Management</h2>
+<p>For detailed information about dependency management, including deprecated dependencies and their replacements, see <a href="/docs/DEPENDENCY_MANAGEMENT.MD">DEPENDENCY_MANAGEMENT.MD</a>.</p>
+<h2>Document History</h2>
+<ul>
+<li><strong>2025-05-20</strong>: Updated removal timelines and verified dependency information</li>
+<li><strong>2025-04-18</strong>: Added deprecated dependencies section</li>
+<li><strong>2025-03-15</strong>: Initial version of the deprecated code document</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

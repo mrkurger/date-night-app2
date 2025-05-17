@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io Design System Usage Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>DateNight.io Design System Usage Guide</h1>
+
+      <h1>DateNight.io Design System Usage Guide</h1>
+<p>This guide provides practical instructions for using the DateNight.io design system in your Angular components. Following these guidelines will ensure consistency across the application and make your components more maintainable.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#importing-design-tokens">Importing Design Tokens</a></li>
+<li><a href="#typography">Typography</a></li>
+<li><a href="#spacing">Spacing</a></li>
+<li><a href="#colors">Colors</a></li>
+<li><a href="#components">Components</a></li>
+<li><a href="#responsive-design">Responsive Design</a></li>
+<li><a href="#dark-mode">Dark Mode</a></li>
+<li><a href="#accessibility">Accessibility</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+</ol>
+<h2>Getting Started</h2>
+<p>The DateNight.io design system is built on a set of design tokens and mixins that provide consistent styling throughout the application. The system is implemented in SCSS and is available to all components.</p>
+<h3>Key Files</h3>
+<ul>
+<li><code>src/app/core/design/emerald-tokens.scss</code> - Core design tokens</li>
+<li><code>src/app/core/design/typography-mixins.scss</code> - Typography mixins</li>
+<li><code>src/app/core/design/spacing-utilities.scss</code> - Spacing utilities</li>
+<li><code>src/app/core/design/main.scss</code> - Main entry point that imports all design system files</li>
+</ul>
+<h2>Importing Design Tokens</h2>
+<p>Always import the design system in your component SCSS files using the <code>@use</code> directive:</p>
+<pre><code class="language-scss">// Correct way to import the design system
+@use &#39;src/app/core/design/main&#39; as ds;
+
+.my-component {
+  color: ds.$color-primary;
+  padding: ds.$spacing-4;
+}
+</code></pre>
+<p><strong>Don&#39;t</strong> import individual files directly:</p>
+<pre><code class="language-scss">// Incorrect - don&#39;t import individual files
+@import &#39;src/app/core/design/emerald-tokens&#39;;
+</code></pre>
+<h2>Typography</h2>
+<p>Use typography mixins to ensure consistent text styling across the application.</p>
+<h3>Heading Mixins</h3>
+<pre><code class="language-scss">.page-title {
+  @include ds.heading-1;
+}
+
+.section-title {
+  @include ds.heading-2;
+}
+
+.card-title {
+  @include ds.heading-3;
+}
+
+.widget-title {
+  @include ds.heading-4;
+}
+
+.subsection-title {
+  @include ds.heading-5;
+}
+
+.minor-title {
+  @include ds.heading-6;
+}
+</code></pre>
+<h3>Body Text Mixins</h3>
+<pre><code class="language-scss">.main-content {
+  @include ds.body-default;
+}
+
+.featured-content {
+  @include ds.body-large;
+}
+
+.secondary-content {
+  @include ds.body-small;
+}
+
+.fine-print {
+  @include ds.body-xs;
+}
+</code></pre>
+<h3>Special Text Mixins</h3>
+<pre><code class="language-scss">.image-caption {
+  @include ds.caption;
+}
+
+.form-label {
+  @include ds.label;
+}
+
+.button {
+  @include ds.button-text;
+}
+
+.small-button {
+  @include ds.button-text-small;
+}
+
+.large-button {
+  @include ds.button-text-large;
+}
+</code></pre>
+<h3>Link Styling</h3>
+<pre><code class="language-scss">.custom-link {
+  @include ds.link;
+}
+</code></pre>
+<h3>Text Truncation</h3>
+<pre><code class="language-scss">.single-line-truncate {
+  @include ds.truncate-text;
+}
+
+.multi-line-truncate {
+  @include ds.truncate-multiline(3); // Truncate to 3 lines
+}
+</code></pre>
+<h3>Responsive Typography</h3>
+<pre><code class="language-scss">.responsive-heading {
+  @include ds.responsive-font-size(1rem, 2rem);
+}
+</code></pre>
+<h2>Spacing</h2>
+<p>Use spacing tokens for consistent spacing throughout the application.</p>
+<h3>Direct Usage in SCSS</h3>
+<pre><code class="language-scss">.my-component {
+  margin-bottom: ds.$spacing-4;
+  padding: ds.$spacing-3;
+}
+
+.component-header {
+  margin-bottom: ds.$spacing-6;
+}
+
+.component-content {
+  padding: ds.$spacing-4 ds.$spacing-6;
+}
+</code></pre>
+<h3>Utility Classes in HTML</h3>
+<pre><code class="language-html">&lt;div class=&quot;mt-4 mb-6&quot;&gt;Top and bottom margins&lt;/div&gt;
+&lt;div class=&quot;p-4&quot;&gt;Padding on all sides&lt;/div&gt;
+&lt;div class=&quot;px-4 py-2&quot;&gt;Horizontal and vertical padding&lt;/div&gt;
+&lt;div class=&quot;mx-auto&quot;&gt;Horizontally centered with auto margins&lt;/div&gt;
+</code></pre>
+<h3>Responsive Spacing</h3>
+<pre><code class="language-html">&lt;div class=&quot;mt-2 mt-md-4 mt-lg-6&quot;&gt;
+  &lt;!-- Margin top increases at different breakpoints --&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Colors</h2>
+<p>Use color tokens to ensure consistent colors throughout the application.</p>
+<h3>Text Colors</h3>
+<pre><code class="language-scss">.primary-text {
+  color: ds.$color-primary;
+}
+
+.secondary-text {
+  color: ds.$color-secondary;
+}
+
+.body-text {
+  color: ds.$color-dark-gray-2;
+}
+
+.muted-text {
+  color: ds.$color-dark-gray-1;
+}
+</code></pre>
+<h3>Background Colors</h3>
+<pre><code class="language-scss">.primary-background {
+  background-color: ds.$color-primary;
+}
+
+.light-background {
+  background-color: ds.$color-light-gray-1;
+}
+
+.card-background {
+  background-color: ds.$color-white;
+}
+</code></pre>
+<h3>Status Colors</h3>
+<pre><code class="language-scss">.success-message {
+  color: ds.$color-success;
+}
+
+.warning-message {
+  color: ds.$color-warning;
+}
+
+.error-message {
+  color: ds.$color-error;
+}
+
+.info-message {
+  color: ds.$color-info;
+}
+</code></pre>
+<h3>Color Utility Classes</h3>
+<pre><code class="language-html">&lt;div class=&quot;text-primary&quot;&gt;Primary colored text&lt;/div&gt;
+&lt;div class=&quot;bg-light&quot;&gt;Light background&lt;/div&gt;
+&lt;div class=&quot;text-success&quot;&gt;Success message&lt;/div&gt;
+</code></pre>
+<h2>Components</h2>
+<p>When building components, follow these guidelines:</p>
+<h3>BEM Naming Convention</h3>
+<p>Follow the BEM (Block, Element, Modifier) naming convention for CSS classes:</p>
+<pre><code class="language-scss">.card {
+  // Block styles
+
+  &amp;__header {
+    // Element styles
+  }
+
+  &amp;__title {
+    // Element styles
+  }
+
+  &amp;--featured {
+    // Modifier styles
+  }
+}
+</code></pre>
+<p>See the <a href="./BEM-NAMING-CONVENTION.MD">BEM Naming Convention Guide</a> for more details.</p>
+<h3>Component Structure</h3>
+<p>Organize your component files consistently:</p>
+<pre><code>component-name/
+  ├── component-name.component.ts
+  ├── component-name.component.html
+  ├── component-name.component.scss
+  └── component-name.component.spec.ts
+</code></pre>
+<p>Use the <a href="../client-angular/src/app/shared/templates/component.template.ts">Component Template</a> as a starting point for new components.</p>
+<h3>Component Documentation</h3>
+<p>Document your components using the <a href="./COMPONENT-DOCUMENTATION-TEMPLATE.MD">Component Documentation Template</a>.</p>
+<h2>Responsive Design</h2>
+<p>The design system includes breakpoints for responsive design:</p>
+<pre><code class="language-scss">.my-component {
+  // Mobile styles (default)
+
+  @media (min-width: ds.$breakpoint-mobile) {
+    // Small devices (360px+)
+  }
+
+  @media (min-width: ds.$breakpoint-tablet) {
+    // Medium devices (600px+)
+  }
+
+  @media (min-width: ds.$breakpoint-desktop) {
+    // Large devices (960px+)
+  }
+
+  @media (min-width: ds.$breakpoint-desktop-large) {
+    // Extra large devices (1280px+)
+  }
+
+  @media (min-width: ds.$breakpoint-desktop-xl) {
+    // Extra extra large devices (1920px+)
+  }
+}
+</code></pre>
+<h3>Responsive Utility Classes</h3>
+<pre><code class="language-html">&lt;div class=&quot;d-none d-md-block&quot;&gt;
+  &lt;!-- Hidden on mobile, visible on tablet and up --&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;d-block d-lg-none&quot;&gt;
+  &lt;!-- Visible on mobile and tablet, hidden on desktop --&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Dark Mode</h2>
+<p>The design system includes support for dark mode:</p>
+<pre><code class="language-scss">.my-component {
+  background-color: ds.$color-white;
+  color: ds.$color-dark-gray-2;
+
+  @media (prefers-color-scheme: dark) {
+    body.dark-mode-enabled &amp; {
+      background-color: ds.$color-dark-gray-2;
+      color: ds.$color-light-gray-1;
+    }
+  }
+}
+</code></pre>
+<h2>Accessibility</h2>
+<p>Ensure your components are accessible:</p>
+<h3>Color Contrast</h3>
+<p>All color combinations should meet WCAG 2.1 AA standards:</p>
+<ul>
+<li>Text: 4.5:1 contrast ratio</li>
+<li>Large text: 3:1 contrast ratio</li>
+<li>UI components and graphical objects: 3:1 contrast ratio</li>
+</ul>
+<h3>Focus States</h3>
+<p>Use the design system&#39;s focus styles:</p>
+<pre><code class="language-scss">.interactive-element {
+  &amp;:focus-visible {
+    outline: 2px solid ds.$color-primary;
+    outline-offset: 2px;
+  }
+}
+</code></pre>
+<h3>Screen Reader Support</h3>
+<p>Use appropriate ARIA attributes and ensure content is accessible to screen readers:</p>
+<pre><code class="language-html">&lt;button aria-label=&quot;Close dialog&quot; class=&quot;close-button&quot;&gt;
+  &lt;span class=&quot;visually-hidden&quot;&gt;Close&lt;/span&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+&lt;/button&gt;
+</code></pre>
+<h2>Best Practices</h2>
+<h3>Do&#39;s</h3>
+<ul>
+<li>✅ Use design tokens for all visual properties</li>
+<li>✅ Use typography mixins for text styling</li>
+<li>✅ Follow the BEM naming convention</li>
+<li>✅ Make components responsive</li>
+<li>✅ Support dark mode</li>
+<li>✅ Ensure accessibility</li>
+<li>✅ Document your components</li>
+</ul>
+<h3>Don&#39;ts</h3>
+<ul>
+<li>❌ Use hard-coded values for colors, spacing, etc.</li>
+<li>❌ Import individual design system files directly</li>
+<li>❌ Create custom styles that duplicate design system functionality</li>
+<li>❌ Use overly specific selectors</li>
+<li>❌ Nest selectors more than 3 levels deep</li>
+<li>❌ Use <code>!important</code> (except in utility classes)</li>
+</ul>
+<hr>
+<p>This guide is part of the DateNight.io UI/UX implementation plan. It serves as a reference for designers and developers to ensure consistent application of the design system throughout the application.</p>
+<p>Last Updated: 2025-05-15</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

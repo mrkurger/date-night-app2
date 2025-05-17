@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decentralized Documentation Summary - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Decentralized Documentation Summary</h1>
+
+      <h1>Decentralized Documentation Summary</h1>
+<h2>Overview</h2>
+<p>This document provides a summary of the decentralized documentation approach implemented in the Date Night App project. The goal is to keep documentation close to the code it documents and provide a central HTML documentation system that aggregates all component documentation.</p>
+<h2>Implementation</h2>
+<p>The decentralized documentation approach consists of:</p>
+<ol>
+<li><p><strong>Component Documentation Files</strong>:</p>
+<ul>
+<li>CHANGELOG.md - History of changes to the component</li>
+<li>AILESSONS.md - Lessons learned and best practices for the component</li>
+<li>These files are stored in each component directory</li>
+</ul>
+</li>
+<li><p><strong>HTML Documentation System</strong>:</p>
+<ul>
+<li>Located in <code>/docs/html-docs/</code></li>
+<li>Aggregates all component documentation</li>
+<li>Organized by component type (server, client, features, etc.)</li>
+<li>Provides navigation between related components</li>
+</ul>
+</li>
+<li><p><strong>Documentation Scripts</strong>:</p>
+<ul>
+<li><code>create_decentralized_docs.mjs</code> - Creates the decentralized documentation structure</li>
+<li><code>update_html_docs.mjs</code> - Updates the HTML documentation based on changes to component docs</li>
+</ul>
+</li>
+</ol>
+<h2>Directory Structure</h2>
+<p>The HTML documentation is organized as follows:</p>
+<pre><code>/docs/html-docs/
+├── index.html                  # Main documentation index
+├── README.md                   # Instructions for using the documentation
+├── templates/                  # Shared templates and styles
+│   ├── index.html             # Template for index pages
+│   ├── page.html              # Template for content pages
+│   └── styles.css             # Shared styles
+├── server/                     # Server component documentation
+├── client/                     # Client component documentation
+├── features/                   # Feature documentation
+├── components/                 # UI component documentation
+├── services/                   # Service documentation
+├── models/                     # Data model documentation
+└── design/                     # Design system documentation
+</code></pre>
+<h2>Component Documentation</h2>
+<p>Each component has its own documentation files:</p>
+<ol>
+<li><p><strong>CHANGELOG.md</strong>:</p>
+<ul>
+<li>Documents the history of changes to the component</li>
+<li>Uses a consistent format with Added, Changed, Fixed, and Removed sections</li>
+<li>Includes an Unreleased section for changes that haven&#39;t been released yet</li>
+</ul>
+</li>
+<li><p><strong>AILESSONS.md</strong>:</p>
+<ul>
+<li>Documents lessons learned and best practices for the component</li>
+<li>Includes sections for Best Practices, Common Patterns, Known Issues, and Implementation Notes</li>
+<li>Helps maintain knowledge about the component and guides future development</li>
+</ul>
+</li>
+</ol>
+<h2>Documentation Workflow</h2>
+<p>The documentation workflow is as follows:</p>
+<ol>
+<li><p><strong>Creating Documentation</strong>:</p>
+<ul>
+<li>Run <code>create_decentralized_docs.mjs</code> to create template files for all components</li>
+<li>Update the template files with component-specific information</li>
+</ul>
+</li>
+<li><p><strong>Updating Documentation</strong>:</p>
+<ul>
+<li>When making changes to a component, update its CHANGELOG.md file</li>
+<li>When discovering new patterns or best practices, update its AILESSONS.md file</li>
+<li>Run <code>update_html_docs.mjs</code> to update the HTML documentation</li>
+</ul>
+</li>
+<li><p><strong>Viewing Documentation</strong>:</p>
+<ul>
+<li>View component documentation directly in the component directory</li>
+<li>Or, open the HTML documentation to view all documentation in a central location</li>
+</ul>
+</li>
+</ol>
+<h2>Benefits</h2>
+<p>The decentralized documentation approach provides several benefits:</p>
+<ol>
+<li><strong>Proximity to Code</strong>: Documentation is stored alongside the code it documents</li>
+<li><strong>Component-Specific</strong>: Documentation is specific to each component</li>
+<li><strong>Maintainability</strong>: Documentation is updated when the component changes</li>
+<li><strong>Consistency</strong>: All documentation follows the same format and structure</li>
+<li><strong>Accessibility</strong>: Documentation is accessible both in the codebase and as HTML</li>
+</ol>
+<h2>Documentation Standards</h2>
+<p>The decentralized documentation approach follows these standards:</p>
+<ol>
+<li><p><strong>File Naming</strong>:</p>
+<ul>
+<li>CHANGELOG.md and AILESSONS.md for component documentation</li>
+<li>Consistent naming across all components</li>
+</ul>
+</li>
+<li><p><strong>Content Structure</strong>:</p>
+<ul>
+<li>CHANGELOG.md: Added, Changed, Fixed, Removed sections</li>
+<li>AILESSONS.md: Best Practices, Common Patterns, Known Issues, Implementation Notes sections</li>
+</ul>
+</li>
+<li><p><strong>Formatting</strong>:</p>
+<ul>
+<li>Markdown formatting for all documentation</li>
+<li>Consistent formatting across all components</li>
+</ul>
+</li>
+<li><p><strong>Updates</strong>:</p>
+<ul>
+<li>Documentation is updated when code changes</li>
+<li>HTML documentation is regenerated after updates</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The decentralized documentation approach ensures that documentation stays close to the code it documents and is updated when the code changes. By following this approach, we can maintain high-quality documentation throughout the Date Night App project.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decentralized Documentation Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Decentralized Documentation Guide</h1>
+
+      <h1>Decentralized Documentation Guide</h1>
+<h2>Overview</h2>
+<p>The Date Night App uses a decentralized documentation approach where each component has its own documentation files stored alongside the code. This guide explains how to use and maintain this documentation system.</p>
+<h2>Documentation Structure</h2>
+<h3>Component Documentation Files</h3>
+<p>Each component directory contains the following documentation files:</p>
+<ol>
+<li><strong>CHANGELOG.md</strong> - History of changes to the component</li>
+<li><strong>AILESSONS.md</strong> - Lessons learned and best practices for the component</li>
+</ol>
+<p>These files are stored in the component directory, close to the code they document.</p>
+<h3>HTML Documentation</h3>
+<p>The component documentation files are aggregated into a central HTML documentation system located in <code>/docs/html-docs/</code>. This HTML documentation is organized by component type:</p>
+<ul>
+<li><code>/docs/html-docs/server/</code> - Server components</li>
+<li><code>/docs/html-docs/client/</code> - Client components</li>
+<li><code>/docs/html-docs/features/</code> - Features</li>
+<li><code>/docs/html-docs/components/</code> - UI components</li>
+<li><code>/docs/html-docs/services/</code> - Services</li>
+<li><code>/docs/html-docs/models/</code> - Data models</li>
+<li><code>/docs/html-docs/design/</code> - Design system</li>
+</ul>
+<h2>Using the Documentation</h2>
+<h3>Viewing Documentation</h3>
+<p>You can view the documentation in two ways:</p>
+<ol>
+<li><strong>Component Files</strong> - View the CHANGELOG.md and AILESSONS.md files directly in the component directory</li>
+<li><strong>HTML Documentation</strong> - Open <code>/docs/html-docs/index.html</code> in your browser to view the aggregated HTML documentation</li>
+</ol>
+<h3>Finding Documentation</h3>
+<p>To find documentation for a specific component:</p>
+<ol>
+<li>Navigate to the component directory to view the CHANGELOG.md and AILESSONS.md files</li>
+<li>Or, open the HTML documentation and navigate to the appropriate section</li>
+</ol>
+<h2>Maintaining Documentation</h2>
+<h3>Updating Component Documentation</h3>
+<p>When making changes to a component:</p>
+<ol>
+<li><p>Update the CHANGELOG.md file in the component directory</p>
+<ul>
+<li>Add an entry to the &quot;Unreleased&quot; section</li>
+<li>Include details about what was added, changed, or fixed</li>
+<li>Use clear, concise language</li>
+</ul>
+</li>
+<li><p>Update the AILESSONS.md file if you&#39;ve learned something new</p>
+<ul>
+<li>Add new best practices or patterns</li>
+<li>Document challenges and solutions</li>
+<li>Include implementation notes</li>
+</ul>
+</li>
+</ol>
+<h3>Generating HTML Documentation</h3>
+<p>After updating component documentation:</p>
+<ol>
+<li>Run the HTML documentation update script:</li>
+</ol>
+<pre><code class="language-bash">node scripts/update_html_docs.mjs
+</code></pre>
+<p>This will regenerate the HTML documentation based on the updated component files.</p>
+<h3>Adding Documentation to New Components</h3>
+<p>When creating a new component:</p>
+<ol>
+<li>Run the decentralized documentation script to create template files:</li>
+</ol>
+<pre><code class="language-bash">node scripts/create_decentralized_docs.mjs
+</code></pre>
+<p>This will create CHANGELOG.md and AILESSONS.md files in the component directory.</p>
+<ol start="2">
+<li>Update the template files with component-specific information</li>
+<li>Run the HTML documentation update script to include the new component in the HTML documentation</li>
+</ol>
+<h2>Documentation Style Guidelines</h2>
+<h3>CHANGELOG.md</h3>
+<ul>
+<li>Use the following sections:<ul>
+<li><strong>Added</strong> - New features</li>
+<li><strong>Changed</strong> - Changes to existing functionality</li>
+<li><strong>Fixed</strong> - Bug fixes</li>
+<li><strong>Removed</strong> - Removed features</li>
+</ul>
+</li>
+<li>Use bullet points for entries</li>
+<li>Be specific about what was changed</li>
+<li>Include references to issue numbers or pull requests when relevant</li>
+<li>Use present tense (e.g., &quot;Add feature X&quot; not &quot;Added feature X&quot;)</li>
+</ul>
+<h3>AILESSONS.md</h3>
+<ul>
+<li>Use the following sections:<ul>
+<li><strong>Best Practices</strong> - Recommended approaches</li>
+<li><strong>Common Patterns</strong> - Recurring patterns used in the component</li>
+<li><strong>Known Issues</strong> - Challenges or limitations</li>
+<li><strong>Implementation Notes</strong> - Decisions and rationale</li>
+</ul>
+</li>
+<li>Use clear, concise language</li>
+<li>Include code examples when relevant</li>
+<li>Document both what to do and what not to do</li>
+<li>Explain the reasoning behind recommendations</li>
+</ul>
+<h2>Documentation Templates</h2>
+<p>The following templates are used for component documentation:</p>
+<h3>CHANGELOG.md Template</h3>
+<pre><code class="language-markdown"># Changelog for [Component Name]
+
+## [Unreleased]
+
+### Added
+
+- Initial changelog file
+
+### Changed
+
+- None
+
+### Fixed
+
+- None
+
+## How to use this file
+
+When making changes to this component, add an entry to the &quot;Unreleased&quot; section above.
+When a release is made, create a new version section and move the unreleased entries there.
+
+Example:
+
+## [1.0.0] - YYYY-MM-DD
+
+### Added
+
+- Feature X
+- Feature Y
+
+### Changed
+
+- Updated component Z
+
+### Fixed
+
+- Bug in function A
+</code></pre>
+<h3>AILESSONS.md Template</h3>
+<pre><code class="language-markdown"># AI Lessons for [Component Name]
+
+This document contains lessons learned and best practices specific to this component.
+
+## Best Practices
+
+- [Add best practices specific to this component]
+
+## Common Patterns
+
+- [Add common patterns used in this component]
+
+## Known Issues
+
+- [Add known issues or challenges with this component]
+
+## Implementation Notes
+
+- [Add implementation notes or decisions made for this component]
+
+## How to use this file
+
+When discovering new patterns, best practices, or lessons related to this component, add them to this file.
+This helps maintain knowledge about the component and guides future development.
+</code></pre>
+<h2>Conclusion</h2>
+<p>The decentralized documentation approach ensures that documentation stays close to the code it documents and is updated when the code changes. By following this guide, you can help maintain high-quality documentation throughout the Date Night App project.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
