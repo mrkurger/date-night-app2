@@ -1,0 +1,273 @@
+/**
+ * DateNight.io Nebular Theme Customization
+ * 
+ * This file contains custom theme variables for Nebular components.
+ * Uses CSS variables for theming to maintain consistency with the design system.
+ */
+
+@use '@nebular/theme/styles/theming' as *;
+@use '../../../styles/variables.css' as *;
+
+// Common theme settings
+$nb-themes: (
+  font-family-primary: var(--font-family-base),
+  font-family-secondary: var(--font-family-base),
+  text-heading-1-font-size: var(--font-size-4xl),
+  text-heading-2-font-size: var(--font-size-3xl),
+  text-heading-3-font-size: var(--font-size-2xl),
+  text-heading-4-font-size: var(--font-size-xl),
+  text-heading-5-font-size: var(--font-size-lg),
+  text-heading-6-font-size: var(--font-size-md),
+  border-radius: var(--border-radius-md),
+  shadow: var(--shadow-md),
+  layout-padding: 2rem,
+  layout-medium-padding: 1.5rem,
+  layout-small-padding: 1rem,
+
+  divider-color: var(--border-color),
+  divider-style: solid,
+  divider-width: 1px,
+
+  button-filled-small-padding: 0.5rem 1rem,
+  button-filled-medium-padding: 0.75rem 1.5rem,
+  button-filled-large-padding: 1rem 2rem,
+  button-outline-small-padding: 0.5rem 1rem,
+  button-outline-medium-padding: 0.75rem 1.5rem,
+  button-outline-large-padding: 1rem 2rem,
+);
+
+// Light theme configuration
+$nb-themes-light: (
+  // Layout
+  layout-background-color: var(--body-bg),
+  layout-text-color: var(--body-color),
+  // Basic colors
+  color-primary-100: var(--primary-100),
+  color-primary-200: var(--primary-200),
+  color-primary-300: var(--primary-300),
+  color-primary-400: var(--primary-400),
+  color-primary-500: var(--primary-500),
+  color-primary-600: var(--primary-600),
+  color-primary-700: var(--primary-700),
+  color-primary-800: var(--primary-800),
+  color-primary-900: var(--primary-900),
+  background-basic-color-1: var(--neutral-100),
+  background-basic-color-2: var(--neutral-200),
+  background-basic-color-3: var(--neutral-300),
+  background-basic-color-4: var(--neutral-400),
+  border-basic-color-1: var(--neutral-300),
+  border-basic-color-2: var(--neutral-400),
+  border-basic-color-3: var(--neutral-500),
+  border-basic-color-4: var(--neutral-600),
+  border-basic-color-5: var(--neutral-700),
+  text-basic-color: var(--body-color),
+  text-alternate-color: var(--neutral-100),
+  text-control-color: var(--neutral-100),
+  text-disabled-color: var(--neutral-600),
+  text-hint-color: var(--neutral-700),
+  // Status colors
+  color-success-default: var(--success),
+  color-info-default: var(--info),
+  color-warning-default: var(--warning),
+  color-danger-default: var(--danger)
+);
+$nb-themes-components: (
+  // Card
+  card-border-radius: 0.5rem,
+  card-padding: 1.5rem,
+
+  // Button
+  btn-padding: 0.75rem 1.5rem,
+  btn-rectangle-border-radius: 0.375rem,
+  btn-semi-round-border-radius: 0.75rem,
+  btn-round-border-radius: 1.5rem,
+
+  // Input
+  input-border-radius: 0.375rem,
+  input-padding: 0.75rem 1rem,
+
+  // Menu
+  menu-item-padding: 0.75rem 1rem,
+  menu-item-icon-margin: 0.5rem,
+
+  // User
+  user-picture-size: 2.5rem,
+  user-initials-text-size: 1rem,
+
+  // Actions
+  actions-size-small: 1.5rem,
+  actions-size-medium: 2rem,
+  actions-size-large: 2.5rem,
+
+  // Typography
+  text-heading-1-font-size: 2.5rem,
+  text-heading-2-font-size: 2rem,
+  text-heading-3-font-size: 1.75rem,
+  text-heading-4-font-size: 1.5rem,
+  text-heading-5-font-size: 1.25rem,
+  text-heading-6-font-size: 1rem,
+
+  text-paragraph-font-size: 1rem,
+  text-paragraph-line-height: 1.5,
+
+  text-subtitle-font-size: 0.875rem,
+  text-subtitle-line-height: 1.5,
+
+  text-caption-font-size: 0.75rem,
+  text-caption-line-height: 1.35,
+
+  // Fonts
+  text-basic-font-family: 'Inter, sans-serif',
+  text-heading-font-family: 'Poppins, sans-serif'
+);
+
+// Light theme configuration
+$nb-themes-light-custom: (
+  // Brand Colors
+  color-primary-100: #cceeff,
+  color-primary-200: #99ddff,
+  color-primary-300: #66ccff,
+  color-primary-400: #33bbff,
+  color-primary-500: #00aaff,
+  color-primary-600: #0088cc,
+  color-primary-700: #006699,
+  color-primary-800: #004466,
+  color-primary-900: #002233,
+
+  // Semantic Colors
+  color-success-100: #e6fff2,
+  color-success-200: #b3ffdb,
+  color-success-300: #80ffc5,
+  color-success-400: #4dffae,
+  color-success-500: #00d68f,
+  color-success-600: #00a86f,
+  color-success-700: #007a4f,
+  color-success-800: #004c30,
+  color-success-900: #001e10,
+
+  color-info-100: #e6f6ff,
+  color-info-200: #b3e3ff,
+  color-info-300: #80d1ff,
+  color-info-400: #4dbeff,
+  color-info-500: #0095ff,
+  color-info-600: #0077cc,
+  color-info-700: #005999,
+  color-info-800: #003b66,
+  color-info-900: #001d33,
+
+  color-warning-100: #fff6e6,
+  color-warning-200: #ffe4b3,
+  color-warning-300: #ffd280,
+  color-warning-400: #ffc14d,
+  color-warning-500: #ffaa00,
+  color-warning-600: #cc8800,
+  color-warning-700: #996600,
+  color-warning-800: #664400,
+  color-warning-900: #332200,
+
+  color-danger-100: #ffe6ed,
+  color-danger-200: #ffb3c7,
+  color-danger-300: #ff80a1,
+  color-danger-400: #ff4d7b,
+  color-danger-500: #ff3d71,
+  color-danger-600: #cc314a,
+  color-danger-700: #992523,
+  color-danger-800: #661819,
+  color-danger-900: #330c0c,
+
+  // Background Colors
+  background-basic-color-1: #ffffff,
+  background-basic-color-2: #f7f9fc,
+  background-basic-color-3: #edf1f7,
+  background-basic-color-4: #e4e9f2,
+
+  // Border Colors
+  border-basic-color-1: #e4e9f2,
+  border-basic-color-2: #e4e9f2,
+  border-basic-color-3: #e4e9f2,
+  border-basic-color-4: #e4e9f2,
+  border-basic-color-5: #e4e9f2,
+
+  // Text Colors
+  text-basic-color: #222b45,
+  text-alternate-color: #ffffff,
+  text-control-color: #ffffff,
+  text-disabled-color: #8f9bb3,
+  text-hint-color: #8f9bb3,
+
+  // Shadow
+  shadow: (0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)),
+  shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+  shadow-md: (0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)),
+  shadow-lg: (0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1))
+);
+
+// Merge base theme with light theme
+$nb-theme-merged: map-merge($nb-themes, $nb-themes-light);
+
+// Dark theme configuration
+$nb-themes-dark: (
+  // Layout
+  layout-background-color: var(--neutral-900),
+  layout-text-color: var(--neutral-200),
+  // Basic colors - using CSS variables for dark theme
+  color-primary-100: var(--primary-100),
+  color-primary-200: var(--primary-200),
+  color-primary-300: var(--primary-300),
+  color-primary-400: var(--primary-400),
+  color-primary-500: var(--primary-500),
+  color-primary-600: var(--primary-600),
+  color-primary-700: var(--primary-700),
+  color-primary-800: var(--primary-800),
+  color-primary-900: var(--primary-900),
+  background-basic-color-1: var(--neutral-900),
+  background-basic-color-2: var(--neutral-800),
+  background-basic-color-3: var(--neutral-700),
+  background-basic-color-4: var(--neutral-600),
+  border-basic-color-1: var(--neutral-700),
+  border-basic-color-2: var(--neutral-600),
+  border-basic-color-3: var(--neutral-500),
+  border-basic-color-4: var(--neutral-400),
+  border-basic-color-5: var(--neutral-300),
+  text-basic-color: var(--neutral-200),
+  text-alternate-color: var(--neutral-900),
+  text-control-color: var(--neutral-200),
+  text-disabled-color: var(--neutral-600),
+  text-hint-color: var(--neutral-500),
+  // Component specific
+  header-background-color: var(--neutral-800),
+  header-text-color: var(--neutral-200),
+  header-hint-color: var(--neutral-500),
+  footer-background-color: var(--neutral-800),
+  footer-text-color: var(--neutral-200),
+  footer-icon-color: var(--neutral-400),
+  // Cards & Containers
+  card-background-color: var(--neutral-800),
+  card-text-color: var(--neutral-200),
+  card-border-color: var(--neutral-700),
+  card-shadow: var(--shadow-md),
+  card-header-text-color: var(--neutral-200),
+  card-header-hint-color: var(--neutral-500),
+  // Forms
+  form-control-background-color: var(--neutral-800),
+  form-control-border-color: var(--neutral-700),
+  form-control-text-color: var(--neutral-200),
+  form-control-placeholder-color: var(--neutral-600),
+  form-control-focus-border-color: var(--primary-500),
+  // Select & Dropdowns
+  select-option-background-color: var(--neutral-800),
+  select-option-text-color: var(--neutral-200),
+  select-option-hover-background-color: var(--neutral-700),
+  select-option-hover-text-color: var(--neutral-100),
+  select-option-selected-background-color: var(--primary-600),
+  select-option-selected-text-color: var(--neutral-100),
+  // Status colors
+  color-success-default: var(--success),
+  color-info-default: var(--info),
+  color-warning-default: var(--warning),
+  color-danger-default: var(--danger),
+  // Links
+  link-text-color: var(--primary-400),
+  link-text-hover-color: var(--primary-300),
+  link-text-focus-color: var(--primary-500)
+);

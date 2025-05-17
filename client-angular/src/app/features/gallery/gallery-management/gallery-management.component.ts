@@ -8,23 +8,32 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-// Removed unused HttpEventType, HttpResponse from '@angular/common/http'
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 
+interface Media {
+  _id: string;
+  url: string;
+  featuredMedia?: boolean;
+}
+
 @Component({
   selector: 'app-gallery-management',
   templateUrl: './gallery-management.component.html',
   styleUrls: ['./gallery-management.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class GalleryManagementComponent implements OnInit {
   @Input() adId: string;
   @Output() mediaUpdated = new EventEmitter<void>();
 
-  media: any[] = [];
+  media: Media[] = [];
   selectedFiles: File[] = [];
   previewUrls: SafeUrl[] = [];
   progress = 0;
@@ -49,40 +58,41 @@ export class GalleryManagementComponent implements OnInit {
   loadMedia(): void {
     this.loading = true;
     this.mediaService.getAdMedia(this.adId).subscribe({
-      next: (media) => {
+      next: (media: Media[]) => {
         this.media = media;
-        // Find featured media
-        const ad = media.find((m: any) => m.featuredMedia);
-        if (ad) {
-          this.featuredMediaId = ad.featuredMedia;
+        const featuredItem = media.find((m: Media) => m.featuredMedia);
+        if (featuredItem) {
+          this.featuredMediaId = featuredItem._id;
         }
         this.loading = false;
       },
-      error: (err) => {
+      error: () => {
         this.error = 'Failed to load media';
         this.loading = false;
-        this.notificationService.error('Failed to load media');
-        console.error(err);
+        this.notificationService.error(this.error);
       },
     });
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFiles = Array.from(event.target.files);
-    this.previewUrls = [];
+  onFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+      this.selectedFiles = Array.from(target.files);
+      this.generatePreviews();
+    }
+  }
 
-    // Create previews for selected files
+  generatePreviews(): void {
+    this.previewUrls = [];
     this.selectedFiles.forEach((file) => {
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previewUrls.push(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
-        };
-        reader.readAsDataURL(file);
-      } else if (file.type.startsWith('video/')) {
-        // For videos, use a generic video icon or thumbnail
-        this.previewUrls.push('/assets/images/video-thumbnail.png');
-      }
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target?.result) {
+          const url = this.sanitizer.bypassSecurityTrustUrl(e.target.result as string);
+          this.previewUrls.push(url);
+        }
+      };
+      reader.readAsDataURL(file);
     });
   }
 

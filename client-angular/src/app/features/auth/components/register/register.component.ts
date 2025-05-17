@@ -1,3 +1,19 @@
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +23,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -16,47 +31,57 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NbCardModule,
+    ,
+    ,
+    ,
+    NbAlertModule,
+    NbFormFieldModule,
+  ],
   template: `
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title text-center">Register</h3>
-              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" formControlName="username" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" formControlName="email" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" formControlName="password" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label>Account Type</label>
-                  <select formControlName="role" class="form-control">
-                    <option value="user">User</option>
-                    <option value="advertiser">Advertiser</option>
-                  </select>
-                </div>
-                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-                <button
-                  type="submit"
-                  class="btn btn-primary w-100"
-                  [disabled]="registerForm.invalid"
-                >
-                  Register
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="register-container">
+      <nb-card>
+        <nb-card-header>
+          <h3>Register</h3>
+        </nb-card-header>
+        <nb-card-body>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <nb-form-field>
+              <label>Username</label>
+              <input nbInput formControlName="username" placeholder="Username" />
+            </nb-form-field>
+            <nb-form-field>
+              <label>Email</label>
+              <input nbInput type="email" formControlName="email" placeholder="Email" />
+            </nb-form-field>
+            <nb-form-field>
+              <label>Password</label>
+              <input nbInput type="password" formControlName="password" placeholder="Password" />
+            </nb-form-field>
+            <nb-form-field>
+              <label>Account Type</label>
+              <select nbInput formControlName="role">
+                <option value="user">User</option>
+                <option value="advertiser">Advertiser</option>
+              </select>
+            </nb-form-field>
+            <nb-alert *ngIf="error" status="danger">{{ error }}</nb-alert>
+            <button
+              nbButton
+              status="primary"
+              type="submit"
+              [disabled]="registerForm.invalid"
+              fullWidth
+            >
+              Register
+            </button>
+          </form>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
 })

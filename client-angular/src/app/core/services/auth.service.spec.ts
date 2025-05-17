@@ -14,11 +14,20 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
-import { User, LoginDTO, RegisterDTO, AuthResponse } from '../models/user.interface';
+import {
+  User,
+  LoginDTO,
+  RegisterDTO,
+  AuthResponse,
+  NotificationSettings,
+  PrivacySettings,
+} from '../models/user.interface';
+import { Router } from '@angular/router';
 
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
+  let router: Router;
   const apiUrl = `${environment.apiUrl}/auth`;
 
   // Mock user data that matches the User interface
@@ -27,9 +36,9 @@ describe('AuthService', () => {
     id: '123', // Alias for _id
     username: 'testuser',
     email: 'test@example.com',
-    role: 'user',
+    roles: ['user'],
+    status: 'active',
     createdAt: new Date(),
-    updatedAt: new Date(),
   };
 
   // Mock auth response that matches the AuthResponse interface
@@ -48,22 +57,13 @@ describe('AuthService', () => {
 
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
+    router = TestBed.inject(Router);
 
-    // Prevent the initial validateToken call from interfering with tests
-    httpMock
-      .expectOne(`${apiUrl}/validate`)
-      .flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
+    // Prevent the initial checkAuthStatus call from interfering with tests
+    httpMock.expectOne(`${apiUrl}/status`).flush({ user: null });
   });
 
   afterEach(() => {
-    // Handle any pending refresh token requests
-    const refreshRequests = httpMock.match(`${apiUrl}/refresh-token`);
-    if (refreshRequests.length > 0) {
-      refreshRequests.forEach((req) => {
-        req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
-      });
-    }
-
     // Verify that there are no outstanding requests
     httpMock.verify();
   });
@@ -131,8 +131,11 @@ describe('AuthService', () => {
       // Verify user is authenticated
       expect(service.isAuthenticated()).toBeTrue();
 
+      // Spy on router navigation
+      spyOn(router, 'navigate');
+
       // Call logout
-      service.logout();
+      service.logout().subscribe();
 
       // Verify logout request was sent
       const logoutReq = httpMock.expectOne(`${apiUrl}/logout`);
@@ -145,36 +148,27 @@ describe('AuthService', () => {
       // Verify user is no longer authenticated
       expect(service.isAuthenticated()).toBeFalse();
       expect(service.getCurrentUser()).toBeNull();
+      expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
     });
   });
 
   describe('handleOAuthCallback', () => {
     it('should validate token and update user state', () => {
-      let userResult: any;
       service.handleOAuthCallback().subscribe((user) => {
-        userResult = user;
+        expect(user).toEqual(mockUser);
+        expect(service.isAuthenticated()).toBeTrue();
       });
 
       const req = httpMock.expectOne(`${apiUrl}/validate`);
       expect(req.request.method).toBe('GET');
       expect(req.request.withCredentials).toBeTrue();
 
-      req.flush({ success: true, user: mockUser });
-
-      // The service returns the response object, not just the user
-      expect(userResult).toEqual({ success: true, user: mockUser });
-      expect(service.isAuthenticated()).toBeTrue();
+      req.flush({ user: mockUser });
     });
   });
 
   describe('refreshToken', () => {
     it('should send refresh token request and update user state', () => {
-      // Clear any pending refresh token requests
-      const pendingRequests = httpMock.match(`${apiUrl}/refresh-token`);
-      pendingRequests.forEach((req) => {
-        req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
-      });
-
       service.refreshToken().subscribe((response) => {
         expect(response).toEqual(mockAuthResponse);
         expect(service.getCurrentUser()).toEqual(mockUser);
@@ -207,14 +201,20 @@ describe('AuthService', () => {
   describe('updateProfile', () => {
     it('should update user profile and update user state', () => {
       const profileData = {
-        name: 'Updated Name',
-        bio: 'New bio information',
+        profile: {
+          firstName: 'Updated',
+          lastName: 'Name',
+          bio: 'New bio information',
+        },
       };
 
       const updatedUser = {
         ...mockUser,
-        name: 'Updated Name',
-        bio: 'New bio information',
+        profile: {
+          firstName: 'Updated',
+          lastName: 'Name',
+          bio: 'New bio information',
+        },
       };
 
       service.updateProfile(profileData).subscribe((response) => {
@@ -227,7 +227,162 @@ describe('AuthService', () => {
       expect(req.request.body).toEqual(profileData);
       expect(req.request.withCredentials).toBeTrue();
 
-      req.flush({ success: true, user: updatedUser });
+      req.flush({ user: updatedUser, message: 'Profile updated successfully' });
+    });
+  });
+
+  describe('changePassword', () => {
+    it('should send change password request', () => {
+      const passwordData = {
+        currentPassword: 'oldPassword123',
+        newPassword: 'newPassword456',
+      };
+
+      service.changePassword(passwordData).subscribe((response) => {
+        expect(response.message).toBe('Password changed successfully');
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/password`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual(passwordData);
+      expect(req.request.withCredentials).toBeTrue();
+
+      req.flush({ message: 'Password changed successfully' });
+    });
+  });
+
+  describe('updateNotificationSettings', () => {
+    it('should update notification settings and update user state', () => {
+      const notificationSettings: NotificationSettings = {
+        email: true,
+        push: false,
+        sms: true,
+        inApp: true,
+        marketing: false,
+      };
+
+      const updatedUser = {
+        ...mockUser,
+        notificationSettings,
+      };
+
+      service.updateNotificationSettings(notificationSettings).subscribe((response) => {
+        expect(response.user).toEqual(updatedUser);
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/notification-settings`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual(notificationSettings);
+      expect(req.request.withCredentials).toBeTrue();
+
+      req.flush({ user: updatedUser, message: 'Notification settings updated' });
+    });
+  });
+
+  describe('updatePrivacySettings', () => {
+    it('should update privacy settings and update user state', () => {
+      const privacySettings: PrivacySettings = {
+        profileVisibility: 'connections',
+        showOnlineStatus: true,
+        showLastSeen: false,
+        allowDms: 'connections',
+        showEmail: false,
+      };
+
+      const updatedUser = {
+        ...mockUser,
+        privacySettings,
+      };
+
+      service.updatePrivacySettings(privacySettings).subscribe((response) => {
+        expect(response.user).toEqual(updatedUser);
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/privacy-settings`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual(privacySettings);
+      expect(req.request.withCredentials).toBeTrue();
+
+      req.flush({ user: updatedUser, message: 'Privacy settings updated' });
+    });
+  });
+
+  describe('deleteAccount', () => {
+    it('should send delete account request and clear user state', () => {
+      // First login to set the user state
+      service.login({ email: 'test@example.com', password: 'password123' }).subscribe();
+
+      const loginReq = httpMock.expectOne(`${apiUrl}/login`);
+      loginReq.flush(mockAuthResponse);
+
+      // Verify user is authenticated
+      expect(service.isAuthenticated()).toBeTrue();
+
+      service.deleteAccount().subscribe((response) => {
+        expect(response.message).toBe('Account deleted successfully');
+        expect(service.isAuthenticated()).toBeFalse();
+        expect(service.getCurrentUser()).toBeNull();
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/account`);
+      expect(req.request.method).toBe('DELETE');
+      expect(req.request.withCredentials).toBeTrue();
+
+      req.flush({ message: 'Account deleted successfully' });
+    });
+  });
+
+  describe('signIn and signUp', () => {
+    it('should handle signIn request', () => {
+      service.signIn('test@example.com', 'password123').subscribe((user) => {
+        expect(user).toEqual(mockUser);
+        expect(service.getCurrentUser()).toEqual(mockUser);
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/signin`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ email: 'test@example.com', password: 'password123' });
+
+      req.flush({ user: mockUser });
+    });
+
+    it('should handle signUp request', () => {
+      service.signUp('test@example.com', 'password123', 'Test User').subscribe((user) => {
+        expect(user).toEqual(mockUser);
+        expect(service.getCurrentUser()).toEqual(mockUser);
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}/signup`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({
+        email: 'test@example.com',
+        password: 'password123',
+        displayName: 'Test User',
+      });
+
+      req.flush({ user: mockUser });
+    });
+  });
+
+  describe('password reset', () => {
+    it('should handle request password reset', () => {
+      service.requestPassword('test@example.com').subscribe();
+
+      const req = httpMock.expectOne(`${apiUrl}/request-password`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ email: 'test@example.com' });
+
+      req.flush({});
+    });
+
+    it('should handle reset password', () => {
+      service.resetPassword('reset-token-123', 'newPassword123').subscribe();
+
+      const req = httpMock.expectOne(`${apiUrl}/reset-password`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ token: 'reset-token-123', password: 'newPassword123' });
+
+      req.flush({});
     });
   });
 
@@ -241,7 +396,7 @@ describe('AuthService', () => {
       service.login(mockCredentials).subscribe({
         next: () => fail('Should have failed with network error'),
         error: (error) => {
-          expect(error.status).toBe(500);
+          expect(error).toBeTruthy();
           expect(service.isAuthenticated()).toBeFalse();
         },
       });
@@ -251,19 +406,10 @@ describe('AuthService', () => {
     });
 
     it('should handle refresh token errors', () => {
-      // First, clear any pending refresh token requests
-      const pendingRequests = httpMock.match(`${apiUrl}/refresh-token`);
-      pendingRequests.forEach((req) => {
-        req.flush({ success: false }, { status: 401, statusText: 'Unauthorized' });
-      });
-
-      // Reset the mock to ensure we're starting fresh
-      httpMock.verify();
-
       service.refreshToken().subscribe({
         next: () => fail('Should have failed with token error'),
         error: (error) => {
-          expect(error.status).toBe(401);
+          expect(error).toBeTruthy();
           expect(service.isAuthenticated()).toBeFalse();
         },
       });

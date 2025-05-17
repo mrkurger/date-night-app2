@@ -1,5 +1,15 @@
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  NbDialogService,
+  NbDialogRef,
+  NbDialogConfig,
+  NbCardModule,
+  NbButtonModule,
+} from '@nebular/theme';
+import { NebularModule } from '../../shared/nebular.module';
+
+import { Injectable, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { Observable } from 'rxjs';
 import {
   ReviewDialogComponent,
@@ -29,45 +39,37 @@ import {
 
 /**
  * Service for managing dialog interactions throughout the application
- * Provides methods to open various dialog types with consistent configuration
  */
 @Injectable({
   providedIn: 'root',
 })
 export class DialogService {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialogService: NbDialogService) {}
 
   /**
    * Opens a dialog for writing or editing a review
-   * @param data Review dialog configuration data
-   * @returns Observable that resolves with the submitted review or undefined if canceled
    */
-  openReviewDialog(data: ReviewDialogData): Observable<any> {
-    const dialogRef = this.dialog.open(ReviewDialogComponent, {
-      width: '800px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
-      disableClose: true,
-      data,
-    });
-
-    return dialogRef.afterClosed();
+  openReviewDialog(data: ReviewDialogData): Observable<unknown> {
+    return this.dialogService.open(ReviewDialogComponent, {
+      context: { data },
+      closeOnBackdropClick: false,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
    * Opens a dialog for reporting content
-   * @param data Report dialog configuration data
-   * @returns Observable that resolves with the report reason or undefined if canceled
    */
-  openReportDialog(data: ReportDialogData): Observable<string | undefined> {
-    const dialogRef = this.dialog.open(ReportDialogComponent, {
-      width: '600px',
-      maxWidth: '95vw',
-      disableClose: false,
-      data,
-    });
+  reportReview(reviewId: string): Observable<string | undefined> {
+    const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' };
 
-    return dialogRef.afterClosed();
+    return this.dialogService.open(ReportDialogComponent, {
+      context: { data: dialogData },
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
@@ -76,75 +78,61 @@ export class DialogService {
    * @returns Observable that resolves with the response text or undefined if canceled
    */
   openResponseDialog(data: ResponseDialogData): Observable<string | undefined> {
-    const dialogRef = this.dialog.open(ResponseDialogComponent, {
-      width: '700px',
-      maxWidth: '95vw',
-      disableClose: true,
-      data,
-    });
-
-    return dialogRef.afterClosed();
+    return this.dialogService.open(ResponseDialogComponent, {
+      context: { data },
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
    * Opens a dialog for adding or editing a favorite
-   * @param data Favorite dialog configuration data
-   * @returns Observable that resolves with the favorite details or undefined if canceled
    */
   openFavoriteDialog(data: FavoriteDialogData): Observable<FavoriteDialogResult | undefined> {
-    const dialogRef = this.dialog.open(FavoriteDialogComponent, {
-      width: '600px',
-      maxWidth: '95vw',
-      disableClose: false,
-      data,
-    });
-
-    return dialogRef.afterClosed();
+    return this.dialogService.open(FavoriteDialogComponent, {
+      context: { data },
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
    * Opens a dialog for editing notes
-   * @param data Notes dialog configuration data
-   * @returns Observable that resolves with the notes text or undefined if canceled
    */
   openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
-    const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      maxWidth: '95vw',
-      disableClose: false,
-      data,
-    });
-
-    return dialogRef.afterClosed();
+    return this.dialogService.open(NotesDialogComponent, {
+      context: { data },
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
    * Opens a dialog for managing tags
-   * @param data Tags dialog configuration data
-   * @returns Observable that resolves with the tags array or undefined if canceled
    */
   openTagsDialog(data: TagsDialogData): Observable<string[] | undefined> {
-    const dialogRef = this.dialog.open(TagsDialogComponent, {
-      width: '500px',
-      maxWidth: '95vw',
-      disableClose: false,
+    const context = {
       data: {
         title: data.title,
         tags: data.tags || [],
         suggestedTags: data.suggestedTags || [],
         maxTags: data.maxTags || 20,
       },
-    });
+    };
 
-    return dialogRef.afterClosed();
+    return this.dialogService.open(TagsDialogComponent, {
+      context,
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    }).onClose;
   }
 
   /**
-   * Opens a dialog for responding to a review with the review details
-   * @param reviewId ID of the review to respond to
-   * @param reviewTitle Title of the review
-   * @param reviewContent Content of the review
-   * @returns Observable that resolves with the response text or undefined if canceled
+   * Helper method to respond to a review
    */
   respondToReview(
     reviewId: string,
@@ -159,22 +147,7 @@ export class DialogService {
   }
 
   /**
-   * Opens a dialog for reporting a review
-   * @param reviewId ID of the review to report
-   * @returns Observable that resolves with the report reason or undefined if canceled
-   */
-  reportReview(reviewId: string): Observable<string | undefined> {
-    return this.openReportDialog({
-      title: 'Report Review',
-      contentType: 'review',
-    });
-  }
-
-  /**
-   * Opens a dialog for adding an ad to favorites
-   * @param adId ID of the ad to favorite
-   * @param adTitle Title of the ad
-   * @returns Observable that resolves with the favorite details or undefined if canceled
+   * Helper method to add an ad to favorites
    */
   addToFavorites(adId: string, adTitle: string): Observable<FavoriteDialogResult | undefined> {
     return this.openFavoriteDialog({
@@ -184,14 +157,7 @@ export class DialogService {
   }
 
   /**
-   * Opens a dialog for editing a favorite
-   * @param adId ID of the ad
-   * @param adTitle Title of the ad
-   * @param notes Existing notes
-   * @param tags Existing tags
-   * @param priority Existing priority
-   * @param notificationsEnabled Whether notifications are enabled
-   * @returns Observable that resolves with the updated favorite details or undefined if canceled
+   * Helper method to edit a favorite
    */
   editFavorite(
     adId: string,
@@ -209,5 +175,68 @@ export class DialogService {
       existingPriority: priority,
       existingNotificationsEnabled: notificationsEnabled,
     });
+  }
+
+  open<T, D = any>(component: any, config?: Partial<NbDialogConfig<D>>): Observable<T> {
+    return this.dialogService.open(component, config).onClose;
+  }
+
+  confirm(
+    title: string,
+    message: string,
+    confirmText: string = 'Yes',
+    cancelText: string = 'No',
+  ): Observable<boolean> {
+    return this.dialogService.open(ConfirmDialogComponent, {
+      context: {
+        title,
+        message,
+        confirmText,
+        cancelText,
+      },
+    }).onClose;
+  }
+}
+
+@Component({
+  selector: 'app-confirm-dialog',
+  template: `
+    <nb-card>
+      <nb-card-header>{{ title }}</nb-card-header>
+      <nb-card-body>
+        <p>{{ message }}</p>
+      </nb-card-body>
+      <nb-card-footer class="dialog-footer">
+        <button nbButton status="basic" (click)="cancel()">{{ cancelText }}</button>
+        <button nbButton status="primary" (click)="confirm()">{{ confirmText }}</button>
+      </nb-card-footer>
+    </nb-card>
+  `,
+  styles: [
+    `
+      .dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+    `,
+  ],
+  standalone: true,
+  imports: [CommonModule, NbCardModule, NbButtonModule],
+})
+export class ConfirmDialogComponent {
+  constructor(private dialogRef: NbDialogRef<ConfirmDialogComponent>) {}
+
+  title: string = '';
+  message: string = '';
+  confirmText: string = 'Yes';
+  cancelText: string = 'No';
+
+  confirm(): void {
+    this.dialogRef.close(true);
+  }
+
+  cancel(): void {
+    this.dialogRef.close(false);
   }
 }

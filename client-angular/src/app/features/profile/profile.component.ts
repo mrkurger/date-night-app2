@@ -1,3 +1,8 @@
+import { Input } from '@angular/core';
+import { NebularModule } from '../shared/nebular.module';
+
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,19 +12,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-
-// Material Imports
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -30,17 +27,7 @@ import { UserProfile } from '../../core/models/user.interface';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatCheckboxModule,
-  ],
-  schemas: [NO_ERRORS_SCHEMA],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, NebularModule],
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
@@ -48,6 +35,7 @@ export class ProfileComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -85,7 +73,20 @@ export class ProfileComponent implements OnInit {
       )
       .subscribe((user) => {
         if (user) {
-          this.userProfile = user as UserProfile;
+          // Convert User to UserProfile
+          this.userProfile = {
+            firstName: user.profile?.firstName,
+            lastName: user.profile?.lastName,
+            avatar: user.profile?.avatar,
+            bio: user.profile?.bio,
+            location: user.profile?.location,
+            preferences: user.preferences || {
+              emailNotifications: true,
+              pushNotifications: true,
+              theme: 'light',
+              language: 'en',
+            },
+          };
           this.updateFormValues();
         }
       });
@@ -98,11 +99,11 @@ export class ProfileComponent implements OnInit {
       firstName: this.userProfile.firstName || '',
       lastName: this.userProfile.lastName || '',
       bio: this.userProfile.bio || '',
-      phoneNumber: this.userProfile.phoneNumber || '',
+      phoneNumber: '',
       'location.city': this.userProfile.location?.city || '',
       'location.country': this.userProfile.location?.country || '',
-      'preferences.notifications': this.userProfile.preferences?.notifications ?? true,
-      'preferences.darkMode': this.userProfile.preferences?.darkMode ?? false,
+      'preferences.notifications': this.userProfile.preferences?.pushNotifications ?? true,
+      'preferences.darkMode': false,
       'preferences.language': this.userProfile.preferences?.language || 'en',
     });
   }
@@ -155,9 +156,8 @@ export class ProfileComponent implements OnInit {
     });
 
     // Add profile image if selected
-    const fileInput = document.getElementById('profileImage') as HTMLInputElement;
-    if (fileInput?.files && fileInput.files.length > 0) {
-      formData.append('profileImage', fileInput.files[0]);
+    if (this.selectedFile) {
+      formData.append('profileImage', this.selectedFile);
     }
 
     this.userService
@@ -172,8 +172,28 @@ export class ProfileComponent implements OnInit {
       .subscribe((response) => {
         if (response) {
           this.successMessage = 'Profile updated successfully';
-          this.userProfile = response;
+          // Convert User to UserProfile
+          this.userProfile = {
+            firstName: response.profile?.firstName,
+            lastName: response.profile?.lastName,
+            avatar: response.profile?.avatar,
+            bio: response.profile?.bio,
+            location: response.profile?.location,
+            preferences: response.preferences || {
+              emailNotifications: true,
+              pushNotifications: true,
+              theme: 'light',
+              language: 'en',
+            },
+          };
         }
       });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 }

@@ -1,3 +1,5 @@
+import { OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +14,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ContentModerationComponent } from './content-moderation.component';
@@ -102,7 +103,6 @@ describe('ContentModerationComponent', () => {
         { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy },
         { provide: NgbModal, useValue: modalServiceSpy },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContentModerationComponent);

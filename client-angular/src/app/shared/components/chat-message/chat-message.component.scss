@@ -1,5 +1,40 @@
-@use '../../../core/design/design-tokens' as tokens;
+@use '@nebular/theme/styles/theming' as *;
 @use '../../../core/design/typography-mixins' as typography;
+
+:host {
+  display: block;
+  margin-bottom: nb-theme(spacing-2);
+}
+
+nb-card {
+  margin-bottom: 0;
+
+  &.message--outgoing {
+    margin-left: auto;
+    max-width: 80%;
+    background-color: nb-theme(color-primary-100);
+
+    .message__content {
+      text-align: right;
+    }
+  }
+
+  &.message--incoming {
+    margin-right: auto;
+    max-width: 80%;
+  }
+
+  &.message--system {
+    max-width: 100%;
+    text-align: center;
+    background-color: nb-theme(background-basic-color-2);
+
+    .message__text {
+      font-style: italic;
+      color: nb-theme(text-hint-color);
+    }
+  }
+}
 
 .message {
   display: flex;
@@ -20,7 +55,7 @@
 
     .message__content {
       background-color: var(--color-primary-light);
-      border-radius: 1rem 1rem 0 1rem;
+      border-radius: 1rem 1rem 0;
     }
   }
 
@@ -81,7 +116,7 @@
 }
 
 .message__content {
-  padding: 0.75rem 1rem;
+  padding: nb-theme(spacing-2);
   max-width: 70%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -101,12 +136,13 @@
 }
 
 .message__text {
-  font-size: 0.9375rem;
-  line-height: 1.4;
+  font-size: nb-theme(text-paragraph-font-size);
+  line-height: nb-theme(text-paragraph-line-height);
 
   &--system {
+    text-align: center;
     font-style: italic;
-    color: var(--color-text-muted);
+    color: nb-theme(text-hint-color);
   }
 }
 
@@ -141,7 +177,7 @@
 .message__encryption-indicator {
   display: inline-flex;
   align-items: center;
-  margin-right: 0.25rem;
+  margin-right: nb-theme(spacing-1);
   color: var(--color-success);
 
   &--failed {
@@ -152,35 +188,23 @@
 .message__loading {
   display: flex;
   align-items: center;
-  font-style: italic;
-  color: var(--color-text-muted);
-
-  .spinner {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-top-color: var(--color-primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-right: 0.5rem;
-  }
+  gap: nb-theme(spacing-2);
+  color: nb-theme(text-hint-color);
 }
 
 .message__attachments {
-  margin-top: 0.5rem;
+  margin-top: nb-theme(spacing-2);
 }
 
 .attachment {
-  margin-top: 0.5rem;
+  margin-bottom: nb-theme(spacing-2);
   border-radius: 0.5rem;
   overflow: hidden;
 
   &__image {
     img {
       max-width: 100%;
-      max-height: 200px;
-      border-radius: 0.5rem;
+      border-radius: nb-theme(border-radius);
       cursor: pointer;
     }
   }
@@ -188,33 +212,27 @@
   &__file {
     display: flex;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-  }
+    gap: nb-theme(spacing-2);
+    padding: nb-theme(spacing-2);
 
-  &__icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-    color: var(--color-primary);
-  }
+    .attachment__icon {
+      font-size: 1.5rem;
+      color: nb-theme(text-hint-color);
+    }
 
-  &__details {
-    flex: 1;
-  }
+    .attachment__details {
+      flex: 1;
 
-  &__name {
-    font-weight: 500;
-    font-size: 0.875rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
-  }
+      .attachment__name {
+        font-weight: nb-theme(text-button-font-weight);
+        margin-bottom: nb-theme(spacing-1);
+      }
 
-  &__size {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+      .attachment__size {
+        font-size: nb-theme(text-caption-font-size);
+        color: nb-theme(text-hint-color);
+      }
+    }
   }
 
   &__download {
@@ -253,6 +271,19 @@
     .avatar-img {
       width: 1.75rem;
       height: 1.75rem;
+    }
+  }
+}
+
+// Dark mode styles
+:host-context([data-theme='dark']) {
+  nb-card {
+    &.message--outgoing {
+      background-color: nb-theme(color-primary-900);
+    }
+
+    &.message--system {
+      background-color: nb-theme(background-basic-color-3);
     }
   }
 }

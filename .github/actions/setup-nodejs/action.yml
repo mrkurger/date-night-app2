@@ -1,5 +1,5 @@
 name: 'Setup Node.js and Install Dependencies'
-description: 'Sets up Node.js and installs dependencies using npm ci or npm install.'
+description: 'Sets up Node.js and installs dependencies with robust error handling for lockfile mismatches.'
 runs:
   using: 'composite'
   steps:
@@ -7,13 +7,98 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version || '22.x' }}
-        cache: 'npm'
-    - name: Install dependencies
+        cache: ${{ inputs.cache-strategy || 'npm' }}
+        
+    - name: Check npm version
       run: |
-        if [ -f package-lock.json ]; then
-          npm ci
+        echo "Using npm version: $(npm --version)"
+        echo "Using node version: $(node --version)"
+      shell: bash
+      
+    - name: Verify package.json and lockfile
+      run: |
+        if [ -f package.json ]; then
+          echo "Found package.json"
+          
+          # Check if lockfile exists
+          if [ -f package-lock.json ]; then
+            echo "Found package-lock.json"
+            
+            # Check if package-lock.json is valid JSON
+            if ! jq empty package-lock.json 2>/dev/null; then
+              echo "Warning: package-lock.json is not valid JSON. Will use npm install instead of npm ci."
+              echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
+            else
+              echo "Lockfile is valid JSON"
+              echo "LOCKFILE_VALID=true" >> $GITHUB_ENV
+            fi
+          else
+            echo "No package-lock.json found. Will use npm install."
+            echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
+          fi
         else
+          echo "Error: package.json not found!"
+          exit 1
+        fi
+      shell: bash
+      
+    - name: Install dependencies (safe mode)
+      if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
+      run: |
+        echo "Using npm install for safer dependency resolution..."
+        
+        # First try with --no-audit to speed up installation
+        if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+          echo "Installing dependencies and updating lockfile..."
+          npm install --no-audit --package-lock-only || npm install --package-lock-only
+        else
+          echo "Installing dependencies..."
+          npm install --no-audit || npm install
+        fi
+      shell: bash
+      
+    - name: Install dependencies (strict mode)
+      if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
+      run: |
+        echo "Using npm ci for clean installation..."
+        
+        # Try npm ci first, fall back to npm install if it fails
+        npm ci || {
+          echo "npm ci failed, falling back to npm install..."
           npm install
+          
+          # If requested, update the lockfile
+          if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+            echo "Updating lockfile..."
+            npm install
+          fi
+        }
+      shell: bash
+      
+    - name: Check for missing dependencies
+      if: ${{ inputs.check-missing == 'true' }}
+      run: |
+        echo "Checking for missing dependencies..."
+        
+        # Extract dependencies from package.json
+        DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+        
+        # Check if each dependency is installed
+        MISSING=""
+        for DEP in $DEPS; do
+          if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
+            MISSING="$MISSING $DEP"
+          fi
+        done
+        
+        if [ -n "$MISSING" ]; then
+          echo "Warning: The following dependencies might be missing:$MISSING"
+          echo "Attempting to install missing dependencies..."
+          for DEP in $MISSING; do
+            npm install $DEP || echo "Failed to install $DEP"
+          done
+        else
+          echo "All dependencies appear to be installed."
         fi
       shell: bash
 inputs:
@@ -21,3 +106,19 @@ inputs:
     description: 'Node.js version to use'
     required: false
     default: '22.x'
+  cache-strategy:
+    description: 'Caching strategy to use (npm, yarn, pnpm)'
+    required: false
+    default: 'npm'
+  safe-install:
+    description: 'Use npm install instead of npm ci for safer dependency resolution'
+    required: false
+    default: 'false'
+  update-lockfile:
+    description: 'Update the lockfile if dependencies are mismatched'
+    required: false
+    default: 'false'
+  check-missing:
+    description: 'Check for and attempt to install missing dependencies'
+    required: false
+    default: 'false'

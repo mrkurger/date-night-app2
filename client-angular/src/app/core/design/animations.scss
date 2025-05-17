@@ -1,0 +1,96 @@
+// Animation utilities using Nebular theme variables
+@use '@nebular/theme/styles/theming' as *;
+
+// Transition utilities
+.nb-transition {
+  transition: all nb-theme(transition-duration) nb-theme(transition-timing-function);
+}
+
+.nb-transition-fast {
+  transition: all nb-theme(transition-duration-short) nb-theme(transition-timing-function);
+}
+
+.nb-transition-slow {
+  transition: all nb-theme(transition-duration-long) nb-theme(transition-timing-function);
+}
+
+// Hover animations
+.nb-hover-lift {
+  transition: transform nb-theme(transition-duration) nb-theme(transition-timing-function);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.nb-hover-scale {
+  transition: transform nb-theme(transition-duration) nb-theme(transition-timing-function);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Loading animations
+@keyframes nb-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nb-spin {
+  animation: nb-spin 1s linear infinite;
+}
+
+@keyframes nb-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nb-pulse {
+  animation: nb-pulse 2s ease-in-out infinite;
+}
+
+// Fade animations
+.nb-fade {
+  transition: opacity nb-theme(transition-duration) nb-theme(transition-timing-function);
+}
+
+.nb-fade-in {
+  opacity: 1;
+}
+
+.nb-fade-out {
+  opacity: 0;
+}
+
+// Slide animations
+.nb-slide {
+  transition: transform nb-theme(transition-duration) nb-theme(transition-timing-function);
+}
+
+.nb-slide-up {
+  transform: translateY(-100%);
+}
+
+.nb-slide-down {
+  transform: translateY(100%);
+}
+
+.nb-slide-left {
+  transform: translateX(-100%);
+}
+
+.nb-slide-right {
+  transform: translateX(100%);
+}

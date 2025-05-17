@@ -9,9 +9,10 @@
 // ===================================================
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { NbRoleProvider } from '@nebular/security';
 import {
   User,
   LoginDTO,
@@ -21,11 +22,12 @@ import {
   PrivacySettings,
 } from '../models/user.interface';
 import { Router } from '@angular/router';
+import { FingerprintService } from './fingerprint.service'; // Import FingerprintService
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements NbRoleProvider {
   private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
@@ -35,73 +37,136 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private fingerprintService: FingerprintService, // Inject FingerprintService
   ) {
     this.checkAuthStatus();
+  }
+
+  /**
+   * Implement NbRoleProvider interface
+   * Returns the role of the current user
+   */
+  getRole(): Observable<string> {
+    return this.currentUser$.pipe(
+      map((user) => {
+        if (!user) return 'guest';
+        // Return the highest role based on hierarchy: admin > moderator > user > guest
+        if (user.roles.includes('admin')) return 'admin';
+        if (user.roles.includes('moderator')) return 'moderator';
+        if (user.roles.includes('user')) return 'user';
+        return 'guest';
+      }),
+    );
   }
 
   /**
    * Check if user is authenticated on service initialization
    */
   private checkAuthStatus(): void {
-    // With HttpOnly cookies, we need to validate with the server
-    // We don't have access to the token expiration time client-side
-    this.validateToken().subscribe({
-      next: () => {
-        // Removed unused 'user' parameter
-        // Set auto refresh token timer (every 12 hours)
-        this.setAutoRefresh(12 * 60 * 60 * 1000);
-      },
-      error: () => {
-        // Try to refresh the token if validation fails
-        this.refreshToken().subscribe({
-          error: () => {
-            // Clear user state if refresh fails
-            this.currentUserSubject.next(null);
-          },
-        });
-      },
-    });
+    this.http
+      .get<{ user: User | null }>(`${this.apiUrl}/status`)
+      .pipe(
+        map((response) => response.user),
+        catchError(() => of(null)),
+      )
+      .subscribe((user) => this.currentUserSubject.next(user));
   }
 
   /**
    * Login with email and password
    */
   login(credentials: LoginDTO): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
-      .pipe(tap((response) => this.handleAuthResponse(response)));
+    return new Observable((observer) => {
+      this.fingerprintService
+        .collectFingerprint()
+        .then((fingerprint) => {
+          const loginPayload = {
+            ...credentials,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          };
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/login`, loginPayload, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            });
+        })
+        .catch((err) => {
+          console.error('Error collecting fingerprint during login:', err);
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            });
+        });
+    });
   }
 
   /**
    * Register new user
    */
   register(userData: RegisterDTO): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
-      .pipe(tap((response) => this.handleAuthResponse(response)));
+    return new Observable((observer) => {
+      this.fingerprintService
+        .collectFingerprint()
+        .then((fingerprint) => {
+          const registerPayload = {
+            ...userData,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          };
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/register`, registerPayload, {
+              withCredentials: true,
+            })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            });
+        })
+        .catch((err) => {
+          console.error('Error collecting fingerprint during registration:', err);
+          this.http
+            .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
+            .subscribe({
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            });
+        });
+    });
   }
 
   /**
    * Logout user and clear stored data
    */
-  logout(): void {
+  logout(): Observable<void> {
     // Send logout request to server to clear cookies
-    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
-
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         console.error('Logout error:', err);
         // Still clear local state even if server request fails
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      },
-    });
+        return throwError(() => err);
+      }),
+    );
   }
 
   /**
@@ -160,7 +225,8 @@ export class AuthService {
    * The auth interceptor has been updated to handle this.
    */
   getToken(): string | null {
-    return null; // Token is in HttpOnly cookie, not accessible via JS
+    // Token is now stored in HttpOnly cookie; not accessible via JS
+    return null;
   }
 
   /**
@@ -344,5 +410,63 @@ export class AuthService {
           }
         }),
       );
+  }
+
+  signIn(email: string, password: string): Observable<User> {
+    return this.http.post<{ user: User }>(`${this.apiUrl}/signin`, { email, password }).pipe(
+      map((response) => response.user),
+      tap((user) => this.currentUserSubject.next(user)),
+      catchError((error) => {
+        console.error('Sign in error:', error);
+        throw error;
+      }),
+    );
+  }
+
+  signUp(email: string, password: string, displayName: string): Observable<User> {
+    return this.http
+      .post<{ user: User }>(`${this.apiUrl}/signup`, {
+        email,
+        password,
+        displayName,
+      })
+      .pipe(
+        map((response) => response.user),
+        tap((user) => this.currentUserSubject.next(user)),
+        catchError((error) => {
+          console.error('Sign up error:', error);
+          throw error;
+        }),
+      );
+  }
+
+  signOut(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/signout`, {}).pipe(
+      tap(() => {
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/auth/login']);
+      }),
+      catchError((error) => {
+        console.error('Sign out error:', error);
+        throw error;
+      }),
+    );
+  }
+
+  /**
+   * Request password reset
+   * @param email User email
+   */
+  requestPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/request-password`, { email });
+  }
+
+  /**
+   * Reset password with token
+   * @param token Reset token from email
+   * @param password New password
+   */
+  resetPassword(token: string, password: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, { token, password });
   }
 }

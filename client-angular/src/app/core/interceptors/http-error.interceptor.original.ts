@@ -157,7 +157,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       this.requestTimings.set(requestId, {
         startTime: performance.now(),
         url: request.url,
-        method: request.method,
+        method: request.method
       });
     }
     */
@@ -192,7 +192,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           error,
           message: errorDetails.userMessage,
           details: errorDetails,
-          category: errorCategory,
+          category: errorCategory
         }));
       }),
 

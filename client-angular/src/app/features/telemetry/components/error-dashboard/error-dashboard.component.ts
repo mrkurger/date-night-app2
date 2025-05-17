@@ -1,42 +1,18 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (error-dashboard.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
 
-// Define ErrorCategory enum locally since it's not exported from http-error.interceptor
-export enum ErrorCategory {
-  NETWORK = 'network',
-  SERVER = 'server',
-  CLIENT = 'client',
-  AUTHENTICATION = 'authentication',
-  AUTHORIZATION = 'authorization',
-  VALIDATION = 'validation',
-  TIMEOUT = 'timeout',
-  UNKNOWN = 'unknown',
-}
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import {
+  AppSortComponent,
+  AppSortHeaderComponent,
+} from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
+import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 /**
  * Error Dashboard Component
@@ -53,179 +29,169 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
+    NebularModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>
 
-      <mat-card class="filter-card">
-        <mat-card-header>
-          <mat-card-title>Filters</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+      <nb-card class="filter-card">
+        <nb-card-header>
+          <h5>Filters</h5>
+        </nb-card-header>
+        <nb-card-body>
           <form [formGroup]="filterForm" class="filter-form">
-            <mat-form-field appearance="outline">
-              <mat-label>Error Category</mat-label>
-              <mat-select formControlName="category">
-                <mat-option value="">All Categories</mat-option>
-                <mat-option *ngFor="let category of errorCategories" [value]="category.value">
+            <nb-form-field>
+              <nb-select fullWidth formControlName="category" placeholder="Error Category">
+                <nb-option value="">All Categories</nb-option>
+                <nb-option *ngFor="let category of errorCategories" [value]="category.value">
                   {{ category.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Status Code</mat-label>
-              <input matInput type="number" formControlName="statusCode" placeholder="e.g., 500" />
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                type="number"
+                formControlName="statusCode"
+                placeholder="Status Code (e.g., 500)"
+              />
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>From Date</mat-label>
-              <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" />
-              <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-              <mat-datepicker #fromPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                [nbDatepicker]="fromPicker"
+                formControlName="fromDate"
+                placeholder="From Date"
+              />
+              <nb-datepicker #fromPicker></nb-datepicker>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>To Date</mat-label>
-              <input matInput [matDatepicker]="toPicker" formControlName="toDate" />
-              <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-              <mat-datepicker #toPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                [nbDatepicker]="toPicker"
+                formControlName="toDate"
+                placeholder="To Date"
+              />
+              <nb-datepicker #toPicker></nb-datepicker>
+            </nb-form-field>
 
             <div class="filter-actions">
-              <button mat-raised-button color="primary" (click)="applyFilters()">
-                <mat-icon>filter_list</mat-icon> Apply Filters
+              <button nbButton status="primary" (click)="applyFilters()">
+                <nb-icon icon="funnel-outline"></nb-icon> Apply Filters
               </button>
-              <button mat-button (click)="resetFilters()"><mat-icon>clear</mat-icon> Reset</button>
+              <button nbButton status="basic" (click)="resetFilters()">
+                <nb-icon icon="close-outline"></nb-icon> Reset
+              </button>
             </div>
           </form>
-        </mat-card-content>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
 
       <div class="dashboard-content">
         <div class="error-stats">
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>
               <div class="stat-label">Total Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>
               <div class="stat-label">Unique Error Codes</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>
               <div class="stat-label">Server Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>
               <div class="stat-label">Client Errors</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
         </div>
 
-        <mat-card class="error-list-card">
-          <mat-card-header>
-            <mat-card-title>Recent Errors</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
+        <nb-card class="error-list-card">
+          <nb-card-header>
+            <h5>Recent Errors</h5>
+          </nb-card-header>
+          <nb-card-body>
             <div class="loading-container" *ngIf="loading">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner></nb-spinner>
             </div>
 
-            <table
-              mat-table
-              [dataSource]="errors"
-              matSort
-              (matSortChange)="sortData($event)"
-              class="error-table"
-              *ngIf="!loading"
-            >
-              <ng-container matColumnDef="timestamp">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-                <td mat-cell *matCellDef="let error">{{ error.timestamp | date: 'medium' }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="errorCode">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>
-                <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                <td mat-cell *matCellDef="let error">
-                  <mat-chip [ngClass]="'category-' + error.context?.category">
-                    {{ error.context?.category || 'unknown' }}
-                  </mat-chip>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="statusCode">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="userMessage">
-                <th mat-header-cell *matHeaderCellDef>User Message</th>
-                <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef>URL</th>
-                <td mat-cell *matCellDef="let error">{{ error.url }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let error">
-                  <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+            <app-sort (sortChange)="sortData($event)">
+              <table class="table" *ngIf="!loading">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of displayedColumns">
+                      <app-sort-header
+                        [active]="sortField === column.toLowerCase()"
+                        [direction]="sortDirection"
+                      >
+                        {{ column }}
+                      </app-sort-header>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let error of errors">
+                    <td>{{ error.timestamp | date: 'medium' }}</td>
+                    <td>{{ error.statusCode || 'N/A' }}</td>
+                    <td>{{ error.category }}</td>
+                    <td>{{ error.type }}</td>
+                    <td>{{ error.message }}</td>
+                    <td>{{ error.count }}</td>
+                    <td>
+                      <button nbButton ghost size="small" (click)="viewErrorDetails(error)">
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </app-sort>
 
             <div class="no-data-message" *ngIf="!loading && errors.length === 0">
               No errors found matching the current filters.
             </div>
 
-            <mat-paginator
-              [length]="totalErrors"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 25, 50]"
-              (page)="pageChanged($event)"
-              *ngIf="!loading && errors.length > 0"
-            >
-            </mat-paginator>
-          </mat-card-content>
-        </mat-card>
+            <div class="pagination" *ngIf="!loading && errors.length > 0">
+              <button
+                nbButton
+                ghost
+                [disabled]="currentPage === 1"
+                (click)="pageChanged({ page: currentPage - 1, pageSize: pageSize })"
+              >
+                Previous
+              </button>
+              <span>Page {{ currentPage }}</span>
+              <button
+                nbButton
+                ghost
+                [disabled]="currentPage * pageSize >= totalErrors"
+                (click)="pageChanged({ page: currentPage + 1, pageSize: pageSize })"
+              >
+                Next
+              </button>
+            </div>
+          </nb-card-body>
+        </nb-card>
       </div>
     </div>
   `,
@@ -237,7 +203,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 
       h1 {
         margin-bottom: 20px;
-        color: #333;
+        color: var(--text-basic-color);
       }
 
       .filter-card {
@@ -250,7 +216,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
         gap: 16px;
       }
 
-      .filter-form mat-form-field {
+      .filter-form nb-form-field {
         flex: 1 1 200px;
       }
 
@@ -281,12 +247,12 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
       .stat-value {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #3f51b5;
+        color: var(--text-primary-color);
       }
 
       .stat-label {
         font-size: 1rem;
-        color: #666;
+        color: var(--text-hint-color);
       }
 
       .error-list-card {
@@ -306,41 +272,7 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
       .no-data-message {
         text-align: center;
         padding: 20px;
-        color: #666;
-      }
-
-      mat-chip.category-network {
-        background-color: #ff9800;
-      }
-      mat-chip.category-authentication {
-        background-color: #f44336;
-      }
-      mat-chip.category-authorization {
-        background-color: #e91e63;
-      }
-      mat-chip.category-validation {
-        background-color: #9c27b0;
-      }
-      mat-chip.category-server {
-        background-color: #673ab7;
-      }
-      mat-chip.category-client {
-        background-color: #3f51b5;
-      }
-      mat-chip.category-timeout {
-        background-color: #2196f3;
-      }
-      mat-chip.category-rate_limit {
-        background-color: #03a9f4;
-      }
-      mat-chip.category-not_found {
-        background-color: #00bcd4;
-      }
-      mat-chip.category-conflict {
-        background-color: #009688;
-      }
-      mat-chip.category-unknown {
-        background-color: #607d8b;
+        color: var(--text-hint-color);
       }
     `,
   ],
@@ -352,12 +284,12 @@ export class ErrorDashboardComponent implements OnInit {
   loading = true;
 
   // Pagination
-  pageIndex = 0;
+  currentPage = 1;
   pageSize = 10;
 
   // Sorting
   sortField = 'timestamp';
-  sortDirection = 'desc';
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
 
   // Table columns
   displayedColumns = [
@@ -381,6 +313,9 @@ export class ErrorDashboardComponent implements OnInit {
 
   // Error statistics
   errorStats$: Observable<any>;
+
+  // Sort state
+  @ViewChild(AppSortComponent) sort!: AppSortComponent;
 
   constructor(
     private telemetryService: TelemetryService,
@@ -412,7 +347,7 @@ export class ErrorDashboardComponent implements OnInit {
     this.telemetryService
       .getErrorStatistics({
         ...filters,
-        page: this.pageIndex,
+        page: this.currentPage,
         limit: this.pageSize,
         sort: this.sortField,
         order: this.sortDirection,
@@ -470,8 +405,8 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle page change event
    */
-  pageChanged(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
+  pageChanged(event: { page: number; pageSize: number }): void {
+    this.currentPage = event.page;
     this.pageSize = event.pageSize;
     this.loadErrors();
   }
@@ -479,9 +414,9 @@ export class ErrorDashboardComponent implements OnInit {
   /**
    * Handle sort change event
    */
-  sortData(sort: Sort): void {
+  sortData(sort: AppSortEvent): void {
     this.sortField = sort.active;
-    this.sortDirection = sort.direction || 'asc';
+    this.sortDirection = sort.direction;
     this.loadErrors();
   }
 
@@ -489,7 +424,7 @@ export class ErrorDashboardComponent implements OnInit {
    * Apply filters from the form
    */
   applyFilters(): void {
-    this.pageIndex = 0; // Reset to first page when filtering
+    this.currentPage = 1; // Reset to first page when filtering
     this.loadErrors();
   }
 
@@ -503,7 +438,7 @@ export class ErrorDashboardComponent implements OnInit {
       fromDate: null,
       toDate: null,
     });
-    this.pageIndex = 0;
+    this.currentPage = 1;
     this.loadErrors();
   }
 
@@ -538,7 +473,31 @@ export class ErrorDashboardComponent implements OnInit {
    */
   viewErrorDetails(error: ErrorTelemetry): void {
     // This would typically open a dialog with detailed error information
+    // eslint-disable-next-line no-console
     console.log('View error details:', error);
     // Implementation for error details dialog would go here
+  }
+
+  getCategoryStatus(category: string | undefined): string {
+    switch (category) {
+      case ErrorCategory.NETWORK:
+        return 'basic';
+      case ErrorCategory.SERVER:
+        return 'info';
+      case ErrorCategory.CLIENT:
+        return 'success';
+      case ErrorCategory.AUTHENTICATION:
+        return 'warning';
+      case ErrorCategory.AUTHORIZATION:
+        return 'danger';
+      case ErrorCategory.VALIDATION:
+        return 'control';
+      case ErrorCategory.TIMEOUT:
+        return 'warning';
+      case ErrorCategory.UNKNOWN:
+        return 'basic';
+      default:
+        return 'basic';
+    }
   }
 }

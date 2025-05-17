@@ -136,6 +136,7 @@
       <a href="#A">A</a>
       <a href="#C">C</a>
       <a href="#E">E</a>
+      <a href="#F">F</a>
       <a href="#P">P</a>
       <a href="#R">R</a>
       <a href="#S">S</a>
@@ -360,6 +361,96 @@ app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy', 
     `script-src 'self' 'nonce-${res.locals.cspNonce}'`);
   next();
+});</code></pre>
+    </div>
+
+    <div class="section-header" id="F">
+      <h2>F</h2>
+    </div>
+
+    <div class="term" id="fileAccess">
+      <h3>fileAccess</h3>
+      <span class="category security">SECURITY</span>
+      <span class="category validation">VALIDATION</span>
+      <p class="file-path">File: <code>/server/middleware/fileAccess.js</code></p>
+
+      <p>
+        Middleware that validates file access requests by checking file extensions, size limits, and preventing path traversal attacks. It ensures that only allowed files can be accessed.
+      </p>
+
+      <pre><code>export default async function fileAccess(req, res, next) {
+  try {
+    const filename = req.params.filename;
+    
+    if (!filename) {
+      return next({
+        message: 'File not found',
+        statusCode: 404,
+      });
+    }
+
+    // Prevent path traversal attacks
+    const normalizedPath = path.normalize(filename);
+    if (normalizedPath.includes('..') || normalizedPath.startsWith('/')) {
+      return next({
+        message: 'Invalid file path',
+        statusCode: 403,
+      });
+    }
+
+    // Check file extension
+    const ext = path.extname(normalizedPath).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      return next({
+        message: 'Unsupported file type',
+        statusCode: 403,
+      });
+    }
+
+    // Build the full file path
+    const fullPath = path.join(__dirname, '..', 'uploads', normalizedPath);
+
+    try {
+      // Check if file exists
+      await fs.access(fullPath, fs.constants.F_OK | fs.constants.R_OK);
+      
+      // Check file size
+      const stats = await fs.stat(fullPath);
+      if (stats.size > MAX_FILE_SIZE) {
+        return next({
+          message: 'File size exceeds the maximum allowed size',
+          statusCode: 403,
+        });
+      }
+      
+      // Store the validated file path for the next middleware
+      req.validatedFilePath = fullPath;
+      next();
+    } catch (error) {
+      return next({
+        message: 'File not found',
+        statusCode: 404,
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+}</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>req</code> (Object): Express request object</li>
+          <li><code>res</code> (Object): Express response object</li>
+          <li><code>next</code> (Function): Express next middleware function</li>
+        </ul>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply file access middleware
+router.get('/files/:filename', fileAccess, (req, res) => {
+  // File has been validated, serve it
+  res.sendFile(req.validatedFilePath);
 });</code></pre>
     </div>
 
@@ -618,6 +709,111 @@ app.use(errorHandler);</code></pre>
 
     <div class="section-header" id="S">
       <h2>S</h2>
+    </div>
+
+    <div class="term" id="secureFileServing">
+      <h3>secureFileServing</h3>
+      <span class="category security">SECURITY</span>
+      <span class="category performance">PERFORMANCE</span>
+      <p class="file-path">File: <code>/server/middleware/fileAccess.js</code></p>
+
+      <p>
+        Middleware that securely serves files with proper content type headers, caching controls, and ETag generation. It prevents unauthorized access and implements security best practices for file serving.
+      </p>
+
+      <pre><code>export const secureFileServing = (req, res, _next) => {
+  try {
+    const filePath = req.params[0]; // Get the file path from the URL
+
+    if (!filePath) {
+      return res.status(404).json({
+        success: false,
+        message: 'File not found',
+      });
+    }
+
+    // Prevent path traversal attacks
+    const normalizedPath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, '');
+    const fullPath = path.join(__dirname, '..', 'uploads', normalizedPath);
+
+    // Check if file exists
+    if (!existsSync(fullPath)) {
+      return res.status(404).json({
+        success: false,
+        message: 'File not found',
+      });
+    }
+
+    // Check if user has permission to access the file
+    const userId = req.user ? req.user.id.toString() : null;
+    const isUserFile = userId && fullPath.includes(`/uploads/ads/${userId}/`);
+    const isPublicFile = fullPath.includes('/uploads/ads/') && !fullPath.includes('/private/');
+
+    if (!isPublicFile && !isUserFile) {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied',
+      });
+    }
+
+    // Set proper content type
+    const ext = path.extname(fullPath).toLowerCase();
+    const contentTypeMap = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.webp': 'image/webp',
+      '.pdf': 'application/pdf',
+    };
+
+    const contentType = contentTypeMap[ext] || 'application/octet-stream';
+    res.setHeader('Content-Type', contentType);
+
+    // Set cache control headers
+    if (isPublicFile) {
+      res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day
+      
+      // Generate ETag for caching
+      const fileBuffer = readFileSync(fullPath);
+      const hash = crypto.createHash('md5').update(fileBuffer).digest('hex');
+      res.setHeader('ETag', `"${hash}"`);
+      
+      // Check if file is cached
+      const ifNoneMatch = req.headers['if-none-match'];
+      if (ifNoneMatch && ifNoneMatch === `"${hash}"`) {
+        return res.status(304).end(); // Not Modified
+      }
+    } else {
+      // Private files should not be cached
+      res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+
+    // Stream the file
+    const fileStream = createReadStream(fullPath);
+    fileStream.pipe(res);
+  } catch (error) {
+    console.error('File access error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error accessing file',
+    });
+  }
+};</code></pre>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <ul>
+          <li><code>req</code> (Object): Express request object</li>
+          <li><code>res</code> (Object): Express response object</li>
+          <li><code>_next</code> (Function): Express next function (not used)</li>
+        </ul>
+      </div>
+
+      <p><strong>Example usage:</strong></p>
+      <pre><code>// Apply secure file serving middleware
+app.get('/uploads/*', secureFileServing);</code></pre>
     </div>
 
     <div class="term" id="sanitizeErrorMessage">

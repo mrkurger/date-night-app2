@@ -1,34 +1,35 @@
 @use 'sass:math';
 @use 'sass:color';
 
-// ===================================================
-// CORE DESIGN SYSTEM
-// ===================================================
-// This file contains global styles and imports all design system files.
-// It is forwarded by the main design system entry point.
-//
-// IMPORT HIERARCHY:
-// 1. This file imports design-tokens.scss and components.scss
-// 2. It is forwarded by /styles/design-system/index.scss
-// 3. Application code should import from /styles/design-system/index.scss
-//
-// IMPORTANT:
-// - DO NOT import design-tokens.scss directly in application code
-// - Always use @forward instead of @import when creating entry points
-// - Use @use for importing in component styles
-// ===================================================
+/* ===================================================
+ * CORE DESIGN SYSTEM
+ * ===================================================
+ * This file contains global styles and imports all design system files.
+ * It is forwarded by the main design system entry point.
+ *
+ * IMPORT HIERARCHY:
+ * 1. This file imports design-tokens.scss and components.scss
+ * 2. It is forwarded by /styles/design-system/index.scss
+ * 3. Application code should import from /styles/design-system/index.scss
+ *
+ * IMPORTANT:
+ * - DO NOT import design-tokens.scss directly in application code
+ * - Always use @forward instead of @import when creating entry points
+ * - Use @use for importing in component styles
+ * =================================================== */
 
-// Import design tokens - this is the ONLY place that should directly import design-tokens.scss
-@use 'design-tokens' as *;
+/* Import design tokens - this is the ONLY place that should directly import design-tokens.scss */
+
 @forward 'variables';
 @forward 'components';
-// Prevent duplicate variable definitions by using 'hide' to hide conflicting variables
+
+/* Prevent duplicate variable definitions by using 'hide' to hide conflicting variables */
 @forward 'typography-mixins';
 
-// Forward spacing utilities
+/* Forward spacing utilities */
 @forward 'spacing-utilities';
 
-// Forward design utilities
+/* Forward design utilities */
 @forward 'bem-utilities';
 @forward 'responsive-utilities';
 @forward 'accessibility-utilities';
@@ -37,14 +38,9 @@
 @forward 'micro-interactions';
 @forward 'dark-mode';
 
-// Import emerald-ui integration
-@forward 'emerald-ui-integration';
+/* Nebular UI integration is handled through the theme module */
 
-// Import fonts - optimized to reduce size
-// Only import the weights we actually use in the application
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&family=Roboto+Mono&display=swap');
-
-// Reset and base styles
+/* Reset and base styles */
 *,
 *::before,
 *::after {
@@ -52,26 +48,26 @@
 }
 
 html {
-  font-family: $font-family-base;
-  line-height: $line-height-normal;
-  -webkit-text-size-adjust: 100%;
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
+  text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  font-weight: $font-weight-regular;
-  line-height: $line-height-normal;
-  color: $color-dark-gray-2;
-  background-color: $color-light-gray-1;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-dark-gray-2);
+  background-color: var(--color-light-gray-1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Typography
+/* Typography */
 h1,
 h2,
 h3,
@@ -79,117 +75,117 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: $spacing-3;
-  font-family: $font-family-heading;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-tight;
-  color: $color-dark-gray-3;
+  margin-bottom: var(--spacing-3);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-dark-gray-3);
 }
 
 h1 {
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-3xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-3xl);
   }
 }
 
 h2 {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-2xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-2xl);
   }
 }
 
 h3 {
-  font-size: $font-size-2xl;
+  font-size: var(--font-size-2xl);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-xl;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-xl);
   }
 }
 
 h4 {
-  font-size: $font-size-xl;
+  font-size: var(--font-size-xl);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-lg;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-lg);
   }
 }
 
 h5 {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-base;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-base);
   }
 }
 
 h6 {
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: $font-size-sm;
+  @media (max-width: var(--breakpoint-tablet)) {
+    font-size: var(--font-size-sm);
   }
 }
 
 p {
   margin-top: 0;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4);
 }
 
 a {
-  color: $color-primary;
+  color: var(--color-primary);
   text-decoration: none;
   background-color: transparent;
-  transition: color $transition-normal $transition-timing-default;
+  transition: color var(--transition-normal) var(--transition-timing-default);
 
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
     text-decoration: underline;
   }
 
   &:focus-visible {
-    outline: 2px solid rgba($color-primary, 0.5);
+    outline: 2px solid rgba(var(--color-primary), 0.5);
     outline-offset: 2px;
   }
 }
 
-// Lists
+/* Lists */
 ul,
 ol {
-  padding-left: $spacing-5;
+  padding-left: var(--spacing-5);
   margin-top: 0;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4);
 }
 
-// Code
+/* Code */
 code,
 pre {
   font-family: 'Roboto Mono', monospace;
-  font-size: $font-size-sm;
+  font-size: var(--font-size-sm);
 }
 
 code {
-  color: $color-primary-dark;
+  color: var(--color-primary-dark);
   word-wrap: break-word;
 }
 
 pre {
   display: block;
   margin-top: 0;
-  margin-bottom: $spacing-4;
+  margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   overflow: auto;
-  font-size: $font-size-sm;
-  color: $color-dark-gray-2;
-  background-color: $color-light-gray-2;
-  border-radius: $border-radius-md;
-  padding: $spacing-3;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+  color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+  background-color: var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
 }
 
 // Images
@@ -203,58 +199,58 @@ img {
 // Tables
 table {
   width: 100%;
-  margin-bottom: $spacing-4;
-  color: $color-dark-gray-2;
+  margin-bottom: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
   border-collapse: collapse;
 }
 
 th {
   text-align: inherit;
-  padding: $spacing-3;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
   vertical-align: bottom;
-  border-bottom: 2px solid $color-light-gray-2;
-  font-weight: $font-weight-semibold;
+  border-bottom: 2px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
 }
 
 td {
-  padding: $spacing-3;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
   vertical-align: top;
-  border-top: 1px solid $color-light-gray-2;
+  border-top: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
 }
 
 // Container
 .container {
   width: 100%;
-  padding-right: $spacing-4;
-  padding-left: $spacing-4;
+  padding-right: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  padding-left: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   margin-right: auto;
   margin-left: auto;
 
-  @media (min-width: $breakpoint-mobile) {
-    max-width: $container-sm;
+  @media (min-width: var(--breakpoint-mobile) /* TODO: Verify correct CSS variable */) {
+    max-width: var(--container-sm) /* TODO: Verify correct CSS variable */;
   }
 
-  @media (min-width: $breakpoint-tablet) {
-    max-width: $container-md;
+  @media (min-width: var(--breakpoint-tablet) /* TODO: Verify correct CSS variable */) {
+    max-width: var(--container-md) /* TODO: Verify correct CSS variable */;
   }
 
-  @media (min-width: $breakpoint-desktop) {
-    max-width: $container-lg;
+  @media (min-width: var(--breakpoint-desktop) /* TODO: Verify correct CSS variable */) {
+    max-width: var(--container-lg) /* TODO: Verify correct CSS variable */;
   }
 
-  @media (min-width: $breakpoint-desktop-large) {
-    max-width: $container-xl;
+  @media (min-width: var(--breakpoint-desktop-large) /* TODO: Verify correct CSS variable */) {
+    max-width: var(--container-xl) /* TODO: Verify correct CSS variable */;
   }
 
-  @media (min-width: $breakpoint-desktop-xl) {
-    max-width: $container-2xl;
+  @media (min-width: var(--breakpoint-desktop-xl) /* TODO: Verify correct CSS variable */) {
+    max-width: var(--container-2xl) /* TODO: Verify correct CSS variable */;
   }
 }
 
 .container-fluid {
   width: 100%;
-  padding-right: $spacing-4;
-  padding-left: $spacing-4;
+  padding-right: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  padding-left: var(--spacing-4) /* TODO: Verify correct CSS variable */;
   margin-right: auto;
   margin-left: auto;
 }
@@ -263,63 +259,61 @@ td {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: calc(-1 * $grid-gutter-width / 2);
-  margin-left: calc(-1 * $grid-gutter-width / 2);
+  margin-right: calc(-1 * var(--grid-gutter-width) /* TODO: Verify correct CSS variable */ / 2);
+  margin-left: calc(-1 * var(--grid-gutter-width) /* TODO: Verify correct CSS variable */ / 2);
 }
+
+$grid-columns: 12 !default;
 
 .col {
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
-  padding-right: calc($grid-gutter-width / 2);
-  padding-left: calc($grid-gutter-width / 2);
+  padding-right: calc(var(--grid-gutter-width) /* TODO: Verify correct CSS variable */ / 2);
+  padding-left: calc(var(--grid-gutter-width) /* TODO: Verify correct CSS variable */ / 2);
 }
 
 @for $i from 1 through $grid-columns {
   .col-#{$i} {
-    flex: 0 0 math.percentage(math.div($i, $grid-columns));
-    max-width: math.percentage(math.div($i, $grid-columns));
-    padding-right: calc($grid-gutter-width / 2);
-    padding-left: calc($grid-gutter-width / 2);
+    flex: 0 0 calc(($i / $grid-columns) * 100%);
+    max-width: calc(($i / $grid-columns) * 100%);
+    padding-right: calc(var(--grid-gutter-width) / 2);
+    padding-left: calc(var(--grid-gutter-width) / 2);
   }
 }
 
-@media (min-width: $breakpoint-mobile) {
+@media (min-width: var(--breakpoint-mobile)) {
   @for $i from 1 through $grid-columns {
     .col-sm-#{$i} {
-      $percentage: math.div($i, $grid-columns) * 100%;
-      flex: 0 0 $percentage;
-      max-width: $percentage;
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (min-width: var(--breakpoint-tablet)) {
   @for $i from 1 through $grid-columns {
     .col-md-#{$i} {
-      $percentage: math.div($i, $grid-columns) * 100%;
-      flex: 0 0 $percentage;
-      max-width: $percentage;
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
 
-@media (min-width: $breakpoint-desktop) {
+@media (min-width: var(--breakpoint-desktop)) {
   @for $i from 1 through $grid-columns {
     .col-lg-#{$i} {
-      $percentage: math.div($i, $grid-columns) * 100%;
-      flex: 0 0 $percentage;
-      max-width: $percentage;
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
 
-@media (min-width: $breakpoint-desktop-large) {
+@media (min-width: var(--breakpoint-desktop-large)) {
   @for $i from 1 through $grid-columns {
     .col-xl-#{$i} {
-      $percentage: math.div($i, $grid-columns) * 100%;
-      flex: 0 0 $percentage;
-      max-width: $percentage;
+      flex: 0 0 calc(($i / $grid-columns) * 100%);
+      max-width: calc(($i / $grid-columns) * 100%);
     }
   }
 }
@@ -345,7 +339,7 @@ td {
   display: grid !important;
 }
 
-@media (min-width: $breakpoint-mobile) {
+@media (min-width: var(--breakpoint-mobile)) {
   .d-sm-none {
     display: none !important;
   }
@@ -363,7 +357,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-tablet) {
+@media (min-width: var(--breakpoint-tablet)) {
   .d-md-none {
     display: none !important;
   }
@@ -381,7 +375,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-desktop) {
+@media (min-width: var(--breakpoint-desktop)) {
   .d-lg-none {
     display: none !important;
   }
@@ -399,7 +393,7 @@ td {
   }
 }
 
-@media (min-width: $breakpoint-desktop-large) {
+@media (min-width: var(--breakpoint-desktop-large)) {
   .d-xl-none {
     display: none !important;
   }
@@ -526,32 +520,37 @@ td {
 
 .animate-fade-in {
   animation-name: fadeIn;
-  animation-duration: $animation-duration-normal;
-  animation-timing-function: $transition-timing-default;
+  animation-duration: var(--animation-duration-normal) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--transition-timing-default)
+    /* TODO: Verify correct CSS variable */;
 }
 
 .animate-slide-up {
   animation-name: slideInUp;
-  animation-duration: $animation-duration-normal;
-  animation-timing-function: $transition-timing-default;
+  animation-duration: var(--animation-duration-normal) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--transition-timing-default)
+    /* TODO: Verify correct CSS variable */;
 }
 
 .animate-slide-down {
   animation-name: slideInDown;
-  animation-duration: $animation-duration-normal;
-  animation-timing-function: $transition-timing-default;
+  animation-duration: var(--animation-duration-normal) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--transition-timing-default)
+    /* TODO: Verify correct CSS variable */;
 }
 
 .animate-slide-left {
   animation-name: slideInLeft;
-  animation-duration: $animation-duration-normal;
-  animation-timing-function: $transition-timing-default;
+  animation-duration: var(--animation-duration-normal) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--transition-timing-default)
+    /* TODO: Verify correct CSS variable */;
 }
 
 .animate-slide-right {
   animation-name: slideInRight;
-  animation-duration: $animation-duration-normal;
-  animation-timing-function: $transition-timing-default;
+  animation-duration: var(--animation-duration-normal) /* TODO: Verify correct CSS variable */;
+  animation-timing-function: var(--transition-timing-default)
+    /* TODO: Verify correct CSS variable */;
 }
 
 // App-specific global styles
@@ -563,22 +562,22 @@ td {
 
 .main-content {
   flex: 1;
-  padding: $spacing-6 0;
+  padding: var(--spacing-6) /* TODO: Verify correct CSS variable */ 0;
 }
 
 .section-title {
-  margin-bottom: $spacing-6;
+  margin-bottom: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   position: relative;
 
   &:after {
     content: '';
     position: absolute;
-    bottom: -$spacing-3;
+    bottom: -var(--spacing-3) /* TODO: Verify correct CSS variable */;
     left: 0;
     width: 60px;
     height: 4px;
-    background-color: $color-primary;
-    border-radius: $border-radius-full;
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -597,7 +596,7 @@ td {
 
 // Focus styles for keyboard navigation
 :focus-visible {
-  outline: 2px solid $color-primary;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -659,101 +658,101 @@ td {
 
 // Text colors
 .text-primary {
-  color: $color-primary !important;
+  color: var(--color-primary) !important;
 }
 
 .text-secondary {
-  color: $color-secondary !important;
+  color: var(--color-secondary) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-success {
-  color: $color-success !important;
+  color: var(--color-success) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-warning {
-  color: $color-warning !important;
+  color: var(--color-warning) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-danger {
-  color: $color-error !important;
+  color: var(--color-error) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-info {
-  color: $color-info !important;
+  color: var(--color-info) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-light {
-  color: $color-light-gray-1 !important;
+  color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-dark {
-  color: $color-dark-gray-3 !important;
+  color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-muted {
-  color: $color-dark-gray-1 !important;
+  color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .text-white {
-  color: $color-white !important;
+  color: var(--color-white) /* TODO: Verify correct CSS variable */ !important;
 }
 
 // Background colors
 .bg-primary {
-  background-color: $color-primary !important;
+  background-color: var(--color-primary) !important;
 }
 
 .bg-secondary {
-  background-color: $color-secondary !important;
+  background-color: var(--color-secondary) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-success {
-  background-color: $color-success !important;
+  background-color: var(--color-success) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-warning {
-  background-color: $color-warning !important;
+  background-color: var(--color-warning) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-danger {
-  background-color: $color-error !important;
+  background-color: var(--color-error) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-info {
-  background-color: $color-info !important;
+  background-color: var(--color-info) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-light {
-  background-color: $color-light-gray-1 !important;
+  background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-dark {
-  background-color: $color-dark-gray-3 !important;
+  background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .bg-white {
-  background-color: $color-white !important;
+  background-color: var(--color-white) /* TODO: Verify correct CSS variable */ !important;
 }
 
 // Border utilities
 .border {
-  border: 1px solid $color-light-gray-2 !important;
+  border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .border-top {
-  border-top: 1px solid $color-light-gray-2 !important;
+  border-top: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .border-right {
-  border-right: 1px solid $color-light-gray-2 !important;
+  border-right: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .border-bottom {
-  border-bottom: 1px solid $color-light-gray-2 !important;
+  border-bottom: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .border-left {
-  border-left: 1px solid $color-light-gray-2 !important;
+  border-left: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .border-0 {
@@ -761,15 +760,15 @@ td {
 }
 
 .rounded {
-  border-radius: $border-radius-md !important;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .rounded-sm {
-  border-radius: $border-radius-sm !important;
+  border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .rounded-lg {
-  border-radius: $border-radius-lg !important;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .rounded-circle {
@@ -777,7 +776,7 @@ td {
 }
 
 .rounded-pill {
-  border-radius: $border-radius-full !important;
+  border-radius: var(--border-radius-full) /* TODO: Verify correct CSS variable */ !important;
 }
 
 // Shadow utilities
@@ -786,22 +785,22 @@ td {
 }
 
 .shadow-sm {
-  box-shadow: $shadow-sm !important;
+  box-shadow: var(--shadow-sm) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .shadow {
-  box-shadow: $shadow-md !important;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */ !important;
 }
 
 .shadow-lg {
-  box-shadow: $shadow-lg !important;
+  box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */ !important;
 }
 
 // Dark mode support
 @media (prefers-color-scheme: dark) {
   body.dark-mode-enabled {
-    color: $color-light-gray-1;
-    background-color: $color-dark-gray-3;
+    color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+    background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
 
     h1,
     h2,
@@ -809,84 +808,85 @@ td {
     h4,
     h5,
     h6 {
-      color: $color-white;
+      color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
 
     a {
-      color: $color-primary-light;
+      color: var(--color-primary-light); // TODO: Set a valid dark mode link color
 
       &:hover {
-        color: color.adjust($color-primary-light, $lightness: 10%);
+        // TODO: Set a valid hover color for links in dark mode
+        // color: var(--color-primary-lighter);
       }
     }
 
     .card {
-      background-color: $color-dark-gray-2;
-      border-color: $color-dark-gray-1;
+      background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
       .card-header,
       .card-footer {
-        background-color: $color-dark-gray-2;
-        border-color: $color-dark-gray-1;
+        background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+        border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
       }
     }
 
     .form-control {
-      color: $color-light-gray-1;
-      background-color: $color-dark-gray-2;
-      border-color: $color-dark-gray-1;
+      color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+      background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
       &:focus {
-        color: $color-white;
-        background-color: $color-dark-gray-2;
+        color: var(--color-white) /* TODO: Verify correct CSS variable */;
+        background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
       }
 
       &::placeholder {
-        color: $color-medium-gray-2;
+        color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
       }
     }
 
     .modal-content {
-      background-color: $color-dark-gray-2;
-      border-color: $color-dark-gray-1;
+      background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     .modal-header,
     .modal-footer {
-      border-color: $color-dark-gray-1;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     .table {
-      color: $color-light-gray-1;
+      color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
 
       th,
       td {
-        border-color: $color-dark-gray-1;
+        border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
       }
     }
 
     .text-muted {
-      color: $color-medium-gray-2 !important;
+      color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */ !important;
     }
 
     .border {
-      border-color: $color-dark-gray-1 !important;
+      border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
     }
 
     .border-top {
-      border-top-color: $color-dark-gray-1 !important;
+      border-top-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
     }
 
     .border-right {
-      border-right-color: $color-dark-gray-1 !important;
+      border-right-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
     }
 
     .border-bottom {
-      border-bottom-color: $color-dark-gray-1 !important;
+      border-bottom-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
     }
 
     .border-left {
-      border-left-color: $color-dark-gray-1 !important;
+      border-left-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */ !important;
     }
   }
 }

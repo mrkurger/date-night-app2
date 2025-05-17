@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NbSecurityModule, NbRoleProvider, NbAclService } from '@nebular/security';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -47,11 +48,10 @@ export function cspInterceptorFactory() {
 }
 
 export function authInterceptorFactory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   authService: AuthService,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   userService: UserService,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   router: Router,
 ) {
   // These services are injected but not directly used in the factory
@@ -88,6 +88,39 @@ export function httpErrorInterceptorFactory() {
   return interceptor;
 }
 
+// Security configuration
+const securityConfig = {
+  accessControl: {
+    guest: {
+      view: ['public-content', 'auth-pages'],
+      create: [],
+      edit: [],
+      delete: [],
+    },
+    user: {
+      parent: 'guest',
+      view: ['user-profile', 'matches', 'messages'],
+      create: ['profile', 'messages'],
+      edit: ['own-profile', 'own-messages'],
+      delete: ['own-profile', 'own-messages'],
+    },
+    moderator: {
+      parent: 'user',
+      view: ['reported-content', 'user-reports'],
+      create: ['moderation-notes'],
+      edit: ['user-status', 'content-status'],
+      delete: ['reported-content'],
+    },
+    admin: {
+      parent: 'moderator',
+      view: ['*'],
+      create: ['*'],
+      edit: ['*'],
+      delete: ['*'],
+    },
+  },
+};
+
 /**
  * Core Module
  *
@@ -98,7 +131,7 @@ export function httpErrorInterceptorFactory() {
  * Note: Order matters for interceptors - they are applied in the order listed.
  */
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, NbSecurityModule.forRoot(securityConfig)],
   providers: [
     // Core Services
     AuthService,
@@ -144,6 +177,13 @@ export function httpErrorInterceptorFactory() {
       deps: [Router, NotificationService, TelemetryService, AuthService],
       multi: true,
     },
+
+    // Security Providers
+    {
+      provide: NbRoleProvider,
+      useClass: AuthService,
+    },
+    NbAclService,
   ],
 })
 export class CoreModule {}

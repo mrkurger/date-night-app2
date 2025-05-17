@@ -1,285 +1,339 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Lessons: Services - Date Night App</title>
-    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1>Date Night App Documentation</h1>
-        <nav>
-          <ul>
-            <li><a href="/_docs_index.html">Home</a></li>
-            <li><a href="/_glossary.html">Glossary</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Lessons - Core Services</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+    code {
+      background-color: #f8f8f8;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background-color: #f8f8f8;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      border: 1px solid #ddd;
+    }
+    pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+    .note {
+      background-color: #fffacd;
+      padding: 15px;
+      border-left: 4px solid #ffd700;
+      margin: 20px 0;
+    }
+    .warning {
+      background-color: #ffebee;
+      padding: 15px;
+      border-left: 4px solid #f44336;
+      margin: 20px 0;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .service-section {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Lessons - Core Services</h1>
+  
+  <div class="service-section">
+    <h2>File Encryption Service</h2>
+    <p>The File Encryption Service provides methods for encrypting and decrypting files using the Web Crypto API.</p>
+    
+    <h3>Implementation</h3>
+    <pre><code>
+import { Injectable } from '@angular/core';
+import { EncryptionService } from './encryption.service';
 
-    <main class="container">
-      <div class="page-content">
-        <aside class="sidebar">
-          <h3>Services</h3>
-          <ul>
-            <li><a href="./CHANGELOG.html">Changelog</a></li>
-            <li><a href="./AILESSONS.html">AI Lessons</a></li>
-            <li><a href="./GLOSSARY.html">Glossary</a></li>
-          </ul>
-        </aside>
-
-        <article class="content">
-          <h1>AI Lessons: Services</h1>
-
-          <p>
-            This file contains lessons learned and best practices for the Services component/module.
-          </p>
-
-          <h2>Interface Consistency in Tests</h2>
-
-          <p>
-            When working with complex interfaces like <code>Ad</code> and <code>Favorite</code>,
-            it's crucial to ensure that mock objects in tests fully implement the required interface
-            properties. Missing properties can lead to subtle type errors that may not be
-            immediately apparent.
-          </p>
-
-          <h3>Problem Encountered</h3>
-          <p>
-            In the
-            <a href="./GLOSSARY.html#FavoriteService" title="Service for managing user favorites"
-              >FavoriteService</a
-            >
-            tests, mock objects were missing required properties from the <code>Ad</code> interface,
-            causing type errors.
-          </p>
-
-          <h3>Solution</h3>
-          <p>
-            Always create complete mock objects that satisfy all required properties of the
-            interface:
-          </p>
-
-          <pre><code>// Complete mock object
-const mockAd = {
-  _id: 'ad1',
-  title: 'Test Ad',
-  userId: 'user1',
-  isActive: true,
-  isFeatured: false,
-  isTrending: false,
-  isTouring: false,
-  viewCount: 0,
-  clickCount: 0,
-  inquiryCount: 0,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  location: {
-    city: 'Test City',
-    county: 'Test County'
-  }
-};</code></pre>
-
-          <div class="tip">
-            <strong>Tip:</strong> Consider creating factory functions for generating test data to
-            ensure consistency across tests.
-          </div>
-
-          <h2>Observable Properties vs. Methods in Tests</h2>
-
-          <p>
-            When testing components that use services with observable streams, it's often better to
-            mock the observable properties directly rather than methods that return observables.
-          </p>
-
-          <h3>Problem Encountered</h3>
-          <p>In the chat component tests, we were mocking methods that return observables:</p>
-
-          <pre><code>chatServiceSpy.onNewMessage.and.returnValue(newMessageSubject.asObservable());
-chatServiceSpy.onMessageRead.and.returnValue(messageReadSubject.asObservable());
-chatServiceSpy.onTypingIndicator.and.returnValue(typingIndicatorSubject.asObservable());</code></pre>
-
-          <h3>Solution</h3>
-          <p>A more maintainable approach is to directly set the observable properties:</p>
-
-          <pre><code>// Set up the socket event handlers as properties instead of methods
-chatServiceSpy.newMessage$ = newMessageSubject.asObservable();
-chatServiceSpy.messageRead$ = messageReadSubject.asObservable();
-chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();</code></pre>
-
-          <p>
-            This approach better reflects the actual service implementation and makes the tests more
-            resilient to implementation changes.
-          </p>
-
-          <h2>Specific vs. Generic Assertions</h2>
-
-          <p>
-            When testing complex objects, using specific assertions for critical properties rather
-            than exact equality checks can make tests more maintainable.
-          </p>
-
-          <h3>Problem Encountered</h3>
-          <p>
-            In the
-            <a href="./GLOSSARY.html#FavoriteService" title="Service for managing user favorites"
-              >FavoriteService</a
-            >
-            tests, we were using exact equality checks for complex objects:
-          </p>
-
-          <pre><code>service.getFavorites().subscribe(favorites => {
-  expect(favorites).toEqual(mockFavorites);
-});</code></pre>
-
-          <h3>Solution</h3>
-          <p>
-            A more maintainable approach is to assert on specific properties that are critical to
-            the test:
-          </p>
-
-          <pre><code>service.getFavorites().subscribe(favorites => {
-  expect(favorites.length).toEqual(mockFavorites.length);
-  expect(favorites[0]._id).toEqual(mockFavorites[0]._id);
-  expect(favorites[1]._id).toEqual(mockFavorites[1]._id);
-});</code></pre>
-
-          <p>
-            This approach makes tests less brittle when the object structure changes in ways that
-            don't affect the core functionality being tested.
-          </p>
-
-          <h2>CSS Integration Strategies</h2>
-
-          <p>
-            When integrating external CSS frameworks like Emerald UI, it's important to choose the
-            right integration strategy to avoid conflicts with existing styles.
-          </p>
-
-          <h3>Approach Used</h3>
-          <p>
-            We integrated Emerald UI CSS by importing it in component-specific SCSS files rather
-            than globally:
-          </p>
-
-          <pre><code>@use '../../../styles/design-system/index.scss' as ds;
-/* Removed emerald-ui import as it's causing build issues */</code></pre>
-
-          <p>
-            This approach allows for more granular control over which components use the Emerald UI
-            styles, reducing the risk of style conflicts.
-          </p>
-
-          <h3>Benefits</h3>
-          <ul>
-            <li>Component-specific styling control</li>
-            <li>Reduced risk of global style conflicts</li>
-            <li>Easier to remove or replace the framework in the future</li>
-            <li>Better performance as styles are only loaded where needed</li>
-          </ul>
-
-          <h2>Modern SASS Practices</h2>
-
-          <p>
-            As SASS evolves, certain functions and practices become deprecated. It's important to stay
-            current with modern SASS practices to ensure compatibility with future versions.
-          </p>
-
-          <h3>Problem Encountered</h3>
-          <p>
-            We encountered several SASS deprecation warnings related to the use of functions like
-            <code>darken()</code> and <code>lighten()</code>, as well as parent selector nesting issues.
-          </p>
-
-          <pre><code>// Old approach with deprecated functions
-&:hover:not(:disabled) {
-  background-color: darken(ds.$color-primary, 5%);
-}</code></pre>
-
-          <h3>Solution</h3>
-          <p>
-            We updated our SCSS files to use the newer <code>color.scale()</code> function and proper
-            parent selector syntax:
-          </p>
-
-          <pre><code>// Import the color module
-@use 'sass:color';
-
-// Modern approach with color.scale()
-&:hover:not(:disabled) {
-  background-color: color.scale(ds.$color-primary, $lightness: -5%);
-}</code></pre>
-
-          <h3>Benefits</h3>
-          <ul>
-            <li>Future-proof code that works with newer SASS versions</li>
-            <li>More explicit and readable color manipulations</li>
-            <li>Better compatibility with SASS modules system</li>
-            <li>Elimination of deprecation warnings</li>
-          </ul>
-
-          <h2>File Encryption Implementation</h2>
-
-          <p>
-            When implementing file encryption in a web application, it's important to leverage the
-            browser's native Web Crypto API for secure operations.
-          </p>
-
-          <h3>Approach Used</h3>
-          <p>
-            We created a dedicated <a href="./GLOSSARY.html#FileEncryptionService">FileEncryptionService</a>
-            that builds on top of our existing <a href="./GLOSSARY.html#EncryptionService">EncryptionService</a>
-            to handle file-specific encryption needs:
-          </p>
-
-          <pre><code>@Injectable({
-  providedIn: 'root',
+@Injectable({
+  providedIn: 'root'
 })
 export class FileEncryptionService {
   constructor(private encryptionService: EncryptionService) {}
 
   async encryptFile(file: File): Promise<{ encryptedData: ArrayBuffer; iv: Uint8Array }> {
-    const fileBuffer = await file.arrayBuffer();
-    const iv = crypto.getRandomValues(new Uint8Array(12));
-    const encryptedData = await this.encryptionService.encrypt(fileBuffer, iv);
-
+    // Convert file to ArrayBuffer
+    const fileData = await file.arrayBuffer();
+    
+    // Generate a random IV
+    const iv = crypto.getRandomValues(new Uint8Array(16));
+    
+    // Encrypt the file data
+    const encryptedData = await this.encryptionService.encrypt(fileData, iv);
+    
     return { encryptedData, iv };
   }
 
   async decryptFile(encryptedData: ArrayBuffer, iv: Uint8Array): Promise<ArrayBuffer> {
     return this.encryptionService.decrypt(encryptedData, iv);
   }
-}</code></pre>
+}
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li>Use <code>File.arrayBuffer()</code> to efficiently convert files to binary data</li>
+      <li>Generate cryptographically secure random values for the initialization vector (IV)</li>
+      <li>Separate file-specific encryption logic from the core encryption service</li>
+      <li>Return both the encrypted data and the IV, as both are needed for decryption</li>
+      <li>Use async/await for cleaner handling of Promise-based crypto operations</li>
+    </ul>
+  </div>
+  
+  <div class="service-section">
+    <h2>Encryption Service</h2>
+    <p>The Encryption Service provides low-level encryption and decryption methods using the Web Crypto API.</p>
+    
+    <h3>Implementation</h3>
+    <pre><code>
+import { Injectable } from '@angular/core';
 
-          <h3>Key Learnings</h3>
-          <ul>
-            <li>Use <code>File.arrayBuffer()</code> to efficiently convert files to binary data</li>
-            <li>Generate cryptographically secure random values for the initialization vector (IV)</li>
-            <li>Separate file-specific encryption logic from the core encryption service</li>
-            <li>Return both the encrypted data and the IV, as both are needed for decryption</li>
-            <li>Use async/await for cleaner handling of Promise-based crypto operations</li>
-          </ul>
+@Injectable({
+  providedIn: 'root'
+})
+export class EncryptionService {
+  private readonly algorithm = 'AES-GCM';
+  private readonly keyUsages: KeyUsage[] = ['encrypt', 'decrypt'];
+  private encryptionKey: CryptoKey | null = null;
 
-          <h3>Testing Considerations</h3>
-          <p>
-            When testing encryption services, it's important to:
-          </p>
-          <ul>
-            <li>Mock the underlying crypto operations to avoid actual encryption in tests</li>
-            <li>Test the full encryption and decryption cycle to ensure data integrity</li>
-            <li>Verify that the service correctly handles different file types and sizes</li>
-            <li>Check error handling for cases like invalid IVs or corrupted data</li>
-          </ul>
-        </article>
-      </div>
-    </main>
+  constructor() {
+    this.initializeEncryptionKey();
+  }
 
-    <footer>
-      <div class="container">
-        <p>&copy; 2025 Date Night App. All rights reserved.</p>
-      </div>
-    </footer>
-  </body>
+  private async initializeEncryptionKey(): Promise<void> {
+    // In a real app, you might retrieve this from a secure storage
+    const keyMaterial = new TextEncoder().encode('your-secure-key-material');
+    
+    // Derive a key using PBKDF2
+    const salt = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+    const importedKey = await crypto.subtle.importKey(
+      'raw',
+      keyMaterial,
+      'PBKDF2',
+      false,
+      ['deriveKey']
+    );
+    
+    this.encryptionKey = await crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt,
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      importedKey,
+      { name: this.algorithm, length: 256 },
+      false,
+      this.keyUsages
+    );
+  }
+
+  async encrypt(data: ArrayBuffer, iv: Uint8Array): Promise<ArrayBuffer> {
+    if (!this.encryptionKey) {
+      await this.initializeEncryptionKey();
+    }
+    
+    return crypto.subtle.encrypt(
+      {
+        name: this.algorithm,
+        iv
+      },
+      this.encryptionKey!,
+      data
+    );
+  }
+
+  async decrypt(encryptedData: ArrayBuffer, iv: Uint8Array): Promise<ArrayBuffer> {
+    if (!this.encryptionKey) {
+      await this.initializeEncryptionKey();
+    }
+    
+    return crypto.subtle.decrypt(
+      {
+        name: this.algorithm,
+        iv
+      },
+      this.encryptionKey!,
+      encryptedData
+    );
+  }
+}
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li>Use AES-GCM for authenticated encryption</li>
+      <li>Derive encryption keys using PBKDF2 with sufficient iterations</li>
+      <li>Store the encryption key securely</li>
+      <li>Use the Web Crypto API for cryptographic operations</li>
+      <li>Handle asynchronous crypto operations properly</li>
+    </ul>
+    
+    <div class="warning">
+      <strong>Security Warning:</strong> In a production application, never hardcode encryption keys. Use a secure key management system or derive keys from user credentials.
+    </div>
+  </div>
+  
+  <div class="service-section">
+    <h2>WebSocket Fallback Service</h2>
+    <p>The WebSocket Fallback Service provides a solution for handling WebSocket connection failures in development mode.</p>
+    
+    <h3>Problem</h3>
+    <p>
+      In Angular development mode, the application may experience constant WebSocket connection errors:
+      <code>WebSocket connection to 'ws://localhost:4201/' failed:</code>
+    </p>
+    <p>
+      These errors occur when the Angular development server's Hot Module Replacement (HMR) feature
+      tries to establish a WebSocket connection but fails to connect. This can flood the console with
+      error messages, making it difficult to debug other issues.
+    </p>
+    
+    <h3>Implementation</h3>
+    <pre><code>
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WebSocketFallbackService {
+  private connectionStatus = new BehaviorSubject&lt;boolean&gt;(false);
+  private maxReconnectAttempts = 3;
+  private reconnectAttempts = 0;
+  private reconnectTimeout: any = null;
+  private originalWebSocket: any = null;
+
+  /**
+   * Initialize the WebSocket fallback service
+   * This should be called in the app initialization phase
+   */
+  public initialize(): void {
+    // Only apply in development mode
+    if (window.location.hostname === 'localhost') {
+      console.log('WebSocket fallback service initialized');
+      this.setupWebSocketFallback();
+    }
+  }
+
+  /**
+   * Get the current connection status as an Observable
+   */
+  public getConnectionStatus(): Observable&lt;boolean&gt; {
+    return this.connectionStatus.asObservable();
+  }
+
+  /**
+   * Setup the WebSocket fallback mechanism
+   * This intercepts WebSocket creation and handles reconnection attempts
+   */
+  private setupWebSocketFallback(): void {
+    // Store the original WebSocket constructor
+    this.originalWebSocket = window.WebSocket;
+
+    // Override the WebSocket constructor
+    (window as any).WebSocket = function(url: string, protocols?: string | string[]) {
+      const instance = new (window as any).originalWebSocket(url, protocols);
+      
+      // Handle connection errors
+      instance.addEventListener('error', (event: Event) => {
+        if (url.includes('localhost:4201')) {
+          console.warn('Development server WebSocket connection failed. Live reload may not work.');
+        }
+      });
+
+      return instance;
+    };
+
+    // Restore the original properties and methods
+    (window as any).WebSocket.prototype = this.originalWebSocket.prototype;
+    (window as any).WebSocket.CONNECTING = this.originalWebSocket.CONNECTING;
+    (window as any).WebSocket.OPEN = this.originalWebSocket.OPEN;
+    (window as any).WebSocket.CLOSING = this.originalWebSocket.CLOSING;
+    (window as any).WebSocket.CLOSED = this.originalWebSocket.CLOSED;
+    (window as any).originalWebSocket = this.originalWebSocket;
+  }
+
+  /**
+   * Restore the original WebSocket constructor
+   * This should be called when the service is destroyed
+   */
+  public restoreOriginalWebSocket(): void {
+    if (this.originalWebSocket) {
+      window.WebSocket = this.originalWebSocket;
+      this.originalWebSocket = null;
+    }
+  }
+}
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li>WebSocket connection issues in Angular development mode are common and can be mitigated</li>
+      <li>Intercepting the WebSocket constructor allows for custom error handling</li>
+      <li>Limiting reconnection attempts prevents console flooding</li>
+      <li>Only apply the fix in development mode (localhost) to avoid affecting production</li>
+      <li>Restore the original WebSocket constructor when the service is destroyed to prevent memory leaks</li>
+    </ul>
+    
+    <h3>Additional Fixes</h3>
+    <ul>
+      <li>Update Angular dev server configuration to improve WebSocket stability</li>
+      <li>Disable HMR in development mode to prevent WebSocket connection issues</li>
+      <li>Modify CSP policy to allow WebSocket connections from all local addresses</li>
+      <li>Create a WebSocket polyfill script to intercept and manage WebSocket connections</li>
+    </ul>
+    
+    <div class="note">
+      <strong>Note:</strong> This solution is specific to development mode and should not affect production builds.
+      The WebSocket connection issues are often related to network configuration, firewalls, or proxy settings.
+    </div>
+  </div>
+  
+  <!-- Add more service sections as needed -->
+  
+</body>
 </html>

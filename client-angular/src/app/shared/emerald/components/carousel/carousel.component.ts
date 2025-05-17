@@ -1,29 +1,24 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (carousel.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald Carousel Component
+ * Carousel Component
  *
- * A wrapper for the Emerald.js Carousel component.
  * This component displays a carousel of images or other content.
- *
- * Documentation: https://docs-emerald.condorlabs.io/Carousel
+ * It uses Nebular UI components for consistent styling.
  */
 @Component({
-  selector: 'emerald-carousel',
+  selector: 'nb-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    NbButtonModule,
+    NbIconModule
+  ],
 })
 export class CarouselComponent implements OnInit, OnDestroy {
   @Input() items: CarouselItem[] = [];

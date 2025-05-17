@@ -7,49 +7,66 @@
 // - DEFAULT_VIEW_MODE: Default view mode (default: 'grid')
 //   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../../shared/material.module';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 import { Subscription } from 'rxjs';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
 
 @Component({
   selector: 'app-gallery',
   template: `
-    <div class="gallery-container mat-elevation-z2">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Photo Gallery</mat-card-title>
+    <div class="gallery-container">
+      <nb-card>
+        <nb-card-header>
+          <h5>Photo Gallery</h5>
           <div class="view-toggle">
             <button
-              mat-icon-button
-              [color]="viewMode === 'grid' ? 'primary' : ''"
+              nbButton
+              ghost
+              [status]="viewMode === 'grid' ? 'primary' : 'basic'"
               (click)="setViewMode('grid')"
-              aria-label="Grid view"
+              nbTooltip="Grid view"
             >
-              <mat-icon>grid_view</mat-icon>
+              <nb-icon icon="grid-outline"></nb-icon>
             </button>
             <button
-              mat-icon-button
-              [color]="viewMode === 'list' ? 'primary' : ''"
+              nbButton
+              ghost
+              [status]="viewMode === 'list' ? 'primary' : 'basic'"
               (click)="setViewMode('list')"
-              aria-label="List view"
+              nbTooltip="List view"
             >
-              <mat-icon>view_list</mat-icon>
+              <nb-icon icon="list-outline"></nb-icon>
             </button>
           </div>
-        </mat-card-header>
-        <mat-card-content>
+        </nb-card-header>
+        <nb-card-body>
           <div
             [ngClass]="{ 'gallery-grid': viewMode === 'grid', 'gallery-list': viewMode === 'list' }"
           >
             <!-- Gallery content will be implemented here -->
             <p>Gallery feature coming soon...</p>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
   styles: [
@@ -74,11 +91,23 @@ import { Subscription } from 'rxjs';
       .view-toggle {
         display: flex;
         margin-left: auto;
+        gap: 8px;
       }
     `,
   ],
   standalone: true,
-  imports: [CommonModule, RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbTooltipModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SharedModule,
+  ],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

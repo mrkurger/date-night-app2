@@ -10,76 +10,109 @@ on:
       - 'docs/**/*.md'
       - '_docs_index.html'
       - '_glossary.html'
+      - 'scripts/generate_docs.js'
+      - '.github/workflows/generate-docs.yml'
   pull_request:
     branches: [main]
-  workflow_dispatch:  # Allow manual triggering of the workflow
+    paths:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.html'
+      - 'docs/**/*.md'
+      - 'scripts/generate_docs.js'
+  workflow_dispatch:
 
 jobs:
   generate-docs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
     permissions:
-      contents: write  # Required to commit changes to the repository
+      contents: write
+    timeout-minutes: 30 # Add timeout to prevent runaway jobs
+    
     steps:
       # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      # Step 2: Setup Node.js
-      # Use the official Node.js action for reliability
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
         with:
-          node-version: '20.x'  # Use stable LTS version
-
-      # Step 3: Ensure each folder has required HTML docs
-      - name: Ensure Required HTML Docs
+          fetch-depth: 0 # Fetch all history for proper documentation generation
+      
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
+        with:
+          node-version: '22'
+          safe-install: 'true'
+          update-lockfile: 'false'
+          check-missing: 'true'
+      
+      - name: Install marked package for Markdown processing
+        run: npm install marked
+      
+      - name: Create documentation directories
+        run: |
+          mkdir -p downloaded-reports/docs
+      
+      # Step 1: Ensure each folder has required HTML docs
+      - name: Ensure each folder has required HTML docs
         run: node scripts/generate_docs.js --verbose
-
-      # Step 4: Parse source code to update glossaries
-      - name: Update Glossaries
+      
+      # Step 2: Parse source code to update glossaries
+      - name: Parse source code to update glossaries
         run: node scripts/generate_docs.js --update-only --verbose
-
-      # Step 5: Rebuild documentation indexes
-      - name: Rebuild Documentation Indexes
+      
+      # Step 3: Rebuild documentation indexes and migrate Markdown to HTML
+      - name: Rebuild documentation indexes
         run: node scripts/generate_docs.js --migrate-docs --verbose
-
-      # Step 6: Commit changes back to repository
-      - name: Commit Changes
-        if: github.event_name != 'pull_request'  # Only commit on non-PR events
+      
+      # Step 4: Generate documentation for GitHub Pages
+      - name: Generate documentation for GitHub Pages
+        run: node scripts/generate_docs.js --verbose --migrate-docs --output-dir=downloaded-reports/docs
+      
+      # Step 5: Commit changes (only HTML files)
+      - name: Commit changes
+        if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add "**/*.html"
           git diff --quiet && git diff --staged --quiet || git commit -m "Update documentation [skip ci]"
           git push
-
-  upload-docs:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
-    needs: generate-docs  # Run only after generate-docs job completes
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      # Step 2: Setup Node.js
-      # Use the official Node.js action for reliability
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'  # Use stable LTS version
-
-      # Step 3: Build Documentation
-      # Run the build process to generate final documentation files
-      - name: Build Documentation
-        run: |
-          cd docs
-          npm ci  # Clean install dependencies
-          npm run build  # Build the documentation
-
-      # Step 4: Upload Documentation as an Artifact
-      - name: Upload Documentation
+      
+      # Upload documentation as artifact
+      - name: Upload documentation as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: documentation-${{ github.run_id }}  # Include run ID for traceability
-          path: docs/build  # Path to the built documentation
-          retention-days: 14  # Retain the artifact for 14 days
+          name: documentation
+          path: downloaded-reports/docs
+          retention-days: 14
+          if-no-files-found: warn
+
+  deploy-to-pages:
+    needs: generate-docs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Download documentation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation
+          path: docs-to-deploy
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: 'docs-to-deploy'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3

@@ -168,7 +168,7 @@ const sanitizeErrorMessage = message => {
  * @param {Response} res - Express response object
  * @param {Function} _next - Express next function (not used as this is the final handler)
  */
-// eslint-disable-next-line no-unused-vars
+
 export default (err, req, res, _next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';

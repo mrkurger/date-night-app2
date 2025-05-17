@@ -1,3 +1,6 @@
+import { Input } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +15,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 
 import { AdvertiserProfileComponent } from './advertiser-profile.component';
 import { AdService } from '../../core/services/ad.service';
@@ -23,6 +25,8 @@ import { NotificationService } from '../../core/services/notification.service';
 @Component({
   selector: 'app-main-layout',
   template: '<ng-content></ng-content>',
+  standalone: true,
+  imports: [ReactiveFormsModule],
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -98,7 +102,9 @@ describe('AdvertiserProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, AdvertiserProfileComponent],
+      imports: [RouterTestingModule,
+    ReactiveFormsModule,
+    AdvertiserProfileComponent],
       declarations: [MockMainLayoutComponent],
       providers: [
         {
@@ -111,7 +117,6 @@ describe('AdvertiserProfileComponent', () => {
         { provide: AuthService, useClass: MockAuthService },
         { provide: NotificationService, useClass: MockNotificationService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdvertiserProfileComponent);

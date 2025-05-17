@@ -1,0 +1,244 @@
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h3 {
+  margin: 0;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-basic-color-3);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  flex: 1;
+  font-weight: 600;
+  color: var(--text-hint-color);
+}
+
+.value {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.positive {
+  color: var(--color-success-600);
+}
+
+.negative {
+  color: var(--color-danger-600);
+}
+
+.detail-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-basic-color-3);
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-basic-color);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.transaction-details {
+  padding: 1rem;
+}
+
+.detail-label {
+  color: var(--text-hint-color);
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.detail-value {
+  flex: 1;
+  text-align: right;
+  word-break: break-all;
+
+  &.id-value {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}
+
+.metadata-title {
+  color: var(--text-basic-color);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.detail-divider {
+  border: none;
+  border-top: 1px solid var(--divider-color);
+  margin: 1.5rem 0;
+}
+
+.transaction-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+
+  &.transaction-deposit {
+    background-color: var(--color-success-100);
+    color: var(--color-success-600);
+  }
+
+  &.transaction-withdrawal {
+    background-color: var(--color-warning-100);
+    color: var(--color-warning-600);
+  }
+
+  &.transaction-transfer {
+    background-color: var(--color-info-100);
+    color: var(--color-info-600);
+  }
+
+  &.transaction-payment {
+    background-color: var(--color-info-100);
+    color: var(--color-info-600);
+  }
+
+  &.transaction-refund {
+    background-color: var(--color-success-100);
+    color: var(--color-success-600);
+  }
+
+  &.transaction-fee {
+    background-color: var(--color-basic-100);
+    color: var(--color-basic-600);
+  }
+}
+
+.transaction-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &.status-pending {
+    background-color: var(--color-warning-100);
+    color: var(--color-warning-600);
+  }
+
+  &.status-completed {
+    background-color: var(--color-success-100);
+    color: var(--color-success-600);
+  }
+
+  &.status-failed {
+    background-color: var(--color-danger-100);
+    color: var(--color-danger-600);
+  }
+
+  &.status-cancelled {
+    background-color: var(--color-basic-100);
+    color: var(--color-basic-600);
+  }
+}
+
+.positive-amount {
+  color: var(--color-success-600);
+  font-weight: 600;
+}
+
+.negative-amount {
+  color: var(--color-danger-600);
+  font-weight: 600;
+}
+
+@include nb-install {
+  .transaction-details {
+    max-width: 600px;
+    width: 100%;
+
+    nb-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        margin: 0;
+      }
+    }
+
+    nb-card-body {
+      padding: var(--padding);
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--margin);
+
+      .label {
+        font-weight: bold;
+        color: var(--text-hint-color);
+      }
+
+      .value {
+        color: var(--text-basic-color);
+      }
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--padding-xs) var(--padding-sm);
+      border-radius: var(--border-radius);
+      font-size: var(--text-button-tiny-font-size);
+
+      &.completed {
+        background-color: var(--color-success-100);
+        color: var(--color-success-800);
+      }
+
+      &.pending {
+        background-color: var(--color-warning-100);
+        color: var(--color-warning-800);
+      }
+
+      &.failed {
+        background-color: var(--color-danger-100);
+        color: var(--color-danger-800);
+      }
+    }
+
+    nb-card-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+    }
+  }
+}

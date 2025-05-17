@@ -25,360 +25,274 @@ import { validateObjectId } from '../../utils/validation.js';
 import { errorResponse, successResponse } from '../../utils/response.js';
 
 /**
- * Register a user's public key
- *
- * @param {Object} req - Express request object
+ * Sends a success response
  * @param {Object} res - Express response object
+ * @param {any} payload - Data to include in the response
  */
-const registerPublicKey = async (req, res) => {
-  try {
-    const { publicKey } = req.body;
-    const userId = req.user.id;
-
-    if (!publicKey) {
-      return errorResponse(res, 'Public key is required', 400);
-    }
-
-    // Update the user's public key
-    await User.findByIdAndUpdate(userId, {
-      'encryption.publicKey': publicKey,
-      'encryption.keyRegisteredAt': new Date(),
-    });
-
-    logger.info(`User ${userId} registered a public key`);
-    return successResponse(res, { success: true });
-  } catch (error) {
-    logger.error('Error registering public key:', error);
-    return errorResponse(res, 'Failed to register public key', 500);
-  }
-};
+export function sendSuccess(res, payload) {
+  res.status(200).json({ success: true, data: payload });
+}
 
 /**
- * Set up encryption for a chat room
- *
+ * Sends an error response
+ * @param {Object} res - Express response object
+ * @param {Error|string} err - Error details
+ * @param {number} code - HTTP status code (default: 500)
+ */
+export function sendError(res, err, code = 500) {
+  console.error('Error:', err.message || err);
+  res.status(code).json({ success: false, error: err.message || 'Internal Error' });
+}
+
+/**
+ * Registers a user's public key for end-to-end encryption
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const setupRoomEncryption = async (req, res) => {
+export async function registerPublicKey(req, res) {
+  try {
+    const { userId, publicKey } = req.body;
+
+    if (!userId || !publicKey) {
+      return sendError(res, 'Missing required fields', 400);
+    }
+
+    if (!validateObjectId(userId)) {
+      return sendError(res, 'Invalid user ID format', 400);
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { 'encryption.publicKey': publicKey } },
+      { new: true }
+    );
+
+    if (!user) {
+      return sendError(res, 'User not found', 404);
+    }
+
+    logger.info(`Public key registered for user ${userId}`);
+    return sendSuccess(res, { message: 'Public key registered successfully' });
+  } catch (err) {
+    logger.error('Error registering public key:', err);
+    return sendError(res, err);
+  }
+}
+
+/**
+ * Sets up encryption for a chat room
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function setupRoomEncryption(req, res) {
   try {
     const { roomId } = req.body;
-    const userId = req.user.id;
+
+    if (!roomId) {
+      return sendError(res, 'Room ID is required', 400);
+    }
 
     if (!validateObjectId(roomId)) {
-      return errorResponse(res, 'Invalid room ID', 400);
+      return sendError(res, 'Invalid room ID format', 400);
     }
 
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
-    }
-
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
+    const room = await ChatRoom.findByIdAndUpdate(
+      roomId,
+      { $set: { 'encryption.enabled': true } },
+      { new: true }
     );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
     }
 
-    // Update the room's encryption settings
-    chatRoom.encryption = {
-      enabled: true,
-      enabledBy: userId,
-      enabledAt: new Date(),
-    };
-
-    await chatRoom.save();
-
-    logger.info(`User ${userId} enabled encryption for room ${roomId}`);
-    return successResponse(res, { success: true });
-  } catch (error) {
-    logger.error('Error setting up room encryption:', error);
-    return errorResponse(res, 'Failed to set up room encryption', 500);
+    logger.info(`Encryption enabled for room ${roomId}`);
+    return sendSuccess(res, { message: 'Room encryption enabled' });
+  } catch (err) {
+    logger.error('Error setting up room encryption:', err);
+    return sendError(res, err);
   }
-};
+}
 
 /**
- * Disable encryption for a chat room
- *
+ * Disables encryption for a chat room
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const disableRoomEncryption = async (req, res) => {
+export async function disableRoomEncryption(req, res) {
+  try {
+    const { roomId } = req.body;
+
+    if (!roomId) {
+      return sendError(res, 'Room ID is required', 400);
+    }
+
+    if (!validateObjectId(roomId)) {
+      return sendError(res, 'Invalid room ID format', 400);
+    }
+
+    const room = await ChatRoom.findByIdAndUpdate(
+      roomId,
+      {
+        $set: { 'encryption.enabled': false },
+        $unset: { 'encryption.roomKey': '' },
+      },
+      { new: true }
+    );
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
+    }
+
+    logger.info(`Encryption disabled for room ${roomId}`);
+    return sendSuccess(res, { message: 'Room encryption disabled' });
+  } catch (err) {
+    logger.error('Error disabling room encryption:', err);
+    return sendError(res, err);
+  }
+}
+
+/**
+ * Stores an encrypted room key
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function storeRoomKey(req, res) {
+  try {
+    const { roomId, encryptedKey } = req.body;
+
+    if (!roomId || !encryptedKey) {
+      return sendError(res, 'Missing required fields', 400);
+    }
+
+    if (!validateObjectId(roomId)) {
+      return sendError(res, 'Invalid room ID format', 400);
+    }
+
+    const room = await ChatRoom.findByIdAndUpdate(
+      roomId,
+      { $set: { 'encryption.roomKey': encryptedKey } },
+      { new: true }
+    );
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
+    }
+
+    logger.info(`Room key stored for room ${roomId}`);
+    return sendSuccess(res, { message: 'Room key stored successfully' });
+  } catch (err) {
+    logger.error('Error storing room key:', err);
+    return sendError(res, err);
+  }
+}
+
+/**
+ * Retrieves an encrypted room key
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function getRoomKey(req, res) {
   try {
     const { roomId } = req.params;
-    const userId = req.user.id;
+
+    if (!roomId) {
+      return sendError(res, 'Room ID is required', 400);
+    }
 
     if (!validateObjectId(roomId)) {
-      return errorResponse(res, 'Invalid room ID', 400);
+      return sendError(res, 'Invalid room ID format', 400);
     }
 
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
+    const room = await ChatRoom.findById(roomId);
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
     }
 
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
-    );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
+    if (!room.encryption?.roomKey) {
+      return sendError(res, 'Room key not found', 404);
     }
 
-    // Update the room's encryption settings
-    chatRoom.encryption = {
-      enabled: false,
-      disabledBy: userId,
-      disabledAt: new Date(),
-    };
-
-    await chatRoom.save();
-
-    logger.info(`User ${userId} disabled encryption for room ${roomId}`);
-    return successResponse(res, { success: true });
-  } catch (error) {
-    logger.error('Error disabling room encryption:', error);
-    return errorResponse(res, 'Failed to disable room encryption', 500);
+    return sendSuccess(res, { roomKey: room.encryption.roomKey });
+  } catch (err) {
+    logger.error('Error retrieving room key:', err);
+    return sendError(res, err);
   }
-};
+}
 
 /**
- * Store an encrypted room key for a participant
- *
+ * Gets public keys of all room participants
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const storeRoomKey = async (req, res) => {
-  try {
-    const { roomId, participantId, encryptedKey } = req.body;
-    const userId = req.user.id;
-
-    if (!validateObjectId(roomId) || !validateObjectId(participantId)) {
-      return errorResponse(res, 'Invalid room ID or participant ID', 400);
-    }
-
-    if (!encryptedKey) {
-      return errorResponse(res, 'Encrypted key is required', 400);
-    }
-
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
-    }
-
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
-    );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
-    }
-
-    // Check if the target user is a participant in the room
-    const isTargetParticipant = chatRoom.participants.some(
-      p =>
-        p.user &&
-        (p.user.toString() === participantId ||
-          (p.user._id && p.user._id.toString() === participantId))
-    );
-    if (!isTargetParticipant) {
-      return errorResponse(res, 'Target user is not a participant in this chat room', 403);
-    }
-
-    // Store the encrypted key
-    // First, check if we already have a key entry for this participant
-    const keyIndex = chatRoom.encryptedKeys.findIndex(
-      key => key.participantId.toString() === participantId
-    );
-
-    if (keyIndex >= 0) {
-      // Update existing key
-      chatRoom.encryptedKeys[keyIndex].encryptedKey = encryptedKey;
-      chatRoom.encryptedKeys[keyIndex].updatedAt = new Date();
-    } else {
-      // Add new key
-      chatRoom.encryptedKeys.push({
-        participantId,
-        encryptedKey,
-        createdBy: userId,
-        createdAt: new Date(),
-      });
-    }
-
-    await chatRoom.save();
-
-    logger.info(
-      `User ${userId} stored an encrypted key for participant ${participantId} in room ${roomId}`
-    );
-    return successResponse(res, { success: true });
-  } catch (error) {
-    logger.error('Error storing room key:', error);
-    return errorResponse(res, 'Failed to store room key', 500);
-  }
-};
-
-/**
- * Get the encrypted room key for the current user
- *
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-const getRoomKey = async (req, res) => {
+export async function getRoomParticipantKeys(req, res) {
   try {
     const { roomId } = req.params;
-    const userId = req.user.id;
+
+    if (!roomId) {
+      return sendError(res, 'Room ID is required', 400);
+    }
 
     if (!validateObjectId(roomId)) {
-      return errorResponse(res, 'Invalid room ID', 400);
+      return sendError(res, 'Invalid room ID format', 400);
     }
 
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
+    const room = await ChatRoom.findById(roomId).populate('participants', 'encryption.publicKey');
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
     }
 
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
-    );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
-    }
+    const participantKeys = room.participants
+      .filter(p => p.encryption?.publicKey)
+      .map(p => ({
+        userId: p._id,
+        publicKey: p.encryption.publicKey,
+      }));
 
-    // Check if encryption is enabled for this room
-    if (!chatRoom.encryption || !chatRoom.encryption.enabled) {
-      return errorResponse(res, 'Encryption is not enabled for this chat room', 400);
-    }
-
-    // Find the encrypted key for this user
-    const keyEntry = chatRoom.encryptedKeys.find(key => key.participantId.toString() === userId);
-
-    if (!keyEntry) {
-      return errorResponse(res, 'No encryption key found for this user', 404);
-    }
-
-    logger.info(`User ${userId} retrieved their encrypted key for room ${roomId}`);
-    return successResponse(res, { encryptedKey: keyEntry.encryptedKey });
-  } catch (error) {
-    logger.error('Error getting room key:', error);
-    return errorResponse(res, 'Failed to get room key', 500);
+    return sendSuccess(res, { participantKeys });
+  } catch (err) {
+    logger.error('Error retrieving participant keys:', err);
+    return sendError(res, err);
   }
-};
+}
 
 /**
- * Get the public keys of all participants in a room
- *
+ * Gets the encryption status of a room
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-const getRoomParticipantKeys = async (req, res) => {
+export async function getRoomEncryptionStatus(req, res) {
   try {
     const { roomId } = req.params;
-    const userId = req.user.id;
+
+    if (!roomId) {
+      return sendError(res, 'Room ID is required', 400);
+    }
 
     if (!validateObjectId(roomId)) {
-      return errorResponse(res, 'Invalid room ID', 400);
+      return sendError(res, 'Invalid room ID format', 400);
     }
 
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
+    const room = await ChatRoom.findById(roomId);
+
+    if (!room) {
+      return sendError(res, 'Chat room not found', 404);
     }
 
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
-    );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
-    }
-
-    // Get the public keys of all participants
-    const participantIds = chatRoom.participants.map(p => p.user);
-    const participants = await User.find({ _id: { $in: participantIds } }, 'encryption.publicKey');
-
-    // Format the response
-    const participantKeys = {};
-    participants.forEach(participant => {
-      if (participant.encryption && participant.encryption.publicKey) {
-        participantKeys[participant._id.toString()] = participant.encryption.publicKey;
-      }
+    return sendSuccess(res, {
+      isEncrypted: room.encryption?.enabled || false,
+      hasRoomKey: !!room.encryption?.roomKey,
     });
-
-    logger.info(`User ${userId} retrieved participant keys for room ${roomId}`);
-    return successResponse(res, { participantKeys });
-  } catch (error) {
-    logger.error('Error getting participant keys:', error);
-    return errorResponse(res, 'Failed to get participant keys', 500);
+  } catch (err) {
+    logger.error('Error retrieving encryption status:', err);
+    return sendError(res, err);
   }
-};
+}
 
-/**
- * Get the encryption status of a room
- *
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-const getRoomEncryptionStatus = async (req, res) => {
-  try {
-    const { roomId } = req.params;
-    const userId = req.user.id;
-
-    if (!validateObjectId(roomId)) {
-      return errorResponse(res, 'Invalid room ID', 400);
-    }
-
-    // Get the chat room
-    const chatRoom = await ChatRoom.findById(roomId);
-    if (!chatRoom) {
-      return errorResponse(res, 'Chat room not found', 404);
-    }
-
-    // Check if the user is a participant in the room
-    const isParticipant = chatRoom.participants.some(
-      p =>
-        p.user && (p.user.toString() === userId || (p.user._id && p.user._id.toString() === userId))
-    );
-    if (!isParticipant) {
-      return errorResponse(res, 'You are not a participant in this chat room', 403);
-    }
-
-    // Get the encryption status
-    const encryptionEnabled = chatRoom.encryption && chatRoom.encryption.enabled;
-
-    // Check if all participants have public keys
-    const participantIds = chatRoom.participants.map(p => p.user);
-    const participants = await User.find({ _id: { $in: participantIds } }, 'encryption.publicKey');
-
-    const allParticipantsHaveKeys = participants.every(
-      participant => participant.encryption && participant.encryption.publicKey
-    );
-
-    // Check if the current user has a key for this room
-    const hasRoomKey = chatRoom.encryptedKeys.some(key => key.participantId.toString() === userId);
-
-    logger.info(`User ${userId} checked encryption status for room ${roomId}`);
-    return successResponse(res, {
-      encryptionEnabled,
-      allParticipantsHaveKeys,
-      hasRoomKey,
-    });
-  } catch (error) {
-    logger.error('Error getting encryption status:', error);
-    return errorResponse(res, 'Failed to get encryption status', 500);
-  }
-};
+// Add these named exports so other modules can import { successResponse, errorResponse }
+export { successResponse, errorResponse };
 
 export default {
   registerPublicKey,
@@ -388,4 +302,6 @@ export default {
   getRoomKey,
   getRoomParticipantKeys,
   getRoomEncryptionStatus,
+  sendSuccess,
+  sendError,
 };

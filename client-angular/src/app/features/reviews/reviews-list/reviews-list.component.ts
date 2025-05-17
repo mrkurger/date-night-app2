@@ -1,18 +1,15 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (reviews-list.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import { NebularModule } from '../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -36,16 +33,279 @@ export interface Review {
 @Component({
   selector: 'app-reviews-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule, NebularModule],
+  template: `
+    <div class="reviews-list-container">
+      <!-- Loading State -->
+      <div class="loading-container" *ngIf="loading">
+        <nb-spinner status="primary"></nb-spinner>
+        <p>Loading reviews...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="!loading && reviews.length === 0">
+        <nb-icon icon="message-square-outline" class="empty-icon"></nb-icon>
+        <h3>No Reviews Yet</h3>
+        <p>Be the first to share your experience!</p>
+      </div>
+
+      <!-- Reviews List -->
+      <div class="reviews-list" *ngIf="!loading && reviews.length > 0">
+        <nb-card *ngFor="let review of reviews" class="review-item">
+          <nb-card-header>
+            <div class="review-header">
+              <div class="user-info">
+                <nb-user
+                  *ngIf="!review.anonymous"
+                  [name]="review.userName"
+                  [picture]="review.userAvatar || '/assets/img/default-avatar.png'"
+                  size="medium"
+                ></nb-user>
+                <nb-user
+                  *ngIf="review.anonymous"
+                  name="Anonymous User"
+                  icon="person-outline"
+                  size="medium"
+                ></nb-user>
+                <span class="review-date">{{ formatDate(review.createdAt) }}</span>
+              </div>
+
+              <!-- Review Actions -->
+              <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
+                <button
+                  nbButton
+                  ghost
+                  [nbContextMenu]="reviewActions"
+                  [nbContextMenuTag]="review._id"
+                  aria-label="Review actions"
+                >
+                  <nb-icon icon="more-vertical-outline"></nb-icon>
+                </button>
+              </div>
+            </div>
+          </nb-card-header>
+
+          <nb-card-body>
+            <!-- Review Content -->
+            <div class="review-content">
+              <div class="rating">
+                <div class="stars">
+                  <nb-icon
+                    *ngFor="let star of getStars(review.rating)"
+                    [icon]="star ? 'star' : 'star-outline'"
+                    [status]="star ? 'warning' : 'basic'"
+                  ></nb-icon>
+                </div>
+                <nb-badge [text]="review.rating + '/5'" status="primary"></nb-badge>
+              </div>
+
+              <h3 class="review-title">{{ review.title }}</h3>
+              <p class="review-text">{{ review.content }}</p>
+
+              <!-- Ad Info (if showing) -->
+              <div class="ad-info" *ngIf="showAdInfo">
+                <a [routerLink]="['/ad-details', review.adId]" class="ad-link">
+                  View Ad
+                  <nb-icon icon="external-link-outline"></nb-icon>
+                </a>
+              </div>
+
+              <!-- Review Feedback -->
+              <div class="review-feedback">
+                <button
+                  nbButton
+                  ghost
+                  size="small"
+                  [status]="review.userReaction === 'helpful' ? 'success' : 'basic'"
+                  (click)="onReactionClick(review._id, 'helpful')"
+                >
+                  <nb-icon icon="thumbs-up-outline"></nb-icon>
+                </button>
+                <button
+                  nbButton
+                  ghost
+                  size="small"
+                  [status]="review.userReaction === 'unhelpful' ? 'danger' : 'basic'"
+                  (click)="onReactionClick(review._id, 'unhelpful')"
+                >
+                  <nb-icon icon="thumbs-down-outline"></nb-icon>
+                  Not Helpful ({{ review.unhelpful }})
+                </button>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container" *ngIf="showPagination && totalPages > 1 && !loading">
+        <div class="pagination">
+          <button
+            nbButton
+            ghost
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)"
+            aria-label="Previous page"
+          >
+            <nb-icon icon="arrow-left"></nb-icon>
+          </button>
+
+          <ng-container *ngFor="let page of pageNumbers">
+            <ng-container *ngIf="page !== -1; else ellipsis">
+              <button
+                nbButton
+                [ghost]="page !== currentPage"
+                [status]="page === currentPage ? 'primary' : 'basic'"
+                (click)="changePage(page)"
+                [attr.aria-current]="page === currentPage ? 'page' : null"
+              >
+                {{ page }}
+              </button>
+            </ng-container>
+            <ng-template #ellipsis>
+              <span class="ellipsis">...</span>
+            </ng-template>
+          </ng-container>
+
+          <button
+            nbButton
+            ghost
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)"
+            aria-label="Next page"
+          >
+            <nb-icon icon="arrow-right"></nb-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .reviews-list-container {
+        padding: 2rem;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        gap: 1rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+
+        .empty-icon {
+          font-size: 3rem;
+          color: var(--text-hint-color);
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          margin-bottom: 0.5rem;
+          color: var(--text-basic-color);
+        }
+
+        p {
+          color: var(--text-hint-color);
+        }
+      }
+
+      .reviews-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .review-date {
+        color: var(--text-hint-color);
+        font-size: 0.875rem;
+      }
+
+      .review-content {
+        .rating {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .stars {
+          display: flex;
+          gap: 0.25rem;
+        }
+
+        .review-title {
+          margin-bottom: 0.5rem;
+          color: var(--text-basic-color);
+        }
+
+        .review-text {
+          color: var(--text-basic-color);
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      .ad-info {
+        margin-bottom: 1rem;
+
+        .ad-link {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--text-primary-color);
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .review-feedback {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .pagination-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .ellipsis {
+        color: var(--text-hint-color);
+        padding: 0 0.5rem;
+      }
+    `,
   ],
-  templateUrl: './reviews-list.component.html',
-  styleUrls: ['./reviews-list.component.scss'],
 })
 export class ReviewsListComponent implements OnInit {
   @Input() reviews: Review[] = [];
@@ -66,6 +326,10 @@ export class ReviewsListComponent implements OnInit {
   }>();
 
   currentUserId: string | null = null;
+  reviewActions = [
+    { title: 'Edit Review', icon: 'edit-outline', action: 'edit' },
+    { title: 'Delete Review', icon: 'trash-2-outline', action: 'delete' },
+  ];
 
   constructor(private authService: AuthService) {}
 

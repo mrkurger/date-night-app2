@@ -1,3 +1,5 @@
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AvailabilityCalendarComponent } from './availability-calendar.component';

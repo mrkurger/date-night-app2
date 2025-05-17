@@ -6,7 +6,8 @@
  */
 export interface Ad {
   // Core properties
-  _id: string | { city: string; county: string };
+  _id: string;
+  id?: string;
   title?: string;
   description?: string;
   category?: string;

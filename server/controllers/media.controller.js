@@ -1,5 +1,6 @@
 import mediaService from '../services/media.service.js';
 import { validationResult } from 'express-validator';
+import { sendSuccess, sendError } from '../utils/response.js';
 
 /**
  * Media Controller for handling media-related API endpoints
@@ -143,5 +144,14 @@ const mediaController = {
     }
   },
 };
+
+export async function someHandler(req, res) {
+  try {
+    const result = await mediaService.processMedia();
+    return sendSuccess(res, result);
+  } catch (err) {
+    return sendError(res, err, err.status || 500);
+  }
+}
 
 export default mediaController;

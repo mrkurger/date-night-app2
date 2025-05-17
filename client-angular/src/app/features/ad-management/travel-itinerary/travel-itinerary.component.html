@@ -1,373 +1,111 @@
 <div class="travel-itinerary-container">
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Travel Itinerary Management</h2>
-      <p class="text-muted">
-        Manage your travel plans and let your followers know where you'll be next.
-      </p>
-      <div class="tabs-container">
-        <div class="tabs-header">
-          <button
-            *ngFor="
-              let tab of [
-                'Add/Edit Itinerary',
-                'Your Itineraries',
-                'Map View',
-                'Location Tracking',
-              ];
-              let i = index
-            "
-            class="tab-button"
-            [class.active]="activeTab === i"
-            (click)="activeTab = i; onTabChange({ index: i })"
-          >
-            {{ tab }}
+  <nb-card>
+    <nb-card-header>
+      <h2>Travel Itinerary</h2>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="travelForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <nb-form-field>
+            <label for="destination">Destination</label>
+            <input nbInput formControlName="destination" placeholder="Enter destination" />
+            <div
+              *ngIf="
+                travelForm.get('destination')?.hasError('required') &&
+                travelForm.get('destination')?.touched
+              "
+              class="error-message"
+            >
+              Destination is required
+            </div>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <nb-form-field>
+            <label for="startDate">Start Date</label>
+            <input
+              nbInput
+              formControlName="startDate"
+              [nbDatepicker]="startDatePicker"
+              placeholder="Select start date"
+            />
+            <nb-datepicker #startDatePicker></nb-datepicker>
+            <div
+              *ngIf="
+                travelForm.get('startDate')?.hasError('required') &&
+                travelForm.get('startDate')?.touched
+              "
+              class="error-message"
+            >
+              Start date is required
+            </div>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <nb-form-field>
+            <label for="endDate">End Date</label>
+            <input
+              nbInput
+              formControlName="endDate"
+              [nbDatepicker]="endDatePicker"
+              placeholder="Select end date"
+            />
+            <nb-datepicker #endDatePicker></nb-datepicker>
+            <div
+              *ngIf="
+                travelForm.get('endDate')?.hasError('required') &&
+                travelForm.get('endDate')?.touched
+              "
+              class="error-message"
+            >
+              End date is required
+            </div>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <nb-form-field>
+            <label for="travelers">Number of Travelers</label>
+            <input
+              nbInput
+              type="number"
+              formControlName="travelers"
+              placeholder="Enter number of travelers"
+            />
+            <div
+              *ngIf="
+                travelForm.get('travelers')?.hasError('required') &&
+                travelForm.get('travelers')?.touched
+              "
+              class="error-message"
+            >
+              Number of travelers is required
+            </div>
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <nb-form-field>
+            <label for="budget">Budget</label>
+            <input nbInput type="number" formControlName="budget" placeholder="Enter budget" />
+          </nb-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button nbButton status="primary" [disabled]="travelForm.invalid" type="submit">
+            Save Itinerary
           </button>
+          <button nbButton status="basic" type="button" (click)="onCancel()">Cancel</button>
         </div>
+      </form>
 
-        <div class="tabs-content">
-          <!-- Tab 1: Add/Edit Itinerary -->
-          <div *ngIf="activeTab === 0" class="tab-pane">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>{{ editMode ? 'Edit Travel Itinerary' : 'Add New Travel Itinerary' }}</h3>
-                  </div>
-                  <div class="card-body">
-                    <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()">
-                      <div formGroupName="destination">
-                        <!-- County Selection -->
-                        <mat-form-field class="w-100">
-                          <mat-label>County</mat-label>
-                          <mat-select formControlName="county" required>
-                            <mat-option *ngFor="let county of counties" [value]="county">
-                              {{ county }}
-                            </mat-option>
-                          </mat-select>
-                          <mat-error
-                            *ngIf="itineraryForm.get('destination.county')?.errors?.required"
-                          >
-                            County is required
-                          </mat-error>
-                        </mat-form-field>
-
-                        <!-- City Selection -->
-                        <mat-form-field class="w-100">
-                          <mat-label>City</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            formControlName="city"
-                            [matAutocomplete]="auto"
-                            required
-                          />
-                          <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let city of filteredCities" [value]="city.name">
-                              {{ city.name }}
-                            </mat-option>
-                          </mat-autocomplete>
-                          <mat-error
-                            *ngIf="itineraryForm.get('destination.city')?.errors?.required"
-                          >
-                            City is required
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-
-                      <!-- Dates -->
-                      <div class="row">
-                        <div class="col-md-6">
-                          <mat-form-field class="w-100">
-                            <mat-label>Arrival Date</mat-label>
-                            <input
-                              matInput
-                              [matDatepicker]="arrivalPicker"
-                              formControlName="arrivalDate"
-                              required
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="arrivalPicker"
-                            ></mat-datepicker-toggle>
-                            <mat-datepicker #arrivalPicker></mat-datepicker>
-                            <mat-error *ngIf="itineraryForm.get('arrivalDate')?.errors?.required">
-                              Arrival date is required
-                            </mat-error>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-md-6">
-                          <mat-form-field class="w-100">
-                            <mat-label>Departure Date</mat-label>
-                            <input
-                              matInput
-                              [matDatepicker]="departurePicker"
-                              formControlName="departureDate"
-                              required
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="departurePicker"
-                            ></mat-datepicker-toggle>
-                            <mat-datepicker #departurePicker></mat-datepicker>
-                            <mat-error *ngIf="itineraryForm.get('departureDate')?.errors?.required">
-                              Departure date is required
-                            </mat-error>
-                          </mat-form-field>
-                        </div>
-                      </div>
-
-                      <!-- Status -->
-                      <mat-form-field class="w-100">
-                        <mat-label>Status</mat-label>
-                        <mat-select formControlName="status">
-                          <mat-option value="planned">Planned</mat-option>
-                          <mat-option value="active">Active</mat-option>
-                          <mat-option value="completed">Completed</mat-option>
-                          <mat-option value="cancelled">Cancelled</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-
-                      <!-- Notes -->
-                      <mat-form-field class="w-100">
-                        <mat-label>Notes</mat-label>
-                        <textarea matInput formControlName="notes" rows="3"></textarea>
-                      </mat-form-field>
-
-                      <!-- Submit Button -->
-                      <div class="d-flex justify-content-between">
-                        <button
-                          type="submit"
-                          mat-raised-button
-                          color="primary"
-                          [disabled]="submitting"
-                        >
-                          <mat-spinner *ngIf="submitting" diameter="20" class="me-2"></mat-spinner>
-                          {{ editMode ? 'Update' : 'Add' }} Itinerary
-                        </button>
-                        <button *ngIf="editMode" type="button" mat-button (click)="resetForm()">
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>Location Selection</h3>
-                  </div>
-                  <div class="card-body">
-                    <app-map
-                      #itineraryMap
-                      [height]="'400px'"
-                      [initialLatitude]="59.9139"
-                      [initialLongitude]="10.7522"
-                      [initialZoom]="6"
-                      [selectable]="true"
-                      (locationSelected)="onMapLocationSelected($event)"
-                      (markerClick)="onMarkerClick($event)"
-                    ></app-map>
-
-                    <div *ngIf="selectedLocation" class="mt-3">
-                      <p>
-                        <strong>Selected Location:</strong><br />
-                        Latitude: {{ selectedLocation.latitude | number: '1.6-6' }}<br />
-                        Longitude: {{ selectedLocation.longitude | number: '1.6-6' }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab 2: Itinerary List -->
-          <div *ngIf="activeTab === 1" class="tab-pane">
-            <div class="card">
-              <div class="card-header">
-                <h3>Your Travel Itineraries</h3>
-              </div>
-              <div class="card-body">
-                <div *ngIf="loading" class="text-center">
-                  <div class="spinner-border"></div>
-                  <p>Loading itineraries...</p>
-                </div>
-
-                <div *ngIf="!loading && itineraries.length === 0" class="text-center">
-                  <p>You haven't added any travel itineraries yet.</p>
-                </div>
-
-                <div *ngIf="!loading && itineraries.length > 0">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Destination</th>
-                          <th>Dates</th>
-                          <th>Status</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let itinerary of itineraries">
-                          <td>
-                            {{ itinerary.destination.city }}, {{ itinerary.destination.county }}
-                          </td>
-                          <td>
-                            {{ formatDate(itinerary.arrivalDate) }} -
-                            {{ formatDate(itinerary.departureDate) }}
-                          </td>
-                          <td>
-                            <span [class]="'badge ' + getStatusClass(itinerary.status)">
-                              {{ itinerary.status | titlecase }}
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              mat-icon-button
-                              color="primary"
-                              (click)="editItinerary(itinerary)"
-                              matTooltip="Edit"
-                            >
-                              <mat-icon>edit</mat-icon>
-                            </button>
-                            <button
-                              mat-icon-button
-                              color="warn"
-                              (click)="cancelItinerary(itinerary)"
-                              *ngIf="itinerary.status !== 'cancelled'"
-                              matTooltip="Cancel"
-                            >
-                              <mat-icon>cancel</mat-icon>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab 3: Map View -->
-          <div *ngIf="activeTab === 2" class="tab-pane">
-            <div class="card">
-              <div class="card-header">
-                <h3>Travel Map</h3>
-              </div>
-              <div class="card-body">
-                <app-map
-                  #itineraryMap
-                  [height]="'600px'"
-                  [initialLatitude]="59.9139"
-                  [initialLongitude]="10.7522"
-                  [initialZoom]="6"
-                  [selectable]="false"
-                  (markerClick)="onMarkerClick($event)"
-                ></app-map>
-
-                <!-- Map Legend -->
-                <div class="map-legend mt-3">
-                  <h4>Legend</h4>
-                  <div class="row">
-                    <div
-                      class="col-md-3"
-                      *ngFor="let status of ['planned', 'active', 'completed', 'cancelled']"
-                    >
-                      <div class="d-flex align-items-center">
-                        <div [ngStyle]="mapService.generateMarkerStyle(status)" class="me-2"></div>
-                        <span>{{ status | titlecase }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab 4: Location Tracking -->
-          <div *ngIf="activeTab === 3" class="tab-pane">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>Active Travel Plans</h3>
-                  </div>
-                  <div class="card-body">
-                    <div *ngIf="loading" class="text-center">
-                      <div class="spinner-border"></div>
-                      <p>Loading itineraries...</p>
-                    </div>
-
-                    <div *ngIf="!loading">
-                      <div *ngIf="getActiveItineraries().length === 0" class="text-center">
-                        <p>You don't have any active travel itineraries.</p>
-                      </div>
-
-                      <div *ngFor="let itinerary of getActiveItineraries()" class="mb-3">
-                        <div class="card">
-                          <div class="card-body">
-                            <h5 class="card-title">
-                              {{ itinerary.destination.city }}, {{ itinerary.destination.county }}
-                            </h5>
-                            <p class="card-text">
-                              <strong>Dates:</strong> {{ formatDate(itinerary.arrivalDate) }} -
-                              {{ formatDate(itinerary.departureDate) }}
-                            </p>
-                            <p class="card-text" *ngIf="itinerary.notes">
-                              <strong>Notes:</strong> {{ itinerary.notes }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-7">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>Your Location</h3>
-                  </div>
-                  <div class="card-body">
-                    <app-map
-                      #locationMap
-                      [height]="'500px'"
-                      [initialLatitude]="59.9139"
-                      [initialLongitude]="10.7522"
-                      [initialZoom]="6"
-                      [selectable]="false"
-                    ></app-map>
-
-                    <div class="mt-3">
-                      <button
-                        mat-raised-button
-                        color="primary"
-                        (click)="startLocationTracking()"
-                        [disabled]="trackingLocation"
-                      >
-                        <mat-icon>my_location</mat-icon>
-                        {{ trackingLocation ? 'Updating Location...' : 'Update My Location' }}
-                      </button>
-
-                      <p *ngIf="currentPosition" class="mt-2">
-                        <strong>Current Position:</strong><br />
-                        Latitude: {{ currentPosition.latitude | number: '1.6-6' }}<br />
-                        Longitude: {{ currentPosition.longitude | number: '1.6-6' }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Map Component -->
+      <div class="map-container" *ngIf="showMap">
+        <h3>Destination Map</h3>
+        <app-map [latitude]="mapLatitude" [longitude]="mapLongitude" [zoom]="mapZoom"></app-map>
       </div>
-    </div>
-  </div>
+    </nb-card-body>
+  </nb-card>
 </div>

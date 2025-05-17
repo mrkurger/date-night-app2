@@ -1,3 +1,4 @@
+import { OnDestroy, OnInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +8,6 @@
 // - DEFAULT_VIEW: Default view type (default: 'netflix')
 //   Related to: user-preferences.service.ts:defaultViewType
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { NetflixViewComponent } from '../netflix-view/netflix-view.component';
@@ -21,7 +21,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NetflixViewComponent, TinderComponent, ListViewComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule],
 })
 export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+/* Removed: @import '@nebular/theme/styles/prebuilt/default.css'; */
+/* Removed: @import 'node_modules/eva-icons/style/eva-icons.css'; */
 @import 'assets/styles/design-system.scss';
 
 /* Import Google Fonts */
@@ -45,77 +46,8 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-.mat-mdc-snack-bar-action .mdc-button__label {
-  color: white;
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Form styles */
-.mat-mdc-form-field {
-  width: 100%;
-  font-family: var(--font-family-base);
-}
-
-.mat-mdc-form-field-infix {
-  font-family: var(--font-family-base);
-}
-
-.mat-mdc-form-field-label {
-  font-family: var(--font-family-base);
-  color: var(--neutral-600);
-}
-
-.mat-mdc-form-field-error {
-  color: var(--error);
-  font-size: var(--font-size-xs);
-}
-
-.mat-mdc-form-field-hint {
-  color: var(--neutral-600);
-  font-size: var(--font-size-xs);
-}
-
-.mat-mdc-snack-bar-container {
-  margin: 1rem !important;
-}
-
-.mat-mdc-snack-bar-container .mdc-snackbar__surface {
-  border-radius: var(--border-radius-md) !important;
-  box-shadow: var(--shadow-lg) !important;
-}
-
-/* Button styles */
-.mat-mdc-button,
-.mat-mdc-raised-button,
-.mat-mdc-outlined-button,
-.mat-mdc-unelevated-button {
-  font-family: var(--font-family-base) !important;
-  font-weight: var(--font-weight-medium) !important;
-  border-radius: var(--border-radius-md) !important;
-  transition: all var(--transition-normal) var(--transition-timing-default) !important;
-}
-
-.mat-mdc-raised-button.mat-primary {
-  background-color: var(--primary) !important;
-}
-
-.mat-mdc-raised-button.mat-accent {
-  background-color: var(--secondary) !important;
-}
-
-.mat-mdc-outlined-button.mat-primary {
-  color: var(--primary) !important;
-  border-color: var(--primary) !important;
-}
-
-.mat-mdc-outlined-button.mat-accent {
-  color: var(--secondary) !important;
-  border-color: var(--secondary) !important;
-}
-
-/* Card styles */
-.mat-mdc-card {
+/* Nebular UI Overrides */
+nb-card {
   border-radius: var(--border-radius-lg) !important;
   box-shadow: var(--shadow-md) !important;
   transition:
@@ -123,89 +55,62 @@ body {
     box-shadow var(--transition-normal) var(--transition-timing-default) !important;
 }
 
-.mat-mdc-card:hover {
+nb-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg) !important;
 }
 
+/* Button styles */
+nb-button,
+[nbButton] {
+  font-family: var(--font-family-base) !important;
+  font-weight: var(--font-weight-medium) !important;
+  border-radius: var(--border-radius-md) !important;
+  transition: all var(--transition-normal) var(--transition-timing-default) !important;
+}
+
+/* Form styles */
+nb-form-field {
+  width: 100%;
+  font-family: var(--font-family-base);
+}
+
 /* Dialog styles */
-.mat-mdc-dialog-container .mdc-dialog__surface {
+nb-dialog-container {
   border-radius: var(--border-radius-lg) !important;
   box-shadow: var(--shadow-xl) !important;
 }
 
-.mat-mdc-dialog-title {
+nb-card-header {
   font-family: var(--font-family-heading) !important;
   font-weight: var(--font-weight-semibold) !important;
   color: var(--neutral-900) !important;
 }
 
 /* Tab styles */
-.mat-mdc-tab-header {
-  border-bottom: var(--border-width-thin) solid var(--neutral-300);
-}
-
-.mat-mdc-tab {
+nb-tabset {
   font-family: var(--font-family-base) !important;
   font-weight: var(--font-weight-medium) !important;
   transition: all var(--transition-normal) var(--transition-timing-default) !important;
 }
 
-.mat-mdc-tab.mat-mdc-tab-active {
-  color: var(--primary) !important;
-}
-
-.mat-mdc-tab-header-pagination-chevron {
-  border-color: var(--neutral-700) !important;
-}
-
-.mat-mdc-tab-header-pagination-disabled .mat-mdc-tab-header-pagination-chevron {
-  border-color: var(--neutral-400) !important;
-}
-
 /* Checkbox styles */
-.mat-mdc-checkbox
-  .mdc-checkbox
-  .mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background {
-  background-color: var(--primary) !important;
-  border-color: var(--primary) !important;
-}
-
-/* Radio button styles */
-.mat-mdc-radio-button
-  .mdc-radio
-  .mdc-radio__native-control:enabled:checked
-  + .mdc-radio__background
-  .mdc-radio__outer-circle {
-  border-color: var(--primary) !important;
-}
-
-.mat-mdc-radio-button
-  .mdc-radio
-  .mdc-radio__native-control:enabled:checked
-  + .mdc-radio__background
-  .mdc-radio__inner-circle {
-  background-color: var(--primary) !important;
-}
-
-/* Select styles */
-.mat-mdc-select-panel {
-  border-radius: var(--border-radius-md) !important;
-  box-shadow: var(--shadow-lg) !important;
-}
-
-.mat-mdc-option {
+nb-checkbox {
   font-family: var(--font-family-base) !important;
 }
 
-.mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-multiple) {
-  background-color: rgba(255, 51, 102, 0.1) !important;
-  color: var(--primary) !important;
+/* Radio button styles */
+nb-radio {
+  font-family: var(--font-family-base) !important;
+}
+
+/* Select styles */
+nb-select {
+  font-family: var(--font-family-base) !important;
 }
 
 /* Tooltip styles */
-.mat-mdc-tooltip {
+nb-tooltip {
   background-color: var(--neutral-800) !important;
   border-radius: var(--border-radius-md) !important;
   font-family: var(--font-family-base) !important;

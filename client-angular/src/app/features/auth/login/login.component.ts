@@ -1,3 +1,16 @@
+import { OnInit } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,35 +20,34 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
-// Material Modules
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// Nebular Modules
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
+    RouterLink,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
   ],
 })
 export class LoginComponent implements OnInit {
@@ -48,6 +60,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private authService: AuthService,
+    private nbAuthService: NbAuthService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -88,5 +102,30 @@ export class LoginComponent implements OnInit {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
         },
       });
+  }
+
+  socialLogin(provider: string): void {
+    this.isLoading = true;
+
+    this.nbAuthService.authenticate(provider).subscribe((result: NbAuthResult) => {
+      this.isLoading = false;
+      if (result.isSuccess()) {
+        // Only allow redirects to internal routes for security
+        const redirect = result.getRedirect();
+        if (
+          redirect &&
+          redirect.startsWith('/') &&
+          !redirect.startsWith('//') &&
+          !redirect.includes(':')
+        ) {
+          this.router.navigateByUrl(redirect);
+        } else {
+          this.router.navigateByUrl(this.returnUrl);
+        }
+      } else {
+        this.errorMessage =
+          result.getErrors()[0] || `Login with ${provider} failed. Please try again.`;
+      }
+    });
   }
 }

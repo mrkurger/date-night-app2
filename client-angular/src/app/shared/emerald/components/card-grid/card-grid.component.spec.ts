@@ -1,3 +1,4 @@
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,16 +9,19 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, Input, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule
+    NbCardModule, } from '@angular/common';
 
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 
-// Mock component for emerald-app-card
+// Mock component for nb-card
 @Component({
-  selector: 'emerald-app-card',
+  selector: 'nb-card',
   template: '<div class="mock-card">{{ title }}</div>',
   standalone: true,
   imports: [CommonModule],
@@ -43,7 +47,7 @@ class MockAppCardComponent {
       <div class="custom-template">{{ item.title }}</div>
     </ng-template>
 
-    <emerald-card-grid
+    <nb-card-grid
       [items]="items"
       [columns]="columns"
       [gap]="gap"
@@ -55,7 +59,7 @@ class MockAppCardComponent {
       [itemTemplate]="useCustomTemplate ? customTemplate : null"
       (itemClick)="onItemClick($event)"
     >
-    </emerald-card-grid>
+    </nb-card-grid>
   `,
   standalone: true,
   imports: [CommonModule, CardGridComponent],
@@ -128,7 +132,7 @@ describe('CardGridComponent', () => {
     hostComponent.layout = 'grid';
     hostFixture.detectChanges();
 
-    const gridElement = debugElement.query(By.css('.emerald-card-grid'));
+    const gridElement = debugElement.query(By.css('.nb-card-grid'));
     expect(gridElement).toBeTruthy();
 
     // Check if the grid style is applied correctly
@@ -142,12 +146,12 @@ describe('CardGridComponent', () => {
     hostComponent.layout = 'masonry';
     hostFixture.detectChanges();
 
-    const gridElement = debugElement.query(By.css('.emerald-card-grid'));
+    const gridElement = debugElement.query(By.css('.nb-card-grid'));
     expect(gridElement).toBeTruthy();
-    expect(gridElement.classes['emerald-card-grid--masonry']).toBeTrue();
+    expect(gridElement.classes['nb-card-grid--masonry']).toBeTrue();
 
     // Check if masonry items have the correct class
-    const masonryItems = debugElement.queryAll(By.css('.emerald-card-grid__item--masonry'));
+    const masonryItems = debugElement.queryAll(By.css('.nb-card-grid__item--masonry'));
     expect(masonryItems.length).toBe(3);
   });
 
@@ -155,19 +159,19 @@ describe('CardGridComponent', () => {
     hostComponent.layout = 'netflix';
     hostFixture.detectChanges();
 
-    const netflixGrid = debugElement.query(By.css('.emerald-card-grid--netflix'));
+    const netflixGrid = debugElement.query(By.css('.nb-card-grid--netflix'));
     expect(netflixGrid).toBeTruthy();
 
-    const netflixRow = debugElement.query(By.css('.emerald-card-grid__netflix-row'));
+    const netflixRow = debugElement.query(By.css('.nb-card-grid__netflix-row'));
     expect(netflixRow).toBeTruthy();
 
-    const netflixItems = debugElement.queryAll(By.css('.emerald-card-grid__item--netflix'));
+    const netflixItems = debugElement.queryAll(By.css('.nb-card-grid__item--netflix'));
     expect(netflixItems.length).toBe(3);
   });
 
   it('should handle item click event', () => {
     // Find the first grid item
-    const firstItem = debugElement.query(By.css('.emerald-card-grid__item'));
+    const firstItem = debugElement.query(By.css('.nb-card-grid__item'));
     expect(firstItem).toBeTruthy();
 
     // Trigger click event
@@ -214,7 +218,7 @@ describe('CardGridComponent', () => {
     hostFixture.detectChanges();
 
     // Check if empty state is displayed
-    const emptyState = debugElement.query(By.css('.emerald-card-grid__empty'));
+    const emptyState = debugElement.query(By.css('.nb-card-grid__empty'));
     expect(emptyState).toBeTruthy();
 
     // Verify empty state content

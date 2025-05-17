@@ -4,9 +4,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "module": "CommonJS",
+    "module": "esnext",
     "target": "ES2022",
-    "types": ["jasmine", "node"],
+    "types": ["jasmine", "node", "@types/jasmine"],
     "baseUrl": "./",
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
@@ -15,22 +15,9 @@
     "strict": false,
     "noImplicitAny": false,
     "noEmitOnError": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types", "src/typings.d.ts"]
   },
-  "files": ["src/jasmine.d.ts"],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
-}
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noImplicitAny": false,
-    "noEmitOnError": false,
-    "moduleResolution": "node"
-  },
-  "files": ["src/test.d.ts", "src/typings.d.ts"],
+  "files": ["src/test.ts", "src/jasmine.d.ts", "src/typings.d.ts", "src/polyfills.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

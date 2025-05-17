@@ -1,9 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
+import {
+  AppSortComponent,
+  AppSortHeaderComponent,
+} from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Ad, AdCreateDTO, AdUpdateDTO } from '../models/ad.interface';
+import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+
+export interface GetAdsResponse {
+  ads: Ad[];
+  total: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +24,8 @@ export class AdService {
 
   constructor(private http: HttpClient) {}
 
-  getAds(filters?: any): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl, { params: filters }).pipe(
-      catchError((error) => {
-        console.error('Error fetching ads from API:', error);
-        return of(this.getMockAds());
-      }),
-    );
+  getAds(filters?: any): Observable<GetAdsResponse> {
+    return this.http.get<GetAdsResponse>(`${this.apiUrl}`, { params: filters });
   }
 
   // Commented out to avoid duplicate implementation
@@ -365,7 +371,7 @@ export class AdService {
       });
     }
 
-    // Sort by distance
+    // NbSortEvent by distance
     return mockResults.sort((a, b) => a.distance - b.distance);
   }
 
@@ -394,5 +400,33 @@ export class AdService {
 
   private deg2rad(deg: number): number {
     return deg * (Math.PI / 180);
+  }
+
+  /**
+   * Get available counties
+   */
+  getCounties(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/counties`);
+  }
+
+  /**
+   * Like an ad
+   */
+  likeAd(adId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${adId}/like`, {});
+  }
+
+  /**
+   * Dislike an ad
+   */
+  dislikeAd(adId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${adId}/dislike`, {});
+  }
+
+  /**
+   * Super like an ad
+   */
+  superlikeAd(adId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${adId}/superlike`, {});
   }
 }

@@ -12,16 +12,16 @@
       <h2 class="design-demo__section-title">Typography</h2>
 
       <div class="design-demo__card-grid">
-        <app-card>
+        <nb-card>
           <h3 class="heading-1">Heading 1</h3>
           <h3 class="heading-2">Heading 2</h3>
           <h3 class="heading-3">Heading 3</h3>
           <h3 class="heading-4">Heading 4</h3>
           <h3 class="heading-5">Heading 5</h3>
           <h3 class="heading-6">Heading 6</h3>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <p class="body-large">Body Large: This is larger body text used for featured content.</p>
           <p class="body-default">
             Body Default: This is the default body text used for most content.
@@ -36,7 +36,7 @@
             Caption: This is used for image captions and supplementary information.
           </p>
           <p class="label">Label: This is used for form labels and small headers.</p>
-        </app-card>
+        </nb-card>
       </div>
     </section>
 
@@ -44,7 +44,7 @@
       <h2 class="design-demo__section-title">Colors</h2>
 
       <div class="design-demo__card-grid">
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Primary Colors</h3>
           <div class="color-grid">
             <div class="color-swatch">
@@ -66,9 +66,9 @@
               <div class="color-swatch__name">Primary Dark</div>
             </div>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Secondary Colors</h3>
           <div class="color-grid">
             <div class="color-swatch">
@@ -90,9 +90,9 @@
               <div class="color-swatch__name">Secondary Dark</div>
             </div>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Semantic Colors</h3>
           <div class="color-grid">
             <div class="color-swatch">
@@ -112,9 +112,9 @@
               <div class="color-swatch__name">Info</div>
             </div>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Neutral Colors</h3>
           <div class="color-grid">
             <div class="color-swatch">
@@ -165,7 +165,7 @@
               <div class="color-swatch__name">Dark Gray 3</div>
             </div>
           </div>
-        </app-card>
+        </nb-card>
       </div>
     </section>
 
@@ -173,7 +173,7 @@
       <h2 class="design-demo__section-title">Buttons</h2>
 
       <div class="design-demo__card-grid">
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Button Variants</h3>
           <div class="button-grid">
             <app-button variant="primary" (buttonClick)="onButtonClick($event, 'Primary')">
@@ -192,9 +192,9 @@
               Danger
             </app-button>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Button Sizes</h3>
           <div class="button-grid">
             <app-button size="small" (buttonClick)="onButtonClick($event, 'Small')">
@@ -209,9 +209,9 @@
               Large
             </app-button>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Button States</h3>
           <div class="button-grid">
             <app-button [disabled]="true"> Disabled </app-button>
@@ -220,9 +220,9 @@
 
             <app-button [fullWidth]="true"> Full Width </app-button>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Buttons with Icons</h3>
           <div class="button-grid">
             <app-button iconLeft="arrow-left" (buttonClick)="onButtonClick($event, 'Icon Left')">
@@ -249,7 +249,7 @@
               Search
             </app-button>
           </div>
-        </app-card>
+        </nb-card>
       </div>
     </section>
 
@@ -257,7 +257,7 @@
       <h2 class="design-demo__section-title">Form Inputs</h2>
 
       <div class="design-demo__card-grid">
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Text Inputs</h3>
           <div class="form-grid">
             <app-input
@@ -307,9 +307,9 @@
             >
             </app-input>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Input Variants</h3>
           <div class="form-grid">
             <app-input
@@ -325,9 +325,9 @@
             <app-input label="Standard Input" placeholder="Standard input" variant="standard">
             </app-input>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Input Sizes</h3>
           <div class="form-grid">
             <app-input label="Small Input" placeholder="Small input" size="small"> </app-input>
@@ -337,79 +337,79 @@
 
             <app-input label="Large Input" placeholder="Large input" size="large"> </app-input>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Checkboxes (now Toggles)</h3>
           <div class="form-grid">
-            <emerald-toggle
+            <nb-toggle
               label="Default Toggle"
               [(ngModel)]="checkboxValue"
               (change)="onToggleChange($event, 'Default Toggle')"
             >
-            </emerald-toggle>
+            </nb-toggle>
 
-            <emerald-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
-            </emerald-toggle>
+            <nb-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
+            </nb-toggle>
 
-            <emerald-toggle label="Disabled Toggle" [disabled]="true"> </emerald-toggle>
+            <nb-toggle label="Disabled Toggle" [disabled]="true"> </nb-toggle>
 
-            <emerald-toggle
+            <nb-toggle
               label="Disabled Checked Toggle"
               [(ngModel)]="disabledCheckedToggleValue"
               [disabled]="true"
             >
-            </emerald-toggle>
+            </nb-toggle>
 
-            <emerald-toggle label="Toggle with (conceptual) Error"> </emerald-toggle>
+            <nb-toggle label="Toggle with (conceptual) Error"> </nb-toggle>
 
-            <emerald-toggle label="Toggle with (conceptual) Helper Text"> </emerald-toggle>
+            <nb-toggle label="Toggle with (conceptual) Helper Text"> </nb-toggle>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Toggle Sizes</h3>
           <div class="form-grid">
-            <emerald-toggle label="Small Toggle" size="small"> </emerald-toggle>
+            <nb-toggle label="Small Toggle" size="small"> </nb-toggle>
 
-            <emerald-toggle label="Medium Toggle (Default)" size="medium"> </emerald-toggle>
+            <nb-toggle label="Medium Toggle (Default)" size="medium"> </nb-toggle>
 
-            <emerald-toggle label="Large Toggle" size="large"> </emerald-toggle>
+            <nb-toggle label="Large Toggle" size="large"> </nb-toggle>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Toggle Colors (Emerald Specific)</h3>
           <div class="form-grid">
-            <emerald-toggle
+            <nb-toggle
               label="Primary Toggle"
               color="primary"
               [(ngModel)]="primaryToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Success Toggle"
               color="success"
               [(ngModel)]="successToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Warning Toggle"
               color="warning"
               [(ngModel)]="warningToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Danger Toggle"
               color="danger"
               [(ngModel)]="dangerToggleValue"
-            ></emerald-toggle>
-            <emerald-toggle
+            ></nb-toggle>
+            <nb-toggle
               label="Info Toggle"
               color="info"
               [(ngModel)]="infoToggleValue"
-            ></emerald-toggle>
+            ></nb-toggle>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Select Inputs</h3>
           <div class="form-grid">
             <app-select
@@ -445,9 +445,9 @@
             >
             </app-select>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Select Variants</h3>
           <div class="form-grid">
             <app-select
@@ -474,9 +474,9 @@
             >
             </app-select>
           </div>
-        </app-card>
+        </nb-card>
 
-        <app-card>
+        <nb-card>
           <h3 class="heading-4 mb-4">Select Sizes</h3>
           <div class="form-grid">
             <app-select
@@ -503,7 +503,7 @@
             >
             </app-select>
           </div>
-        </app-card>
+        </nb-card>
       </div>
     </section>
 
@@ -511,52 +511,52 @@
       <h2 class="design-demo__section-title">Cards</h2>
 
       <div class="design-demo__card-grid">
-        <app-card>
+        <nb-card>
           <h3 class="heading-4">Default Card</h3>
           <p class="body-default">This is a default card with medium padding and border radius.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card [bordered]="false">
+        <nb-card [bordered]="false">
           <h3 class="heading-4">Borderless Card</h3>
           <p class="body-default">This card has no border, only shadow.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card [shadowed]="false">
+        <nb-card [shadowed]="false">
           <h3 class="heading-4">No Shadow Card</h3>
           <p class="body-default">This card has a border but no shadow.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card padding="large" radius="large">
+        <nb-card padding="large" radius="large">
           <h3 class="heading-4">Large Padding & Radius</h3>
           <p class="body-default">This card has large padding and border radius.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card padding="small" radius="small">
+        <nb-card padding="small" radius="small">
           <h3 class="heading-4">Small Padding & Radius</h3>
           <p class="body-default">This card has small padding and border radius.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card [clickable]="true">
+        <nb-card [clickable]="true">
           <h3 class="heading-4">Clickable Card</h3>
           <p class="body-default">This card is clickable and has hover effects.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card [selected]="true">
+        <nb-card [selected]="true">
           <h3 class="heading-4">Selected Card</h3>
           <p class="body-default">This card is in a selected state.</p>
-        </app-card>
+        </nb-card>
 
-        <app-card [disabled]="true">
+        <nb-card [disabled]="true">
           <h3 class="heading-4">Disabled Card</h3>
           <p class="body-default">This card is in a disabled state.</p>
-        </app-card>
+        </nb-card>
       </div>
     </section>
 
     <section class="design-demo__section">
       <h2 class="design-demo__section-title">Icons</h2>
 
-      <app-card>
+      <nb-card>
         <h3 class="heading-4 mb-4">Icon Sizes & Colors</h3>
         <div class="icon-grid">
           <div class="icon-demo">
@@ -604,9 +604,9 @@
             <span class="icon-demo__label">Info</span>
           </div>
         </div>
-      </app-card>
+      </nb-card>
 
-      <app-card class="mt-4">
+      <nb-card class="mt-4">
         <h3 class="heading-4 mb-4">Available Icons</h3>
         <div class="icon-grid">
           <div class="icon-demo">
@@ -654,7 +654,7 @@
             <span class="icon-demo__label">eye-off</span>
           </div>
         </div>
-      </app-card>
+      </nb-card>
     </section>
   </div>
 </div>

@@ -71,7 +71,8 @@ export class PerformanceInterceptor implements HttpInterceptor {
           const url = this.getCleanUrl(request.url);
 
           // Log the API response time
-          console.debug(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);
+
+          console.warn(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);
         }
       }),
     );
@@ -94,7 +95,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
    * @param request The HTTP request
    * @returns An Observable of the HTTP event or null if not cached
    */
-  private tryGetFromCache(request: HttpRequest<unknown>): Observable<HttpEvent<unknown>> | null {
+  private tryGetFromCache(_request: HttpRequest<unknown>): Observable<HttpEvent<unknown>> | null {
     // Implement cache lookup logic here
     return null;
   }
@@ -104,7 +105,7 @@ export class PerformanceInterceptor implements HttpInterceptor {
    * @param request The HTTP request
    * @param response The HTTP response
    */
-  private addToCache(request: HttpRequest<unknown>, response: HttpResponse<unknown>): void {
+  private addToCache(_request: HttpRequest<unknown>, _response: HttpResponse<unknown>): void {
     // Implement cache storage logic here
   }
 

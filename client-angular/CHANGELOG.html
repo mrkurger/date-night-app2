@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Migration Changelog</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      .version {
+        background: #f7f9fc;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .version h2 {
+        margin-top: 0;
+      }
+      .changes {
+        margin-left: 1rem;
+      }
+      .type {
+        font-weight: bold;
+        color: #3366ff;
+      }
+      .date {
+        color: #8f9bb3;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Material UI to Nebular Migration Changelog</h1>
+
+    <div class="version">
+      <h2>Version 1.0.0 - Initial Migration</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Nebular dependencies (@nebular/theme, @nebular/eva-icons)</li>
+          <li>Nebular module for centralized imports</li>
+          <li>Migration script (migrate-to-nebular.sh)</li>
+          <li>Migration documentation (MIGRATION_GUIDE.html)</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated app layout to use Nebular layout components</li>
+          <li>Migrated TinderCard component to use Nebular components</li>
+          <li>Updated theme configuration in styles.scss</li>
+          <li>Replaced Material icons with Eva icons</li>
+        </ul>
+
+        <h3>Removed</h3>
+        <ul>
+          <li>Angular Material dependencies</li>
+          <li>Material theme configuration</li>
+          <li>Material-specific styles and utilities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.1 - Component Updates</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Nebular-specific animations and transitions</li>
+          <li>Custom theme variables for consistent styling</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated form controls to use Nebular inputs</li>
+          <li>Migrated dialog components to use NbDialogService</li>
+          <li>Updated notification system to use NbToastrService</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Theme inheritance issues in nested components</li>
+          <li>Icon alignment in buttons and cards</li>
+          <li>Form field validation styles</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.2 - Style Refinements</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Dark theme support using Nebular's theming system</li>
+          <li>Custom color palette for consistent branding</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Refined component spacing and alignment</li>
+          <li>Updated typography to match design system</li>
+          <li>Improved responsive behavior of layout components</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Mobile navigation issues</li>
+          <li>Theme switching bugs</li>
+          <li>Card layout inconsistencies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>Version 1.0.3 - Performance Improvements</h2>
+      <p class="date">2024-04-19</p>
+
+      <div class="changes">
+        <h3>Added</h3>
+        <ul>
+          <li>Lazy loading for Nebular modules</li>
+          <li>Performance monitoring for UI components</li>
+        </ul>
+
+        <h3>Changed</h3>
+        <ul>
+          <li>Optimized theme variable usage</li>
+          <li>Reduced bundle size by removing unused styles</li>
+        </ul>
+
+        <h3>Fixed</h3>
+        <ul>
+          <li>Memory leaks in dynamic components</li>
+          <li>Style recalculation performance issues</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <h2>May 13, 2025 - Nebular UI Component Analysis</h2>
+      
+      <p>Completed a comprehensive analysis of the frontend codebase to identify components that could be replaced with Nebular UI equivalents.</p>
+      
+      <h3>Key Findings</h3>
+      <ul>
+        <li>Most of the application already uses Nebular UI components extensively</li>
+        <li>Identified four custom components that could be replaced with Nebular equivalents:
+          <ul>
+            <li><code>app-card</code> → <code>nb-card</code></li>
+            <li><code>app-skeleton</code> → <code>nb-skeleton</code></li>
+            <li><code>app-button</code> → <code>nb-button</code></li>
+            <li><code>app-carousel</code> → Keep as custom component (no Nebular equivalent)</li>
+          </ul>
+        </li>
+        <li>Created documentation of current Nebular usage in AILESSONS.html</li>
+        <li>Created component glossary in GLOSSARY.html</li>
+      </ul>
+      
+      <h3>Next Steps</h3>
+      <ul>
+        <li>Replace identified custom components with Nebular equivalents</li>
+        <li>Ensure consistent theming across all components</li>
+        <li>Update tests after component replacements</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed Karma Test Runner Compatibility</h2>
+      
+      <p>Fixed an issue where Karma tests were failing due to incompatibility between Karma 6.4.x and rimraf 5.x.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a patch script <code>fix-karma-rimraf.js</code> that modifies Karma's <code>temp_dir.js</code> to handle both rimraf 3.x and 5.x APIs</li>
+        <li>Added a <code>fix-karma</code> npm script to the root package.json</li>
+        <li>Updated the client-angular test scripts to run the fix before tests</li>
+        <li>This fixes the error: <code>TypeError: rimraf is not a function</code> that was occurring during test runs</li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>The root package.json has an override for rimraf to version 5.0.5</li>
+        <li>Karma 6.4.0 expects rimraf to be a function (as in version 3.x)</li>
+        <li>In rimraf 5.x, the API has changed and it's no longer a direct function</li>
+        <li>The patch modifies Karma to check the rimraf type and use the appropriate API</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed Babel Runtime Missing Module Issue</h2>
+      
+      <p>Fixed an issue where Angular tests were failing due to missing Babel runtime helper files.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a custom module loader script <code>fix-babel-runtime-loader.js</code> to intercept module requests</li>
+        <li>Added a test runner script that uses the custom module loader</li>
+        <li>Added a <code>test:with-loader</code> npm script to the client-angular package.json</li>
+        <li>Added a <code>fix-babel</code> npm script to the root package.json</li>
+        <li>Created a combined <code>fix-tests</code> script that runs both fixes</li>
+        <li>This fixes the error: <code>Error: Can't resolve '@babel/runtime/helpers/asyncToGenerator.js'</code></li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>The tests were looking for Babel runtime helpers in a nested node_modules structure that doesn't exist</li>
+        <li>We created a custom module loader that intercepts require calls for the missing module</li>
+        <li>The loader redirects the requests to the actual implementation in the root node_modules</li>
+        <li>This approach is more robust than trying to create the complex directory structure</li>
+        <li>It works even when the build-angular directory is a symbolic link</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 13, 2025 - Fixed CSS Path Resolution in Karma Tests</h2>
+      
+      <p>Fixed an issue where Karma tests were failing due to missing CSS files.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Created a script <code>fix-karma-css-paths.js</code> to create placeholder CSS files</li>
+        <li>Added a <code>fix-css</code> npm script to the root package.json</li>
+        <li>Updated the <code>fix-tests</code> script to include the CSS fix</li>
+        <li>Updated the Karma configuration to include the CSS files</li>
+        <li>This fixes the errors: <code>Can't resolve 'node_modules/@nebular/theme/styles/prebuilt/default.css'</code> and <code>Can't resolve 'node_modules/eva-icons/style/eva-icons.css'</code></li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>Karma was looking for CSS files in the client-angular/node_modules directory</li>
+        <li>We created the directory structure and placeholder CSS files to satisfy these dependencies</li>
+        <li>The placeholder files are empty but allow the tests to run without CSS-related errors</li>
+        <li>We also updated the Karma configuration to explicitly include these files</li>
+        <li>This approach is more maintainable than modifying the Angular configuration</li>
+      </ul>
+    </div>
+    
+    <div class="version">
+      <h2>May 15, 2025 - Fixed Nebular Component Issues</h2>
+      
+      <p>Fixed issues with Nebular UI components that were preventing the application from compiling.</p>
+      
+      <h3>Changes</h3>
+      <ul>
+        <li>Added missing Nebular module imports in component files:
+          <ul>
+            <li>Fixed <code>response-dialog.component.ts</code> by adding proper imports for <code>NbButtonModule</code>, <code>NbInputModule</code>, <code>NbSpinnerModule</code>, <code>NbDialogRef</code>, and <code>NB_DIALOG_CONFIG</code></li>
+            <li>Fixed <code>review-dialog.component.ts</code> by adding proper imports for <code>NbButtonModule</code> and <code>NbDialogRef</code></li>
+            <li>Fixed <code>theme-toggle.component.ts</code> by adding proper import for <code>NbButtonModule</code></li>
+            <li>Fixed <code>tinder-card.component.ts</code> by adding proper imports for <code>NbButtonModule</code>, <code>NbBadgeModule</code>, and <code>NbUserModule</code></li>
+          </ul>
+        </li>
+        <li>Added Eva Icons CSS to <code>index.html</code> via CDN</li>
+        <li>Updated Content Security Policy to allow loading resources from unpkg.com</li>
+        <li>Fixed SASS map module import in <code>tokens.scss</code> by adding <code>@use 'sass:map';</code></li>
+        <li>Created comprehensive <code>fix-project.sh</code> script to handle common project issues</li>
+      </ul>
+      
+      <h3>Technical Details</h3>
+      <ul>
+        <li>The components were using Nebular modules in their templates but not importing them properly</li>
+        <li>The SASS compilation was failing due to missing map module import</li>
+        <li>Eva Icons CSS was not being loaded properly</li>
+        <li>The Content Security Policy was blocking resources from unpkg.com</li>
+        <li>The <code>fix-project.sh</code> script automates common fixes for the project</li>
+      </ul>
+    </div>
+  </body>
+</html>

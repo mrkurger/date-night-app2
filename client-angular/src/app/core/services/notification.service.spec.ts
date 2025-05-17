@@ -1,3 +1,5 @@
+/// <reference types="jasmine" />
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,8 +10,9 @@
 //   Related to: client-angular/src/app/core/services/notification.service.ts
 // ===================================================
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NbToastrService, NbToastrRef, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { of } from 'rxjs';
 
 import { NotificationService, NotificationType, ToastNotification } from './notification.service';
@@ -18,20 +21,27 @@ import { environment } from '../../../environments/environment';
 describe('NotificationService', () => {
   let service: NotificationService;
   let httpMock: HttpTestingController;
-  let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
-  let snackBarRefSpy: jasmine.SpyObj<MatSnackBarRef<any>>;
+  let snackBarSpy: jasmine.SpyObj<NbToastrService>;
+  let snackBarRefSpy: jasmine.SpyObj<NbToastrRef<any>>;
+  let toastrSpy: jasmine.SpyObj<NbToastrService>;
 
   const apiUrl = environment.apiUrl + '/notifications';
 
   beforeEach(() => {
-    // Create spies for MatSnackBar and MatSnackBarRef
-    snackBarRefSpy = jasmine.createSpyObj('MatSnackBarRef', ['dismiss']);
-    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
+    // Create spies for NbToastrService and NbToastrRef
+    snackBarRefSpy = jasmine.createSpyObj('NbToastrRef', ['dismiss']);
+    snackBarSpy = jasmine.createSpyObj('NbToastrService', ['open']);
     snackBarSpy.open.and.returnValue(snackBarRefSpy);
+
+    toastrSpy = jasmine.createSpyObj('NbToastrService', ['show']);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [NotificationService, { provide: MatSnackBar, useValue: snackBarSpy }],
+      providers: [
+        NotificationService,
+        { provide: NbToastrService, useValue: snackBarSpy },
+        { provide: NbToastrService, useValue: toastrSpy },
+      ],
     });
 
     service = TestBed.inject(NotificationService);
@@ -266,6 +276,48 @@ describe('NotificationService', () => {
 
       const req = httpMock.expectOne(`${apiUrl}/unread-count`);
       req.flush('Server error', errorResponse);
+    });
+  });
+
+  describe('Toastr Notifications', () => {
+    it('should show success notification', () => {
+      const message = 'Success message';
+      service.success(message);
+      expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Success', {
+        status: 'success',
+        duration: 3000,
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      });
+    });
+
+    it('should show error notification', () => {
+      const message = 'Error message';
+      service.error(message);
+      expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Error', {
+        status: 'danger',
+        duration: 5000,
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      });
+    });
+
+    it('should show warning notification', () => {
+      const message = 'Warning message';
+      service.warning(message);
+      expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Warning', {
+        status: 'warning',
+        duration: 4000,
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      });
+    });
+
+    it('should show info notification', () => {
+      const message = 'Info message';
+      service.info(message);
+      expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Info', {
+        status: 'info',
+        duration: 3000,
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      });
     });
   });
 });

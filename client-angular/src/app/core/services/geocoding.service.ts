@@ -10,7 +10,7 @@
 // - CACHE_DURATION: How long to cache geocoding results (default: 24 hours)
 // ===================================================
 
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';

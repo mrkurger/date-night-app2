@@ -7,12 +7,13 @@
    - SETTING_NAME: Description of setting (default: value)
      Related to: other_file.scss:OTHER_SETTING
    =================================================== */
-@use '../../../core/design/design-tokens' as tokens;
+
 @use '../../../core/design/typography-mixins' as typography;
 
 .chat-settings {
-  padding: 1.5rem;
-  background-color: var(--color-background-light);
+  /* Dark theme adjustments */
+  background-color: var(--background-basic-color-1);
+  padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

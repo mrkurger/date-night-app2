@@ -1,51 +1,35 @@
-@use 'src/styles/design-system/index.scss' as ds;
-@use '../../../../core/design/emerald-tokens' as emerald;
+@use '@nebular/theme/styles/theming' as *;
 @use 'sass:color';
-// Define variables locally for testing
-$border-radius-md: 0.375rem;
-$border-radius-sm: 0.25rem;
-emerald.$color-white: #f3f4f6;
-emerald.$color-light-gray-1: #e5e7eb;
-emerald.$color-light-gray-2: #d1d5db;
-emerald.$color-medium-gray-1: #9ca3af;
-emerald.$color-dark-gray-3: #1f2937;
-emerald.$color-black: #111827;
-$white: #ffffff;
-$black: #000000;
-$shadow-md:
-  0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-// Emerald Carousel Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/Carousel
+// Carousel Component Styles using Nebular Theme
 
-.emerald-carousel {
+.nebular-carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: $border-radius-md;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
 
   // Aspect Ratios
   &--1-1 {
-    .emerald-carousel__main {
+    .nebular-carousel__main {
       padding-bottom: 100%; // 1:1 aspect ratio
     }
   }
 
   &--4-3 {
-    .emerald-carousel__main {
+    .nebular-carousel__main {
       padding-bottom: 75%; // 4:3 aspect ratio
     }
   }
 
   &--16-9 {
-    .emerald-carousel__main {
+    .nebular-carousel__main {
       padding-bottom: 56.25%; // 16:9 aspect ratio
     }
   }
 
   &--21-9 {
-    .emerald-carousel__main {
+    .nebular-carousel__main {
       padding-bottom: 42.85%; // 21:9 aspect ratio
     }
   }
@@ -113,8 +97,8 @@ $shadow-md:
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: rgba(emerald.$color-black, 0.6);
-    color: emerald.$color-white;
+    background-color: rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.6);
+    color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
     display: flex;
     align-items: center;
@@ -126,7 +110,7 @@ $shadow-md:
       transform 0.2s ease;
 
     &:hover {
-      background-color: rgba(emerald.$color-black, 0.8);
+      background-color: rgba(var(--color-black) /* TODO: Verify correct CSS variable */, 0.8);
       transform: translateY(-50%) scale(1.1);
     }
 
@@ -154,7 +138,7 @@ $shadow-md:
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: rgba(emerald.$color-white, 0.5);
+    background-color: rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.5);
     border: none;
     cursor: pointer;
     transition:
@@ -162,18 +146,18 @@ $shadow-md:
       transform 0.2s ease;
 
     &:hover {
-      background-color: rgba(emerald.$color-white, 0.8);
+      background-color: rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.8);
     }
 
     &--active {
-      background-color: emerald.$color-white;
+      background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
       transform: scale(1.2);
     }
   }
 
   // Thumbnails
   &--with-thumbnails {
-    .emerald-carousel__main {
+    .nebular-carousel__main {
       margin-bottom: 8px;
     }
   }
@@ -188,12 +172,12 @@ $shadow-md:
     }
 
     &::-webkit-scrollbar-track {
-      background: emerald.$color-light-gray-1;
+      background: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
       border-radius: 3px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: emerald.$color-medium-gray-1;
+      background-color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
       border-radius: 3px;
     }
   }
@@ -207,7 +191,7 @@ $shadow-md:
   &__thumbnail {
     width: 60px;
     height: 60px;
-    border-radius: $border-radius-sm;
+    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
     overflow: hidden;
     border: 2px solid transparent;
     padding: 0;

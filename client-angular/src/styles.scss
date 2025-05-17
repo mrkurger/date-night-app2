@@ -1,1 +1,111 @@
-@import 'leaflet/dist/leaflet.css';
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+@use '@nebular/theme/styles/themes/cosmic' as dark;
+@use './app/core/design/tokens' as tokens;
+@use './app/core/design/utilities' as utils;
+@use '@fontsource/inter' as inter;
+@use '@fontsource/poppins' as poppins;
+@use './app/core/design/responsive' as responsive;
+@use './app/core/design/animations' as animations;
+@use './app/core/design/typography' as typography;
+@use './app/core/design/spacing' as spacing;
+@use './app/core/design/spacing-utilities-fix' as spacing-fix;
+
+:root {
+  --nb-theme-margin: 1rem;
+  --nb-theme-margin-lg: 1.5rem;
+  --nb-theme-margin-xs: 0.25rem;
+  --nb-theme-spacing: 0.5rem;
+  --nb-theme-form-field-spacing: 0.75rem;
+  --nb-theme-card-margin-bottom: 1.5rem;
+  --nb-theme-card-border-radius: 0.5rem;
+  --nb-theme-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --nb-theme-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --nb-theme-transition-duration: 0.2s;
+  --nb-theme-transition-timing-function: ease-in-out;
+  --nb-theme-button-border-radius: 0.25rem;
+  --nb-theme-button-padding: 0.5rem 1rem;
+  --nb-theme-border-radius: 0.25rem;
+  --nb-theme-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --nb-theme-padding: 1rem;
+  --color-danger-default: #ff3d71;
+  --color-primary-default: #3366ff;
+  --color-basic-600: #8f9bb3;
+}
+
+
+// Nebular theme and Eva Icons are now loaded via index.html
+
+// Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
+
+// Global styles
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: nb-theme(text-paragraph-font-family);
+  background-color: nb-theme(background-basic-color-1);
+  color: nb-theme(text-basic-color);
+}
+
+// Component styles
+nb-card {
+  margin-bottom: nb-theme(card-margin-bottom);
+  border-radius: nb-theme(card-border-radius);
+  box-shadow: nb-theme(card-shadow);
+  transition:
+    transform 0.2s nb-theme(transition-timing-function),
+    box-shadow 0.2s nb-theme(transition-timing-function);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: nb-theme(card-shadow-hover);
+  }
+}
+
+// Form styles
+nb-form-field {
+  margin-bottom: nb-theme(form-field-spacing);
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    font-family: nb-theme(text-paragraph-font-family);
+  }
+
+  &.has-error {
+    .error-message {
+      color: nb-theme(color-danger-default);
+      font-size: nb-theme(text-caption-font-size);
+      margin-top: nb-theme(form-field-spacing);
+    }
+  }
+}
+
+// Button styles
+[nbButton] {
+  font-family: nb-theme(text-button-font-family) !important;
+  font-weight: nb-theme(text-button-font-weight) !important;
+  text-transform: nb-theme(text-button-text-transform) !important;
+  border-radius: nb-theme(button-border-radius) !important;
+  padding: nb-theme(button-padding) !important;
+  transition: all nb-theme(transition-duration) nb-theme(transition-timing-function) !important;
+}
+
+// Utility classes
+.nb-margin {
+  margin: nb-theme(margin);
+}
+
+.nb-padding {
+  padding: nb-theme(padding);
+}
+
+.nb-rounded {
+  border-radius: nb-theme(border-radius);
+}
+
+.nb-shadow {
+  box-shadow: nb-theme(shadow);
+}

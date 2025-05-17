@@ -1,7 +1,7 @@
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains tests for the Emerald AppCard component
+// This file contains tests for the /*DEPRECATED:Emerald*/ AppCard component
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AD: Mock ad data for testing
@@ -9,7 +9,7 @@
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppCardComponent } from './app-card.component';
@@ -71,12 +71,12 @@ describe('AppCardComponent', () => {
     });
 
     it('should initialize with default values', () => {
-      const newComponent = new AppCardComponent();
-      expect(newComponent.layout).toBe('netflix');
-      expect(newComponent.showActions).toBeTrue();
-      expect(newComponent.showDescription).toBeTrue();
-      expect(newComponent.isOnline).toBeFalse();
-      expect(newComponent.currentMediaIndex).toBe(0);
+      // Use the existing component instance instead of creating a new one
+      expect(component.layout).toBe('netflix');
+      expect(component.showActions).toBeTrue();
+      expect(component.showDescription).toBeTrue();
+      expect(component.isOnline).toBeFalse();
+      expect(component.currentMediaIndex).toBe(0);
     });
 
     it('should set background image on init', () => {
@@ -272,42 +272,42 @@ describe('AppCardComponent', () => {
   describe('UI Rendering', () => {
     it('should apply correct layout class', () => {
       // Default layout (netflix)
-      let cardElement = debugElement.query(By.css('.emerald-app-card--netflix'));
+      let cardElement = debugElement.query(By.css('.nb-card--netflix'));
       expect(cardElement).toBeTruthy();
 
       // Change to tinder layout
       component.layout = 'tinder';
       fixture.detectChanges();
 
-      cardElement = debugElement.query(By.css('.emerald-app-card--tinder'));
+      cardElement = debugElement.query(By.css('.nb-card--tinder'));
       expect(cardElement).toBeTruthy();
 
       // Change to list layout
       component.layout = 'list';
       fixture.detectChanges();
 
-      cardElement = debugElement.query(By.css('.emerald-app-card--list'));
+      cardElement = debugElement.query(By.css('.nb-card--list'));
       expect(cardElement).toBeTruthy();
     });
 
     it('should show online/offline status', () => {
       // Default (offline)
-      let statusElement = debugElement.query(By.css('.emerald-app-card__status-label--offline'));
+      let statusElement = debugElement.query(By.css('.nb-card__status-label--offline'));
       expect(statusElement).toBeTruthy();
 
       // Change to online
       component.isOnline = true;
       fixture.detectChanges();
 
-      statusElement = debugElement.query(By.css('.emerald-app-card__status-label--online'));
+      statusElement = debugElement.query(By.css('.nb-card__status-label--online'));
       expect(statusElement).toBeTruthy();
     });
 
     it('should show media navigation when multiple media items exist', () => {
-      const navButtons = debugElement.queryAll(By.css('.emerald-app-card__media-nav'));
+      const navButtons = debugElement.queryAll(By.css('.nb-card__media-nav'));
       expect(navButtons.length).toBe(2);
 
-      const dots = debugElement.queryAll(By.css('.emerald-app-card__media-dot'));
+      const dots = debugElement.queryAll(By.css('.nb-card__media-dot'));
       expect(dots.length).toBe(2);
     });
 
@@ -315,26 +315,26 @@ describe('AppCardComponent', () => {
       component.ad = { ...mockAd, images: ['https://example.com/image1.jpg'], media: [] };
       fixture.detectChanges();
 
-      const navButtons = debugElement.queryAll(By.css('.emerald-app-card__media-nav'));
+      const navButtons = debugElement.queryAll(By.css('.nb-card__media-nav'));
       expect(navButtons.length).toBe(0);
 
-      const dots = debugElement.queryAll(By.css('.emerald-app-card__media-dot'));
+      const dots = debugElement.queryAll(By.css('.nb-card__media-dot'));
       expect(dots.length).toBe(0);
     });
 
     it('should show card title', () => {
-      const titleElement = debugElement.query(By.css('.emerald-app-card__title'));
+      const titleElement = debugElement.query(By.css('.nb-card__title'));
       expect(titleElement.nativeElement.textContent).toBe(mockAd.title);
     });
 
     it('should show location when available', () => {
-      const locationElement = debugElement.query(By.css('.emerald-app-card__location'));
+      const locationElement = debugElement.query(By.css('.nb-card__location'));
       expect(locationElement).toBeTruthy();
       expect(locationElement.nativeElement.textContent).toContain(mockAd.location);
     });
 
     it('should show price when available', () => {
-      const priceElement = debugElement.query(By.css('.emerald-app-card__price'));
+      const priceElement = debugElement.query(By.css('.nb-card__price'));
       expect(priceElement).toBeTruthy();
       expect(priceElement.nativeElement.textContent).toContain('$100');
     });
@@ -343,7 +343,7 @@ describe('AppCardComponent', () => {
       component.showDescription = true;
       fixture.detectChanges();
 
-      const descriptionElement = debugElement.query(By.css('.emerald-app-card__description'));
+      const descriptionElement = debugElement.query(By.css('.nb-card__description'));
       expect(descriptionElement).toBeTruthy();
     });
 
@@ -351,7 +351,7 @@ describe('AppCardComponent', () => {
       component.showDescription = false;
       fixture.detectChanges();
 
-      const descriptionElement = debugElement.query(By.css('.emerald-app-card__description'));
+      const descriptionElement = debugElement.query(By.css('.nb-card__description'));
       expect(descriptionElement).toBeFalsy();
     });
 
@@ -359,7 +359,7 @@ describe('AppCardComponent', () => {
       component.showActions = true;
       fixture.detectChanges();
 
-      const actionsElement = debugElement.query(By.css('.emerald-app-card__actions'));
+      const actionsElement = debugElement.query(By.css('.nb-card__actions'));
       expect(actionsElement).toBeTruthy();
     });
 
@@ -367,20 +367,20 @@ describe('AppCardComponent', () => {
       component.showActions = false;
       fixture.detectChanges();
 
-      const actionsElement = debugElement.query(By.css('.emerald-app-card__actions'));
+      const actionsElement = debugElement.query(By.css('.nb-card__actions'));
       expect(actionsElement).toBeFalsy();
     });
 
     it('should show swipe actions only in tinder layout', () => {
       // Netflix layout (default)
-      let swipeActionsElement = debugElement.query(By.css('.emerald-app-card__swipe-actions'));
+      let swipeActionsElement = debugElement.query(By.css('.nb-card__swipe-actions'));
       expect(swipeActionsElement).toBeFalsy();
 
       // Tinder layout
       component.layout = 'tinder';
       fixture.detectChanges();
 
-      swipeActionsElement = debugElement.query(By.css('.emerald-app-card__swipe-actions'));
+      swipeActionsElement = debugElement.query(By.css('.nb-card__swipe-actions'));
       expect(swipeActionsElement).toBeTruthy();
     });
   });

@@ -1,36 +1,31 @@
 <button
+  nbButton
   [type]="type"
-  [ngClass]="buttonClasses"
+  [status]="status"
+  [size]="size"
+  [appearance]="appearance"
   [disabled]="disabled || loading"
   [attr.aria-label]="ariaLabel"
   [attr.aria-disabled]="disabled || loading"
+  [class.full-width]="fullWidth"
   (click)="onClick($event)"
 >
   @if (loading) {
-    <!-- Spinner placeholder - to be styled like Emerald's spinner -->
-    <span class="button__spinner-embed" aria-hidden="true">
-      <!-- For now, a simple app-icon, ideally this becomes a CSS spinner or styled SVG -->
-      <app-icon name="spinner-alt"></app-icon>
-      <!-- Placeholder icon name -->
-    </span>
+    <nb-icon icon="loader-outline" class="spin"></nb-icon>
   } @else {
     <!-- Left Icon -->
     @if (iconLeft) {
-      <span class="button__icon button__icon--left" aria-hidden="true">
-        <app-icon [name]="iconLeft"></app-icon>
-      </span>
+      <nb-icon [icon]="iconLeft" class="button-icon button-icon-left"></nb-icon>
     }
 
     <!-- Button Text -->
-    <span class="button__text">
+    <span class="button-content">
       <ng-content></ng-content>
     </span>
 
     <!-- Right Icon -->
     @if (iconRight) {
-      <span class="button__icon button__icon--right" aria-hidden="true">
-        <app-icon [name]="iconRight"></app-icon>
-      </span>
+      <nb-icon [icon]="iconRight" class="button-icon button-icon-right"></nb-icon>
     }
   }
 </button>

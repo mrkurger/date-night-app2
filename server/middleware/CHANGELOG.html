@@ -91,6 +91,55 @@
     <h1>Middleware Changelog</h1>
 
     <div class="entry">
+      <h2>2025-05-15</h2>
+      <span class="tag feature">FEATURE</span>
+      <span class="tag improvement">IMPROVEMENT</span>
+      <h3>Enhanced File Access Security and Performance</h3>
+      <p class="date">May 15, 2025</p>
+
+      <p>
+        Implemented a comprehensive file access security system with improved validation and performance optimizations.
+      </p>
+
+      <h4>Changes:</h4>
+      <ul>
+        <li>
+          Added default export for <code>fileAccess</code> middleware to validate file access requests
+        </li>
+        <li>
+          Implemented security checks for file extensions, size limits, and path traversal
+        </li>
+        <li>
+          Fixed fs module imports to properly separate synchronous and asynchronous functions
+        </li>
+        <li>
+          Added performance optimizations including ETags and conditional responses
+        </li>
+        <li>
+          Updated documentation in GLOSSARY.html and AILESSONS.html
+        </li>
+      </ul>
+
+      <h4>Technical Details:</h4>
+      <p>
+        The implementation now follows a two-stage approach to file handling:
+      </p>
+      <ol>
+        <li>
+          <code>fileAccess</code> middleware validates requests before allowing access
+        </li>
+        <li>
+          <code>secureFileServing</code> middleware handles the actual file serving with proper headers and streaming
+        </li>
+      </ol>
+
+      <p>
+        This separation of concerns improves security by ensuring all file access is properly validated
+        before any file operations are performed.
+      </p>
+    </div>
+
+    <div class="entry">
       <h2>2025-05-11</h2>
       <span class="tag fix">FIX</span>
       <h3>Fixed URL Parsing Issue in Error Handling</h3>

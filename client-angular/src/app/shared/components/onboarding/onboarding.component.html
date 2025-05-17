@@ -3,7 +3,7 @@
     <div class="onboarding-header">
       <h2 class="onboarding-title">{{ currentStep.title }}</h2>
       <button class="onboarding-close" (click)="skipOnboarding()" aria-label="Close onboarding">
-        <mat-icon>close</mat-icon>
+        <nb-icon icon="close"></nb-icon>
       </button>
     </div>
 
@@ -30,7 +30,7 @@
 
     <!-- Progress Indicator -->
     <div class="onboarding-progress" *ngIf="showProgress">
-      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+      <nb-progress-bar mode="determinate" [value]="progress"></nb-progress-bar>
       <span class="progress-text">{{ currentStepIndex + 1 }} of {{ steps.length }}</span>
     </div>
 
@@ -47,13 +47,20 @@
 
     <!-- Actions -->
     <div class="onboarding-actions">
-      <button *ngIf="currentStepIndex > 0" mat-button class="btn-previous" (click)="previousStep()">
-        <mat-icon>arrow_back</mat-icon> Previous
+      <button
+        *ngIf="currentStepIndex > 0"
+        nbButton
+        ghost
+        class="btn-previous"
+        (click)="previousStep()"
+      >
+        <nb-icon icon="arrow-back-outline"></nb-icon> Previous
       </button>
 
       <button
         *ngIf="showSkip && currentStepIndex < steps.length - 1"
-        mat-button
+        nbButton
+        ghost
         class="btn-skip"
         (click)="skipOnboarding()"
       >
@@ -61,20 +68,20 @@
       </button>
 
       <button
-        mat-raised-button
-        color="primary"
+        nbButton
+        status="primary"
         class="btn-next"
         *ngIf="!currentStep.ctaLink && !currentStep.ctaAction"
         (click)="nextStep()"
       >
         {{ currentStepIndex < steps.length - 1 ? 'Next' : 'Finish' }}
-        <mat-icon *ngIf="currentStepIndex < steps.length - 1">arrow_forward</mat-icon>
+        <nb-icon *ngIf="currentStepIndex < steps.length - 1" icon="arrow-forward-outline"></nb-icon>
       </button>
 
       <a
         *ngIf="currentStep.ctaLink"
-        mat-raised-button
-        color="primary"
+        nbButton
+        status="primary"
         class="btn-cta"
         [routerLink]="currentStep.ctaLink"
         (click)="nextStep()"
@@ -84,8 +91,8 @@
 
       <button
         *ngIf="!currentStep.ctaLink && currentStep.ctaAction"
-        mat-raised-button
-        color="primary"
+        nbButton
+        status="primary"
         class="btn-cta"
         (click)="handleCtaClick()"
       >

@@ -1,0 +1,5 @@
+# Domain            TTL  Class  Type   Target
+groups.chat.example.com  300  IN     CNAME  chat.example.com.
+share.chat.example.com   300  IN     CNAME  chat.example.com.
+
+chat.example.com.  300  IN     A     203.0.113.123

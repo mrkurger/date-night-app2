@@ -1,28 +1,23 @@
-@use 'src/styles/design-system/index.scss' as ds;
-@use '../../../../core/design/emerald-tokens' as emerald;
+@use '@nebular/theme/styles/theming' as *;
 @use 'sass:color';
-@use '../../../../core/design/design-tokens' as tokens;
 
-// Font variables
-$font-weight-semibold: 600;
+// Avatar Component Styles
+// Using Nebular theme variables
 
-// Emerald Avatar Component Styles
-// Documentation: https://docs-emerald.condorlabs.io/Avatar
-
-.emerald-avatar-container {
+.nb-user-container {
   position: relative;
   display: inline-block;
 }
 
-.emerald-avatar {
+.nb-user {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: color.adjust(emerald.$color-primary, $lightness: 35%);
-  color: color.adjust(emerald.$color-primary-dark, $lightness: -10%);
-  font-weight: $font-weight-semibold;
+  background-color: nb-theme(color-primary-100);
+  color: nb-theme(color-primary-800);
+  font-weight: nb-theme(text-button-font-weight);
   cursor: pointer;
   overflow: hidden;
   transition:
@@ -31,22 +26,22 @@ $font-weight-semibold: 600;
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: nb-theme(shadow);
   }
 
   // Avatar Sizes
   &--small {
     width: 32px;
     height: 32px;
-    font-size: 0.75rem;
+    font-size: nb-theme(text-caption-font-size);
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 8px;
       height: 8px;
       border-width: 1px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 8px;
     }
   }
@@ -54,15 +49,15 @@ $font-weight-semibold: 600;
   &--medium {
     width: 48px;
     height: 48px;
-    font-size: 0.875rem;
+    font-size: nb-theme(text-button-small-font-size);
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 10px;
       height: 10px;
       border-width: 2px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 10px;
     }
   }
@@ -70,15 +65,15 @@ $font-weight-semibold: 600;
   &--large {
     width: 64px;
     height: 64px;
-    font-size: 1rem;
+    font-size: nb-theme(text-button-font-size);
 
-    .emerald-avatar__status {
+    .nb-user__status {
       width: 12px;
       height: 12px;
       border-width: 2px;
     }
 
-    .emerald-avatar__dropdown-indicator {
+    .nb-user__dropdown-indicator {
       font-size: 12px;
     }
   }
@@ -100,7 +95,7 @@ $font-weight-semibold: 600;
   }
 
   // No Image Fallback
-  &--no-image .emerald-avatar__initials {
+  &--no-image .nb-user__initials {
     display: flex;
   }
 
@@ -111,14 +106,14 @@ $font-weight-semibold: 600;
     right: 0;
     border-radius: 50%;
     border-style: solid;
-    border-color: emerald.$color-white;
+    border-color: nb-theme(background-basic-color-1);
 
     &--online {
-      background-color: emerald.$color-success;
+      background-color: nb-theme(color-success-500);
     }
 
     &--offline {
-      background-color: emerald.$color-medium-gray-2;
+      background-color: nb-theme(color-basic-500);
     }
   }
 
@@ -132,24 +127,22 @@ $font-weight-semibold: 600;
     justify-content: center;
     width: 16px;
     height: 16px;
-    background-color: emerald.$color-white;
+    background-color: nb-theme(background-basic-color-1);
     border-radius: 50%;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    color: emerald.$color-dark-gray-2;
+    box-shadow: nb-theme(shadow);
+    color: nb-theme(text-hint-color);
   }
 }
 
 // Dropdown Menu
-.emerald-avatar__dropdown {
+.nb-user__dropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
   min-width: 200px;
-  background-color: emerald.$color-white;
-  border-radius: 0.375rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(card-border-radius);
+  box-shadow: nb-theme(shadow-lg);
   z-index: 1000;
   overflow: hidden;
   animation: dropdown-fade-in 0.2s ease;
@@ -161,9 +154,9 @@ $font-weight-semibold: 600;
     right: 16px;
     width: 16px;
     height: 16px;
-    background-color: emerald.$color-white;
+    background-color: nb-theme(background-basic-color-1);
     transform: rotate(45deg);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: nb-theme(shadow);
   }
 
   // Dropdown Menu
@@ -187,7 +180,7 @@ $font-weight-semibold: 600;
     align-items: center;
     width: 100%;
     padding: 10px 16px;
-    color: emerald.$color-dark-gray-3;
+    color: nb-theme(text-basic-color);
     text-decoration: none;
     background: none;
     border: none;
@@ -196,7 +189,7 @@ $font-weight-semibold: 600;
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: emerald.$color-light-gray-1;
+      background-color: nb-theme(background-basic-color-hover);
     }
   }
 
@@ -205,20 +198,20 @@ $font-weight-semibold: 600;
     margin-right: 12px;
     width: 16px;
     text-align: center;
-    color: emerald.$color-dark-gray-1;
+    color: nb-theme(text-hint-color);
   }
 
   // Dropdown Label
   &-label {
     flex: 1;
-    font-size: 0.875rem;
+    font-size: nb-theme(text-button-small-font-size);
   }
 
   // Dropdown Divider
   &-divider {
     height: 1px;
     margin: 8px 0;
-    background-color: emerald.$color-light-gray-2;
+    background-color: nb-theme(divider-color);
   }
 }
 

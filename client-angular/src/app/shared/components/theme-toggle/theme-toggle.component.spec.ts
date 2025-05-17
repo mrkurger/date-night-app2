@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThemeToggleComponent } from './theme-toggle.component';
 import { ThemeService } from '../../../core/services/theme.service';

@@ -6,3 +6,16 @@ dist
 .github
 *.md
 package-lock.json
+
+# Problematic files
+src/app/theme.scss
+
+# Documentation files
+CHANGELOG.html
+AILESSONS.html
+GLOSSARY.html
+_docs_index.html
+_glossary.html
+_docs*.html
+src/app/core/services/AILESSONS.html
+**/*.html

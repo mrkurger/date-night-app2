@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Module Glossary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2a3f5f;
+        }
+        .glossary-entry {
+            margin-bottom: 30px;
+            border-left: 4px solid #3366cc;
+            padding-left: 15px;
+        }
+        .term {
+            font-weight: bold;
+            color: #1565c0;
+        }
+        .definition {
+            margin-top: 10px;
+        }
+        .usage {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .nav {
+            margin-bottom: 30px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #3366cc;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .category {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ddd;
+        }
+        .see-also {
+            margin-top: 10px;
+            color: #666;
+        }
+        .see-also a {
+            color: #3366cc;
+            text-decoration: none;
+        }
+        .see-also a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../../../_docs_index.html">Main Documentation</a>
+        <a href="../../../_glossary.html">Global Glossary</a>
+        <a href="./CHANGELOG.html">Changelog</a>
+        <a href="./AILESSONS.html">AI Lessons</a>
+    </div>
+
+    <h1>Shared Module Glossary</h1>
+    
+    <div class="category">
+        <h2>Nebular Components</h2>
+    </div>
+    
+    <div class="glossary-entry" id="NebularModule">
+        <div class="term">NebularModule</div>
+        <div class="definition">
+            A module that provides all Nebular components, directives, and services needed throughout the application.
+            It should be imported in the SharedModule.
+        </div>
+        <div class="usage">
+            <pre><code>
+import { NebularModule } from './shared/nebular.module';
+
+@NgModule({
+  imports: [
+    NebularModule,
+    // other imports
+  ],
+})
+export class AppModule { }
+            </code></pre>
+        </div>
+        <div class="see-also">
+            See also: <a href="#customComponentIdGenerator">customComponentIdGenerator</a>
+        </div>
+    </div>
+    
+    <div class="glossary-entry" id="customComponentIdGenerator">
+        <div class="term">customComponentIdGenerator</div>
+        <div class="definition">
+            A function that generates unique component IDs to avoid collisions between Nebular components.
+            It adds a prefix and a random string to the component ID.
+        </div>
+        <div class="usage">
+            <pre><code>
+// Custom component ID generator to avoid collisions
+export function customComponentIdGenerator(componentType: any): string {
+  // Add a prefix to the component ID to make it unique
+  return `custom-${componentType.name}-${Math.random().toString(36).substring(2, 8)}`;
+}
+
+// Provider in NebularModule
+providers: [
+  // Provide the custom component ID generator
+  {
+    provide: 'componentIdGenerator',
+    useValue: customComponentIdGenerator,
+  },
+],
+            </code></pre>
+        </div>
+        <div class="see-also">
+            See also: <a href="#NebularModule">NebularModule</a>
+        </div>
+    </div>
+    
+    <div class="category">
+        <h2>Service Worker</h2>
+    </div>
+    
+    <div class="glossary-entry" id="provideServiceWorker">
+        <div class="term">provideServiceWorker</div>
+        <div class="definition">
+            A function that provides the Angular Service Worker to the application.
+            It can be configured to enable or disable the service worker and set the registration strategy.
+        </div>
+        <div class="usage">
+            <pre><code>
+// In app.config.ts
+provideServiceWorker('ngsw-worker.js', {
+  enabled: false, // Disable in development mode to prevent 404 errors
+  registrationStrategy: 'registerWhenStable:30000',
+}),
+            </code></pre>
+        </div>
+    </div>
+    
+    <div class="glossary-entry" id="ngsw-worker">
+        <div class="term">ngsw-worker.js</div>
+        <div class="definition">
+            The Angular Service Worker file that is generated during the build process.
+            A placeholder file can be created to prevent 404 errors during development.
+        </div>
+        <div class="usage">
+            <pre><code>
+// This is a placeholder for the Angular Service Worker
+// The actual file will be generated during the build process
+// This file is needed to prevent 404 errors during development
+
+console.log('Service Worker Placeholder Loaded');
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+  // Let the browser handle the request normally
+  event.respondWith(fetch(event.request));
+});
+            </code></pre>
+        </div>
+        <div class="see-also">
+            See also: <a href="#provideServiceWorker">provideServiceWorker</a>
+        </div>
+    </div>
+    
+    <div class="category">
+        <h2>Custom Components</h2>
+    </div>
+    
+    <div class="glossary-entry" id="NbErrorComponent">
+        <div class="term">NbErrorComponent</div>
+        <div class="definition">
+            A custom Nebular-compatible component that displays error messages.
+            It is part of the NebularModule.
+        </div>
+        <div class="usage">
+            <pre><code>
+<nb-error message="An error occurred" type="danger"></nb-error>
+            </code></pre>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,12 +7,12 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
+
 import { AdvertiserRatings } from '../../../core/models/review.interface';
 import { ReviewService } from '../../../core/services/review.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
@@ -22,22 +22,23 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatProgressBarModule,
-    MatDividerModule,
-    MatButtonModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
+    RouterModule,
     StarRatingComponent,
+    NbCardModule,
   ],
   template: `
-    <mat-card class="review-summary-card">
-      <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
-        <mat-card-subtitle *ngIf="ratings">{{ ratings.totalReviews }} reviews</mat-card-subtitle>
-      </mat-card-header>
+    <nb-card class="review-summary-card">
+      <nb-card-header>
+        <h4>{{ title }}</h4>
+        <p *ngIf="ratings">{{ ratings.totalReviews }} reviews</p>
+      </nb-card-header>
 
-      <mat-card-content>
+      <nb-card-body>
         <div class="loading-container" *ngIf="loading">
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <nb-progress-bar mode="indeterminate"></nb-progress-bar>
           <p>Loading ratings...</p>
         </div>
 
@@ -58,18 +59,17 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
             </div>
           </div>
 
-          <mat-divider></mat-divider>
+          <hr />
 
           <div class="category-ratings" *ngIf="showCategoryRatings">
             <div class="category-rating">
               <span class="category-label">Communication</span>
               <div class="rating-bar-container">
                 <div class="rating-bar">
-                  <mat-progress-bar
-                    mode="determinate"
+                  <nb-progress-bar
                     [value]="(ratings.communicationAvg / 5) * 100"
-                    color="accent"
-                  ></mat-progress-bar>
+                    status="primary"
+                  ></nb-progress-bar>
                 </div>
                 <span class="category-value">{{ ratings.communicationAvg | number: '1.1-1' }}</span>
               </div>
@@ -79,11 +79,10 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
               <span class="category-label">Appearance</span>
               <div class="rating-bar-container">
                 <div class="rating-bar">
-                  <mat-progress-bar
-                    mode="determinate"
+                  <nb-progress-bar
                     [value]="(ratings.appearanceAvg / 5) * 100"
-                    color="accent"
-                  ></mat-progress-bar>
+                    status="primary"
+                  ></nb-progress-bar>
                 </div>
                 <span class="category-value">{{ ratings.appearanceAvg | number: '1.1-1' }}</span>
               </div>
@@ -93,11 +92,10 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
               <span class="category-label">Location</span>
               <div class="rating-bar-container">
                 <div class="rating-bar">
-                  <mat-progress-bar
-                    mode="determinate"
+                  <nb-progress-bar
                     [value]="(ratings.locationAvg / 5) * 100"
-                    color="accent"
-                  ></mat-progress-bar>
+                    status="primary"
+                  ></nb-progress-bar>
                 </div>
                 <span class="category-value">{{ ratings.locationAvg | number: '1.1-1' }}</span>
               </div>
@@ -107,32 +105,31 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
               <span class="category-label">Value</span>
               <div class="rating-bar-container">
                 <div class="rating-bar">
-                  <mat-progress-bar
-                    mode="determinate"
+                  <nb-progress-bar
                     [value]="(ratings.valueAvg / 5) * 100"
-                    color="accent"
-                  ></mat-progress-bar>
+                    status="primary"
+                  ></nb-progress-bar>
                 </div>
                 <span class="category-value">{{ ratings.valueAvg | number: '1.1-1' }}</span>
               </div>
             </div>
           </div>
         </div>
-      </mat-card-content>
+      </nb-card-body>
 
-      <mat-card-actions *ngIf="showWriteReviewButton">
-        <button mat-raised-button color="primary" (click)="writeReviewClicked.emit()">
+      <nb-card-footer *ngIf="showWriteReviewButton">
+        <button nbButton status="primary" (click)="writeReviewClicked.emit()">
           Write a Review
         </button>
-      </mat-card-actions>
-    </mat-card>
+      </nb-card-footer>
+    </nb-card>
   `,
   styles: [
     `
       .review-summary-card {
         margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-md);
       }
 
       .loading-container {
@@ -142,13 +139,13 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 
       .loading-container p {
         margin-top: 10px;
-        color: #666;
+        color: var(--text-hint-color);
       }
 
       .no-reviews {
         padding: 20px;
         text-align: center;
-        color: #666;
+        color: var(--text-hint-color);
       }
 
       .ratings-container {
@@ -165,13 +162,13 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
       .rating-value {
         font-size: 2.5rem;
         font-weight: 500;
-        color: #333;
+        color: var(--text-basic-color);
         line-height: 1;
       }
 
       .rating-count {
         margin-top: 5px;
-        color: #666;
+        color: var(--text-hint-color);
         font-size: 0.9rem;
       }
 
@@ -188,7 +185,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
       .category-label {
         flex: 0 0 100px;
         font-weight: 500;
-        color: #333;
+        color: var(--text-basic-color);
       }
 
       .rating-bar-container {
@@ -206,7 +203,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
         width: 30px;
         text-align: right;
         font-weight: 500;
-        color: #333;
+        color: var(--text-basic-color);
       }
     `,
   ],
@@ -217,6 +214,7 @@ export class ReviewSummaryComponent implements OnInit {
   @Input() showCategoryRatings = true;
   @Input() showWriteReviewButton = true;
   @Input() writeReviewClicked = new EventEmitter<void>();
+  @Output() ratingClick = new EventEmitter<number>();
 
   ratings: AdvertiserRatings | null = null;
   loading = false;

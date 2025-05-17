@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Lessons Learned - Material UI to Nebular Migration</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      .lesson {
+        background: #f7f9fc;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .lesson h3 {
+        margin-top: 0;
+      }
+      code {
+        background: #edf1f7;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      pre {
+        background: #edf1f7;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+      .tip {
+        background: #e7f1ff;
+        border-left: 4px solid #3366ff;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AI Lessons Learned - Material UI to Nebular Migration</h1>
+
+    <h2>Component Migration Patterns</h2>
+
+    <div class="lesson">
+      <h3>1. Layout Component Migration</h3>
+      <p>
+        When migrating from Material's layout components to Nebular's, we discovered several key
+        patterns:
+      </p>
+      <ul>
+        <li>
+          Nebular's layout system is more opinionated and requires proper nesting of components
+        </li>
+        <li>The <code>nb-layout</code> component must be the root container</li>
+        <li>Sidebar and header components need specific placement within the layout hierarchy</li>
+      </ul>
+      <div class="tip">
+        <strong>Best Practice:</strong> Always start migration from the root layout components and
+        work your way down to ensure proper component hierarchy.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Form Control Differences</h3>
+      <p>Key differences in form control implementation between Material and Nebular:</p>
+      <ul>
+        <li>Nebular form controls use different validation patterns</li>
+        <li>Status classes are handled differently in Nebular</li>
+        <li>Form field appearance customization requires different approaches</li>
+      </ul>
+      <pre>
+// Material UI
+&lt;mat-form-field appearance="outline">
+  &lt;input matInput [formControl]="control">
+  &lt;mat-error *ngIf="control.hasError('required')">
+    Required field
+  &lt;/mat-error>
+&lt;/mat-form-field>
+
+// Nebular
+&lt;nb-form-field>
+  &lt;input nbInput [formControl]="control">
+  &lt;ng-container *ngIf="control.hasError('required')">
+    Required field
+  &lt;/ng-container>
+&lt;/nb-form-field></pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>3. Theme Migration Strategy</h3>
+      <p>Lessons learned about theme migration:</p>
+      <ul>
+        <li>Nebular's theme system is more extensive and requires careful planning</li>
+        <li>Custom variables need to be mapped to Nebular's theme structure</li>
+        <li>Some Material-specific color functions need to be reimplemented</li>
+      </ul>
+      <pre>
+// Material UI
+$theme-colors: (
+  primary: mat-palette($mat-indigo),
+  accent: mat-palette($mat-pink)
+);
+
+// Nebular
+$nb-themes: nb-register-theme((
+  color-primary-100: #f2f6ff,
+  color-primary-500: #3366ff,
+  color-primary-900: #091c7a
+), default, default);</pre
+      >
+    </div>
+
+    <h2>Common Challenges and Solutions</h2>
+
+    <div class="lesson">
+      <h3>1. Icon System Migration</h3>
+      <p>Challenges faced when migrating from Material Icons to Eva Icons:</p>
+      <ul>
+        <li>Icon name mapping is not one-to-one</li>
+        <li>Eva Icons have different naming conventions</li>
+        <li>Some icons need to be combined to achieve the same effect</li>
+      </ul>
+      <div class="tip">
+        <strong>Solution:</strong> Created a mapping service to handle icon name translations and
+        fallbacks.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Dialog System Differences</h3>
+      <p>Key differences in dialog implementation:</p>
+      <ul>
+        <li>Nebular uses a different context system</li>
+        <li>Dialog styling and animations differ significantly</li>
+        <li>Dialog results are handled differently</li>
+      </ul>
+      <pre>
+// Material UI
+const dialogRef = this.dialog.open(DialogComponent, {
+  data: { ... }
+});
+
+// Nebular
+const dialogRef = this.dialogService.open(DialogComponent, {
+  context: { ... }
+});</pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>3. Performance Considerations</h3>
+      <p>Performance impacts observed during migration:</p>
+      <ul>
+        <li>Nebular's theme system can impact initial load time</li>
+        <li>Dynamic theme switching requires optimization</li>
+        <li>Some components need lazy loading strategies</li>
+      </ul>
+      <div class="tip">
+        <strong>Solution:</strong> Implemented lazy loading for feature modules and optimized theme
+        variable usage.
+      </div>
+    </div>
+
+    <h2>Testing Insights</h2>
+
+    <div class="lesson">
+      <h3>1. Component Testing</h3>
+      <p>Key learnings about testing Nebular components:</p>
+      <ul>
+        <li>Nebular components require specific TestBed configuration</li>
+        <li>Theme testing requires additional setup</li>
+        <li>Some Material test helpers need to be replaced</li>
+      </ul>
+      <pre>
+// Test setup for Nebular components
+TestBed.configureTestingModule({
+  imports: [
+    NbThemeModule.forRoot(),
+    // Other required modules
+  ],
+  providers: [
+    { provide: NB_DOCUMENT, useValue: document },
+    // Other required providers
+  ]
+});</pre
+      >
+    </div>
+
+    <div class="lesson">
+      <h3>2. E2E Testing Considerations</h3>
+      <p>Changes needed for E2E tests:</p>
+      <ul>
+        <li>Updated element selectors for Nebular components</li>
+        <li>Modified interaction patterns for some components</li>
+        <li>Added new test cases for Nebular-specific features</li>
+      </ul>
+    </div>
+
+    <h2>Nebular UI Framework Analysis - May 13, 2025</h2>
+
+    <div class="lesson">
+      <h3>Analysis of Nebular UI Implementation</h3>
+      
+      <p>
+        A comprehensive analysis of the codebase reveals that the Angular client is already
+        extensively using Nebular UI components. The application has successfully implemented
+        most core Nebular components, including:
+      </p>
+      
+      <ul>
+        <li>Layout components (<code>nb-layout</code>, <code>nb-sidebar</code>)</li>
+        <li>Form controls (<code>nb-input</code>, <code>nb-select</code>, etc.)</li>
+        <li>Data presentation components (<code>nb-card</code>, <code>nb-list</code>)</li>
+        <li>Dialog system (<code>NbDialogService</code>)</li>
+        <li>Navigation components (<code>nb-menu</code>, <code>nb-actions</code>)</li>
+      </ul>
+      
+      <p>
+        The following components were identified as candidates for replacement with Nebular equivalents:
+      </p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+        <thead>
+          <tr style="background-color: #edf1f7;">
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Custom Component</th>
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Nebular Equivalent</th>
+            <th style="padding: 0.5rem; border: 1px solid #e4e9f2; text-align: left;">Recommendation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-card</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-card</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Replace with Nebular Card and use CSS customization</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-skeleton</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-skeleton</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Replace with Nebular Skeleton</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-button</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>nb-button</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Use Nebular Button directly with consistent styling</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;"><code>app-carousel</code></td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">No equivalent</td>
+            <td style="padding: 0.5rem; border: 1px solid #e4e9f2;">Keep custom component but ensure styling consistency</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Benefits of Complete Migration</h3>
+      
+      <p>
+        Completing the migration to Nebular UI components would provide several benefits:
+      </p>
+      
+      <ul>
+        <li><strong>Consistency:</strong> A unified design language across the application</li>
+        <li><strong>Maintainability:</strong> Less custom code to maintain</li>
+        <li><strong>Theme support:</strong> Better leverage of Nebular's theming capabilities</li>
+        <li><strong>Accessibility:</strong> Nebular components follow accessibility best practices</li>
+        <li><strong>Performance:</strong> Optimized components with proper change detection</li>
+      </ul>
+      
+      <p>
+        The application already has custom Nebular themes defined in <code>core/design/nebular-theme-customization.ts</code>.
+        When replacing custom components with Nebular equivalents, it's important to extend these themes
+        to maintain visual consistency.
+      </p>
+    </div>
+
+    <h2>Testing Infrastructure</h2>
+
+    <div class="lesson">
+      <h3>Karma and rimraf Compatibility - May 13, 2025</h3>
+      <p>
+        We encountered and resolved a critical issue with Karma test runner and the rimraf dependency.
+        This provides important lessons about dependency management in modern JavaScript projects.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Karma 6.4.x expects rimraf to be a function (as in version 3.x)</li>
+        <li>The project had an override for rimraf to version 5.x in the root package.json</li>
+        <li>In rimraf 5.x, the API changed from a function to an object with methods</li>
+        <li>This caused the error: <code>TypeError: rimraf is not a function</code></li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        Rather than downgrading rimraf (which could cause other compatibility issues), we created a patch
+        for Karma's <code>temp_dir.js</code> file to handle both API versions:
+      </p>
+      
+      <pre>
+// Original code in temp_dir.js
+rimraf(path, done)
+
+// Patched code
+typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Dependency Overrides:</strong> Package overrides in monorepos can cause unexpected compatibility issues</li>
+        <li><strong>API Changes:</strong> Major version updates of utilities like rimraf can change their API significantly</li>
+        <li><strong>Patching Strategy:</strong> Sometimes patching a dependency is better than downgrading or forking</li>
+        <li><strong>Automation:</strong> We added the patch to the test scripts to ensure it's applied consistently</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When using package overrides in a monorepo, always check compatibility with all tools and frameworks used across the project. Consider creating compatibility layers for critical dependencies.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>Nebular Component Import Patterns - May 15, 2025</h3>
+      <p>
+        When working with Nebular UI components in Angular standalone components, we discovered several important patterns:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>Complete Imports:</strong> Always import all Nebular modules used in the component template</li>
+        <li><strong>Consolidated Import Statements:</strong> Group related Nebular imports together for better readability</li>
+        <li><strong>Injection Tokens:</strong> Remember to import and use proper injection tokens like <code>NB_DIALOG_CONFIG</code></li>
+        <li><strong>Service Types:</strong> Import service types like <code>NbDialogRef</code> explicitly</li>
+      </ul>
+      
+      <pre>
+// Good practice - consolidated imports
+import { 
+  NbIconModule, 
+  NbCardModule, 
+  NbButtonModule,
+  NbDialogRef,
+  NB_DIALOG_CONFIG
+} from '@nebular/theme';
+
+// Good practice - proper injection in constructor
+constructor(
+  private dialogRef: NbDialogRef&lt;MyComponent&gt;,
+  @Inject(NB_DIALOG_CONFIG) public data: MyDialogData
+) {}</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When using standalone components, always include all required Nebular modules in the imports array, even if they're imported elsewhere in the application.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>SASS Module System in Angular - May 15, 2025</h3>
+      <p>
+        We encountered and resolved issues with the SASS module system in Angular, particularly with map functions:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>Explicit Module Imports:</strong> Always import SASS built-in modules explicitly</li>
+        <li><strong>Map Module:</strong> The 'map' module is not imported by default and must be explicitly imported</li>
+        <li><strong>Namespace Imported Modules:</strong> Use namespaces to avoid conflicts</li>
+        <li><strong>Modern SASS Syntax:</strong> Use @use instead of @import for better modularity</li>
+      </ul>
+      
+      <pre>
+// Required for using map functions
+@use 'sass:map';
+
+// Accessing map values
+$primary-color: map.get($colors, 'primary');</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> Always include <code>@use 'sass:map';</code> at the top of SCSS files that use map functions like map.get().
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>Content Security Policy for Angular Apps - May 15, 2025</h3>
+      <p>
+        We improved the Content Security Policy configuration to allow loading resources from CDNs:
+      </p>
+      
+      <h4>Key Learnings</h4>
+      <ul>
+        <li><strong>External Resources:</strong> CSP must explicitly allow all external resources</li>
+        <li><strong>CDN Domains:</strong> Each CDN domain must be listed in the appropriate directive</li>
+        <li><strong>Font Sources:</strong> Font sources need special consideration in the CSP</li>
+        <li><strong>Meta vs Headers:</strong> Some CSP directives only work via HTTP headers</li>
+      </ul>
+      
+      <pre>
+&lt;meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; 
+           script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; 
+           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; 
+           font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://unpkg.com data:;"
+/&gt;</pre>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When adding external resources like CDN-hosted CSS, always update the CSP to allow loading from those domains.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>Babel Runtime Module Resolution - May 13, 2025</h3>
+      <p>
+        We encountered and resolved an issue with missing Babel runtime helpers in Angular tests.
+        This provides valuable insights into Node.js module resolution and custom module loaders.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Angular tests were failing with: <code>Error: Can't resolve '@babel/runtime/helpers/asyncToGenerator.js'</code></li>
+        <li>The tests were looking for the file in a nested node_modules structure that didn't exist</li>
+        <li>The path was hardcoded in the generated test files: <code>/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js</code></li>
+        <li>This structure is typical in older Angular versions but not in Angular 19</li>
+        <li>The build-angular directory was a symbolic link, making it impossible to create the nested structure</li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        We created a custom module loader that intercepts require calls for the missing module:
+      </p>
+      
+      <pre>
+// Custom module loader
+const Module = require('module');
+const path = require('path');
+
+// Store the original require function
+const originalRequire = Module.prototype.require;
+
+// The path to the actual implementation
+const actualImplementationPath = path.resolve(__dirname, 
+  '../../node_modules/@babel/runtime/helpers/asyncToGenerator.js');
+
+// The path that tests are trying to load
+const missingModulePath = '/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js';
+
+// Override the require function
+Module.prototype.require = function(id) {
+  // If the requested module is the missing one, return the actual implementation
+  if (id === missingModulePath) {
+    return originalRequire.call(this, actualImplementationPath);
+  }
+  
+  // Otherwise, use the original require function
+  return originalRequire.call(this, id);
+};</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Module Resolution:</strong> Understanding how Node.js module resolution works is crucial</li>
+        <li><strong>Custom Module Loaders:</strong> Overriding Module.prototype.require allows intercepting module requests</li>
+        <li><strong>Symbolic Links:</strong> Be aware of symbolic links in node_modules that can prevent directory creation</li>
+        <li><strong>Multiple Solutions:</strong> We tried several approaches before finding the most robust solution</li>
+        <li><strong>Test Runner Integration:</strong> Created a custom test runner script that loads the module loader first</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When dealing with hardcoded paths in generated code, a custom module loader can be more robust than trying to recreate the expected directory structure or using webpack aliases. This approach works at the Node.js level and doesn't require changes to the build configuration.
+      </div>
+    </div>
+    
+    <div class="lesson">
+      <h3>CSS Path Resolution in Karma Tests - May 13, 2025</h3>
+      <p>
+        We encountered and resolved an issue with missing CSS files in Karma tests.
+        This provides insights into how Karma resolves static assets and how to handle missing dependencies.
+      </p>
+      
+      <h4>Problem Analysis</h4>
+      <ul>
+        <li>Karma tests were failing with: <code>Error: Can't resolve 'node_modules/@nebular/theme/styles/prebuilt/default.css'</code></li>
+        <li>Also failing with: <code>Error: Can't resolve 'node_modules/eva-icons/style/eva-icons.css'</code></li>
+        <li>The tests were looking for CSS files in the client-angular/node_modules directory</li>
+        <li>These CSS files were referenced in the Angular configuration but not available in the test environment</li>
+        <li>The CSS files are needed for the tests to run, even though the styles aren't actually used in the tests</li>
+      </ul>
+      
+      <h4>Solution Approach</h4>
+      <p>
+        We created placeholder CSS files and updated the Karma configuration:
+      </p>
+      
+      <pre>
+// 1. Create the directory structure
+fs.mkdirSync(path.join(clientNodeModulesDir, '@nebular'), { recursive: true });
+fs.mkdirSync(nebularThemeDir, { recursive: true });
+fs.mkdirSync(nebularThemeStylesDir, { recursive: true });
+fs.mkdirSync(nebularThemePrebuiltDir, { recursive: true });
+
+// 2. Create placeholder CSS files
+const defaultCssContent = `
+/* This is a placeholder CSS file created by the fix-karma-css-paths.js script */
+/* It's used to prevent Karma test failures due to missing CSS files */
+`;
+fs.writeFileSync(defaultCssPath, defaultCssContent);
+
+// 3. Update Karma configuration to include the CSS files
+karmaConfig = karmaConfig.replace(
+  /files: \[/,
+  `files: [
+  { pattern: 'node_modules/@nebular/theme/styles/prebuilt/default.css', included: true },
+  { pattern: 'node_modules/eva-icons/style/eva-icons.css', included: true },`
+);</pre>
+      
+      <h4>Key Lessons</h4>
+      <ul>
+        <li><strong>Asset Resolution:</strong> Karma has its own asset resolution mechanism separate from Angular</li>
+        <li><strong>Placeholder Files:</strong> Creating empty placeholder files can satisfy dependencies without needing the actual content</li>
+        <li><strong>Karma Configuration:</strong> Explicitly including files in the Karma configuration ensures they're available during tests</li>
+        <li><strong>Test Environment:</strong> The test environment often has different requirements than the development environment</li>
+        <li><strong>Automation:</strong> Creating a script to set up the test environment ensures consistency and reproducibility</li>
+      </ul>
+      
+      <div class="tip">
+        <strong>Best Practice:</strong> When dealing with missing assets in test environments, create placeholder files rather than trying to copy or symlink the actual files. This approach is more lightweight and avoids potential issues with file permissions or symbolic links.
+      </div>
+    </div>
+
+    <h2>Future Considerations</h2>
+
+    <div class="lesson">
+      <h3>1. Maintenance Strategy</h3>
+      <p>Long-term maintenance considerations:</p>
+      <ul>
+        <li>Keep track of Nebular updates and breaking changes</li>
+        <li>Maintain documentation of custom components and themes</li>
+        <li>Regular performance monitoring of theme system</li>
+        <li>Monitor dependencies for API changes that might require patches or compatibility layers</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Scalability Lessons</h3>
+      <p>Insights for scaling the application:</p>
+      <ul>
+        <li>Organize components by feature modules</li>
+        <li>Implement proper lazy loading strategies</li>
+        <li>Use shared components effectively</li>
+        <li>Create automated scripts for common maintenance tasks</li>
+      </ul>
+    </div>
+  </body>
+</html>

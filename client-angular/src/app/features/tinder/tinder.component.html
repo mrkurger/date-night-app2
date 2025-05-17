@@ -3,35 +3,32 @@
     <div class="tinder-header">
       <h1 class="tinder-title">Discover</h1>
       <div class="tinder-filters">
-        <button class="filter-button" (click)="openFilters()">
-          <i class="fas fa-sliders-h"></i> Filters
+        <button nbButton status="primary" (click)="openFilters(filtersDialog)">
+          <nb-icon icon="options-2-outline"></nb-icon>
+          Filters
         </button>
       </div>
     </div>
 
-    <!-- Loading State with Emerald SkeletonLoader -->
+    <!-- Loading State -->
     <div class="loading-container" *ngIf="loading">
-      <emerald-skeleton-loader type="card" [count]="1" [animated]="true" [layout]="'tinder'">
-      </emerald-skeleton-loader>
+      <nb-spinner size="large"></nb-spinner>
       <p class="loading-text">Finding matches for you...</p>
     </div>
 
     <!-- Error State -->
     <div class="error-container" *ngIf="error && !loading">
-      <div class="error-icon">
-        <i class="fas fa-exclamation-circle"></i>
-      </div>
+      <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
       <p class="error-text">{{ error }}</p>
-      <button class="retry-button" (click)="loadSwipeAds()">
-        <i class="fas fa-redo"></i> Try Again
+      <button nbButton status="primary" (click)="loadSwipeAds()">
+        <nb-icon icon="refresh-outline"></nb-icon>
+        Try Again
       </button>
     </div>
 
     <!-- Empty State -->
     <div class="empty-container" *ngIf="!loading && !error && (!ads || ads.length === 0)">
-      <div class="empty-icon">
-        <i class="fas fa-search"></i>
-      </div>
+      <nb-icon icon="search-outline" class="empty-icon"></nb-icon>
       <p class="empty-text">No more profiles to show</p>
       <p class="empty-subtext">Try adjusting your filters or check back later</p>
     </div>
@@ -39,123 +36,95 @@
     <!-- Tinder Card Area -->
     <div class="swipe-area" *ngIf="!loading && !error && currentAd">
       <!-- Current Card -->
-      <emerald-tinder-card
+      <nb-tinder-card
         [title]="currentAd.title"
         [subtitle]="getLocationString(currentAd)"
         [description]="currentAd.description"
         [media]="getCardMedia(currentAd)"
         [tags]="currentAd.tags"
-        [itemId]="getAdIdAsString(currentAd._id)"
-        [age]="currentAd.age.toString()"
-        [state]="cardState"
-        [swipeable]="true"
-        (swipe)="onSwipe($any($event))"
-        (actionClick)="onCardAction($any($event))"
-        (mediaChange)="onMediaChange($any($event))"
+        (like)="likeAd(getAdIdAsString(currentAd._id))"
+        (dislike)="dislikeAd(getAdIdAsString(currentAd._id))"
+        (superlike)="superlikeAd(getAdIdAsString(currentAd._id))"
       >
-      </emerald-tinder-card>
+      </nb-tinder-card>
     </div>
 
     <!-- Next Card Preview (for smooth transitions) -->
     <div class="next-card-preview" *ngIf="nextAd">
-      <emerald-tinder-card
+      <nb-tinder-card
         [title]="nextAd.title"
         [subtitle]="getLocationString(nextAd)"
         [description]="nextAd.description"
         [media]="getCardMedia(nextAd)"
         [tags]="nextAd.tags"
-        [itemId]="getAdIdAsString(nextAd._id)"
-        [age]="nextAd.age.toString()"
-        [swipeable]="false"
       >
-      </emerald-tinder-card>
+      </nb-tinder-card>
     </div>
   </div>
 
-  <!-- Floating Action Button for Filters -->
-  <emerald-floating-action-button
-    icon="fa-sliders-h"
-    label="Filters"
-    color="primary"
-    position="bottom-right"
-    [showTooltip]="true"
-    tooltipText="Filter Profiles"
-    (buttonClick)="openFilters()"
-  >
-  </emerald-floating-action-button>
-
-  <!-- Filters Modal -->
-  <div
-    class="modal fade"
-    id="filtersModal"
-    tabindex="-1"
-    aria-labelledby="filtersModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="filtersModalLabel">
-            <i class="fas fa-filter"></i> Filter Profiles
+  <!-- Filters Dialog -->
+  <ng-template #filtersDialog let-ref="dialogRef">
+    <nb-card>
+      <nb-card-header>
+        <div class="dialog-header">
+          <h5>
+            <nb-icon icon="funnel-outline"></nb-icon>
+            Filter Profiles
           </h5>
-          <button
-            type="button"
-            class="btn-close"
-            (click)="closeFilters()"
-            aria-label="Close"
-          ></button>
+          <button nbButton ghost (click)="ref.close()">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
         </div>
-        <div class="modal-body">
-          <form [formGroup]="filterForm">
-            <div class="mb-3">
-              <label for="category" class="form-label"> <i class="fas fa-tag"></i> Category </label>
-              <select class="form-select" id="category" formControlName="category">
-                <option value="">All Categories</option>
-                <option value="Escort">Escort</option>
-                <option value="Striptease">Striptease</option>
-                <option value="Massage">Massage</option>
-                <option value="Companion">Companion</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="filterForm">
+          <nb-form-field>
+            <label>
+              <nb-icon icon="pricetags-outline"></nb-icon>
+              Category
+            </label>
+            <nb-select fullWidth formControlName="category">
+              <nb-option value="">All Categories</nb-option>
+              <nb-option value="Escort">Escort</nb-option>
+              <nb-option value="Striptease">Striptease</nb-option>
+              <nb-option value="Massage">Massage</nb-option>
+              <nb-option value="Companion">Companion</nb-option>
+              <nb-option value="Other">Other</nb-option>
+            </nb-select>
+          </nb-form-field>
 
-            <div class="mb-3">
-              <label for="location" class="form-label">
-                <i class="fas fa-map-marker-alt"></i> Location
-              </label>
-              <select class="form-select" id="location" formControlName="location">
-                <option value="">All Locations</option>
-                <option *ngFor="let county of counties" [value]="county">{{ county }}</option>
-              </select>
-            </div>
+          <nb-form-field>
+            <label>
+              <nb-icon icon="pin-outline"></nb-icon>
+              Location
+            </label>
+            <nb-select fullWidth formControlName="location">
+              <nb-option value="">All Locations</nb-option>
+              <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
+            </nb-select>
+          </nb-form-field>
 
-            <div class="mb-3">
-              <label class="form-label d-block mb-2">
-                <i class="fas fa-plane"></i> Touring Status
-              </label>
-              <!-- Using Emerald Toggle -->
-              <emerald-toggle
-                label="Show only touring profiles"
-                labelPosition="right"
-                color="primary"
-                [formControl]="$any(filterForm.get('touringOnly'))"
-              >
-              </emerald-toggle>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">
-            <i class="fas fa-undo"></i> Reset
+          <nb-form-field>
+            <label>
+              <nb-icon icon="paper-plane-outline"></nb-icon>
+              Touring Status
+            </label>
+            <nb-toggle formControlName="touringOnly">Show only touring profiles</nb-toggle>
+          </nb-form-field>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+        <div class="dialog-footer">
+          <button nbButton status="basic" (click)="resetFilters()">
+            <nb-icon icon="refresh-outline"></nb-icon>
+            Reset
           </button>
-          <button type="button" class="btn btn-secondary" (click)="closeFilters()">
-            <i class="fas fa-times"></i> Cancel
-          </button>
-          <button type="button" class="btn btn-primary" (click)="applyFilters()">
-            <i class="fas fa-check"></i> Apply Filters
+          <button nbButton status="primary" (click)="applyFilters(); ref.close()">
+            <nb-icon icon="checkmark-outline"></nb-icon>
+            Apply Filters
           </button>
         </div>
-      </div>
-    </div>
-  </div>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
 </app-main-layout>

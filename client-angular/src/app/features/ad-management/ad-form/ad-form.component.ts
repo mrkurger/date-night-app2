@@ -1,151 +1,190 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (ad-form.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../../../shared/material.module';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  NbCardModule,
+  NbFormFieldModule,
+  NbSelectModule,
+  NbIconModule,
+  NbButtonModule,
+  NbInputModule,
+  NbCheckboxModule,
+  NbTagModule,
+  NbSpinnerModule,
+  NbAlertModule,
+} from '@nebular/theme';
+
+import { Ad } from '../../../core/models/ad.interface';
+import { CategoryService } from '../../../core/services/category.service';
 import { LocationService } from '../../../core/services/location.service';
-import { NorwayCity } from '../../../core/constants/norway-locations';
 
 @Component({
   selector: 'app-ad-form',
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MaterialModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbSelectModule,
+    NbIconModule,
+    NbButtonModule,
+    NbInputModule,
+    NbCheckboxModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbAlertModule,
+  ],
 })
 export class AdFormComponent implements OnInit {
+  @Input() ad: Ad | null = null;
+  @Input() submitButtonText = 'Save';
+  @Input() isSubmitting = false;
+  @Input() error: string | null = null;
+  @Output() formSubmit = new EventEmitter<Ad>();
+  @Output() formCancel = new EventEmitter<void>();
+
   adForm: FormGroup;
-  isEditMode = false;
-  adId: string | null = null;
-  loading = false;
-  categories = ['Escort', 'Stripper', 'Massage', 'Companion', 'Other'];
-  counties: string[] = [];
-  cities: NorwayCity[] = [];
+  categories: string[] = [];
+  locations: string[] = [];
+  uploadedImages: File[] = [];
+  imagePreviewUrls: string[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private snackBar: MatSnackBar,
+    private categoryService: CategoryService,
     private locationService: LocationService,
   ) {
-    this.adForm = this.createForm();
-  }
-
-  ngOnInit(): void {
-    // Load counties
-    this.loading = true;
-    this.locationService.getCounties().subscribe((counties) => {
-      this.counties = counties;
-      this.loading = false;
-    });
-
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          this.adId = params.get('id');
-          this.isEditMode = !!this.adId;
-
-          if (this.isEditMode && this.adId) {
-            this.loading = true;
-            // In a real app, you would fetch the ad data from a service
-            // return this.adService.getAd(this.adId);
-            return of({
-              title: 'Sample Ad',
-              description: 'This is a sample ad description',
-              category: 'Escort',
-              price: 200,
-              county: 'Oslo',
-              city: 'Oslo',
-              isActive: true,
-            });
-          }
-          return of(null);
-        }),
-        tap((ad) => {
-          if (ad) {
-            this.adForm.patchValue(ad);
-
-            // Load cities for the selected county
-            if (ad.county) {
-              this.loadCitiesForCounty(ad.county);
-            }
-          }
-          this.loading = false;
-        }),
-      )
-      .subscribe();
-  }
-
-  /**
-   * Load cities when county changes
-   */
-  onCountyChange(): void {
-    const county = this.adForm.get('county')?.value;
-    if (county) {
-      this.loadCitiesForCounty(county);
-      this.adForm.get('city')?.setValue(''); // Reset city when county changes
-    }
-  }
-
-  /**
-   * Load cities for a specific county
-   */
-  private loadCitiesForCounty(county: string): void {
-    this.locationService.getCitiesByCounty(county).subscribe((cities) => {
-      this.cities = cities;
-    });
-  }
-
-  createForm(): FormGroup {
-    return this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
+    this.adForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: [
+        '',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(2000)],
+      ],
+      price: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
-      price: [null, [Validators.required, Validators.min(0)]],
-      county: ['', Validators.required],
-      city: ['', Validators.required],
+      location: ['', Validators.required],
+      isTouring: [false],
+      tags: [''],
+      contactEmail: ['', [Validators.email]],
+      contactPhone: [''],
       isActive: [true],
     });
   }
 
-  onSubmit(): void {
-    if (this.adForm.invalid) {
-      return;
-    }
+  ngOnInit(): void {
+    this.loadCategories();
+    this.loadLocations();
 
-    this.loading = true;
-    const adData = this.adForm.value;
-
-    // In a real app, you would save the ad data using a service
-    // const request = this.isEditMode
-    //   ? this.adService.updateAd(this.adId, adData)
-    //   : this.adService.createAd(adData);
-
-    // Simulating API call
-    setTimeout(() => {
-      this.loading = false;
-      this.snackBar.open(`Ad ${this.isEditMode ? 'updated' : 'created'} successfully!`, 'Close', {
-        duration: 3000,
+    if (this.ad) {
+      this.adForm.patchValue({
+        title: this.ad.title,
+        description: this.ad.description,
+        price: this.ad.price || 0,
+        category: this.ad.category,
+        location: this.ad.location,
+        isTouring: this.ad.isTouring || false,
+        tags: this.ad.tags ? this.ad.tags.join(', ') : '',
+        contactEmail: this.ad.contactEmail || '',
+        contactPhone: this.ad.contactPhone || '',
+        isActive: this.ad.isActive !== false,
       });
-      this.router.navigate(['../list'], { relativeTo: this.route });
-    }, 1000);
+
+      if (this.ad.images && this.ad.images.length > 0) {
+        this.imagePreviewUrls = this.ad.images.map((img) =>
+          typeof img === 'string' ? img : img.url,
+        );
+      }
+    }
+  }
+
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+      },
+    });
+  }
+
+  loadLocations(): void {
+    this.locationService.getLocations().subscribe({
+      next: (locations) => {
+        this.locations = locations;
+      },
+      error: (err) => {
+        console.error('Error loading locations:', err);
+      },
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        if (file.type.match('image.*')) {
+          this.uploadedImages.push(file);
+
+          // Create preview
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.imagePreviewUrls.push(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+
+  removeImage(index: number): void {
+    this.imagePreviewUrls.splice(index, 1);
+    if (index < this.uploadedImages.length) {
+      this.uploadedImages.splice(index, 1);
+    }
+  }
+
+  onSubmit(): void {
+    if (this.adForm.valid) {
+      const formData = this.adForm.value;
+
+      // Process tags
+      const tags = formData.tags
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag);
+
+      const adData: Ad = {
+        ...formData,
+        tags,
+        // Keep existing images if any
+        images: this.ad?.images || [],
+        // Add ID if editing
+        _id: this.ad?._id,
+      };
+
+      this.formSubmit.emit(adData);
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.adForm.controls).forEach((key) => {
+        this.adForm.get(key)?.markAsTouched();
+      });
+    }
   }
 
   onCancel(): void {
-    this.router.navigate(['../list'], { relativeTo: this.route });
+    this.formCancel.emit();
   }
 }

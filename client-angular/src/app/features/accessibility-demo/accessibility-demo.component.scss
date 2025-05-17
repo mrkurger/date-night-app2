@@ -1,359 +1,184 @@
-@use 'src/styles/design-system/index.scss' as ds;
+@use '@nebular/theme/styles/theming' as *;
 @use 'src/styles/mixins/_dark-mode.scss' as darkmode;
 @use 'src/styles/mixins/index.scss' as mixins;
 
-.a11y-demo {
-  &__skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
-    padding: ds.$spacing-3 ds.$spacing-6;
-    z-index: 100;
-    transition: top 0.3s;
-
-    &:focus {
-      top: 0;
-    }
+@include nb-install {
+  :host {
+    display: block;
+    padding: var(--padding);
   }
 
-  &__header {
-    background-color: ds.$color-primary;
-    color: ds.$color-white;
-    padding: ds.$spacing-12 0;
-    margin-bottom: ds.$spacing-12;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-primary-dark;
-    }
-  }
-
-  &__title {
-    font-size: ds.$font-size-4xl;
-    margin-bottom: ds.$spacing-4;
-  }
-
-  &__description {
-    font-size: ds.$font-size-lg;
-    max-width: 800px;
-  }
-
-  &__section {
-    margin-bottom: ds.$spacing-16;
-    padding-bottom: ds.$spacing-12;
-    border-bottom: 1px solid ds.$color-light-gray-2;
-
-    @include darkmode.dark-mode {
-      border-bottom-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__section-title {
-    font-size: ds.$font-size-3xl;
-    margin-bottom: ds.$spacing-8;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: ds.$spacing-3;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background-color: ds.$color-primary;
-      border-radius: ds.$border-radius-full;
-
-      @include darkmode.dark-mode {
-        background-color: ds.$color-primary-light;
-      }
-    }
-  }
-
-  &__subsection {
-    margin-bottom: ds.$spacing-8;
-  }
-
-  &__subsection-title {
-    font-size: ds.$font-size-xl;
-    margin-bottom: ds.$spacing-4;
-  }
-
-  &__example {
-    background-color: ds.$color-white;
-    border-radius: ds.$border-radius-lg;
-    padding: ds.$spacing-6;
-    margin-bottom: ds.$spacing-6;
-    box-shadow: ds.$shadow-sm;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-2;
-      box-shadow: 0 0 0 1px rgba(ds.$color-white, 0.1);
-    }
-  }
-
-  &__code {
-    background-color: ds.$color-light-gray-1;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-    margin: ds.$spacing-4 0;
-    overflow-x: auto;
-    font-family: monospace;
-    font-size: ds.$font-size-sm;
-
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-3;
-    }
-  }
-
-  // Focusable elements grid
-  &__focusable-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__focusable-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-
-    @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__focusable-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-  }
-
-  &__focusable-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
-
-    @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
-    }
-  }
-
-  // Keyboard navigation demo
-  &__keyboard-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: ds.$spacing-4;
-    margin-top: ds.$spacing-4;
-  }
-
-  &__keyboard-item {
-    padding: ds.$spacing-4 ds.$spacing-6;
-    background-color: ds.$color-light-gray-1;
-    border-radius: ds.$border-radius-md;
-    cursor: pointer;
-
-    &:focus-visible {
-      outline: 2px solid ds.$color-primary;
-      outline-offset: 2px;
-      background-color: ds.$color-light-gray-2;
+  .accessibility-demo {
+    &__section {
+      margin-bottom: var(--margin-lg);
     }
 
-    @include darkmode.dark-mode {
-      background-color: ds.$color-dark-gray-2;
-
-      &:focus-visible {
-        background-color: ds.$color-dark-gray-1;
-      }
-    }
-  }
-
-  // ARIA examples
-  &__aria-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__aria-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-
-    @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__aria-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-    font-family: monospace;
-  }
-
-  &__aria-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
-
-    @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
-    }
-  }
-
-  // Focus management examples
-  &__focus-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__focus-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-
-    @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__focus-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-  }
-
-  &__focus-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
-
-    @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
-    }
-  }
-
-  // Color contrast examples
-  &__contrast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: ds.$spacing-6;
-  }
-
-  &__contrast-item {
-    border: 1px solid ds.$color-light-gray-2;
-    border-radius: ds.$border-radius-md;
-    padding: ds.$spacing-4;
-
-    @include darkmode.dark-mode {
-      border-color: ds.$color-dark-gray-1;
-    }
-  }
-
-  &__contrast-name {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-  }
-
-  &__contrast-description {
-    margin-bottom: ds.$spacing-4;
-    color: ds.$color-dark-gray-1;
-
-    @include darkmode.dark-mode {
-      color: ds.$color-light-gray-2;
-    }
-  }
-
-  &__contrast-sample {
-    padding: ds.$spacing-4;
-    border-radius: ds.$border-radius-md;
-    margin-bottom: ds.$spacing-4;
-    font-size: ds.$font-size-xl;
-    font-weight: ds.$font-weight-semibold;
-    text-align: center;
-  }
-
-  &__contrast-ratio {
-    font-size: ds.$font-size-sm;
-  }
-
-  &__contrast-status {
-    display: inline-block;
-    margin-left: ds.$spacing-2;
-    padding: ds.$spacing-1 ds.$spacing-2;
-    border-radius: ds.$border-radius-sm;
-    font-weight: ds.$font-weight-medium;
-
-    &--pass {
-      background-color: ds.$color-success;
-      color: ds.$color-white;
+    &__title {
+      margin-bottom: var(--margin);
+      color: var(--text-basic-color);
+      font-weight: bold;
     }
 
-    &--fail {
-      background-color: ds.$color-error;
-      color: ds.$color-white;
-    }
-  }
-
-  // Semantic HTML comparison
-  &__semantic-comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: ds.$spacing-6;
-
-    @include mixins.responsive-down('tablet') {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__semantic-title {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-  }
-
-  // Alt text comparison
-  &__alt-text-comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: ds.$spacing-6;
-
-    @include mixins.responsive-down('tablet') {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__alt-text-title {
-    font-size: ds.$font-size-lg;
-    font-weight: ds.$font-weight-semibold;
-    margin-bottom: ds.$spacing-2;
-  }
-
-  // Resources list
-  &__resources-list {
-    list-style-type: disc;
-    padding-left: ds.$spacing-6;
-
-    li {
-      margin-bottom: ds.$spacing-2;
+    &__subtitle {
+      margin-bottom: var(--margin-sm);
+      color: var(--text-hint-color);
     }
 
-    a {
-      color: ds.$color-primary;
-      text-decoration: none;
+    &__example {
+      padding: var(--padding);
+      border-radius: var(--border-radius);
+      background-color: var(--background-basic-color-1);
+      box-shadow: var(--shadow);
+      margin-bottom: var(--margin);
+    }
+
+    &__button {
+      background-color: var(--color-primary-500);
+      color: var(--text-control-color);
+      border: none;
+      padding: var(--padding-sm) var(--padding);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
 
       &:hover {
+        background-color: var(--color-primary-600);
+      }
+
+      &:active {
+        background-color: var(--color-primary-700);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        background-color: var(--background-basic-color-3);
+        cursor: not-allowed;
+      }
+    }
+
+    &__input {
+      width: 100%;
+      padding: var(--padding-sm);
+      border: 1px solid var(--border-basic-color-3);
+      border-radius: var(--border-radius);
+      background-color: var(--background-basic-color-1);
+      color: var(--text-basic-color);
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-primary-500);
+        box-shadow: 0 0 0 2px var(--color-primary-transparent-200);
+      }
+
+      &::placeholder {
+        color: var(--text-hint-color);
+      }
+    }
+
+    &__link {
+      color: var(--color-primary-500);
+      text-decoration: none;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: var(--color-primary-600);
         text-decoration: underline;
       }
 
       &:focus-visible {
-        outline: 2px solid ds.$color-primary;
+        outline: 2px solid var(--color-primary-500);
         outline-offset: 2px;
       }
+    }
+
+    &__skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      padding: var(--padding-sm) var(--padding);
+      background-color: var(--color-primary-500);
+      color: var(--text-control-color);
+      text-decoration: none;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      transition: top 0.2s ease;
+
+      &:focus {
+        top: 0;
+      }
+    }
+
+    &__contrast-example {
+      padding: var(--padding);
+      margin-bottom: var(--margin);
+
+      &--good {
+        background-color: var(--background-basic-color-1);
+        color: var(--text-basic-color);
+      }
+
+      &--bad {
+        background-color: var(--background-basic-color-1);
+        color: var(--text-hint-color);
+      }
+    }
+
+    &__header {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--padding-12) 0;
+      margin-bottom: var(--margin-12);
 
       @include darkmode.dark-mode {
-        color: ds.$color-primary-light;
+        background-color: var(--color-primary-dark);
       }
+    }
+
+    &__description {
+      font-size: var(--font-size-lg);
+      max-width: 800px;
+    }
+
+    &__section-title {
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--margin-8);
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: var(--margin-3);
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--color-primary);
+        border-radius: var(--border-radius-full);
+
+        @include darkmode.dark-mode {
+          background-color: var(--color-primary-light);
+        }
+      }
+    }
+
+    &__subsection {
+      margin-bottom: var(--margin-8);
+    }
+
+    &__subsection-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--margin-4);
+    }
+
+    &__code {
+      background-color: var(--background-basic-color-2);
+      border-radius: var(--border-radius);
+      padding: var(--padding);
+      margin: var(--margin) 0;
+      overflow-x: auto;
     }
   }
 }

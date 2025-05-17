@@ -1,12 +1,15 @@
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
-// This file contains tests for the Emerald AppCard component
+// This file contains tests for the /*DEPRECATED:Emerald*/ AppCard component
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEM: Mock item data for testing
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../nebular.module';
+
 // import { By } from '@angular/platform-browser';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,21 +22,22 @@ import { LabelComponent } from '../components/label/label.component';
  * that requires methods not available in this component
  */
 @Component({
-  selector: 'emerald-app-card-test',
+  selector: 'nb-card-test',
   template: `
-    <div class="emerald-app-card" [ngClass]="'emerald-app-card--' + layout">
-      <div class="emerald-app-card__content">
-        <h3 class="emerald-app-card__title">{{ title }}</h3>
-        <p class="emerald-app-card__subtitle" *ngIf="subtitle">{{ subtitle }}</p>
-        <p class="emerald-app-card__description" *ngIf="description">{{ description }}</p>
-        <div class="emerald-app-card__tags" *ngIf="visibleTags.length > 0">
-          <emerald-label *ngFor="let tag of visibleTags" [text]="tag"></emerald-label>
+    <div class="nb-card" [ngClass]="'nb-card--' + layout">
+      <div class="nb-card__content">
+        <h3 class="nb-card__title">{{ title }}</h3>
+        <p class="nb-card__subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+        <p class="nb-card__description" *ngIf="description">{{ description }}</p>
+        <div class="nb-card__tags" *ngIf="visibleTags.length > 0">
+          <nb-tag *ngFor="let tag of visibleTags" [text]="tag"></nb-tag>
         </div>
       </div>
     </div>
   `,
   standalone: true,
-  imports: [CommonModule, LabelComponent],
+  imports: [CommonModule, LabelComponent
+    NbTagModule,],
 })
 class TestAppCardComponent extends AppCardComponent {}
 

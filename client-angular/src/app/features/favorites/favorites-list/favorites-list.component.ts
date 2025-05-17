@@ -1,30 +1,9 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (favorites-list.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   FavoriteService,
   Favorite,
@@ -35,31 +14,24 @@ import { NotificationService } from '../../../core/services/notification.service
 import { FavoriteButtonComponent } from '../../../shared/components/favorite-button/favorite-button.component';
 import { NotesDialogComponent } from '../../../shared/components/notes-dialog/notes-dialog.component';
 import { Subject } from 'rxjs';
+import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+// Import NebularModule directly for standalone components if not already present
+import { NebularModule } from '../../../shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({
   selector: 'app-favorites-list',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatCheckboxModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    FavoriteButtonComponent,
+    NebularModule, // Ensure NebularModule is imported here
+    // FavoriteButtonComponent is imported but not used in the template
+    // FavoriteButtonComponent,
   ],
   template: `
     <div class="favorites-container">
@@ -68,301 +40,261 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
         <div class="favorites-actions" *ngIf="favorites && favorites.length > 0">
           <button
-            mat-raised-button
-            color="primary"
+            nbButton
+            status="primary"
             [disabled]="selectedFavorites.length === 0"
-            [matMenuTriggerFor]="batchMenu"
+            [nbContextMenu]="batchActions"
+            nbContextMenuTag="batch-menu"
           >
             Batch Actions ({{ selectedFavorites.length }})
+            <nb-icon icon="chevron-down-outline"></nb-icon>
           </button>
-
-          <mat-menu #batchMenu="matMenu">
-            <button mat-menu-item (click)="removeFavoritesBatch()">
-              <mat-icon>delete</mat-icon>
-              <span>Remove Selected</span>
-            </button>
-            <button mat-menu-item (click)="openTagsDialog()">
-              <mat-icon>label</mat-icon>
-              <span>Add Tags to Selected</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('high')">
-              <mat-icon>priority_high</mat-icon>
-              <span>Set High Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('normal')">
-              <mat-icon>remove_circle_outline</mat-icon>
-              <span>Set Normal Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('low')">
-              <mat-icon>arrow_downward</mat-icon>
-              <span>Set Low Priority</span>
-            </button>
-          </mat-menu>
         </div>
       </div>
 
       <div class="filters-container" *ngIf="favorites && favorites.length > 0">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Search favorites</mat-label>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="search-outline"></nb-icon>
           <input
-            matInput
+            nbInput
+            fullWidth
             [(ngModel)]="filterOptions.search"
             (input)="onSearchChange($event)"
             placeholder="Search by title, description, or notes"
           />
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+        </nb-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sort by</mat-label>
-          <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
-            <mat-option value="newest">Newest first</mat-option>
-            <mat-option value="oldest">Oldest first</mat-option>
-            <mat-option value="price-asc">Price: Low to High</mat-option>
-            <mat-option value="price-desc">Price: High to Low</mat-option>
-            <mat-option value="title-asc">Title: A to Z</mat-option>
-            <mat-option value="title-desc">Title: Z to A</mat-option>
-            <mat-option value="priority-high">Priority: High to Low</mat-option>
-            <mat-option value="priority-low">Priority: Low to High</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <nb-form-field>
+          <nb-select
+            fullWidth
+            [(ngModel)]="filterOptions.sort"
+            (selectedChange)="applyFilters()"
+            placeholder="Sort by"
+          >
+            <nb-option value="newest">Newest first</nb-option>
+            <nb-option value="oldest">Oldest first</nb-option>
+            <nb-option value="price-asc">Price: Low to High</nb-option>
+            <nb-option value="price-desc">Price: High to Low</nb-option>
+            <nb-option value="title-asc">Title: A to Z</nb-option>
+            <nb-option value="title-desc">Title: Z to A</nb-option>
+            <nb-option value="priority-high">Priority: High to Low</nb-option>
+            <nb-option value="priority-low">Priority: Low to High</nb-option>
+          </nb-select>
+        </nb-form-field>
 
         <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
           <div class="tags-label">Filter by tag:</div>
-          <div class="tags-chips">
-            <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-              <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
-                {{ tag.tag }} ({{ tag.count }})
-              </mat-chip-option>
-            </mat-chip-listbox>
-          </div>
+          <nb-tag-list>
+            <nb-tag
+              *ngFor="let tag of userTags"
+              [text]="tag.tag + ' (' + tag.count + ')'"
+              [selected]="selectedTagFilters.includes(tag.tag)"
+              (click)="toggleTagFilter(tag.tag)"
+              appearance="outline"
+              status="basic"
+            >
+            </nb-tag>
+          </nb-tag-list>
         </div>
 
-        <button mat-button color="primary" (click)="resetFilters()" *ngIf="isFiltered">
-          <mat-icon>clear</mat-icon>
+        <button nbButton ghost (click)="resetFilters()" *ngIf="isFiltered">
+          <nb-icon icon="close-outline"></nb-icon>
           Clear Filters
         </button>
       </div>
 
       <div class="loading-container" *ngIf="loading">
-        <mat-spinner diameter="40"></mat-spinner>
+        <nb-spinner size="large"></nb-spinner>
         <p>Loading your favorites...</p>
       </div>
 
       <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)">
-        <mat-card>
-          <mat-card-content>
-            <mat-icon class="empty-icon">favorite_border</mat-icon>
+        <nb-card>
+          <nb-card-body>
+            <nb-icon icon="heart-outline" class="empty-icon"></nb-icon>
             <h3>No favorites yet</h3>
             <p>Browse ads and click the heart icon to add them to your favorites.</p>
-            <button mat-raised-button color="primary" routerLink="/ads">Browse Ads</button>
-          </mat-card-content>
-        </mat-card>
+            <button nbButton status="primary" routerLink="/ads">Browse Ads</button>
+          </nb-card-body>
+        </nb-card>
       </div>
 
       <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0">
-        <mat-card
-          *ngFor="let favorite of favorites"
-          class="favorite-card"
-          [ngClass]="getPriorityClass(favorite)"
-        >
-          <div class="favorite-header">
-            <div class="favorite-select">
-              <mat-checkbox
-                [(ngModel)]="favorite.selected"
-                (change)="updateSelectedFavorites()"
-                color="primary"
-              ></mat-checkbox>
-            </div>
-
-            <img
-              [src]="
-                favorite.ad.images && favorite.ad.images.length > 0
-                  ? favorite.ad.images[0]
-                  : 'assets/images/placeholder.jpg'
-              "
-              [alt]="favorite.ad.title"
-              class="favorite-image"
-              [routerLink]="['/ads', favorite.ad._id]"
-            />
-
-            <div class="favorite-info">
-              <h3 class="favorite-title" [routerLink]="['/ads', favorite.ad._id]">
-                {{ favorite.ad.title }}
-              </h3>
-
-              <div class="favorite-details">
-                <span class="favorite-location">
-                  <mat-icon>location_on</mat-icon>
-                  {{ favorite.ad.location }}
-                </span>
-
-                <span class="favorite-price">
-                  <mat-icon>attach_money</mat-icon>
-                  {{ favorite.ad.price | currency: 'NOK' : 'symbol' : '1.0-0' }}
-                </span>
-
-                <span class="favorite-date">
-                  <mat-icon>event</mat-icon>
-                  Added {{ favorite.createdAt | date: 'mediumDate' }}
-                </span>
-
-                <span class="favorite-priority" [ngClass]="'priority-' + favorite.priority">
-                  <mat-icon>{{ getPriorityIcon(favorite.priority) }}</mat-icon>
-                  {{ favorite.priority | titlecase }} Priority
-                </span>
+        <nb-card *ngFor="let favorite of favorites" [ngClass]="getPriorityClass(favorite)">
+          <nb-card-body>
+            <div class="favorite-header">
+              <div class="favorite-select">
+                <nb-checkbox
+                  [(ngModel)]="favorite.selected"
+                  (ngModelChange)="updateSelectedFavorites()"
+                  status="primary"
+                ></nb-checkbox>
               </div>
 
-              <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
-                <mat-chip-listbox>
-                  <mat-chip *ngFor="let tag of favorite.tags">{{ tag }}</mat-chip>
-                </mat-chip-listbox>
+              <div class="favorite-image">
+                <img
+                  [src]="
+                    favorite.ad.images && favorite.ad.images.length > 0
+                      ? favorite.ad.images[0]
+                      : 'assets/images/placeholder.jpg'
+                  "
+                  [alt]="favorite.ad.title"
+                />
               </div>
-            </div>
 
-            <div class="favorite-actions">
-              <app-favorite-button
-                [adId]="this.getAdIdAsString(favorite.ad._id)"
-                (favoriteChanged)="onFavoriteRemoved($event, favorite)"
-              ></app-favorite-button>
+              <div class="favorite-info">
+                <h3>
+                  <a [routerLink]="['/ads', favorite.ad._id]">{{ favorite.ad.title }}</a>
+                </h3>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options">
-                <mat-icon>more_vert</mat-icon>
-              </button>
+                <div class="favorite-meta">
+                  <nb-tag
+                    [status]="getPriorityClass(favorite)"
+                    [icon]="getPriorityIcon(favorite.priority)"
+                  >
+                    {{ favorite.priority | titlecase }} Priority
+                  </nb-tag>
 
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
-                  <mat-icon>visibility</mat-icon>
-                  <span>View Ad</span>
-                </button>
-                <button mat-menu-item (click)="openNotesDialog(favorite)">
-                  <mat-icon>note</mat-icon>
-                  <span>Edit Notes</span>
-                </button>
-                <button mat-menu-item (click)="openTagsDialogForSingle(favorite)">
-                  <mat-icon>label</mat-icon>
-                  <span>Edit Tags</span>
-                </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item [matMenuTriggerFor]="priorityMenu">
-                  <mat-icon>priority_high</mat-icon>
-                  <span>Set Priority</span>
-                </button>
-                <button mat-menu-item (click)="toggleNotifications(favorite)">
-                  <mat-icon>{{
-                    favorite.notificationsEnabled ? 'notifications' : 'notifications_off'
-                  }}</mat-icon>
-                  <span>{{
-                    favorite.notificationsEnabled ? 'Disable Notifications' : 'Enable Notifications'
-                  }}</span>
-                </button>
-                <mat-divider></mat-divider>
+                  <nb-tag status="basic" icon="calendar-outline">
+                    Added {{ favorite.dateAdded || favorite.createdAt | date }}
+                  </nb-tag>
+
+                  <nb-tag
+                    *ngIf="favorite.notificationsEnabled"
+                    status="success"
+                    icon="bell-outline"
+                  >
+                    Notifications On
+                  </nb-tag>
+                </div>
+
+                <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
+                  <nb-tag-list>
+                    <nb-tag
+                      *ngFor="let tag of favorite.tags"
+                      status="basic"
+                      appearance="outline"
+                      size="tiny"
+                    >
+                      {{ tag }}
+                    </nb-tag>
+                  </nb-tag-list>
+                </div>
+
+                <p class="favorite-notes" *ngIf="favorite.notes">
+                  {{ favorite.notes }}
+                </p>
+              </div>
+
+              <div class="favorite-actions">
                 <button
-                  mat-menu-item
-                  (click)="removeFavorite(this.getAdIdAsString(favorite.ad._id))"
+                  nbButton
+                  ghost
+                  size="small"
+                  [nbContextMenu]="[
+                    {
+                      title: 'View Details',
+                      icon: 'eye-outline',
+                      link: '/ads/' + this.getAdIdAsString(favorite.ad),
+                    },
+                    {
+                      title: 'Edit Notes',
+                      icon: 'edit-outline',
+                      data: favorite,
+                    },
+                    {
+                      title: 'Manage Tags',
+                      icon: 'bookmark-outline',
+                      data: favorite,
+                    },
+                    {
+                      title: 'Set Priority',
+                      icon: 'arrow-up-outline',
+                      children: [
+                        {
+                          title: 'High',
+                          icon: 'arrow-up-outline',
+                          data: { favorite, priority: 'high' },
+                        },
+                        {
+                          title: 'Normal',
+                          icon: 'minus-outline',
+                          data: { favorite, priority: 'normal' },
+                        },
+                        {
+                          title: 'Low',
+                          icon: 'arrow-down-outline',
+                          data: { favorite, priority: 'low' },
+                        },
+                      ],
+                    },
+                    {
+                      title: favorite.notificationsEnabled
+                        ? 'Disable Notifications'
+                        : 'Enable Notifications',
+                      icon: favorite.notificationsEnabled ? 'bell-off-outline' : 'bell-outline',
+                      data: favorite,
+                    },
+                    {
+                      title: 'Remove',
+                      icon: 'trash-2-outline',
+                      data: favorite,
+                    },
+                  ]"
+                  nbContextMenuTag="favorite-menu"
                 >
-                  <mat-icon>delete</mat-icon>
-                  <span>Remove from Favorites</span>
+                  <nb-icon icon="more-vertical-outline"></nb-icon>
                 </button>
-              </mat-menu>
-
-              <mat-menu #priorityMenu="matMenu">
-                <button mat-menu-item (click)="updatePriority(favorite, 'high')">
-                  <mat-icon>arrow_upward</mat-icon>
-                  <span>High</span>
-                </button>
-                <button mat-menu-item (click)="updatePriority(favorite, 'normal')">
-                  <mat-icon>remove</mat-icon>
-                  <span>Normal</span>
-                </button>
-                <button mat-menu-item (click)="updatePriority(favorite, 'low')">
-                  <mat-icon>arrow_downward</mat-icon>
-                  <span>Low</span>
-                </button>
-              </mat-menu>
+              </div>
             </div>
-          </div>
-
-          <mat-divider *ngIf="favorite.notes"></mat-divider>
-
-          <div class="favorite-notes" *ngIf="favorite.notes">
-            <mat-icon>note</mat-icon>
-            <p>{{ favorite.notes }}</p>
-          </div>
-
-          <mat-card-actions>
-            <button mat-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
-              <mat-icon>visibility</mat-icon>
-              View Ad
-            </button>
-
-            <button
-              mat-button
-              color="accent"
-              [routerLink]="['/chat']"
-              [queryParams]="{ userId: favorite.ad.userId }"
-            >
-              <mat-icon>chat</mat-icon>
-              Contact Advertiser
-            </button>
-
-            <mat-slide-toggle
-              [checked]="favorite.notificationsEnabled"
-              (change)="toggleNotifications(favorite)"
-              color="primary"
-              class="notifications-toggle"
-            >
-              Notifications
-            </mat-slide-toggle>
-          </mat-card-actions>
-        </mat-card>
+          </nb-card-body>
+        </nb-card>
       </div>
     </div>
   `,
   styles: [
     `
+      :host {
+        display: block;
+        padding: var(--padding);
+      }
+
       .favorites-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
       }
 
       .favorites-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: var(--margin);
       }
 
       .page-title {
         margin: 0;
-        color: #333;
-        font-size: 2rem;
+        color: var(--text-basic-color);
       }
 
       .filters-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 20px;
-        align-items: center;
-      }
+        background-color: var(--card-background-color);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: var(--margin);
+        box-shadow: var(--shadow);
 
-      .search-field {
-        flex: 1;
-        min-width: 250px;
+        nb-form-field {
+          margin-bottom: var(--margin);
+        }
       }
 
       .tags-filter {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 8px;
-      }
+        margin-bottom: var(--margin);
 
-      .tags-label {
-        font-weight: 500;
-        color: #666;
+        .tags-label {
+          margin-bottom: var(--spacing);
+          color: var(--text-hint-color);
+        }
       }
 
       .loading-container {
@@ -370,184 +302,110 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 40px;
-      }
+        padding: var(--padding);
+        color: var(--text-hint-color);
 
-      .loading-container p {
-        margin-top: 20px;
-        color: #666;
+        nb-spinner {
+          margin-bottom: var(--spacing);
+        }
       }
 
       .no-favorites {
         text-align: center;
-        padding: 40px 0;
+        color: var(--text-hint-color);
+
+        .empty-icon {
+          font-size: 4rem;
+          margin-bottom: var(--spacing);
+        }
+
+        h3 {
+          margin: 0 0 var(--spacing);
+          color: var(--text-basic-color);
+        }
+
+        p {
+          margin: 0 0 var(--margin);
+        }
       }
 
-      .no-favorites mat-card {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 30px;
+      .favorites-list {
+        display: grid;
+        gap: var(--margin);
       }
 
-      .empty-icon {
-        font-size: 64px;
-        height: 64px;
-        width: 64px;
-        color: #ccc;
-        margin-bottom: 20px;
-      }
+      nb-card {
+        margin: 0;
 
-      .no-favorites h3 {
-        margin-bottom: 10px;
-        color: #333;
-      }
+        &.priority-high {
+          border-left: 4px solid var(--color-danger-default);
+        }
 
-      .no-favorites p {
-        margin-bottom: 20px;
-        color: #666;
-      }
+        &.priority-normal {
+          border-left: 4px solid var(--color-warning-default);
+        }
 
-      .favorite-card {
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .favorite-card.priority-high {
-        border-left: 4px solid #f44336;
-      }
-
-      .favorite-card.priority-normal {
-        border-left: 4px solid #2196f3;
-      }
-
-      .favorite-card.priority-low {
-        border-left: 4px solid #4caf50;
+        &.priority-low {
+          border-left: 4px solid var(--color-success-default);
+        }
       }
 
       .favorite-header {
         display: flex;
-        padding: 16px;
-      }
-
-      .favorite-select {
-        display: flex;
-        align-items: center;
-        margin-right: 16px;
+        gap: var(--spacing);
+        align-items: flex-start;
       }
 
       .favorite-image {
         width: 120px;
         height: 120px;
-        object-fit: cover;
-        border-radius: 4px;
-        cursor: pointer;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       .favorite-info {
         flex: 1;
-        margin-left: 16px;
-        display: flex;
-        flex-direction: column;
+
+        h3 {
+          margin: 0 0 var(--spacing);
+          font-size: var(--text-heading-6-font-size);
+
+          a {
+            color: var(--text-basic-color);
+            text-decoration: none;
+
+            &:hover {
+              color: var(--color-primary-hover);
+            }
+          }
+        }
       }
 
-      .favorite-title {
-        margin: 0 0 10px 0;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-
-      .favorite-title:hover {
-        color: #3f51b5;
-      }
-
-      .favorite-details {
+      .favorite-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-      }
-
-      .favorite-location,
-      .favorite-price,
-      .favorite-date,
-      .favorite-priority {
-        display: flex;
-        align-items: center;
-      }
-
-      .favorite-priority.priority-high {
-        color: #f44336;
-      }
-
-      .favorite-priority.priority-normal {
-        color: #2196f3;
-      }
-
-      .favorite-priority.priority-low {
-        color: #4caf50;
-      }
-
-      .favorite-details mat-icon {
-        font-size: 16px;
-        height: 16px;
-        width: 16px;
-        margin-right: 4px;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing);
       }
 
       .favorite-tags {
-        margin-top: 8px;
-      }
-
-      .favorite-actions {
-        display: flex;
-        align-items: flex-start;
+        margin-bottom: var(--spacing);
       }
 
       .favorite-notes {
-        display: flex;
-        padding: 16px;
-        background-color: #f9f9f9;
-        border-radius: 0 0 8px 8px;
-      }
-
-      .favorite-notes mat-icon {
-        margin-right: 8px;
-        color: #666;
-      }
-
-      .favorite-notes p {
         margin: 0;
-        color: #333;
-        white-space: pre-line;
+        color: var(--text-hint-color);
+        font-style: italic;
       }
 
-      .notifications-toggle {
+      .favorite-actions {
         margin-left: auto;
-      }
-
-      @media (max-width: 768px) {
-        .favorite-header {
-          flex-direction: column;
-        }
-
-        .favorite-image {
-          width: 100%;
-          height: 200px;
-          margin-bottom: 16px;
-        }
-
-        .favorite-info {
-          margin-left: 0;
-        }
-
-        .favorite-actions {
-          margin-top: 16px;
-          justify-content: flex-end;
-          width: 100%;
-        }
       }
     `,
   ],
@@ -569,8 +427,11 @@ export class FavoritesListComponent implements OnInit {
   /**
    * Convert ad ID to string regardless of its type
    */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  getAdIdAsString(adId: any): string {
+    if (!adId) return '';
+    if (typeof adId === 'string') return adId;
+    if (adId._id) return adId._id;
+    return JSON.stringify(adId);
   }
 
   get isFiltered(): boolean {
@@ -583,10 +444,17 @@ export class FavoritesListComponent implements OnInit {
     );
   }
 
+  // Batch actions menu items
+  batchActions: NbMenuItem[] = [
+    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },
+    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },
+    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },
+  ];
+
   constructor(
     private favoriteService: FavoriteService,
     private notificationService: NotificationService,
-    private dialog: MatDialog,
+    private dialog: NbDialogService,
   ) {
     // Set up debounced search
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
@@ -693,16 +561,17 @@ export class FavoritesListComponent implements OnInit {
 
   openNotesDialog(favorite: Favorite): void {
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Edit Notes',
-        notes: favorite.notes || '',
-        maxLength: 500,
-        placeholder: 'Add personal notes about this ad...',
+      context: {
+        data: {
+          title: 'Edit Notes',
+          notes: favorite.notes || '',
+          maxLength: 500,
+          placeholder: 'Add personal notes about this ad...',
+        },
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         this.updateNotes(favorite, result);
       }
@@ -711,16 +580,17 @@ export class FavoritesListComponent implements OnInit {
 
   openTagsDialogForSingle(favorite: Favorite): void {
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Edit Tags',
-        notes: favorite.tags ? favorite.tags.join(', ') : '',
-        maxLength: 200,
-        placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+      context: {
+        data: {
+          title: 'Edit Tags',
+          notes: favorite.tags ? favorite.tags.join(', ') : '',
+          maxLength: 200,
+          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+        },
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')
@@ -736,16 +606,17 @@ export class FavoritesListComponent implements OnInit {
     if (this.selectedFavorites.length === 0) return;
 
     const dialogRef = this.dialog.open(NotesDialogComponent, {
-      width: '500px',
-      data: {
-        title: 'Add Tags to Selected Favorites',
-        notes: '',
-        maxLength: 200,
-        placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+      context: {
+        data: {
+          title: 'Add Tags to Selected Favorites',
+          notes: '',
+          maxLength: 200,
+          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
+        },
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
         const tags = result
           .split(',')
@@ -905,5 +776,14 @@ export class FavoritesListComponent implements OnInit {
       default:
         return 'remove';
     }
+  }
+
+  toggleTagFilter(tag: string): void {
+    if (this.selectedTagFilters.includes(tag)) {
+      this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
+    } else {
+      this.selectedTagFilters.push(tag);
+    }
+    this.applyFilters();
   }
 }

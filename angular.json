@@ -1,0 +1,110 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "client-angular": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "client-angular",
+      "sourceRoot": "client-angular/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/client-angular",
+            "index": "client-angular/src/index.html",
+            "main": "client-angular/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "client-angular/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["client-angular/src/favicon.ico", "client-angular/src/assets"],
+            "styles": [
+              "/node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "/node_modules/eva-icons/style/eva-icons.css",
+              "client-angular/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "client-angular:build:production"
+            },
+            "development": {
+              "buildTarget": "client-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "client-angular:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "client-angular/e2e/protractor.conf.js",
+            "devServerTarget": "client-angular:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "client-angular:serve:production"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
+import { Component } from '@angular/core';
 /**
- * Emerald.js Components Index
+ * /*DEPRECATED:Emerald*/.js Components Index
  *
- * This file exports all Emerald.js component wrappers for easy importing.
+ * This file exports all /*DEPRECATED:Emerald*/.js component wrappers for easy importing.
  *
- * Documentation: https://docs-emerald.condorlabs.io/
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/
  */
 
 // Components

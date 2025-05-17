@@ -1,4 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { ThemeService } from '../../core/services/theme.service';
@@ -12,9 +27,356 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-micro-interactions-demo',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule],
-  templateUrl: './micro-interactions-demo.component.html',
-  styleUrls: ['./micro-interactions-demo.component.scss'],
+  template: `
+    <div [class]="bem.block()">
+      <header [class]="bem.element('header')">
+        <div class="container">
+          <h1 [class]="bem.element('title')">Micro-interactions</h1>
+          <p [class]="bem.element('description')">
+            This page demonstrates micro-interactions used throughout the DateNight.io application.
+            Micro-interactions provide feedback, guide users, and create a more engaging experience.
+          </p>
+          <button nbButton status="primary" (click)="toggleTheme()">
+            <nb-icon [icon]="(isDarkMode$ | async) ? 'sun-outline' : 'moon-outline'"></nb-icon>
+            Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
+          </button>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- Introduction -->
+        <nb-card>
+          <nb-card-header>
+            <h2>Introduction</h2>
+          </nb-card-header>
+          <nb-card-body>
+            <p>
+              Micro-interactions are small, subtle animations and effects that provide feedback and
+              enhance the user experience. They help users understand what's happening, guide them
+              through the interface, and make the application feel more responsive and polished.
+            </p>
+            <p>
+              DateNight.io uses a consistent set of micro-interactions throughout the application to
+              create a cohesive and engaging experience. This page showcases these
+              micro-interactions and provides examples of how to implement them.
+            </p>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- Hover Effects -->
+        <nb-card>
+          <nb-card-header>
+            <h2>Hover Effects</h2>
+          </nb-card-header>
+          <nb-card-body>
+            <p>
+              Hover effects provide feedback when users hover over interactive elements. They help
+              users understand what elements are clickable and what will happen when they click.
+            </p>
+
+            <div class="hover-grid">
+              <nb-card *ngFor="let effect of hoverEffects" [class]="effect.class">
+                <nb-card-body>
+                  <h3>{{ effect.name }}</h3>
+                  <p>{{ effect.description }}</p>
+                  <pre *ngIf="effect.code">{{ effect.code }}</pre>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- Loading States -->
+        <nb-card>
+          <nb-card-header>
+            <h2>Loading States</h2>
+          </nb-card-header>
+          <nb-card-body>
+            <p>
+              Loading states provide feedback when the application is processing a request or
+              loading content. They help users understand that something is happening and prevent
+              them from thinking the application is frozen or unresponsive.
+            </p>
+
+            <div class="loading-demo">
+              <button
+                nbButton
+                status="primary"
+                [disabled]="isLoading"
+                (click)="simulateLoading()"
+                [class.success]="isSuccess"
+                [class.error]="isError"
+              >
+                <span>
+                  {{
+                    isLoading
+                      ? 'Loading...'
+                      : isSuccess
+                        ? 'Success!'
+                        : isError
+                          ? 'Error!'
+                          : 'Click to Load'
+                  }}
+                </span>
+                <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
+                <nb-icon
+                  *ngIf="isSuccess"
+                  icon="checkmark-circle-2-outline"
+                  status="success"
+                ></nb-icon>
+                <nb-icon *ngIf="isError" icon="close-circle-outline" status="danger"></nb-icon>
+              </button>
+
+              <button
+                nbButton
+                status="danger"
+                [disabled]="isLoading"
+                (click)="simulateError()"
+                [class.success]="isSuccess"
+                [class.error]="isError"
+              >
+                <span>
+                  {{
+                    isLoading
+                      ? 'Loading...'
+                      : isSuccess
+                        ? 'Success!'
+                        : isError
+                          ? 'Error!'
+                          : 'Simulate Error'
+                  }}
+                </span>
+                <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
+                <nb-icon
+                  *ngIf="isSuccess"
+                  icon="checkmark-circle-2-outline"
+                  status="success"
+                ></nb-icon>
+                <nb-icon *ngIf="isError" icon="close-circle-outline" status="danger"></nb-icon>
+              </button>
+            </div>
+
+            <div class="loading-grid">
+              <nb-card *ngFor="let state of loadingStates">
+                <nb-card-body>
+                  <h3>{{ state.name }}</h3>
+                  <p>{{ state.description }}</p>
+                  <div [class]="state.class">
+                    <div *ngIf="state.class === 'button-loading'">
+                      <button nbButton status="primary" disabled>
+                        <span>Loading</span>
+                        <nb-spinner size="small"></nb-spinner>
+                      </button>
+                    </div>
+
+                    <div *ngIf="state.class === 'skeleton-loader'" class="skeleton">
+                      <div class="skeleton-line short"></div>
+                      <div class="skeleton-line medium"></div>
+                      <div class="skeleton-line long"></div>
+                      <div class="skeleton-line medium"></div>
+                    </div>
+
+                    <div *ngIf="state.class === 'progress-bar'">
+                      <nb-progress-bar [value]="75" status="primary"></nb-progress-bar>
+                    </div>
+
+                    <div *ngIf="state.class === 'pulse-loading'" class="pulse"></div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- Transition Effects -->
+        <nb-card>
+          <nb-card-header>
+            <h2>Transition Effects</h2>
+          </nb-card-header>
+          <nb-card-body>
+            <p>
+              Transition effects provide smooth animations when elements enter, exit, or change
+              state. They help users understand what's happening and create a more polished
+              experience.
+            </p>
+
+            <div class="transition-grid">
+              <nb-card *ngFor="let effect of transitionEffects" [class]="effect.class">
+                <nb-card-body>
+                  <h3>{{ effect.name }}</h3>
+                  <p>{{ effect.description }}</p>
+                  <pre *ngIf="effect.code">{{ effect.code }}</pre>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- Feedback Animations -->
+        <nb-card>
+          <nb-card-header>
+            <h2>Feedback Animations</h2>
+          </nb-card-header>
+          <nb-card-body>
+            <p>
+              Feedback animations provide visual cues when users interact with the application. They
+              help users understand the result of their actions and create a more engaging
+              experience.
+            </p>
+
+            <div class="feedback-grid">
+              <nb-card *ngFor="let animation of feedbackAnimations" [class]="animation.class">
+                <nb-card-body>
+                  <h3>{{ animation.name }}</h3>
+                  <p>{{ animation.description }}</p>
+
+                  <div class="feedback-demo">
+                    <div *ngIf="animation.class === 'success-animation'">
+                      <button nbButton status="success" (click)="simulateLoading()">
+                        Show Success
+                      </button>
+                    </div>
+
+                    <div *ngIf="animation.class === 'error-animation'">
+                      <button nbButton status="danger" (click)="simulateError()">Show Error</button>
+                    </div>
+
+                    <div *ngIf="animation.class === 'click-ripple'">
+                      <button nbButton status="primary">Click Me</button>
+                    </div>
+
+                    <div *ngIf="animation.class === 'shake-animation'">
+                      <button
+                        nbButton
+                        status="warning"
+                        #shakeButton
+                        (click)="simulateShake(shakeButton)"
+                      >
+                        Shake Me
+                      </button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </main>
+    </div>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      header {
+        background-color: var(--background-basic-color-2);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+
+        h1 {
+          margin: 0 0 1rem;
+          color: var(--text-basic-color);
+        }
+
+        p {
+          color: var(--text-hint-color);
+          margin: 0 0 2rem;
+        }
+      }
+
+      .hover-grid,
+      .loading-grid,
+      .transition-grid,
+      .feedback-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        margin-top: 2rem;
+      }
+
+      .loading-demo {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .skeleton {
+        .skeleton-line {
+          height: 1rem;
+          background-color: var(--background-basic-color-3);
+          border-radius: var(--border-radius);
+          margin-bottom: 0.5rem;
+          animation: pulse 1.5s ease-in-out infinite;
+
+          &.short {
+            width: 30%;
+          }
+
+          &.medium {
+            width: 60%;
+          }
+
+          &.long {
+            width: 90%;
+          }
+        }
+      }
+
+      .pulse {
+        width: 3rem;
+        height: 3rem;
+        background-color: var(--color-primary-500);
+        border-radius: 50%;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .shake-active {
+        animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      }
+
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+        20%,
+        80% {
+          transform: translate3d(2px, 0, 0);
+        }
+        30%,
+        50%,
+        70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+        40%,
+        60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+    `,
+  ],
 })
 export class MicroInteractionsDemoComponent {
   bem = new BemUtil('micro-demo');
@@ -181,11 +543,13 @@ export class MicroInteractionsDemoComponent {
    * Simulates a shake animation for invalid input
    * @param element The element to shake
    */
-  simulateShake(element: HTMLElement): void {
-    element.classList.add('shake-active');
+  simulateShake(element: any): void {
+    if (element && element.nativeElement) {
+      element.nativeElement.classList.add('shake-active');
 
-    setTimeout(() => {
-      element.classList.remove('shake-active');
-    }, 500);
+      setTimeout(() => {
+        element.nativeElement.classList.remove('shake-active');
+      }, 500);
+    }
   }
 }

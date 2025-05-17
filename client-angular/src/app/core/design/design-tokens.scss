@@ -2,252 +2,45 @@
  * DateNight.io Design System
  * 
  * This file contains all design tokens used throughout the application.
- * Always reference these variables instead of hardcoding values to maintain consistency.
- * 
- * IMPORTANT: This file now forwards the Emerald UI aligned design tokens.
- * The original tokens are kept for backward compatibility but will be deprecated.
+ * Uses Nebular theme variables for consistent styling.
  */
 
-// Use Sass built-in color module
 @use 'sass:color';
 
-// Use Emerald UI aligned tokens (introduces 'emerald-tokens' namespace)
-@use 'emerald-tokens';
-@forward 'emerald-tokens';
+// Function to return a CSS variable as a string
+@function get-color($var) {
+  @return unquote('var(--#{$var})');
+}
 
-// Add any additional design tokens or overrides here
-$transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-$opacity-disabled: 0.5; // Added token for disabled opacity
+// Function to safely adjust color (example, adjust as needed)
+@function safe-color-adjust($color, $lightness-amount) {
+  @return color.adjust($color, $lightness: $lightness-amount);
+}
 
-// Legacy tokens - kept for backward compatibility
+// Primary colors - Using Nebular theme variables
 
-// Primary colors - Main brand colors (DEPRECATED - use Emerald tokens instead)
-$primary-50: #fff2f6; // Extra lightest
-$primary-100: #ffe6ec; // Lightest
-$primary-200: #ffb3c5;
-$primary-300: #ff809e;
-$primary-400: #ff4d77;
-$primary-500: emerald-tokens.$color-primary; // Base primary
-$primary-600: #e62e5c;
-$primary-700: #b32348;
-$primary-800: #801934;
-$primary-900: #4d0f1f; // Darkest
+// Secondary colors
 
-// Secondary colors - Complementary to primary (DEPRECATED - use Emerald tokens instead)
-$secondary-100: #f2f1ff;
-$secondary-200: #e6e4ff;
-$secondary-300: #b3b0ff;
-$secondary-400: #807dff;
-$secondary-500: emerald-tokens.$color-secondary; // Base secondary
-$secondary-600: #5b53e6;
-$secondary-700: #4840b3;
-$secondary-800: #322d80;
-$secondary-900: #1d1a4d;
+// Neutral colors
 
-// Neutral colors - For text, backgrounds, etc. (DEPRECATED - use Emerald tokens instead)
-$neutral-50: emerald-tokens.$color-light-gray-1; // Extra light gray
-$neutral-100: emerald-tokens.$color-white; // White
-$neutral-200: emerald-tokens.$color-light-gray-2;
-$neutral-300: emerald-tokens.$color-medium-gray-1;
-$neutral-400: emerald-tokens.$color-medium-gray-2;
-$neutral-500: emerald-tokens.$color-dark-gray-1; // Base neutral
-$neutral-600: emerald-tokens.$color-dark-gray-2;
-$neutral-700: emerald-tokens.$color-dark-gray-3;
-$neutral-800: color.adjust(emerald-tokens.$color-dark-gray-3, $lightness: -10%);
-$neutral-900: emerald-tokens.$color-black; // Almost black
+// Semantic colors
 
-// Semantic colors - For status, alerts, etc. (DEPRECATED - use Emerald tokens instead)
-$success: emerald-tokens.$color-success;
-$success-100: color.adjust(emerald-tokens.$color-success, $lightness: 40%); // Lightest success
-$success-200: color.adjust(emerald-tokens.$color-success, $lightness: 30%);
-$success-300: color.adjust(emerald-tokens.$color-success, $lightness: 20%);
-$success-400: color.adjust(emerald-tokens.$color-success, $lightness: 10%);
-$success-500: emerald-tokens.$color-success;
-$success-600: color.adjust(emerald-tokens.$color-success, $lightness: -10%);
-$success-700: color.adjust(emerald-tokens.$color-success, $lightness: -20%);
-$success-800: color.adjust(emerald-tokens.$color-success, $lightness: -30%);
-$success-900: color.adjust(emerald-tokens.$color-success, $lightness: -40%);
-$success-light: color.adjust(
-  emerald-tokens.$color-success,
-  $lightness: 20%
-); // Kept for backward compatibility
-$success-dark: color.adjust(
-  emerald-tokens.$color-success,
-  $lightness: -20%
-); // Kept for backward compatibility
+// Typography
 
-$warning: emerald-tokens.$color-warning;
-$warning-100: color.adjust(emerald-tokens.$color-warning, $lightness: 40%); // Lightest warning
-$warning-200: color.adjust(emerald-tokens.$color-warning, $lightness: 30%);
-$warning-300: color.adjust(emerald-tokens.$color-warning, $lightness: 20%);
-$warning-400: color.adjust(emerald-tokens.$color-warning, $lightness: 10%);
-$warning-500: emerald-tokens.$color-warning;
-$warning-600: color.adjust(emerald-tokens.$color-warning, $lightness: -10%);
-$warning-700: color.adjust(emerald-tokens.$color-warning, $lightness: -20%);
-$warning-800: color.adjust(emerald-tokens.$color-warning, $lightness: -30%);
-$warning-900: color.adjust(emerald-tokens.$color-warning, $lightness: -40%);
-$warning-light: color.adjust(
-  emerald-tokens.$color-warning,
-  $lightness: 20%
-); // Kept for backward compatibility
-$warning-dark: color.adjust(
-  emerald-tokens.$color-warning,
-  $lightness: -20%
-); // Kept for backward compatibility
+// Font sizes
 
-$error: emerald-tokens.$color-error;
-$error-100: color.adjust(emerald-tokens.$color-error, $lightness: 40%); // Lightest error
-$error-200: color.adjust(emerald-tokens.$color-error, $lightness: 30%);
-$error-300: color.adjust(emerald-tokens.$color-error, $lightness: 20%);
-$error-400: color.adjust(emerald-tokens.$color-error, $lightness: 10%);
-$error-500: emerald-tokens.$color-error;
-$error-600: color.adjust(emerald-tokens.$color-error, $lightness: -10%);
-$error-700: color.adjust(emerald-tokens.$color-error, $lightness: -20%);
-$error-800: color.adjust(emerald-tokens.$color-error, $lightness: -30%);
-$error-900: color.adjust(emerald-tokens.$color-error, $lightness: -40%);
-$error-light: color.adjust(
-  emerald-tokens.$color-error,
-  $lightness: 20%
-); // Kept for backward compatibility
-$error-dark: color.adjust(
-  emerald-tokens.$color-error,
-  $lightness: -20%
-); // Kept for backward compatibility
+// Font weights
 
-$info: emerald-tokens.$color-info;
-$info-100: color.adjust(emerald-tokens.$color-info, $lightness: 40%); // Lightest info
-$info-200: color.adjust(emerald-tokens.$color-info, $lightness: 30%);
-$info-300: color.adjust(emerald-tokens.$color-info, $lightness: 20%);
-$info-400: color.adjust(emerald-tokens.$color-info, $lightness: 10%);
-$info-500: emerald-tokens.$color-info;
-$info-600: color.adjust(emerald-tokens.$color-info, $lightness: -10%);
-$info-700: color.adjust(emerald-tokens.$color-info, $lightness: -20%);
-$info-800: color.adjust(emerald-tokens.$color-info, $lightness: -30%);
-$info-900: color.adjust(emerald-tokens.$color-info, $lightness: -40%);
-$info-light: color.adjust(
-  emerald-tokens.$color-info,
-  $lightness: 20%
-); // Kept for backward compatibility
-$info-dark: color.adjust(
-  emerald-tokens.$color-info,
-  $lightness: -20%
-); // Kept for backward compatibility
+// Line heights
 
-// Typography (DEPRECATED - use Emerald tokens instead)
-// Font families
-$font-primary: emerald-tokens.$font-family-heading;
-$font-secondary: emerald-tokens.$font-family-base;
-$font-monospace: 'Roboto Mono', monospace;
+// Spacing
 
-// Font sizes - mapped to Emerald tokens
-$font-size-xs: emerald-tokens.$font-size-xs;
-$font-size-sm: emerald-tokens.$font-size-sm;
-$font-size-base: emerald-tokens.$font-size-base;
-$font-size-md: emerald-tokens.$font-size-lg;
-$font-size-lg: emerald-tokens.$font-size-xl;
-$font-size-xl: emerald-tokens.$font-size-2xl;
-$font-size-2xl: emerald-tokens.$font-size-3xl;
-$font-size-3xl: emerald-tokens.$font-size-4xl;
-$font-size-4xl: emerald-tokens.$font-size-5xl;
+// Border radius
 
-// Font weights - mapped to Emerald tokens
-$font-weight-light: emerald-tokens.$font-weight-light;
-$font-weight-regular: emerald-tokens.$font-weight-regular;
-$font-weight-medium: emerald-tokens.$font-weight-medium;
-$font-weight-semibold: emerald-tokens.$font-weight-semibold;
-$font-weight-bold: emerald-tokens.$font-weight-bold;
-
-// Line heights - mapped to Emerald tokens
-$line-height-tight: emerald-tokens.$line-height-tight;
-$line-height-snug: emerald-tokens.$line-height-snug;
-$line-height-normal: emerald-tokens.$line-height-normal;
-$line-height-relaxed: emerald-tokens.$line-height-relaxed;
-$line-height-loose: emerald-tokens.$line-height-loose;
-
-// Letter spacing
-$letter-spacing-tight: -0.025em;
-$letter-spacing-normal: 0;
-$letter-spacing-wide: 0.025em;
-$letter-spacing-wider: 0.05em;
-$letter-spacing-widest: 0.1em;
-
-// Spacing - mapped to Emerald tokens
-$spacing-0: emerald-tokens.$spacing-0;
-$spacing-1: emerald-tokens.$spacing-1;
-$spacing-2: emerald-tokens.$spacing-2;
-$spacing-3: emerald-tokens.$spacing-3;
-$spacing-4: emerald-tokens.$spacing-4;
-$spacing-5: emerald-tokens.$spacing-5;
-$spacing-6: emerald-tokens.$spacing-6;
-$spacing-8: emerald-tokens.$spacing-8;
-$spacing-10: emerald-tokens.$spacing-10;
-$spacing-12: emerald-tokens.$spacing-12;
-$spacing-16: emerald-tokens.$spacing-16;
-$spacing-20: emerald-tokens.$spacing-20;
-$spacing-24: emerald-tokens.$spacing-24;
-$spacing-32: 8rem; // 128px
-
-// Border radius - mapped to Emerald tokens
-$border-radius-none: emerald-tokens.$border-radius-none;
-$border-radius-sm: emerald-tokens.$border-radius-sm;
-$border-radius-md: emerald-tokens.$border-radius-md;
-$border-radius-lg: emerald-tokens.$border-radius-lg;
-$border-radius-xl: emerald-tokens.$border-radius-xl;
-$border-radius-2xl: emerald-tokens.$border-radius-2xl;
-$border-radius-full: emerald-tokens.$border-radius-full;
-
-// Shadows - mapped to Emerald tokens
-$shadow-none: emerald-tokens.$shadow-none;
-$shadow-xs: emerald-tokens.$shadow-xs;
-$shadow-sm: emerald-tokens.$shadow-sm;
-$shadow-md: emerald-tokens.$shadow-md;
-$shadow-lg: emerald-tokens.$shadow-lg;
-$shadow-xl: emerald-tokens.$shadow-xl;
-$shadow-2xl: emerald-tokens.$shadow-2xl;
-$shadow-inner: emerald-tokens.$shadow-inner;
+// Shadows
 
 // Z-index
-$z-index-0: 0;
-$z-index-10: 10;
-$z-index-20: 20;
-$z-index-30: 30;
-$z-index-40: 40;
-$z-index-50: 50;
-$z-index-auto: auto;
 
-// Transitions - mapped to Emerald tokens
-$transition-fast: emerald-tokens.$transition-fast;
-$transition-normal: emerald-tokens.$transition-normal;
-$transition-slow: emerald-tokens.$transition-slow;
-$transition-ease: emerald-tokens.$transition-timing-default;
-$transition-ease-in: emerald-tokens.$transition-timing-in;
-$transition-ease-out: emerald-tokens.$transition-timing-out;
-$transition-ease-in-out: emerald-tokens.$transition-timing-default;
+// Transitions
 
-// Breakpoints - mapped to Emerald tokens
-$breakpoint-xs: emerald-tokens.$breakpoint-mobile-small;
-$breakpoint-sm: emerald-tokens.$breakpoint-mobile;
-$breakpoint-md: emerald-tokens.$breakpoint-tablet;
-$breakpoint-lg: emerald-tokens.$breakpoint-desktop;
-$breakpoint-xl: emerald-tokens.$breakpoint-desktop-large;
-$breakpoint-2xl: emerald-tokens.$breakpoint-desktop-xl;
-
-// Container max widths - mapped to Emerald tokens
-$container-sm: emerald-tokens.$container-sm;
-$container-md: emerald-tokens.$container-md;
-$container-lg: emerald-tokens.$container-lg;
-$container-xl: emerald-tokens.$container-xl;
-$container-2xl: emerald-tokens.$container-2xl;
-
-// Grid columns - mapped to Emerald tokens
-$grid-columns: emerald-tokens.$grid-columns;
-$grid-gutter-width: emerald-tokens.$grid-gutter-width;
-
-// Animation - mapped to Emerald tokens
-$animation-duration-fast: emerald-tokens.$animation-duration-fast;
-$animation-duration-normal: emerald-tokens.$animation-duration-normal;
-$animation-duration-slow: emerald-tokens.$animation-duration-slow;
-$animation-timing-ease: emerald-tokens.$transition-timing-default;
-$animation-timing-ease-in: emerald-tokens.$transition-timing-in;
-$animation-timing-ease-out: emerald-tokens.$transition-timing-out;
-$animation-timing-ease-in-out: emerald-tokens.$transition-timing-default;
+// Breakpoints

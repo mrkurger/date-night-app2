@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication Implementation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="page-content">
+        <aside class="sidebar">
+          <h3>Auth</h3>
+          <ul>
+            <li><a href="./CHANGELOG.html">Changelog</a></li>
+            <li><a href="./AILESSONS.html">AI Lessons</a></li>
+            <li><a href="./GLOSSARY.html">Glossary</a></li>
+          </ul>
+        </aside>
+
+        <article class="content">
+          <h1>Authentication Implementation</h1>
+
+          <p>
+            This document provides an overview of the authentication system implemented in the Date
+            Night App. The system uses modern security practices and supports multiple
+            authentication methods.
+          </p>
+
+          <h2>Key Features</h2>
+          <ul>
+            <li>Traditional email/password authentication</li>
+            <li>
+              OAuth 2.0 social login with multiple providers:
+              <ul>
+                <li>Google</li>
+                <li>Facebook</li>
+                <li>Apple</li>
+                <li>Microsoft</li>
+              </ul>
+            </li>
+            <li>Password reset functionality</li>
+            <li>Secure token management with HttpOnly cookies</li>
+            <li>Protection against common security vulnerabilities</li>
+          </ul>
+
+          <h2>Architecture</h2>
+          <p>
+            The authentication system is built on the Nebular Auth module, which provides a flexible
+            and extensible framework for handling various authentication strategies. The
+            implementation follows a token-based authentication approach with JWTs (JSON Web Tokens)
+            and employs server-side HttpOnly cookies for enhanced security.
+          </p>
+
+          <h3>Client-Side Components</h3>
+          <ul>
+            <li>
+              <strong>LoginComponent</strong> - Handles user login via traditional and social
+              methods
+            </li>
+            <li>
+              <strong>RegisterComponent</strong> - Manages user registration via traditional and
+              social methods
+            </li>
+            <li>
+              <strong>RequestPasswordComponent</strong> - Allows users to request password reset
+            </li>
+            <li>
+              <strong>ResetPasswordComponent</strong> - Enables users to set a new password using a
+              reset token
+            </li>
+            <li>
+              <strong>AuthCallbackComponent</strong> - Processes OAuth callbacks from social
+              providers
+            </li>
+            <li>
+              <strong>AuthLayoutComponent</strong> - Provides consistent layout for authentication
+              pages
+            </li>
+          </ul>
+
+          <h3>Server-Side Integration</h3>
+          <p>The client authentication system integrates with server-side endpoints that handle:</p>
+          <ul>
+            <li>User registration and login</li>
+            <li>OAuth provider authentication</li>
+            <li>Token validation and refresh</li>
+            <li>Password reset operations</li>
+          </ul>
+
+          <h2>Security Measures</h2>
+          <ul>
+            <li>
+              <strong>HttpOnly Cookies</strong> - Authentication tokens are stored in HttpOnly
+              cookies to prevent access by client-side JavaScript, protecting against XSS attacks.
+            </li>
+            <li>
+              <strong>CSRF Protection</strong> - Cross-Site Request Forgery protection through
+              SameSite cookie attributes and other mechanisms.
+            </li>
+            <li>
+              <strong>Open Redirect Protection</strong> - Validation of redirect URLs to prevent
+              malicious redirects.
+            </li>
+            <li>
+              <strong>OAuth Security</strong> - Implementation of OAuth 2.0 best practices including
+              PKCE (Proof Key for Code Exchange) where applicable.
+            </li>
+            <li>
+              <strong>Password Requirements</strong> - Enforcement of strong password policies and
+              secure password reset flows.
+            </li>
+          </ul>
+
+          <h2>Testing</h2>
+          <p>
+            To test the authentication functionality, configure the appropriate OAuth credentials in
+            the auth.module.ts file and verify all flows:
+          </p>
+          <ol>
+            <li>Traditional login and registration</li>
+            <li>Social login and registration with each provider</li>
+            <li>Password reset request and completion</li>
+            <li>Token refresh and session management</li>
+          </ol>
+
+          <h2>Configuration</h2>
+          <p>OAuth providers require configuration of client IDs and secrets:</p>
+          <ol>
+            <li>Update the client IDs in auth.module.ts for each provider</li>
+            <li>Configure the matching provider credentials on the server side</li>
+            <li>Set up appropriate redirect URIs in each provider's developer console</li>
+          </ol>
+
+          <div class="alert alert-info">
+            <p>
+              <strong>Note:</strong> For security reasons, OAuth client IDs should be stored in
+              environment variables rather than being hardcoded.
+            </p>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

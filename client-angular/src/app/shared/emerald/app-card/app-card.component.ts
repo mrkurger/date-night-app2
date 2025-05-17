@@ -1,3 +1,11 @@
+
+
+import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,9 +15,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LabelComponent } from '../components/label/label.component';
 
 /**
  * App Card Component
@@ -18,11 +24,62 @@ import { LabelComponent } from '../components/label/label.component';
  * Supports various layouts including default, netflix, and tinder styles.
  */
 @Component({
-  selector: 'emerald-app-card',
-  templateUrl: '../components/app-card/app-card.component.html',
-  styleUrls: ['../components/app-card/app-card.component.scss'],
+  selector: 'app-card',
+  template: `
+    <nb-card [ngClass]="layout" (click)="handleClick()" class="app-card">
+      <nb-card-header *ngIf="title || avatarUrl">
+        <div class="card-header-content">
+          <div *ngIf="avatarUrl" class="avatar-container">
+            <img [src]="avatarUrl" [alt]="avatarName" class="avatar" />
+            <nb-badge *ngIf="isOnline" status="success" position="bottom-right"></nb-badge>
+          </div>
+          <div class="header-text">
+            <h3 class="title">{{ title }}</h3>
+            <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <img *ngIf="imageUrl" [src]="imageUrl" [alt]="title" class="card-image" />
+        <p *ngIf="description" class="description">{{ description }}</p>
+
+        <div *ngIf="visibleTags.length" class="tags">
+          <nb-badge
+            *ngFor="let tag of visibleTags"
+            [text]="tag"
+            status="primary"
+            position="centered"
+          ></nb-badge>
+        </div>
+      </nb-card-body>
+
+      <nb-card-footer *ngIf="actions.length">
+        <div class="actions">
+          <button
+            *ngFor="let action of actions"
+            nbButton
+            ghost
+            size="small"
+            [nbTooltip]="action.tooltip"
+            (click)="handleActionClick($event, action.id)"
+          >
+            <nb-icon [icon]="action.icon"></nb-icon>
+          </button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  `,
+  styleUrls: ['./app-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, LabelComponent],
+  imports: [
+    CommonModule,
+    NbBadgeModule,
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbTooltipModule
+  ],
 })
 export class AppCardComponent {
   /**

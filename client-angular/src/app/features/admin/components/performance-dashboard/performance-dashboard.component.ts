@@ -1,3 +1,5 @@
+import { Component, Input, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,50 +9,36 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
+
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+
 import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+// Custom pagination event interface
+interface PaginationChangeEvent {
+  page: number;
+  pageSize: number;
+}
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Component({
   selector: 'app-performance-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatIconModule,
+    NebularModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
     ReactiveFormsModule,
     NgxChartsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './performance-dashboard.component.html',
   styleUrls: ['./performance-dashboard.component.scss'],
 })
@@ -74,6 +62,10 @@ export class PerformanceDashboardComponent implements OnInit {
   // Pagination
   pageSize = 10;
   pageIndex = 0;
+
+  // Sorting
+  sortColumn = 'avgDuration';
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
   totalEndpoints = 0;
 
   // Filtering
@@ -206,7 +198,7 @@ export class PerformanceDashboardComponent implements OnInit {
       value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
     }));
 
-    // Sort by date
+    // NbSortEvent by date
     series.sort((a, b) => a.name.localeCompare(b.name));
 
     return [
@@ -228,18 +220,21 @@ export class PerformanceDashboardComponent implements OnInit {
     this.loadDashboardData();
   }
 
-  onPageChange(event: PageEvent): void {
+  /**
+   * Handle page change event from paginator
+   */
+  onPageChange(event: PaginationChangeEvent): void {
+    this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
     this.loadDashboardData();
   }
 
-  sortData(sort: Sort): void {
-    // Implement sorting logic
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-
+  /**
+   * Handle sort event from sort component
+   */
+  sortData(sort: AppSortEvent): void {
+    // Implement sorting logic if needed, then reload data
+    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
     this.loadDashboardData();
   }
 

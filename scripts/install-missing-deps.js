@@ -2,18 +2,18 @@
 
 /**
  * Enhanced script to install missing dependencies for the Date Night App
- * This script checks for and installs commonly missing dependencies for all components
+ * This script combines functionality from install-missing-deps.js and install-missing-dependencies.js
+ * It both checks for common dependencies and installs specific known missing dependencies
  */
 
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 // Define paths - ES module compatible way
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 // Define directories
 const rootDir = path.join(__dirname, '..');
@@ -34,8 +34,8 @@ const colors = {
 console.log(`${colors.cyan}Date Night App - Dependency Checker${colors.reset}`);
 console.log(`${colors.cyan}==================================${colors.reset}\n`);
 
-// List of dependencies to check and install if missing
-const dependencies = {
+// List of common dependencies to check and install if missing
+const commonDependencies = {
   server: {
     prod: [
       'express',
@@ -79,6 +79,8 @@ const dependencies = {
       'rxjs',
       'zone.js',
       'ngx-socket-io',
+      'socket.io-client',
+      'angularx-qrcode',
     ],
     dev: ['@angular/cli', '@angular-devkit/build-angular', 'typescript', 'jasmine-core', 'karma'],
   },
@@ -106,48 +108,39 @@ function getInstalledDependencies(dir) {
     };
   } catch (error) {
     console.error(
-      `${colors.red}Error reading package.json in ${dir}: ${error.message}${colors.reset}`
+      `${colors.red}Error reading package.json in ${dir}: ${error.message}${colors.reset}`,
     );
     return { prod: {}, dev: {} };
   }
 }
 
-// Function to install missing dependencies
-function installMissingDependencies(dir, deps, type) {
-  if (deps.length === 0) {
-    console.log(
-      `${colors.green}All ${type} dependencies are already installed in ${path.basename(dir)}!${colors.reset}`
-    );
+// Function to install dependencies
+function installDependencies(directory, dependencies, isDev = false) {
+  if (!dependencies || dependencies.length === 0) {
     return;
   }
 
-  console.log(
-    `${colors.yellow}Installing missing ${type} dependencies in ${path.basename(dir)}: ${deps.join(', ')}${colors.reset}`
-  );
+  const depType = isDev ? 'devDependencies' : 'dependencies';
+  console.log(`${colors.blue}Installing ${depType} in ${path.basename(directory)}:${colors.reset}`);
+  dependencies.forEach(dep => console.log(`${colors.yellow}- ${dep}${colors.reset}`));
 
   try {
-    // Change to directory
-    process.chdir(dir);
-
-    // Install missing dependencies
-    const installCmd =
-      type === 'production'
-        ? `npm install --save ${deps.join(' ')}`
-        : `npm install --save-dev ${deps.join(' ')}`;
-
-    execSync(installCmd, { stdio: 'inherit' });
-
+    const command = `npm install ${dependencies.join(' ')} ${isDev ? '--save-dev' : '--save'} --legacy-peer-deps`;
+    execSync(command, {
+      cwd: directory,
+      stdio: 'inherit',
+    });
     console.log(
-      `${colors.green}Dependencies installed successfully in ${path.basename(dir)}!${colors.reset}`
+      `${colors.green}Successfully installed ${depType} in ${path.basename(directory)}${colors.reset}`,
     );
   } catch (error) {
     console.error(
-      `${colors.red}Error installing dependencies in ${path.basename(dir)}: ${error.message}${colors.reset}`
+      `${colors.red}Error installing ${depType} in ${path.basename(directory)}: ${error.message}${colors.reset}`,
     );
   }
 }
 
-// Function to check and install dependencies for a component
+// Function to check and install missing dependencies for a component
 function checkAndInstallForComponent(dir, componentName, componentDeps) {
   console.log(`\n${colors.magenta}Checking ${componentName} dependencies...${colors.reset}`);
 
@@ -171,14 +164,51 @@ function checkAndInstallForComponent(dir, componentName, componentDeps) {
   });
 
   // Install missing dependencies
-  installMissingDependencies(dir, missingProd, 'production');
-  installMissingDependencies(dir, missingDev, 'development');
+  if (missingProd.length === 0) {
+    console.log(
+      `${colors.green}All production dependencies are already installed in ${path.basename(dir)}!${colors.reset}`,
+    );
+  } else {
+    installDependencies(dir, missingProd, false);
+  }
+
+  if (missingDev.length === 0) {
+    console.log(
+      `${colors.green}All development dependencies are already installed in ${path.basename(dir)}!${colors.reset}`,
+    );
+  } else {
+    installDependencies(dir, missingDev, true);
+  }
 }
 
-// Check and install dependencies for each component
-checkAndInstallForComponent(rootDir, 'Root project', dependencies.root);
-checkAndInstallForComponent(serverDir, 'Server', dependencies.server);
-checkAndInstallForComponent(clientDir, 'Client', dependencies.client);
+// Main function to run the dependency checks and installations
+function main() {
+  // First check and install common dependencies
+  console.log(`${colors.cyan}=== Checking Common Dependencies ===${colors.reset}`);
+  checkAndInstallForComponent(rootDir, 'Root project', commonDependencies.root);
+  checkAndInstallForComponent(serverDir, 'Server', commonDependencies.server);
+  checkAndInstallForComponent(clientDir, 'Client', commonDependencies.client);
+
+  // Then install specific known missing dependencies
+  console.log(
+    `\n${colors.cyan}=== Installing Specific Known Missing Dependencies ===${colors.reset}`,
+  );
+
+  // Root project - nothing specific to add currently
+
+  // Client project - specific dependencies
+  console.log(`${colors.magenta}Installing specific dependencies for client...${colors.reset}`);
+  installDependencies(clientDir, ['socket.io-client'], false);
+
+  // Server project - specific dependencies
+  console.log(`${colors.magenta}Installing specific dependencies for server...${colors.reset}`);
+  installDependencies(serverDir, ['argon2', 'bcrypt'], false);
+
+  console.log(`\n${colors.green}Dependency check and installation completed!${colors.reset}`);
+}
+
+// Run the main function
+main();
 
 // Update package.json scripts to include this utility
 const rootPackageJsonPath = path.join(rootDir, 'package.json');
@@ -197,5 +227,3 @@ try {
 } catch (error) {
   console.error(`\n${colors.red}Error updating package.json: ${error.message}${colors.reset}`);
 }
-
-console.log(`\n${colors.green}Dependency check and installation completed!${colors.reset}`);

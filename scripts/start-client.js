@@ -23,14 +23,17 @@ try {
   // Change to client directory
   process.chdir(clientDir);
 
-  // Start the Angular client with the correct project and increased memory
-  execSync('NODE_OPTIONS=--max_old_space_size=8192 npx ng serve client-angular --open', {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      NODE_OPTIONS: '--max_old_space_size=8192',
+  // Start the Angular client with the correct project, increased memory, and WebSocket configuration
+  execSync(
+    'NODE_OPTIONS=--max_old_space_size=8192 npx ng serve client-angular --host=localhost --disable-host-check --no-hmr --live-reload',
+    {
+      stdio: 'inherit',
+      env: {
+        ...process.env,
+        NODE_OPTIONS: '--max_old_space_size=8192',
+      },
     },
-  });
+  );
 } catch (error) {
   console.error('Error starting Angular client:', error.message);
   process.exit(1);

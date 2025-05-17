@@ -1,6 +1,12 @@
 import Review from '../models/review.model.js';
 import User from '../models/user.model.js';
 import Ad from '../models/ad.model.js';
+import { sendError } from '../utils/response.js';
+
+export async function someHandler(req, res) {
+  // TODO: Implement review handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
+}
 
 // Create a new review
 const createReview = async (req, res) => {

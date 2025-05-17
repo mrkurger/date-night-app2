@@ -11,6 +11,7 @@ import Favorite from '../models/favorite.model.js';
 import Ad from '../models/ad.model.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Controller for managing user favorites
@@ -519,6 +520,11 @@ class FavoriteController {
 
     return filters;
   }
+}
+
+export async function someHandler(req, res) {
+  // TODO: Implement this handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
 }
 
 const favoriteController = new FavoriteController();

@@ -19,6 +19,12 @@ uploads
 
 # Documentation (handled separately)
 *.md
+CHANGELOG.html
+AILESSONS.html
+GLOSSARY.html
+_docs_index.html
+_glossary.html
+_docs*.html
 
 # Package manager files
 package-lock.json

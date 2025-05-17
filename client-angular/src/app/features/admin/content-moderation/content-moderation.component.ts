@@ -1,3 +1,6 @@
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +10,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaService } from '../../../core/services/media.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import {
@@ -131,6 +133,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
           this.applyFilters();
 
           if (this.pendingMedia.length === 0) {
+            // eslint-disable-next-line no-console
             console.log('No pending media items found');
           }
         },

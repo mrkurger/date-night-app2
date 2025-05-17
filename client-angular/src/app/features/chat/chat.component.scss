@@ -1,4 +1,7 @@
-@use '../../../app/core/design/design-tokens' as tokens;
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/global/breakpoints' as *;
+
 /* Removed emerald-ui import as it's causing build issues */
 
 // ===================================================
@@ -7,30 +10,24 @@
 // This file contains styles for the chat component
 //
 // COMMON CUSTOMIZATIONS:
-// - $sidebar-width: Width of the chat sidebar (default: 320px)
-// - $message-bubble-sent: Background color for sent messages (default: $primary-500)
-// - $message-bubble-received: Background color for received messages (default: $neutral-100)
-// - $typing-indicator-color: Color of the typing indicator (default: $primary-500)
+// - var(--sidebar-width) /* TODO: Verify correct CSS variable */: Width of the chat sidebar (default: 320px)
+// - var(--message-bubble-sent) /* TODO: Verify correct CSS variable */: Background color for sent messages (default: var(--primary-500) /* TODO: Verify correct CSS variable */)
+// - var(--message-bubble-received) /* TODO: Verify correct CSS variable */: Background color for received messages (default: var(--neutral-100) /* TODO: Verify correct CSS variable */)
+// - var(--typing-indicator-color) /* TODO: Verify correct CSS variable */: Color of the typing indicator (default: var(--primary-500) /* TODO: Verify correct CSS variable */)
 // ===================================================
 
 // Variables
-$sidebar-width: 320px;
-$message-bubble-sent: #2c7be5;
-$message-bubble-received: #f8f9fa;
-$typing-indicator-color: #2c7be5;
-$temporary-message-color: #ffc107;
-$temporary-message-bg: rgba(255, 193, 7, 0.3);
 
 // Animations
 @keyframes pulse-shadow {
   0% {
-    box-shadow: 0 0 0 0 rgba(ds.$warning-500, 0.4);
+    box-shadow: 0 0 0 0 rgba(nb-theme(color-warning-500), 0.4);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(ds.$warning-500, 0);
+    box-shadow: 0 0 0 10px rgba(nb-theme(color-warning-500), 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(ds.$warning-500, 0);
+    box-shadow: 0 0 0 0 rgba(nb-theme(color-warning-500), 0);
   }
 }
 
@@ -68,17 +65,17 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 // Chat Container
 .chat-container {
   display: grid;
-  grid-template-columns: $sidebar-width 1fr;
-  gap: $spacing-4;
+  grid-template-columns: var(--sidebar-width) /* TODO: Verify correct CSS variable */ 1fr;
+  gap: nb-theme(spacing-md);
   height: calc(100vh - 140px);
   max-width: 1400px;
   margin: 0 auto;
-  background-color: $neutral-50;
-  border-radius: $border-radius-lg;
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(border-radius);
   overflow: hidden;
-  box-shadow: $shadow-md;
+  box-shadow: nb-theme(shadow);
 
-  @media (max-width: $breakpoint-lg) {
+  @include media-breakpoint-down(lg) {
     grid-template-columns: 1fr;
     height: 100vh;
     border-radius: 0;
@@ -87,13 +84,13 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
 // Chat Sidebar
 .chat-sidebar {
-  background-color: white;
-  border-right: 1px solid $neutral-200;
+  background-color: nb-theme(background-basic-color-1);
+  border-right: 1px solid nb-theme(border-basic-color-3);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  @media (max-width: $breakpoint-lg) {
+  @include media-breakpoint-down(lg) {
     display: none;
 
     &.mobile-visible {
@@ -112,31 +109,31 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-4;
-  border-bottom: 1px solid $neutral-200;
-  background-color: white;
+  padding: nb-theme(padding);
+  border-bottom: 1px solid nb-theme(border-basic-color-3);
+  background-color: nb-theme(background-basic-color-1);
 
   h2 {
     margin: 0;
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
-    color: $neutral-900;
+    font-size: nb-theme(text-heading-4-font-size);
+    font-weight: nb-theme(text-heading-4-font-weight);
+    color: nb-theme(text-basic-color);
   }
 
   .chat-header-actions {
     display: flex;
-    gap: $spacing-1;
+    gap: nb-theme(spacing-xs);
   }
 }
 
 .chat-search {
-  padding: $spacing-3;
-  border-bottom: 1px solid $neutral-200;
-  background-color: white;
+  padding: nb-theme(padding-sm);
+  border-bottom: 1px solid nb-theme(border-basic-color-3);
+  background-color: nb-theme(background-basic-color-1);
 
   .search-field {
     width: 100%;
-    margin-bottom: $spacing-2;
+    margin-bottom: nb-theme(spacing-md);
 
     ::ng-deep .mat-mdc-form-field-subscript-wrapper {
       display: none;
@@ -145,19 +142,19 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
   .conversation-filters {
     display: flex;
-    gap: $spacing-1;
-    margin-top: $spacing-2;
+    gap: nb-theme(spacing-xs);
+    margin-top: nb-theme(spacing-md);
 
     button {
       flex: 1;
       min-width: 0;
-      font-size: $font-size-sm;
-      padding: $spacing-1 $spacing-2;
+      font-size: nb-theme(text-font-size-sm);
+      padding: nb-theme(padding-xs) nb-theme(padding-md);
 
       &.active {
-        color: $primary-500;
-        background-color: $primary-50;
-        font-weight: $font-weight-medium;
+        color: nb-theme(color-primary-500);
+        background-color: nb-theme(color-primary-50);
+        font-weight: nb-theme(text-font-weight-medium);
       }
     }
   }
@@ -166,67 +163,67 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .chat-contacts {
   flex: 1;
   overflow-y: auto;
-  background-color: white;
+  background-color: nb-theme(background-basic-color-1);
 
   .contacts-loading {
-    padding: $spacing-4;
+    padding: nb-theme(padding-md);
   }
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  padding: $spacing-3 $spacing-4;
-  border-bottom: 1px solid $neutral-100;
+  padding: nb-theme(padding-md) nb-theme(padding-lg);
+  border-bottom: 1px solid nb-theme(border-basic-color-1);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: $neutral-50;
+    background-color: nb-theme(background-basic-color-2);
   }
 
   &.active {
-    background-color: $primary-50;
+    background-color: nb-theme(color-primary-50);
   }
 
   &.unread {
     .contact-name {
-      font-weight: $font-weight-bold;
-      color: $neutral-900;
+      font-weight: nb-theme(text-font-weight-bold);
+      color: nb-theme(text-basic-color);
     }
 
     .contact-preview {
-      font-weight: $font-weight-medium;
-      color: $neutral-800;
+      font-weight: nb-theme(text-font-weight-medium);
+      color: nb-theme(text-basic-color-800);
     }
   }
 
   .contact-info {
     flex: 1;
     min-width: 0;
-    margin-left: $spacing-3;
+    margin-left: nb-theme(spacing-md);
   }
 
   .contact-name-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: $spacing-1;
+    margin-bottom: nb-theme(spacing-xs);
   }
 
   .contact-name {
-    font-weight: $font-weight-medium;
-    color: $neutral-800;
+    font-weight: nb-theme(text-font-weight-medium);
+    color: nb-theme(text-basic-color-800);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .contact-time {
-    font-size: $font-size-xs;
-    color: $neutral-600;
+    font-size: nb-theme(text-font-size-xs);
+    color: nb-theme(text-basic-color-600);
     white-space: nowrap;
-    margin-left: $spacing-2;
+    margin-left: nb-theme(spacing-xs);
   }
 
   .contact-preview-row {
@@ -236,15 +233,15 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 
   .contact-preview {
-    font-size: $font-size-sm;
-    color: $neutral-600;
+    font-size: nb-theme(text-font-size-sm);
+    color: nb-theme(text-basic-color-600);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
 
     .typing-indicator {
-      color: $primary-500;
+      color: nb-theme(color-primary-500);
       font-style: italic;
     }
   }
@@ -252,27 +249,27 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   .contact-badges {
     display: flex;
     align-items: center;
-    margin-left: $spacing-2;
+    margin-left: nb-theme(spacing-xs);
   }
 
   .unread-badge {
-    background-color: $primary-500;
-    color: white;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
+    background-color: nb-theme(color-primary-500);
+    color: nb-theme(background-basic-color-1);
+    font-size: nb-theme(text-font-size-xs);
+    font-weight: nb-theme(text-font-weight-medium);
     min-width: 20px;
     height: 20px;
-    border-radius: $border-radius-full;
+    border-radius: nb-theme(border-radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 $spacing-1;
+    padding: 0 nb-theme(padding-xs);
   }
 
   .pin-icon {
     font-size: 16px;
-    color: $neutral-500;
-    margin-left: $spacing-1;
+    color: nb-theme(text-basic-color-500);
+    margin-left: nb-theme(spacing-xs);
   }
 }
 
@@ -281,20 +278,20 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $spacing-8;
-  color: $neutral-600;
+  padding: nb-theme(padding-lg);
+  color: nb-theme(text-basic-color-600);
   text-align: center;
 
   mat-icon {
     font-size: 48px;
     width: 48px;
     height: 48px;
-    margin-bottom: $spacing-4;
-    color: $neutral-400;
+    margin-bottom: nb-theme(spacing-md);
+    color: nb-theme(text-basic-color-400);
   }
 
   p {
-    margin-bottom: $spacing-4;
+    margin-bottom: nb-theme(spacing-md);
   }
 }
 
@@ -302,7 +299,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .chat-main {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: nb-theme(background-basic-color-1);
   overflow: hidden;
   position: relative;
 }
@@ -317,9 +314,9 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-3 $spacing-4;
-  border-bottom: 1px solid $neutral-200;
-  background-color: white;
+  padding: nb-theme(padding-md) nb-theme(padding-lg);
+  border-bottom: 1px solid nb-theme(border-basic-color-2);
+  background-color: nb-theme(background-basic-color-1);
   z-index: 10;
 
   .header-left {
@@ -329,42 +326,42 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     min-width: 0;
 
     .back-button {
-      margin-right: $spacing-2;
+      margin-right: nb-theme(spacing-xs);
       display: none;
 
-      @media (max-width: $breakpoint-lg) {
+      @include media-breakpoint-down(lg) {
         display: block;
       }
     }
   }
 
   .chat-recipient {
-    margin-left: $spacing-3;
+    margin-left: nb-theme(spacing-md);
     flex: 1;
     min-width: 0;
   }
 
   .recipient-name {
-    font-weight: $font-weight-semibold;
-    color: $neutral-900;
-    margin-bottom: $spacing-1;
+    font-weight: nb-theme(text-font-weight-semibold);
+    color: nb-theme(text-basic-color);
+    margin-bottom: nb-theme(spacing-xs);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .recipient-status {
-    font-size: $font-size-sm;
-    color: $neutral-600;
+    font-size: nb-theme(text-font-size-sm);
+    color: nb-theme(text-basic-color-600);
 
     &.online {
-      color: $success;
+      color: nb-theme(color-success);
     }
   }
 
   .header-actions {
     display: flex;
-    gap: $spacing-1;
+    gap: nb-theme(spacing-xs);
   }
 }
 
@@ -372,31 +369,31 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .message-list {
   flex: 1;
   overflow-y: auto;
-  padding: $spacing-4;
-  background-color: $neutral-100;
+  padding: nb-theme(padding-md);
+  background-color: nb-theme(background-basic-color-1);
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: nb-theme(spacing-md);
 
   .message-group {
     display: flex;
     flex-direction: column;
-    gap: $spacing-3;
+    gap: nb-theme(spacing-md);
   }
 
   .date-separator {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: $spacing-4 0;
+    margin: nb-theme(spacing-md) 0;
 
     span {
-      background-color: $neutral-300;
-      color: $neutral-700;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-medium;
-      padding: $spacing-1 $spacing-3;
-      border-radius: $border-radius-full;
+      background-color: nb-theme(background-basic-color-3);
+      color: nb-theme(text-basic-color-700);
+      font-size: nb-theme(text-font-size-xs);
+      font-weight: nb-theme(text-font-weight-medium);
+      padding: nb-theme(padding-xs) nb-theme(padding-md);
+      border-radius: nb-theme(border-radius-full);
     }
   }
 }
@@ -405,7 +402,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .message {
   display: flex;
   align-items: flex-end;
-  gap: $spacing-2;
+  gap: nb-theme(spacing-md);
   max-width: 80%;
   position: relative;
 
@@ -414,8 +411,8 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     flex-direction: row-reverse;
 
     .message-bubble {
-      background-color: $message-bubble-sent;
-      color: white;
+      background-color: nb-theme(color-primary-500);
+      color: nb-theme(background-basic-color-1);
       border-bottom-right-radius: 4px;
     }
 
@@ -428,7 +425,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     align-self: flex-start;
 
     .message-bubble {
-      background-color: $message-bubble-received;
+      background-color: nb-theme(background-basic-color-2);
       border-bottom-left-radius: 4px;
     }
 
@@ -439,26 +436,26 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
   .message-avatar {
     align-self: flex-end;
-    margin-bottom: $spacing-1;
+    margin-bottom: nb-theme(spacing-xs);
   }
 
   .message-bubble {
-    padding: $spacing-3;
-    border-radius: $border-radius-lg;
-    box-shadow: $shadow-sm;
+    padding: nb-theme(padding-md);
+    border-radius: nb-theme(border-radius-lg);
+    box-shadow: nb-theme(shadow-sm);
     max-width: 100%;
     word-break: break-word;
     position: relative;
 
     // Styling for temporary messages
     &.temporary-message {
-      border: 1px dashed $temporary-message-color;
+      border: 1px dashed nb-theme(color-warning-500);
     }
 
     // Styling for messages about to expire
     &.about-to-expire {
       animation: pulse 2s infinite;
-      border: 1px dashed $temporary-message-color;
+      border: 1px dashed nb-theme(color-warning-500);
 
       .temporary-message-indicator {
         animation: spin 2s infinite linear;
@@ -469,7 +466,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
       position: absolute;
       top: -8px;
       right: -8px;
-      background-color: $temporary-message-color;
+      background-color: nb-theme(color-warning-500);
       border-radius: 50%;
       width: 20px;
       height: 20px;
@@ -481,13 +478,13 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
         font-size: 14px;
         width: 14px;
         height: 14px;
-        color: white;
+        color: nb-theme(background-basic-color-1);
       }
     }
   }
 
   .message-content {
-    margin-bottom: $spacing-2;
+    margin-bottom: nb-theme(spacing-md);
 
     a {
       color: inherit;
@@ -496,15 +493,15 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 
   .message-attachments {
-    margin-top: $spacing-2;
+    margin-top: nb-theme(spacing-md);
     display: flex;
     flex-direction: column;
-    gap: $spacing-2;
+    gap: nb-theme(spacing-md);
 
     img {
       max-width: 100%;
       max-height: 300px;
-      border-radius: $border-radius-md;
+      border-radius: nb-theme(border-radius-md);
       cursor: pointer;
       transition: transform 0.2s ease;
 
@@ -517,13 +514,13 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
       display: flex;
       align-items: center;
       background-color: rgba(0, 0, 0, 0.05);
-      border-radius: $border-radius-md;
-      padding: $spacing-2;
+      border-radius: nb-theme(border-radius-md);
+      padding: nb-theme(padding-md);
       cursor: pointer;
 
       mat-icon {
-        margin-right: $spacing-2;
-        color: $neutral-700;
+        margin-right: nb-theme(spacing-md);
+        color: nb-theme(text-basic-color-700);
       }
 
       .file-info {
@@ -532,15 +529,15 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
       }
 
       .file-name {
-        font-weight: $font-weight-medium;
+        font-weight: nb-theme(text-font-weight-medium);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .file-size {
-        font-size: $font-size-xs;
-        color: $neutral-600;
+        font-size: nb-theme(text-font-size-xs);
+        color: nb-theme(text-basic-color-600);
       }
     }
   }
@@ -549,11 +546,11 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: $spacing-1;
-    margin-top: $spacing-1;
+    gap: nb-theme(spacing-xs);
+    margin-top: nb-theme(spacing-xs);
 
     .message-time {
-      font-size: $font-size-xs;
+      font-size: nb-theme(text-font-size-xs);
       color: rgba(255, 255, 255, 0.8);
     }
 
@@ -565,7 +562,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
         font-size: 14px;
         width: 14px;
         height: 14px;
-        color: $temporary-message-color;
+        color: nb-theme(color-warning-500);
       }
     }
 
@@ -580,11 +577,11 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   &.received .message-meta {
     .message-time,
     .status-icon {
-      color: $neutral-600;
+      color: nb-theme(text-basic-color-600);
     }
 
     .message-expiry .expiry-icon {
-      color: $temporary-message-color;
+      color: nb-theme(color-warning-500);
     }
   }
 
@@ -595,8 +592,8 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     transition: opacity 0.2s ease;
 
     button {
-      background-color: white;
-      box-shadow: $shadow-md;
+      background-color: nb-theme(background-basic-color-1);
+      box-shadow: nb-theme(shadow-md);
     }
   }
 
@@ -624,8 +621,8 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   &__expiry {
     display: flex;
     align-items: center;
-    margin-left: 8px;
-    color: var(--warning-color);
+    margin-left: nb-theme(spacing-md);
+    color: nb-theme(color-warning-color);
 
     mat-icon {
       font-size: 16px;
@@ -643,13 +640,13 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .typing-indicator-container {
   display: flex;
   align-items: flex-end;
-  gap: $spacing-2;
-  margin-top: $spacing-2;
+  gap: nb-theme(spacing-md);
+  margin-top: nb-theme(spacing-md);
 
   .typing-bubble {
-    background-color: $neutral-200;
-    padding: $spacing-2 $spacing-3;
-    border-radius: $border-radius-lg;
+    background-color: nb-theme(background-basic-color-2);
+    padding: nb-theme(padding-md) nb-theme(padding-lg);
+    border-radius: nb-theme(border-radius-lg);
     border-bottom-left-radius: 4px;
   }
 
@@ -661,7 +658,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: $typing-indicator-color;
+      background-color: nb-theme(color-primary-500);
       animation: typingAnimation 1.4s infinite ease-in-out;
 
       &:nth-child(1) {
@@ -696,8 +693,8 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $spacing-8;
-  color: $neutral-600;
+  padding: nb-theme(padding-lg);
+  color: nb-theme(text-basic-color-600);
   text-align: center;
   margin: auto 0;
 
@@ -705,14 +702,14 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     font-size: 48px;
     width: 48px;
     height: 48px;
-    margin-bottom: $spacing-4;
-    color: $neutral-400;
+    margin-bottom: nb-theme(spacing-md);
+    color: nb-theme(text-basic-color-400);
   }
 
   h3 {
-    margin-bottom: $spacing-2;
-    color: $neutral-700;
-    font-weight: $font-weight-semibold;
+    margin-bottom: nb-theme(spacing-md);
+    color: nb-theme(text-basic-color-700);
+    font-weight: nb-theme(text-font-weight-semibold);
   }
 }
 
@@ -721,14 +718,14 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $spacing-3 $spacing-4;
-  background-color: $neutral-100;
-  border-top: 1px solid $neutral-200;
+  padding: nb-theme(padding-md) nb-theme(padding-lg);
+  background-color: nb-theme(background-basic-color-1);
+  border-top: 1px solid nb-theme(border-basic-color-2);
 
   .reply-content {
     display: flex;
     align-items: center;
-    gap: $spacing-2;
+    gap: nb-theme(spacing-md);
     flex: 1;
     min-width: 0;
   }
@@ -739,14 +736,14 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 
   .reply-to {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    color: $primary-500;
+    font-size: nb-theme(text-font-size-sm);
+    font-weight: nb-theme(text-font-weight-medium);
+    color: nb-theme(color-primary-500);
   }
 
   .reply-message {
-    font-size: $font-size-sm;
-    color: $neutral-600;
+    font-size: nb-theme(text-font-size-sm);
+    color: nb-theme(text-basic-color-600);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -757,28 +754,28 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .message-input-container {
   display: flex;
   align-items: flex-end;
-  gap: $spacing-2;
-  padding: $spacing-3 $spacing-4;
-  background-color: white;
-  border-top: 1px solid $neutral-200;
+  gap: nb-theme(spacing-md);
+  padding: nb-theme(padding-md) nb-theme(padding-lg);
+  background-color: nb-theme(background-basic-color-1);
+  border-top: 1px solid nb-theme(border-basic-color-2);
 }
 
 .message-input {
   flex: 1;
   display: flex;
   align-items: flex-end;
-  background-color: $neutral-100;
-  border-radius: $border-radius-lg;
-  padding: $spacing-2;
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(border-radius-lg);
+  padding: nb-theme(padding-xs);
   transition: background-color 0.3s ease;
 
   // Temporary message mode styling
   &.temp-message-mode {
-    background-color: $temporary-message-bg;
-    border: 1px dashed $temporary-message-color;
+    background-color: nb-theme(color-warning-100);
+    border: 1px dashed nb-theme(color-warning-500);
 
     textarea::placeholder {
-      color: $temporary-message-color;
+      color: nb-theme(color-warning-500);
     }
   }
 
@@ -787,10 +784,10 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     border: none;
     background: transparent;
     resize: none;
-    padding: $spacing-2;
+    padding: nb-theme(padding-xs);
     max-height: 120px;
     font-family: inherit;
-    font-size: $font-size-md;
+    font-size: nb-theme(text-font-size-md);
 
     &:focus {
       outline: none;
@@ -801,25 +798,25 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   .temp-message-duration {
     display: flex;
     align-items: center;
-    color: $temporary-message-color;
-    font-size: $font-size-sm;
-    margin-right: $spacing-2;
+    color: nb-theme(color-warning-500);
+    font-size: nb-theme(text-font-size-sm);
+    margin-right: nb-theme(spacing-md);
 
     .mat-icon {
       font-size: 16px;
       height: 16px;
       width: 16px;
-      margin-right: $spacing-1;
+      margin-right: nb-theme(spacing-xs);
     }
   }
 
   &.temp-message-mode {
     textarea {
-      border-color: var(--warning-color);
-      background-color: var(--warning-bg-light);
+      border-color: nb-theme(color-warning-color);
+      background-color: nb-theme(color-warning-bg-light);
 
       &::placeholder {
-        color: var(--warning-color);
+        color: nb-theme(color-warning-color);
       }
     }
   }
@@ -828,14 +825,14 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .temp-message-indicator {
   display: flex;
   align-items: center;
-  padding: 8px;
-  background-color: var(--warning-bg);
-  border-radius: 4px;
-  margin-bottom: 8px;
-  color: var(--warning-color);
+  padding: nb-theme(padding-xs);
+  background-color: nb-theme(color-warning-bg);
+  border-radius: nb-theme(border-radius-md);
+  margin-bottom: nb-theme(spacing-md);
+  color: nb-theme(color-warning-color);
 
   mat-icon {
-    margin-right: 8px;
+    margin-right: nb-theme(spacing-xs);
   }
 
   button {
@@ -846,10 +843,10 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .attachment-button,
 .emoji-button,
 .temp-message-button {
-  color: $neutral-600;
+  color: nb-theme(text-basic-color-600);
 
   &.active {
-    color: $temporary-message-color;
+    color: nb-theme(color-warning-500);
   }
 }
 
@@ -869,9 +866,9 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   position: absolute;
   bottom: 80px;
   right: 20px;
-  background-color: white;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-lg;
+  background-color: nb-theme(background-basic-color-1);
+  border-radius: nb-theme(border-radius-lg);
+  box-shadow: nb-theme(shadow-lg);
   width: 300px;
   max-height: 300px;
   overflow: hidden;
@@ -881,8 +878,8 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
   .emoji-categories {
     display: flex;
-    border-bottom: 1px solid $neutral-200;
-    padding: $spacing-1;
+    border-bottom: 1px solid nb-theme(border-basic-color-2);
+    padding: nb-theme(padding-xs);
 
     button {
       flex: 1;
@@ -890,10 +887,10 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 
   .emoji-list {
-    padding: $spacing-2;
+    padding: nb-theme(padding-xs);
     display: flex;
     flex-wrap: wrap;
-    gap: $spacing-1;
+    gap: nb-theme(spacing-xs);
     overflow-y: auto;
     max-height: 250px;
   }
@@ -908,10 +905,10 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     cursor: pointer;
     border: none;
     background: none;
-    border-radius: $border-radius-md;
+    border-radius: nb-theme(border-radius-md);
 
     &:hover {
-      background-color: $neutral-100;
+      background-color: nb-theme(background-basic-color-2);
     }
   }
 }
@@ -922,7 +919,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: $neutral-50;
+  background-color: nb-theme(background-basic-color-1);
 
   .empty-state-content {
     display: flex;
@@ -930,27 +927,27 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
     align-items: center;
     text-align: center;
     max-width: 400px;
-    padding: $spacing-6;
+    padding: nb-theme(padding-md);
   }
 
   .empty-icon {
     font-size: 64px;
     width: 64px;
     height: 64px;
-    margin-bottom: $spacing-4;
-    color: $neutral-400;
+    margin-bottom: nb-theme(spacing-md);
+    color: nb-theme(text-basic-color-400);
   }
 
   h3 {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
-    color: $neutral-800;
-    margin-bottom: $spacing-2;
+    font-size: nb-theme(text-font-size-xl);
+    font-weight: nb-theme(text-font-weight-semibold);
+    color: nb-theme(text-basic-color-800);
+    margin-bottom: nb-theme(spacing-md);
   }
 
   p {
-    color: $neutral-600;
-    margin-bottom: $spacing-4;
+    color: nb-theme(text-basic-color-600);
+    margin-bottom: nb-theme(spacing-md);
   }
 }
 
@@ -962,32 +959,32 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .contact-list {
   max-height: 300px;
   overflow-y: auto;
-  margin-top: $spacing-4;
+  margin-top: nb-theme(spacing-md);
 }
 
 .contact-option {
   display: flex;
   align-items: center;
-  padding: $spacing-2 $spacing-3;
-  border-radius: $border-radius-md;
+  padding: nb-theme(padding-xs) nb-theme(padding-md);
+  border-radius: nb-theme(border-radius-md);
   cursor: pointer;
 
   &:hover {
-    background-color: $neutral-100;
+    background-color: nb-theme(background-basic-color-2);
   }
 
   .contact-name {
-    margin-left: $spacing-3;
-    font-weight: $font-weight-medium;
+    margin-left: nb-theme(spacing-md);
+    font-weight: nb-theme(text-font-weight-medium);
   }
 }
 
 .no-contacts,
 .no-results,
 .no-media {
-  padding: $spacing-4;
+  padding: nb-theme(padding-md);
   text-align: center;
-  color: $neutral-600;
+  color: nb-theme(text-basic-color-600);
 }
 
 // Image Preview Dialog
@@ -996,27 +993,27 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $spacing-4;
+  padding: nb-theme(padding-md);
 
   .close-button {
     position: absolute;
-    top: $spacing-2;
-    right: $spacing-2;
+    top: nb-theme(padding-xs);
+    right: nb-theme(padding-xs);
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: nb-theme(background-basic-color-1);
   }
 
   .preview-image {
     max-width: 100%;
     max-height: 80vh;
-    border-radius: $border-radius-md;
+    border-radius: nb-theme(border-radius-md);
   }
 
   .image-preview-actions {
     display: flex;
-    gap: $spacing-2;
-    margin-top: $spacing-4;
+    gap: nb-theme(spacing-md);
+    margin-top: nb-theme(spacing-md);
   }
 }
 
@@ -1024,30 +1021,30 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .search-results {
   max-height: 300px;
   overflow-y: auto;
-  margin-top: $spacing-4;
+  margin-top: nb-theme(spacing-md);
 }
 
 .search-result-item {
-  padding: $spacing-3;
-  border-radius: $border-radius-md;
+  padding: nb-theme(padding-md);
+  border-radius: nb-theme(border-radius-md);
   cursor: pointer;
-  border-bottom: 1px solid $neutral-200;
+  border-bottom: 1px solid nb-theme(border-basic-color-2);
 
   &:hover {
-    background-color: $neutral-100;
+    background-color: nb-theme(background-basic-color-2);
   }
 
   .result-sender {
-    font-weight: $font-weight-medium;
-    color: $primary-500;
-    margin-bottom: $spacing-1;
+    font-weight: nb-theme(text-font-weight-medium);
+    color: nb-theme(color-primary-500);
+    margin-bottom: nb-theme(spacing-xs);
   }
 
   .result-message {
-    margin-bottom: $spacing-1;
+    margin-bottom: nb-theme(spacing-xs);
 
     mark {
-      background-color: rgba($primary-500, 0.2);
+      background-color: rgba(nb-theme(color-primary-500), 0.2);
       color: inherit;
       padding: 0 2px;
       border-radius: 2px;
@@ -1055,24 +1052,24 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
   }
 
   .result-time {
-    font-size: $font-size-xs;
-    color: $neutral-600;
+    font-size: nb-theme(text-font-size-xs);
+    color: nb-theme(text-basic-color-600);
   }
 }
 
 // Gallery Tabs
 .gallery-tabs {
   display: flex;
-  border-bottom: 1px solid $neutral-200;
-  margin-bottom: $spacing-4;
+  border-bottom: 1px solid nb-theme(border-basic-color-2);
+  margin-bottom: nb-theme(spacing-md);
 
   button {
     flex: 1;
-    padding: $spacing-2 $spacing-4;
+    padding: nb-theme(padding-xs) nb-theme(padding-md);
 
     &.active {
-      color: $primary-500;
-      border-bottom: 2px solid $primary-500;
+      color: nb-theme(color-primary-500);
+      border-bottom: 2px solid nb-theme(color-primary-500);
     }
   }
 }
@@ -1080,12 +1077,12 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .gallery-images {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-2;
+  gap: nb-theme(spacing-md);
 
   .gallery-image {
     aspect-ratio: 1;
     overflow: hidden;
-    border-radius: $border-radius-md;
+    border-radius: nb-theme(border-radius-md);
     cursor: pointer;
 
     img {
@@ -1105,24 +1102,24 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 .gallery-links {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: nb-theme(spacing-md);
 
   .gallery-file,
   .gallery-link {
     display: flex;
     align-items: center;
-    padding: $spacing-3;
-    border-radius: $border-radius-md;
-    background-color: $neutral-100;
+    padding: nb-theme(padding-md);
+    border-radius: nb-theme(border-radius-md);
+    background-color: nb-theme(background-basic-color-2);
     cursor: pointer;
 
     &:hover {
-      background-color: $neutral-200;
+      background-color: nb-theme(background-basic-color-3);
     }
 
     mat-icon {
-      margin-right: $spacing-3;
-      color: $neutral-700;
+      margin-right: nb-theme(spacing-md);
+      color: nb-theme(text-basic-color-700);
     }
 
     .file-info,
@@ -1133,7 +1130,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
     .file-name,
     .link-title {
-      font-weight: $font-weight-medium;
+      font-weight: nb-theme(text-font-weight-medium);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1141,21 +1138,21 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 
     .file-meta,
     .link-url {
-      font-size: $font-size-xs;
-      color: $neutral-600;
+      font-size: nb-theme(text-font-size-xs);
+      color: nb-theme(text-basic-color-600);
     }
 
     .file-date,
     .link-date {
-      font-size: $font-size-xs;
-      color: $neutral-600;
+      font-size: nb-theme(text-font-size-xs);
+      color: nb-theme(text-basic-color-600);
       white-space: nowrap;
     }
   }
 }
 
 // Responsive Styles
-@media (max-width: $breakpoint-md) {
+@media (max-width: var(--breakpoint-md) /* TODO: Verify correct CSS variable */) {
   .message {
     max-width: 90%;
   }
@@ -1164,7 +1161,7 @@ $temporary-message-bg: rgba(255, 193, 7, 0.3);
 // Message Highlight Animation
 @keyframes highlightMessage {
   0% {
-    background-color: rgba($primary-500, 0.3);
+    background-color: rgba(nb-theme(color-primary-500), 0.3);
   }
   100% {
     background-color: transparent;

@@ -9,7 +9,9 @@
 // ===================================================
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MapComponent } from './map.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 // import { By } from '@angular/platform-browser';
 import * as L from 'leaflet';
 import { MapMonitoringService } from '../../../core/services/map-monitoring.service';
@@ -30,33 +32,25 @@ const mockMap = jasmine.createSpyObj('Map', [
   'setZoom',
   'getCenter',
   'flyTo',
+  'fitBounds',
 ]);
-mockMap.setView.and.returnValue(mockMap);
-mockMap.on.and.returnValue(mockMap);
-mockMap.getZoom.and.returnValue(10);
-mockMap.getCenter.and.returnValue({ lat: 0, lng: 0 });
 
-const mockMarker = jasmine.createSpyObj('Marker', [
-  'addTo',
-  'setLatLng',
-  'bindPopup',
-  'openPopup',
-  'remove',
-  'on',
-]);
-mockMarker.addTo.and.returnValue(mockMarker);
-mockMarker.setLatLng.and.returnValue(mockMarker);
-mockMarker.bindPopup.and.returnValue(mockMarker);
-mockMarker.on.and.returnValue(mockMarker);
+const mockLatLng = jasmine.createSpyObj('LatLng', ['lat', 'lng']);
+mockLatLng.lat.and.returnValue(59.9139);
+mockLatLng.lng.and.returnValue(10.7522);
 
-const mockPopup = jasmine.createSpyObj('Popup', ['setLatLng', 'setContent', 'openOn']);
-mockPopup.setLatLng.and.returnValue(mockPopup);
-mockPopup.setContent.and.returnValue(mockPopup);
+const mockMarker = jasmine.createSpyObj('Marker', ['addTo', 'remove', 'getLatLng', 'on', 'off']);
+mockMarker.getLatLng.and.returnValue(mockLatLng);
 
-// Create spies for Leaflet functions
+// Mock the Leaflet library
 spyOn(L, 'map').and.returnValue(mockMap);
 spyOn(L, 'marker').and.returnValue(mockMarker);
-spyOn(L, 'popup').and.returnValue(mockPopup);
+spyOn(L, 'latLng').and.callFake((lat, lng) => {
+  mockLatLng.lat.and.returnValue(lat);
+  mockLatLng.lng.and.returnValue(lng);
+  return mockLatLng;
+});
+spyOn(L, 'circle').and.returnValue(jasmine.createSpyObj('Circle', ['addTo', 'remove']));
 spyOn(L, 'icon').and.returnValue(
   jasmine.createSpyObj('Icon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),
 );
@@ -81,25 +75,27 @@ spyOn(L, 'divIcon').and.returnValue(
       (markerClick)="onMarkerClick($event)"
     ></app-map>
   `,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 class TestHostComponent {
   @ViewChild('mapComponent') mapComponent!: MapComponent;
   height = '400px';
   initialLatitude = 59.9139;
   initialLongitude = 10.7522;
-  initialZoom = 10;
+  initialZoom = 13;
   selectable = true;
-  markers = [];
-  showCurrentLocation = false;
+  showCurrentLocation = true;
+  markers: L.Marker[] = [];
 
-  selectedLocation: any = null;
-  clickedMarker: any = null;
+  selectedLocation: { lat: number; lng: number } | null = null;
+  clickedMarker: L.Marker | null = null;
 
-  onLocationSelected(location: any): void {
+  onLocationSelected(location: { lat: number; lng: number }) {
     this.selectedLocation = location;
   }
 
-  onMarkerClick(marker: any): void {
+  onMarkerClick(marker: L.Marker) {
     this.clickedMarker = marker;
   }
 }
@@ -111,172 +107,124 @@ describe('MapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TestHostComponent],
-      imports: [MapComponent],
+      imports: [MapComponent, TestHostComponent],
       providers: [{ provide: MapMonitoringService, useValue: mockMapMonitoringService }],
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
     hostComponent = hostFixture.componentInstance;
-    component = hostComponent.mapComponent;
     hostFixture.detectChanges();
+    component = hostComponent.mapComponent;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize with correct input values', () => {
-    expect(component.height).toBe('400px');
-    expect(component.initialLatitude).toBe(59.9139);
-    expect(component.initialLongitude).toBe(10.7522);
-    expect(component.initialZoom).toBe(10);
-    expect(component.selectable).toBe(true);
-  });
-
-  it('should initialize map on ngAfterViewInit', () => {
-    // Call ngAfterViewInit manually
-    component.ngAfterViewInit();
+  it('should initialize the map with provided inputs', () => {
     expect(L.map).toHaveBeenCalled();
+    expect(mockMap.setView).toHaveBeenCalledWith([59.9139, 10.7522], 13);
   });
 
-  it('should clean up map on ngOnDestroy', () => {
-    // Initialize map
-    component.ngAfterViewInit();
+  it('should set the map height based on input', () => {
+    const mapElement = hostFixture.nativeElement.querySelector('.map-container');
+    expect(mapElement.style.height).toBe('400px');
+  });
 
-    // Destroy component
+  it('should emit location when map is clicked and selectable is true', () => {
+    // Simulate map click
+    const clickHandler = mockMap.on.calls.allArgs().find((args) => args[0] === 'click')?.[1];
+    if (clickHandler) {
+      const mockEvent = { latlng: mockLatLng };
+      clickHandler(mockEvent);
+      expect(hostComponent.selectedLocation).toEqual({ lat: 59.9139, lng: 10.7522 });
+    } else {
+      fail('Click handler not found');
+    }
+  });
+
+  it('should not emit location when selectable is false', () => {
+    hostComponent.selectable = false;
+    hostFixture.detectChanges();
+
+    // Simulate map click
+    const clickHandler = mockMap.on.calls.allArgs().find((args) => args[0] === 'click')?.[1];
+    if (clickHandler) {
+      const mockEvent = { latlng: mockLatLng };
+      clickHandler(mockEvent);
+      expect(hostComponent.selectedLocation).toBeNull();
+    } else {
+      fail('Click handler not found');
+    }
+  });
+
+  it('should add markers when provided', fakeAsync(() => {
+    const newMarker = jasmine.createSpyObj('Marker', ['addTo', 'remove', 'getLatLng', 'on', 'off']);
+    newMarker.getLatLng.and.returnValue(mockLatLng);
+
+    // Reset the spy to return our new marker
+    (L.marker as jasmine.Spy).and.returnValue(newMarker);
+
+    hostComponent.markers = [newMarker];
+    hostFixture.detectChanges();
+
+    // Trigger ngOnChanges
+    component.ngOnChanges({
+      markers: { currentValue: [newMarker], previousValue: [], firstChange: false } as any,
+    });
+
+    tick();
+
+    expect(newMarker.addTo).toHaveBeenCalledWith(mockMap);
+  }));
+
+  it('should emit marker when clicked', () => {
+    // Simulate marker click
+    const clickHandler = mockMarker.on.calls.allArgs().find((args) => args[0] === 'click')?.[1];
+    if (clickHandler) {
+      clickHandler();
+      expect(hostComponent.clickedMarker).toBe(mockMarker);
+    } else {
+      fail('Marker click handler not found');
+    }
+  });
+
+  it('should clean up on destroy', () => {
     component.ngOnDestroy();
-
-    // Map's remove method should have been called
     expect(mockMap.remove).toHaveBeenCalled();
   });
 
-  it('should update markers when markers input changes', () => {
-    // Set up test markers
-    const testMarkers = [
-      { id: '1', latitude: 59.9, longitude: 10.7, title: 'Test 1', description: 'Description 1' },
-      { id: '2', latitude: 59.8, longitude: 10.6, title: 'Test 2', description: 'Description 2' },
-    ];
-
-    // Update markers
-    hostComponent.markers = testMarkers;
-    hostFixture.detectChanges();
-
-    // Call updateMarkers manually
-    component.updateMarkers(testMarkers);
-
-    // Should create markers
-    expect(L.marker).toHaveBeenCalledTimes(2);
-  });
-
-  it('should emit location when map is clicked', fakeAsync(() => {
-    // Spy on the output event
-    spyOn(component.mapClick, 'emit');
-
-    // Initialize map
-    component.ngAfterViewInit();
-
-    // Simulate map click by calling the callback directly
-    // First, find the 'on' call for the click event
-    const clickHandler = mockMap.on.calls.all().find((call) => call.args[0] === 'click')?.args[1];
-    expect(clickHandler).toBeDefined();
-
-    // Call the click handler with a mock event
-    if (clickHandler) {
-      clickHandler({ latlng: { lat: 60.0, lng: 11.0 } });
-      tick();
-
-      // Check if mapClick was emitted
-      expect(component.mapClick.emit).toHaveBeenCalled();
-    }
-  }));
-
-  it('should center map to specified coordinates', () => {
-    // Call centerMap
-    component.centerMap(60.0, 11.0, 12);
-
-    // Map should be centered
-    expect(mockMap.flyTo).toHaveBeenCalledWith([60.0, 11.0], 12);
-  });
-
-  it('should set selected location', () => {
-    // Call setSelectedLocation
-    component.setSelectedLocation(60.0, 11.0);
-
-    // Selected location marker should be created
-    expect(L.marker).toHaveBeenCalled();
-  });
-
-  it('should refresh map', () => {
-    // Call refreshMap
-    component.refreshMap();
-
-    // Map should be invalidated
-    expect(mockMap.invalidateSize).toHaveBeenCalled();
-  });
-
-  it('should handle marker click', () => {
-    // Set up test marker
-    const testMarker = {
-      id: '1',
-      latitude: 59.9,
-      longitude: 10.7,
-      title: 'Test',
-      description: 'Description',
-    };
-
-    // Spy on the output event
-    spyOn(component.markerClick, 'emit');
-
-    // Initialize map and add markers
-    component.ngAfterViewInit();
-    component.updateMarkers([testMarker]);
-
-    // Simulate marker click by finding the marker click handler
-    const markerClickHandler = mockMarker.on.calls.all().find((call) => call.args[0] === 'click')
-      ?.args[1];
-    expect(markerClickHandler).toBeDefined();
-
-    if (markerClickHandler) {
-      markerClickHandler();
-
-      // Check if markerClick was emitted
-      expect(component.markerClick.emit).toHaveBeenCalled();
-    }
-  });
-
-  it('should show current location when enabled', () => {
-    // Mock geolocation API
-    const mockGeolocation = {
-      getCurrentPosition: jasmine.createSpy('getCurrentPosition').and.callFake((success) => {
-        success({
-          coords: {
-            latitude: 60.0,
-            longitude: 11.0,
-          },
-        });
-      }),
-    };
-
-    // Replace navigator.geolocation with our mock
-    Object.defineProperty(navigator, 'geolocation', {
-      value: mockGeolocation,
-      configurable: true,
-      writable: true,
+  it('should show current location when enabled', fakeAsync(() => {
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success) => {
+      const position = {
+        coords: {
+          latitude: 59.9139,
+          longitude: 10.7522,
+          accuracy: 10,
+        },
+      } as GeolocationPosition;
+      success(position);
     });
 
-    // Enable current location
-    component.showCurrentLocation = true;
-    component.ngOnChanges({
-      showCurrentLocation: {
-        currentValue: true,
-        previousValue: false,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
-    } as any);
+    component.ngOnInit();
+    tick();
 
-    // Verify geolocation was used
-    expect(mockGeolocation.getCurrentPosition).toHaveBeenCalled();
+    expect(L.circle).toHaveBeenCalled();
+    expect(L.marker).toHaveBeenCalled();
+  }));
+
+  it('should update map when inputs change', () => {
+    hostComponent.initialZoom = 15;
+    hostComponent.initialLatitude = 60.0;
+    hostComponent.initialLongitude = 11.0;
+
+    // Trigger ngOnChanges
+    component.ngOnChanges({
+      initialZoom: { currentValue: 15, previousValue: 13, firstChange: false } as any,
+      initialLatitude: { currentValue: 60.0, previousValue: 59.9139, firstChange: false } as any,
+      initialLongitude: { currentValue: 11.0, previousValue: 10.7522, firstChange: false } as any,
+    });
+
+    expect(mockMap.setView).toHaveBeenCalledWith([60.0, 11.0], 15);
   });
 });

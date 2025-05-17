@@ -106,6 +106,132 @@
     <h1>Middleware AI Lessons</h1>
 
     <div class="lesson">
+      <h2>Secure File Handling in Express Applications</h2>
+      <span class="tag security">SECURITY</span>
+      <span class="tag performance">PERFORMANCE</span>
+      <p class="date">May 15, 2025</p>
+
+      <p>
+        Implementing secure file handling in Express applications requires careful consideration of
+        several security aspects. This lesson covers best practices for file validation, access control,
+        and efficient serving of files.
+      </p>
+
+      <div class="warning">
+        <h3>Security Risks in File Handling</h3>
+        <p>
+          Insecure file handling can lead to several vulnerabilities:
+        </p>
+        <ul>
+          <li><strong>Path Traversal Attacks:</strong> Allowing users to access files outside the intended directory</li>
+          <li><strong>Malicious File Uploads:</strong> Accepting dangerous file types that could be executed on the server</li>
+          <li><strong>Unauthorized Access:</strong> Failing to properly restrict access to sensitive files</li>
+          <li><strong>Excessive Resource Usage:</strong> Allowing extremely large files that could cause denial of service</li>
+        </ul>
+      </div>
+
+      <h3>Two-Stage File Access Control</h3>
+      <p>
+        We've implemented a two-stage approach to file handling:
+      </p>
+      <ol>
+        <li>
+          <strong>Validation Middleware (fileAccess):</strong> Validates file requests by checking extensions,
+          size limits, and preventing path traversal attacks before allowing access.
+        </li>
+        <li>
+          <strong>Serving Middleware (secureFileServing):</strong> Handles the actual file serving with
+          proper content types, caching controls, and streaming for efficiency.
+        </li>
+      </ol>
+
+      <h3>Key Security Measures</h3>
+      <ul>
+        <li>
+          <strong>Path Normalization:</strong> Using <code>path.normalize()</code> to prevent path traversal attacks
+          by resolving <code>..</code> segments in file paths.
+        </li>
+        <li>
+          <strong>Whitelisting Extensions:</strong> Only allowing specific file extensions through a predefined
+          whitelist (<code>ALLOWED_EXTENSIONS</code>).
+        </li>
+        <li>
+          <strong>Size Limits:</strong> Enforcing maximum file size limits to prevent denial of service attacks.
+        </li>
+        <li>
+          <strong>Access Control:</strong> Checking user permissions before serving files, especially for
+          private or user-specific content.
+        </li>
+        <li>
+          <strong>Proper Content Types:</strong> Setting appropriate Content-Type headers based on file extensions.
+        </li>
+      </ul>
+
+      <h3>Performance Optimizations</h3>
+      <p>
+        The implementation includes several performance optimizations:
+      </p>
+      <ul>
+        <li>
+          <strong>File Streaming:</strong> Using <code>createReadStream</code> instead of loading entire files
+          into memory, which is more efficient for large files.
+        </li>
+        <li>
+          <strong>Caching Controls:</strong> Setting appropriate Cache-Control headers to reduce server load
+          for frequently accessed files.
+        </li>
+        <li>
+          <strong>ETag Generation:</strong> Implementing ETags for client-side caching, allowing browsers to
+          use cached versions when files haven't changed.
+        </li>
+        <li>
+          <strong>304 Not Modified Responses:</strong> Returning lightweight 304 responses when the client
+          already has the current version of a file.
+        </li>
+      </ul>
+
+      <div class="tip">
+        <h3>Best Practice</h3>
+        <p>
+          Always separate the validation logic from the file serving logic. This separation of concerns
+          makes the code more maintainable and allows for more granular security controls.
+        </p>
+      </div>
+
+      <h3>Testing Considerations</h3>
+      <p>
+        When testing file access middleware, consider these scenarios:
+      </p>
+      <ul>
+        <li>Valid file access with allowed extensions</li>
+        <li>Attempts to access files with invalid extensions</li>
+        <li>Attempts to access files that exceed size limits</li>
+        <li>Path traversal attempts (e.g., using <code>../</code> to access parent directories)</li>
+        <li>URL-encoded path traversal attempts (e.g., <code>%2E%2E%2F</code>)</li>
+        <li>Access to non-existent files</li>
+      </ul>
+
+      <h3>Related Resources</h3>
+      <ul>
+        <li>
+          <a href="https://owasp.org/www-community/attacks/Path_Traversal" target="_blank">
+            OWASP Path Traversal
+          </a>
+        </li>
+        <li>
+          <a href="https://expressjs.com/en/advanced/best-practice-security.html" target="_blank">
+            Express Security Best Practices
+          </a>
+        </li>
+        <li>
+          <a href="https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options" target="_blank">
+            Node.js File Streaming
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="lesson">
       <h2>URL Parsing in Express and path-to-regexp</h2>
       <span class="tag security">SECURITY</span>
       <span class="tag debugging">DEBUGGING</span>

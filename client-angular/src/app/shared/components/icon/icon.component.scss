@@ -5,7 +5,7 @@
  * Implements the DateNight.io icon styles using the design system.
  */
 
-@use '../../../../app/core/design/design-tokens' as ds;
+
 
 .icon {
   display: inline-block;
@@ -31,27 +31,27 @@
 
   // Color variants
   &--primary {
-    color: ds.$color-primary;
+    color: ds.var(--color-primary);
   }
 
   &--secondary {
-    color: ds.$color-secondary;
+    color: var(--color-secondary) /* TODO: Verify correct CSS variable */;
   }
 
   &--success {
-    color: ds.$color-success;
+    color: var(--color-success) /* TODO: Verify correct CSS variable */;
   }
 
   &--warning {
-    color: ds.$color-warning;
+    color: var(--color-warning) /* TODO: Verify correct CSS variable */;
   }
 
   &--error {
-    color: ds.$color-error;
+    color: var(--color-error) /* TODO: Verify correct CSS variable */;
   }
 
   &--info {
-    color: ds.$color-info;
+    color: var(--color-info) /* TODO: Verify correct CSS variable */;
   }
 
   // Placeholder for when icon is not found
@@ -59,7 +59,7 @@
     display: inline-block;
     background-color: currentColor;
     opacity: 0.2;
-    border-radius: ds.$border-radius-sm;
+    border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -68,11 +68,11 @@
   body.dark-mode-enabled {
     .icon {
       &--primary {
-        color: ds.$color-primary-light;
+        color: ds.var(--color-primary)-light;
       }
 
       &--secondary {
-        color: color.adjust(ds.$color-secondary, $lightness: 10%);
+        color: /* TODO: Invalid SCSS function call with CSS variable removed: /* TODO: Invalid SCSS function call with CSS variable removed: color.adjust(var(--color-secondary) */ */ /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: 10%);
       }
     }
   }

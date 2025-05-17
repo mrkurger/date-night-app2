@@ -1,34 +1,54 @@
 // ===================================================
 // DESIGN SYSTEM ENTRY POINT
 // ===================================================
-// This file is the main entry point for the design system
-//
-// IMPORT HIERARCHY:
-// 1. This file (index.scss) is the main entry point
-// 2. It forwards the core design system from app/core/design/main
-// 3. The core design system already imports design-tokens
-//
-// USAGE:
-// - In application styles: @use '~/styles/design-system' as ds;
-// - Then use tokens: color: ds.$color-primary;
-//
-// IMPORTANT:
-// - DO NOT import design-tokens.scss directly in application code
-// - DO NOT import this file multiple times in the same file
-// - Always use the @use directive instead of @import
-// - DO NOT use @use '../../app/core/design/design-tokens' directly
+// This file is the main entry point for the design system.
+// It combines Nebular theme variables with our design tokens.
 // ===================================================
 
-// Import new design system - only forward _variables.scss which already includes all needed variables and tokens
-@forward '_variables';
+/* Import Nebular Theme */
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/dark' as dark-theme;
 
-// Legacy imports - to be removed after migration
-// @forward 'typography';
-// @forward 'components';
-// @forward 'utilities';
-// @forward 'animations';
-// @forward 'reset';
+/* Import Design Tokens */
 
-// IMPORTANT: This line was causing duplicate imports and has been removed.
-// The design tokens are already forwarded through main.scss above.
-// @use '../../app/core/design/design-tokens' as *;
+@use '../../app/core/design/nebular-theme-customization' as theme;
+
+/* Forward Base Styles */
+@forward '../variables';
+@forward '../mixins/index';
+@forward './_typography';
+@forward './colors';
+@forward './spacing';
+@forward './breakpoints';
+
+/* Register Themes */
+@use '@nebular/theme/styles/themes/default' as nb-default;
+
+/* Forward core design tokens and variables */
+@forward '../../app/core/design/design-tokens' as tokens-*;
+@forward '_variables' as vars-*;
+
+/* Forward utilities */
+@forward '../../app/core/design/bem-utilities';
+// Temporarily commenting out to avoid duplicate $breakpoints variable
+// @forward '../../app/core/design/responsive-utilities';
+@forward '../../app/core/design/accessibility-utilities';
+// Temporarily commenting out to avoid duplicate mixins
+// @forward '../../app/core/design/animation-utilities';
+@forward '../../app/core/design/dark-mode';
+
+/* Forward component styles */
+@forward '../../app/core/design/components';
+
+/* Forward typography */
+@forward '../../app/core/design/typography-mixins';
+
+/* Forward spacing utilities */
+@forward '../../app/core/design/spacing-utilities';
+
+/* Forward micro-interactions */
+@forward '../../app/core/design/micro-interactions';
+
+/* Forward Nebular theme customization */
+@forward '../../app/core/design/nebular-theme-customization';

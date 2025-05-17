@@ -1,0 +1,54 @@
+.social-auth {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 60px);
+    height: 1px;
+    background-color: var(--divider-color);
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+
+  span {
+    display: inline-block;
+    padding: 0 10px;
+    background-color: var(--card-background-color);
+    position: relative;
+    color: var(--text-hint-color);
+  }
+}
+
+.social-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+
+  button {
+    flex: 1 0 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    justify-content: center;
+    margin: 0;
+
+    nb-icon {
+      margin-right: 5px;
+    }
+  }
+}

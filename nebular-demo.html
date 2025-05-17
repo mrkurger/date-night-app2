@@ -1,0 +1,1635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/@nebular/eva-icons@11.0.0/bundles/eva-icons.umd.min.js"></script>
+    <script src="https://unpkg.com/@nebular/theme@11.0.0/bundles/nebular-theme.umd.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebular Demo</title>
+
+    <!-- Eva Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/eva-icons@1.1.3/style/eva-icons.css" />
+
+    <!-- Nebular Theme -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@nebular/theme@11.0.0/styles/prebuilt/cosmic.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@nebular/theme@11.0.0/styles/prebuilt/default.css"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family:
+          Open Sans,
+          sans-serif;
+      }
+
+      .layout-container {
+        display: flex;
+        height: 100vh;
+      }
+
+      /* Sidebar and Menu Styles */
+      .sidebar {
+        width: 280px;
+        background-color: #232940;
+        color: white;
+        transition: width 0.3s ease;
+        overflow: hidden;
+      }
+
+      .nb-menu {
+        padding: 0;
+      }
+
+      .nb-menu .menu-item {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .nb-menu .menu-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nb-menu .menu-title {
+        margin-left: 0.5rem;
+      }
+
+      .nb-menu .badge {
+        background: #7659ff;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-left: auto;
+      }
+
+      .menu-badge {
+        background: #7659ff;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-left: auto;
+      }
+
+      .sidebar.collapsed {
+        width: 60px;
+      }
+
+      .sidebar.collapsed .sidebar-header h2,
+      .sidebar.collapsed .menu-item span {
+        display: none;
+      }
+
+      .sidebar.collapsed .menu-item {
+        justify-content: center;
+        padding: 1rem 0;
+      }
+
+      .sidebar.collapsed .menu-item i {
+        margin-right: 0;
+      }
+
+      .sidebar-toggle {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        padding: 0.5rem;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      .sidebar-header {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        color: #fff;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .menu-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .menu-item i {
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      /* Nebular Menu Styles */
+      .nb-menu {
+        background: #232940;
+        color: white;
+        border: none;
+      }
+
+      .nb-menu nb-menu-item {
+        padding: 0;
+      }
+
+      .nb-menu .menu-item {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .nb-menu .menu-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nb-menu .menu-title {
+        margin-left: 0.5rem;
+      }
+
+      .nb-menu .badge {
+        background: #7659ff;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-left: auto;
+      }
+
+      /* Main Content Area */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header with Nebular Search */
+      .header {
+        background-color: #232940;
+        padding: 1rem;
+      }
+
+      /* Nebular Search Styles */
+      .nb-search {
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .header .search-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .nb-search-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 1050;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nb-search-modal.active {
+        display: flex;
+      }
+
+      .nb-search-modal input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid white;
+        color: white;
+        font-size: 2rem;
+        padding: 0.5rem;
+        width: 50%;
+        outline: none;
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        position: relative;
+      }
+
+      .search-container i {
+        color: white;
+        margin-right: 0.5rem;
+      }
+
+      .search-container input {
+        background: transparent;
+        border: none;
+        color: white;
+        width: 100%;
+        outline: none;
+      }
+
+      .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #232940;
+        border-radius: 0 0 4px 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+        z-index: 100;
+      }
+
+      .search-container.active .search-results {
+        display: block;
+      }
+
+      .search-result-item {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .search-result-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .search-result-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Nebular Search Styles */
+      nb-search {
+        width: 100%;
+      }
+
+      .nb-search-container {
+        width: 100%;
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        background-color: #232940;
+        padding: 0 1rem;
+      }
+
+      .tab {
+        padding: 1rem;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.2s;
+      }
+
+      .tab.active {
+        border-bottom-color: #7659ff;
+      }
+
+      /* Card Container */
+      .card-container {
+        padding: 2rem;
+        background-color: #151a30;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .tab-content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      /* Netflix-style Card */
+      .netflix-card {
+        position: relative;
+        height: 350px;
+        border-radius: 8px;
+        overflow: hidden;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .netflix-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .netflix-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .netflix-card-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        color: white;
+      }
+
+      .netflix-card .name {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .netflix-card .distance {
+        font-size: 0.9rem;
+        color: #ccc;
+        margin-bottom: 0.5rem;
+      }
+
+      /* Nebular Card Styles */
+      .nb-card {
+        background-color: #232940;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .nb-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .nb-card-header {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nb-card-body {
+        padding: 1rem;
+        color: white;
+      }
+
+      .nb-card-footer {
+        padding: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
+
+      /* Flip Card */
+      .nb-flip-card {
+        perspective: 1000px;
+        height: 300px;
+      }
+
+      .nb-flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .nb-flip-card:hover .nb-flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .nb-flip-card-front,
+      .nb-flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background-color: #232940;
+        border-radius: 8px;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .nb-flip-card-back {
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Reveal Card */
+      .nb-reveal-card {
+        position: relative;
+        height: 300px;
+      }
+
+      .nb-reveal-card-front {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .nb-reveal-card-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #232940;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .nb-reveal-card:hover .nb-reveal-card-back {
+        transform: translateY(0);
+      }
+
+      /* Button Styles */
+      .nb-button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.2s;
+      }
+
+      .nb-button-primary {
+        background-color: #7659ff;
+        color: white;
+      }
+
+      .nb-button-ghost {
+        background-color: transparent;
+        color: #7659ff;
+        border: 1px solid #7659ff;
+      }
+
+      /* Status Badge */
+      .status-badge {
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .status-online {
+        background-color: #00d68f;
+        color: white;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      /* Loading State */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(35, 41, 64, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .loading-overlay.active {
+        display: flex;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid #7659ff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Online Status Indicator */
+      .status-indicator {
+        position: absolute;
+        bottom: 3px;
+        right: 3px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #00d68f;
+        border: 2px solid #232940;
+      }
+
+      .user-avatar-container {
+        position: relative;
+      }
+
+      /* Image Carousel */
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+      }
+
+      .carousel-slides {
+        display: flex;
+        transition: transform 0.3s ease;
+        height: 100%;
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        height: 100%;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .carousel-nav {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+      }
+
+      .carousel-dot.active {
+        background: white;
+      }
+
+      /* Tinder-style Card */
+      .tinder-card {
+        position: relative;
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .tinder-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .tinder-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        padding: 2rem 1rem 1rem;
+        color: white;
+      }
+
+      .tinder-actions {
+        position: absolute;
+        bottom: 1rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2rem;
+      }
+
+      .action-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .action-button:hover {
+        transform: scale(1.1);
+      }
+
+      .action-button.like {
+        color: #00d68f;
+      }
+
+      .action-button.dislike {
+        color: #ff3d71;
+      }
+
+      /* Enhanced Card Styles */
+      .nb-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body nb-layout>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="layout-container">
+      <!-- Sidebar with nb-menu -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>Demo App</h2>
+        </div>
+        <nav class="nb-menu">
+          <a href="#" class="menu-item">
+            <i class="eva eva-home-outline"></i>
+            <span class="menu-title">Dashboard</span>
+            <span class="menu-badge">New</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="eva eva-person-outline"></i>
+            <span class="menu-title">Profile</span>
+            <span class="menu-badge">2</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="eva eva-message-circle-outline"></i>
+            <span class="menu-title">Messages</span>
+            <span class="menu-badge">5</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="eva eva-settings-2-outline"></i>
+            <span class="menu-title">Settings</span>
+          </a>
+          <a href="#" class="menu-item admin-menu-item">
+            <i class="eva eva-shield-outline"></i>
+            <span class="menu-title">Admin</span>
+          </a>
+          <a href="#" class="menu-item chat-menu-item">
+            <i class="eva eva-message-square-outline"></i>
+            <span class="menu-title">Chat Demo</span>
+          </a>
+        </nav>
+        <button class="sidebar-toggle">
+          <i class="eva eva-menu-2-outline"></i>
+        </button>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header with Nebular Search -->
+        <header class="header">
+          <div class="search-container">
+            <i class="eva eva-search-outline"></i>
+            <input type="text" id="main-search" name="main-search" placeholder="Search..." />
+            <div class="search-results"></div>
+          </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <a href="#" class="tab active"
+            ><i class="eva eva-grid-outline"></i><span>Basic Cards</span></a
+          >
+          <a href="#" class="tab"><i class="eva eva-flip-2-outline"></i><span>Flip Cards</span></a>
+          <a href="#" class="tab"><i class="eva eva-eye-outline"></i><span>Reveal Cards</span></a>
+          <a href="#" class="tab"><i class="eva eva-film-outline"></i><span>Netflix Cards</span></a>
+          <a href="#" class="tab"><i class="eva eva-people-outline"></i><span>Netflix2</span></a>
+        </div>
+
+        <!-- Card Container -->
+        <div class="card-container">
+          <!-- Basic Cards Tab -->
+          <div class="basic-tab tab-content-grid">
+            <!-- Card 1: Default with header, body, footer -->
+            <nb-card>
+              <nb-card-header>Alex Doe</nb-card-header>
+              <img
+                src="client-angular/src/assets/img/2.jpeg"
+                alt="Profile 2"
+                class="nb-card-image"
+              />
+              <nb-card-body>Software Engineer, loves hiking and AI.</nb-card-body>
+              <nb-card-footer><button nbButton status="primary">Like</button></nb-card-footer>
+            </nb-card>
+            <!-- Card 2: With accent -->
+            <nb-card accent="info">
+              <nb-card-header>Emma Davis</nb-card-header>
+              <img
+                src="client-angular/src/assets/img/3.jpeg"
+                alt="Profile 3"
+                class="nb-card-image"
+              />
+              <nb-card-body>Graphic Designer, coffee enthusiast.</nb-card-body>
+              <nb-card-footer><button nbButton status="success">Connect</button></nb-card-footer>
+            </nb-card>
+            <!-- Card 3: Only header and body -->
+            <nb-card>
+              <nb-card-header>Michael Smith</nb-card-header>
+              <img
+                src="client-angular/src/assets/img/4.jpeg"
+                alt="Profile 4"
+                class="nb-card-image"
+              />
+              <nb-card-body>Musician, loves indie music.</nb-card-body>
+            </nb-card>
+            <!-- Card 4: Only body -->
+            <nb-card>
+              <nb-card-body
+                >Sarah Brown<br /><img
+                  src="client-angular/src/assets/img/5.jpeg"
+                  alt="Profile 5"
+                  class="nb-card-image"
+              /></nb-card-body>
+            </nb-card>
+            <!-- Card 5: With accent, header, body, footer -->
+            <nb-card accent="danger">
+              <nb-card-header>David Miller</nb-card-header>
+              <img
+                src="client-angular/src/assets/img/6.jpeg"
+                alt="Profile 6"
+                class="nb-card-image"
+              />
+              <nb-card-body>Chef, foodie, and traveler.</nb-card-body>
+              <nb-card-footer><button nbButton status="danger">Block</button></nb-card-footer>
+            </nb-card>
+            <!-- Card 6: Only body, accent -->
+            <nb-card accent="warning">
+              <nb-card-body
+                >Olivia Taylor<br /><img
+                  src="client-angular/src/assets/img/7.jpeg"
+                  alt="Profile 7"
+                  class="nb-card-image"
+              /></nb-card-body>
+            </nb-card>
+            <!-- Card 7: Header, body, no footer -->
+            <nb-card>
+              <nb-card-header>Sophie Anderson</nb-card-header>
+              <img
+                src="client-angular/src/assets/img/8.jpeg"
+                alt="Profile 8"
+                class="nb-card-image"
+              />
+              <nb-card-body>Photographer, loves the outdoors.</nb-card-body>
+            </nb-card>
+            <!-- Card 8: Only body, accent -->
+            <nb-card accent="primary">
+              <nb-card-body
+                >Stranda Beach<br /><img
+                  src="client-angular/src/assets/img/stranda.jpeg"
+                  alt="Profile Beach"
+                  class="nb-card-image"
+              /></nb-card-body>
+            </nb-card>
+          </div>
+          <!-- Flip Cards Tab -->
+          <div class="flip-tab tab-content-grid" style="display: none">
+            <!-- Card 1: Default flip card -->
+            <nb-flip-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/2.jpeg"
+                  alt="Profile 2"
+                  class="nb-card-image"
+                />
+                <h3>Alex Doe</h3>
+                <p>Engineer, loves hiking</p>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Contact: alex@example.com</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 2: With accent -->
+            <nb-flip-card accent="info">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/3.jpeg"
+                  alt="Profile 3"
+                  class="nb-card-image"
+                />
+                <h3>Emma Davis</h3>
+                <p>Designer, coffee lover</p>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Instagram: @emma.designs</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 3: Only front content -->
+            <nb-flip-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/4.jpeg"
+                  alt="Profile 4"
+                  class="nb-card-image"
+                />
+                <h3>Michael Smith</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Musician, indie music</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 4: Only back content -->
+            <nb-flip-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/5.jpeg"
+                  alt="Profile 5"
+                  class="nb-card-image"
+                />
+                <h3>Sarah Brown</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Offline, try later</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 5: With accent, header, footer -->
+            <nb-flip-card accent="danger">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/6.jpeg"
+                  alt="Profile 6"
+                  class="nb-card-image"
+                />
+                <h3>David Miller</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Chef, foodie, traveler</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 6: Only front, accent -->
+            <nb-flip-card accent="warning">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/7.jpeg"
+                  alt="Profile 7"
+                  class="nb-card-image"
+                />
+                <h3>Olivia Taylor</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Photographer, outdoors</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 7: Header, body, no footer -->
+            <nb-flip-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/8.jpeg"
+                  alt="Profile 8"
+                  class="nb-card-image"
+                />
+                <h3>Sophie Anderson</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Beach lover</p>
+              </nb-card-back>
+            </nb-flip-card>
+            <!-- Card 8: Only body, accent -->
+            <nb-flip-card accent="primary">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/stranda.jpeg"
+                  alt="Profile Beach"
+                  class="nb-card-image"
+                />
+                <h3>Stranda Beach</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Norwegian paradise</p>
+              </nb-card-back>
+            </nb-flip-card>
+          </div>
+          <!-- Reveal Cards Tab -->
+          <div class="reveal-tab tab-content-grid" style="display: none">
+            <!-- Card 1: Default reveal card -->
+            <nb-reveal-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/2.jpeg"
+                  alt="Profile 2"
+                  class="nb-card-image"
+                />
+                <h3>Alex Doe</h3>
+                <p>Engineer, loves hiking</p>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Contact: alex@example.com</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 2: With accent -->
+            <nb-reveal-card accent="info">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/3.jpeg"
+                  alt="Profile 3"
+                  class="nb-card-image"
+                />
+                <h3>Emma Davis</h3>
+                <p>Designer, coffee lover</p>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Instagram: @emma.designs</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 3: Only front content -->
+            <nb-reveal-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/4.jpeg"
+                  alt="Profile 4"
+                  class="nb-card-image"
+                />
+                <h3>Michael Smith</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Musician, indie music</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 4: Only back content -->
+            <nb-reveal-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/5.jpeg"
+                  alt="Profile 5"
+                  class="nb-card-image"
+                />
+                <h3>Sarah Brown</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Offline, try later</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 5: With accent, header, footer -->
+            <nb-reveal-card accent="danger">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/6.jpeg"
+                  alt="Profile 6"
+                  class="nb-card-image"
+                />
+                <h3>David Miller</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Chef, foodie, traveler</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 6: Only front, accent -->
+            <nb-reveal-card accent="warning">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/7.jpeg"
+                  alt="Profile 7"
+                  class="nb-card-image"
+                />
+                <h3>Olivia Taylor</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Photographer, outdoors</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 7: Header, body, no footer -->
+            <nb-reveal-card>
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/8.jpeg"
+                  alt="Profile 8"
+                  class="nb-card-image"
+                />
+                <h3>Sophie Anderson</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Beach lover</p>
+              </nb-card-back>
+            </nb-reveal-card>
+            <!-- Card 8: Only body, accent -->
+            <nb-reveal-card accent="primary">
+              <nb-card-front>
+                <img
+                  src="client-angular/src/assets/img/stranda.jpeg"
+                  alt="Profile Beach"
+                  class="nb-card-image"
+                />
+                <h3>Stranda Beach</h3>
+              </nb-card-front>
+              <nb-card-back>
+                <p>Norwegian paradise</p>
+              </nb-card-back>
+            </nb-reveal-card>
+          </div>
+          <!-- Netflix Cards Tab -->
+          <div class="netflix-tab tab-content-grid" style="display: none">
+            <!-- 8 Netflix-style cards -->
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/2.jpeg"
+                class="netflix-card-image"
+                alt="Profile 2"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Alex Doe</div>
+                <div class="distance">2 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/3.jpeg"
+                class="netflix-card-image"
+                alt="Profile 3"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Emma Davis</div>
+                <div class="distance">5 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/4.jpeg"
+                class="netflix-card-image"
+                alt="Profile 4"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Michael Smith</div>
+                <div class="distance">1 mile away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/5.jpeg"
+                class="netflix-card-image"
+                alt="Profile 5"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Sarah Brown</div>
+                <div class="distance">3 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/6.jpeg"
+                class="netflix-card-image"
+                alt="Profile 6"
+              />
+              <div class="netflix-card-content">
+                <div class="name">David Miller</div>
+                <div class="distance">4 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/7.jpeg"
+                class="netflix-card-image"
+                alt="Profile 7"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Olivia Taylor</div>
+                <div class="distance">6 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/8.jpeg"
+                class="netflix-card-image"
+                alt="Profile 8"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Sophie Anderson</div>
+                <div class="distance">2 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="netflix-card">
+              <img
+                src="client-angular/src/assets/img/stranda.jpeg"
+                class="netflix-card-image"
+                alt="Profile Beach"
+              />
+              <div class="netflix-card-content">
+                <div class="name">Stranda Beach</div>
+                <div class="distance">7 miles away</div>
+                <div class="status-indicator"></div>
+                <div class="status-text">Online</div>
+                <div class="card-actions">
+                  <button class="action-button"><i class="eva eva-close-outline"></i></button>
+                  <button class="action-button"><i class="eva eva-heart-outline"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Netflix2 Tab: Profile Card Example (Dating Site Style) Flex Grid -->
+          <div class="netflix2-tab tab-content-grid" style="display: none">
+            <!-- 8 Netflix2-style cards -->
+            <article class="c-card" data-card-type="profile-dating">
+              <header class="c-card__header">
+                <div class="c-card__image-wrapper">
+                  <img
+                    class="c-card__image"
+                    src="client-angular/src/assets/img/2.jpeg"
+                    alt="User Profile Picture"
+                  />
+                </div>
+                <div class="c-card__title-group">
+                  <h3 class="c-card__title">Alex Doe, 29</h3>
+                  <p class="c-card__subtitle">Software Engineer</p>
+                  <div class="c-card__meta-info">
+                    <span
+                      class="c-card__online-status c-card__online-status--online"
+                      title="Online"
+                    ></span>
+                    <span class="c-card__distance">5 km away</span>
+                  </div>
+                </div>
+              </header>
+              <section class="c-card__body">
+                <div class="c-card__carousel">
+                  <div class="c-card__carousel-image-container">
+                    <img
+                      src="client-angular/src/assets/img/3.jpeg"
+                      alt="Profile gallery image 1"
+                      class="c-card__carousel-image"
+                    />
+                    <img
+                      src="client-angular/src/assets/img/4.jpeg"
+                      alt="Profile gallery image 2"
+                      class="c-card__carousel-image"
+                    />
+                    <img
+                      src="client-angular/src/assets/img/5.jpeg"
+                      alt="Profile gallery image 3"
+                      class="c-card__carousel-image"
+                    />
+                  </div>
+                  <button
+                    class="c-card__carousel-nav c-card__carousel-nav--prev"
+                    aria-label="Previous image"
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    class="c-card__carousel-nav c-card__carousel-nav--next"
+                    aria-label="Next image"
+                  >
+                    &gt;
+                  </button>
+                  <div class="c-card__carousel-dots"></div>
+                </div>
+                <p class="c-card__description">
+                  Passionate developer with a love for creating intuitive and dynamic user
+                  experiences. Enjoys hiking and photography in their free time. Looking for someone
+                  with a shared sense of adventure.
+                </p>
+                <div class="c-card__custom-content">
+                  <div class="c-profile-details">
+                    <dl class="c-profile-details__list">
+                      <dt class="c-profile-details__term">Interests:</dt>
+                      <dd class="c-profile-details__description">
+                        Coding, Hiking, Photography, AI, Travel
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </section>
+              <footer class="c-card__footer c-card__footer--dating-actions">
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--dismiss"
+                  aria-label="Dismiss"
+                >
+                  ✕
+                </button>
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--favorite"
+                  aria-label="Favorite"
+                >
+                  ❤
+                </button>
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--chat"
+                  aria-label="Chat"
+                >
+                  💬
+                </button>
+              </footer>
+            </article>
+            <article class="c-card" data-card-type="profile-dating">
+              <header class="c-card__header">
+                <div class="c-card__image-wrapper">
+                  <img
+                    class="c-card__image"
+                    src="client-angular/src/assets/img/3.jpeg"
+                    alt="User Profile Picture"
+                  />
+                </div>
+                <div class="c-card__title-group">
+                  <h3 class="c-card__title">Emma Davis, 27</h3>
+                  <p class="c-card__subtitle">Graphic Designer</p>
+                  <div class="c-card__meta-info">
+                    <span
+                      class="c-card__online-status c-card__online-status--online"
+                      title="Online"
+                    ></span>
+                    <span class="c-card__distance">2 km away</span>
+                  </div>
+                </div>
+              </header>
+              <section class="c-card__body">
+                <div class="c-card__carousel">
+                  <div class="c-card__carousel-image-container">
+                    <img
+                      src="client-angular/src/assets/img/4.jpeg"
+                      alt="Profile gallery image 1"
+                      class="c-card__carousel-image"
+                    />
+                    <img
+                      src="client-angular/src/assets/img/5.jpeg"
+                      alt="Profile gallery image 2"
+                      class="c-card__carousel-image"
+                    />
+                    <img
+                      src="client-angular/src/assets/img/6.jpeg"
+                      alt="Profile gallery image 3"
+                      class="c-card__carousel-image"
+                    />
+                  </div>
+                  <button
+                    class="c-card__carousel-nav c-card__carousel-nav--prev"
+                    aria-label="Previous image"
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    class="c-card__carousel-nav c-card__carousel-nav--next"
+                    aria-label="Next image"
+                  >
+                    &gt;
+                  </button>
+                  <div class="c-card__carousel-dots"></div>
+                </div>
+                <p class="c-card__description">
+                  Designer, coffee lover, and art enthusiast. Loves exploring new places and
+                  cultures.
+                </p>
+                <div class="c-card__custom-content">
+                  <div class="c-profile-details">
+                    <dl class="c-profile-details__list">
+                      <dt class="c-profile-details__term">Interests:</dt>
+                      <dd class="c-profile-details__description">Art, Coffee, Travel, Music</dd>
+                    </dl>
+                  </div>
+                </div>
+              </section>
+              <footer class="c-card__footer c-card__footer--dating-actions">
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--dismiss"
+                  aria-label="Dismiss"
+                >
+                  ✕
+                </button>
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--favorite"
+                  aria-label="Favorite"
+                >
+                  ❤
+                </button>
+                <button
+                  class="c-button c-card__action--icon-btn c-card__action--chat"
+                  aria-label="Chat"
+                >
+                  💬
+                </button>
+              </footer>
+            </article>
+            <!-- Repeat for 6 more cards, using 4.jpeg, 5.jpeg, 6.jpeg, 7.jpeg, 8.jpeg, stranda.jpeg, and realistic content -->
+          </div>
+        </div>
+      </div>
+      <!-- end main-content -->
+    </div>
+    <!-- end layout-container -->
+
+    <!-- Nebular Chat Demo Section (hidden by default) -->
+    <div
+      class="chat-demo-section"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 400px;
+        max-width: 100vw;
+        z-index: 2000;
+      "
+    >
+      <nb-chat title="Nebular Chat Demo" size="medium" status="primary">
+        <nb-chat-message
+          message="Hello! How can I help you today?"
+          sender="Support"
+          avatar="https://i.pravatar.cc/150?img=12"
+          status="primary"
+        ></nb-chat-message>
+        <nb-chat-message
+          message="I'm interested in your profile!"
+          sender="User"
+          avatar="https://i.pravatar.cc/150?img=13"
+          status="success"
+          reply="true"
+        ></nb-chat-message>
+        <nb-chat-form></nb-chat-form>
+      </nb-chat>
+    </div>
+
+    <!-- Static Admin Page (ngx-admin style, hidden by default) -->
+    <div
+      class="admin-page"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #222b45;
+        color: #fff;
+        z-index: 3000;
+        overflow: auto;
+      "
+    >
+      <div
+        style="
+          max-width: 900px;
+          margin: 40px auto;
+          background: #1a2138;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          padding: 2rem;
+        "
+      >
+        <h1 style="font-size: 2.2rem; margin-bottom: 1.5rem; color: #7659ff">
+          Admin Dashboard (Static Demo)
+        </h1>
+        <div style="display: flex; gap: 2rem; flex-wrap: wrap">
+          <div
+            style="
+              flex: 1 1 250px;
+              background: #232940;
+              border-radius: 8px;
+              padding: 1.5rem;
+              margin-bottom: 1rem;
+            "
+          >
+            <h2 style="color: #00d68f">Users</h2>
+            <p>Total: <b>1,234</b></p>
+            <p>Active: <b>1,100</b></p>
+          </div>
+          <div
+            style="
+              flex: 1 1 250px;
+              background: #232940;
+              border-radius: 8px;
+              padding: 1.5rem;
+              margin-bottom: 1rem;
+            "
+          >
+            <h2 style="color: #ff3d71">Reports</h2>
+            <p>Open: <b>12</b></p>
+            <p>Resolved: <b>98</b></p>
+          </div>
+          <div
+            style="
+              flex: 1 1 250px;
+              background: #232940;
+              border-radius: 8px;
+              padding: 1.5rem;
+              margin-bottom: 1rem;
+            "
+          >
+            <h2 style="color: #ffd600">Revenue</h2>
+            <p>This Month: <b>$4,200</b></p>
+            <p>Growth: <b>+8%</b></p>
+          </div>
+        </div>
+        <div style="margin-top: 2rem">
+          <h3 style="color: #7659ff">Recent Activity</h3>
+          <ul style="list-style: none; padding: 0">
+            <li style="margin-bottom: 0.5rem">
+              [2025-05-14] User <b>JaneDoe</b> upgraded to Premium
+            </li>
+            <li style="margin-bottom: 0.5rem">[2025-05-13] Report <b>#112</b> resolved by admin</li>
+            <li style="margin-bottom: 0.5rem">[2025-05-12] New user <b>MikeSmith</b> registered</li>
+          </ul>
+        </div>
+        <button
+          class="nb-button nb-button-primary"
+          style="margin-top: 2rem"
+          onclick="document.querySelector('.admin-page').style.display='none'"
+        >
+          Close Admin
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Initialize Nebular components
+      window.addEventListener('DOMContentLoaded', () => {
+        const loadingOverlay = document.querySelector('.loading-overlay');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebarMenu = document.querySelector('.nb-menu');
+        const mainContent = document.querySelector('.main-content');
+        const adminPage = document.querySelector('.admin-page');
+        const chatSection = document.querySelector('.chat-demo-section');
+        const tabs = document.querySelectorAll('.tab');
+        const basicTab = document.querySelector('.basic-tab');
+        const flipTab = document.querySelector('.flip-tab');
+        const revealTab = document.querySelector('.reveal-tab');
+        const netflixTab = document.querySelector('.netflix-tab');
+        const netflix2Tab = document.querySelector('.netflix2-tab');
+
+        // Show loading overlay on page load
+        loadingOverlay.classList.add('active');
+        setTimeout(() => {
+          loadingOverlay.classList.remove('active');
+        }, 1500);
+
+        // Sidebar toggle
+        sidebarToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('collapsed');
+        });
+
+        // Sidebar Navigation Logic
+        const sidebarMenuItems = sidebarMenu.querySelectorAll('.menu-item');
+
+        function showSection(section) {
+          // Hide all
+          mainContent.style.display = 'none';
+          adminPage.style.display = 'none';
+          chatSection.style.display = 'none';
+          // Show selected
+          if (section === 'Admin') {
+            adminPage.style.display = 'block';
+          } else if (section === 'Chat Demo') {
+            chatSection.style.display = 'block';
+          } else {
+            mainContent.style.display = 'flex';
+          }
+        }
+
+        sidebarMenuItems.forEach(item => {
+          item.addEventListener('click', e => {
+            e.preventDefault();
+            // Remove active from all
+            sidebarMenuItems.forEach(i => i.classList.remove('active'));
+            // Set active on clicked
+            item.classList.add('active');
+            // Show correct section
+            const label = item.querySelector('.menu-title').textContent.trim();
+            showSection(label);
+          });
+          // Tooltip
+          item.title = item.querySelector('.menu-title').textContent.trim();
+        });
+
+        // Overlay Close Buttons: restore sidebar state
+        const adminCloseBtn = adminPage.querySelector('button.nb-button-primary');
+        if (adminCloseBtn) {
+          adminCloseBtn.addEventListener('click', () => {
+            // Set Dashboard as active and show main content
+            sidebarMenuItems.forEach(i => i.classList.remove('active'));
+            const dashboard = Array.from(sidebarMenuItems).find(i =>
+              i.textContent.includes('Dashboard'),
+            );
+            if (dashboard) dashboard.classList.add('active');
+            showSection('Dashboard');
+          });
+        }
+        if (chatSection && !chatSection.querySelector('.close-chat-btn')) {
+          const closeBtn = document.createElement('button');
+          closeBtn.textContent = '×';
+          closeBtn.className = 'close-chat-btn';
+          closeBtn.style =
+            'position:absolute;top:8px;right:8px;font-size:1.5rem;background:none;border:none;color:#fff;z-index:10;cursor:pointer;';
+          closeBtn.title = 'Close Chat';
+          closeBtn.onclick = () => {
+            // Set Dashboard as active and show main content
+            sidebarMenuItems.forEach(i => i.classList.remove('active'));
+            const dashboard = Array.from(sidebarMenuItems).find(i =>
+              i.textContent.includes('Dashboard'),
+            );
+            if (dashboard) dashboard.classList.add('active');
+            showSection('Dashboard');
+          };
+          chatSection.appendChild(closeBtn);
+        }
+
+        // Tab switching logic
+        tabs.forEach(tab => {
+          tab.addEventListener('click', e => {
+            e.preventDefault();
+            loadingOverlay.classList.add('active');
+
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            setTimeout(() => {
+              // Show/hide tab content
+              basicTab.style.display = tab.textContent.includes('Basic Cards') ? 'grid' : 'none';
+              flipTab.style.display = tab.textContent.includes('Flip Cards') ? 'grid' : 'none';
+              revealTab.style.display = tab.textContent.includes('Reveal Cards') ? 'grid' : 'none';
+              netflixTab.style.display = tab.textContent.includes('Netflix Cards')
+                ? 'grid'
+                : 'none';
+              netflix2Tab.style.display = tab.textContent.includes('Netflix2') ? 'grid' : 'none';
+              loadingOverlay.classList.remove('active');
+            }, 500);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

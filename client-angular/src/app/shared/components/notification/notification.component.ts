@@ -1,52 +1,27 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (notification.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { NotificationService } from '../../../core/services/notification.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// Define these types locally until they're properly exported from the service
-export enum NotificationType {
-  SUCCESS = 'success',
-  ERROR = 'error',
-  WARNING = 'warning',
-  INFO = 'info',
-}
-
-export interface ToastNotification {
-  id: string;
-  message: string;
-  type: NotificationType;
-  timestamp: Date;
-  autoClose?: boolean;
-  duration?: number;
-}
+import { NebularModule } from '../../nebular.module';
+import { NotificationMessage } from './notification.model';
+import { NbCardModule, NbIconModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NebularModule, NbCardModule, NbIconModule],
   template: `
     <div class="notifications-container">
-      <div
-        *ngFor="let notification of activeNotifications; let i = index"
-        [@notificationState]="notification.state"
-        class="notification"
-        [ngClass]="'notification-' + notification.type"
+      <nb-card
+        *ngFor="let notification of notifications"
+        [status]="getNotificationStatus(notification)"
+        class="notification-card"
       >
-        <div class="notification-content">
-          <div class="notification-message">{{ notification.message }}</div>
-          <button class="notification-close" (click)="removeNotification(i)">×</button>
-        </div>
-      </div>
+        <nb-card-body>
+          <div class="notification-content">
+            <nb-icon [icon]="getNotificationIcon(notification)"></nb-icon>
+            <span class="notification-message">{{ notification.message }}</span>
+          </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
   styles: [
@@ -56,180 +31,76 @@ export interface ToastNotification {
         top: 20px;
         right: 20px;
         z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-width: 350px;
+        max-width: 400px;
       }
 
-      .notification {
-        padding: 15px;
-        border-radius: 4px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        opacity: 0.9;
+      .notification-card {
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
-      }
 
-      .notification:hover {
-        opacity: 1;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
       }
 
       .notification-content {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        gap: 12px;
       }
 
       .notification-message {
-        flex-grow: 1;
-        margin-right: 10px;
+        flex: 1;
       }
 
-      .notification-close {
-        background: none;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0.7;
-        transition: opacity 0.2s;
-      }
-
-      .notification-close:hover {
-        opacity: 1;
-      }
-
-      .notification-success {
-        background-color: #d4edda;
-        color: #155724;
-        border-left: 4px solid #28a745;
-      }
-
-      .notification-error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border-left: 4px solid #dc3545;
-      }
-
-      .notification-info {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border-left: 4px solid #17a2b8;
-      }
-
-      .notification-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border-left: 4px solid #ffc107;
+      nb-icon {
+        font-size: 1.5rem;
       }
     `,
   ],
-  animations: [
-    trigger('notificationState', [
-      state(
-        'visible',
-        style({
-          transform: 'translateX(0)',
-          opacity: 1,
-        }),
-      ),
-      state(
-        'hidden',
-        style({
-          transform: 'translateX(100%)',
-          opacity: 0,
-        }),
-      ),
-      transition('hidden => visible', [animate('300ms ease-out')]),
-      transition('visible => hidden', [animate('300ms ease-in')]),
-    ]),
-  ],
 })
-export class NotificationComponent implements OnInit, OnDestroy {
-  activeNotifications: Array<{
-    id?: string;
-    type: NotificationType;
-    message: string;
-    state: 'visible' | 'hidden';
-    timeoutId?: number;
-  }> = [];
+export class NotificationComponent implements OnDestroy {
+  @Input() notifications: NotificationMessage[] = [];
 
-  private subscription: Subscription = new Subscription();
-
-  constructor(private notificationService: NotificationService) {}
-
-  ngOnInit(): void {
-    this.subscription.add(
-      this.notificationService.toasts$.subscribe((notifications) => {
-        // Handle array of notifications
-        if (Array.isArray(notifications)) {
-          // Process only new notifications that aren't already displayed
-          const currentIds = this.activeNotifications.map((n) => n.id);
-          notifications.forEach((notification) => {
-            if (!notification.id || !currentIds.includes(notification.id)) {
-              this.showNotification(notification);
-            }
-          });
-        }
-      }),
-    );
+  // This property is used in tests
+  get activeNotifications(): NotificationMessage[] {
+    return this.notifications;
   }
+
+  private timeoutIds: number[] = [];
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    // Clear any remaining timeouts
-    this.activeNotifications.forEach((notification) => {
-      if (notification.timeoutId) {
-        clearTimeout(notification.timeoutId);
-      }
-    });
+    // Clear any timeouts
+    this.timeoutIds.forEach((id) => clearTimeout(id));
   }
 
-  showNotification(notification: ToastNotification): void {
-    const newNotification = {
-      id: notification.id,
-      type: notification.type,
-      message: notification.message,
-      state: 'visible' as 'visible' | 'hidden',
-    };
-
-    this.activeNotifications.push(newNotification);
-
-    // Set timeout to remove notification
-    const index = this.activeNotifications.length - 1;
-    const timeoutId = window.setTimeout(() => {
-      this.hideNotification(index);
-    }, notification.duration || 3000);
-
-    this.activeNotifications[index].timeoutId = timeoutId;
-  }
-
-  hideNotification(index: number): void {
-    if (index >= 0 && index < this.activeNotifications.length) {
-      this.activeNotifications[index].state = 'hidden';
-
-      // Remove notification after animation completes
-      setTimeout(() => {
-        this.removeNotification(index);
-      }, 300);
+  getNotificationStatus(notification: NotificationMessage): string {
+    switch (notification.type) {
+      case 'success':
+        return 'success';
+      case 'error':
+        return 'danger';
+      case 'warning':
+        return 'warning';
+      case 'info':
+      default:
+        return 'info';
     }
   }
 
-  removeNotification(index: number): void {
-    if (index >= 0 && index < this.activeNotifications.length) {
-      // Clear timeout if it exists
-      if (this.activeNotifications[index].timeoutId) {
-        clearTimeout(this.activeNotifications[index].timeoutId);
-      }
-
-      // If notification has an ID, tell the service to remove it
-      const notificationId = this.activeNotifications[index].id;
-      if (notificationId) {
-        this.notificationService.removeToast(notificationId);
-      }
-
-      // Remove notification from array
-      this.activeNotifications.splice(index, 1);
+  getNotificationIcon(notification: NotificationMessage): string {
+    switch (notification.type) {
+      case 'success':
+        return 'checkmark-circle-2-outline';
+      case 'error':
+        return 'alert-circle-outline';
+      case 'warning':
+        return 'alert-triangle-outline';
+      case 'info':
+      default:
+        return 'info-outline';
     }
   }
 }

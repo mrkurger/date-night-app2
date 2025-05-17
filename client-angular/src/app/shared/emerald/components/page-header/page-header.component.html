@@ -1,100 +1,78 @@
-<!-- Emerald PageHeader Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/PageHeader -->
+<!-- Page Header Component -->
+<!-- Using Nebular components -->
 
-<div
-  class="emerald-page-header"
-  [ngClass]="{ 'emerald-page-header--with-background': backgroundImage }"
->
+<div class="nb-header" [ngClass]="{ 'nb-header--with-background': backgroundImage }">
   <!-- Background Image -->
   <div
     *ngIf="backgroundImage"
-    class="emerald-page-header__background"
+    class="nb-header__background"
     [style.background-image]="'url(' + backgroundImage + ')'"
   >
-    <div class="emerald-page-header__overlay"></div>
+    <div class="nb-header__overlay"></div>
   </div>
 
-  <div class="emerald-page-header__container">
+  <div class="nb-header__container">
     <!-- Back Link -->
-    <a *ngIf="backLink" [routerLink]="backLink" class="emerald-page-header__back-link">
-      <i class="fas fa-arrow-left"></i>
+    <a *ngIf="backLink" [routerLink]="backLink" class="nb-header__back-link">
+      <nb-icon icon="arrow-back-outline"></nb-icon>
       <span>Back</span>
     </a>
 
     <!-- Breadcrumbs -->
-    <div *ngIf="breadcrumbs && breadcrumbs.length > 0" class="emerald-page-header__breadcrumbs">
-      <ul class="emerald-page-header__breadcrumbs-list">
-        <li
-          *ngFor="let crumb of breadcrumbs; let last = last"
-          class="emerald-page-header__breadcrumb"
-          [ngClass]="{ 'emerald-page-header__breadcrumb--active': last }"
-        >
-          <a
-            *ngIf="!last && crumb.url"
-            [routerLink]="crumb.url"
-            class="emerald-page-header__breadcrumb-link"
-          >
-            {{ crumb.label }}
-          </a>
-          <span *ngIf="last || !crumb.url">{{ crumb.label }}</span>
-          <i
-            *ngIf="!last"
-            class="fas fa-chevron-right emerald-page-header__breadcrumb-separator"
-          ></i>
-        </li>
-      </ul>
-    </div>
+    <nb-breadcrumbs *ngIf="breadcrumbs && breadcrumbs.length > 0">
+      <nb-breadcrumb
+        *ngFor="let crumb of breadcrumbs"
+        [routerLink]="crumb.url ? crumb.url : []"
+        [disabled]="!crumb.url"
+      >
+        {{ crumb.label }}
+      </nb-breadcrumb>
+    </nb-breadcrumbs>
 
-    <div class="emerald-page-header__content">
+    <div class="nb-header__content">
       <!-- Avatar (if provided) -->
-      <div *ngIf="avatarUrl || avatarName" class="emerald-page-header__avatar-container">
-        <div class="emerald-page-header__avatar">
-          <img
-            *ngIf="avatarUrl"
-            [src]="avatarUrl"
-            [alt]="avatarName || 'User avatar'"
-            class="emerald-page-header__avatar-image"
-          />
+      <div *ngIf="avatarUrl || avatarName" class="nb-header__avatar-container">
+        <nb-user
+          [name]="avatarName"
+          [picture]="avatarUrl"
+          [title]="subtitle"
+          size="large"
+          [showTitle]="false"
+          [showName]="false"
+        >
+        </nb-user>
 
-          <span *ngIf="!avatarUrl && avatarName" class="emerald-page-header__avatar-initials">
-            {{ avatarName.charAt(0).toUpperCase() }}
-          </span>
-
-          <span
-            *ngIf="avatarIsOnline !== undefined"
-            class="emerald-page-header__avatar-status"
-            [ngClass]="{
-              'emerald-page-header__avatar-status--online': avatarIsOnline,
-              'emerald-page-header__avatar-status--offline': !avatarIsOnline,
-            }"
-          >
-          </span>
-        </div>
+        <span
+          *ngIf="avatarIsOnline !== undefined"
+          class="nb-header__avatar-status"
+          [ngClass]="{
+            'nb-header__avatar-status--online': avatarIsOnline,
+            'nb-header__avatar-status--offline': !avatarIsOnline,
+          }"
+        ></span>
       </div>
 
       <!-- Title and Subtitle -->
-      <div class="emerald-page-header__titles">
-        <h1 class="emerald-page-header__title">{{ title }}</h1>
-        <p *ngIf="subtitle" class="emerald-page-header__subtitle">{{ subtitle }}</p>
+      <div class="nb-header__titles">
+        <h1 class="nb-header__title">{{ title }}</h1>
+        <p *ngIf="subtitle" class="nb-header__subtitle">{{ subtitle }}</p>
       </div>
 
       <!-- Actions -->
-      <div *ngIf="actions && actions.length > 0" class="emerald-page-header__actions">
+      <div *ngIf="actions && actions.length > 0" class="nb-header__actions">
         <button
           *ngFor="let action of actions"
-          class="emerald-page-header__action"
-          [ngClass]="{
-            'emerald-page-header__action--primary': action.variant === 'primary',
-            'emerald-page-header__action--secondary': action.variant === 'secondary',
-            'emerald-page-header__action--success': action.variant === 'success',
-            'emerald-page-header__action--danger': action.variant === 'danger',
-            'emerald-page-header__action--warning': action.variant === 'warning',
-            'emerald-page-header__action--info': action.variant === 'info',
-          }"
+          nbButton
+          [status]="action.variant"
+          [size]="'small'"
           (click)="onActionClick(action, $event)"
         >
-          <i *ngIf="action.icon" class="{{ action.icon }} emerald-page-header__action-icon"></i>
-          <span class="emerald-page-header__action-label">{{ action.label }}</span>
+          <nb-icon
+            *ngIf="action.icon"
+            [icon]="getIconName(action.icon)"
+            class="nb-header__action-icon"
+          ></nb-icon>
+          <span class="nb-header__action-label">{{ action.label }}</span>
         </button>
       </div>
     </div>

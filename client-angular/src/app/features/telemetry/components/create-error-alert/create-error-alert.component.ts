@@ -1,25 +1,20 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (create-error-alert.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlertService } from '../../../../core/services/alert.service';
-import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
-import { AlertTimeWindow } from '../../../../core/models/alert.model';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { ErrorCategory } from '../../../../core/models/error.model';
 
 /**
  * Component for creating alerts based on error categories
@@ -27,225 +22,258 @@ import { AlertTimeWindow } from '../../../../core/models/alert.model';
 @Component({
   selector: 'app-create-error-alert',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
   ],
   template: `
-    <mat-card class="create-alert-card">
-      <mat-card-header>
-        <mat-card-title>Create Error Alert</mat-card-title>
-        <mat-card-subtitle>Set up alerts for specific error categories</mat-card-subtitle>
-      </mat-card-header>
+    <nb-card>
+      <nb-card-header>
+        <h3>Create Error Alert</h3>
+        <p class="subtitle">Set up alerts for specific error categories</p>
+      </nb-card-header>
 
-      <mat-card-content>
-        <form [formGroup]="alertForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Alert Name</mat-label>
-            <input matInput formControlName="name" placeholder="e.g., Critical Server Errors" />
-            <mat-error *ngIf="alertForm.get('name')?.hasError('required')">
-              Alert name is required
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea
-              matInput
-              formControlName="description"
-              rows="3"
-              placeholder="e.g., Alert for monitoring server errors"
-            ></textarea>
-            <mat-error *ngIf="alertForm.get('description')?.hasError('required')">
-              Description is required
-            </mat-error>
-          </mat-form-field>
-
-          <div class="form-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Error Category</mat-label>
-              <mat-select formControlName="category">
-                <mat-option *ngFor="let category of errorCategories" [value]="category.value">
-                  {{ category.label }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="alertForm.get('category')?.hasError('required')">
-                Error category is required
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Threshold</mat-label>
-              <input matInput type="number" formControlName="threshold" min="1" />
-              <mat-hint>Number of errors to trigger the alert</mat-hint>
-              <mat-error *ngIf="alertForm.get('threshold')?.hasError('required')">
-                Threshold is required
-              </mat-error>
-              <mat-error *ngIf="alertForm.get('threshold')?.hasError('min')">
-                Threshold must be at least 1
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Time Window</mat-label>
-              <mat-select formControlName="timeWindow">
-                <mat-option *ngFor="let window of timeWindows" [value]="window.value">
-                  {{ window.label }}
-                </mat-option>
-              </mat-select>
-              <mat-hint>Time period for counting errors</mat-hint>
-              <mat-error *ngIf="alertForm.get('timeWindow')?.hasError('required')">
-                Time window is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="form-actions">
-            <button mat-button type="button" (click)="resetForm()">Reset</button>
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="alertForm.invalid || isSubmitting"
+      <nb-card-body [formGroup]="alertForm">
+        <div class="form-row">
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              formControlName="name"
+              placeholder="Alert Name"
+              [status]="
+                alertForm.get('name')?.invalid && alertForm.get('name')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <span
+              class="error-message"
+              *ngIf="alertForm.get('name')?.hasError('required') && alertForm.get('name')?.touched"
             >
-              <span *ngIf="!isSubmitting">Create Alert</span>
-              <mat-spinner diameter="24" *ngIf="isSubmitting"></mat-spinner>
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+              Alert name is required
+            </span>
+          </nb-form-field>
+        </div>
+
+        <div class="form-row">
+          <nb-form-field>
+            <textarea
+              nbInput
+              fullWidth
+              formControlName="description"
+              placeholder="Description"
+              rows="3"
+              [status]="
+                alertForm.get('description')?.invalid && alertForm.get('description')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            ></textarea>
+            <span
+              class="error-message"
+              *ngIf="
+                alertForm.get('description')?.hasError('required') &&
+                alertForm.get('description')?.touched
+              "
+            >
+              Description is required
+            </span>
+          </nb-form-field>
+        </div>
+
+        <div class="form-row">
+          <nb-form-field>
+            <nb-select
+              fullWidth
+              formControlName="category"
+              placeholder="Error Category"
+              [status]="
+                alertForm.get('category')?.invalid && alertForm.get('category')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            >
+              <nb-option *ngFor="let category of errorCategories" [value]="category.value">
+                {{ category.label }}
+              </nb-option>
+            </nb-select>
+            <span
+              class="error-message"
+              *ngIf="
+                alertForm.get('category')?.hasError('required') &&
+                alertForm.get('category')?.touched
+              "
+            >
+              Error category is required
+            </span>
+          </nb-form-field>
+        </div>
+
+        <div class="form-row">
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              formControlName="threshold"
+              placeholder="Threshold"
+              [status]="
+                alertForm.get('threshold')?.invalid && alertForm.get('threshold')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <span class="hint-text">Number of errors to trigger the alert</span>
+            <span
+              class="error-message"
+              *ngIf="
+                alertForm.get('threshold')?.hasError('required') &&
+                alertForm.get('threshold')?.touched
+              "
+            >
+              Threshold is required
+            </span>
+            <span
+              class="error-message"
+              *ngIf="
+                alertForm.get('threshold')?.hasError('min') && alertForm.get('threshold')?.touched
+              "
+            >
+              Threshold must be at least 1
+            </span>
+          </nb-form-field>
+        </div>
+
+        <div class="form-row">
+          <nb-form-field>
+            <nb-select
+              fullWidth
+              formControlName="timeWindow"
+              placeholder="Time Window"
+              [status]="
+                alertForm.get('timeWindow')?.invalid && alertForm.get('timeWindow')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            >
+              <nb-option *ngFor="let window of timeWindows" [value]="window.value">
+                {{ window.label }}
+              </nb-option>
+            </nb-select>
+            <span class="hint-text">Time period for counting errors</span>
+            <span
+              class="error-message"
+              *ngIf="
+                alertForm.get('timeWindow')?.hasError('required') &&
+                alertForm.get('timeWindow')?.touched
+              "
+            >
+              Time window is required
+            </span>
+          </nb-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button nbButton status="primary" (click)="onSubmit()" [disabled]="!alertForm.valid">
+            Create Alert
+          </button>
+          <button nbButton status="basic" (click)="onCancel()">Cancel</button>
+        </div>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
-      .create-alert-card {
-        max-width: 800px;
-        margin: 20px auto;
+      :host {
+        display: block;
+        max-width: 600px;
+        margin: 0 auto;
       }
 
-      .full-width {
-        width: 100%;
-        margin-bottom: 16px;
+      .subtitle {
+        color: var(--text-hint-color);
+        margin: 0;
       }
 
       .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 16px;
+        margin-bottom: var(--margin);
       }
 
-      .form-row mat-form-field {
-        flex: 1 1 200px;
+      .hint-text {
+        color: var(--text-hint-color);
+        font-size: var(--text-caption-font-size);
+        margin-top: var(--spacing-xs);
+      }
+
+      .error-message {
+        color: var(--color-danger-default);
+        font-size: var(--text-caption-font-size);
+        margin-top: var(--spacing-xs);
       }
 
       .form-actions {
         display: flex;
-        justify-content: flex-end;
-        gap: 16px;
-        margin-top: 24px;
-      }
-
-      button[type='submit'] {
-        min-width: 120px;
+        gap: var(--spacing);
+        margin-top: var(--margin);
       }
     `,
   ],
 })
 export class CreateErrorAlertComponent implements OnInit {
   alertForm: FormGroup;
-  isSubmitting = false;
 
-  // Error categories for dropdown
-  errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({
-    label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '),
-    value,
-  }));
-
-  // Time windows for dropdown
-  timeWindows = [
-    { label: '5 minutes', value: AlertTimeWindow.MINUTES_5 },
-    { label: '15 minutes', value: AlertTimeWindow.MINUTES_15 },
-    { label: '30 minutes', value: AlertTimeWindow.MINUTES_30 },
-    { label: '1 hour', value: AlertTimeWindow.HOURS_1 },
-    { label: '6 hours', value: AlertTimeWindow.HOURS_6 },
-    { label: '12 hours', value: AlertTimeWindow.HOURS_12 },
-    { label: '24 hours', value: AlertTimeWindow.HOURS_24 },
+  errorCategories = [
+    { value: ErrorCategory.NETWORK, label: 'Network Errors' },
+    { value: ErrorCategory.SERVER, label: 'Server Errors' },
+    { value: ErrorCategory.CLIENT, label: 'Client Errors' },
+    { value: ErrorCategory.AUTHENTICATION, label: 'Authentication Errors' },
+    { value: ErrorCategory.AUTHORIZATION, label: 'Authorization Errors' },
+    { value: ErrorCategory.VALIDATION, label: 'Validation Errors' },
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private alertService: AlertService,
-    private snackBar: MatSnackBar,
-  ) {
+  timeWindows = [
+    { value: 300, label: '5 minutes' },
+    { value: 900, label: '15 minutes' },
+    { value: 1800, label: '30 minutes' },
+    { value: 3600, label: '1 hour' },
+    { value: 7200, label: '2 hours' },
+    { value: 14400, label: '4 hours' },
+    { value: 28800, label: '8 hours' },
+    { value: 86400, label: '24 hours' },
+  ];
+
+  constructor(private fb: FormBuilder) {
     this.alertForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      category: [ErrorCategory.SERVER, Validators.required],
-      threshold: [5, [Validators.required, Validators.min(1)]],
-      timeWindow: [AlertTimeWindow.HOURS_1, Validators.required],
+      category: ['', Validators.required],
+      threshold: [1, [Validators.required, Validators.min(1)]],
+      timeWindow: [300, Validators.required],
     });
   }
 
-  ngOnInit(): void {
-    // Initialize form with default values
-  }
+  ngOnInit(): void {}
 
-  /**
-   * Handle form submission
-   */
   onSubmit(): void {
-    if (this.alertForm.invalid) {
-      return;
+    if (this.alertForm.valid) {
+      // Handle form submission
+      // eslint-disable-next-line no-console
+      console.log(this.alertForm.value);
     }
-
-    this.isSubmitting = true;
-    const formValues = this.alertForm.value;
-
-    this.alertService
-      .createErrorCategoryAlert(
-        formValues.category,
-        formValues.name,
-        formValues.description,
-        formValues.threshold,
-        formValues.timeWindow,
-      )
-      .subscribe({
-        next: (alert) => {
-          this.isSubmitting = false;
-          this.snackBar.open(`Alert "${alert.name}" created successfully`, 'Close', {
-            duration: 5000,
-            panelClass: ['success-snackbar'],
-          });
-          this.resetForm();
-        },
-        error: (error) => {
-          this.isSubmitting = false;
-          this.snackBar.open(`Error creating alert: ${error.message || 'Unknown error'}`, 'Close', {
-            duration: 5000,
-            panelClass: ['error-snackbar'],
-          });
-        },
-      });
   }
 
-  /**
-   * Reset the form to default values
-   */
-  resetForm(): void {
-    this.alertForm.reset({
-      name: '',
-      description: '',
-      category: ErrorCategory.SERVER,
-      threshold: 5,
-      timeWindow: AlertTimeWindow.HOURS_1,
-    });
+  onCancel(): void {
+    // Handle cancel action
   }
 }

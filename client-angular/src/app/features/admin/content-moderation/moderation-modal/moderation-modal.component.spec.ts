@@ -1,7 +1,7 @@
 /// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { SimpleChange, DebugElement } from '@angular/core';
+import { SimpleChange, DebugElement , Component} from '@angular/core';
 import { By, DomSanitizer } from '@angular/platform-browser';
 
 import { ModerationModalComponent } from './moderation-modal.component';
@@ -42,7 +42,7 @@ describe('ModerationModalComponent', () => {
         FormBuilder,
         { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy },
         { provide: NotificationService, useValue: mockNotificationService }
-      ],
+      ]
     }).compileComponents();
 
   // Mock media data for image type
@@ -78,8 +78,8 @@ describe('ModerationModalComponent', () => {
       imports: [ReactiveFormsModule, ModerationModalComponent],
       providers: [
         FormBuilder,
-        { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy },
-      ],
+        { provide: ContentSanitizerService, useValue: contentSanitizerServiceSpy }
+      ]
     }).compileComponents();
 
     formBuilder = TestBed.inject(FormBuilder);
@@ -90,7 +90,7 @@ describe('ModerationModalComponent', () => {
     // Create a form for testing
     component.form = formBuilder.group({
       status: ['approved', [Validators.required]],
-      notes: ['', [Validators.maxLength(500), Validators.required]],
+      notes: ['', [Validators.maxLength(500), Validators.required]]
     });
 
     fixture.detectChanges();
@@ -120,7 +120,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockImageMedia;
 
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true),
+        media: new SimpleChange(null, mockImageMedia, true)
       });
 
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockImageMedia.url);
@@ -133,7 +133,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockVideoMedia;
 
       component.ngOnChanges({
-        media: new SimpleChange(null, mockVideoMedia, true),
+        media: new SimpleChange(null, mockVideoMedia, true)
       });
 
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockVideoMedia.url);
@@ -148,7 +148,7 @@ describe('ModerationModalComponent', () => {
       component.media = mockImageMedia;
 
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true),
+        media: new SimpleChange(null, mockImageMedia, true)
       });
 
       expect(contentSanitizerServiceSpy.isValidUrl).toHaveBeenCalledWith(mockImageMedia.url);
@@ -160,7 +160,7 @@ describe('ModerationModalComponent', () => {
       component.media = null;
 
       component.ngOnChanges({
-        media: new SimpleChange(mockImageMedia, null, false),
+        media: new SimpleChange(mockImageMedia, null, false)
       });
 
       expect(contentSanitizerServiceSpy.isValidUrl).not.toHaveBeenCalled();
@@ -172,7 +172,7 @@ describe('ModerationModalComponent', () => {
       component.media = mediaWithoutUrl;
 
       component.ngOnChanges({
-        media: new SimpleChange(null, mediaWithoutUrl, true),
+        media: new SimpleChange(null, mediaWithoutUrl, true)
       });
 
       expect(contentSanitizerServiceSpy.isValidUrl).not.toHaveBeenCalled();
@@ -186,7 +186,7 @@ describe('ModerationModalComponent', () => {
       // Then process new media
       component.media = mockImageMedia;
       component.ngOnChanges({
-        media: new SimpleChange(null, mockImageMedia, true),
+        media: new SimpleChange(null, mockImageMedia, true)
       });
 
       expect(component.mediaError).toBeFalse();
@@ -239,7 +239,7 @@ describe('ModerationModalComponent', () => {
 
       component.form.setValue({
         status: 'approved',
-        notes: 'Content meets guidelines',
+        notes: 'Content meets guidelines'
       });
 
       component.validateAndSubmit();
@@ -252,7 +252,7 @@ describe('ModerationModalComponent', () => {
 
       component.form.setValue({
         status: 'rejected',
-        notes: 'Content violates guidelines',
+        notes: 'Content violates guidelines'
       });
 
       component.validateAndSubmit();
@@ -278,7 +278,7 @@ describe('ModerationModalComponent', () => {
 
       // Set notes but leave status as null
       component.form.patchValue({
-        notes: 'Valid notes',
+        notes: 'Valid notes'
       });
       component.form.get('status')?.setValue(null);
 
@@ -421,7 +421,7 @@ describe('ModerationModalComponent', () => {
       // Set form to valid state
       component.form.setValue({
         status: 'approved',
-        notes: 'Valid notes',
+        notes: 'Valid notes'
       });
       fixture.detectChanges();
 

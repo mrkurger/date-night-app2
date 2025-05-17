@@ -1,3 +1,6 @@
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +15,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AuthService } from './core/services/auth.service';
 import { NotificationService } from './core/services/notification.service';
@@ -114,15 +116,14 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'browse', component: MockComponent },
-          { path: 'login', component: MockComponent },
-          { path: 'dashboard', component: MockComponent },
+          { path: 'browse', component: TestAppComponent },
+          { path: 'login', component: TestAppComponent },
+          { path: 'dashboard', component: TestAppComponent },
         ]),
         TestAppComponent, // Use our test component instead of the real one
         NotificationComponent,
         DebugInfoComponent,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA], // Add these to handle unknown elements and attributes
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: NotificationService, useValue: mockNotificationService },

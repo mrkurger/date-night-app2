@@ -2,85 +2,121 @@
 <!-- Documentation: https://docs-emerald.condorlabs.io/Pager -->
 
 <div
-  class="emerald-pager"
+  class="nb-paginator"
   [ngClass]="{
-    'emerald-pager--simple': style === 'simple',
-    'emerald-pager--compact': style === 'compact',
-    'emerald-pager--small': size === 'small',
-    'emerald-pager--large': size === 'large',
-    'emerald-pager--left': align === 'left',
-    'emerald-pager--right': align === 'right',
+    'nb-paginator--simple': style === 'simple',
+    'nb-paginator--compact': style === 'compact',
+    'nb-paginator--small': size === 'small',
+    'nb-paginator--large': size === 'large',
+    'nb-paginator--left': align === 'left',
+    'nb-paginator--right': align === 'right',
   }"
 >
   <!-- Page Size Selector -->
-  <div class="emerald-pager__size-selector" *ngIf="showPageSize">
+  <div class="nb-paginator__size-selector" *ngIf="showPageSize">
     <label for="pageSize">Items per page:</label>
-    <select id="pageSize" [value]="pageSize" (change)="onPageSizeChange($event)">
-      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-    </select>
+    <nb-select
+      id="pageSize"
+      [selected]="pageSize"
+      (selectedChange)="onPageSizeChange($event)"
+      [size]="size"
+    >
+      <nb-option *ngFor="let size of pageSizes" [value]="size">
+        {{ size }}
+      </nb-option>
+    </nb-select>
   </div>
 
   <!-- Pagination Controls -->
-  <div class="emerald-pager__controls">
-    <!-- First Page Button -->
-    <button
-      *ngIf="showFirstLast && style !== 'simple'"
-      class="emerald-pager__button emerald-pager__button--first"
-      [disabled]="currentPage === 1"
-      (click)="goToFirstPage()"
-      aria-label="Go to first page"
-    >
-      <i class="fas fa-angle-double-left"></i>
-    </button>
-
-    <!-- Previous Page Button -->
-    <button
-      *ngIf="showPrevNext"
-      class="emerald-pager__button emerald-pager__button--prev"
-      [disabled]="currentPage === 1"
-      (click)="goToPreviousPage()"
-      aria-label="Go to previous page"
-    >
-      <i class="fas fa-angle-left"></i>
-    </button>
-
-    <!-- Page Numbers (Default and Compact Styles) -->
-    <div *ngIf="style !== 'simple'" class="emerald-pager__pages">
+  <div class="nb-paginator__controls">
+    <!-- Simple Style -->
+    <div *ngIf="style === 'simple'" class="nb-paginator__simple">
       <button
-        *ngFor="let page of visiblePages"
-        class="emerald-pager__button emerald-pager__button--page"
-        [ngClass]="{ 'emerald-pager__button--active': page === currentPage }"
-        (click)="goToPage(page)"
+        nbButton
+        ghost
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)"
+        aria-label="Previous page"
       >
-        {{ page }}
+        <nb-icon icon="chevron-left-outline"></nb-icon>
+      </button>
+      <span class="nb-paginator__current">{{ currentPage }} / {{ totalPages }}</span>
+      <button
+        nbButton
+        ghost
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(currentPage + 1)"
+        aria-label="Next page"
+      >
+        <nb-icon icon="chevron-right-outline"></nb-icon>
       </button>
     </div>
 
-    <!-- Current Page Indicator (Simple Style) -->
-    <div *ngIf="style === 'simple'" class="emerald-pager__current">
-      <span>{{ currentPage }} / {{ totalPages }}</span>
+    <!-- Default and Compact Styles -->
+    <div *ngIf="style !== 'simple'" class="nb-paginator__pages">
+      <!-- First Page Button -->
+      <button
+        *ngIf="showFirstLast"
+        nbButton
+        ghost
+        [disabled]="currentPage === 1"
+        (click)="goToPage(1)"
+        aria-label="First page"
+        [size]="size"
+      >
+        <nb-icon icon="chevrons-left-outline"></nb-icon>
+      </button>
+
+      <!-- Previous Page Button -->
+      <button
+        *ngIf="showPrevNext"
+        nbButton
+        ghost
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)"
+        aria-label="Previous page"
+        [size]="size"
+      >
+        <nb-icon icon="chevron-left-outline"></nb-icon>
+      </button>
+
+      <!-- Page Numbers -->
+      <button
+        *ngFor="let page of visiblePages"
+        nbButton
+        [ghost]="page !== currentPage"
+        [status]="page === currentPage ? 'primary' : 'basic'"
+        (click)="goToPage(page)"
+        [size]="size"
+      >
+        {{ page }}
+      </button>
+
+      <!-- Next Page Button -->
+      <button
+        *ngIf="showPrevNext"
+        nbButton
+        ghost
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(currentPage + 1)"
+        aria-label="Next page"
+        [size]="size"
+      >
+        <nb-icon icon="chevron-right-outline"></nb-icon>
+      </button>
+
+      <!-- Last Page Button -->
+      <button
+        *ngIf="showFirstLast"
+        nbButton
+        ghost
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(totalPages)"
+        aria-label="Last page"
+        [size]="size"
+      >
+        <nb-icon icon="chevrons-right-outline"></nb-icon>
+      </button>
     </div>
-
-    <!-- Next Page Button -->
-    <button
-      *ngIf="showPrevNext"
-      class="emerald-pager__button emerald-pager__button--next"
-      [disabled]="currentPage === totalPages"
-      (click)="goToNextPage()"
-      aria-label="Go to next page"
-    >
-      <i class="fas fa-angle-right"></i>
-    </button>
-
-    <!-- Last Page Button -->
-    <button
-      *ngIf="showFirstLast && style !== 'simple'"
-      class="emerald-pager__button emerald-pager__button--last"
-      [disabled]="currentPage === totalPages"
-      (click)="goToLastPage()"
-      aria-label="Go to last page"
-    >
-      <i class="fas fa-angle-double-right"></i>
-    </button>
   </div>
 </div>

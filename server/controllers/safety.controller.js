@@ -1,6 +1,7 @@
 import SafetyService from '../services/safety.service.js';
 import User from '../models/user.model.js';
 import SafetyCheckin from '../models/safety-checkin.model.js';
+import { sendError } from '../utils/response.js';
 
 const safetyService = new SafetyService();
 
@@ -252,5 +253,10 @@ const safetyController = {
     }
   },
 };
+
+export async function someHandler(req, res) {
+  // TODO: Implement safety handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
+}
 
 export default safetyController;

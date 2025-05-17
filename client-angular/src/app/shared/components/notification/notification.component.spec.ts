@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,11 +11,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import {
-  NotificationComponent,
-  NotificationType,
-  ToastNotification,
-} from './notification.component';
+import { NotificationComponent } from './notification.component';
+import { NotificationType, ToastNotification } from './notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

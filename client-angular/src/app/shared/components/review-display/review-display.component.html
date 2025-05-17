@@ -1,23 +1,23 @@
-<mat-card class="review-card" [class.pending]="review.status === 'pending'">
+<nb-card class="review-card" [class.pending]="review.status === 'pending'">
   <!-- Review Header -->
-  <mat-card-header>
+  <nb-card-header>
     <img
-      mat-card-avatar
+      nb-card-avatar
       [src]="review.reviewer.profileImage || '/assets/img/default-profile.jpg'"
       [alt]="review.reviewer.username"
     />
-    <mat-card-title>
+    <nb-card-title>
       {{ review.title }}
-      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" matTooltip="Verified Meeting">
-        <mat-icon>verified</mat-icon>
+      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" nbTooltip="Verified Meeting">
+        <nb-icon icon="verified"></nb-icon>
       </span>
-    </mat-card-title>
-    <mat-card-subtitle>
+    </nb-card-title>
+    <nb-card-subtitle>
       <span class="reviewer-name">{{ review.reviewer.username }}</span>
       <span class="review-date">{{ review.createdAt | timeAgo }}</span>
 
       <span class="status-badge" *ngIf="review.status === 'pending'"> Pending Approval </span>
-    </mat-card-subtitle>
+    </nb-card-subtitle>
 
     <div class="review-rating">
       <app-star-rating
@@ -26,10 +26,10 @@
         [showRatingText]="true"
       ></app-star-rating>
     </div>
-  </mat-card-header>
+  </nb-card-header>
 
   <!-- Review Content -->
-  <mat-card-content>
+  <nb-card-body>
     <div class="review-content">
       {{ review.content }}
     </div>
@@ -87,13 +87,13 @@
 
     <!-- Meeting Date -->
     <div class="meeting-date" *ngIf="review.isVerifiedMeeting && review.meetingDate">
-      <mat-icon>event</mat-icon>
+      <nb-icon icon="event"></nb-icon>
       <span>Met on {{ review.meetingDate | date: 'mediumDate' }}</span>
     </div>
 
     <!-- Advertiser Response -->
     <div class="advertiser-response" *ngIf="review.advertiserResponse">
-      <mat-divider></mat-divider>
+      <nb-divider></nb-divider>
       <div class="response-header">
         <img
           class="response-avatar"
@@ -111,67 +111,62 @@
         {{ review.advertiserResponse.content }}
       </div>
     </div>
-  </mat-card-content>
+  </nb-card-body>
 
   <!-- Review Actions -->
-  <mat-card-actions *ngIf="showActions && review.status === 'approved'">
-    <button
-      mat-button
+  <nb-card-actions *ngIf="showActions && review.status === 'approved'">
+    <button nbButton
       color="primary"
       (click)="onMarkHelpful()"
       [disabled]="isCurrentUserReviewer"
-      matTooltip="Mark this review as helpful"
+      nbTooltip="Mark this review as helpful"
     >
-      <mat-icon>thumb_up</mat-icon>
+      <nb-icon icon="thumb_up"></nb-icon>
       Helpful ({{ review.helpfulVotes }})
     </button>
 
-    <button
-      mat-button
+    <button nbButton
       color="warn"
       (click)="onReportReview()"
       [disabled]="isCurrentUserReviewer"
-      matTooltip="Report this review"
+      nbTooltip="Report this review"
     >
-      <mat-icon>flag</mat-icon>
+      <nb-icon icon="flag"></nb-icon>
       Report
     </button>
 
     <span class="spacer"></span>
 
     <!-- Advertiser Actions -->
-    <button
-      mat-button
+    <button nbButton
       color="primary"
       *ngIf="isCurrentUserAdvertiser && !review.advertiserResponse"
       (click)="onRespondToReview()"
-      matTooltip="Respond to this review"
+      nbTooltip="Respond to this review"
     >
-      <mat-icon>reply</mat-icon>
+      <nb-icon icon="reply"></nb-icon>
       Respond
     </button>
 
     <!-- Reviewer Actions -->
-    <button
-      mat-button
+    <button nbButton
       color="primary"
       *ngIf="isCurrentUserReviewer"
       (click)="onEditReview()"
-      matTooltip="Edit your review"
+      nbTooltip="Edit your review"
     >
-      <mat-icon>edit</mat-icon>
+      <nb-icon icon="edit"></nb-icon>
       Edit
     </button>
 
-    <button
-      mat-button
+    <button nbButton
       color="warn"
       *ngIf="isCurrentUserReviewer"
       (click)="onDeleteReview()"
-      matTooltip="Delete your review"
+      nbTooltip="Delete your review"
     >
-      <mat-icon>delete</mat-icon>
+      <nb-icon icon="delete"></nb-icon>
       Delete
     </button>
-  </mat-card-actions>
-</mat-card>
+  </nb-card-footer>
+</nb-card>

@@ -1,3 +1,6 @@
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,9 +10,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+
 import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
@@ -22,35 +24,41 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
   template: `
-    <div class="telemetry-dashboard-container">
-      <h1>Application Telemetry Dashboard</h1>
-
-      <mat-tab-group>
-        <mat-tab label="Error Monitoring">
-          <app-error-dashboard></app-error-dashboard>
-        </mat-tab>
-        <mat-tab label="Performance Monitoring">
-          <app-performance-dashboard></app-performance-dashboard>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+    <nb-card>
+      <nb-card-header>
+        <h1>Application Telemetry Dashboard</h1>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-tabset>
+          <nb-tab tabTitle="Error Monitoring">
+            <app-error-dashboard></app-error-dashboard>
+          </nb-tab>
+          <nb-tab tabTitle="Performance Monitoring">
+            <app-performance-dashboard></app-performance-dashboard>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
-      .telemetry-dashboard-container {
-        padding: 20px;
-      }
-
       h1 {
-        margin-bottom: 20px;
-        color: #333;
+        margin: 0;
+        color: nb-theme(text-basic-color);
         text-align: center;
       }
 
-      ::ng-deep .mat-tab-body-content {
-        padding: 0 !important;
+      nb-card-body {
+        padding: 0;
+      }
+
+      ::ng-deep nb-tabset {
+        .tab-content {
+          padding: 1rem;
+        }
       }
     `,
   ],

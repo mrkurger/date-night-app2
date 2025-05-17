@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators'; // Removed map
+import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User, UserProfile, PublicProfile } from '../models/user.interface';
 
@@ -32,10 +32,8 @@ export class UserService {
   private authStatusSubject = new BehaviorSubject<boolean>(this.hasValidToken());
 
   constructor(private http: HttpClient) {
-    // Initialize current user if token exists
-    if (this.hasValidToken()) {
-      this.getCurrentUser().subscribe();
-    }
+    // Initialize current user if authenticated (token is now in HttpOnly cookie)
+    this.getCurrentUser().subscribe();
   }
 
   /**
@@ -92,7 +90,7 @@ export class UserService {
    * Logout the current user
    */
   logout(): void {
-    localStorage.removeItem('token');
+    // No need to remove token from localStorage; token is in HttpOnly cookie
     this.currentUserSubject.next(null);
     this.authStatusSubject.next(false);
   }
@@ -111,8 +109,8 @@ export class UserService {
    * Update user profile with form data (supports file uploads)
    * @param formData Form data with profile updates
    */
-  updateProfile(formData: FormData): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.apiUrl}/profile`, formData).pipe(
+  updateProfile(formData: FormData): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/profile`, formData).pipe(
       tap((user) => {
         // Update current user if it's the logged-in user
         if (this.currentUser && this.currentUser._id === user._id) {
@@ -182,54 +180,109 @@ export class UserService {
   }
 
   private hasValidToken(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp > Date.now() / 1000;
-    } catch {
-      return false;
-    }
+    // Always return true in dev; token is in HttpOnly cookie and validated server-side
+    return true;
   }
 
   private loadUserFromToken(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      this.currentUserSubject.next(payload.user);
-      this.authStatusSubject.next(true);
-    }
-  }
-
-  private handleAuthentication(response: AuthResponse): void {
-    const { token, user } = response;
-    localStorage.setItem('token', token);
-    this.currentUserSubject.next(user);
-    this.authStatusSubject.next(true);
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An unknown error occurred';
-
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-
-    return throwError(() => new Error(errorMessage));
+    // No longer needed; token is in HttpOnly cookie
   }
 
   /**
-   * Get the current user profile
+   * Get the current user from the server
+   * @returns Observable of the current user
    */
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`).pipe(
-      tap((user) => this.currentUserSubject.next(user)),
-      catchError(this.handleError),
+    return this.http.get<User>(`${this.authUrl}/me`).pipe(
+      tap((user) => {
+        this.currentUserSubject.next(user);
+        this.authStatusSubject.next(true);
+      }),
+      catchError((error) => {
+        this.logout();
+        return throwError(() => error);
+      }),
     );
+  }
+
+  private handleAuthentication(response: AuthResponse): void {
+    // No need to store token in localStorage; token is in HttpOnly cookie
+    if (response && response.user) {
+      // Add id property as alias to _id for compatibility if present
+      const user: any = response.user;
+      // @ts-ignore: _id may exist on user for compatibility
+      if (user._id) {
+        user.id = user._id;
+      }
+      // Only set if user has required User properties
+      if (user.id && user.username && user.email) {
+        this.currentUserSubject.next(user as User);
+        this.authStatusSubject.next(true);
+      }
+    }
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An error occurred';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Server-side error
+      errorMessage = error.error?.message || error.message;
+    }
+    return throwError(() => new Error(errorMessage));
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
+
+  createUser(user: Partial<User>): Observable<User> {
+    return this.http.post<User>(this.apiUrl, user);
+  }
+
+  updateUser(id: string, updates: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${id}`, updates);
+  }
+
+  deleteUser(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  banUser(id: string): Observable<User> {
+    return this.updateUser(id, { status: 'banned' });
+  }
+
+  unbanUser(id: string): Observable<User> {
+    return this.updateUser(id, { status: 'active' });
+  }
+
+  getUserStats(): Observable<{
+    total: number;
+    active: number;
+    banned: number;
+    suspended: number;
+  }> {
+    return this.getUsers().pipe(
+      map((users) => ({
+        total: users.length,
+        active: users.filter((u) => u.status === 'active').length,
+        banned: users.filter((u) => u.status === 'banned').length,
+        suspended: users.filter((u) => u.status === 'suspended').length,
+      })),
+    );
+  }
+
+  getUsersByRole(role: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/by-role/${role}`);
+  }
+
+  updateUserRole(userId: string, role: string): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${userId}/role`, { role });
   }
 }

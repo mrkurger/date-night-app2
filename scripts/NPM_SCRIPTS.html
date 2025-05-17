@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Night App - NPM Scripts Documentation</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .script-category {
+        background-color: #f6f8fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .script-item {
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+        margin-bottom: 20px;
+      }
+
+      .script-name {
+        font-weight: bold;
+        color: #3498db;
+        font-size: 1.1em;
+      }
+
+      .script-command {
+        background-color: #f6f8fa;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-family: monospace;
+        display: inline-block;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+      }
+
+      .script-description {
+        margin-top: 5px;
+      }
+
+      .script-issues {
+        color: #e74c3c;
+        margin-top: 5px;
+      }
+
+      .script-notes {
+        font-style: italic;
+        margin-top: 5px;
+        color: #666;
+      }
+
+      .toc {
+        background-color: #f6f8fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+      }
+
+      .toc ul {
+        list-style-type: none;
+        padding-left: 15px;
+      }
+
+      .toc li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>NPM Scripts Documentation</h1>
+      <p>Comprehensive documentation for all npm scripts in the Date Night App project</p>
+
+      <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+          <li><a href="#startup-scripts">Startup Scripts</a></li>
+          <li><a href="#installation-scripts">Installation & Setup Scripts</a></li>
+          <li><a href="#mongodb-scripts">MongoDB Scripts</a></li>
+          <li><a href="#csp-scripts">Content Security Policy (CSP) Scripts</a></li>
+          <li><a href="#esm-scripts">ESM (ECMAScript Modules) Scripts</a></li>
+          <li><a href="#maintenance-scripts">Maintenance Scripts</a></li>
+          <li><a href="#testing-scripts">Testing Scripts</a></li>
+          <li><a href="#linting-scripts">Linting & Formatting Scripts</a></li>
+          <li><a href="#documentation-scripts">Documentation Scripts</a></li>
+        </ul>
+      </div>
+
+      <section id="startup-scripts" class="script-category">
+        <h2>Startup Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">start</div>
+          <div class="script-command">npm run start</div>
+          <div class="script-description">
+            Main entry point to start both server and client concurrently. Uses the concurrently
+            package to run both the server and client in parallel.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">start:server</div>
+          <div class="script-command">npm run start:server</div>
+          <div class="script-description">
+            Starts only the server in development mode. Changes directory to the server folder and
+            runs its dev script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">start:client</div>
+          <div class="script-command">npm run start:client</div>
+          <div class="script-description">
+            Starts only the Angular client application. Uses a custom script
+            (scripts/start-client.js) that handles directory changes and memory allocation.
+          </div>
+          <div class="script-notes">
+            The script increases Node.js memory allocation to 8GB to prevent memory issues during
+            Angular compilation.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">dev</div>
+          <div class="script-command">npm run dev</div>
+          <div class="script-description">
+            Development startup script that fixes common issues before starting the application.
+            Runs fix-project.sh to fix common issues, then starts both server and client.
+          </div>
+          <div class="script-notes">
+            This is the recommended script for local development as it ensures the environment is
+            properly set up.
+          </div>
+        </div>
+      </section>
+
+      <section id="installation-scripts" class="script-category">
+        <h2>Installation & Setup Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">install-all</div>
+          <div class="script-command">npm run install-all</div>
+          <div class="script-description">
+            Installs dependencies for the root project, server, and client. Runs npm install in each
+            directory sequentially.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">install-missing</div>
+          <div class="script-command">npm run install-missing</div>
+          <div class="script-description">
+            Installs missing dependencies identified by the custom script. Uses
+            scripts/install-missing-deps.js to check and install missing dependencies.
+          </div>
+          <div class="script-notes">
+            This script checks for common dependencies and also installs specific known missing
+            dependencies.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">preinstall</div>
+          <div class="script-command">npm run preinstall</div>
+          <div class="script-description">
+            Runs automatically before npm install to disable husky in CI environments. Uses
+            scripts/disable-husky-in-ci.js to create a .huskyrc file.
+          </div>
+          <div class="script-notes">This prevents Git hook issues in CI environments.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">prepare</div>
+          <div class="script-command">npm run prepare</div>
+          <div class="script-description">
+            Sets up husky Git hooks after npm install (but skips in CI environments). Uses a shell
+            command to check for CI environment before running husky.
+          </div>
+        </div>
+      </section>
+
+      <section id="mongodb-scripts" class="script-category">
+        <h2>MongoDB Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">mongodb</div>
+          <div class="script-command">npm run mongodb</div>
+          <div class="script-description">
+            Ensures MongoDB is running for the application. Uses scripts/ensure-mongodb.js to check
+            and start MongoDB if needed.
+          </div>
+          <div class="script-notes">
+            The script handles different operating systems and error cases.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">fix-mongodb</div>
+          <div class="script-command">npm run fix-mongodb</div>
+          <div class="script-description">
+            Fixes common MongoDB issues. Uses scripts/fix-mongodb-issues.js to repair MongoDB
+            installations.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">check-mongodb</div>
+          <div class="script-command">npm run check-mongodb</div>
+          <div class="script-description">
+            Checks MongoDB permissions. Uses scripts/check-mongodb-permissions.js to verify proper
+            access rights.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">setup:mongodb</div>
+          <div class="script-command">npm run setup:mongodb</div>
+          <div class="script-description">
+            Combines MongoDB permission check and issue fixing. Runs check-mongodb and fix-mongodb
+            scripts in sequence.
+          </div>
+          <div class="script-notes">This is a convenient helper script for MongoDB setup.</div>
+        </div>
+      </section>
+
+      <section id="csp-scripts" class="script-category">
+        <h2>Content Security Policy (CSP) Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">fix-csp</div>
+          <div class="script-command">npm run fix-csp</div>
+          <div class="script-description">
+            Fixes Content Security Policy issues in both server and client. Uses
+            scripts/fix-csp-issues.js to update CSP configurations.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">fix-csp:restart</div>
+          <div class="script-command">npm run fix-csp:restart</div>
+          <div class="script-description">
+            Fixes CSP issues and restarts the application. Runs fix-csp with the --restart flag.
+          </div>
+        </div>
+      </section>
+
+      <section id="esm-scripts" class="script-category">
+        <h2>ESM (ECMAScript Modules) Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">convert-to-esm</div>
+          <div class="script-command">npm run convert-to-esm</div>
+          <div class="script-description">
+            Converts CommonJS modules to ESM. Uses scripts/convert-to-esm.js to update import/export
+            syntax.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">fix-esm</div>
+          <div class="script-command">npm run fix-esm</div>
+          <div class="script-description">
+            Fixes remaining ESM issues after conversion. Uses scripts/fix-remaining-esm-issues.js to
+            resolve edge cases.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">validate-esm</div>
+          <div class="script-command">npm run validate-esm</div>
+          <div class="script-description">
+            Validates ESM compatibility. Uses scripts/validate-esm.js to check for ESM compliance.
+          </div>
+        </div>
+      </section>
+
+      <section id="maintenance-scripts" class="script-category">
+        <h2>Maintenance Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">make-executable</div>
+          <div class="script-command">npm run make-executable</div>
+          <div class="script-description">
+            Makes all scripts executable. Uses make-scripts-executable.sh to set executable
+            permissions.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">fix-all</div>
+          <div class="script-command">npm run fix-all</div>
+          <div class="script-description">
+            Runs the comprehensive fix script. Uses fix-project.sh to fix various issues.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">check-node</div>
+          <div class="script-command">npm run check-node</div>
+          <div class="script-description">
+            Checks Node.js version compatibility. Uses scripts/check-node-version.js to verify
+            Node.js version.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">update-packages</div>
+          <div class="script-command">npm run update-packages</div>
+          <div class="script-description">
+            Updates package dependencies. Uses scripts/update-packages.js to update to compatible
+            versions.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">audit-fix</div>
+          <div class="script-command">npm run audit-fix</div>
+          <div class="script-description">
+            Fixes npm audit issues using the standard approach (without --force).
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">audit-fix:force</div>
+          <div class="script-command">npm run audit-fix:force</div>
+          <div class="script-description">
+            Fixes npm audit issues using the --force flag. This may introduce breaking changes.
+          </div>
+          <div class="script-notes">
+            Use with caution as it may update dependencies to versions with breaking changes.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">audit-fix:all</div>
+          <div class="script-command">npm run audit-fix:all</div>
+          <div class="script-description">
+            Runs npm audit fix in the root project, server, and client directories.
+          </div>
+        </div>
+      </section>
+
+      <section id="testing-scripts" class="script-category">
+        <h2>Testing Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">test</div>
+          <div class="script-command">npm run test</div>
+          <div class="script-description">Runs server tests. Alias for test:server.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:server</div>
+          <div class="script-command">npm run test:server</div>
+          <div class="script-description">
+            Runs all server tests. Changes directory to server and runs its test script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:server:unit</div>
+          <div class="script-command">npm run test:server:unit</div>
+          <div class="script-description">
+            Runs only server unit tests. Uses Jest with a specific test match pattern.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:server:integration</div>
+          <div class="script-command">npm run test:server:integration</div>
+          <div class="script-description">
+            Runs only server integration tests. Uses Jest with a specific test match pattern.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:server:performance</div>
+          <div class="script-command">npm run test:server:performance</div>
+          <div class="script-description">
+            Runs only server performance tests. Uses Jest with a specific test match pattern.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:client</div>
+          <div class="script-command">npm run test:client</div>
+          <div class="script-description">
+            Runs client tests. Changes directory to client-angular and runs its test script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:client:coverage</div>
+          <div class="script-command">npm run test:client:coverage</div>
+          <div class="script-description">
+            Runs client tests with coverage reporting. Changes directory to client-angular and runs
+            its test:coverage script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:all</div>
+          <div class="script-command">npm run test:all</div>
+          <div class="script-description">
+            Runs both server and client tests. Runs test:server and test:client in sequence.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:watch</div>
+          <div class="script-command">npm run test:watch</div>
+          <div class="script-description">
+            Runs tests in watch mode. Uses Jest's watch mode to rerun tests on file changes.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:coverage</div>
+          <div class="script-command">npm run test:coverage</div>
+          <div class="script-description">
+            Runs tests with coverage reporting. Uses Jest's coverage reporting.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">test:ci</div>
+          <div class="script-command">npm run test:ci</div>
+          <div class="script-description">
+            Runs tests in CI mode. Uses Jest's CI mode with JUnit reporter for CI integration.
+          </div>
+        </div>
+      </section>
+
+      <section id="linting-scripts" class="script-category">
+        <h2>Linting & Formatting Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">lint</div>
+          <div class="script-command">npm run lint</div>
+          <div class="script-description">
+            Runs linting for both server and client. Runs lint:server and lint:client in sequence.
+          </div>
+          <div class="script-notes">This will fail if there are linting errors.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">lint:server</div>
+          <div class="script-command">npm run lint:server</div>
+          <div class="script-description">
+            Runs linting for server code. Changes directory to server and runs its lint script.
+          </div>
+          <div class="script-notes">This will fail if there are linting errors.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">lint:client</div>
+          <div class="script-command">npm run lint:client</div>
+          <div class="script-description">
+            Runs linting for client code. Changes directory to client-angular and runs its lint
+            script.
+          </div>
+          <div class="script-notes">This will fail if there are linting errors.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">lint:check</div>
+          <div class="script-command">npm run lint:check</div>
+          <div class="script-description">
+            Checks for linting issues without failing. Runs lint:server:check and lint:client:check
+            in sequence.
+          </div>
+          <div class="script-notes">This will not fail even if there are linting errors.</div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">lint:fix</div>
+          <div class="script-command">npm run lint:fix</div>
+          <div class="script-description">
+            Fixes linting issues for both server and client. Runs lint:server:fix and
+            lint:client:fix in sequence.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">format</div>
+          <div class="script-command">npm run format</div>
+          <div class="script-description">
+            Formats code using Prettier. Formats files in the src directory.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">format:server</div>
+          <div class="script-command">npm run format:server</div>
+          <div class="script-description">
+            Formats server code. Changes directory to server and runs its format script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">format:client</div>
+          <div class="script-command">npm run format:client</div>
+          <div class="script-description">
+            Formats client code. Changes directory to client-angular and runs its format script.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">format:all</div>
+          <div class="script-command">npm run format:all</div>
+          <div class="script-description">
+            Formats all code and fixes linting issues. Runs format and lint:fix in sequence.
+          </div>
+        </div>
+      </section>
+
+      <section id="documentation-scripts" class="script-category">
+        <h2>Documentation Scripts</h2>
+
+        <div class="script-item">
+          <div class="script-name">docs:improve</div>
+          <div class="script-command">npm run docs:improve</div>
+          <div class="script-description">
+            Improves documentation. Runs scripts/run_docs_improvement.sh to enhance documentation.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">docs:status</div>
+          <div class="script-command">npm run docs:status</div>
+          <div class="script-description">
+            Shows documentation status. Runs scripts/docs_improvement_helper.js with the --report
+            flag.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">docs:rename</div>
+          <div class="script-command">npm run docs:rename</div>
+          <div class="script-description">
+            Renames documentation files. Runs scripts/rename_docs_to_uppercase.js to standardize
+            filenames.
+          </div>
+        </div>
+
+        <div class="script-item">
+          <div class="script-name">docs:generate-feature</div>
+          <div class="script-command">npm run docs:generate-feature</div>
+          <div class="script-description">
+            Generates feature documentation. Runs scripts/generate_feature_docs.js to create
+            feature-specific documentation.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+        <p>Last updated: <span id="last-updated"></span></p>
+        <script>
+          document.getElementById('last-updated').textContent = new Date()
+            .toISOString()
+            .split('T')[0];
+        </script>
+      </div>
+    </footer>
+  </body>
+</html>

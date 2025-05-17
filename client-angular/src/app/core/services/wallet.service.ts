@@ -18,66 +18,57 @@ export interface WalletBalance {
   available: number;
   pending: number;
   reserved: number;
+  total?: number;
 }
 
 export interface WalletTransaction {
-  _id: string;
+  id: string;
+  _id?: string;
   type: 'deposit' | 'withdrawal' | 'transfer' | 'payment' | 'refund' | 'fee';
   amount: number;
   currency: string;
   status: 'pending' | 'completed' | 'failed' | 'cancelled';
-  description: string;
-  metadata: {
-    paymentIntentId?: string;
-    paymentMethodId?: string;
-    transactionId?: string;
-    txHash?: string;
-    blockConfirmations?: number;
-    provider?: string;
-    senderWalletId?: string;
-    recipientWalletId?: string;
-    adId?: string;
-    serviceType?: string;
+  paymentMethodId?: string;
+  paymentMethod?: PaymentMethod;
+  fee?: number;
+  description?: string;
+  createdAt: string | Date;
+  updatedAt?: string | Date;
+}
+
+export type PaymentMethodType = 'card' | 'bank_account' | 'crypto' | 'crypto_address' | 'paypal';
+
+export interface PaymentMethod {
+  id: string;
+  _id?: string;
+  type: PaymentMethodType;
+  currency: string;
+  isDefault: boolean;
+  name?: string;
+  details?: any;
+  provider?: string;
+  cardDetails?: {
+    brand: string;
+    lastFour: string;
+    expiryMonth: number;
+    expiryYear: number;
+  };
+  bankDetails?: {
+    bankName: string;
+    lastFour: string;
+    accountType: string;
+    country?: string;
+    accountNumber?: string;
+    routingNumber?: string;
+    accountHolder?: string;
+    memoName?: string;
+  };
+  cryptoDetails?: {
+    currency: string;
     address?: string;
     network?: string;
     memo?: string;
   };
-  fee?: {
-    amount: number;
-    currency: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface PaymentMethod {
-  _id: string;
-  type: 'card' | 'bank_account' | 'crypto_address';
-  provider: string;
-  isDefault: boolean;
-  cardDetails?: {
-    lastFour: string;
-    brand: string;
-    expiryMonth: number;
-    expiryYear: number;
-    tokenId: string;
-  };
-  bankDetails?: {
-    accountType: string;
-    lastFour: string;
-    bankName: string;
-    country: string;
-    currency: string;
-    tokenId: string;
-  };
-  cryptoDetails?: {
-    currency: string;
-    address: string;
-    network: string;
-    memo?: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface WalletSettings {
@@ -137,6 +128,20 @@ export interface ExchangeRate {
   fromCurrency: string;
   toCurrency: string;
   rate: number;
+}
+
+export interface DepositRequest {
+  amount: number;
+  currency: string;
+  paymentMethodId?: string;
+  description?: string;
+}
+
+export interface DepositResult {
+  success: boolean;
+  transactionId?: string;
+  clientSecret?: string;
+  error?: string;
 }
 
 @Injectable({
@@ -221,12 +226,14 @@ export class WalletService {
    * Get wallet payment methods
    */
   getWalletPaymentMethods(): Observable<PaymentMethod[]> {
-    return this.http
-      .get<{
-        status: string;
-        data: { paymentMethods: PaymentMethod[] };
-      }>(`${this.apiUrl}/payment-methods`)
-      .pipe(map((response) => response.data.paymentMethods));
+    return this.http.get<PaymentMethod[]>(`${this.apiUrl}/payment-methods`);
+  }
+
+  /**
+   * Get payment methods (new method - compatible with component)
+   */
+  getPaymentMethods(): Observable<PaymentMethod[]> {
+    return this.getWalletPaymentMethods();
   }
 
   /**
@@ -431,31 +438,117 @@ export class WalletService {
    */
   formatCurrency(amount: number, currency: string): string {
     // For cryptocurrencies, use different formatting
-    if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
+    if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency.toUpperCase())) {
+      // Ensure currency is uppercase for comparison
+      const majorAmount = this.convertToMajorUnit(amount, currency);
       // Format based on cryptocurrency
-      switch (currency) {
+      switch (currency.toUpperCase()) {
         case 'BTC':
-          // Convert satoshis to BTC (1 BTC = 100,000,000 satoshis)
-          return `${(amount / 100000000).toFixed(8)} BTC`;
+          return `${majorAmount.toFixed(8)} BTC`;
         case 'ETH':
-          // Convert wei to ETH (1 ETH = 1,000,000,000,000,000,000 wei)
-          return `${(amount / 1000000000000000000).toFixed(6)} ETH`;
+          return `${majorAmount.toFixed(6)} ETH`; // Common display for ETH
         case 'USDT':
         case 'USDC':
-          // Stablecoins typically use 6 decimals (1 USDT = 1,000,000 units)
-          return `${(amount / 1000000).toFixed(2)} ${currency}`;
+          return `${majorAmount.toFixed(2)} ${currency.toUpperCase()}`;
         default:
-          return `${(amount / 100).toFixed(2)} ${currency}`;
+          // Fallback for other cryptos, assuming 2-6 decimal places, using a sensible default or specific logic
+          return `${majorAmount.toFixed(2)} ${currency.toUpperCase()}`;
       }
     }
 
     // For fiat currencies, use Intl.NumberFormat
+    // Amount is expected to be in smallest unit (e.g. cents)
     return new Intl.NumberFormat('no-NO', {
       style: 'currency',
       currency: currency,
-      minimumFractionDigits: 0,
+      minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    }).format(amount / 100);
+    }).format(this.convertToMajorUnit(amount, currency));
+  }
+
+  /**
+   * Convert amount from smallest unit (e.g., cents, satoshis) to major unit (e.g., USD, BTC).
+   * @param amount Amount in smallest currency unit.
+   * @param currency Currency code.
+   */
+  convertToMajorUnit(amount: number, currency: string): number {
+    currency = currency.toUpperCase();
+    if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
+      switch (currency) {
+        case 'BTC':
+          return amount / 100000000; // 1 BTC = 100,000,000 satoshis
+        case 'ETH':
+          return amount / 1000000000000000000; // 1 ETH = 10^18 wei
+        case 'USDT':
+        case 'USDC':
+          return amount / 1000000; // Typically 6 decimals
+        // Add other cryptocurrencies and their smallest unit factor
+        default:
+          return amount / 100; // Default assumption for unlisted cryptos (e.g. 2 decimals)
+      }
+    } else {
+      // Assuming fiat currencies have 2 decimal places (e.g. cents to dollars)
+      return amount / 100;
+    }
+  }
+
+  /**
+   * Convert amount from major unit (e.g., USD, BTC) to smallest unit (e.g., cents, satoshis).
+   * @param amount Amount in major currency unit.
+   * @param currency Currency code.
+   */
+  convertToSmallestUnit(amount: number, currency: string): number {
+    currency = currency.toUpperCase();
+    if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
+      switch (currency) {
+        case 'BTC':
+          return Math.round(amount * 100000000); // 1 BTC = 100,000,000 satoshis
+        case 'ETH':
+          return Math.round(amount * 1000000000000000000); // 1 ETH = 10^18 wei
+        case 'USDT':
+        case 'USDC':
+          return Math.round(amount * 1000000); // Typically 6 decimals
+        // Add other cryptocurrencies and their smallest unit factor
+        default:
+          return Math.round(amount * 100); // Default assumption
+      }
+    } else {
+      // Assuming fiat currencies have 2 decimal places (e.g. dollars to cents)
+      return Math.round(amount * 100);
+    }
+  }
+
+  /**
+   * Get stored payment methods
+   */
+  getStoredPaymentMethods(): Observable<PaymentMethod[]> {
+    return this.http
+      .get<{ status: string; data: PaymentMethod[] }>(`${this.apiUrl}/payment-methods`)
+      .pipe(map((response) => response.data));
+  }
+
+  /**
+   * Process a deposit
+   */
+  processDeposit(data: DepositRequest): Observable<DepositResult> {
+    return this.http
+      .post<{ status: string; data: DepositResult }>(`${this.apiUrl}/deposit`, data)
+      .pipe(map((response) => response.data));
+  }
+
+  /**
+   * Withdraw funds
+   * @param data Withdrawal data
+   */
+  withdraw(data: {
+    amount: number;
+    currency: string;
+    paymentMethodId: string;
+    memo?: string;
+  }): Observable<WalletTransaction> {
+    return this.http
+      .post<{ data: { transaction: WalletTransaction } }>(`${this.apiUrl}/withdraw`, data)
+      .pipe(map((response) => response.data.transaction));
   }
 
   /**

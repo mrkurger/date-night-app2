@@ -2,12 +2,12 @@
  * Types of alert conditions
  */
 export enum AlertConditionType {
-  ERROR_COUNT = 'error_count',
-  ERROR_RATE = 'error_rate',
-  PERFORMANCE_THRESHOLD = 'performance_threshold',
-  ERROR_PATTERN = 'error_pattern',
-  STATUS_CODE = 'status_code',
-  ERROR_CATEGORY = 'error_category',
+  ERROR_COUNT = 'ERROR_COUNT',
+  ERROR_RATE = 'ERROR_RATE',
+  PERFORMANCE_THRESHOLD = 'PERFORMANCE_THRESHOLD',
+  ERROR_PATTERN = 'ERROR_PATTERN',
+  STATUS_CODE = 'STATUS_CODE',
+  ERROR_CATEGORY = 'ERROR_CATEGORY',
 }
 
 /**
@@ -27,36 +27,27 @@ export enum AlertTimeWindow {
  * Alert severity levels
  */
 export enum AlertSeverity {
-  INFO = 'info',
-  WARNING = 'warning',
-  ERROR = 'error',
-  CRITICAL = 'critical',
+  INFO = 'INFO',
+  WARNING = 'WARNING',
+  ERROR = 'ERROR',
+  CRITICAL = 'CRITICAL',
 }
 
 /**
  * Alert notification channels
  */
-export enum AlertChannel {
-  UI = 'ui',
-  EMAIL = 'email',
-  SLACK = 'slack',
-  WEBHOOK = 'webhook',
-}
+export type AlertChannel = 'ui' | 'email' | 'slack' | 'webhook';
 
 /**
  * Alert condition configuration
  */
 export interface AlertCondition {
   type: AlertConditionType;
-  threshold: number;
-  timeWindow: AlertTimeWindow;
-
-  // Optional parameters based on condition type
-  errorCode?: string;
+  threshold?: number;
+  timeWindow?: AlertTimeWindow;
+  pattern?: string;
   statusCode?: number;
   errorCategory?: string;
-  endpoint?: string;
-  pattern?: string;
 }
 
 /**
@@ -78,17 +69,15 @@ export interface AlertNotification {
  * Custom alert definition
  */
 export interface Alert {
-  id?: string;
+  id: string;
   name: string;
   description?: string;
-  enabled: boolean;
   severity: AlertSeverity;
   condition: AlertCondition;
-  notifications: AlertNotification[];
-  createdAt?: Date;
-  updatedAt?: Date;
-  lastTriggeredAt?: Date;
-  createdBy?: string;
+  channels: AlertChannel[];
+  enabled: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
@@ -100,9 +89,9 @@ export interface AlertEvent {
   alertName: string;
   severity: AlertSeverity;
   message: string;
-  timestamp: Date;
+  timestamp: string;
   acknowledged: boolean;
+  acknowledgedAt?: string;
   acknowledgedBy?: string;
-  acknowledgedAt?: Date;
-  relatedData?: Record<string, unknown>;
+  data?: Record<string, any>;
 }

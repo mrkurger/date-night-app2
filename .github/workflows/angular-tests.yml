@@ -2,47 +2,52 @@ name: Angular Tests
 
 on:
   push:
-    branches: [main, develop, Nebular-UI-Refactor]
+    branches: [main, develop, Nebular-UI-Refactor, Nebular-UI-Refactor]
     paths:
-      - 'client-angular/**'
-      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
+      - 'client-angular/**'  # Trigger workflow for changes in Angular client
+      - '.github/workflows/angular-tests.yml'  # Trigger workflow changes
   pull_request:
     branches: [main, develop]
     paths:
-      - 'client-angular/**'
-      - '.github/workflows/angular-tests.yml' # Trigger on workflow changes too
+      - 'client-angular/**'  # Trigger workflow for PRs in Angular client
+      - '.github/workflows/angular-tests.yml'  # Trigger workflow changes
+
+# Add concurrency settings to cancel in-progress runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  # Unit Test Job
   test:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 20
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 20  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [20.x, 18.x] # Stable Node.js versions
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # Step 2: Setup Node.js using the official setup action
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
       # Step 3: Install dependencies
+      # Using `npm ci` ensures a clean install matching the lockfile
       - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm ci # Clean install dependencies
-          # Install Angular CLI globally if needed
-          npm install -g @angular/cli
+          npm ci
 
-      # Step 4: Run Unit Tests
-      # Ensure ChromeHeadless is installed for tests
+      # Step 4: Run unit tests using Angular CLI
+      # Ensure ChromeHeadless is installed for testing
       - name: Install Chrome Browser
         run: sudo apt-get install -y google-chrome-stable
 
@@ -67,47 +72,36 @@ jobs:
             downloaded-reports/angular
           if-no-files-found: warn
 
+  # End-to-End Test Job
   e2e:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 30
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 30  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [20.x, 18.x]
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # Step 2: Setup Node.js using the official setup action
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Step 3: Install dependencies
-      - name: Install Dependencies
-        run: |
-          cd ./client-angular
-          npm ci # Clean install dependencies
-          # Install Angular CLI globally if needed
-          npm install -g @angular/cli
-
-      # Step 4: Start Angular App
-      # Use `npx ng serve` to start the app
+      # Step 3: Start Angular application
       - name: Start Angular App
-        working-directory: ./client-angular
-        run: npx ng serve --host=0.0.0.0 --port=4200 &
-        env:
-          CI: true
+        run: npx ng serve --host=0.0.0.0 --port=4200
 
-      # Step 5: Wait for the app to be ready
+      # Step 4: Wait for the app to be ready
       - name: Wait for App
         run: npx wait-on http://localhost:4200
 
-      # Step 6: Run Cypress Tests
+      # Step 5: Run Cypress tests
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
@@ -117,14 +111,14 @@ jobs:
           wait-on: 'http://localhost:4200'
           browser: chrome
 
-      # Step 7: Prepare Cypress screenshots directory
+      # Step 6: Prepare Cypress screenshots directory
       - name: Prepare Cypress Screenshots Directory
         if: failure()
         run: |
           mkdir -p downloaded-reports/angular/cypress-screenshots
           cp -r ./client-angular/cypress/screenshots/* downloaded-reports/angular/cypress-screenshots/ || true
 
-      # Step 8: Upload Cypress screenshots as an artifact
+      # Step 7: Upload Cypress screenshots as an artifact
       - name: Upload Cypress Screenshots
         uses: actions/upload-artifact@v4
         if: failure()
@@ -135,21 +129,22 @@ jobs:
             downloaded-reports/angular/cypress-screenshots
           if-no-files-found: warn
 
+  # Linting Job
   lint:
     runs-on: ubuntu-latest
     env:
-      CI: true
-    timeout-minutes: 10
+      CI: true  # Ensure CI environment variables are set
+    timeout-minutes: 10  # Prevent runaway jobs
 
     strategy:
       matrix:
-        node-version: [20.x, 18.x]
+        node-version: [20.x, 18.x]  # Use stable LTS Node.js versions
 
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # Step 2: Setup Node.js using the official setup action
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -161,7 +156,7 @@ jobs:
           cd ./client-angular
           npm install eslint @angular-eslint/builder @angular-eslint/eslint-plugin @angular-eslint/eslint-plugin-template --save-dev
 
-      # Step 4: Run ESLint
+      # Step 4: Run ESLint to lint the Angular client
       - name: Run ESLint
         working-directory: ./client-angular
         run: npx ng lint client-angular

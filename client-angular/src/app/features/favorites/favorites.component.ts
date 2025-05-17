@@ -1,23 +1,28 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (favorites.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+
 import { environment } from '../../../environments/environment';
-import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component'; // Corrected path
+import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
-// import { EmptyStateComponent } from '../../shared/emerald/components/empty-state/empty-state.component'; // Commented out - Cannot find module
 import { NotificationService } from '../../core/services/notification.service';
 
 export interface Favorite {
@@ -46,20 +51,262 @@ export interface Favorite {
 @Component({
   selector: 'app-favorites',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
-    MainLayoutComponent,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbTagModule,
+    NbBadgeModule,
     CardGridComponent,
     LoadingSpinnerComponent,
-    // EmptyStateComponent, // Commented out - Cannot find module
   ],
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss'],
+  template: `
+    <div class="favorites-container">
+      <nb-card>
+        <nb-card-header>
+          <h1>My Favorites</h1>
+        </nb-card-header>
+        <nb-card-body>
+          <!-- Loading State -->
+          <div *ngIf="loading" class="loading-state">
+            <app-loading-spinner message="Loading your favorites..."></app-loading-spinner>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error" class="error-state">
+            <nb-icon icon="alert-circle-outline" status="danger"></nb-icon>
+            <h3>{{ error }}</h3>
+            <button nbButton status="primary" (click)="loadFavorites()">Try Again</button>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!loading && !error && favorites.length === 0" class="empty-state">
+            <nb-icon icon="heart-outline" status="basic"></nb-icon>
+            <h3>No Favorites Yet</h3>
+            <p>Start browsing and add some favorites to your collection!</p>
+            <button nbButton status="primary" (click)="navigateToBrowse()">Browse Ads</button>
+          </div>
+
+          <!-- Favorites Grid -->
+          <app-card-grid
+            *ngIf="!loading && !error && favorites.length > 0"
+            [items]="favorites"
+            [columns]="3"
+            [gap]="24"
+            [animated]="true"
+            (itemClick)="onFavoriteClick($event)"
+          >
+            <ng-template #itemTemplate let-favorite>
+              <nb-card>
+                <nb-card-body>
+                  <div class="favorite-card">
+                    <div class="favorite-image">
+                      <img [src]="favorite.ad.profileImage" [alt]="favorite.ad.title" />
+                      <nb-badge
+                        *ngIf="favorite.notificationsEnabled"
+                        status="info"
+                        position="top right"
+                        text="Notifications On"
+                      ></nb-badge>
+                    </div>
+                    <div class="favorite-content">
+                      <h3>{{ favorite.ad.title }}</h3>
+                      <p class="location">
+                        <nb-icon icon="map-outline"></nb-icon>
+                        {{ favorite.ad.location.city }}, {{ favorite.ad.location.county }}
+                      </p>
+                      <div class="advertiser">
+                        <img
+                          [src]="favorite.ad.advertiser.profileImage"
+                          [alt]="favorite.ad.advertiser.username"
+                        />
+                        <span>{{ favorite.ad.advertiser.username }}</span>
+                      </div>
+                      <p class="date">Added {{ favorite.createdAt | date }}</p>
+                    </div>
+                    <div class="favorite-actions">
+                      <button
+                        nbButton
+                        ghost
+                        status="primary"
+                        (click)="$event.stopPropagation(); viewDetails(favorite)"
+                      >
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </button>
+                      <button
+                        nbButton
+                        ghost
+                        [status]="favorite.notificationsEnabled ? 'warning' : 'basic'"
+                        (click)="$event.stopPropagation(); toggleNotifications(favorite)"
+                      >
+                        <nb-icon
+                          [icon]="
+                            favorite.notificationsEnabled ? 'bell-outline' : 'bell-off-outline'
+                          "
+                        ></nb-icon>
+                      </button>
+                      <button
+                        nbButton
+                        ghost
+                        status="danger"
+                        (click)="$event.stopPropagation(); removeFavorite(favorite)"
+                      >
+                        <nb-icon icon="trash-2-outline"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </ng-template>
+          </app-card-grid>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  `,
+  styles: [
+    `
+      .favorites-container {
+        padding: nb-theme(padding-lg);
+      }
+
+      .loading-state,
+      .error-state,
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        text-align: center;
+        padding: nb-theme(padding-lg);
+
+        nb-icon {
+          font-size: 3rem;
+          margin-bottom: nb-theme(margin);
+        }
+
+        h3 {
+          margin: 0 0 nb-theme(margin);
+          color: nb-theme(text-basic-color);
+        }
+
+        p {
+          margin: 0 0 nb-theme(margin-lg);
+          color: nb-theme(text-hint-color);
+        }
+      }
+
+      .favorite-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: nb-theme(spacing);
+
+        .favorite-image {
+          position: relative;
+          width: 100%;
+          height: 200px;
+          border-radius: nb-theme(border-radius);
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .favorite-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: nb-theme(spacing-2);
+
+          h3 {
+            margin: 0;
+            font-size: nb-theme(text-heading-6-font-size);
+            color: nb-theme(text-basic-color);
+          }
+
+          .location {
+            display: flex;
+            align-items: center;
+            gap: nb-theme(spacing-2);
+            color: nb-theme(text-hint-color);
+            margin: 0;
+
+            nb-icon {
+              font-size: 1rem;
+            }
+          }
+
+          .advertiser {
+            display: flex;
+            align-items: center;
+            gap: nb-theme(spacing-2);
+
+            img {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            span {
+              color: nb-theme(text-basic-color);
+              font-weight: 500;
+            }
+          }
+
+          .date {
+            margin: 0;
+            color: nb-theme(text-hint-color);
+            font-size: nb-theme(text-caption-font-size);
+          }
+        }
+
+        .favorite-actions {
+          display: flex;
+          gap: nb-theme(spacing-2);
+          margin-top: auto;
+          padding-top: nb-theme(spacing-2);
+          border-top: 1px solid nb-theme(border-basic-color-3);
+
+          button {
+            flex: 1;
+          }
+        }
+      }
+
+      // Dark theme adjustments
+      :host-context([data-theme='dark']) {
+        .favorite-card {
+          .favorite-content {
+            h3 {
+              color: nb-theme(text-basic-color);
+            }
+
+            .location,
+            .date {
+              color: nb-theme(text-hint-color);
+            }
+          }
+
+          .favorite-actions {
+            border-color: nb-theme(border-basic-color-4);
+          }
+        }
+      }
+    `,
+  ],
 })
 export class FavoritesComponent implements OnInit {
   favorites: Favorite[] = [];
   loading = true;
-  error = false;
+  error: string | null = null;
 
   constructor(
     private http: HttpClient,
@@ -71,139 +318,64 @@ export class FavoritesComponent implements OnInit {
     this.loadFavorites();
   }
 
-  /**
-   * Load user's favorites
-   */
   loadFavorites(): void {
     this.loading = true;
-    this.error = false;
+    this.error = null;
 
-    this.getFavorites().subscribe(
-      (favorites) => {
+    this.http
+      .get<Favorite[]>(`${environment.apiUrl}/favorites`)
+      .pipe(
+        catchError((error) => {
+          this.error = 'Failed to load favorites. Please try again.';
+          return of([]);
+        }),
+      )
+      .subscribe((favorites) => {
         this.favorites = favorites;
         this.loading = false;
-      },
-      (error) => {
-        console.error('Error loading favorites:', error);
-        this.error = true;
-        this.loading = false;
-        this.notificationService.error('Failed to load favorites. Please try again.');
-      },
-    );
-  }
-
-  /**
-   * Get user's favorites from the API
-   */
-  getFavorites(): Observable<Favorite[]> {
-    return this.http.get<Favorite[]>(`${environment.apiUrl}/favorites`).pipe(
-      catchError((error) => {
-        console.error('Error fetching favorites:', error);
-        return of([]);
-      }),
-    );
-  }
-
-  /**
-   * Handle card click event
-   */
-  onCardClick(adId: string): void {
-    this.router.navigate(['/ads', adId]);
-  }
-
-  /**
-   * Handle remove favorite action
-   */
-  onRemoveFavorite(favorite: Favorite): void {
-    this.http
-      .delete(`${environment.apiUrl}/favorites/${favorite.ad._id}`)
-      .pipe(
-        catchError((error) => {
-          console.error('Error removing favorite:', error);
-          this.notificationService.error('Failed to remove favorite. Please try again.');
-          return of(null);
-        }),
-      )
-      .subscribe((response) => {
-        if (response !== null) {
-          // Remove from local array
-          this.favorites = this.favorites.filter((f) => f._id !== favorite._id);
-          this.notificationService.success('Favorite removed successfully');
-        }
       });
   }
 
-  /**
-   * Handle toggle notifications action
-   */
-  onToggleNotifications(favorite: Favorite): void {
-    const newState = !favorite.notificationsEnabled;
+  onFavoriteClick(favorite: Favorite): void {
+    this.viewDetails(favorite);
+  }
 
+  viewDetails(favorite: Favorite): void {
+    this.router.navigate(['/ads', favorite.ad._id]);
+  }
+
+  toggleNotifications(favorite: Favorite): void {
+    const newState = !favorite.notificationsEnabled;
     this.http
-      .put(`${environment.apiUrl}/favorites/${favorite.ad._id}/notifications`, {
-        enabled: newState,
+      .patch(`${environment.apiUrl}/favorites/${favorite._id}`, {
+        notificationsEnabled: newState,
       })
-      .pipe(
-        catchError((error) => {
-          console.error('Error toggling notifications:', error);
-          this.notificationService.error(
-            'Failed to update notification settings. Please try again.',
-          );
-          return of(null);
-        }),
-      )
-      .subscribe((response) => {
-        if (response !== null) {
-          // Update local state
+      .subscribe(
+        () => {
           favorite.notificationsEnabled = newState;
           this.notificationService.success(
-            `Notifications ${newState ? 'enabled' : 'disabled'} for this favorite`,
+            `Notifications ${newState ? 'enabled' : 'disabled'} for ${favorite.ad.title}`,
           );
-        }
-      });
+        },
+        (error) => {
+          this.notificationService.error('Failed to update notification settings');
+        },
+      );
   }
 
-  /**
-   * Handle update notes action
-   */
-  onUpdateNotes(data: { favorite: Favorite; notes: string }): void {
-    this.http
-      .put(`${environment.apiUrl}/favorites/${data.favorite.ad._id}/notes`, {
-        notes: data.notes,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error updating notes:', error);
-          this.notificationService.error('Failed to update notes. Please try again.');
-          return of(null);
-        }),
-      )
-      .subscribe((response) => {
-        if (response !== null) {
-          // Update local state
-          data.favorite.notes = data.notes;
-          this.notificationService.success('Notes updated successfully');
-        }
-      });
-  }
-
-  /**
-   * Transform favorites to card format for CardGridComponent
-   */
-  get favoriteCards() {
-    return this.favorites.map((favorite) => ({
-      id: favorite.ad._id,
-      title: favorite.ad.title,
-      subtitle: `${favorite.ad.location.city}, ${favorite.ad.location.county}`,
-      description: favorite.ad.description,
-      image: favorite.ad.profileImage || '/assets/img/default-ad.jpg',
-      badge: favorite.notificationsEnabled ? 'Notifications On' : null,
-      badgeColor: 'success',
-      metadata: {
-        favorite: favorite,
-        advertiser: favorite.ad.advertiser,
-        notes: favorite.notes,
+  removeFavorite(favorite: Favorite): void {
+    this.http.delete(`${environment.apiUrl}/favorites/${favorite._id}`).subscribe(
+      () => {
+        this.favorites = this.favorites.filter((f) => f._id !== favorite._id);
+        this.notificationService.success('Favorite removed successfully');
       },
-    }));
+      (error) => {
+        this.notificationService.error('Failed to remove favorite');
+      },
+    );
+  }
+
+  navigateToBrowse(): void {
+    this.router.navigate(['/browse']);
   }
 }

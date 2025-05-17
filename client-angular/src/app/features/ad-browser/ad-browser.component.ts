@@ -7,18 +7,32 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../shared/material.module';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbLayoutModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-browser',
   templateUrl: './ad-browser.component.html',
   styleUrls: ['./ad-browser.component.scss'],
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbLayoutModule,
+  ],
 })
 export class AdBrowserComponent implements OnInit {
   ads: any[] = [];
@@ -43,8 +57,8 @@ export class AdBrowserComponent implements OnInit {
   loadAds(): void {
     this.loading = true;
     this.adService.getAds().subscribe({
-      next: (data) => {
-        this.ads = data;
+      next: (response) => {
+        this.ads = response.ads;
         this.loading = false;
       },
       error: (err) => {

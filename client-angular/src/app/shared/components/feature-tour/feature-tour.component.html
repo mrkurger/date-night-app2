@@ -15,20 +15,15 @@
       <p class="tooltip-description">{{ currentStep.description }}</p>
 
       <div class="tooltip-actions">
-        <button
-          *ngIf="currentStepIndex > 0"
-          mat-button
-          class="btn-previous"
-          (click)="previousStep()"
-        >
-          <mat-icon>arrow_back</mat-icon> Previous
+        <button *ngIf="currentStepIndex > 0" nbButton class="btn-previous" (click)="previousStep()">
+          <nb-icon icon="arrow_back"></nb-icon> Previous
         </button>
 
-        <button *ngIf="showSkip" mat-button class="btn-skip" (click)="skipTour()">Skip Tour</button>
+        <button *ngIf="showSkip" nbButton class="btn-skip" (click)="skipTour()">Skip Tour</button>
 
-        <button mat-raised-button color="primary" class="btn-next" (click)="nextStep()">
+        <button nbButton status="primary" color="primary" class="btn-next" (click)="nextStep()">
           {{ currentStepIndex < steps.length - 1 ? 'Next' : 'Finish' }}
-          <mat-icon *ngIf="currentStepIndex < steps.length - 1">arrow_forward</mat-icon>
+          <nb-icon *ngIf="currentStepIndex < steps.length - 1">arrow_forward"></nb-icon>
         </button>
       </div>
 

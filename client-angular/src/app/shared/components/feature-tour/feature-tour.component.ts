@@ -1,12 +1,3 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (feature-tour.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import {
   Component,
   ElementRef,
@@ -17,9 +8,34 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+
+/**
+ * Feature Tour Component
+ *
+ * A customizable component for displaying feature tours and walkthroughs.
+ * Configure settings below to customize the behavior.
+ * @see other_file.ts:OTHER_SETTING for related functionality
+ */
+
+// Style interfaces
+interface TooltipStyles {
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  transform?: string;
+}
+
+interface SpotlightStyles {
+  top: string;
+  left: string;
+  width: string;
+  height: string;
+  transform?: string;
+}
 
 export interface TourStep {
   id: string;
@@ -36,7 +52,7 @@ export interface TourStep {
   templateUrl: './feature-tour.component.html',
   styleUrls: ['./feature-tour.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule],
 })
 export class FeatureTourComponent implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = [];
@@ -176,7 +192,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
   }
 
   // Calculate tooltip position based on target element and specified position
-  getTooltipStyle(): any {
+  getTooltipStyle(): TooltipStyles {
     if (!this.targetRect && this.currentStep.position !== 'center') {
       // Default to center position if no target element
       return {
@@ -232,7 +248,7 @@ export class FeatureTourComponent implements OnInit, OnDestroy {
   }
 
   // Calculate spotlight position and size
-  getSpotlightStyle(): any {
+  getSpotlightStyle(): SpotlightStyles {
     if (!this.targetRect) {
       return {
         top: '50%',

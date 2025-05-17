@@ -27,6 +27,7 @@
             <li><a href="./CHANGELOG.html">Changelog</a></li>
             <li><a href="./AILESSONS.html">AI Lessons</a></li>
             <li><a href="./GLOSSARY.html">Glossary</a></li>
+            <li><a href="./AUTH_IMPLEMENTATION.html">Implementation Details</a></li>
           </ul>
         </aside>
 
@@ -51,6 +52,14 @@
             </li>
             <li>Always validate user input on both client and server sides</li>
             <li>Use HTTPS for all authentication-related communication</li>
+            <li>
+              Use standalone Angular components for authentication to minimize bundle size and improve
+              loading performance
+            </li>
+            <li>
+              Implement OAuth 2.0 with PKCE for social login providers to enhance security in public
+              clients
+            </li>
           </ul>
 
           <h2>Common Patterns</h2>
@@ -96,6 +105,83 @@
               security
             </li>
             <li>Password reset tokens are short-lived (1 hour) and single-use</li>
+          </ul>
+
+          <h2>OAuth Integration</h2>
+
+          <p>
+            When implementing OAuth authentication with multiple providers (Google, Facebook, Apple,
+            Microsoft), we've learned several important lessons:
+          </p>
+
+          <h3>Configuration</h3>
+
+          <ul>
+            <li>
+              <strong>Client IDs:</strong> Each OAuth provider requires a unique client ID obtained
+              from their developer console. These should be stored in environment variables, not
+              hardcoded.
+            </li>
+            <li>
+              <strong>Redirect URIs:</strong> Must be consistently configured both in the OAuth
+              provider console and the application code. They must exactly match.
+            </li>
+            <li>
+              <strong>Scopes:</strong> Request only the minimum scopes needed (typically 'email' and
+              'profile') to comply with privacy regulations.
+            </li>
+          </ul>
+
+          <h3>Implementation</h3>
+
+          <ul>
+            <li>
+              <strong>Universal Callback Component:</strong> Using a single auth-callback component
+              that handles responses from all providers reduces code duplication.
+            </li>
+            <li>
+              <strong>Provider Detection:</strong> The callback should detect which provider initiated
+              the OAuth flow, typically via query parameters.
+            </li>
+            <li>
+              <strong>Error Handling:</strong> OAuth callbacks should gracefully handle authentication
+              failures with clear user feedback.
+            </li>
+          </ul>
+
+          <h3>Token Management</h3>
+
+          <ul>
+            <li>
+              <strong>Token Storage:</strong> OAuth tokens should be handled securely, preferably
+              using HttpOnly cookies set by the server, not localStorage.
+            </li>
+            <li>
+              <strong>Token Refresh:</strong> Implement automatic refresh for providers that support
+              refresh tokens to maintain sessions without requiring re-authentication.
+            </li>
+            <li>
+              <strong>User Mapping:</strong> Create a consistent user profile structure regardless of
+              which OAuth provider was used, mapping provider-specific fields to your application's
+              user model.
+            </li>
+          </ul>
+
+          <h3>UI/UX Considerations</h3>
+
+          <ul>
+            <li>
+              <strong>Provider Buttons:</strong> Follow each provider's branding guidelines for logo
+              usage and button styling.
+            </li>
+            <li>
+              <strong>Loading States:</strong> Show clear loading indicators during the OAuth process,
+              which may take several seconds.
+            </li>
+            <li>
+              <strong>Account Linking:</strong> Consider how to handle cases where a user tries to
+              login with a social account that matches an existing email address.
+            </li>
           </ul>
 
           <h2>Documentation Migration</h2>

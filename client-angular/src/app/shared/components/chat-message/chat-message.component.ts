@@ -1,12 +1,3 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (chat-message.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import {
   Component,
   Input,
@@ -14,7 +5,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
+import {
+  NbCardModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbButtonModule,
+  NbUserModule,
+  NbBadgeModule,
+} from '@nebular/theme';
+
 import { ChatMessage } from '../../../core/services/chat.service';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -25,7 +26,18 @@ import { FileSizePipe } from '../../pipes/file-size.pipe';
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipe, LinkifyPipe, FileSizePipe],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbButtonModule,
+    NbUserModule,
+    NbBadgeModule,
+    TimeAgoPipe,
+    LinkifyPipe,
+    FileSizePipe,
+  ],
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

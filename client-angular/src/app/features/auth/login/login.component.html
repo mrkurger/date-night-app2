@@ -1,71 +1,127 @@
 <div class="login-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
+  <nb-card>
+    <nb-card-header>
+      <h2>Login</h2>
+    </nb-card-header>
 
-    <mat-card-content>
+    <nb-card-body>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div *ngIf="errorMessage" class="error-message">
           {{ errorMessage }}
         </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" autocomplete="email" />
-          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-            Email is required
-          </mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-            Please enter a valid email address
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
+        <nb-form-field class="full-width">
+          <nb-icon nbPrefix icon="email-outline"></nb-icon>
           <input
-            matInput
+            nbInput
+            fullWidth
+            formControlName="email"
+            type="email"
+            placeholder="Email"
+            autocomplete="email"
+            [status]="
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <div
+            *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            class="validation-message"
+          >
+            <span *ngIf="loginForm.get('email')?.hasError('required')"> Email is required </span>
+            <span *ngIf="loginForm.get('email')?.hasError('email')">
+              Please enter a valid email address
+            </span>
+          </div>
+        </nb-form-field>
+
+        <nb-form-field class="full-width">
+          <nb-icon
+            nbPrefix
+            [icon]="hidePassword ? 'eye-off-outline' : 'eye-outline'"
+            (click)="hidePassword = !hidePassword"
+            [nbTooltip]="hidePassword ? 'Show password' : 'Hide password'"
+            class="password-toggle"
+          >
+          </nb-icon>
+          <input
+            nbInput
+            fullWidth
             formControlName="password"
             [type]="hidePassword ? 'password' : 'text'"
+            placeholder="Password"
             autocomplete="current-password"
+            [status]="
+              loginForm.get('password')?.invalid && loginForm.get('password')?.touched
+                ? 'danger'
+                : 'basic'
+            "
           />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword"
-            type="button"
+          <div
+            *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            class="validation-message"
           >
-            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
-          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-            Password is required
-          </mat-error>
-          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
-            Password must be at least 6 characters
-          </mat-error>
-        </mat-form-field>
+            <span *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </span>
+            <span *ngIf="loginForm.get('password')?.hasError('minlength')">
+              Password must be at least 6 characters
+            </span>
+          </div>
+        </nb-form-field>
 
         <div class="form-actions">
           <button
-            mat-raised-button
-            color="primary"
+            nbButton
+            status="primary"
+            size="large"
             type="submit"
             [disabled]="loginForm.invalid || isLoading"
             class="full-width"
           >
-            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
             <span *ngIf="!isLoading">Login</span>
           </button>
         </div>
 
+        <div class="social-auth">
+          <p class="divider"><span>or continue with</span></p>
+
+          <div class="social-buttons">
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('google')">
+              <nb-icon icon="google-outline"></nb-icon> Google
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('facebook')">
+              <nb-icon icon="facebook-outline"></nb-icon> Facebook
+            </button>
+
+            <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
+              <nb-icon icon="apple-outline"></nb-icon> Apple
+            </button>
+
+            <button
+              nbButton
+              ghost
+              status="primary"
+              type="button"
+              (click)="socialLogin('microsoft')"
+            >
+              <nb-icon icon="microsoft-outline"></nb-icon> Microsoft
+            </button>
+          </div>
+        </div>
+
         <div class="form-footer">
-          <a routerLink="/auth/forgot-password">Forgot Password?</a>
+          <a routerLink="/auth/request-password" class="forgot-password">Forgot Password?</a>
           <span class="spacer"></span>
-          <span>Don't have an account? <a routerLink="/auth/register">Register</a></span>
+          <span
+            >Don't have an account?
+            <a routerLink="/auth/register" class="register-link">Register</a></span
+          >
         </div>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </nb-card-body>
+  </nb-card>
 </div>

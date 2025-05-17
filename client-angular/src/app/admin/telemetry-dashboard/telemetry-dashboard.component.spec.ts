@@ -1,3 +1,7 @@
+import { Input } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,21 +12,19 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  // DEPRECATED:NbPaginatorComponent
+  AppSortComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
+  AppSortHeaderComponent,
+} from '../../shared/components/custom-nebular-components';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NbTableModule } from '@nebular/theme';
+
 import { TelemetryService } from '../../core/services/telemetry.service';
 import { TelemetryDashboardComponent } from './telemetry-dashboard.component';
 import { of } from 'rxjs';
@@ -95,19 +97,16 @@ describe('TelemetryDashboardComponent', () => {
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
-        MatTabsModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatProgressSpinnerModule,
+        NbTabsetModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbTableModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbSelectModule,
+        NbDatepickerModule,
+        NbSpinnerModule,
         TelemetryDashboardComponent,
       ],
       providers: [{ provide: TelemetryService, useValue: telemetryServiceSpy }],

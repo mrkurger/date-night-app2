@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { ErrorCategory } from '../interceptors/http-error.interceptor';
 
 export interface TelemetryMetadata {
   appVersion?: string;
@@ -21,9 +22,11 @@ export interface ErrorTelemetry {
   url?: string;
   stackTrace?: string;
   name?: string;
-  category?: string;
+  category: ErrorCategory;
   statusCode?: number;
   metadata?: TelemetryMetadata;
+  count: number;
+  details?: any;
 }
 
 /**
@@ -34,6 +37,9 @@ export interface PerformanceTelemetry {
   type: string;
   duration: number;
   url?: string;
+  method?: string;
+  ttfb?: number;
+  responseSize?: number;
   metadata?: TelemetryMetadata;
 }
 
@@ -101,6 +107,30 @@ export interface PerformanceStatistics {
   };
 }
 
+export interface ErrorDashboardData {
+  trends: Array<{
+    timestamp: string;
+    count: number;
+  }>;
+  distribution: Array<{
+    category: ErrorCategory;
+    count: number;
+  }>;
+  errors: ErrorTelemetry[];
+  total: number;
+}
+
+export interface ErrorDashboardFilters {
+  search?: string;
+  category?: ErrorCategory;
+  startDate?: Date;
+  endDate?: Date;
+  page: number;
+  pageSize: number;
+  sortColumn?: string;
+  sortDirection?: string;
+}
+
 /**
  * Service for tracking application telemetry including errors and performance metrics
  */
@@ -152,6 +182,7 @@ export class TelemetryService {
         sessionId: this.sessionId,
         userId: this.userId,
       },
+      count: 1,
     };
 
     if (!this.isOnline) {
@@ -302,13 +333,16 @@ export class TelemetryService {
     while (this.offlineErrorQueue.length > 0) {
       const error = this.offlineErrorQueue.shift();
       if (error) {
-        this.http.post<ErrorTelemetry>(`${this.apiUrl}/errors`, error).pipe(
-          catchError((err) => {
-            console.error('Failed to send queued error telemetry:', err);
-            this.offlineErrorQueue.unshift(error);
-            return of(null);
-          }),
-        ).subscribe();
+        this.http
+          .post<ErrorTelemetry>(`${this.apiUrl}/errors`, error)
+          .pipe(
+            catchError((err) => {
+              console.error('Failed to send queued error telemetry:', err);
+              this.offlineErrorQueue.unshift(error);
+              return of(null);
+            }),
+          )
+          .subscribe();
       }
     }
 
@@ -316,13 +350,16 @@ export class TelemetryService {
     while (this.offlinePerformanceQueue.length > 0) {
       const perf = this.offlinePerformanceQueue.shift();
       if (perf) {
-        this.http.post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perf).pipe(
-          catchError((err) => {
-            console.error('Failed to send queued performance telemetry:', err);
-            this.offlinePerformanceQueue.unshift(perf);
-            return of(null);
-          }),
-        ).subscribe();
+        this.http
+          .post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perf)
+          .pipe(
+            catchError((err) => {
+              console.error('Failed to send queued performance telemetry:', err);
+              this.offlinePerformanceQueue.unshift(perf);
+              return of(null);
+            }),
+          )
+          .subscribe();
       }
     }
   }
@@ -376,5 +413,15 @@ export class TelemetryService {
       console.error('Error sanitizing URL for telemetry:', error);
       return 'invalid-url';
     }
+  }
+
+  getErrorDashboardData(filters: ErrorDashboardFilters): Observable<ErrorDashboardData> {
+    return this.http.get<ErrorDashboardData>(`${this.apiUrl}/errors/dashboard`, {
+      params: {
+        ...filters,
+        startDate: filters.startDate?.toISOString(),
+        endDate: filters.endDate?.toISOString(),
+      },
+    });
   }
 }

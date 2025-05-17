@@ -5,7 +5,7 @@
  * type handling across the application.
  */
 import { Observable, throwError, timer } from 'rxjs';
-import { mergeMap, finalize, catchError, retry } from 'rxjs/operators';
+import { mergeMap, finalize, catchError } from 'rxjs/operators';
 
 /**
  * Retry with exponential backoff strategy
@@ -20,7 +20,7 @@ export function retryWithBackoff<T>(
   maxRetries = 3,
   initialDelay = 1000,
   maxDelay = 10000,
-  shouldRetry: (error: any) => boolean = () => true,
+  shouldRetry: (error: unknown) => boolean = () => true,
 ) {
   let retries = 0;
 
@@ -33,7 +33,8 @@ export function retryWithBackoff<T>(
 
         retries++;
         const delay = Math.min(initialDelay * Math.pow(2, retries - 1), maxDelay);
-        console.log(`Retry attempt ${retries} after ${delay}ms`);
+        // Use warn for logging retries
+        console.warn(`Retry attempt ${retries} after ${delay}ms`);
 
         return timer(delay).pipe(mergeMap(() => source));
       }),

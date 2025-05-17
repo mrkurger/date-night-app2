@@ -1,3 +1,20 @@
+import { OnInit } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,22 +24,57 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { Ad } from '../../core/models/ad.interface';
 
+/**
+ * Advertiser Profile Component
+ *
+ * Displays and manages an advertiser's profile information using Nebular UI components.
+ * Features include:
+ * - Profile viewing with responsive layout
+ * - Profile editing with form validation
+ * - Media gallery with thumbnails
+ * - Status badges (Featured, Touring)
+ * - Actions (Edit, Delete, Upgrade)
+ *
+ * Uses Nebular components:
+ * - NbCard for layout containers
+ * - NbBadge for status indicators
+ * - NbForm components for editing
+ * - NbButton for actions
+ * - NbIcon for visual indicators
+ * - NbSpinner for loading states
+ */
 @Component({
   selector: 'app-advertiser-profile',
   templateUrl: './advertiser-profile.component.html',
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbLayoutModule,
+  ],
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;

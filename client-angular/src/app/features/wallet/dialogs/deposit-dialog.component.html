@@ -1,0 +1,86 @@
+<nb-card [nbSpinner]="isSubmitting" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <h3>Deposit Funds</h3>
+    <button nbButton ghost status="basic" size="small" (click)="close()" class="close-button">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+      <nb-form-field>
+        <label>Currency</label>
+        <nb-select
+          fullWidth
+          formControlName="currency"
+          placeholder="Select currency"
+          [status]="f.currency.dirty ? (f.currency.invalid ? 'danger' : 'success') : 'basic'"
+        >
+          <nb-option *ngFor="let cur of context.currencies" [value]="cur">
+            {{ cur }}
+          </nb-option>
+        </nb-select>
+        <div *ngIf="f.currency.valid && f.currency.dirty">Currency selected.</div>
+        
+          <span *ngIf="f.currency.errors?.required">Currency is required.</span>
+        
+      </nb-form-field>
+
+      <nb-form-field>
+        <label>Amount</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="amount"
+          type="number"
+          placeholder="Enter amount"
+          [status]="f.amount.dirty ? (f.amount.invalid ? 'danger' : 'success') : 'basic'"
+        />
+        <div *ngIf="f.amount.valid && f.amount.dirty">Amount looks good.</div>
+        
+          <span *ngIf="f.amount.errors?.required">Amount is required.</span>
+          <span *ngIf="f.amount.errors?.min"
+            >Amount must be greater than {{ f.amount.errors?.min.min }}.</span
+          >
+        
+      </nb-form-field>
+
+      <nb-form-field *ngIf="context.paymentMethods && context.paymentMethods.length > 0">
+        <label>Payment Method</label>
+        <nb-radio-group
+          formControlName="paymentMethodId"
+          name="paymentMethodId"
+          [status]="
+            f.paymentMethodId.dirty ? (f.paymentMethodId.invalid ? 'danger' : 'success') : 'basic'
+          "
+        >
+          <nb-radio *ngFor="let method of context.paymentMethods" [value]="method._id">
+            {{ getPaymentMethodLabel(method) }}
+          </nb-radio>
+        </nb-radio-group>
+        Payment method selected.
+        
+          <span *ngIf="f.paymentMethodId.errors?.required">Payment method is required.</span>
+        
+      </nb-form-field>
+      <div *ngIf="!context.paymentMethods || context.paymentMethods.length === 0">
+        <nb-alert status="warning"
+          >No payment methods available. Please add a payment method first.</nb-alert
+        >
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="actions-footer">
+    <button nbButton status="basic" (click)="close()" [disabled]="isSubmitting">Cancel</button>
+    <button
+      nbButton
+      status="primary"
+      type="submit"
+      (click)="deposit()"
+      [disabled]="!depositForm.valid || isSubmitting"
+    >
+      <nb-icon icon="checkmark-circle-2-outline" pack="eva" *ngIf="!isSubmitting"></nb-icon>
+      <nb-spinner *ngIf="isSubmitting" nbSpinnerSize="tiny" nbSpinnerStatus="control"></nb-spinner>
+      {{ isSubmitting ? 'Processing...' : 'Deposit Funds' }}
+    </button>
+  </nb-card-footer>
+</nb-card>

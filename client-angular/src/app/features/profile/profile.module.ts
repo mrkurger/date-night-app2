@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +20,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    ProfileComponent,
+    EditProfileComponent,
+  ],
 })
 export class ProfileModule {}

@@ -1,12 +1,113 @@
 @use '../../../assets/styles/design-system.scss' as ds;
 
 .profile-container {
-  max-width: var(--container-md);
-  margin: 0 auto;
-  padding: var(--space-6);
-  background-color: var(--neutral-100);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  background-color: var(--background-basic-color-2);
+  min-height: 100vh;
+
+  nb-card {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--text-basic-color);
+    font-weight: 600;
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-basic-color-3);
+    }
+
+    .image-upload {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    nb-form-field {
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+
+  .preferences-section {
+    background-color: var(--background-basic-color-1);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin: 1.5rem 0;
+
+    h3 {
+      margin: 0 0 1.5rem;
+      color: var(--text-basic-color);
+      font-weight: 500;
+    }
+
+    nb-toggle {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button {
+      min-width: 120px;
+    }
+  }
+
+  nb-form-field {
+    width: 100%;
+  }
+
+  .error-icon nb-icon {
+    color: var(--color-danger-default);
+  }
+
+  nb-alert {
+    margin-bottom: 1.5rem;
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
 }
 
 .profile-header {

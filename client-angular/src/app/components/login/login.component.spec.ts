@@ -9,28 +9,32 @@
 // ===================================================
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
-import { of, throwError, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+
+// Nebular imports
+
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 import { LoginComponent } from '../../features/auth/login/login.component';
 import { UserService } from '../../core/services/user.service';
-import { User, AuthResponse } from '../../core/models/user.interface';
+import { AuthService } from '../../core/services/auth.service';
+import { User } from '../../core/models/user.interface';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let userService: jasmine.SpyObj<UserService>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let nbAuthService: jasmine.SpyObj<NbAuthService>;
   let router: Router;
 
   const mockUser: User = {
@@ -38,12 +42,12 @@ describe('LoginComponent', () => {
     id: 'user123',
     username: 'testuser',
     email: 'test@example.com',
-    role: 'user',
+    roles: ['user'],
+    status: 'active',
     createdAt: new Date(),
-    updatedAt: new Date(),
   };
 
-  const mockAuthResponse: AuthResponse = {
+  const mockAuthResponse = {
     token: 'mock-token',
     refreshToken: 'mock-refresh-token',
     expiresIn: 86400,
@@ -51,33 +55,51 @@ describe('LoginComponent', () => {
   };
 
   beforeEach(async () => {
-    // Create spy for UserService
-    const userServiceSpy = jasmine.createSpyObj('UserService', ['login', 'isAuthenticated']);
+    // Create spies for services
+    const userServiceSpy = jasmine.createSpyObj<UserService>('UserService', [
+      'login',
+      'isAuthenticated',
+    ]);
     userServiceSpy.isAuthenticated.and.returnValue(false); // Default to not authenticated
 
+    const authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', [
+      'login',
+      'isAuthenticated',
+    ]);
+    authServiceSpy.isAuthenticated.and.returnValue(false);
+
+    const nbAuthServiceSpy = jasmine.createSpyObj<NbAuthService>('NbAuthService', ['authenticate']);
+
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        FormsModule,
-        RouterTestingModule.withRoutes([
-          { path: 'browse', component: LoginComponent },
-          { path: 'dashboard', component: LoginComponent },
-        ]),
+      imports: [ReactiveFormsModule,
+    FormsModule,
+    RouterTestingModule.withRoutes([
+          { path: 'browse',
+    { path: 'dashboard']),
         HttpClientTestingModule,
         BrowserAnimationsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
+        NbThemeModule.forRoot(),
+        NbCardModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbTooltipModule,
+        NbEvaIconsModule,
+        CommonModule,
+      ],
+      providers: [
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: NbAuthService, useValue: nbAuthServiceSpy },
         LoginComponent,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to handle unknown elements
-      providers: [{ provide: UserService, useValue: userServiceSpy }],
     }).compileComponents();
 
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj<NbAuthService>;
     router = TestBed.inject(Router);
   });
 
@@ -143,7 +165,7 @@ describe('LoginComponent', () => {
     });
 
     // Mock failed login
-    const errorResponse = { message: 'Invalid credentials' };
+    const errorResponse = new Error('Invalid credentials');
     userService.login.and.returnValue(throwError(() => errorResponse));
 
     // Submit form
@@ -158,34 +180,48 @@ describe('LoginComponent', () => {
     expect(compiled.querySelector('.error-message')).toBeTruthy();
   });
 
-  it('should disable submit button while loading', () => {
-    // Setup form with valid data
-    component.loginForm.patchValue({
-      email: 'test@example.com',
-      password: 'Password123!',
-    });
+  it('should handle social login', () => {
+    // Mock successful social login
+    const mockAuthResult = {
+      isSuccess: () => true,
+      getRedirect: () => '/dashboard',
+      getErrors: () => [],
+    } as NbAuthResult;
 
-    // Create a delayed observable to simulate network request
-    userService.login.and.returnValue(
-      new Observable((observer) => {
-        // This will be resolved after a delay
-        setTimeout(() => {
-          observer.next(mockAuthResponse);
-          observer.complete();
-        }, 100);
-      }),
-    );
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
 
-    // Submit form
-    component.onSubmit();
+    // Spy on router navigation
+    spyOn(router, 'navigateByUrl');
 
-    // Verify loading state
-    expect(component.isLoading).toBe(true);
+    // Call social login
+    component.socialLogin('google');
 
-    fixture.detectChanges();
+    // Verify service was called
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('google');
 
-    const compiled = fixture.nativeElement;
-    const submitButton = compiled.querySelector('button[type="submit"]');
-    expect(submitButton.disabled).toBe(true);
+    // Verify navigation occurred
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+    expect(component.isLoading).toBeFalse();
+  });
+
+  it('should handle social login failure', () => {
+    // Mock failed social login
+    const mockAuthResult = {
+      isSuccess: () => false,
+      getRedirect: () => null,
+      getErrors: () => ['Authentication failed'],
+    } as NbAuthResult;
+
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
+
+    // Call social login
+    component.socialLogin('facebook');
+
+    // Verify service was called
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('facebook');
+
+    // Verify error message is set
+    expect(component.errorMessage).toBe('Authentication failed');
+    expect(component.isLoading).toBeFalse();
   });
 });

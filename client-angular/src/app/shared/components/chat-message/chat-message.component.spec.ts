@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser'; // Commented out as it's currently unused
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ChatMessageComponent } from './chat-message.component';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';

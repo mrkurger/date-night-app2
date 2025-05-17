@@ -4,15 +4,13 @@
 
 :root {
   /* Color Palette */
-  --primary: #ff3366; /* Vibrant pink - primary actions, highlights */
+  --primary: #f36; /* Vibrant pink - primary actions, highlights */
   --primary-light: #ff6b99; /* Lighter pink - hover states, backgrounds */
   --primary-dark: #cc295a; /* Darker pink - active states, text */
-
   --secondary: #6c63ff; /* Purple - secondary actions, accents */
   --secondary-light: #9e97ff; /* Lighter purple - hover states, backgrounds */
   --secondary-dark: #4a43cc; /* Darker purple - active states, text */
-
-  --neutral-100: #ffffff; /* White - backgrounds, cards */
+  --neutral-100: #fff; /* White - backgrounds, cards */
   --neutral-200: #f8f9fc; /* Off-white - alternate backgrounds */
   --neutral-300: #eef1f8; /* Light gray - borders, dividers */
   --neutral-400: #d1d5e0; /* Mid-light gray - disabled states */
@@ -21,7 +19,6 @@
   --neutral-700: #4a5568; /* Darker gray - primary text */
   --neutral-800: #2d3748; /* Very dark gray - headings */
   --neutral-900: #1a202c; /* Almost black - emphasized text */
-
   --success: #38d9a9; /* Green - success states, positive actions */
   --warning: #ffab2e; /* Orange - warning states, caution actions */
   --error: #ff4757; /* Red - error states, destructive actions */
@@ -29,10 +26,9 @@
 
   /* Typography */
   --font-family-base:
-    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu, cantarell,
     'Open Sans', 'Helvetica Neue', sans-serif;
   --font-family-heading: 'Poppins', var(--font-family-base);
-
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
   --font-size-md: 1rem; /* 16px */
@@ -42,13 +38,11 @@
   --font-size-3xl: 1.875rem; /* 30px */
   --font-size-4xl: 2.25rem; /* 36px */
   --font-size-5xl: 3rem; /* 48px */
-
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-
   --line-height-tight: 1.25;
   --line-height-snug: 1.375;
   --line-height-normal: 1.5;
@@ -76,7 +70,6 @@
   --border-radius-xl: 1rem; /* 16px */
   --border-radius-2xl: 1.5rem; /* 24px */
   --border-radius-full: 9999px;
-
   --border-width-thin: 1px;
   --border-width-thick: 2px;
 

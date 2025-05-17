@@ -1,44 +1,52 @@
 <div class="ad-detail-container">
-  <mat-spinner *ngIf="loading" diameter="40"></mat-spinner>
+  <nb-card>
+    <nb-card-header>
+      <h2>{{ ad?.title }}</h2>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="ad-content">
+        <div class="ad-images" *ngIf="ad?.images && ad.images.length > 0">
+          <img [src]="ad.images[0]" alt="{{ ad.title }}" />
+          <div class="image-thumbnails" *ngIf="ad.images.length > 1">
+            <img
+              *ngFor="let image of ad.images.slice(1)"
+              [src]="image"
+              alt="{{ ad.title }}"
+              (click)="selectImage(image)"
+            />
+          </div>
+        </div>
 
-  <mat-card *ngIf="error" class="error-card">
-    <mat-card-content>
-      <p class="error-message">{{ error }}</p>
-    </mat-card-content>
-  </mat-card>
+        <div class="ad-info">
+          <div class="ad-price">{{ ad?.price | currency }}</div>
+          <div class="ad-location">
+            <nb-icon icon="pin-outline"></nb-icon>
+            {{ ad?.location }}
+          </div>
+          <div class="ad-date">
+            <nb-icon icon="calendar-outline"></nb-icon>
+            Posted on {{ ad?.createdAt | date }}
+          </div>
+          <div class="ad-description">
+            <h3>Description</h3>
+            <p>{{ ad?.description }}</p>
+          </div>
 
-  <mat-card *ngIf="ad">
-    <mat-card-header>
-      <mat-card-title>{{ ad.title }}</mat-card-title>
-      <mat-card-subtitle>{{ ad.category }}</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="ad-images" *ngIf="ad.images?.length">
-        <img [src]="ad.images[0]" [alt]="ad.title" />
+          <div class="ad-actions">
+            <button nbButton status="primary" (click)="onContact()">
+              <nb-icon icon="message-circle-outline"></nb-icon>
+              Contact Seller
+            </button>
+            <app-favorite-button [adId]="ad?.id"></app-favorite-button>
+          </div>
+        </div>
       </div>
-
-      <div class="ad-info">
-        <p>{{ ad.description }}</p>
-        <p><strong>Price:</strong> ${{ ad.price }}</p>
-        <p><strong>Location:</strong> {{ ad.location }}</p>
-      </div>
-    </mat-card-content>
-
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="startChat()">Contact Advertiser</button>
-      <div class="favorite-action">
-        <app-favorite-button
-          [adId]="ad._id"
-          [adTitle]="ad.title"
-          [large]="true"
-          (favoriteChanged)="onFavoriteChanged($event)"
-        >
-        </app-favorite-button>
-        <span class="favorite-label">{{
-          isFavorite() ? 'Remove from Favorites' : 'Add to Favorites'
-        }}</span>
-      </div>
-    </mat-card-actions>
-  </mat-card>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="basic" (click)="onBack()">
+        <nb-icon icon="arrow-back-outline"></nb-icon>
+        Back to Listings
+      </button>
+    </nb-card-footer>
+  </nb-card>
 </div>

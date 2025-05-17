@@ -1,4 +1,4 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 :host {
   display: contents;
@@ -15,7 +15,7 @@
     flex-direction: column-reverse;
 
     .help-content {
-      margin-bottom: tokens.$spacing-2;
+      margin-bottom: 0.5rem;
 
       &::after {
         content: '';
@@ -34,7 +34,7 @@
     flex-direction: row;
 
     .help-content {
-      margin-left: tokens.$spacing-2;
+      margin-left: 0.5rem;
 
       &::after {
         content: '';
@@ -53,7 +53,7 @@
     flex-direction: column;
 
     .help-content {
-      margin-top: tokens.$spacing-2;
+      margin-top: 0.5rem;
 
       &::after {
         content: '';
@@ -72,7 +72,7 @@
     flex-direction: row-reverse;
 
     .help-content {
-      margin-right: tokens.$spacing-2;
+      margin-right: 0.5rem;
 
       &::after {
         content: '';
@@ -92,10 +92,10 @@
   pointer-events: auto;
 
   button {
-    background-color: rgba($primary-500, 0.1);
+    background-color: rgba(var(--primary-500) /* TODO: Verify correct CSS variable */, 0.1);
 
     &:hover {
-      background-color: rgba($primary-500, 0.2);
+      background-color: rgba(var(--primary-500) /* TODO: Verify correct CSS variable */, 0.2);
     }
   }
 }
@@ -103,8 +103,8 @@
 .help-content {
   position: relative;
   background-color: white;
-  border-radius: $border-radius-md;
-  box-shadow: $shadow-lg;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-lg) /* TODO: Verify correct CSS variable */;
   width: 250px;
   pointer-events: auto;
   opacity: 0;
@@ -121,15 +121,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-3 $spacing-4;
-  border-bottom: 1px solid $neutral-200;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  border-bottom: 1px solid var(--neutral-200) /* TODO: Verify correct CSS variable */;
 }
 
 .help-title {
   margin: 0;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $neutral-900;
+  font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
 }
 
 .help-dismiss {
@@ -146,18 +146,18 @@
 }
 
 .help-body {
-  padding: $spacing-3 $spacing-4;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
   p {
     margin: 0;
-    font-size: $font-size-sm;
-    color: $neutral-700;
-    line-height: $line-height-relaxed;
+    font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-700) /* TODO: Verify correct CSS variable */;
+    line-height: var(--line-height-relaxed) /* TODO: Verify correct CSS variable */;
   }
 }
 
 // Custom tooltip style
 ::ng-deep .help-tooltip-preview {
-  background-color: $primary-500;
-  font-size: $font-size-sm;
+  background-color: var(--primary-500) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
 }

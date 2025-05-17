@@ -1,3 +1,9 @@
+import { EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,16 +13,11 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatBadgeModule } from '@angular/material/badge';
 
 export interface Review {
   _id: string;
@@ -62,12 +63,11 @@ export interface Review {
     CommonModule,
     StarRatingComponent,
     TimeAgoPipe,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatDividerModule,
-    MatTooltipModule,
-    MatBadgeModule,
+    NbButtonModule,
+    NbIconModule,
+    NbCardModule,
+    NbTooltipModule,
+    NbBadgeModule,
   ],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],

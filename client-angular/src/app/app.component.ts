@@ -1,299 +1,180 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (app.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy, Inject, Renderer2 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import {
-  Router,
-  RouterOutlet,
-  RouterLink,
-  RouterLinkActive,
-  NavigationStart,
-  NavigationEnd,
-  NavigationCancel,
-  NavigationError,
-} from '@angular/router';
-import { Subscription, filter } from 'rxjs';
-import { AuthService } from './core/services/auth.service';
-import { NotificationService } from './core/services/notification.service';
-import { ChatService } from './core/services/chat.service';
-import { CsrfService } from './core/services/csrf.service';
-import { PlatformService } from './core/services/platform.service';
-import { PwaService } from './core/services/pwa.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ThemeService } from './core/services/theme.service';
-import { PerformanceMonitorService } from './core/services/performance-monitor.service';
-import { NotificationComponent } from './shared/components/notification/notification.component';
-import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
-import { AlertNotificationsComponent } from './shared/components/alert-notifications/alert-notifications.component';
-// These components are used in the template or will be used in future updates
-// import { OnboardingComponent } from './shared/components/onboarding/onboarding.component';
-// import { FeatureTourComponent } from './shared/components/feature-tour/feature-tour.component';
-// import { ContextualHelpComponent } from './shared/components/contextual-help/contextual-help.component';
-// import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
-import { Meta, Title } from '@angular/platform-browser';
-import { NgIf } from '@angular/common';
-import { NbIconLibraries } from '@nebular/theme';
+import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle.component';
+import { Subscription } from 'rxjs';
+import { NebularModule } from './shared/nebular.module';
+import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
+import {
+  NbSidebarService,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbActionsModule,
+  NbUserModule,
+  NbButtonModule,
+  NbIconModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    NotificationComponent,
-    DebugInfoComponent,
-    AlertNotificationsComponent,
-    NgIf,
+    RouterModule,
+    NebularModule,
+    ThemeToggleComponent,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbMenuModule,
+    NbActionsModule,
+    NbUserModule,
+    NbButtonModule,
+    NbIconModule,
   ],
+  template: `
+    <nb-layout>
+      <nb-layout-header fixed>
+        <div class="header-container">
+          <div class="left">
+            <button nbButton ghost (click)="toggleSidebar()">
+              <nb-icon icon="menu-outline"></nb-icon>
+            </button>
+            <a class="app-title" routerLink="/">DateNight.io</a>
+          </div>
+          <div class="right">
+            <nb-actions size="small">
+              <nb-action icon="search-outline"></nb-action>
+              <nb-action>
+                <app-theme-toggle mode="icon-only"></app-theme-toggle>
+              </nb-action>
+              <nb-action>
+                <nb-user
+                  [name]="'John Doe'"
+                  [picture]="'assets/images/default-avatar.png'"
+                ></nb-user>
+              </nb-action>
+            </nb-actions>
+          </div>
+        </div>
+      </nb-layout-header>
+
+      <nb-sidebar state="collapsed">
+        <nb-menu [items]="menuItems"></nb-menu>
+      </nb-sidebar>
+
+      <nb-layout-column>
+        <div class="main-content">
+          <router-outlet></router-outlet>
+        </div>
+      </nb-layout-column>
+
+      <nb-layout-footer fixed>
+        <div class="footer-container">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h3 class="footer-heading">About DateNight.io</h3>
+              <p class="footer-text">
+                Find your perfect match and plan amazing dates with our innovative dating platform.
+              </p>
+            </div>
+            <div class="footer-section">
+              <h3 class="footer-heading">Quick Links</h3>
+              <ul class="footer-links">
+                <li><a routerLink="/browse">Browse</a></li>
+                <li><a routerLink="/matches">Matches</a></li>
+                <li><a routerLink="/profile">Profile</a></li>
+                <li><a routerLink="/settings">Settings</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h3 class="footer-heading">Connect With Us</h3>
+              <div class="social-links">
+                <a href="#" class="social-link" target="_blank" rel="noopener">
+                  <nb-icon icon="facebook-outline"></nb-icon>
+                </a>
+                <a href="#" class="social-link" target="_blank" rel="noopener">
+                  <nb-icon icon="twitter-outline"></nb-icon>
+                </a>
+                <a href="#" class="social-link" target="_blank" rel="noopener">
+                  <nb-icon icon="instagram-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nb-layout-footer>
+    </nb-layout>
+  `,
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  isAuthenticated = false;
-  isAdvertiser = false;
-  isAdmin = false;
-  isClient = false; // Flag to determine if user is a client
-  username = '';
-  unreadMessages = 0;
-  notificationCount = 0;
-  deferredPrompt: unknown;
-  showInstallPrompt = false;
-
-  // Onboarding properties
-  showOnboarding = false;
-  showFeatureTour = false;
-  onboardingSteps: Array<{ title: string; content: string; image?: string }> = [];
-  featureTourSteps: Array<{ element: string; title: string; content: string; position?: string }> =
-    [];
-  contextualHelpItems: Array<{ id: string; title: string; content: string }> = [];
-
-  private authSubscription: Subscription = new Subscription();
-  private chatSubscription: Subscription = new Subscription();
-  private notificationSubscription: Subscription = new Subscription();
-  private onboardingSubscription: Subscription = new Subscription();
-  private themeSubscription: Subscription = new Subscription();
-
-  // Track loading state for page transitions
-  isLoading = false;
-  private routerSubscription: Subscription = new Subscription();
+  private subscription: Subscription | null = null;
+  menuItems = [
+    {
+      title: 'Home',
+      icon: 'home-outline',
+      link: '/',
+    },
+    {
+      title: 'Browse',
+      icon: 'search-outline',
+      link: '/browse',
+    },
+    {
+      title: 'Matches',
+      icon: 'heart-outline',
+      link: '/matches',
+    },
+    {
+      title: 'Messages',
+      icon: 'message-square-outline',
+      link: '/messages',
+    },
+    {
+      title: 'Profile',
+      icon: 'person-outline',
+      link: '/profile',
+    },
+    {
+      title: 'Settings',
+      icon: 'settings-2-outline',
+      link: '/settings',
+    },
+  ];
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private notificationService: NotificationService,
-    private chatService: ChatService,
-    private csrfService: CsrfService,
-    private platformService: PlatformService,
-    private pwaService: PwaService,
-    private titleService: Title,
-    private metaService: Meta,
     private themeService: ThemeService,
-    private performanceMonitor: PerformanceMonitorService,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document,
-    private iconLibraries: NbIconLibraries,
-  ) {
-    // Set default meta tags for SEO
-    this.titleService.setTitle('Date Night App - Find Your Perfect Match');
-    this.metaService.addTags([
-      {
-        name: 'description',
-        content:
-          'Date Night App helps you find your perfect match for a memorable date night experience.',
-      },
-      { name: 'keywords', content: 'dating, date night, match, social, relationships' },
-      { name: 'robots', content: 'index, follow' },
-      { property: 'og:title', content: 'Date Night App - Find Your Perfect Match' },
-      {
-        property: 'og:description',
-        content:
-          'Date Night App helps you find your perfect match for a memorable date night experience.',
-      },
-      { property: 'og:type', content: 'website' },
-    ]);
+    private sidebarService: NbSidebarService,
+    private webSocketFallbackService: WebSocketFallbackService,
+  ) {}
 
-    // Listen for beforeinstallprompt event to enable PWA installation
-    this.platformService.runInBrowser(() => {
-      window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later
-        this.deferredPrompt = e;
-        // Show the install button
-        this.showInstallPrompt = true;
-      });
+  ngOnInit() {
+    // Initialize WebSocket fallback service
+    this.webSocketFallbackService.initialize();
+
+    // Subscribe to theme changes
+    this.subscription = this.themeService.theme$.subscribe((theme) => {
+      // Theme service will handle the actual theme switching
+      this.themeService.setTheme(theme);
     });
 
-    // Initialize isClient based on user role or other logic
-    this.isClient = true; // Set this based on your actual user role logic
-
-    // Set up router event listeners for page transitions
-    this.setupRouterEvents();
-    this.iconLibraries.registerSvgPack('eva', { packClass: 'eva-icons' });
-    this.iconLibraries.setDefaultPack('eva');
+    // Initialize theme from saved preference
+    const savedTheme = this.themeService.getCurrentTheme();
+    this.themeService.setTheme(savedTheme || 'system');
   }
 
-  ngOnInit(): void {
-    // Add theme-transition class to body
-    this.renderer.addClass(this.document.body, 'theme-transition');
-
-    // Only run browser-specific code when in browser environment
-    this.platformService.runInBrowser(() => {
-      // Initialize CSRF protection
-      this.csrfService.initializeCsrf().subscribe();
-
-      // Check for PWA updates
-      this.pwaService.checkForUpdates().then((hasUpdate) => {
-        if (hasUpdate) {
-          console.warn('New version available');
-        }
-      });
-
-      this.authSubscription = this.authService.currentUser$.subscribe((user: unknown) => {
-        this.isAuthenticated = !!user;
-
-        if (user) {
-          const userObj = user as { username: string; role: string };
-          this.username = userObj.username;
-          this.isAdvertiser = userObj.role === 'advertiser' || userObj.role === 'admin';
-          this.isAdmin = userObj.role === 'admin';
-
-          // Initialize chat service if authenticated
-          this.initializeChat();
-
-          // Mock implementation for unread messages until the service is fully implemented
-          // This will be replaced with the actual subscription once the service is ready
-          this.unreadMessages = Math.floor(Math.random() * 5);
-          this.notificationCount = Math.floor(Math.random() * 3);
-        }
-      });
-    });
+  toggleSidebar() {
+    this.sidebarService.toggle(true, 'left');
   }
 
-  /**
-   * Initialize chat service
-   * Loads chat rooms and unread counts
-   */
-  private initializeChat(): void {
-    // Load chat rooms
-    this.chatService.getRooms().subscribe();
-
-    // Mock implementation for unread counts
-    // This will be replaced with the actual call once the service is ready
-    // this.chatService.getUnreadCounts().subscribe();
-  }
-
-  /**
-   * Sets up router event listeners for page transitions
-   */
-  private setupRouterEvents(): void {
-    // Track navigation events for page transitions
-    this.routerSubscription = this.router.events
-      .pipe(
-        filter(
-          (event) =>
-            event instanceof NavigationStart ||
-            event instanceof NavigationEnd ||
-            event instanceof NavigationCancel ||
-            event instanceof NavigationError,
-        ),
-      )
-      .subscribe((event) => {
-        // Show loading indicator on navigation start
-        if (event instanceof NavigationStart) {
-          this.isLoading = true;
-          this.renderer.addClass(this.document.body, 'page-transition');
-        }
-
-        // Hide loading indicator when navigation ends (success, cancel, or error)
-        if (
-          event instanceof NavigationEnd ||
-          event instanceof NavigationCancel ||
-          event instanceof NavigationError
-        ) {
-          // Use setTimeout to ensure the transition effect is visible
-          setTimeout(() => {
-            this.isLoading = false;
-            this.renderer.removeClass(this.document.body, 'page-transition');
-
-            // Measure page load performance
-            if (event instanceof NavigationEnd) {
-              this.performanceMonitor.measureComponentRender('PageNavigation', () => {
-                // Scroll to top on navigation
-                window.scrollTo(0, 0);
-                return true;
-              });
-            }
-          }, 300);
-        }
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
 
-    if (this.chatSubscription) {
-      this.chatSubscription.unsubscribe();
-    }
-
-    if (this.notificationSubscription) {
-      this.notificationSubscription.unsubscribe();
-    }
-
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
-    }
-
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/auth/login']);
-    this.notificationService.success('You have been logged out successfully');
-
-    // Reset counters
-    this.unreadMessages = 0;
-    this.notificationCount = 0;
-  }
-
-  /**
-   * Install PWA app
-   * Shows the installation prompt
-   */
-  installPwa(): void {
-    if (!this.deferredPrompt) {
-      console.warn('Installation prompt not available');
-      return;
-    }
-
-    // Show the prompt
-    (this.deferredPrompt as any).prompt();
-
-    // Wait for the user to respond to the prompt
-    (this.deferredPrompt as any).userChoice.then((choiceResult: { outcome: string }) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.warn('User accepted the install prompt');
-        this.notificationService.success('App installation started!');
-      } else {
-        console.warn('User dismissed the install prompt');
-      }
-
-      // Clear the deferred prompt variable
-      this.deferredPrompt = null;
-      this.showInstallPrompt = false;
-    });
+    // Restore original WebSocket
+    this.webSocketFallbackService.restoreOriginalWebSocket();
   }
 }

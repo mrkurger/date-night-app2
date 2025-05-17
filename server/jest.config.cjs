@@ -55,7 +55,7 @@ module.exports = {
 
   // Transform ignore patterns
   transformIgnorePatterns: [
-    'node_modules/(?!(mongoose|@babel/runtime|@jest/globals|bcrypt|jsonwebtoken|supertest|stripe|jest-extended)/)',
+    'node_modules/(?!(mongoose|@babel/runtime|@jest/globals|bcrypt|jsonwebtoken|supertest|stripe|jest-extended|mongodb-memory-server|new-find-package-json)/)',
   ],
 
   // No need to specify .js as ESM since package.json has "type": "module",

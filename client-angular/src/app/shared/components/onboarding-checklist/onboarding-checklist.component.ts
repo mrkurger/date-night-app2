@@ -8,11 +8,9 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -39,10 +37,10 @@ export interface ChecklistItem {
   imports: [
     CommonModule,
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatCheckboxModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
+    NbCheckboxModule,
     RouterModule,
   ],
 })

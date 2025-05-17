@@ -7,9 +7,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import geocodingService from '../services/geocoding.service';
-import { AppError } from '../middleware/errorHandler';
-import { logger } from '../utils/logger';
+import geocodingService from '../services/geocoding.service.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Controller for geocoding operations
@@ -151,4 +152,11 @@ class GeocodingController {
   }
 }
 
-module.exports = new GeocodingController();
+export async function someHandler(req, res) {
+  // TODO: Implement geocoding fallback handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
+}
+
+// Export as ES module
+const geocodingController = new GeocodingController();
+export default geocodingController;

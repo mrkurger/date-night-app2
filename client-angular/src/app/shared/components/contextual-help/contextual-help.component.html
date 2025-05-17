@@ -7,12 +7,13 @@
   >
     <div class="help-icon">
       <button
-        mat-icon-button
+        nbButton
+        ghost
         color="primary"
-        [matTooltip]="item.title"
-        matTooltipClass="help-tooltip-preview"
+        [nbTooltip]="item.title"
+        nbTooltipClass="help-tooltip-preview"
       >
-        <mat-icon>{{ item.icon || 'help_outline' }}</mat-icon>
+        <nb-icon icon="{{ item.icon || 'help_outline' }}"></nb-icon>
       </button>
     </div>
 
@@ -21,12 +22,12 @@
         <h4 class="help-title">{{ item.title }}</h4>
         <button
           *ngIf="item.showDismiss !== false"
-          mat-icon-button
+          nb-icon-button
           class="help-dismiss"
           (click)="dismissHelp(item.id)"
           aria-label="Dismiss help"
         >
-          <mat-icon>close</mat-icon>
+          <nb-icon icon="close"></nb-icon>
         </button>
       </div>
       <div class="help-body">

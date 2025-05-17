@@ -1,3 +1,6 @@
+import { Component } from '@angular/core';
+/// <reference types="jasmine" />
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,7 +11,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { NbDialogService, NbDialogRef } from '@nebular/theme';
 import { of } from 'rxjs';
 import { DialogService } from './dialog.service';
 import { ReviewDialogComponent } from '../../shared/components/review-dialog/review-dialog.component';
@@ -17,21 +20,65 @@ import { ResponseDialogComponent } from '../../shared/components/response-dialog
 
 describe('DialogService', () => {
   let service: DialogService;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let dialogSpy: jasmine.SpyObj<NbDialogService>;
+  let dialogRefSpy: jasmine.SpyObj<NbDialogRef<any>>;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('MatDialog', ['open']);
+    dialogRefSpy = jasmine.createSpyObj('NbDialogRef', ['close'], {
+      onClose: of(true),
+      onBackdropClick: of(true),
+      overlayRef: {},
+      componentRef: {},
+    });
+
+    dialogSpy = jasmine.createSpyObj('NbDialogService', ['open']);
+    dialogSpy.open.and.returnValue(dialogRefSpy);
 
     TestBed.configureTestingModule({
-      providers: [DialogService, { provide: MatDialog, useValue: spy }],
+      providers: [DialogService, { provide: NbDialogService, useValue: dialogSpy }],
     });
 
     service = TestBed.inject(DialogService);
-    dialogSpy = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should open a dialog', () => {
+    const mockComponent = {};
+    const mockConfig = { context: { data: 'test' } };
+    service.open(mockComponent, mockConfig);
+    expect(dialogSpy.open).toHaveBeenCalledWith(mockComponent, mockConfig);
+  });
+
+  it('should open a confirm dialog', () => {
+    const title = 'Test Title';
+    const message = 'Test Message';
+    service.confirm(title, message);
+    expect(dialogSpy.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      context: {
+        title,
+        message,
+        confirmText: 'Yes',
+        cancelText: 'No',
+      },
+    });
+  });
+
+  it('should open a response dialog', () => {
+    const data = {
+      title: 'Test Title',
+      reviewTitle: 'Test Review',
+      reviewContent: 'Test Content',
+    };
+    service.openResponseDialog(data);
+    expect(dialogSpy.open).toHaveBeenCalledWith(jasmine.any(Function), {
+      context: { data },
+      closeOnBackdropClick: true,
+      hasBackdrop: true,
+      backdropClass: 'dialog-backdrop',
+    });
   });
 
   describe('openReviewDialog', () => {
@@ -80,32 +127,6 @@ describe('DialogService', () => {
         width: '600px',
         maxWidth: '95vw',
         disableClose: false,
-        data,
-      });
-    });
-  });
-
-  describe('openResponseDialog', () => {
-    it('should open the response dialog with correct configuration', () => {
-      const mockDialogRef = {
-        afterClosed: () => of('response text'),
-      };
-      dialogSpy.open.and.returnValue(mockDialogRef as any);
-
-      const data = {
-        title: 'Respond to Review',
-        reviewTitle: 'Great experience',
-        reviewContent: 'Had a wonderful time',
-      };
-
-      service.openResponseDialog(data).subscribe((result) => {
-        expect(result).toBe('response text');
-      });
-
-      expect(dialogSpy.open).toHaveBeenCalledWith(ResponseDialogComponent, {
-        width: '700px',
-        maxWidth: '95vw',
-        disableClose: true,
         data,
       });
     });

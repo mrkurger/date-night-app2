@@ -7,16 +7,21 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { MaterialModule } from '../../shared/material.module';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../../shared/shared.module';
 import { AdBrowserComponent } from './ad-browser.component';
 
-const routes: Routes = [{ path: '', component: AdBrowserComponent }];
+const routes = [
+  {
+    path: '',
+    component: AdBrowserComponent,
+  },
+];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, MaterialModule, RouterModule.forChild(routes), AdBrowserComponent],
+  // No declarations needed as AdBrowserComponent is standalone
+  imports: [CommonModule, SharedModule, RouterModule.forChild(routes), AdBrowserComponent],
 })
 export class AdBrowserModule {}

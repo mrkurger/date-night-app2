@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Actions Workflow Improvements</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>GitHub Actions Workflow Improvements</h1>
+      <p>Last updated: May 2025</p>
+
+      <h2>Overview of Improvements</h2>
+      <p>
+        This document outlines the improvements made to the GitHub Actions workflows in the Date
+        Night App repository.
+      </p>
+
+      <h3>1. CI Workflow (ci.yml)</h3>
+      <ul>
+        <li>Updated to actions/checkout@v4 for better performance and security</li>
+        <li>Added workflow_dispatch trigger for manual execution</li>
+        <li>Added test results directory preparation and artifact upload</li>
+        <li>
+          Fixed deprecated syntax in if conditions (using ${{ failure() }} instead of failure())
+        </li>
+        <li>Added retention-days parameter to artifacts to manage storage</li>
+      </ul>
+
+      <h3>2. Documentation Generation (generate-docs.yml)</h3>
+      <ul>
+        <li>
+          Created a comprehensive workflow that replaces the deprecated
+          docs-generation-and-deployment.yml
+        </li>
+        <li>
+          Implemented a multi-step process for documentation generation:
+          <ol>
+            <li>Ensure each folder has required HTML docs</li>
+            <li>Parse source code to update glossaries</li>
+            <li>Rebuild documentation indexes and migrate Markdown to HTML</li>
+            <li>Generate documentation for GitHub Pages</li>
+            <li>Commit changes (only HTML files)</li>
+          </ol>
+        </li>
+        <li>Added artifact upload for documentation</li>
+        <li>Implemented GitHub Pages deployment with proper permissions</li>
+        <li>Added timeout to prevent runaway jobs</li>
+      </ul>
+
+      <h3>3. Angular Tests (angular-tests.yml)</h3>
+      <ul>
+        <li>Added workflow_dispatch trigger for manual execution</li>
+        <li>
+          Implemented concurrency control to prevent multiple instances running simultaneously
+        </li>
+        <li>Added dependency caching for faster builds</li>
+        <li>Improved artifact handling with better naming and retention policies</li>
+        <li>Enhanced Cypress test results collection (screenshots and videos)</li>
+        <li>Added ESLint report generation and upload on failure</li>
+      </ul>
+
+      <h3>4. CodeQL Security Analysis (codeql-analysis.yml)</h3>
+      <ul>
+        <li>Renamed to "CodeQL Security Analysis" for clarity</li>
+        <li>Added develop branch to the triggers</li>
+        <li>Added workflow_dispatch trigger for manual execution</li>
+        <li>Implemented concurrency control</li>
+        <li>Added timeout to prevent runaway jobs</li>
+        <li>Implemented matrix strategy for different languages</li>
+        <li>Updated to github/codeql-action@v3</li>
+        <li>Added extended security queries</li>
+        <li>Added SARIF results upload as artifacts</li>
+      </ul>
+
+      <h3>5. Snyk Security Issues (sync-snyk-issues.yml)</h3>
+      <ul>
+        <li>Renamed to "Sync Snyk Security Issues" for clarity</li>
+        <li>Added Snyk CLI caching for faster execution</li>
+        <li>Added token verification step</li>
+        <li>Added HTML report generation for documentation</li>
+        <li>Added deprecation notice creation for the old docs workflow</li>
+      </ul>
+
+      <h3>6. Cleanup Artifacts (cleanup.yml)</h3>
+      <ul>
+        <li>Added repository checkout step</li>
+        <li>Added directory creation if it doesn't exist</li>
+        <li>Added error handling with || true to prevent failures</li>
+        <li>Added reporting of remaining files</li>
+      </ul>
+
+      <h2>Best Practices Implemented</h2>
+      <ul>
+        <li>
+          <strong>Concurrency Control:</strong> Preventing multiple workflow runs from executing
+          simultaneously
+        </li>
+        <li><strong>Dependency Caching:</strong> Speeding up builds by caching dependencies</li>
+        <li>
+          <strong>Timeout Limits:</strong> Preventing runaway jobs that could consume excessive
+          resources
+        </li>
+        <li>
+          <strong>Error Handling:</strong> Adding proper error handling to prevent workflow failures
+        </li>
+        <li>
+          <strong>Artifact Management:</strong> Setting retention policies and organizing artifacts
+        </li>
+        <li><strong>Documentation:</strong> Adding comments and documentation to workflows</li>
+        <li>
+          <strong>Security:</strong> Using the latest versions of actions and implementing security
+          best practices
+        </li>
+      </ul>
+
+      <h2>Dependency Management Improvements</h2>
+      <p>
+        We've implemented a robust dependency management strategy to address common issues with
+        Node.js dependencies:
+      </p>
+
+      <h3>1. Enhanced setup-nodejs Action</h3>
+      <ul>
+        <li>Validates package.json and lockfile consistency</li>
+        <li>Detects invalid JSON in lockfiles</li>
+        <li>Provides fallback mechanisms when npm ci fails</li>
+        <li>Checks for and installs missing dependencies</li>
+        <li>Supports optional lockfile updates</li>
+      </ul>
+
+      <h3>2. New Dependency Check Workflow</h3>
+      <ul>
+        <li>Runs weekly and on demand</li>
+        <li>Checks all package.json and lockfiles in the repository</li>
+        <li>Identifies and fixes dependency mismatches</li>
+        <li>Regenerates invalid lockfiles</li>
+        <li>Installs missing dependencies</li>
+        <li>Creates a detailed report of all issues and fixes</li>
+        <li>Automatically creates a PR with the fixes when run on schedule</li>
+      </ul>
+
+      <h3>3. Workflow Updates for Dependency Handling</h3>
+      <ul>
+        <li>All workflows now use safe-install mode when appropriate</li>
+        <li>Added checks for missing dependencies</li>
+        <li>Improved handling of lockfile inconsistencies</li>
+        <li>Enhanced error reporting for dependency issues</li>
+      </ul>
+
+      <h3>4. Documentation</h3>
+      <ul>
+        <li>Created comprehensive documentation on dependency management</li>
+        <li>Added best practices for developers</li>
+        <li>Included troubleshooting guides</li>
+      </ul>
+
+      <h2>Future Recommendations</h2>
+      <ul>
+        <li>
+          <strong>Environment Variables:</strong> Move hardcoded values to repository secrets or
+          environment variables
+        </li>
+        <li>
+          <strong>Matrix Testing:</strong> Expand matrix testing to include multiple Node.js
+          versions if needed
+        </li>
+        <li>
+          <strong>Reusable Workflows:</strong> Consider creating reusable workflows for common tasks
+        </li>
+        <li><strong>Monitoring:</strong> Implement workflow monitoring and alerting</li>
+        <li>
+          <strong>Performance Optimization:</strong> Further optimize workflows for faster execution
+        </li>
+        <li>
+          <strong>Dependency Automation:</strong> Consider implementing automated dependency updates
+          with tools like Dependabot or Renovate
+        </li>
+        <li>
+          <strong>Vulnerability Scanning:</strong> Integrate more comprehensive vulnerability
+          scanning into the CI/CD pipeline
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

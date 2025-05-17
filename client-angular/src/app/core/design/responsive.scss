@@ -1,0 +1,118 @@
+// Responsive utilities using Nebular breakpoints
+@use '@nebular/theme/styles/theming' as *;
+
+// Breakpoint mixins
+@mixin nb-media-breakpoint-up($name) {
+  @if $name == xs {
+    @media (min-width: nb-theme(breakpoint-xs)) {
+      @content;
+    }
+  } @else if $name == sm {
+    @media (min-width: nb-theme(breakpoint-sm)) {
+      @content;
+    }
+  } @else if $name == md {
+    @media (min-width: nb-theme(breakpoint-md)) {
+      @content;
+    }
+  } @else if $name == lg {
+    @media (min-width: nb-theme(breakpoint-lg)) {
+      @content;
+    }
+  } @else if $name == xl {
+    @media (min-width: nb-theme(breakpoint-xl)) {
+      @content;
+    }
+  }
+}
+
+// Responsive display utilities
+@each $breakpoint in (xs, sm, md, lg, xl) {
+  @include nb-media-breakpoint-up($breakpoint) {
+    .nb-d-#{$breakpoint}-none {
+      display: none !important;
+    }
+    .nb-d-#{$breakpoint}-block {
+      display: block !important;
+    }
+    .nb-d-#{$breakpoint}-inline {
+      display: inline !important;
+    }
+    .nb-d-#{$breakpoint}-inline-block {
+      display: inline-block !important;
+    }
+    .nb-d-#{$breakpoint}-flex {
+      display: flex !important;
+    }
+  }
+}
+
+// Responsive flex utilities
+@each $breakpoint in (xs, sm, md, lg, xl) {
+  @include nb-media-breakpoint-up($breakpoint) {
+    .nb-flex-#{$breakpoint}-row {
+      flex-direction: row !important;
+    }
+    .nb-flex-#{$breakpoint}-column {
+      flex-direction: column !important;
+    }
+    .nb-flex-#{$breakpoint}-wrap {
+      flex-wrap: wrap !important;
+    }
+    .nb-flex-#{$breakpoint}-nowrap {
+      flex-wrap: nowrap !important;
+    }
+  }
+}
+
+// Responsive text alignment
+@each $breakpoint in (xs, sm, md, lg, xl) {
+  @include nb-media-breakpoint-up($breakpoint) {
+    .nb-text-#{$breakpoint}-left {
+      text-align: left !important;
+    }
+    .nb-text-#{$breakpoint}-center {
+      text-align: center !important;
+    }
+    .nb-text-#{$breakpoint}-right {
+      text-align: right !important;
+    }
+  }
+}
+
+// Responsive spacing utilities
+@each $breakpoint in (xs, sm, md, lg, xl) {
+  @include nb-media-breakpoint-up($breakpoint) {
+    .nb-m-#{$breakpoint}-0 {
+      margin: 0 !important;
+    }
+    .nb-mt-#{$breakpoint}-0 {
+      margin-top: 0 !important;
+    }
+    .nb-mb-#{$breakpoint}-0 {
+      margin-bottom: 0 !important;
+    }
+    .nb-ml-#{$breakpoint}-0 {
+      margin-left: 0 !important;
+    }
+    .nb-mr-#{$breakpoint}-0 {
+      margin-right: 0 !important;
+    }
+
+    .nb-p-#{$breakpoint}-0 {
+      padding: 0 !important;
+    }
+    .nb-pt-#{$breakpoint}-0 {
+      padding-top: 0 !important;
+    }
+    .nb-pb-#{$breakpoint}-0 {
+      padding-bottom: 0 !important;
+    }
+    .nb-pl-#{$breakpoint}-0 {
+      padding-left: 0 !important;
+    }
+    .nb-pr-#{$breakpoint}-0 {
+      padding-right: 0 !important;
+    }
+  }
+}

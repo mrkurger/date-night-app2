@@ -7,26 +7,26 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import {
   TelemetryService,
   PerformanceTelemetry,
 } from '../../../../core/services/telemetry.service';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+
+// Custom pagination event interface
+interface PaginationChangeEvent {
+  page: number;
+  pageSize: number;
+}
+
+import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
 /**
  * Performance Dashboard Component
@@ -43,288 +43,280 @@ import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
+    NebularModule,
     ReactiveFormsModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="dashboard-container">
       <h1>Performance Monitoring Dashboard</h1>
 
-      <mat-card class="filter-card">
-        <mat-card-header>
-          <mat-card-title>Filters</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+      <nb-card class="filter-card">
+        <nb-card-header>
+          <h5>Filters</h5>
+        </nb-card-header>
+        <nb-card-body>
           <form [formGroup]="filterForm" class="filter-form">
-            <mat-form-field appearance="outline">
-              <mat-label>URL Contains</mat-label>
-              <input matInput formControlName="url" placeholder="e.g., /api/users" />
-            </mat-form-field>
+            <nb-form-field>
+              <label>URL Contains</label>
+              <input nbInput formControlName="url" placeholder="e.g., /api/users" />
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>HTTP Method</mat-label>
-              <mat-select formControlName="method">
-                <mat-option value="">All Methods</mat-option>
-                <mat-option value="GET">GET</mat-option>
-                <mat-option value="POST">POST</mat-option>
-                <mat-option value="PUT">PUT</mat-option>
-                <mat-option value="DELETE">DELETE</mat-option>
-                <mat-option value="PATCH">PATCH</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-form-field>
+              <label>HTTP Method</label>
+              <nb-select formControlName="method" placeholder="Select method">
+                <nb-option value="">All Methods</nb-option>
+                <nb-option value="GET">GET</nb-option>
+                <nb-option value="POST">POST</nb-option>
+                <nb-option value="PUT">PUT</nb-option>
+                <nb-option value="DELETE">DELETE</nb-option>
+                <nb-option value="PATCH">PATCH</nb-option>
+              </nb-select>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Min Duration (ms)</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="minDuration"
-                placeholder="e.g., 1000"
-              />
-            </mat-form-field>
+            <nb-form-field>
+              <label>Min Duration (ms)</label>
+              <input nbInput type="number" formControlName="minDuration" placeholder="e.g., 1000" />
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>From Date</mat-label>
-              <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" />
-              <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-              <mat-datepicker #fromPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <label>From Date</label>
+              <input nbInput [nbDatepicker]="fromPicker" formControlName="fromDate" />
+              <nb-datepicker #fromPicker></nb-datepicker>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>To Date</mat-label>
-              <input matInput [matDatepicker]="toPicker" formControlName="toDate" />
-              <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-              <mat-datepicker #toPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <label>To Date</label>
+              <input nbInput [nbDatepicker]="toPicker" formControlName="toDate" />
+              <nb-datepicker #toPicker></nb-datepicker>
+            </nb-form-field>
 
             <div class="filter-actions">
-              <button mat-raised-button color="primary" (click)="applyFilters()">
-                <mat-icon>filter_list</mat-icon> Apply Filters
+              <button nbButton status="primary" (click)="applyFilters()">
+                <nb-icon icon="filter"></nb-icon> Apply Filters
               </button>
-              <button mat-button (click)="resetFilters()"><mat-icon>clear</mat-icon> Reset</button>
+              <button nbButton status="basic" (click)="resetFilters()">
+                <nb-icon icon="close"></nb-icon> Reset
+              </button>
             </div>
           </form>
-        </mat-card-content>
-      </mat-card>
+        </nb-card-body>
+      </nb-card>
 
       <div class="dashboard-content">
         <div class="performance-stats">
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">{{ (performanceStats$ | async)?.totalRequests || 0 }}</div>
               <div class="stat-label">Total Requests</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">
                 {{ ((performanceStats$ | async)?.avgDuration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">Average Duration</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">
                 {{ ((performanceStats$ | async)?.p95Duration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">95th Percentile</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
 
-          <mat-card class="stat-card">
-            <mat-card-content>
+          <nb-card class="stat-card">
+            <nb-card-body>
               <div class="stat-value">
                 {{ ((performanceStats$ | async)?.maxDuration | number: '1.0-0') || '0' }} ms
               </div>
               <div class="stat-label">Max Duration</div>
-            </mat-card-content>
-          </mat-card>
+            </nb-card-body>
+          </nb-card>
         </div>
 
-        <mat-card class="endpoints-list-card">
-          <mat-card-header>
-            <mat-card-title>Endpoint Performance</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
+        <nb-card class="endpoints-list-card">
+          <nb-card-header>
+            <h5>Endpoint Performance</h5>
+          </nb-card-header>
+          <nb-card-body>
             <div class="loading-container" *ngIf="loading">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner></nb-spinner>
             </div>
 
-            <table
-              mat-table
-              [dataSource]="performanceData"
-              matSort
-              (matSortChange)="sortData($event)"
-              class="performance-table"
-              *ngIf="!loading"
-            >
-              <ng-container matColumnDef="timestamp">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-                <td mat-cell *matCellDef="let item">{{ item.timestamp | date: 'medium' }}</td>
-              </ng-container>
+            <app-sort (sortChange)="onSortChange($event)">
+              <table nbTable *ngIf="!loading">
+                <thead>
+                  <tr>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'timestamp'"
+                        [direction]="sortDirection"
+                      >
+                        Timestamp
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'method'"
+                        [direction]="sortDirection"
+                      >
+                        Method
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header [active]="sortField === 'url'" [direction]="sortDirection">
+                        URL
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'duration'"
+                        [direction]="sortDirection"
+                      >
+                        Duration (ms)
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header [active]="sortField === 'ttfb'" [direction]="sortDirection">
+                        TTFB (ms)
+                      </app-sort-header>
+                    </th>
+                    <th>
+                      <app-sort-header
+                        [active]="sortField === 'responseSize'"
+                        [direction]="sortDirection"
+                      >
+                        Response Size
+                      </app-sort-header>
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of performanceData">
+                    <td>{{ item.timestamp | date: 'medium' }}</td>
+                    <td>{{ item.method }}</td>
+                    <td>{{ item.url }}</td>
+                    <td [ngClass]="getDurationClass(item.duration)">
+                      {{ item.duration | number: '1.0-0' }}
+                    </td>
+                    <td>{{ item.ttfb | number: '1.0-0' }}</td>
+                    <td>{{ formatBytes(item.responseSize) }}</td>
+                    <td>
+                      <button nbButton ghost (click)="viewPerformanceDetails(item)">
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </app-sort>
 
-              <ng-container matColumnDef="method">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Method</th>
-                <td mat-cell *matCellDef="let item">{{ item.method }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef>URL</th>
-                <td mat-cell *matCellDef="let item">{{ item.url }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="duration">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration (ms)</th>
-                <td mat-cell *matCellDef="let item" [ngClass]="getDurationClass(item.duration)">
-                  {{ item.duration | number: '1.0-0' }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="ttfb">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>TTFB (ms)</th>
-                <td mat-cell *matCellDef="let item">{{ (item.ttfb | number: '1.0-0') || '-' }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="responseSize">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Response Size</th>
-                <td mat-cell *matCellDef="let item">{{ formatBytes(item.responseSize) }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let item">
-                  <button mat-icon-button color="primary" (click)="viewPerformanceDetails(item)">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-
-            <div class="no-data-message" *ngIf="!loading && performanceData.length === 0">
-              No performance data found matching the current filters.
+            <div class="pagination">
+              <button
+                nbButton
+                ghost
+                [disabled]="pageIndex === 0"
+                (click)="onPageChange({ page: pageIndex, pageSize: pageSize })"
+              >
+                Previous
+              </button>
+              <span>Page {{ pageIndex + 1 }}</span>
+              <button
+                nbButton
+                ghost
+                [disabled]="(pageIndex + 1) * pageSize >= totalItems"
+                (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })"
+              >
+                Next
+              </button>
             </div>
-
-            <mat-paginator
-              [length]="totalItems"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 25, 50]"
-              (page)="pageChanged($event)"
-              *ngIf="!loading && performanceData.length > 0"
-            >
-            </mat-paginator>
-          </mat-card-content>
-        </mat-card>
+          </nb-card-body>
+        </nb-card>
       </div>
     </div>
   `,
   styles: [
     `
       .dashboard-container {
-        padding: 20px;
-      }
-
-      h1 {
-        margin-bottom: 20px;
-        color: #333;
+        padding: 1rem;
       }
 
       .filter-card {
-        margin-bottom: 20px;
+        margin-bottom: 1.5rem;
       }
 
       .filter-form {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-      }
-
-      .filter-form mat-form-field {
-        flex: 1 1 200px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
       }
 
       .filter-actions {
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
-      .dashboard-content {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+        gap: 1rem;
+        margin-top: 1rem;
       }
 
       .performance-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
       }
 
       .stat-card {
-        flex: 1 1 200px;
         text-align: center;
       }
 
       .stat-value {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #3f51b5;
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary-color);
       }
 
       .stat-label {
-        font-size: 1rem;
-        color: #666;
-      }
-
-      .endpoints-list-card {
-        width: 100%;
-      }
-
-      .performance-table {
-        width: 100%;
+        color: var(--text-hint-color);
+        margin-top: 0.5rem;
       }
 
       .loading-container {
         display: flex;
         justify-content: center;
-        padding: 20px;
-      }
-
-      .no-data-message {
-        text-align: center;
-        padding: 20px;
-        color: #666;
+        padding: 2rem;
       }
 
       .duration-normal {
-        color: #4caf50;
+        color: var(--color-success-600);
       }
 
       .duration-warning {
-        color: #ff9800;
+        color: var(--color-warning-600);
       }
 
       .duration-critical {
-        color: #f44336;
-        font-weight: bold;
+        color: var(--color-danger-600);
+      }
+
+      table {
+        width: 100%;
+      }
+
+      th {
+        font-weight: 600;
+      }
+
+      td {
+        padding: 0.75rem;
       }
     `,
   ],
@@ -339,10 +331,6 @@ export class PerformanceDashboardComponent implements OnInit {
   pageIndex = 0;
   pageSize = 10;
 
-  // Sorting
-  sortField = 'timestamp';
-  sortDirection = 'desc';
-
   // Table columns
   displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions'];
 
@@ -351,6 +339,10 @@ export class PerformanceDashboardComponent implements OnInit {
 
   // Performance statistics
   performanceStats$: Observable<any>;
+
+  // Sorting
+  sortField = 'timestamp';
+  sortDirection: 'asc' | 'desc' | '' = 'desc';
 
   constructor(
     private telemetryService: TelemetryService,
@@ -364,40 +356,37 @@ export class PerformanceDashboardComponent implements OnInit {
       toDate: [null],
     });
 
-    // Initialize performance statistics
     this.performanceStats$ = this.getPerformanceStatistics();
   }
 
   ngOnInit(): void {
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**
    * Load performance data with current pagination, sorting, and filtering
    */
-  loadPerformanceData(): void {
+  loadDashboardData(): void {
     this.loading = true;
-
     const filters = this.getFilters();
 
     this.telemetryService
       .getPerformanceStatistics({
         ...filters,
         page: this.pageIndex,
-        limit: this.pageSize,
-        sort: this.sortField,
-        order: this.sortDirection,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
       })
       .pipe(
         catchError((error) => {
           console.error('Error loading performance data:', error);
-          this.loading = false;
           return of({ data: [], total: 0 });
         }),
       )
-      .subscribe((data) => {
-        this.performanceData = data.data || [];
-        this.totalItems = data.total || 0;
+      .subscribe((response) => {
+        this.performanceData = response.data;
+        this.totalItems = response.total;
         this.loading = false;
       });
   }
@@ -408,11 +397,10 @@ export class PerformanceDashboardComponent implements OnInit {
   getPerformanceStatistics(): Observable<any> {
     return this.filterForm.valueChanges.pipe(
       startWith(this.filterForm.value),
-      switchMap(() => {
-        const filters = this.getFilters();
-        return this.telemetryService
+      switchMap((filters) =>
+        this.telemetryService
           .getPerformanceStatistics({
-            ...filters,
+            ...this.getFilters(),
             stats: true,
           })
           .pipe(
@@ -425,35 +413,27 @@ export class PerformanceDashboardComponent implements OnInit {
                   maxDuration: 0,
                 },
             ),
-            catchError(() =>
-              of({
+            catchError((error) => {
+              console.error('Error loading performance stats:', error);
+              return of({
                 totalRequests: 0,
                 avgDuration: 0,
                 p95Duration: 0,
                 maxDuration: 0,
-              }),
-            ),
-          );
-      }),
+              });
+            }),
+          ),
+      ),
     );
   }
 
   /**
-   * Handle page change event
+   * Handle page change event from paginator
    */
-  pageChanged(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
+  onPageChange(event: PaginationChangeEvent): void {
+    this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
-    this.loadPerformanceData();
-  }
-
-  /**
-   * Handle sort change event
-   */
-  sortData(sort: Sort): void {
-    this.sortField = sort.active;
-    this.sortDirection = sort.direction || 'asc';
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**
@@ -461,7 +441,7 @@ export class PerformanceDashboardComponent implements OnInit {
    */
   applyFilters(): void {
     this.pageIndex = 0; // Reset to first page when filtering
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**
@@ -471,42 +451,42 @@ export class PerformanceDashboardComponent implements OnInit {
     this.filterForm.reset({
       url: '',
       method: '',
-      minDuration: '',
+      minDuration: null,
       fromDate: null,
       toDate: null,
     });
     this.pageIndex = 0;
-    this.loadPerformanceData();
+    this.loadDashboardData();
   }
 
   /**
    * Get current filters from the form
    */
   getFilters(): any {
-    const filters: any = {};
-    const formValues = this.filterForm.value;
+    const filters = this.filterForm.value;
+    const result: any = {};
 
-    if (formValues.url) {
-      filters.url = formValues.url;
+    if (filters.url) {
+      result.url = filters.url;
     }
 
-    if (formValues.method) {
-      filters.method = formValues.method;
+    if (filters.method) {
+      result.method = filters.method;
     }
 
-    if (formValues.minDuration) {
-      filters.minDuration = formValues.minDuration;
+    if (filters.minDuration) {
+      result.minDuration = filters.minDuration;
     }
 
-    if (formValues.fromDate) {
-      filters.fromDate = formValues.fromDate.toISOString();
+    if (filters.fromDate) {
+      result.fromDate = filters.fromDate.toISOString();
     }
 
-    if (formValues.toDate) {
-      filters.toDate = formValues.toDate.toISOString();
+    if (filters.toDate) {
+      result.toDate = filters.toDate.toISOString();
     }
 
-    return filters;
+    return result;
   }
 
   /**
@@ -532,9 +512,9 @@ export class PerformanceDashboardComponent implements OnInit {
    * Get CSS class based on duration
    */
   getDurationClass(duration: number): string {
-    if (duration < 500) {
+    if (duration < 1000) {
       return 'duration-normal';
-    } else if (duration < 1000) {
+    } else if (duration < 3000) {
       return 'duration-warning';
     } else {
       return 'duration-critical';
@@ -546,7 +526,14 @@ export class PerformanceDashboardComponent implements OnInit {
    */
   viewPerformanceDetails(item: PerformanceTelemetry): void {
     // This would typically open a dialog with detailed performance information
+    // eslint-disable-next-line no-console
     console.log('View performance details:', item);
     // Implementation for performance details dialog would go here
+  }
+
+  onSortChange(event: AppSortEvent): void {
+    this.sortField = event.active;
+    this.sortDirection = event.direction;
+    this.loadDashboardData();
   }
 }

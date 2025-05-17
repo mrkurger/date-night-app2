@@ -158,6 +158,7 @@ const mockRequest = (options = {}) => {
     query: {},
     headers: {},
     cookies: {},
+    path: '/test',
     ...options,
   };
 
@@ -177,6 +178,7 @@ const mockResponse = () => {
   res.cookie = jest.fn().mockReturnValue(res);
   res.clearCookie = jest.fn().mockReturnValue(res);
   res.redirect = jest.fn().mockReturnValue(res);
+  res.setHeader = jest.fn().mockReturnValue(res);
   res.locals = {};
 
   return res;

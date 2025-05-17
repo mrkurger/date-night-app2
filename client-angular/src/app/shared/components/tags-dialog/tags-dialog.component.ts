@@ -1,23 +1,18 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (tags-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, Inject } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbTagModule,
+} from '@nebular/theme';
 
 export interface TagsDialogData {
   title: string;
@@ -35,73 +30,64 @@ export interface TagsDialogData {
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
     FormsModule,
     ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbTagModule,
   ],
   template: `
-    <div class="tags-dialog-container">
-      <div class="dialog-header">
-        <h2 mat-dialog-title>{{ data.title }}</h2>
-        <button mat-icon-button (click)="onClose()">
-          <mat-icon>close</mat-icon>
+    <nb-card>
+      <nb-card-header class="dialog-header">
+        <h2>{{ data.title }}</h2>
+        <button nbButton ghost size="small" (click)="onClose()">
+          <nb-icon icon="close-outline"></nb-icon>
         </button>
-      </div>
+      </nb-card-header>
 
-      <mat-dialog-content>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Tags</mat-label>
-          <mat-chip-grid #chipGrid>
-            <mat-chip-row
+      <nb-card-body>
+        <nb-form-field>
+          <div class="tags-container">
+            <nb-tag
               *ngFor="let tag of tags"
-              (removed)="removeTag(tag)"
-              [editable]="true"
-              (edited)="editTag(tag, $event)"
-            >
-              {{ tag }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip-row>
-            <input
-              placeholder="Add tags..."
-              [matChipInputFor]="chipGrid"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              (matChipInputTokenEnd)="addTag($event)"
-            />
-          </mat-chip-grid>
-          <mat-hint> Press Enter to add a tag. {{ maxTagsMessage }} </mat-hint>
-        </mat-form-field>
+              [text]="tag"
+              removable
+              (remove)="removeTag(tag)"
+            ></nb-tag>
+            <input nbInput placeholder="Add tags..." (keydown)="onTagAdd($event)" />
+          </div>
+          <span class="hint-text">Press Enter or Space to add a tag. {{ maxTagsMessage }}</span>
+        </nb-form-field>
 
         <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0">
           <h3>Suggested Tags</h3>
           <div class="suggested-tags-list">
-            <button
-              mat-chip
+            <nb-tag
               *ngFor="let tag of data.suggestedTags"
+              [text]="tag"
+              [status]="tags.includes(tag) ? 'basic' : 'primary'"
               (click)="addSuggestedTag(tag)"
-              [disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)"
-            >
-              {{ tag }}
-            </button>
+              [class.disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)"
+            ></nb-tag>
           </div>
         </div>
+      </nb-card-body>
 
+      <nb-card-footer>
         <div class="form-actions">
-          <button mat-button type="button" (click)="onClose()">Cancel</button>
-          <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+          <button nbButton status="basic" (click)="onClose()">Cancel</button>
+          <button nbButton status="primary" (click)="onSave()">Save</button>
         </div>
-      </mat-dialog-content>
-    </div>
+      </nb-card-footer>
+    </nb-card>
   `,
   styles: [
     `
-      .tags-dialog-container {
+      :host {
+        display: block;
         min-width: 400px;
         max-width: 600px;
       }
@@ -110,57 +96,73 @@ export interface TagsDialogData {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #eee;
       }
 
       h2 {
         margin: 0;
-        font-size: 20px;
+        font-size: 1.25rem;
         font-weight: 500;
       }
 
-      mat-dialog-content {
-        padding: 24px;
+      nb-form-field {
+        width: 100%;
+        margin-bottom: 1.5rem;
       }
 
-      .full-width {
-        width: 100%;
-        margin-bottom: 20px;
+      .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .hint-text {
+        display: block;
+        font-size: 0.875rem;
+        color: var(--text-hint-color);
+        margin-top: 0.5rem;
       }
 
       .suggested-tags {
-        margin-bottom: 24px;
+        margin-bottom: 1.5rem;
       }
 
       .suggested-tags h3 {
-        font-size: 16px;
-        margin-bottom: 8px;
-        color: #555;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-hint-color);
       }
 
       .suggested-tags-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 0.5rem;
+
+        nb-tag {
+          cursor: pointer;
+
+          &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
       }
 
       .form-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 0.625rem;
       }
     `,
   ],
 })
 export class TagsDialogComponent {
   tags: string[] = [];
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  inputValue = '';
 
   constructor(
-    public dialogRef: MatDialogRef<TagsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TagsDialogData,
+    public dialogRef: NbDialogRef<TagsDialogComponent>,
+    @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData,
   ) {
     this.tags = [...data.tags];
   }
@@ -177,72 +179,54 @@ export class TagsDialogComponent {
 
   /**
    * Add a new tag
-   * @param event Chip input event
    */
-  addTag(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Check if we've reached the maximum number of tags
-    if (this.data.maxTags && this.tags.length >= this.data.maxTags) {
-      event.chipInput!.clear();
+  onTagAdd(event: KeyboardEvent): void {
+    // Only handle Enter and Space keys
+    if (event.key !== 'Enter' && event.key !== ' ') {
       return;
     }
 
-    // Add tag if it doesn't already exist
-    if (value && !this.tags.includes(value)) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.trim();
+
+    // Prevent default behavior for space key
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+
+    if (!value) return;
+
+    if (this.data.maxTags && this.tags.length >= this.data.maxTags) {
+      return;
+    }
+
+    if (!this.tags.includes(value)) {
       this.tags.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  /**
-   * Add a suggested tag
-   * @param tag Tag to add
-   */
-  addSuggestedTag(tag: string): void {
-    // Check if we've reached the maximum number of tags
-    if (this.data.maxTags && this.tags.length >= this.data.maxTags) {
-      return;
-    }
-
-    // Add tag if it doesn't already exist
-    if (!this.tags.includes(tag)) {
-      this.tags.push(tag);
+      input.value = '';
     }
   }
 
   /**
    * Remove a tag
-   * @param tag Tag to remove
    */
   removeTag(tag: string): void {
     const index = this.tags.indexOf(tag);
-
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
   }
 
   /**
-   * Edit an existing tag
-   * @param tag Tag to edit
-   * @param event Edit event
+   * Add a suggested tag
    */
-  editTag(tag: string, event: any): void {
-    const value = event.trim();
-    const index = this.tags.indexOf(tag);
-
-    if (index >= 0 && value && !this.tags.includes(value)) {
-      this.tags[index] = value;
-    } else if (!value) {
-      this.removeTag(tag);
+  addSuggestedTag(tag: string): void {
+    if (!this.tags.includes(tag) && (!this.data.maxTags || this.tags.length < this.data.maxTags)) {
+      this.tags.push(tag);
     }
   }
 
   /**
-   * Save tags and close dialog
+   * Save changes and close dialog
    */
   onSave(): void {
     this.dialogRef.close(this.tags);

@@ -1,41 +1,149 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (reviews-page.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
 import { ReviewsListComponent, Review } from '../reviews-list/reviews-list.component';
 import { ReviewFormComponent, ReviewData } from '../review-form/review-form.component';
 import { ReviewsService } from '../../../core/services/reviews.service';
 import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { tap, catchError } from 'rxjs/operators'; // Removed switchMap
+import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
   selector: 'app-reviews-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTabsModule,
-    ReviewsListComponent,
-    ReviewFormComponent,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent],
+  template: `
+    <div class="reviews-page-container">
+      <nb-card class="reviews-header-card">
+        <nb-card-body>
+          <div class="reviews-header">
+            <div class="ad-info" *ngIf="adTitle">
+              <div class="ad-image" *ngIf="adImage">
+                <img [src]="adImage" [alt]="adTitle" loading="lazy" />
+              </div>
+              <div class="ad-details">
+                <h2 class="ad-title">{{ adTitle }}</h2>
+                <a [routerLink]="['/ad-details', adId]" class="ad-link">
+                  View Ad
+                  <nb-icon icon="external-link-outline"></nb-icon>
+                </a>
+              </div>
+            </div>
+
+            <div class="reviews-actions" *ngIf="!showReviewForm">
+              <button nbButton status="primary" (click)="showAddReviewForm()" *ngIf="!hasReviewed">
+                <nb-icon icon="star"></nb-icon>
+                Write a Review
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <!-- Review Form -->
+      <div class="review-form-wrapper" *ngIf="showReviewForm">
+        <app-review-form
+          [adId]="adId"
+          [existingReview]="editingReview"
+          (reviewSubmitted)="onReviewSubmitted($event)"
+          (cancel)="onCancelReview()"
+        ></app-review-form>
+      </div>
+
+      <!-- Reviews List -->
+      <div class="reviews-content" *ngIf="!showReviewForm">
+        <h3 class="section-title">Reviews</h3>
+
+        <app-reviews-list
+          [reviews]="reviews"
+          [loading]="loading"
+          [totalReviews]="totalReviews"
+          [currentPage]="currentPage"
+          [pageSize]="pageSize"
+          [canManage]="false"
+          (pageChange)="onPageChange($event)"
+          (editReview)="onEditReview($event)"
+          (deleteReview)="onDeleteReview($event)"
+          (reactionChange)="onReactionChange($event)"
+        ></app-reviews-list>
+      </div>
+    </div>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .reviews-page-container {
+        padding: 2rem;
+      }
+
+      .reviews-header-card {
+        margin-bottom: 2rem;
+      }
+
+      .reviews-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+
+      .ad-info {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .ad-image {
+        width: 120px;
+        height: 120px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .ad-details {
+        .ad-title {
+          margin: 0 0 0.5rem;
+          color: var(--text-basic-color);
+        }
+
+        .ad-link {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--text-primary-color);
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .section-title {
+        margin: 0 0 1.5rem;
+        color: var(--text-basic-color);
+      }
+
+      .review-form-wrapper {
+        margin-bottom: 2rem;
+      }
+    `,
   ],
-  templateUrl: './reviews-page.component.html',
-  styleUrls: ['./reviews-page.component.scss'],
 })
 export class ReviewsPageComponent implements OnInit {
   adId = '';

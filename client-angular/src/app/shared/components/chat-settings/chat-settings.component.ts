@@ -8,6 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -16,7 +17,19 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbSpinnerModule,
+  NbAlertModule,
+} from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
+
 import { environment } from '../../../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -30,9 +43,120 @@ export interface ChatSettings {
 @Component({
   selector: 'app-chat-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './chat-settings.component.html',
-  styleUrls: ['./chat-settings.component.scss'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbSpinnerModule,
+    NbAlertModule,
+  ],
+  template: `
+    <nb-card>
+      <nb-card-header>
+        <h3>Chat Settings</h3>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+          <div class="settings-group">
+            <nb-toggle formControlName="messageExpiryEnabled" status="primary">
+              Enable Message Auto-Deletion
+            </nb-toggle>
+            <p class="hint-text">Messages will be automatically deleted after the specified time</p>
+
+            <nb-form-field *ngIf="settingsForm.get('messageExpiryEnabled')?.value">
+              <label>Message Expiry Time</label>
+              <nb-select fullWidth formControlName="messageExpiryTime">
+                <nb-option *ngFor="let option of expiryTimeOptions" [value]="option.value">
+                  {{ option.label }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+          <div class="settings-group">
+            <nb-toggle formControlName="encryptionEnabled" status="primary">
+              Enable End-to-End Encryption
+            </nb-toggle>
+            <p class="hint-text">
+              Messages will be encrypted and can only be read by chat participants
+            </p>
+          </div>
+
+          <nb-alert *ngIf="saveError" status="danger" class="settings-alert">
+            Failed to save settings. Please try again.
+          </nb-alert>
+
+          <nb-alert *ngIf="saveSuccess" status="success" class="settings-alert">
+            Settings saved successfully!
+          </nb-alert>
+
+          <div class="settings-actions">
+            <button
+              nbButton
+              ghost
+              status="basic"
+              type="button"
+              (click)="resetForm()"
+              [disabled]="isSaving"
+            >
+              <nb-icon icon="refresh-outline"></nb-icon>
+              Reset
+            </button>
+            <button
+              nbButton
+              status="primary"
+              type="submit"
+              [disabled]="settingsForm.invalid || isSaving"
+            >
+              <nb-spinner *ngIf="isSaving" size="small"></nb-spinner>
+              <nb-icon *ngIf="!isSaving" icon="save-outline"></nb-icon>
+              Save Settings
+            </button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  `,
+  styles: [
+    `
+      .settings-group {
+        margin-bottom: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
+
+        .hint-text {
+          margin: var(--nb-theme-margin-xs) 0 var(--nb-theme-margin); /* was nb-theme(margin-xs) 0 nb-theme(margin) */
+          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
+          font-size: var(
+            --nb-theme-text-caption-font-size
+          ); /* was nb-theme(text-caption-font-size) */
+        }
+      }
+
+      .settings-alert {
+        margin-bottom: var(--nb-theme-margin); /* was nb-theme(margin) */
+      }
+
+      .settings-actions {
+        display: flex;
+        gap: var(--nb-theme-spacing); /* was nb-theme(spacing) */
+        justify-content: flex-end;
+        margin-top: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
+      }
+
+      /* Dark theme adjustments */
+      :host-context([data-theme='dark']) {
+        .hint-text {
+          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
+        }
+      }
+    `,
+  ],
 })
 export class ChatSettingsComponent implements OnInit {
   @Input() roomId!: string;

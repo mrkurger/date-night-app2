@@ -4,7 +4,11 @@
   "projects": {
     "client-angular": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -15,22 +19,21 @@
             "outputPath": "dist/client-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest",
               {
                 "glob": "**/*",
-                "input": "public"
-              },
-              "src/manifest.webmanifest",
-              "src/assets",
-              "src/favicon.ico"
+                "input": "node_modules/eva-icons/style/fonts/",
+                "output": "/assets/fonts/"
+              }
             ],
             "styles": [
-              "src/styles.css",
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -47,8 +50,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "50kB",
-                  "maximumError": "100kB"
+                  "maximumWarning": "50kb",
+                  "maximumError": "100kb"
                 }
               ],
               "outputHashing": "all"
@@ -71,7 +74,18 @@
               "buildTarget": "client-angular:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4201,
+            "host": "localhost",
+            "hmr": false,
+            "liveReload": true,
+            "allowedHosts": ["localhost"],
+            "disableHostCheck": true,
+            "webSocketOptions": {
+              "reconnectInterval": 3000
+            }
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
@@ -81,16 +95,11 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -113,7 +122,7 @@
             "outputPath": "dist/date-night-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -122,12 +131,17 @@
               },
               "src/manifest.webmanifest",
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/eva-icons/style/fonts/",
+                "output": "/assets/fonts/"
+              }
             ],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -185,9 +199,9 @@
               }
             ],
             "styles": [
-              "src/styles/main.scss",
-              "src/assets/styles/leaflet.css",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+
+              "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {

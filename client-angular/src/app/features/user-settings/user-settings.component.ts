@@ -1,16 +1,30 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (user-settings.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbTabsetModule,
+} from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormsModule,
+} from '@angular/forms';
+
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ThemeService } from '../../core/services/theme.service';
@@ -19,15 +33,438 @@ import {
   ContentDensity,
   CardSize,
 } from '../../core/services/user-preferences.service';
-import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-settings',
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MainLayoutComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbTabsetModule,
+  ],
+  template: `
+    <nb-layout>
+      <nb-layout-column>
+        <div class="settings-container">
+          <nb-card>
+            <nb-card-header>
+              <h1>Account Settings</h1>
+              <p class="subtitle">Manage your account preferences and personal information</p>
+            </nb-card-header>
+
+            <nb-card-body>
+              <nb-tabset fullWidth>
+                <!-- Profile Tab -->
+                <nb-tab tabTitle="Profile" tabIcon="person-outline">
+                  <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+                    <nb-form-field>
+                      <label for="name">Full Name</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        id="name"
+                        formControlName="name"
+                        [status]="
+                          profileForm.get('name')?.invalid && profileForm.get('name')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="person-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="email">Email</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        id="email"
+                        formControlName="email"
+                        [status]="
+                          profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="email-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="phone">Phone</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        id="phone"
+                        formControlName="phone"
+                        [status]="
+                          profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="phone-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="bio">Bio</label>
+                      <textarea
+                        nbInput
+                        fullWidth
+                        id="bio"
+                        formControlName="bio"
+                        rows="4"
+                      ></textarea>
+                    </nb-form-field>
+
+                    <div class="form-actions">
+                      <button
+                        nbButton
+                        status="primary"
+                        type="submit"
+                        [disabled]="profileForm.invalid || loading"
+                      >
+                        <nb-icon icon="save-outline"></nb-icon>
+                        Save Profile
+                      </button>
+                    </div>
+                  </form>
+                </nb-tab>
+
+                <!-- Security Tab -->
+                <nb-tab tabTitle="Security" tabIcon="lock-outline">
+                  <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
+                    <nb-form-field>
+                      <label for="currentPassword">Current Password</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        type="password"
+                        id="currentPassword"
+                        formControlName="currentPassword"
+                        [status]="
+                          passwordForm.get('currentPassword')?.invalid &&
+                          passwordForm.get('currentPassword')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="newPassword">New Password</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        type="password"
+                        id="newPassword"
+                        formControlName="newPassword"
+                        [status]="
+                          passwordForm.get('newPassword')?.invalid &&
+                          passwordForm.get('newPassword')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="confirmPassword">Confirm Password</label>
+                      <input
+                        nbInput
+                        fullWidth
+                        type="password"
+                        id="confirmPassword"
+                        formControlName="confirmPassword"
+                        [status]="
+                          passwordForm.get('confirmPassword')?.invalid &&
+                          passwordForm.get('confirmPassword')?.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      />
+                      <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                    </nb-form-field>
+
+                    <div class="form-actions">
+                      <button
+                        nbButton
+                        status="primary"
+                        type="submit"
+                        [disabled]="passwordForm.invalid || loading"
+                      >
+                        <nb-icon icon="save-outline"></nb-icon>
+                        Update Password
+                      </button>
+                    </div>
+                  </form>
+                </nb-tab>
+
+                <!-- Notifications Tab -->
+                <nb-tab tabTitle="Notifications" tabIcon="bell-outline">
+                  <form [formGroup]="notificationForm" (ngSubmit)="saveNotificationSettings()">
+                    <nb-toggle
+                      formControlName="emailNotifications"
+                      status="primary"
+                      labelPosition="start"
+                    >
+                      Email Notifications
+                    </nb-toggle>
+                    <p class="hint-text">Receive notifications via email</p>
+
+                    <nb-toggle
+                      formControlName="chatNotifications"
+                      status="primary"
+                      labelPosition="start"
+                    >
+                      Chat Notifications
+                    </nb-toggle>
+                    <p class="hint-text">Receive notifications for new chat messages</p>
+
+                    <nb-toggle
+                      formControlName="marketingEmails"
+                      status="primary"
+                      labelPosition="start"
+                    >
+                      Marketing Emails
+                    </nb-toggle>
+                    <p class="hint-text">Receive promotional emails and updates</p>
+
+                    <nb-toggle
+                      formControlName="newMatchNotifications"
+                      status="primary"
+                      labelPosition="start"
+                    >
+                      New Match Notifications
+                    </nb-toggle>
+                    <p class="hint-text">Receive notifications when someone likes your profile</p>
+
+                    <div class="form-actions">
+                      <button
+                        nbButton
+                        status="primary"
+                        type="submit"
+                        [disabled]="notificationForm.invalid || loading"
+                      >
+                        <nb-icon icon="save-outline"></nb-icon>
+                        Save Notification Settings
+                      </button>
+                    </div>
+                  </form>
+                </nb-tab>
+
+                <!-- Privacy Tab -->
+                <nb-tab tabTitle="Privacy" tabIcon="shield-outline">
+                  <form [formGroup]="privacyForm" (ngSubmit)="savePrivacySettings()">
+                    <nb-form-field>
+                      <label for="profileVisibility">Profile Visibility</label>
+                      <nb-select
+                        fullWidth
+                        id="profileVisibility"
+                        formControlName="profileVisibility"
+                      >
+                        <nb-option value="public">Public - Visible to everyone</nb-option>
+                        <nb-option value="registered">
+                          Registered Users - Only visible to registered users
+                        </nb-option>
+                        <nb-option value="private">
+                          Private - Only visible to users you've matched with
+                        </nb-option>
+                      </nb-select>
+                    </nb-form-field>
+
+                    <nb-toggle
+                      formControlName="showOnlineStatus"
+                      status="primary"
+                      labelPosition="start"
+                    >
+                      Show Online Status
+                    </nb-toggle>
+                    <p class="hint-text">Allow others to see when you're online</p>
+
+                    <nb-form-field>
+                      <label for="allowMessaging">Who Can Message You</label>
+                      <nb-select fullWidth id="allowMessaging" formControlName="allowMessaging">
+                        <nb-option value="all">Everyone</nb-option>
+                        <nb-option value="matches">Only Matches</nb-option>
+                        <nb-option value="none">No One (Disable messaging)</nb-option>
+                      </nb-select>
+                    </nb-form-field>
+
+                    <nb-toggle formControlName="dataSharing" status="primary" labelPosition="start">
+                      Data Sharing for Service Improvement
+                    </nb-toggle>
+                    <p class="hint-text">
+                      Allow anonymous usage data to be collected to improve our services
+                    </p>
+
+                    <div class="form-actions">
+                      <button
+                        nbButton
+                        status="primary"
+                        type="submit"
+                        [disabled]="privacyForm.invalid || loading"
+                      >
+                        <nb-icon icon="save-outline"></nb-icon>
+                        Save Privacy Settings
+                      </button>
+                    </div>
+                  </form>
+                </nb-tab>
+
+                <!-- Display Tab -->
+                <nb-tab tabTitle="Display" tabIcon="monitor-outline">
+                  <form [formGroup]="displayForm" (ngSubmit)="saveDisplaySettings()">
+                    <div class="theme-section">
+                      <h3>Theme</h3>
+                      <nb-radio-group
+                        [(ngModel)]="currentTheme"
+                        [ngModelOptions]="{ standalone: true }"
+                      >
+                        <nb-radio value="light">Light</nb-radio>
+                        <nb-radio value="dark">Dark</nb-radio>
+                        <nb-radio value="system">System</nb-radio>
+                      </nb-radio-group>
+                    </div>
+
+                    <nb-form-field>
+                      <label for="defaultViewType">Default View Type</label>
+                      <nb-select fullWidth id="defaultViewType" formControlName="defaultViewType">
+                        <nb-option value="netflix">Netflix Style</nb-option>
+                        <nb-option value="grid">Grid View</nb-option>
+                        <nb-option value="list">List View</nb-option>
+                        <nb-option value="tinder">Tinder Style</nb-option>
+                      </nb-select>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="contentDensity">Content Density</label>
+                      <nb-select fullWidth id="contentDensity" formControlName="contentDensity">
+                        <nb-option
+                          *ngFor="let option of contentDensityOptions"
+                          [value]="option.value"
+                        >
+                          {{ option.label }}
+                        </nb-option>
+                      </nb-select>
+                    </nb-form-field>
+
+                    <nb-form-field>
+                      <label for="cardSize">Card Size</label>
+                      <nb-select fullWidth id="cardSize" formControlName="cardSize">
+                        <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">
+                          {{ option.label }}
+                        </nb-option>
+                      </nb-select>
+                    </nb-form-field>
+
+                    <div class="form-actions">
+                      <button nbButton ghost status="basic" (click)="resetDisplaySettings()">
+                        <nb-icon icon="refresh-outline"></nb-icon>
+                        Reset to Defaults
+                      </button>
+                      <button
+                        nbButton
+                        status="primary"
+                        type="submit"
+                        [disabled]="displayForm.pristine || loading"
+                      >
+                        <nb-icon icon="save-outline"></nb-icon>
+                        Save Display Settings
+                      </button>
+                    </div>
+                  </form>
+                </nb-tab>
+              </nb-tabset>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-layout-column>
+    </nb-layout>
+  `,
+  styles: [
+    `
+      .settings-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      nb-card-header {
+        h1 {
+          margin: 0;
+          font-size: 2rem;
+          font-weight: 600;
+        }
+
+        .subtitle {
+          margin: 0.5rem 0 0;
+          color: nb-theme(text-hint-color);
+        }
+      }
+
+      nb-form-field {
+        margin-bottom: 1.5rem;
+      }
+
+      .hint-text {
+        margin: 0.25rem 0 1rem;
+        color: nb-theme(text-hint-color);
+        font-size: 0.875rem;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: flex-end;
+      }
+
+      .theme-section {
+        margin-bottom: 2rem;
+
+        h3 {
+          margin: 0 0 1rem;
+          font-size: 1.25rem;
+          font-weight: 600;
+        }
+
+        nb-radio-group {
+          display: flex;
+          gap: 1rem;
+        }
+      }
+
+      nb-toggle {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Dark theme adjustments */
+      :host-context([data-theme='dark']) {
+        .hint-text {
+          color: nb-theme(text-hint-color);
+        }
+      }
+    `,
+  ],
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
@@ -37,7 +474,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   displayForm: FormGroup;
   loading = false;
   user: any = null;
-  activeTab = 'profile';
   currentTheme: 'light' | 'dark' | 'system' = 'system';
   contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
   cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
@@ -52,6 +488,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     private userPreferencesService: UserPreferencesService,
     private router: Router,
   ) {
+    this.initializeForms();
+    this.initializeOptions();
+  }
+
+  private initializeForms(): void {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
@@ -87,10 +528,20 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       contentDensity: ['comfortable'],
       cardSize: ['medium'],
     });
+  }
 
-    // Get content density and card size options from the service
-    this.contentDensityOptions = this.userPreferencesService.contentDensityOptions;
-    this.cardSizeOptions = this.userPreferencesService.cardSizeOptions;
+  private initializeOptions(): void {
+    this.contentDensityOptions = [
+      { value: 'compact', label: 'Compact' },
+      { value: 'comfortable', label: 'Comfortable' },
+      { value: 'condensed', label: 'Condensed' },
+    ];
+
+    this.cardSizeOptions = [
+      { value: 'small', label: 'Small' },
+      { value: 'medium', label: 'Medium' },
+      { value: 'large', label: 'Large' },
+    ];
   }
 
   ngOnInit(): void {
@@ -100,55 +551,60 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  loadUserData(): void {
+  private loadUserData(): void {
     this.loading = true;
     this.subscriptions.push(
-      this.authService.currentUser$.subscribe((user) => {
-        if (user) {
-          this.user = user;
-
-          // Populate profile form
-          this.profileForm.patchValue({
-            name: user.name || '',
-            email: user.email || '',
-            phone: user.phone || '',
-            bio: user.bio || '',
-          });
-
-          // Populate notification settings if available
-          if (user.notificationSettings) {
-            this.notificationForm.patchValue({
-              emailNotifications: user.notificationSettings.emailNotifications ?? true,
-              chatNotifications: user.notificationSettings.chatNotifications ?? true,
-              marketingEmails: user.notificationSettings.marketingEmails ?? false,
-              newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
-            });
+      this.authService.currentUser$.subscribe({
+        next: (user) => {
+          if (user) {
+            this.user = user;
+            this.updateFormsWithUserData(user);
           }
-
-          // Populate privacy settings if available
-          if (user.privacySettings) {
-            this.privacyForm.patchValue({
-              profileVisibility: user.privacySettings.profileVisibility || 'public',
-              showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
-              allowMessaging: user.privacySettings.allowMessaging || 'all',
-              dataSharing: user.privacySettings.dataSharing ?? false,
-            });
-          }
-        }
-        this.loading = false;
+          this.loading = false;
+        },
+        error: (error) => {
+          this.notificationService.error('Failed to load user data');
+          this.loading = false;
+        },
       }),
     );
   }
 
-  loadThemeSettings(): void {
-    // Get current theme
-    this.currentTheme = this.themeService.getCurrentTheme();
+  private updateFormsWithUserData(user: any): void {
+    // Profile form
+    this.profileForm.patchValue({
+      name: user.name || '',
+      email: user.email || '',
+      phone: user.phone || '',
+      bio: user.bio || '',
+    });
 
-    // Subscribe to theme changes
+    // Notification settings
+    if (user.notificationSettings) {
+      this.notificationForm.patchValue({
+        emailNotifications: user.notificationSettings.emailNotifications ?? true,
+        chatNotifications: user.notificationSettings.chatNotifications ?? true,
+        marketingEmails: user.notificationSettings.marketingEmails ?? false,
+        newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
+      });
+    }
+
+    // Privacy settings
+    if (user.privacySettings) {
+      this.privacyForm.patchValue({
+        profileVisibility: user.privacySettings.profileVisibility || 'public',
+        showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
+        allowMessaging: user.privacySettings.allowMessaging || 'all',
+        dataSharing: user.privacySettings.dataSharing ?? false,
+      });
+    }
+  }
+
+  private loadThemeSettings(): void {
+    this.currentTheme = this.themeService.getCurrentTheme();
     this.subscriptions.push(
       this.themeService.theme$.subscribe((theme) => {
         this.currentTheme = theme;
@@ -156,18 +612,14 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadDisplaySettings(): void {
-    // Get user preferences
+  private loadDisplaySettings(): void {
     const preferences = this.userPreferencesService.getPreferences();
-
-    // Populate display form
     this.displayForm.patchValue({
       defaultViewType: preferences.defaultViewType,
       contentDensity: preferences.contentDensity,
       cardSize: preferences.cardSize,
     });
 
-    // Subscribe to preference changes
     this.subscriptions.push(
       this.userPreferencesService.preferences$.subscribe((prefs) => {
         this.displayForm.patchValue(
@@ -182,22 +634,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
-    const newPassword = form.get('newPassword')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    if (newPassword !== confirmPassword) {
-      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-
-    return null;
-  }
-
-  setActiveTab(tab: string): void {
-    this.activeTab = tab;
-  }
-
   saveProfile(): void {
     if (this.profileForm.invalid) {
       this.notificationService.error('Please fix the form errors before submitting');
@@ -205,147 +641,99 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    const profileData = this.profileForm.value;
-
-    this.authService.updateProfile(profileData).subscribe({
-      next: (response) => {
-        this.loading = false;
+    this.authService.updateProfile(this.profileForm.value).subscribe({
+      next: () => {
         this.notificationService.success('Profile updated successfully');
+        this.loading = false;
       },
       error: (error) => {
-        this.loading = false;
         this.notificationService.error('Failed to update profile');
-        console.error('Error updating profile:', error);
+        this.loading = false;
       },
     });
   }
 
-  changePassword(): void {
+  savePassword(): void {
     if (this.passwordForm.invalid) {
       this.notificationService.error('Please fix the form errors before submitting');
       return;
     }
 
     this.loading = true;
-    const passwordData = {
-      currentPassword: this.passwordForm.value.currentPassword,
-      newPassword: this.passwordForm.value.newPassword,
-    };
-
-    this.authService.changePassword(passwordData).subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.notificationService.success('Password changed successfully');
+    this.authService.changePassword(this.passwordForm.value).subscribe({
+      next: () => {
+        this.notificationService.success('Password updated successfully');
         this.passwordForm.reset();
+        this.loading = false;
       },
       error: (error) => {
+        this.notificationService.error('Failed to update password');
         this.loading = false;
-        this.notificationService.error('Failed to change password');
-        console.error('Error changing password:', error);
       },
     });
   }
 
   saveNotificationSettings(): void {
     this.loading = true;
-    const notificationSettings = this.notificationForm.value;
-
-    this.authService.updateNotificationSettings(notificationSettings).subscribe({
-      next: (response) => {
-        this.loading = false;
+    this.authService.updateNotificationSettings(this.notificationForm.value).subscribe({
+      next: () => {
         this.notificationService.success('Notification settings updated');
+        this.loading = false;
       },
       error: (error) => {
-        this.loading = false;
         this.notificationService.error('Failed to update notification settings');
-        console.error('Error updating notification settings:', error);
+        this.loading = false;
       },
     });
   }
 
   savePrivacySettings(): void {
     this.loading = true;
-    const privacySettings = this.privacyForm.value;
-
-    this.authService.updatePrivacySettings(privacySettings).subscribe({
-      next: (response) => {
-        this.loading = false;
+    this.authService.updatePrivacySettings(this.privacyForm.value).subscribe({
+      next: () => {
         this.notificationService.success('Privacy settings updated');
+        this.loading = false;
       },
       error: (error) => {
-        this.loading = false;
         this.notificationService.error('Failed to update privacy settings');
-        console.error('Error updating privacy settings:', error);
+        this.loading = false;
       },
     });
   }
 
-  deleteAccount(): void {
-    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-      this.loading = true;
-
-      this.authService.deleteAccount().subscribe({
-        next: () => {
-          this.loading = false;
-          this.notificationService.success('Your account has been deleted');
-          // Redirect to home page
-          this.router.navigateByUrl('/');
-        },
-        error: (error) => {
-          this.loading = false;
-          this.notificationService.error('Failed to delete account');
-          console.error('Error deleting account:', error);
-        },
-      });
-    }
-  }
-
-  /**
-   * Set the theme
-   * @param theme The theme to set
-   */
-  setTheme(theme: 'light' | 'dark' | 'system'): void {
-    this.themeService.setTheme(theme);
-  }
-
-  /**
-   * Save display settings
-   */
   saveDisplaySettings(): void {
     this.loading = true;
-
     try {
-      const displaySettings = this.displayForm.value;
-
-      // Update user preferences
-      this.userPreferencesService.updatePreferences({
-        defaultViewType: displaySettings.defaultViewType,
-        contentDensity: displaySettings.contentDensity,
-        cardSize: displaySettings.cardSize,
-      });
-
+      this.userPreferencesService.updatePreferences(this.displayForm.value);
       this.notificationService.success('Display settings saved successfully');
       this.displayForm.markAsPristine();
     } catch (error) {
-      console.error('Error saving display settings:', error);
       this.notificationService.error('Failed to save display settings');
     } finally {
       this.loading = false;
     }
   }
 
-  /**
-   * Reset display settings to defaults
-   */
   resetDisplaySettings(): void {
-    // Reset to default values
-    this.displayForm.patchValue({
-      defaultViewType: 'netflix',
-      contentDensity: 'comfortable',
-      cardSize: 'medium',
-    });
+    const defaultSettings = {
+      defaultViewType: 'netflix' as const,
+      contentDensity: 'comfortable' as const,
+      cardSize: 'medium' as const,
+    };
 
-    // Save the default values
-    this.saveDisplaySettings();
+    this.displayForm.patchValue(defaultSettings);
+    this.userPreferencesService.updatePreferences(defaultSettings);
+    this.notificationService.success('Display settings reset to defaults');
+  }
+
+  private passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+    const newPassword = group.get('newPassword');
+    const confirmPassword = group.get('confirmPassword');
+
+    if (!newPassword || !confirmPassword) {
+      return null;
+    }
+
+    return newPassword.value === confirmPassword.value ? null : { passwordMismatch: true };
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs'; // Removed Observable
+import { Subject, BehaviorSubject, Observable } from 'rxjs'; // Removed Observable
 import { environment } from '../../../environments/environment';
 import { ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
 import { AlertEvent } from '../models/alert.model';
@@ -52,9 +52,9 @@ export class TelemetrySocketService implements OnDestroy {
   /**
    * Connect to the telemetry WebSocket server
    */
-  public connect(): void {
+  public connect(): Observable<void> {
     if (this.socket) {
-      return;
+      return new Observable<void>();
     }
 
     try {
@@ -92,6 +92,7 @@ export class TelemetrySocketService implements OnDestroy {
       this.connectionStatus.next(false);
       this.attemptReconnect();
     }
+    return new Observable<void>();
   }
 
   /**
@@ -202,5 +203,10 @@ export class TelemetrySocketService implements OnDestroy {
    */
   ngOnDestroy(): void {
     this.disconnect();
+  }
+
+  onErrorUpdate(): Observable<any> {
+    // Implementation details
+    return new Observable<any>();
   }
 }

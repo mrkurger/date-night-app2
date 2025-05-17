@@ -9,6 +9,7 @@
 // ===================================================
 import paymentService from '../services/payment.service.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Payment Controller for handling payment-related API endpoints
@@ -200,6 +201,11 @@ class PaymentController {
       next(error);
     }
   }
+}
+
+export async function someHandler(req, res) {
+  // TODO: Implement payment handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
 }
 
 export default new PaymentController();

@@ -1,17 +1,23 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (chat-list.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ChatService, ChatRoom } from '../../../core/services/chat.service';
+import { ChatService, ChatRoom, ChatParticipant } from '../../../core/services/chat.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
@@ -19,7 +25,8 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipe],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })
@@ -39,7 +46,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.getCurrentUserId();
+    const currentUser = this.authService.getCurrentUser();
+    this.currentUserId = currentUser?._id || '';
     this.loadRooms();
     this.setupSocketListeners();
   }
@@ -48,7 +56,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this.subscriptions.forEach((sub) => sub.unsubscribe());
 
-    // Disconnect from socket
+    // Disconnect socket
     this.chatService.disconnectSocket();
   }
 
@@ -81,10 +89,10 @@ export class ChatListComponent implements OnInit, OnDestroy {
     this.chatService.connectSocket();
 
     // Listen for new messages
-    this.chatService.onNewMessage((message) => {
+    const messageSub = this.chatService.newMessage$.subscribe((message) => {
       // Find the room for this message
       const roomId = message.roomId;
-      const room = this.rooms.find((r) => r._id === roomId);
+      const room = this.rooms.find((r) => r.id === roomId);
 
       if (room) {
         // Update last message
@@ -103,12 +111,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Subscribe to unread count updates
-    const unreadSub = this.chatService.unreadCount$.subscribe((count) => {
-      // This is a total count, individual room counts are handled above
-    });
-
-    this.subscriptions.push(unreadSub);
+    this.subscriptions.push(messageSub);
 
     // Subscribe to online users updates
     const onlineSub = this.chatService.onlineUsers$.subscribe((users) => {
@@ -147,8 +150,6 @@ export class ChatListComponent implements OnInit, OnDestroy {
    * Create a new chat
    */
   createNewChat(): void {
-    // This would open a dialog to select a user
-    // For now, we'll just navigate to a placeholder route
     this.router.navigate(['/chat/new']);
   }
 
@@ -160,10 +161,10 @@ export class ChatListComponent implements OnInit, OnDestroy {
       return room.name;
     }
 
-    // In a real app, you would have user details in the room object
-    // For now, we'll just use a placeholder
-    const otherParticipant = room.participants.find((p) => p !== this.currentUserId);
-    return otherParticipant ? `User ${otherParticipant.substring(0, 5)}` : 'Chat Room';
+    const otherParticipant = room.participants.find(
+      (p: ChatParticipant) => p.id !== this.currentUserId,
+    );
+    return otherParticipant ? otherParticipant.username : 'Chat Room';
   }
 
   /**
@@ -174,7 +175,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
       return 'No messages yet';
     }
 
-    const message = room.lastMessage.message || room.lastMessage.content || '';
+    const message = room.lastMessage.content || room.lastMessage.message || '';
 
     // If message is encrypted, show a placeholder
     if (room.lastMessage.isEncrypted) {
@@ -189,31 +190,24 @@ export class ChatListComponent implements OnInit, OnDestroy {
       } else if (attachment.type === 'video') {
         return '🎥 Video';
       } else {
-        return `📎 ${attachment.name || 'File'}`;
+        return `📎 ${attachment.name}`;
       }
     }
 
-    // Truncate long messages
-    if (message.length > 50) {
-      return message.substring(0, 47) + '...';
-    }
-
-    return message;
+    return message.length > 50 ? `${message.substring(0, 47)}...` : message;
   }
 
   /**
    * Get the last message time
    */
   getLastMessageTime(room: ChatRoom): Date {
-    if (!room.lastMessage) {
-      return new Date(room.updatedAt || room.createdAt);
-    }
-
-    return new Date(room.lastMessage.timestamp || room.lastMessage.createdAt);
+    return (
+      room.lastMessage?.timestamp || room.lastMessage?.createdAt || room.updatedAt || room.createdAt
+    );
   }
 
   /**
-   * Check if a room has unread messages
+   * Check if room has unread messages
    */
   hasUnreadMessages(room: ChatRoom): boolean {
     return room.unreadCount > 0;
@@ -224,40 +218,24 @@ export class ChatListComponent implements OnInit, OnDestroy {
    */
   archiveRoom(event: Event, room: ChatRoom): void {
     event.stopPropagation();
-
-    this.chatService.archiveRoom(room._id, true).subscribe(
-      (updatedRoom) => {
-        // Remove from list
-        this.rooms = this.rooms.filter((r) => r._id !== room._id);
-        this.notificationService.success('Chat archived');
+    this.chatService.archiveRoom(room.id).subscribe(
+      () => {
+        this.rooms = this.rooms.filter((r) => r.id !== room.id);
+        this.notificationService.success('Chat room archived');
       },
       (error) => {
         console.error('Error archiving room:', error);
-        this.notificationService.error('Failed to archive chat');
+        this.notificationService.error('Failed to archive chat room');
       },
     );
   }
 
   /**
-   * Pin a chat room
+   * Toggle pin status of a room
    */
   togglePin(event: Event, room: ChatRoom): void {
     event.stopPropagation();
-
-    const newPinned = !room.pinned;
-
-    this.chatService.pinRoom(room._id, newPinned).subscribe(
-      (updatedRoom) => {
-        // Update local state
-        room.pinned = newPinned;
-        // Re-sort rooms
-        this.rooms = this.sortRooms(this.rooms);
-        this.notificationService.success(newPinned ? 'Chat pinned' : 'Chat unpinned');
-      },
-      (error) => {
-        console.error('Error pinning room:', error);
-        this.notificationService.error('Failed to update chat');
-      },
-    );
+    room.pinned = !room.pinned;
+    this.rooms = this.sortRooms(this.rooms);
   }
 }

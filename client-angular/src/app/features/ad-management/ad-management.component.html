@@ -4,45 +4,37 @@
     <p class="subtitle">Manage your advertisements and travel itineraries</p>
   </div>
 
-  <nav mat-tab-nav-bar>
-    <a
-      mat-tab-link
-      routerLink="list"
-      routerLinkActive
-      #rla1="routerLinkActive"
-      [active]="rla1.isActive"
+  <nb-tabset fullWidth routerLinks>
+    <nb-tab
+      tabTitle="My Ads"
+      tabIcon="list-outline"
+      route="list"
+      [active]="router.url.includes('/list')"
     >
-      <i class="fas fa-ad"></i> My Ads
-    </a>
-    <a
-      mat-tab-link
-      routerLink="create"
-      routerLinkActive
-      #rla2="routerLinkActive"
-      [active]="rla2.isActive"
+    </nb-tab>
+    <nb-tab
+      tabTitle="Create New Ad"
+      tabIcon="plus-outline"
+      route="create"
+      [active]="router.url.includes('/create')"
     >
-      <i class="fas fa-plus-circle"></i> Create New Ad
-    </a>
-    <a
-      mat-tab-link
-      routerLink="/touring"
-      routerLinkActive
-      #rla3="routerLinkActive"
-      [active]="rla3.isActive"
+    </nb-tab>
+    <nb-tab
+      tabTitle="Touring Advertisers"
+      tabIcon="globe-outline"
+      route="/touring"
+      [active]="router.url.includes('/touring')"
     >
-      <i class="fas fa-globe-americas"></i> Touring Advertisers
-    </a>
-    <a
-      mat-tab-link
+    </nb-tab>
+    <nb-tab
       *ngIf="isAdmin"
-      routerLink="/admin/ads"
-      routerLinkActive
-      #rla4="routerLinkActive"
-      [active]="rla4.isActive"
+      tabTitle="Admin Panel"
+      tabIcon="shield-outline"
+      route="/admin/ads"
+      [active]="router.url.includes('/admin/ads')"
     >
-      <i class="fas fa-shield-alt"></i> Admin Panel
-    </a>
-  </nav>
+    </nb-tab>
+  </nb-tabset>
 
   <div class="content">
     <router-outlet></router-outlet>

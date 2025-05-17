@@ -1,3 +1,5 @@
+
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,22 +12,27 @@
 //   Related to: pager.component.html
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald Pager Component
+ * Pagination Component
  *
- * A pagination component for navigating through pages of results.
- * This component provides a flexible pagination system with various styles and options.
- *
- * Documentation: https://docs-emerald.condorlabs.io/Pager
+ * A wrapper around Nebular's button and icon components that provides a flexible pagination system
+ * with various styles and options.
  */
 @Component({
-  selector: 'emerald-pager',
+  selector: 'nb-paginator',
   templateUrl: './pager.component.html',
   styleUrls: ['./pager.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    NbSelectModule,
+    NbIconModule,
+    NbButtonModule
+  ],
 })
 export class PagerComponent implements OnChanges {
   /**
@@ -97,7 +104,7 @@ export class PagerComponent implements OnChanges {
   @Output() pageSizeChange = new EventEmitter<number>();
 
   /**
-   * The array of visible page numbers
+   * The range of visible pages
    */
   visiblePages: number[] = [];
 
@@ -112,20 +119,16 @@ export class PagerComponent implements OnChanges {
    */
   calculateVisiblePages(): void {
     if (this.totalPages <= this.maxVisiblePages) {
-      // If total pages is less than or equal to max visible pages, show all pages
       this.visiblePages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
     } else {
-      // Calculate the range of visible pages
       const halfVisible = Math.floor(this.maxVisiblePages / 2);
       let start = Math.max(this.currentPage - halfVisible, 1);
       const end = Math.min(start + this.maxVisiblePages - 1, this.totalPages);
 
-      // Adjust start if end is at max
       if (end === this.totalPages) {
         start = Math.max(end - this.maxVisiblePages + 1, 1);
       }
 
-      // Create the array of visible pages
       this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
     }
   }
@@ -137,55 +140,15 @@ export class PagerComponent implements OnChanges {
     if (page < 1 || page > this.totalPages || page === this.currentPage) {
       return;
     }
-
     this.pageChange.emit(page);
   }
 
   /**
-   * Go to the previous page
+   * Handle page size change
    */
-  goToPreviousPage(): void {
-    if (this.currentPage > 1) {
-      this.goToPage(this.currentPage - 1);
-    }
-  }
-
-  /**
-   * Go to the next page
-   */
-  goToNextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.goToPage(this.currentPage + 1);
-    }
-  }
-
-  /**
-   * Go to the first page
-   */
-  goToFirstPage(): void {
-    if (this.currentPage !== 1) {
-      this.goToPage(1);
-    }
-  }
-
-  /**
-   * Go to the last page
-   */
-  goToLastPage(): void {
-    if (this.currentPage !== this.totalPages) {
-      this.goToPage(this.totalPages);
-    }
-  }
-
-  /**
-   * Change the page size
-   */
-  onPageSizeChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const newPageSize = parseInt(select.value, 10);
-
-    if (newPageSize !== this.pageSize) {
-      this.pageSizeChange.emit(newPageSize);
+  onPageSizeChange(newSize: number): void {
+    if (newSize !== this.pageSize) {
+      this.pageSizeChange.emit(newSize);
     }
   }
 }

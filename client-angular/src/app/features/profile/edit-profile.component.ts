@@ -1,3 +1,5 @@
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +9,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
@@ -155,12 +156,10 @@ export class EditProfileComponent implements OnInit {
       this.userService.getUserProfile(currentUser._id).subscribe({
         next: (user) => {
           this.profileForm.patchValue({
-            username: user.username,
-            email: user.email,
             bio: user.bio || '',
-            location: user.location || '',
-            website: user.website || '',
-            phone: user.phone || '',
+            location: user.location?.city || '',
+            website: '',
+            phone: '',
           });
         },
         error: (error) => {

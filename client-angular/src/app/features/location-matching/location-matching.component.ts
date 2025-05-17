@@ -1,26 +1,7 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (location-matching.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MapComponent } from '../../shared/components/map/map.component';
 import { GeocodingService } from '../../core/services/geocoding.service';
@@ -61,24 +42,8 @@ interface LocationMatchResult {
   templateUrl: './location-matching.component.html',
   styleUrls: ['./location-matching.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTooltipModule,
-    ClusterModule,
-    MapComponent,
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MapComponent],
 })
 export class LocationMatchingComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;

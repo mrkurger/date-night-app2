@@ -1,3 +1,8 @@
+import {} from '@nebular/theme';
+import { Input } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +12,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';

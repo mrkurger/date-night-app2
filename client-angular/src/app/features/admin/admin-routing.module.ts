@@ -9,37 +9,85 @@
 // ===================================================
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../../core/guards/admin.guard';
+
+// Component imports
 import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
-import { AlertManagementComponent } from './components/alert-management/alert-management.component';
 import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { RevenueAnalyticsComponent } from './components/revenue-analytics/revenue-analytics.component';
+import { ContentModerationComponent } from './components/content-moderation/content-moderation.component';
+import { SystemHealthComponent } from './components/system-health/system-health.component';
+import { AuditLogComponent } from './components/audit-log/audit-log.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { ErrorSecurityDashboardComponent } from './components/error-security-dashboard/error-security-dashboard.component';
 
 /**
  * Admin module routes
- *
- * Note: All components referenced here are standalone components.
- * This is the recommended approach for Angular 19+.
+ * All routes are protected by AdminGuard
  */
 const routes: Routes = [
   {
-    path: 'telemetry',
-    component: TelemetryDashboardComponent,
-    data: { title: 'Telemetry Dashboard' },
-  },
-  {
-    path: 'alerts',
-    component: AlertManagementComponent,
-    data: { title: 'Alert Management' },
-  },
-  {
-    path: 'errors',
-    component: ErrorDashboardComponent,
-    data: { title: 'Error Dashboard' },
-  },
-  {
-    path: 'performance',
-    component: PerformanceDashboardComponent,
-    data: { title: 'Performance Dashboard' },
+    path: '',
+    canActivate: [AdminGuard],
+    children: [
+      {
+        path: 'telemetry',
+        component: TelemetryDashboardComponent,
+        data: { title: 'Telemetry Dashboard' },
+      },
+      {
+        path: 'errors',
+        component: ErrorDashboardComponent,
+        data: { title: 'Error Dashboard' },
+      },
+      {
+        path: 'performance',
+        component: PerformanceDashboardComponent,
+        data: { title: 'Performance Dashboard' },
+      },
+      {
+        path: 'users',
+        component: UserManagementComponent,
+        data: { title: 'User Management' },
+      },
+      {
+        path: 'revenue',
+        component: RevenueAnalyticsComponent,
+        data: { title: 'Revenue Analytics' },
+      },
+      {
+        path: 'moderation',
+        component: ContentModerationComponent,
+        data: { title: 'Content Moderation' },
+      },
+      {
+        path: 'health',
+        component: SystemHealthComponent,
+        data: { title: 'System Health' },
+      },
+      {
+        path: 'audit',
+        component: AuditLogComponent,
+        data: { title: 'Audit Log' },
+      },
+      {
+        path: 'settings',
+        component: AdminSettingsComponent,
+        data: { title: 'Admin Settings' },
+      },
+      {
+        path: 'error-security',
+        component: ErrorSecurityDashboardComponent,
+        data: { title: 'Error Security Dashboard' },
+      },
+      {
+        path: '',
+        redirectTo: 'telemetry',
+        pathMatch: 'full',
+      },
+    ],
   },
 ];
 

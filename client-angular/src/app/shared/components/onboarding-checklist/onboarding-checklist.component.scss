@@ -1,10 +1,10 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 .checklist-container {
-  background-color: $neutral-100;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
-  margin-bottom: $spacing-6;
+  background-color: var(--neutral-100) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-lg) /* TODO: Verify correct CSS variable */;
+  box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
+  margin-bottom: var(--spacing-6) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
   transition: all 0.3s ease;
 
@@ -19,12 +19,12 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: $spacing-4 $spacing-6;
-  border-bottom: 1px solid $neutral-200;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  border-bottom: 1px solid var(--neutral-200) /* TODO: Verify correct CSS variable */;
   cursor: pointer;
 
   &:hover {
-    background-color: $neutral-50;
+    background-color: var(--neutral-50) /* TODO: Verify correct CSS variable */;
   }
 }
 
@@ -33,76 +33,76 @@
 }
 
 .checklist-title {
-  font-family: $font-primary;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $neutral-900;
-  margin: 0 0 $spacing-1 0;
+  font-family: var(--font-primary) /* TODO: Verify correct CSS variable */;
+  font-size: var(--font-size-xl) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-bold) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
+  margin: 0 0 var(--spacing-1) /* TODO: Verify correct CSS variable */ 0;
   display: flex;
   align-items: center;
-  gap: $spacing-2;
+  gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
 }
 
 .checklist-subtitle {
-  font-size: $font-size-sm;
-  color: $neutral-600;
-  margin: 0 0 $spacing-4 0;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
+  margin: 0 0 var(--spacing-4) /* TODO: Verify correct CSS variable */ 0;
 }
 
 .progress-container {
-  margin-top: $spacing-4;
+  margin-top: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 
   .progress-text {
     display: block;
-    font-size: $font-size-xs;
-    color: $neutral-600;
-    margin-top: $spacing-1;
+    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
+    color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
+    margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
     text-align: right;
   }
 }
 
 .collapse-button {
-  margin-top: $spacing-1;
+  margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
 }
 
 .checklist-content {
-  padding: $spacing-4 $spacing-6 $spacing-6;
+  padding: var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
 }
 
 .checklist-items {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: var(--spacing-4) /* TODO: Verify correct CSS variable */;
 }
 
 .checklist-item {
   display: flex;
   align-items: flex-start;
-  padding: $spacing-3;
-  border-radius: $border-radius-md;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */;
+  border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: $neutral-50;
+    background-color: var(--neutral-50) /* TODO: Verify correct CSS variable */;
   }
 
   &.completed {
-    background-color: rgba($success, 0.05);
+    background-color: rgba(var(--success) /* TODO: Verify correct CSS variable */, 0.05);
 
     .item-title {
-      color: $neutral-600;
+      color: var(--neutral-600) /* TODO: Verify correct CSS variable */;
       text-decoration: line-through;
     }
 
     .item-description {
-      color: $neutral-500;
+      color: var(--neutral-500) /* TODO: Verify correct CSS variable */;
     }
   }
 }
 
 .item-checkbox {
-  margin-right: $spacing-3;
-  margin-top: $spacing-1;
+  margin-right: var(--spacing-3) /* TODO: Verify correct CSS variable */;
+  margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
 }
 
 .item-content {
@@ -113,8 +113,8 @@
 }
 
 .item-icon {
-  margin-right: $spacing-3;
-  color: $primary-500;
+  margin-right: var(--spacing-3) /* TODO: Verify correct CSS variable */;
+  color: var(--primary-500) /* TODO: Verify correct CSS variable */;
 
   mat-icon {
     font-size: 24px;
@@ -128,66 +128,66 @@
 }
 
 .item-title {
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $neutral-900;
-  margin: 0 0 $spacing-1 0;
+  font-size: var(--font-size-base) /* TODO: Verify correct CSS variable */;
+  font-weight: var(--font-weight-semibold) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-900) /* TODO: Verify correct CSS variable */;
+  margin: 0 0 var(--spacing-1) /* TODO: Verify correct CSS variable */ 0;
 }
 
 .item-description {
-  font-size: $font-size-sm;
-  color: $neutral-700;
-  margin: 0 0 $spacing-2 0;
-  line-height: $line-height-relaxed;
+  font-size: var(--font-size-sm) /* TODO: Verify correct CSS variable */;
+  color: var(--neutral-700) /* TODO: Verify correct CSS variable */;
+  margin: 0 0 var(--spacing-2) /* TODO: Verify correct CSS variable */ 0;
+  line-height: var(--line-height-relaxed) /* TODO: Verify correct CSS variable */;
 }
 
 .item-reward {
   display: flex;
   align-items: center;
-  gap: $spacing-1;
-  margin-top: $spacing-2;
-  padding: $spacing-1 $spacing-2;
-  background-color: rgba($primary-500, 0.1);
-  border-radius: $border-radius-sm;
+  gap: var(--spacing-1) /* TODO: Verify correct CSS variable */;
+  margin-top: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-1) /* TODO: Verify correct CSS variable */ var(--spacing-2) /* TODO: Verify correct CSS variable */;
+  background-color: rgba(var(--primary-500) /* TODO: Verify correct CSS variable */, 0.1);
+  border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
   width: fit-content;
 
   mat-icon {
     font-size: 16px;
     width: 16px;
     height: 16px;
-    color: $primary-500;
+    color: var(--primary-500) /* TODO: Verify correct CSS variable */;
   }
 
   .reward-text {
-    font-size: $font-size-xs;
-    color: $primary-700;
-    font-weight: $font-weight-medium;
+    font-size: var(--font-size-xs) /* TODO: Verify correct CSS variable */;
+    color: var(--primary-700) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
   }
 }
 
 .item-action {
-  margin-left: $spacing-2;
+  margin-left: var(--spacing-2) /* TODO: Verify correct CSS variable */;
 
   .completed-icon {
-    color: $success;
+    color: var(--success) /* TODO: Verify correct CSS variable */;
   }
 }
 
 .checklist-footer {
-  margin-top: $spacing-6;
-  padding-top: $spacing-4;
-  border-top: 1px solid $neutral-200;
+  margin-top: var(--spacing-6) /* TODO: Verify correct CSS variable */;
+  padding-top: var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  border-top: 1px solid var(--neutral-200) /* TODO: Verify correct CSS variable */;
 
   .completion-message {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: $spacing-2;
-    color: $success;
-    font-weight: $font-weight-medium;
+    gap: var(--spacing-2) /* TODO: Verify correct CSS variable */;
+    color: var(--success) /* TODO: Verify correct CSS variable */;
+    font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
 
     mat-icon {
-      color: $success;
+      color: var(--success) /* TODO: Verify correct CSS variable */;
     }
   }
 }
@@ -195,15 +195,15 @@
 // Responsive adjustments
 @media (max-width: 768px) {
   .checklist-header {
-    padding: $spacing-3 $spacing-4;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   .checklist-content {
-    padding: $spacing-3 $spacing-4 $spacing-4;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
   }
 
   .checklist-title {
-    font-size: $font-size-lg;
+    font-size: var(--font-size-lg) /* TODO: Verify correct CSS variable */;
   }
 
   .item-content {
@@ -212,12 +212,12 @@
 
   .item-icon {
     margin-right: 0;
-    margin-bottom: $spacing-2;
+    margin-bottom: var(--spacing-2) /* TODO: Verify correct CSS variable */;
   }
 
   .item-action {
     margin-left: 0;
-    margin-top: $spacing-2;
+    margin-top: var(--spacing-2) /* TODO: Verify correct CSS variable */;
     align-self: flex-start;
   }
 }

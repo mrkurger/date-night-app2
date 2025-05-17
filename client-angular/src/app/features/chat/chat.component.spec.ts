@@ -1,37 +1,99 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains tests for the chat component
-//
-// COMMON CUSTOMIZATIONS:
-// - MOCK_DATA: Test data for chat component tests
-//   Related to: client-angular/src/app/testing/test-utils.ts
-// - TEST_COVERAGE: Areas to focus testing on
-//   Related to: docs/UnitTestingLessons.md
-// ===================================================
+/// <reference types="jasmine" />
+/// <reference types="@types/jasmine" />
+
+// Extend the global Matchers interface
+declare global {
+  namespace jasmine {
+    interface CustomMatcherFactories {
+      [name: string]: (...args: any[]) => jasmine.CustomMatcher;
+    }
+
+    interface CustomMatcher {
+      compare<T>(actual: T, ...expected: any[]): CustomMatcherResult;
+      negativeCompare?<T>(actual: T, ...expected: any[]): CustomMatcherResult;
+    }
+
+    interface CustomMatcherResult {
+      pass: boolean;
+      message?: string;
+    }
+
+    interface Matchers<T> {
+      toBeTruthy(): boolean;
+      toBeDefined(): boolean;
+      toBe(expected: any): boolean;
+      toEqual(expected: any): boolean;
+      toHaveBeenCalled(): boolean;
+      toHaveBeenCalledWith(...params: any[]): boolean;
+      toContain(expected: any): boolean;
+      toBeNull(): boolean;
+      toBeUndefined(): boolean;
+      toBeNaN(): boolean;
+      toBeTrue(): boolean;
+      toBeFalse(): boolean;
+      toBeFalsy(): boolean;
+      toMatch(expected: string | RegExp): boolean;
+      toThrow(expected?: any): boolean;
+      toThrowError(expected?: any, message?: string): boolean;
+      toBeGreaterThan(expected: number): boolean;
+      toBeLessThan(expected: number): boolean;
+    }
+  }
+}
 
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { ChatComponent } from './chat.component';
-import { ChatService } from '../../core/services/chat.service';
+import {
+  ChatService,
+  ChatMessage,
+  Contact,
+  TypingIndicator,
+} from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, Subject, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { AvatarComponent } from '../../shared/emerald/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
+import {
+  NbDialogRef,
+  NbDialogService,
+  
+} from '@nebular/theme';
+import { customMatchers } from '../../testing/custom-matchers';
+import { User } from '../../core/models/user.interface';
+
+interface DialogResult {
+  success: boolean;
+  data?: any;
+}
+
+const mockDialogRef = {
+  close: () => {},
+  onClose: of({ success: true }),
+  overlayRef: null,
+  onClose$: of({ success: true }),
+  componentRef: null,
+  onBackdropClick: of(null),
+} as unknown as NbDialogRef<DialogResult>;
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -40,176 +102,179 @@ describe('ChatComponent', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
   let routerSpy: jasmine.SpyObj<Router>;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let dialogServiceSpy: jasmine.SpyObj<NbDialogService>;
   let messageListEl: DebugElement;
   let messageInputEl: DebugElement;
   let sendButtonEl: DebugElement;
+  let newMessageSubject: Subject<ChatMessage>;
+  let messageReadSubject: Subject<{ messageId: string; userId: string }>;
+  let typingIndicatorSubject: Subject<TypingIndicator>;
 
-  // Mock data
-  const mockUser = { _id: 'user1', username: 'testuser', email: 'test@example.com' };
-  const mockContacts = [
-    {
-      id: 'contact1',
-      name: 'John Doe',
-      imageUrl: 'assets/images/avatar1.jpg',
-      lastMessage: 'Hello there!',
-      lastMessageTime: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
-      unreadCount: 2,
-      online: true,
-    },
-    {
-      id: 'contact2',
-      name: 'Jane Smith',
-      imageUrl: 'assets/images/avatar2.jpg',
-      lastMessage: 'See you tomorrow',
-      lastMessageTime: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
-      unreadCount: 0,
-      online: false,
-    },
-  ];
-
-  const mockMessages = [
-    {
-      _id: 'msg1',
-      roomId: 'room1',
-      sender: { id: 'user1', username: 'testuser' },
-      message: 'Hi Jane, how are you?',
-      timestamp: new Date(Date.now() - 1000 * 60 * 10), // 10 minutes ago
-      read: true,
-    },
-    {
-      _id: 'msg2',
-      roomId: 'room1',
-      sender: { id: 'contact2', username: 'Jane Smith' },
-      message: "I'm good, thanks! How about you?",
-      timestamp: new Date(Date.now() - 1000 * 60 * 8), // 8 minutes ago
-      read: true,
-    },
-    {
-      _id: 'msg3',
-      roomId: 'room1',
-      sender: { id: 'user1', username: 'testuser' },
-      message: 'Doing well. See you tomorrow?',
-      timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
-      read: true,
-    },
-    {
-      _id: 'msg4',
-      roomId: 'room1',
-      sender: { id: 'contact2', username: 'Jane Smith' },
-      message: 'See you tomorrow',
-      timestamp: new Date(Date.now() - 1000 * 60 * 3), // 3 minutes ago
-      read: false,
-    },
-  ];
-
-  // Mock socket events
-  const newMessageSubject = new Subject<any>();
-  const messageReadSubject = new Subject<any>();
-  const typingIndicatorSubject = new Subject<any>();
+  const mockUser: User = {
+    _id: 'user1',
+    username: 'testuser',
+    email: 'test@example.com',
+    role: 'user',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
   beforeEach(async () => {
-    // Create spies for all required services
+    jasmine.addMatchers(customMatchers);
+
+    newMessageSubject = new Subject<ChatMessage>();
+    messageReadSubject = new Subject<{ messageId: string; userId: string }>();
+    typingIndicatorSubject = new Subject<TypingIndicator>();
+
     chatServiceSpy = jasmine.createSpyObj('ChatService', [
       'getContacts',
       'getMessages',
       'sendMessage',
       'markAsRead',
-      'setupSocketListeners',
       'onNewMessage',
       'onMessageRead',
       'onTypingIndicator',
-      'sendTypingIndicator',
       'getMessageAutoDeletionSettings',
-      'updateMessageAutoDeletionSettings',
-      'getMockContacts',
       'convertHoursToMilliseconds',
+      'sendTypingIndicator',
+      'updateMessageAutoDeletionSettings',
     ]);
 
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['getCurrentUser']);
-    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [
-      'info',
-      'error',
-      'success',
-      'warning',
-    ]);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-
-    // Set up mock return values
-    chatServiceSpy.getContacts.and.returnValue(of(mockContacts));
-    chatServiceSpy.getMessages.and.returnValue(of(mockMessages));
-    chatServiceSpy.sendMessage.and.returnValue(
-      of({
-        _id: 'new-msg-id',
-        roomId: 'room1',
-        timestamp: new Date(),
-        sender: { id: 'user1', username: 'testuser' },
-        message: 'Test message',
-        read: false,
-      }),
+    chatServiceSpy.getContacts.and.returnValue(
+      of([
+        {
+          id: 'contact1',
+          name: 'John Doe',
+          unreadCount: 2,
+          lastMessage: 'Hello',
+          lastMessageTime: new Date(),
+          online: true,
+        },
+        {
+          id: 'contact2',
+          name: 'Jane Smith',
+          unreadCount: 0,
+          lastMessage: 'Hi',
+          lastMessageTime: new Date(),
+          online: false,
+        },
+      ] as Contact[]),
     );
-    chatServiceSpy.markAsRead.and.returnValue(of({ count: 1 }));
 
-    // Set up the socket event handlers as properties instead of methods
-    chatServiceSpy.newMessage$ = newMessageSubject.asObservable();
-    chatServiceSpy.messageRead$ = messageReadSubject.asObservable();
-    chatServiceSpy.typingIndicator$ = typingIndicatorSubject.asObservable();
+    chatServiceSpy.getMessages.and.returnValue(
+      of([
+        {
+          _id: 'msg1',
+          roomId: 'room1',
+          sender: { id: 'contact2', username: 'Jane' },
+          message: 'Hi there',
+          timestamp: new Date(),
+          read: true,
+          type: 'text',
+        },
+        {
+          _id: 'msg2',
+          roomId: 'room1',
+          sender: { id: 'user1', username: 'Me' },
+          message: 'Hello',
+          timestamp: new Date(),
+          read: true,
+          type: 'text',
+        },
+      ] as ChatMessage[]),
+    );
+
+    chatServiceSpy.markAsRead.and.returnValue(of(void 0));
+
+    chatServiceSpy.onNewMessage.and.callFake((callback) => {
+      const subscription = newMessageSubject.subscribe(() => {
+        callback({
+          _id: 'new-msg',
+          roomId: 'room1',
+          sender: { id: 'contact2', username: 'Jane' },
+          message: 'New message',
+          timestamp: new Date(),
+          read: false,
+          type: 'text',
+        } as ChatMessage);
+      });
+      return () => subscription.unsubscribe();
+    });
+
+    chatServiceSpy.onMessageRead.and.callFake((callback) => {
+      const subscription = messageReadSubject.subscribe((data) => {
+        callback(data);
+      });
+      return () => subscription.unsubscribe();
+    });
+
+    chatServiceSpy.onTypingIndicator.and.callFake((callback) => {
+      const subscription = typingIndicatorSubject.subscribe(() => {
+        callback({
+          roomId: 'room1',
+          userId: 'contact2',
+          typing: true,
+          timestamp: new Date(),
+        } as TypingIndicator);
+      });
+      return () => subscription.unsubscribe();
+    });
+
     chatServiceSpy.getMessageAutoDeletionSettings.and.returnValue({
       enabled: true,
       ttl: 7 * 24 * 60 * 60 * 1000,
     });
-    chatServiceSpy.getMockContacts.and.returnValue(mockContacts);
+
     chatServiceSpy.convertHoursToMilliseconds.and.callFake((hours) => hours * 60 * 60 * 1000);
 
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['getCurrentUser']);
     authServiceSpy.getCurrentUser.and.returnValue(mockUser);
 
-    dialogSpy.open.and.returnValue({
-      afterClosed: () => of(true),
-    } as MatDialogRef<any>);
+    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [
+      'success',
+      'error',
+      'info',
+    ]);
+
+    routerSpy = jasmine.createSpyObj('Router', ['navigate', 'navigateByUrl']);
+
+    dialogServiceSpy = jasmine.createSpyObj('NbDialogService', ['open']);
+    dialogServiceSpy.open.and.returnValue(mockDialogRef);
 
     await TestBed.configureTestingModule({
       imports: [
-        FormsModule,
         CommonModule,
-        MatDialogModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-        MatTooltipModule,
-        MatTabsModule,
+        FormsModule,
         BrowserAnimationsModule,
+        NbDialogModule.forRoot(),
+        NbIconModule,
+        NbButtonModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbMenuModule,
+        NbTooltipModule,
+        NbTabsetModule,
       ],
+      declarations: [ChatComponent],
       providers: [
         { provide: ChatService, useValue: chatServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: NotificationService, useValue: notificationServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: MatDialog, useValue: dialogSpy },
         {
           provide: ActivatedRoute,
           useValue: {
             params: of({ userId: 'contact2' }),
-            queryParamMap: of(convertToParamMap({})),
           },
         },
+        { provide: NbDialogService, useValue: dialogServiceSpy },
       ],
-      schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements like app-avatar
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;
-
-    // Set up component properties
-    component.currentUserId = 'user1';
-
-    // Get important elements
     fixture.detectChanges();
-
-    // Wait for async operations
-    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -226,7 +291,7 @@ describe('ChatComponent', () => {
     it('should load messages for the selected contact from route params', () => {
       expect(chatServiceSpy.getMessages).toHaveBeenCalledWith('contact2');
       expect(component.selectedContactId).toBe('contact2');
-      expect(component.messages.length).toBe(4);
+      expect(component.messages.length).toBe(2);
     });
 
     it('should set up socket listeners', () => {
@@ -237,7 +302,7 @@ describe('ChatComponent', () => {
 
     it('should load message auto-deletion settings', () => {
       expect(chatServiceSpy.getMessageAutoDeletionSettings).toHaveBeenCalledWith('contact2');
-      expect(component.messageAutoDeletionEnabled).toBeTrue();
+      expect(component.messageAutoDeletionEnabled).toBe(true);
       expect(component.messageExpiryTime).toBe(7 * 24 * 60 * 60 * 1000);
     });
   });
@@ -376,7 +441,10 @@ describe('ChatComponent', () => {
     it('should open new message dialog', () => {
       component.openNewMessageDialog();
 
-      expect(dialogSpy.open).toHaveBeenCalled();
+      expect(dialogServiceSpy.open).toHaveBeenCalled();
+      const dialogConfig = dialogServiceSpy.open.calls.first().args[1];
+      expect(dialogConfig).toBeTruthy();
+      expect(dialogConfig.context).toBeTruthy();
     });
 
     it('should toggle message auto-deletion', () => {

@@ -1,0 +1,201 @@
+@use '@nebular/theme/styles/theming' as *;
+
+:host {
+  display: block;
+
+  nb-layout-header {
+    background-color: nb-theme(background-basic-color-1);
+    box-shadow: nb-theme(shadow);
+
+    .brand-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: nb-theme(text-basic-color);
+
+      .brand-accent {
+        color: nb-theme(color-primary-500);
+      }
+    }
+
+    nb-actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .ml-auto {
+        margin-left: auto;
+      }
+
+      nb-action {
+        padding: 0 1rem;
+
+        a[nbButton] {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          nb-icon {
+            font-size: 1.25rem;
+          }
+        }
+
+        nb-badge {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  nb-layout-column {
+    padding: 2rem;
+    background-color: nb-theme(background-basic-color-2);
+  }
+
+  nb-layout-footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: nb-theme(background-basic-color-1);
+    border-top: 1px solid nb-theme(divider-color);
+    color: nb-theme(text-hint-color);
+  }
+
+  // Context Menu Styles
+  nb-card.notifications-menu {
+    max-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    nb-card-header {
+      padding: 1rem;
+      font-weight: bold;
+      border-bottom: 1px solid nb-theme(divider-color);
+    }
+
+    nb-list {
+      nb-list-item {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid nb-theme(divider-color);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // User Menu Styles
+  nb-menu {
+    nb-menu-item {
+      a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: nb-theme(text-basic-color);
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: nb-theme(background-basic-color-2);
+        }
+
+        nb-icon {
+          font-size: 1.25rem;
+          color: nb-theme(text-hint-color);
+        }
+      }
+    }
+  }
+}
+
+/* App Component Styles */
+
+/* Header Styles */
+.app-header {
+  background-color: var(--neutral-100);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-sticky);
+  border-bottom: var(--border-width-thin) solid var(--neutral-300);
+}
+
+.navbar {
+  padding: var(--space-4) 0;
+}
+
+.navbar-brand {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.brand-text {
+  color: var(--neutral-900);
+}
+
+.brand-accent {
+  color: var(--primary);
+}
+
+.navbar-toggler {
+  border: none;
+  padding: var(--space-2);
+  background-color: transparent;
+  color: var(--neutral-700);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal) var(--transition-timing-default);
+}
+
+.navbar-toggler:hover {
+  background-color: var(--neutral-200);
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.2);
+}
+
+.navbar-nav .nav-item {
+  margin: 0 var(--space-1);
+}
+
+.navbar-nav .nav-link {
+  color: var(--neutral-700);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal) var(--transition-timing-default);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--primary);
+  background-color: rgba(255, 51, 102, 0.05);
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--primary);
+  background-color: rgba(255, 51, 102, 0.1);
+}
+
+.navbar-nav .nav-link i {
+  margin-right: var(--space-2);
+  font-size: var(--font-size-lg);
+}
+
+.nav-link.btn-outline-login {
+  border: var(--border-width-thin) solid var(--primary);
+  color: var(--primary);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-2) var(--space-4);
+  transition: all var(--transition-normal) var(--transition-timing-default);
+  font-weight: var(--font-weight-medium);
+}
+
+.nav-link.btn-outline-login:hover {
+}

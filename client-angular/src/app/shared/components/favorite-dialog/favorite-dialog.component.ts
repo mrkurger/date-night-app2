@@ -1,29 +1,28 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (favorite-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, Inject } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
+import {
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbTagInputAddEvent,
+  NbDialogModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbTagModule,
+  NbToggleModule,
+  NbCardModule,
+} from '@nebular/theme';
+
 import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
+  FormControl,
   Validators,
 } from '@angular/forms';
 
@@ -52,101 +51,107 @@ export interface FavoriteDialogResult {
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatSlideToggleModule,
+    NbDialogModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbToggleModule,
     FormsModule,
     ReactiveFormsModule,
+    NbCardModule,
   ],
   template: `
-    <div class="favorite-dialog-container">
-      <div class="dialog-header">
-        <h2 mat-dialog-title>{{ isEdit ? 'Edit Favorite' : 'Add to Favorites' }}</h2>
-        <button mat-icon-button (click)="onClose()">
-          <mat-icon>close</mat-icon>
+    <nb-card class="favorite-dialog-container">
+      <nb-card-header class="dialog-header">
+        <h2>{{ isEdit ? 'Edit Favorite' : 'Add to Favorites' }}</h2>
+        <button nbButton ghost (click)="onClose()">
+          <nb-icon icon="close-outline"></nb-icon>
         </button>
-      </div>
+      </nb-card-header>
 
-      <mat-dialog-content>
+      <nb-card-body>
         <form [formGroup]="favoriteForm" (ngSubmit)="onSubmit()">
           <h3 class="ad-title">{{ data.adTitle }}</h3>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Notes</mat-label>
+          <div class="form-group">
+            <label class="label" for="notes">Notes</label>
             <textarea
-              matInput
+              nbInput
+              fullWidth
+              id="notes"
               formControlName="notes"
               placeholder="Add personal notes about this ad"
               rows="3"
             ></textarea>
-            <mat-hint align="end">{{ favoriteForm.get('notes')?.value?.length || 0 }}/500</mat-hint>
-            <mat-error *ngIf="favoriteForm.get('notes')?.hasError('maxlength')">
+            <p class="caption status-basic">
+              {{ favoriteForm.get('notes')?.value?.length || 0 }}/500
+            </p>
+            <p
+              class="caption status-danger"
+              *ngIf="favoriteForm.get('notes')?.hasError('maxlength')"
+            >
               Notes cannot exceed 500 characters
-            </mat-error>
-          </mat-form-field>
+            </p>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Tags</mat-label>
-            <mat-chip-grid #chipGrid formControlName="tags">
-              <mat-chip-row
-                *ngFor="let tag of tags"
-                (removed)="removeTag(tag)"
-                [editable]="true"
-                (edited)="editTag(tag, $event)"
-              >
-                {{ tag }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
-              <input
-                placeholder="Add tags..."
-                [matChipInputFor]="chipGrid"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addTag($event)"
-              />
-            </mat-chip-grid>
-            <mat-hint>Press Enter to add a tag</mat-hint>
-          </mat-form-field>
+          <div class="form-group">
+            <label class="label" for="tags">Tags</label>
+            <nb-form-field>
+              <nb-tag-list (tagRemove)="removeTag($event)">
+                <nb-tag
+                  *ngFor="let tag of tags"
+                  [text]="tag"
+                  removable
+                  (remove)="removeTag(tag)"
+                ></nb-tag>
+                <input
+                  nbTagInput
+                  fullWidth
+                  [separatorKeys]="separatorKeysCodes"
+                  placeholder="Add tags..."
+                  (tagAdd)="addTag($event)"
+                />
+              </nb-tag-list>
+            </nb-form-field>
+            <p class="caption status-basic">Press Enter to add a tag</p>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Priority</mat-label>
-            <mat-select formControlName="priority">
-              <mat-option value="high">
-                <mat-icon class="priority-icon high">priority_high</mat-icon> High
-              </mat-option>
-              <mat-option value="normal">
-                <mat-icon class="priority-icon normal">remove_circle_outline</mat-icon> Normal
-              </mat-option>
-              <mat-option value="low">
-                <mat-icon class="priority-icon low">arrow_downward</mat-icon> Low
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="form-group">
+            <label class="label" for="priority">Priority</label>
+            <nb-select fullWidth formControlName="priority" id="priority">
+              <nb-option value="high">
+                <nb-icon icon="arrow-up-outline" class="priority-icon high"></nb-icon> High
+              </nb-option>
+              <nb-option value="normal">
+                <nb-icon icon="minus-outline" class="priority-icon normal"></nb-icon> Normal
+              </nb-option>
+              <nb-option value="low">
+                <nb-icon icon="arrow-down-outline" class="priority-icon low"></nb-icon> Low
+              </nb-option>
+            </nb-select>
+          </div>
 
-          <div class="notifications-toggle">
-            <mat-slide-toggle formControlName="notificationsEnabled" color="primary">
+          <div class="form-group notifications-toggle">
+            <nb-toggle formControlName="notificationsEnabled" status="primary">
               Enable notifications
-            </mat-slide-toggle>
-            <div class="notifications-hint">
+            </nb-toggle>
+            <p class="caption status-basic notifications-hint">
               Get notified when this advertiser updates their profile or travel plans
-            </div>
+            </p>
           </div>
 
           <div class="form-actions">
-            <button mat-button type="button" (click)="onClose()">Cancel</button>
-            <button mat-raised-button color="primary" type="submit">
+            <button nbButton ghost type="button" (click)="onClose()">Cancel</button>
+            <button nbButton status="primary" type="submit">
               {{ isEdit ? 'Update' : 'Add to Favorites' }}
             </button>
           </div>
         </form>
-      </mat-dialog-content>
-    </div>
+      </nb-card-body>
+    </nb-card>
   `,
   styles: [
     `
@@ -159,64 +164,53 @@ export interface FavoriteDialogResult {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #eee;
       }
 
       h2 {
         margin: 0;
-        font-size: 20px;
+        font-size: 1.5rem;
         font-weight: 500;
-      }
-
-      mat-dialog-content {
-        padding: 24px;
       }
 
       .ad-title {
         margin-top: 0;
-        margin-bottom: 20px;
-        color: #333;
-        font-size: 18px;
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
       }
 
-      .full-width {
-        width: 100%;
-        margin-bottom: 20px;
+      .form-group {
+        margin-bottom: 1.5rem;
       }
 
       .notifications-toggle {
-        margin-bottom: 24px;
+        margin-bottom: 1.5rem;
       }
 
       .notifications-hint {
-        margin-top: 4px;
-        font-size: 12px;
-        color: #666;
+        margin-top: 0.5rem;
       }
 
       .form-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 1rem;
+        margin-top: 2rem;
       }
 
       .priority-icon {
-        vertical-align: middle;
-        margin-right: 4px;
+        &.high {
+          color: var(--color-danger-default);
+        }
+        &.normal {
+          color: var(--color-primary-default);
+        }
+        &.low {
+          color: var(--color-basic-600);
+        }
       }
 
-      .priority-icon.high {
-        color: #f44336;
-      }
-
-      .priority-icon.normal {
-        color: #2196f3;
-      }
-
-      .priority-icon.low {
-        color: #4caf50;
+      nb-tag-list {
+        width: 100%;
       }
     `,
   ],
@@ -225,92 +219,59 @@ export class FavoriteDialogComponent {
   favoriteForm: FormGroup;
   tags: string[] = [];
   isEdit = false;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly separatorKeysCodes: number[] = [13, 188]; // Enter and comma
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<FavoriteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: FavoriteDialogData,
+    public dialogRef: NbDialogRef<FavoriteDialogComponent>,
+    @Inject(NB_DIALOG_CONFIG) public data: FavoriteDialogData,
   ) {
-    this.isEdit = !!(data.existingNotes || data.existingTags || data.existingPriority);
-
-    // Initialize tags from existing data
+    this.isEdit = !!data.existingNotes || !!data.existingTags?.length;
     this.tags = data.existingTags || [];
 
-    // Create form with existing data or defaults
     this.favoriteForm = this.fb.group({
-      notes: [data.existingNotes || '', Validators.maxLength(500)],
+      notes: [data.existingNotes || '', [Validators.maxLength(500)]],
       tags: [this.tags],
       priority: [data.existingPriority || 'normal'],
-      notificationsEnabled: [
-        data.existingNotificationsEnabled !== undefined ? data.existingNotificationsEnabled : true,
-      ],
+      notificationsEnabled: [data.existingNotificationsEnabled || false],
     });
   }
 
-  /**
-   * Add a new tag
-   * @param event Chip input event
-   */
-  addTag(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add tag
+  addTag(event: NbTagInputAddEvent): void {
+    const value = event.value.trim();
     if (value) {
-      this.tags.push(value);
+      if (!this.tags.includes(value)) {
+        this.tags.push(value);
+        this.favoriteForm.patchValue({ tags: this.tags });
+      }
     }
-
-    // Clear the input value
-    event.chipInput!.clear();
+    if (event.input) {
+      event.input.nativeElement.value = '';
+    }
   }
 
-  /**
-   * Remove a tag
-   * @param tag Tag to remove
-   */
-  removeTag(tag: string): void {
-    const index = this.tags.indexOf(tag);
-
+  removeTag(tag: any): void {
+    // Handle both string and NbTagComponent
+    const tagValue = typeof tag === 'string' ? tag : tag.text;
+    const index = this.tags.indexOf(tagValue);
     if (index >= 0) {
       this.tags.splice(index, 1);
+      this.favoriteForm.patchValue({ tags: this.tags });
     }
   }
 
-  /**
-   * Edit an existing tag
-   * @param tag Tag to edit
-   * @param event Edit event
-   */
-  editTag(tag: string, event: any): void {
-    const value = event.trim();
-    const index = this.tags.indexOf(tag);
-
-    if (index >= 0 && value) {
-      this.tags[index] = value;
-    } else if (!value) {
-      this.removeTag(tag);
-    }
-  }
-
-  /**
-   * Submit the form
-   */
   onSubmit(): void {
     if (this.favoriteForm.valid) {
       const result: FavoriteDialogResult = {
-        notes: this.favoriteForm.value.notes,
+        notes: this.favoriteForm.get('notes')?.value || '',
         tags: this.tags,
-        priority: this.favoriteForm.value.priority,
-        notificationsEnabled: this.favoriteForm.value.notificationsEnabled,
+        priority: this.favoriteForm.get('priority')?.value || 'normal',
+        notificationsEnabled: this.favoriteForm.get('notificationsEnabled')?.value || false,
       };
-
       this.dialogRef.close(result);
     }
   }
 
-  /**
-   * Close the dialog without saving
-   */
   onClose(): void {
     this.dialogRef.close();
   }

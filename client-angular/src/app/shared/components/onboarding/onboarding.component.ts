@@ -8,11 +8,10 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
 
 export interface OnboardingStep {
@@ -34,9 +33,9 @@ export interface OnboardingStep {
   imports: [
     CommonModule,
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
     RouterModule,
   ],
 })

@@ -1,3 +1,4 @@
+import {} from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -100,6 +101,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
    * @default 10.7522 (Oslo, Norway)
    */
   @Input() initialLongitude = 10.7522; // Oslo, Norway
+
+  /**
+   * Current latitude for map center (can be updated dynamically)
+   */
+  @Input() latitude?: number;
+
+  /**
+   * Current longitude for map center (can be updated dynamically)
+   */
+  @Input() longitude?: number;
+
+  /**
+   * Current zoom level (can be updated dynamically)
+   */
+  @Input() zoom?: number;
 
   /**
    * Initial zoom level
@@ -241,6 +257,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
     // If height changes, refresh the map
     if (changes['height'] && !changes['height'].firstChange && this.isInitialized) {
       setTimeout(() => this.refreshMap(), 100);
+    }
+
+    // Handle dynamic latitude/longitude/zoom changes
+    if (this.map && this.isInitialized) {
+      const centerChanged =
+        (changes['latitude'] && this.latitude !== undefined) ||
+        (changes['longitude'] && this.longitude !== undefined);
+
+      if (centerChanged) {
+        const lat = this.latitude !== undefined ? this.latitude : this.initialLatitude;
+        const lng = this.longitude !== undefined ? this.longitude : this.initialLongitude;
+        this.map.setView([lat, lng], this.map.getZoom());
+      }
+
+      if (changes['zoom'] && this.zoom !== undefined) {
+        this.map.setZoom(this.zoom);
+      }
     }
   }
 

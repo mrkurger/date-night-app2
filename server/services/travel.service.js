@@ -15,9 +15,17 @@ import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
 import axios from 'axios';
 import config from '../config/index.js'; // Assuming config exports from an index.js
+import { geocode } from './geocoding.service.js';
 
 // Initialize cache with 5 minute TTL and check period of 10 minutes
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 600 });
+
+export async function route(from, to) {
+  // reuse geocode cache
+  await Promise.all([geocode(from), geocode(to)]);
+  // TODO: Implement route computation
+  return { distance: 0, duration: 0, path: [] };
+}
 
 class TravelService {
   /**

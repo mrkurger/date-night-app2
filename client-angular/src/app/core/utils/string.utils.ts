@@ -259,3 +259,42 @@ export function formatPhoneNumber(phone: string, format = 'XXX XXX XXX'): string
 
   return result;
 }
+
+/**
+ * Extracts a domain name from a URL
+ * @param url The URL to extract the domain from
+ * @param includeSubdomain Whether to include the subdomain (default: false)
+ * @returns The domain name
+ */
+export function extractDomain(url: string, includeSubdomain = false): string {
+  if (!url) {
+    return '';
+  }
+
+  try {
+    // Add protocol if missing
+    if (!url.match(/^[a-zA-Z]+:\/\//)) {
+      url = 'https://' + url;
+    }
+
+    const urlObj = new URL(url);
+    const hostname = urlObj.hostname;
+
+    if (includeSubdomain) {
+      return hostname;
+    }
+
+    // Extract the main domain (remove subdomains)
+    const parts = hostname.split('.');
+    if (parts.length > 2) {
+      // Handle special cases like co.uk, com.au, etc.
+      if (parts[parts.length - 2] === 'co' || parts[parts.length - 2] === 'com') {
+        return parts.slice(-3).join('.');
+      }
+      return parts.slice(-2).join('.');
+    }
+    return hostname;
+  } catch (error) {
+    return '';
+  }
+}

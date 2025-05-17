@@ -1,5 +1,31 @@
+// Dark mode mixins for styling
+@use '@nebular/theme/styles/theming' as *;
+
+// Apply styles only in dark mode
 @mixin dark-mode {
-  @media (prefers-color-scheme: dark) {
+  .dark-theme & {
     @content;
   }
+}
+
+// Apply styles in light mode
+@mixin light-mode {
+  .light-theme &,
+  :not(.dark-theme) & {
+    @content;
+  }
+}
+
+// Toggle styles based on dark/light mode
+@mixin mode-specific($property, $light-value, $dark-value) {
+  #{$property}: $light-value;
+
+  .dark-theme & {
+    #{$property}: $dark-value;
+  }
+}
+
+// Apply color with proper contrast
+@mixin contrast-color($bg-color, $light-text, $dark-text) {
+  color: if(lightness($bg-color) > 50, $dark-text, $light-text);
 }

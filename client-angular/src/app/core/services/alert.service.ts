@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, interval, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-// map and switchMap are not used in this file
-import { environment } from '../../../environments/environment';
+import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Alert,
   AlertEvent,
-  AlertConditionType,
   AlertSeverity,
+  AlertConditionType,
   AlertTimeWindow,
   AlertChannel,
 } from '../models/alert.model';
 import { TelemetrySocketService } from './telemetry-socket.service';
-import { ErrorCategory } from '../interceptors/error-category.enum';
+
+export interface AlertResponse {
+  alerts: Alert[];
+  total: number;
+}
 
 /**
  * Service for managing custom alerts
@@ -22,48 +23,52 @@ import { ErrorCategory } from '../interceptors/error-category.enum';
   providedIn: 'root',
 })
 export class AlertService {
-  private apiUrl = `${environment.apiUrl}/alerts`;
-
-  // Active alerts that have been triggered
-  private activeAlerts = new BehaviorSubject<AlertEvent[]>([]);
-  public activeAlerts$ = this.activeAlerts.asObservable();
-
-  // Count of unacknowledged alerts
-  private unacknowledgedCount = new BehaviorSubject<number>(0);
-  public unacknowledgedCount$ = this.unacknowledgedCount.asObservable();
+  private readonly apiUrl = '/api/alerts';
+  private readonly activeAlertsSubject = new BehaviorSubject<AlertEvent[]>([]);
+  public readonly activeAlerts$ = this.activeAlertsSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private telemetrySocketService: TelemetrySocketService,
   ) {
-    // Initialize by loading active alerts
-    this.loadActiveAlerts();
+    this.setupWebSocketConnection();
+  }
 
-    // Subscribe to real-time alert events if WebSocket is available
-    this.telemetrySocketService.connectionStatus$.subscribe((connected) => {
-      if (connected) {
-        this.subscribeToAlertEvents();
-      }
+  getAlerts(page: number, pageSize: number): Observable<AlertResponse> {
+    return this.http.get<AlertResponse>(`${this.apiUrl}`, {
+      params: { page: page.toString(), pageSize: pageSize.toString() },
     });
+  }
 
-    // Fallback: Poll for active alerts every minute if WebSocket is not available
-    interval(60000).subscribe(() => {
-      if (!this.telemetrySocketService.isConnected) {
-        this.loadActiveAlerts();
-      }
-    });
+  getActiveAlerts(): Observable<AlertEvent[]> {
+    return this.http.get<AlertEvent[]>(`${this.apiUrl}/active`);
+  }
+
+  createAlert(alert: Omit<Alert, 'id' | 'createdAt' | 'updatedAt'>): Observable<Alert> {
+    return this.http.post<Alert>(`${this.apiUrl}`, alert);
+  }
+
+  updateAlert(id: string, update: Partial<Alert>): Observable<Alert> {
+    return this.http.patch<Alert>(`${this.apiUrl}/${id}`, update);
+  }
+
+  deleteAlert(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  testAlert(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${id}/test`, {});
+  }
+
+  acknowledgeAlert(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${id}/acknowledge`, {});
   }
 
   /**
    * Get all alert definitions
    */
   getAlerts(): Observable<Alert[]> {
-    return this.http.get<Alert[]>(this.apiUrl).pipe(
-      catchError((error) => {
-        console.error('Error fetching alerts:', error);
-        return of([]);
-      }),
-    );
+    return this.http.get<Alert[]>(this.apiUrl);
   }
 
   /**
@@ -72,31 +77,6 @@ export class AlertService {
    */
   getAlert(id: string): Observable<Alert> {
     return this.http.get<Alert>(`${this.apiUrl}/${id}`);
-  }
-
-  /**
-   * Create a new alert
-   * @param alert Alert definition
-   */
-  createAlert(alert: Alert): Observable<Alert> {
-    return this.http.post<Alert>(this.apiUrl, alert);
-  }
-
-  /**
-   * Update an existing alert
-   * @param id Alert ID
-   * @param alert Updated alert definition
-   */
-  updateAlert(id: string, alert: Alert): Observable<Alert> {
-    return this.http.put<Alert>(`${this.apiUrl}/${id}`, alert);
-  }
-
-  /**
-   * Delete an alert
-   * @param id Alert ID
-   */
-  deleteAlert(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   /**
@@ -112,12 +92,7 @@ export class AlertService {
    * Get active alert events
    */
   getActiveAlertEvents(): Observable<AlertEvent[]> {
-    return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/active`).pipe(
-      catchError((error) => {
-        console.error('Error fetching active alert events:', error);
-        return of([]);
-      }),
-    );
+    return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/active`);
   }
 
   /**
@@ -127,40 +102,7 @@ export class AlertService {
   getAlertEventHistory(
     filters?: Record<string, string | number | boolean>,
   ): Observable<AlertEvent[]> {
-    return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/history`, { params: filters }).pipe(
-      catchError((error) => {
-        console.error('Error fetching alert event history:', error);
-        return of([]);
-      }),
-    );
-  }
-
-  /**
-   * Acknowledge an alert event
-   * @param eventId Alert event ID
-   */
-  acknowledgeAlertEvent(eventId: string): Observable<AlertEvent> {
-    return this.http.post<AlertEvent>(`${this.apiUrl}/events/${eventId}/acknowledge`, {}).pipe(
-      tap(() => {
-        // Update the active alerts list
-        const currentAlerts = this.activeAlerts.value;
-        const updatedAlerts = currentAlerts.map((alert) =>
-          alert.id === eventId ? { ...alert, acknowledged: true } : alert,
-        );
-        this.activeAlerts.next(updatedAlerts);
-
-        // Update unacknowledged count
-        this.updateUnacknowledgedCount();
-      }),
-    );
-  }
-
-  /**
-   * Test an alert definition to see if it would trigger
-   * @param alert Alert definition to test
-   */
-  testAlert(alert: Alert): Observable<{ wouldTrigger: boolean; message: string }> {
-    return this.http.post<{ wouldTrigger: boolean; message: string }>(`${this.apiUrl}/test`, alert);
+    return this.http.get<AlertEvent[]>(`${this.apiUrl}/events/history`, { params: filters });
   }
 
   /**
@@ -324,40 +266,37 @@ export class AlertService {
     return this.createAlert(alert);
   }
 
-  /**
-   * Load active alerts from the server
-   */
+  private setupWebSocketConnection(): void {
+    // Monitor WebSocket connection status
+    this.telemetrySocketService.connectionStatus$.subscribe((connected) => {
+      if (connected) {
+        this.setupAlertEventListener();
+      }
+    });
+
+    // Initial load of active alerts
+    this.loadActiveAlerts();
+  }
+
   private loadActiveAlerts(): void {
-    this.getActiveAlertEvents().subscribe((alerts) => {
-      this.activeAlerts.next(alerts);
-      this.updateUnacknowledgedCount();
+    this.getActiveAlerts().subscribe((alerts) => {
+      this.activeAlertsSubject.next(alerts);
     });
   }
 
-  /**
-   * Subscribe to real-time alert events via WebSocket
-   */
-  private subscribeToAlertEvents(): void {
+  private setupAlertEventListener(): void {
+    // Subscribe to alert events channel
     this.telemetrySocketService.subscribe('alerts');
 
     // Listen for alert events
     this.telemetrySocketService.alertEvents$.subscribe((event) => {
-      const currentAlerts = this.activeAlerts.value;
+      const currentAlerts = this.activeAlertsSubject.value;
 
       // Add the new alert if it's not already in the list
       if (!currentAlerts.some((alert) => alert.id === event.id)) {
-        this.activeAlerts.next([...currentAlerts, event]);
-        this.updateUnacknowledgedCount();
+        this.activeAlertsSubject.next([...currentAlerts, event]);
       }
     });
-  }
-
-  /**
-   * Update the count of unacknowledged alerts
-   */
-  private updateUnacknowledgedCount(): void {
-    const count = this.activeAlerts.value.filter((alert) => !alert.acknowledged).length;
-    this.unacknowledgedCount.next(count);
   }
 
   /**

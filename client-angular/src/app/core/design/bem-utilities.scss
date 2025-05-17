@@ -120,5 +120,6 @@
 /// @return {String} BEM selector
 @function bem-selector($block, $element: null, $modifier: null) {
   $selector: '.' + bem($block, $element, $modifier);
+
   @return $selector;
 }

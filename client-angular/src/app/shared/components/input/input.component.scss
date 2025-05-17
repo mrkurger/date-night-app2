@@ -6,7 +6,7 @@
  * Implements the DateNight.io input styles using the design system.
  */
 
-@use '../../../../app/core/design/design-tokens' as ds;
+
 
 .input {
   display: flex;
@@ -16,14 +16,14 @@
   // Label
   &__label {
     @include typography.label;
-    margin-bottom: ds.$spacing-1;
-    color: ds.$color-dark-gray-2;
+    margin-bottom: var(--spacing-1) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
   }
 
   // Required indicator
   &__required-indicator {
-    color: ds.$color-error;
-    margin-left: ds.$spacing-1;
+    color: var(--color-error) /* TODO: Verify correct CSS variable */;
+    margin-left: var(--spacing-1) /* TODO: Verify correct CSS variable */;
   }
 
   // Input container
@@ -37,14 +37,14 @@
   // Input field
   &__field {
     width: 100%;
-    font-family: ds.$font-family-base;
+    font-family: var(--font-family-base) /* TODO: Verify correct CSS variable */;
     background-color: transparent;
     border: none;
     outline: none;
-    transition: all ds.$transition-fast ds.$transition-timing-default;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     &::placeholder {
-      color: ds.$color-medium-gray-2;
+      color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
     }
 
     &:focus {
@@ -60,11 +60,11 @@
   // Helper text
   &__helper-text {
     @include typography.body-xs;
-    margin-top: ds.$spacing-1;
-    color: ds.$color-dark-gray-1;
+    margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     &--error {
-      color: ds.$color-error;
+      color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -73,14 +73,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ds.$color-dark-gray-1;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     &--left {
-      margin-right: ds.$spacing-2;
+      margin-right: var(--spacing-2) /* TODO: Verify correct CSS variable */;
     }
 
     &--right {
-      margin-left: ds.$spacing-2;
+      margin-left: var(--spacing-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -90,15 +90,15 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    color: ds.$color-dark-gray-1;
+    color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     &:hover {
-      color: ds.$color-dark-gray-2;
+      color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
     }
 
     &:focus-visible {
       outline: none;
-      color: ds.$color-primary;
+      color: ds.var(--color-primary);
     }
   }
 
@@ -106,7 +106,7 @@
   &--small {
     .input__field {
       @include typography.body-small;
-      padding: ds.$spacing-1 ds.$spacing-2;
+      padding: var(--spacing-1) /* TODO: Verify correct CSS variable */ var(--spacing-2) /* TODO: Verify correct CSS variable */;
       height: 32px;
     }
   }
@@ -114,7 +114,7 @@
   &--medium {
     .input__field {
       @include typography.body-default;
-      padding: ds.$spacing-2 ds.$spacing-3;
+      padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-3) /* TODO: Verify correct CSS variable */;
       height: 40px;
     }
   }
@@ -122,7 +122,7 @@
   &--large {
     .input__field {
       @include typography.body-default;
-      padding: ds.$spacing-3 ds.$spacing-4;
+      padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
       height: 48px;
     }
   }
@@ -130,52 +130,52 @@
   // Variant styles
   &--outlined {
     .input__container {
-      border: 1px solid ds.$color-light-gray-2;
-      border-radius: ds.$border-radius-md;
-      background-color: ds.$color-white;
+      border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
+      border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
+      background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     }
 
     &.input--focused .input__container {
-      border-color: ds.$color-primary;
-      box-shadow: 0 0 0 1px ds.$color-primary;
+      border-color: ds.var(--color-primary);
+      box-shadow: 0 0 0 1px ds.var(--color-primary);
     }
 
     &.input--error .input__container {
-      border-color: ds.$color-error;
-      box-shadow: 0 0 0 1px ds.$color-error;
+      border-color: var(--color-error) /* TODO: Verify correct CSS variable */;
+      box-shadow: 0 0 0 1px var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &--filled {
     .input__container {
-      background-color: ds.$color-light-gray-1;
-      border-radius: ds.$border-radius-md;
+      background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
+      border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
       border: 1px solid transparent;
     }
 
     &.input--focused .input__container {
-      background-color: color.adjust(ds.$color-light-gray-1, $lightness: 2%);
-      border-color: ds.$color-primary;
+      background-color: /* TODO: Invalid SCSS function call with CSS variable removed: /* TODO: Invalid SCSS function call with CSS variable removed: color.adjust(var(--color-light-gray-1) */ */ /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: 2%);
+      border-color: ds.var(--color-primary);
     }
 
     &.input--error .input__container {
-      border-color: ds.$color-error;
+      border-color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
   &--standard {
     .input__container {
-      border-bottom: 1px solid ds.$color-light-gray-2;
+      border-bottom: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
       padding-left: 0;
       padding-right: 0;
     }
 
     &.input--focused .input__container {
-      border-bottom-color: ds.$color-primary;
+      border-bottom-color: ds.var(--color-primary);
     }
 
     &.input--error .input__container {
-      border-bottom-color: ds.$color-error;
+      border-bottom-color: var(--color-error) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -185,11 +185,11 @@
 
     .input__container {
       cursor: not-allowed;
-      background-color: ds.$color-light-gray-1;
+      background-color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
     }
 
     .input__label {
-      color: ds.$color-medium-gray-2;
+      color: var(--color-medium-gray-2) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -217,53 +217,53 @@
   body.dark-mode-enabled {
     .input {
       &__label {
-        color: ds.$color-light-gray-1;
+        color: var(--color-light-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       &__field {
-        color: ds.$color-white;
+        color: var(--color-white) /* TODO: Verify correct CSS variable */;
 
         &::placeholder {
-          color: ds.$color-medium-gray-1;
+          color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
         }
       }
 
       &__helper-text {
-        color: ds.$color-medium-gray-1;
+        color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       &__icon {
-        color: ds.$color-medium-gray-1;
+        color: var(--color-medium-gray-1) /* TODO: Verify correct CSS variable */;
       }
 
       // Variant styles in dark mode
       &--outlined {
         .input__container {
-          border-color: ds.$color-dark-gray-1;
-          background-color: ds.$color-dark-gray-2;
+          border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
+          background-color: var(--color-dark-gray-2) /* TODO: Verify correct CSS variable */;
         }
       }
 
       &--filled {
         .input__container {
-          background-color: ds.$color-dark-gray-3;
+          background-color: var(--color-dark-gray-3) /* TODO: Verify correct CSS variable */;
         }
 
         &.input--focused .input__container {
-          background-color: color.adjust(ds.$color-dark-gray-3, $lightness: 5%);
+          background-color: /* TODO: Invalid SCSS function call with CSS variable removed: /* TODO: Invalid SCSS function call with CSS variable removed: color.adjust(var(--color-dark-gray-3) */ */ /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: 5%);
         }
       }
 
       &--standard {
         .input__container {
-          border-bottom-color: ds.$color-dark-gray-1;
+          border-bottom-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
         }
       }
 
       // State variants in dark mode
       &--disabled {
         .input__container {
-          background-color: color.adjust(ds.$color-dark-gray-2, $lightness: -3%);
+          background-color: /* TODO: Invalid SCSS function call with CSS variable removed: /* TODO: Invalid SCSS function call with CSS variable removed: color.adjust(var(--color-dark-gray-2) */ */ /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: -3%);
         }
       }
     }

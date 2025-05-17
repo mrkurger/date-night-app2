@@ -1,3 +1,16 @@
+import { Input } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+} from '@nebular/theme';
+
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,7 +20,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -16,41 +28,176 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    RouterLink,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+  ],
   template: `
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title text-center">Login</h3>
-              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" formControlName="email" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" formControlName="password" class="form-control" />
-                </div>
-                <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-                <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
-                  Login
-                </button>
-              </form>
-              <div class="text-center mt-3">
-                <a routerLink="/auth/register">Need an account? Register</a>
-              </div>
-            </div>
+    <div class="login-container">
+      <nb-card>
+        <nb-card-header>
+          <h3 class="title">Login</h3>
+        </nb-card-header>
+        <nb-card-body>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <nb-form-field>
+              <nb-icon nbPrefix icon="email-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                type="email"
+                formControlName="email"
+                placeholder="Email"
+                [status]="
+                  loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+              <span
+                nbSuffix
+                *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                class="error-icon"
+              >
+                <nb-icon icon="alert-circle-outline" status="danger"></nb-icon>
+              </span>
+            </nb-form-field>
+
+            <nb-form-field>
+              <nb-icon nbPrefix icon="lock-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Password"
+                [status]="
+                  loginForm.get('password')?.touched && loginForm.get('password')?.invalid
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+              <button
+                nbSuffix
+                nbButton
+                ghost
+                (click)="showPassword = !showPassword"
+                type="button"
+                [attr.aria-label]="showPassword ? 'hide password' : 'show password'"
+              >
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"></nb-icon>
+              </button>
+            </nb-form-field>
+
+            <nb-alert *ngIf="error" status="danger" class="error-alert">
+              {{ error }}
+            </nb-alert>
+
+            <button
+              nbButton
+              status="primary"
+              fullWidth
+              type="submit"
+              [disabled]="loginForm.invalid || isLoading"
+              size="large"
+            >
+              <nb-icon icon="log-in-outline"></nb-icon>
+              <span>Login</span>
+              <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
+            </button>
+          </form>
+
+          <div class="register-link">
+            <a routerLink="/auth/register">Need an account? Register</a>
           </div>
-        </div>
-      </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+        background-color: var(--background-basic-color-2);
+      }
+
+      nb-card {
+        margin: 0;
+        max-width: 400px;
+        width: 100%;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+      }
+
+      .title {
+        margin: 0;
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-basic-color);
+      }
+
+      nb-card-body {
+        padding: 2rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .error-alert {
+        margin: 0;
+      }
+
+      .register-link {
+        margin-top: 1.5rem;
+        text-align: center;
+
+        a {
+          color: var(--text-primary-color);
+          text-decoration: none;
+          font-weight: 500;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      nb-icon {
+        color: var(--text-hint-color);
+      }
+
+      .error-icon nb-icon {
+        color: var(--color-danger-default);
+      }
+    `,
+  ],
 })
 export class LoginComponent {
   loginForm: FormGroup;
   error = '';
+  isLoading = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,9 +212,18 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.isLoading = true;
+      this.error = '';
+
       this.auth.login(this.loginForm.value).subscribe({
-        next: () => this.router.navigate(['/ads']),
-        error: (err) => (this.error = err.error.message || 'Login failed'),
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/ads']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.error = err.error.message || 'Login failed';
+        },
       });
     }
   }

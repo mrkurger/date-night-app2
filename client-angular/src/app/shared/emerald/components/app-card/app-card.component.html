@@ -1,35 +1,29 @@
-<!-- Emerald AppCard Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/AppCard -->
+<!-- AppCard Component using Nebular UI -->
 
-<div
-  class="emerald-app-card"
+<nb-card
   [ngClass]="{
-    'emerald-app-card--tinder': layout === 'tinder',
-    'emerald-app-card--netflix': layout === 'netflix',
-    'emerald-app-card--list': layout === 'list',
+    'nb-card-tinder': layout === 'tinder',
+    'nb-card-netflix': layout === 'netflix',
+    'nb-card-list': layout === 'list',
   }"
   (click)="onViewDetails()"
 >
   <!-- Card Background Image -->
-  <div class="emerald-app-card__media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
-    <!-- Online/Offline Status Label -->
-    <div
-      class="emerald-app-card__status-label"
-      [ngClass]="{
-        'emerald-app-card__status-label--online': isOnline,
-        'emerald-app-card__status-label--offline': !isOnline,
-      }"
-    >
-      <span class="emerald-app-card__status-indicator"></span>
-      <span class="emerald-app-card__status-text">{{ isOnline ? 'Online' : 'Offline' }}</span>
-    </div>
+  <div class="nb-card-media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
+    <!-- Online/Offline Status Badge -->
+    <nb-badge
+      [text]="isOnline ? 'Online' : 'Offline'"
+      [status]="isOnline ? 'success' : 'danger'"
+      position="top-left"
+      class="status-badge"
+    ></nb-badge>
 
     <!-- Media Navigation Dots -->
-    <div class="emerald-app-card__media-dots" *ngIf="getMediaCount() > 1">
+    <div class="nb-card-media-dots" *ngIf="getMediaCount() > 1">
       <div
         *ngFor="let dot of getMediaDots(); let i = index"
-        class="emerald-app-card__media-dot"
-        [ngClass]="{ 'emerald-app-card__media-dot--active': i === currentMediaIndex }"
+        class="nb-card-media-dot"
+        [ngClass]="{ 'nb-card-media-dot-active': i === currentMediaIndex }"
         (click)="
           $event.stopPropagation(); currentMediaIndex = i; backgroundImageUrl = getCurrentMediaUrl()
         "
@@ -39,82 +33,100 @@
     <!-- Media Navigation Buttons -->
     <button
       *ngIf="getMediaCount() > 1"
-      class="emerald-app-card__media-nav emerald-app-card__media-nav--prev"
+      nbButton
+      ghost
+      size="small"
+      class="nb-card-media-nav nb-card-media-nav-prev"
       (click)="prevMedia($event)"
       aria-label="Previous image"
     >
-      <i class="fas fa-chevron-left"></i>
+      <nb-icon icon="chevron-left-outline"></nb-icon>
     </button>
     <button
       *ngIf="getMediaCount() > 1"
-      class="emerald-app-card__media-nav emerald-app-card__media-nav--next"
+      nbButton
+      ghost
+      size="small"
+      class="nb-card-media-nav nb-card-media-nav-next"
       (click)="nextMedia($event)"
       aria-label="Next image"
     >
-      <i class="fas fa-chevron-right"></i>
+      <nb-icon icon="chevron-right-outline"></nb-icon>
     </button>
 
     <!-- Content Overlay with Blur Effect -->
-    <div class="emerald-app-card__content-overlay">
-      <div class="emerald-app-card__content">
-        <h3 class="emerald-app-card__title" *ngIf="ad">{{ ad.title }}</h3>
-        <h3 class="emerald-app-card__title" *ngIf="!ad">Untitled</h3>
+    <div class="nb-card-content-overlay">
+      <nb-card-body class="nb-card-content">
+        <h3 class="nb-card-title" *ngIf="ad">{{ ad.title }}</h3>
+        <h3 class="nb-card-title" *ngIf="!ad">Untitled</h3>
 
-        <div class="emerald-app-card__meta" *ngIf="ad">
-          <div class="emerald-app-card__location" *ngIf="ad.location">
-            <i class="fas fa-map-marker-alt"></i>
+        <div class="nb-card-meta" *ngIf="ad">
+          <div class="nb-card-location" *ngIf="ad.location">
+            <nb-icon icon="map-outline"></nb-icon>
             <span>{{ ad.location }}</span>
           </div>
 
-          <div class="emerald-app-card__price" *ngIf="ad.price">
-            <i class="fas fa-tag"></i>
+          <div class="nb-card-price" *ngIf="ad.price">
+            <nb-icon icon="pricetags-outline"></nb-icon>
             <span>{{ formatPrice(ad.price) }}</span>
           </div>
         </div>
 
-        <p class="emerald-app-card__description" *ngIf="ad && showDescription && ad.description">
+        <p class="nb-card-description" *ngIf="ad && showDescription && ad.description">
           {{ getTruncatedDescription() }}
         </p>
-      </div>
+      </nb-card-body>
     </div>
   </div>
 
   <!-- Card Actions -->
-  <div class="emerald-app-card__actions" *ngIf="showActions">
+  <nb-card-footer class="nb-card-actions" *ngIf="showActions">
     <!-- Bottom Left Floating Action Button -->
     <button
-      class="emerald-app-card__fab emerald-app-card__fab--left"
+      nbButton
+      status="primary"
+      shape="round"
+      class="nb-card-fab nb-card-fab-left"
       (click)="onLike($event)"
       aria-label="Like"
     >
-      <i class="fas fa-heart"></i>
+      <nb-icon icon="heart-outline"></nb-icon>
     </button>
 
     <!-- Bottom Right Floating Action Button -->
     <button
-      class="emerald-app-card__fab emerald-app-card__fab--right"
+      nbButton
+      status="info"
+      shape="round"
+      class="nb-card-fab nb-card-fab-right"
       (click)="onChat($event)"
       aria-label="Chat"
     >
-      <i class="fas fa-comment"></i>
+      <nb-icon icon="message-circle-outline"></nb-icon>
     </button>
 
     <!-- Tinder-specific Swipe Actions -->
-    <div class="emerald-app-card__swipe-actions" *ngIf="layout === 'tinder'">
+    <div class="nb-card-swipe-actions" *ngIf="layout === 'tinder'">
       <button
-        class="emerald-app-card__swipe-button emerald-app-card__swipe-button--left"
+        nbButton
+        status="danger"
+        shape="round"
+        class="nb-card-swipe-button nb-card-swipe-button-left"
         (click)="onSwipe('left', $event)"
         aria-label="Swipe left"
       >
-        <i class="fas fa-times"></i>
+        <nb-icon icon="close-outline"></nb-icon>
       </button>
       <button
-        class="emerald-app-card__swipe-button emerald-app-card__swipe-button--right"
+        nbButton
+        status="success"
+        shape="round"
+        class="nb-card-swipe-button nb-card-swipe-button-right"
         (click)="onSwipe('right', $event)"
         aria-label="Swipe right"
       >
-        <i class="fas fa-heart"></i>
+        <nb-icon icon="heart-outline"></nb-icon>
       </button>
     </div>
-  </div>
-</div>
+  </nb-card-footer>
+</nb-card>

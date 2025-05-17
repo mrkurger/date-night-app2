@@ -7,37 +7,39 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
-import { routes, routingProviders } from './app.routes';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/material.module';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from '../environments/environment';
+import { routes } from './app.routes';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
+import { CoreModule } from './core/core.module';
+import { NebularModule } from './shared/nebular.module';
+import { SocketIoModule } from 'ngx-socket-io';
+import { socketConfig } from './core/config/socket.config';
 
-const socketConfig: SocketIoConfig = {
-  url: environment.socketUrl || 'http://localhost:3000',
-  options: {},
-};
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbThemeModule } from '@nebular/theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
     provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: true, // Enable PWA in all environments
-      registrationStrategy: 'registerImmediately',
+      enabled: false, // Disable in development mode to prevent 404 errors
+      registrationStrategy: 'registerWhenStable:30000',
     }),
-    routingProviders,
-    importProvidersFrom(CoreModule, SharedModule, SocketIoModule.forRoot(socketConfig)),
+    importProvidersFrom(
+      CoreModule,
+      NebularModule,
+      SocketIoModule.forRoot(socketConfig),
+      NbThemeModule.forRoot({ name: 'default' }),
+      NbEvaIconsModule,
+    ),
   ],
 };

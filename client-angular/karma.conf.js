@@ -37,5 +37,8 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true,
+    customMime: {
+      '**/*.js': 'application/javascript',
+    },
   });
 };

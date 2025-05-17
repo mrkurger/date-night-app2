@@ -1,14 +1,30 @@
+import { Component } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule
+} from '@nebular/theme';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  NbDialog,
+  NbDialogService,
+  
+} from '@nebular/theme';
+import { NbDividerModule } from '../../../shared/mocks/nb-divider.module';
 import { of, throwError } from 'rxjs';
 import { FavoritesListComponent } from './favorites-list.component';
 import { FavoriteService } from '../../../core/services/favorite.service';
@@ -21,7 +37,7 @@ describe('FavoritesListComponent', () => {
   let fixture: ComponentFixture<FavoritesListComponent>;
   let favoriteServiceSpy: jasmine.SpyObj<FavoriteService>;
   let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let dialogSpy: jasmine.SpyObj<NbDialogService>;
 
   const mockFavorites = [
     {
@@ -98,27 +114,27 @@ describe('FavoritesListComponent', () => {
       'updateNotes',
     ]);
     notificationServiceSpy = jasmine.createSpyObj('NotificationService', ['success', 'error']);
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    dialogSpy = jasmine.createSpyObj('NbDialogService', ['open']);
 
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         NoopAnimationsModule,
-        MatCardModule,
-        MatIconModule,
-        MatButtonModule,
-        MatDividerModule,
-        MatMenuModule,
-        MatProgressSpinnerModule,
-        MatSlideToggleModule,
-        MatDialogModule,
+        NbCardModule,
+        NbIconModule,
+        NbButtonModule,
+        NbDividerModule,
+        NbMenuModule,
+        NbSpinnerModule,
+        NbToggleModule,
+        NbDialogModule,
         FavoritesListComponent,
         FavoriteButtonComponent,
       ],
       providers: [
         { provide: FavoriteService, useValue: favoriteServiceSpy },
         { provide: NotificationService, useValue: notificationServiceSpy },
-        { provide: MatDialog, useValue: dialogSpy },
+        { provide: NbDialogService, useValue: dialogSpy },
       ],
     }).compileComponents();
 
@@ -192,7 +208,7 @@ describe('FavoritesListComponent', () => {
     favoriteServiceSpy.getFavorites.and.returnValue(of(mockFavorites));
     favoriteServiceSpy.updateNotes.and.returnValue(of({}));
 
-    const dialogRefSpyObj = jasmine.createSpyObj('MatDialogRef', {
+    const dialogRefSpyObj = jasmine.createSpyObj('NbDialogRef', {
       afterClosed: of('New dialog notes'),
     });
     dialogSpy.open.and.returnValue(dialogRefSpyObj);

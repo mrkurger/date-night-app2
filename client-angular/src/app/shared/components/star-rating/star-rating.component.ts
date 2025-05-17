@@ -1,21 +1,12 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (star-rating.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EventEmitter, Output, Input, Component } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-star-rating',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [CommonModule, NbIconModule, NbTooltipModule],
   template: `
     <div class="star-rating" [class.small]="small" [class.readonly]="readonly">
       <span
@@ -26,11 +17,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         (click)="onRatingChange(i + 1)"
         (mouseenter)="onStarHover(i + 1)"
         (mouseleave)="onStarLeave()"
-        [matTooltip]="getTooltip(i + 1)"
+        [nbTooltip]="getTooltip(i + 1)"
       >
-        <mat-icon *ngIf="star.filled">star</mat-icon>
-        <mat-icon *ngIf="star.half">star_half</mat-icon>
-        <mat-icon *ngIf="!star.filled && !star.half">star_border</mat-icon>
+        <nb-icon *ngIf="star.filled" icon="star"></nb-icon>
+        <nb-icon *ngIf="star.half" icon="star-half-2"></nb-icon>
+        <nb-icon *ngIf="!star.filled && !star.half" icon="star-outline"></nb-icon>
       </span>
 
       <span class="rating-text" *ngIf="showRatingText">
@@ -47,29 +38,32 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
       .star {
         cursor: pointer;
-        color: #ffd740;
-      }
+        color: var(--color-warning-500);
+        padding: 0 2px;
 
-      .star mat-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
+        nb-icon {
+          font-size: 1.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
       }
 
       .readonly .star {
         cursor: default;
       }
 
-      .small .star mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
+      .small {
+        .star nb-icon {
+          font-size: 1.125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+        }
       }
 
       .rating-text {
-        margin-left: 8px;
+        margin-left: 0.5rem;
         font-weight: 500;
-        color: #333;
+        color: var(--text-basic-color);
       }
     `,
   ],
@@ -79,73 +73,42 @@ export class StarRatingComponent {
   @Input() readonly = false;
   @Input() small = false;
   @Input() showRatingText = false;
-  @Input() allowHalfStars = true;
-
   @Output() ratingChange = new EventEmitter<number>();
 
-  stars: { filled: boolean; half: boolean }[] = [];
-  hoverRating: number | null = null;
+  private hoveredRating: number | null = null;
 
-  private readonly ratingLabels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
-
-  ngOnInit(): void {
-    this.updateStars();
-  }
-
-  ngOnChanges(): void {
-    this.updateStars();
+  get stars(): { filled: boolean; half: boolean }[] {
+    const rating = this.hoveredRating ?? this.rating;
+    return Array(5)
+      .fill(0)
+      .map((_, index) => {
+        const position = index + 1;
+        return {
+          filled: rating >= position,
+          half: rating + 0.5 >= position && rating < position,
+        };
+      });
   }
 
   onRatingChange(rating: number): void {
-    if (this.readonly) return;
-
-    this.rating = rating;
-    this.ratingChange.emit(rating);
-    this.updateStars();
+    if (!this.readonly) {
+      this.rating = rating;
+      this.ratingChange.emit(rating);
+    }
   }
 
   onStarHover(rating: number): void {
-    if (this.readonly) return;
-
-    this.hoverRating = rating;
-    this.updateStarsForHover();
+    if (!this.readonly) {
+      this.hoveredRating = rating;
+    }
   }
 
   onStarLeave(): void {
-    if (this.readonly) return;
-
-    this.hoverRating = null;
-    this.updateStars();
+    this.hoveredRating = null;
   }
 
-  getTooltip(index: number): string {
-    return this.ratingLabels[index - 1] || '';
-  }
-
-  private updateStars(): void {
-    this.stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      const filled = i <= Math.floor(this.rating);
-      const half = this.allowHalfStars && i === Math.ceil(this.rating) && this.rating % 1 !== 0;
-
-      this.stars.push({ filled, half });
-    }
-  }
-
-  private updateStarsForHover(): void {
-    if (this.hoverRating === null) {
-      this.updateStars();
-      return;
-    }
-
-    this.stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      const filled = i <= this.hoverRating;
-      const half = false; // No half stars on hover
-
-      this.stars.push({ filled, half });
-    }
+  getTooltip(rating: number): string {
+    if (this.readonly) return '';
+    return `Rate ${rating} star${rating !== 1 ? 's' : ''}`;
   }
 }

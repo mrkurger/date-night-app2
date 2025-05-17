@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Input } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import {
@@ -63,9 +66,7 @@ import {
         </div>
 
         <div class="performance-monitor__section">
-          <h4 class="performance-monitor__section-title">
-            Long Tasks ({{ metrics?.longTasks?.length || 0 }})
-          </h4>
+          <h4 class="performance-monitor__section-title"></h4>
           <div class="performance-monitor__long-tasks" *ngIf="metrics?.longTasks?.length">
             <div
               class="performance-monitor__long-task"

@@ -1,36 +1,35 @@
-<!-- Emerald Carousel Component -->
-<!-- Documentation: https://docs-emerald.condorlabs.io/Carousel -->
+<!-- Carousel Component using Nebular UI -->
 
 <div
-  class="emerald-carousel"
+  class="nb-carousel"
   [ngClass]="{
-    'emerald-carousel--1-1': aspectRatio === '1:1',
-    'emerald-carousel--4-3': aspectRatio === '4:3',
-    'emerald-carousel--16-9': aspectRatio === '16:9',
-    'emerald-carousel--21-9': aspectRatio === '21:9',
-    'emerald-carousel--with-thumbnails': thumbnails,
+    'nb-carousel-1-1': aspectRatio === '1:1',
+    'nb-carousel-4-3': aspectRatio === '4:3',
+    'nb-carousel-16-9': aspectRatio === '16:9',
+    'nb-carousel-21-9': aspectRatio === '21:9',
+    'nb-carousel-with-thumbnails': thumbnails,
   }"
 >
   <!-- Main Carousel -->
-  <div class="emerald-carousel__main">
+  <div class="nb-carousel-main">
     <!-- Carousel Items -->
-    <div class="emerald-carousel__items">
+    <div class="nb-carousel-items">
       <div
         *ngFor="let item of items; let i = index"
-        class="emerald-carousel__item"
-        [ngClass]="{ 'emerald-carousel__item--active': i === currentIndex }"
+        class="nb-carousel-item"
+        [ngClass]="{ 'nb-carousel-item-active': i === currentIndex }"
       >
         <!-- Image Item -->
         <img
           *ngIf="item.type === 'image'"
           [src]="item.url"
           [alt]="item.alt || 'Carousel image'"
-          class="emerald-carousel__image"
+          class="nb-carousel-image"
           (error)="onImageError($event)"
         />
 
         <!-- Video Item -->
-        <video *ngIf="item.type === 'video'" class="emerald-carousel__video" controls>
+        <video *ngIf="item.type === 'video'" class="nb-carousel-video" controls>
           <source [src]="item.url" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -38,29 +37,35 @@
     </div>
 
     <!-- Navigation Arrows -->
-    <div *ngIf="showArrows && items.length > 1" class="emerald-carousel__arrows">
+    <div *ngIf="showArrows && items.length > 1" class="nb-carousel-arrows">
       <button
-        class="emerald-carousel__arrow emerald-carousel__arrow--prev"
+        nbButton
+        ghost
+        size="medium"
+        class="nb-carousel-arrow nb-carousel-arrow-prev"
         (click)="prev($event)"
         aria-label="Previous slide"
       >
-        <i class="fas fa-chevron-left"></i>
+        <nb-icon icon="arrow-left-outline"></nb-icon>
       </button>
       <button
-        class="emerald-carousel__arrow emerald-carousel__arrow--next"
+        nbButton
+        ghost
+        size="medium"
+        class="nb-carousel-arrow nb-carousel-arrow-next"
         (click)="next($event)"
         aria-label="Next slide"
       >
-        <i class="fas fa-chevron-right"></i>
+        <nb-icon icon="arrow-right-outline"></nb-icon>
       </button>
     </div>
 
     <!-- Navigation Dots -->
-    <div *ngIf="showDots && items.length > 1 && !thumbnails" class="emerald-carousel__dots">
+    <div *ngIf="showDots && items.length > 1 && !thumbnails" class="nb-carousel-dots">
       <button
         *ngFor="let item of items; let i = index"
-        class="emerald-carousel__dot"
-        [ngClass]="{ 'emerald-carousel__dot--active': i === currentIndex }"
+        class="nb-carousel-dot"
+        [ngClass]="{ 'nb-carousel-dot-active': i === currentIndex }"
         (click)="goTo(i, $event)"
         [attr.aria-label]="'Go to slide ' + (i + 1)"
       ></button>
@@ -68,19 +73,19 @@
   </div>
 
   <!-- Thumbnails -->
-  <div *ngIf="thumbnails && items.length > 1" class="emerald-carousel__thumbnails">
-    <div class="emerald-carousel__thumbnails-container">
+  <div *ngIf="thumbnails && items.length > 1" class="nb-carousel-thumbnails">
+    <div class="nb-carousel-thumbnails-container">
       <button
         *ngFor="let item of items; let i = index"
-        class="emerald-carousel__thumbnail"
-        [ngClass]="{ 'emerald-carousel__thumbnail--active': i === currentIndex }"
+        class="nb-carousel-thumbnail"
+        [ngClass]="{ 'nb-carousel-thumbnail-active': i === currentIndex }"
         (click)="goTo(i, $event)"
         [attr.aria-label]="'Go to slide ' + (i + 1)"
       >
         <img
           [src]="item.thumbnail || item.url"
           [alt]="'Thumbnail ' + (i + 1)"
-          class="emerald-carousel__thumbnail-image"
+          class="nb-carousel-thumbnail-image"
           (error)="onImageError($event)"
         />
       </button>

@@ -9,6 +9,7 @@
 // ===================================================
 import walletService from '../services/wallet.service.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Wallet Controller for handling wallet-related API endpoints
@@ -436,6 +437,11 @@ class WalletController {
       next(error);
     }
   }
+}
+
+export async function someHandler(req, res) {
+  // TODO: Implement wallet handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
 }
 
 export default new WalletController();

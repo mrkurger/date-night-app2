@@ -1,5 +1,78 @@
 # Change Log
 
+## [0.2.4] - 2025-05-11
+
+### Added
+- **`WalletService`** (`wallet.service.ts`):
+  - Added `convertToMajorUnit` method to convert currency amounts from their smallest unit (e.g., cents, satoshis) to the major unit (e.g., USD, BTC).
+  - Added `convertToSmallestUnit` method to convert currency amounts from their major unit to the smallest unit.
+  - Updated `formatCurrency` to utilize `convertToMajorUnit` for consistent display logic.
+
+### Fixed
+- **`WithdrawDialogComponent`** (`withdraw-dialog.component.ts`):
+  - Resolved `Property 'convertToMajorUnit' does not exist on type 'WalletService'` and `Property 'convertToSmallestUnit' does not exist on type 'WalletService'` errors by ensuring these methods are available in `WalletService`.
+  - Corrected various formatting and linting issues throughout the component's template and TypeScript code as per linter feedback. This included:
+    - Proper formatting for multi-line attributes in HTML elements.
+    - Consistent spacing and newlines in HTML and TypeScript.
+    - Correcting arrow function parameter syntax (e.g., `(n) => ...` instead of `n => ...` when required by linter).
+    - Typed `AbstractControl` for `validateMaxAmount` method parameter.
+  - Refined the logic in `filterPaymentMethods` for fiat currencies to potentially include cards for all fiat types if desired (example provided).
+
+---
+
+## [0.2.3] - 2025-05-11
+
+### Fixed
+- **`WithdrawDialogComponent`** (`withdraw-dialog.component.ts`):
+  - Resolved compilation errors by:
+    - Defining a local `WalletCryptoDetails` interface to manage cryptocurrency network information and memo requirements, and updated its usage as an `@Input()`.
+    - Declaring the `cryptoBalances: WalletBalance[]` class property.
+    - Correcting the `getPaymentMethodDisplayName` method to properly access specific details from `PaymentMethod` (e.g., `cardDetails`, `bankDetails`, `cryptoDetails`) instead of a generic `details` property.
+    - Removing incorrect type assertions like `WalletService['BankDetails']`.
+    - Initializing `fiatBalances` and `cryptoBalances` in `ngOnInit` by filtering the main `balances` input.
+    - Updating `updateMaxAmount` and `updateCryptoMaxAmount` to use the new `fiatBalances` and `cryptoBalances` respectively and to correctly convert amounts using `WalletService` methods.
+    - Modifying `filterPaymentMethods` to correctly filter based on `bankDetails.currency`.
+    - Updating `submitFiatWithdrawal` and `submitCryptoWithdrawal` to use `WalletService` methods for amount conversion (to smallest unit) before sending to the backend and for making the actual API calls.
+    - Improved error handling in withdrawal submissions to display backend error messages.
+    - Ensured `ChangeDetectorRef.detectChanges()` is called after asynchronous operations that affect the view.
+  - Addressed various linting and formatting issues.
+
+---
+
+## [0.2.2] - 2025-05-11
+
+### Refactor
+- **`WithdrawDialogComponent`** (`withdraw-dialog.component.ts`):
+  - Replaced Angular Material and Emerald.js imports and components with Nebular equivalents.
+  - Updated component decorator to `standalone: true` and imported necessary Nebular modules (`NbCardModule`, `NbTabsetModule`, `NbInputModule`, `NbButtonModule`, `NbSelectModule`, `NbOptionModule`, `NbSpinnerModule`, `NbIconModule`, `NbAlertModule`, `NbFormFieldModule`, `NbRadioModule`, `NbCheckboxModule`).
+  - Modified constructor to use `NbDialogRef` and `NbToastrService`.
+  - Adapted component template to use Nebular components (`nb-card`, `nb-tabset`, `nb-input`, `nb-select`, `nb-button`, `nb-spinner`, `nb-alert`, `nb-form-field`, `nb-hint`).
+  - Updated component logic to handle data via `@Input()` and utilize Nebular services for dialogs and toast notifications.
+  - Added initial loading spinner and improved handling of empty states for fiat and crypto balances.
+  - Ensured form validation messages and statuses are correctly displayed using Nebular conventions.
+
+---
+
+## [0.2.1] - 2025-05-11
+
+### Fixed
+- Corrected formatting in `deposit-dialog.component.ts` for the `copyToClipboard` method, ensuring proper promise chain indentation and `toastrService.show()` call structure after previous refactoring and manual edits.
+
+### Refactor
+- Continued migration from Angular Material and Emerald.js to Nebular UI in `deposit-dialog.component.ts`.
+
+---
+
+## [0.2.0] - 2025-05-11
+
+### Changed
+- Fixed formatting issues in `deposit-dialog.component.ts` within the `copyToClipboard` method after prior refactoring to Nebular and manual user edits.
+- Ensured `toastrService.show()` calls have consistent formatting.
+
+### Refactor
+- Continued migration from Angular Material and Emerald.js to Nebular UI in `deposit-dialog.component.ts`.
+  - Standardized clipboard functionality using `navigator.clipboard.writeText`.
+
 ## 2025-04-23
 
 ### Fixed

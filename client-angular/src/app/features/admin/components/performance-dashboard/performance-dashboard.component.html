@@ -3,50 +3,58 @@
 
   <div class="filter-section">
     <form [formGroup]="filterForm" class="filter-form">
-      <mat-form-field appearance="outline">
-        <mat-label>URL Contains</mat-label>
-        <input matInput formControlName="url" placeholder="e.g. /api/users" />
-      </mat-form-field>
+      <nb-form-field appearance="outline">
+        <nb-form-field-label>URL Contains</nb-form-field-label>
+        <input nbInput fullWidth formControlName="url" placeholder="e.g. /api/users" />
+      </nb-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>HTTP Method</mat-label>
-        <mat-select formControlName="method">
-          <mat-option value="">All Methods</mat-option>
-          <mat-option value="GET">GET</mat-option>
-          <mat-option value="POST">POST</mat-option>
-          <mat-option value="PUT">PUT</mat-option>
-          <mat-option value="DELETE">DELETE</mat-option>
-          <mat-option value="PATCH">PATCH</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <nb-form-field appearance="outline">
+        <nb-form-field-label>HTTP Method</nb-form-field-label>
+        <nb-select formControlName="method">
+          <nb-option value="">All Methods</nb-option>
+          <nb-option value="GET">GET</nb-option>
+          <nb-option value="POST">POST</nb-option>
+          <nb-option value="PUT">PUT</nb-option>
+          <nb-option value="DELETE">DELETE</nb-option>
+          <nb-option value="PATCH">PATCH</nb-option>
+        </nb-select>
+      </nb-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Min Duration (ms)</mat-label>
-        <input matInput formControlName="minDuration" type="number" placeholder="e.g. 500" />
-      </mat-form-field>
+      <nb-form-field appearance="outline">
+        <nb-form-field-label>Min Duration (ms)</nb-form-field-label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="minDuration"
+          type="number"
+          placeholder="e.g. 500"
+        />
+      </nb-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Date Range</mat-label>
+      <nb-form-field appearance="outline">
+        <nb-form-field-label>Date Range</nb-form-field-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate formControlName="startDate" placeholder="Start date" />
           <input matEndDate formControlName="endDate" placeholder="End date" />
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <nb-datepicker-toggle matSuffix [for]="picker"></nb-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
+      </nb-form-field>
 
-      <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+      <button nbButton status="primary" color="primary" (click)="applyFilters()">
+        Apply Filters
+      </button>
 
-      <button mat-button (click)="resetFilters()">Reset</button>
+      <button nbButton (click)="resetFilters()">Reset</button>
     </form>
   </div>
 
   <div class="dashboard-content">
-    <mat-card class="chart-card">
-      <mat-card-header>
-        <mat-card-title>Slowest Endpoints (Avg Response Time)</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+    <nb-card class="chart-card">
+      <nb-card-header>
+        <nb-card-header>Slowest Endpoints (Avg Response Time)</nb-card-header>
+      </nb-card-header>
+      <nb-card-body>
         <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">
           <ngx-charts-bar-horizontal
             [results]="responseTimeByEndpoint"
@@ -60,14 +68,14 @@
           >
           </ngx-charts-bar-horizontal>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </nb-card-body>
+    </nb-card>
 
-    <mat-card class="chart-card">
-      <mat-card-header>
-        <mat-card-title>Response Time Distribution</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+    <nb-card class="chart-card">
+      <nb-card-header>
+        <nb-card-header>Response Time Distribution</nb-card-header>
+      </nb-card-header>
+      <nb-card-body>
         <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">
           <ngx-charts-pie-chart
             [results]="responseTimeDistribution"
@@ -78,14 +86,14 @@
           >
           </ngx-charts-pie-chart>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </nb-card-body>
+    </nb-card>
 
-    <mat-card class="chart-card">
-      <mat-card-header>
-        <mat-card-title>Response Time Over Time</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+    <nb-card class="chart-card">
+      <nb-card-header>
+        <nb-card-header>Response Time Over Time</nb-card-header>
+      </nb-card-header>
+      <nb-card-body>
         <div class="chart-container" *ngIf="!isLoading; else loadingTemplate">
           <ngx-charts-line-chart
             [results]="responseTimeOverTime"
@@ -99,76 +107,108 @@
           >
           </ngx-charts-line-chart>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </nb-card-body>
+    </nb-card>
   </div>
 
-  <mat-card class="endpoints-list-card">
-    <mat-card-header>
-      <mat-card-title>Endpoint Performance</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+  <nb-card class="endpoints-list-card">
+    <nb-card-header>
+      <nb-card-header>Endpoint Performance</nb-card-header>
+    </nb-card-header>
+    <nb-card-body>
       <div class="table-container" *ngIf="!isLoading; else loadingTemplate">
-        <table mat-table [dataSource]="slowestEndpoints" matSort (matSortChange)="sortData($event)">
-          <!-- URL Column -->
-          <ng-container matColumnDef="url">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>
-            <td mat-cell *matCellDef="let endpoint" class="url-cell">{{ endpoint.url }}</td>
-          </ng-container>
+        <app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
+          <table class="table">
+            <!-- URL Column -->
+            <ng-container matColumnDef="url">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="url">URL</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint" class="url-cell">{{ endpoint.url }}</td>
+            </ng-container>
 
-          <!-- Method Column -->
-          <ng-container matColumnDef="method">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Method</th>
-            <td mat-cell *matCellDef="let endpoint">
-              <span class="method-chip method-{{ endpoint.method.toLowerCase() }}">
-                {{ endpoint.method }}
-              </span>
-            </td>
-          </ng-container>
+            <!-- Method Column -->
+            <ng-container matColumnDef="method">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="method">Method</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint">
+                <span class="method-chip method-{{ endpoint.method.toLowerCase() }}">
+                  {{ endpoint.method }}
+                </span>
+              </td>
+            </ng-container>
 
-          <!-- Average Duration Column -->
-          <ng-container matColumnDef="avgDuration">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Avg Time</th>
-            <td mat-cell *matCellDef="let endpoint">{{ formatDuration(endpoint.avgDuration) }}</td>
-          </ng-container>
+            <!-- Average Duration Column -->
+            <ng-container matColumnDef="avgDuration">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="avgDuration">Avg Time</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint">
+                {{ formatDuration(endpoint.avgDuration) }}
+              </td>
+            </ng-container>
 
-          <!-- P95 Duration Column -->
-          <ng-container matColumnDef="p95Duration">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>P95 Time</th>
-            <td mat-cell *matCellDef="let endpoint">{{ formatDuration(endpoint.p95Duration) }}</td>
-          </ng-container>
+            <!-- P95 Duration Column -->
+            <ng-container matColumnDef="p95Duration">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="p95Duration">P95 Time</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint">
+                {{ formatDuration(endpoint.p95Duration) }}
+              </td>
+            </ng-container>
 
-          <!-- Max Duration Column -->
-          <ng-container matColumnDef="maxDuration">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Max Time</th>
-            <td mat-cell *matCellDef="let endpoint">{{ formatDuration(endpoint.maxDuration) }}</td>
-          </ng-container>
+            <!-- Max Duration Column -->
+            <ng-container matColumnDef="maxDuration">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="maxDuration">Max Time</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint">
+                {{ formatDuration(endpoint.maxDuration) }}
+              </td>
+            </ng-container>
 
-          <!-- Count Column -->
-          <ng-container matColumnDef="count">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Requests</th>
-            <td mat-cell *matCellDef="let endpoint">{{ endpoint.count }}</td>
-          </ng-container>
+            <!-- Count Column -->
+            <ng-container matColumnDef="count">
+              <th mat-header-cell *matHeaderCellDef>
+                <app-sort-header appSortHeaderId="count">Requests</app-sort-header>
+              </th>
+              <td mat-cell *matCellDef="let endpoint">{{ endpoint.count }}</td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </app-sort>
 
-        <mat-paginator
-          [length]="totalEndpoints"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10, 25, 50]"
-          (page)="onPageChange($event)"
-        >
-        </mat-paginator>
+        <div class="pagination">
+          <button
+            nbButton
+            ghost
+            [disabled]="pageIndex === 0"
+            (click)="onPageChange({ page: pageIndex, pageSize: pageSize })"
+          >
+            Previous
+          </button>
+          <span>Page {{ pageIndex + 1 }}</span>
+          <button
+            nbButton
+            ghost
+            [disabled]="(pageIndex + 1) * pageSize >= totalEndpoints"
+            (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })"
+          >
+            Next
+          </button>
+        </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </nb-card-body>
+  </nb-card>
 </div>
 
 <ng-template #loadingTemplate>
   <div class="loading-container">
-    <mat-spinner diameter="40"></mat-spinner>
+    <nb-spinner diameter="40"></nb-spinner>
     <p>Loading data...</p>
   </div>
 </ng-template>

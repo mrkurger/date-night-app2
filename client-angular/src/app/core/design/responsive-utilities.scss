@@ -26,22 +26,19 @@
  * }
  */
 
-@use 'design-tokens' as tokens;
-
-// Breakpoint map
 $breakpoints: (
-  'mobile': tokens.$breakpoint-mobile,
-  'tablet': tokens.$breakpoint-tablet,
-  'desktop': tokens.$breakpoint-desktop,
-  'desktop-large': tokens.$breakpoint-desktop-large,
-  'desktop-xl': tokens.$breakpoint-desktop-xl,
+  'mobile': var(--breakpoint-mobile),
+  'tablet': var(--breakpoint-tablet),
+  'desktop': var(--breakpoint-desktop),
+  'desktop-large': var(--breakpoint-desktop-large),
+  'desktop-xl': var(--breakpoint-desktop-xl),
 );
 
 /// Media query for minimum width
 /// @param {String} $breakpoint - Breakpoint name
 @mixin up($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
       @content;
     }
   } @else {
@@ -53,7 +50,7 @@ $breakpoints: (
 /// @param {String} $breakpoint - Breakpoint name
 @mixin down($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    @media (max-width: map-get($breakpoints, $breakpoint) - 1px) {
+    @media (max-width: calc(#{map.get($breakpoints, $breakpoint)} - 1px)) {
       @content;
     }
   } @else {
@@ -66,7 +63,7 @@ $breakpoints: (
 /// @param {String} $max - Maximum breakpoint name
 @mixin between($min, $max) {
   @if map-has-key($breakpoints, $min) and map-has-key($breakpoints, $max) {
-    @media (min-width: map-get($breakpoints, $min)) and (max-width: map-get($breakpoints, $max) - 1px) {
+    @media (min-width: #{map.get($breakpoints, $min)}) and (max-width: calc(#{map.get($breakpoints, $max)} - 1px)) {
       @content;
     }
   } @else {
@@ -78,21 +75,21 @@ $breakpoints: (
 /// @param {String} $breakpoint - Breakpoint name
 @mixin only($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-    $min: map-get($breakpoints, $breakpoint);
+    $min: map.get($breakpoints, $breakpoint);
     $max: null;
 
     @if $breakpoint == 'mobile' {
-      $max: map-get($breakpoints, 'tablet');
+      $max: map.get($breakpoints, 'tablet');
     } @else if $breakpoint == 'tablet' {
-      $max: map-get($breakpoints, 'desktop');
+      $max: map.get($breakpoints, 'desktop');
     } @else if $breakpoint == 'desktop' {
-      $max: map-get($breakpoints, 'desktop-large');
+      $max: map.get($breakpoints, 'desktop-large');
     } @else if $breakpoint == 'desktop-large' {
-      $max: map-get($breakpoints, 'desktop-xl');
+      $max: map.get($breakpoints, 'desktop-xl');
     }
 
     @if $max {
-      @media (min-width: $min) and (max-width: $max - 1px) {
+      @media (min-width: #{$min}) and (max-width: calc(#{$max} - 1px)) {
         @content;
       }
     } @else {

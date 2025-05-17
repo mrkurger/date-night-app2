@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -17,13 +17,8 @@ import { PerformanceInterceptor } from './performance.interceptor';
  * Usage:
  * ```typescript
  * @NgModule({
- *   imports: [
- *     PerformanceModule.forRoot({
- *       enableMonitoring: true,
- *       enableApiCache: true,
- *       apiCacheMaxAge: 5 * 60 * 1000 // 5 minutes
- *     })
- *   ]
+ *   imports: [*     PerformanceModule.forRoot({
+ *       enableMonitoring: true]
  * })
  * export class AppModule { }
  * ```

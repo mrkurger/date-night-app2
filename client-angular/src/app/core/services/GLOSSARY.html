@@ -248,6 +248,43 @@
               </li>
             </ul>
           </section>
+
+          <section id="WebSocketFallbackService">
+            <h2>WebSocketFallbackService</h2>
+            <p>Service responsible for handling WebSocket connection failures in development mode.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>initialize()</strong>: Initializes the WebSocket fallback service by setting up
+                the WebSocket interception mechanism
+              </li>
+              <li>
+                <strong>getConnectionStatus()</strong>: Returns an Observable that emits the current
+                WebSocket connection status
+              </li>
+              <li>
+                <strong>restoreOriginalWebSocket()</strong>: Restores the original WebSocket constructor
+                when the service is destroyed
+              </li>
+            </ul>
+
+            <h3>Features</h3>
+            <ul>
+              <li>
+                Intercepts WebSocket creation to handle connection errors gracefully
+              </li>
+              <li>
+                Prevents constant reconnection attempts that can flood the console with error messages
+              </li>
+              <li>
+                Provides a fallback mechanism for handling WebSocket connection failures
+              </li>
+              <li>
+                Only applies in development mode (when hostname is 'localhost')
+              </li>
+            </ul>
+          </section>
         </article>
       </div>
     </main>

@@ -9,12 +9,202 @@
 // This file contains settings for fileAccess settings
 //
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.js:OTHER_SETTING
+// - ALLOWED_EXTENSIONS: List of allowed file extensions
+// - MAX_FILE_SIZE: Maximum allowed file size in bytes
 // ===================================================
 import path from 'path';
-import fs from 'fs/promises';
+import fs from 'fs';
 import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+// Configuration constants
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.pdf', '.txt', '.csv'];
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+// Helper function to get the directory of the current module
+const getCurrentDirname = () => path.dirname(fileURLToPath(import.meta.url));
+
+// Configuration constants
+const LOG_DIR_NAME = 'logs';
+const UPLOADS_DIR_NAME = 'uploads';
+
+export const getLogFilePath = filename => {
+  const currentDir = getCurrentDirname();
+  const logDir = path.join(currentDir, '..', LOG_DIR_NAME);
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+  return path.join(logDir, filename);
+};
+
+export const getFilePath = filename => {
+  const currentDir = getCurrentDirname();
+  const uploadsDir = path.join(currentDir, '..', UPLOADS_DIR_NAME);
+  return path.join(uploadsDir, filename);
+};
+
+export const secureCompare = (a, b) => {
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    return false;
+  }
+  try {
+    const aBuffer = Buffer.from(a);
+    const bBuffer = Buffer.from(b);
+
+    if (aBuffer.length !== bBuffer.length) {
+      crypto.timingSafeEqual(aBuffer, aBuffer); // Mitigate timing attack
+      return false;
+    }
+    return crypto.timingSafeEqual(aBuffer, bBuffer);
+  } catch (_) {
+    // Ignore error details for security reasons
+    return false;
+  }
+};
+
+export const checkFileExists = filePath => {
+  try {
+    return fs.existsSync(filePath);
+  } catch (err) {
+    // Log error but don't expose details in response
+    console.error(`Error checking if file exists: ${filePath}`, err.message);
+    return false;
+  }
+};
+
+export const readFileContent = filePath => {
+  try {
+    return fs.readFileSync(filePath, 'utf8');
+  } catch (err) {
+    // Keep 'err'
+    console.error(`Error reading file: ${filePath}`, err.message);
+    return null;
+  }
+};
+
+export const streamFile = (filePath, res) => {
+  if (!filePath || typeof filePath !== 'string') {
+    console.error('streamFile: Invalid filePath provided.');
+    if (res && typeof res.writeHead === 'function') {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.end('Invalid file path.');
+    }
+    return;
+  }
+
+  if (!res || typeof res.writeHead !== 'function' || typeof res.pipe !== 'function') {
+    console.error('streamFile: Invalid response object provided.');
+    return;
+  }
+
+  if (!checkFileExists(filePath)) {
+    console.error(`streamFile: File not found at ${filePath}`);
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('File not found.');
+    return;
+  }
+
+  try {
+    const fileStream = fs.createReadStream(filePath);
+
+    fileStream.on('open', () => {
+      const ext = path.extname(filePath).toLowerCase();
+      let contentType = 'application/octet-stream';
+      if (ext === '.txt') contentType = 'text/plain';
+      else if (ext === '.html') contentType = 'text/html';
+      else if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
+      else if (ext === '.png') contentType = 'image/png';
+
+      res.writeHead(200, { 'Content-Type': contentType });
+      fileStream.pipe(res);
+    });
+
+    fileStream.on('error', streamError => {
+      console.error('Stream error:', streamError.message);
+      if (!res.headersSent) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error streaming file.');
+      } else {
+        res.end();
+      }
+    });
+
+    fileStream.on('close', () => {
+      if (!res.writableEnded) {
+        res.end();
+      }
+    });
+  } catch (err) {
+    // Keep 'err'
+    console.error(`Error setting up stream for file: ${filePath}`, err.message);
+    if (!res.headersSent) {
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Server error while trying to stream file.');
+    } else {
+      res.end();
+    }
+  }
+};
+
+/**
+ * Middleware to validate file access requests
+ * Checks if the requested file is allowed to be accessed
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
+export default async function fileAccess(req, res, next) {
+  try {
+    const filename = req.params.filename;
+
+    if (!filename) {
+      return next({
+        message: 'File not found',
+        statusCode: 404,
+      });
+    }
+
+    const normalizedPath = path.normalize(filename);
+    if (normalizedPath.includes('..') || normalizedPath.startsWith('/')) {
+      return next({
+        message: 'Invalid file path',
+        statusCode: 403,
+      });
+    }
+
+    const ext = path.extname(normalizedPath).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      return next({
+        message: 'Unsupported file type',
+        statusCode: 403,
+      });
+    }
+
+    const fullPath = getFilePath(normalizedPath);
+
+    try {
+      await fs.promises.access(fullPath, fs.constants.F_OK | fs.constants.R_OK);
+
+      const stats = await fs.promises.stat(fullPath);
+      if (stats.size > MAX_FILE_SIZE) {
+        return next({
+          message: 'File size exceeds the maximum allowed size',
+          statusCode: 403,
+        });
+      }
+
+      req.validatedFilePath = fullPath;
+      next();
+    } catch (_) {
+      return next({
+        message: 'File not found',
+        statusCode: 404,
+      });
+    }
+  } catch (err) {
+    return next(err);
+  }
+}
 
 /**
  * Middleware to serve files securely
@@ -23,10 +213,10 @@ import crypto from 'crypto';
  * @param {Response} res - Express response object
  * @param {Function} _next - Express next function (not used as this handler sends response directly)
  */
-// eslint-disable-next-line no-unused-vars
-const secureFileServing = (req, res, _next) => {
+
+export const secureFileServing = (req, res, _next) => {
   try {
-    const filePath = req.params[0]; // Get the file path from the URL
+    const filePath = req.params[0];
 
     if (!filePath) {
       return res.status(404).json({
@@ -35,23 +225,16 @@ const secureFileServing = (req, res, _next) => {
       });
     }
 
-    // Prevent path traversal attacks
     const normalizedPath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, '');
-    const fullPath = path.join(__dirname, '..', 'uploads', normalizedPath);
+    const fullPath = getFilePath(normalizedPath);
 
-    // Check if file exists
-    if (!fs.existsSync(fullPath)) {
+    if (!checkFileExists(fullPath)) {
       return res.status(404).json({
         success: false,
         message: 'File not found',
       });
     }
 
-    // Check if user has permission to access the file
-    // For public files like ad images, this can be skipped
-    // For private files, check if user is the owner or has permission
-
-    // Example: Check if file is in user's directory
     const userId = req.user ? req.user.id.toString() : null;
     const isUserFile = userId && fullPath.includes(`/uploads/ads/${userId}/`);
     const isPublicFile = fullPath.includes('/uploads/ads/') && !fullPath.includes('/private/');
@@ -63,7 +246,6 @@ const secureFileServing = (req, res, _next) => {
       });
     }
 
-    // Set proper content type
     const ext = path.extname(fullPath).toLowerCase();
     const contentTypeMap = {
       '.jpg': 'image/jpeg',
@@ -76,48 +258,28 @@ const secureFileServing = (req, res, _next) => {
     const contentType = contentTypeMap[ext] || 'application/octet-stream';
     res.setHeader('Content-Type', contentType);
 
-    // Set cache control headers for public files
     if (isPublicFile) {
-      res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day
+      res.setHeader('Cache-Control', 'public, max-age=86400');
 
-      // Generate ETag based on file content
       const fileBuffer = fs.readFileSync(fullPath);
       const hash = crypto.createHash('md5').update(fileBuffer).digest('hex');
       res.setHeader('ETag', `"${hash}"`);
 
-      // Check if file is cached
       const ifNoneMatch = req.headers['if-none-match'];
       if (ifNoneMatch && ifNoneMatch === `"${hash}"`) {
-        return res.status(304).end(); // Not Modified
+        return res.status(304).end();
       }
     } else {
-      // Private files should not be cached
       res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
     }
 
-    // Stream the file
-    const fileStream = fs.createReadStream(fullPath);
-    fileStream.pipe(res);
-
-    // Handle errors
-    fileStream.on('error', error => {
-      console.error('Error streaming file:', error);
-      if (!res.headersSent) {
-        res.status(500).json({
-          success: false,
-          message: 'Error serving file',
-        });
-      }
-    });
-  } catch (error) {
-    console.error('File access error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error accessing file',
-    });
+    streamFile(fullPath, res);
+  } catch (err) {
+    console.error('File serving error:', err);
+    if (!res.headersSent) {
+      return res.status(500).json({ success: false, message: 'Error accessing file' });
+    }
   }
 };
-
-export { secureFileServing };

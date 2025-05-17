@@ -4,6 +4,83 @@ This document serves as a log of key insights, patterns, and solutions discovere
 
 > **Note**: This document is a curated log of AI-discovered patterns and solutions. For canonical documentation on specific topics, please refer to the linked dedicated documentation files.
 
+## AI-Assisted Refactoring Log for `date-night-app`
+
+### Date: 2025-05-11
+
+**Goal:** Replace Angular Material and Emerald.js with Nebular UI components, themes, and icons.
+
+**Files Modified:**
+
+*   `/Users/oivindlund/date-night-app/client-angular/src/app/features/wallet/dialogs/deposit-dialog.component.ts`
+    *   Applied formatting fixes to the `copyToClipboard` method's promise chain for improved readability after manual user edits and previous automated attempts.
+    *   Ensured consistent formatting for `toastrService.show()` calls.
+
+**Key Changes & Learnings:**
+
+*   **Iterative Formatting:** Multiple attempts were needed to satisfy the linter regarding promise chain formatting and object literals within method calls. This highlights the importance of precise formatting, especially with chained methods and complex arguments.
+*   **Manual Edit Integration:** The AI needed to re-read the file after manual edits to ensure its subsequent changes were based on the latest version of the code.
+*   **Clipboard API:** Successfully replaced `cdkCopyToClipboard` with the standard `navigator.clipboard.writeText` API, simplifying the dependencies.
+*   **Error Handling in Promises:** Ensured that `.catch()` was correctly implemented for the clipboard promise to handle potential errors during the copy operation.
+*   **Type Safety:** Addressed an `any` type in a `.catch()` block, although in this specific instance for a generic error object, `any` can sometimes be a pragmatic choice if the error structure is unknown or highly variable. For future work, more specific error typing could be considered if error shapes are predictable.
+
+**Next Steps:**
+
+*   Continue refactoring `WalletComponent` and its associated dialogs.
+*   Address linting errors in `app.component.ts`.
+*   Systematically replace Material/Emerald components across the application.
+
+### Date: 2025-05-11 (Continued)
+
+**Goal:** Resolve compilation errors in `WithdrawDialogComponent` after initial Nebular refactoring.
+
+**Files Modified:**
+
+*   `/Users/oivindlund/date-night-app/client-angular/src/app/features/wallet/dialogs/withdraw-dialog.component.ts`
+
+**Key Changes & Learnings:**
+
+*   **Interface Definition for Complex Inputs:** When an `@Input()` expects a complex data structure (like `cryptoDetails` for managing networks and memo requirements per cryptocurrency), it's crucial to have a clear interface. If not available from a service, defining it locally in the component or a shared types file is necessary. The previous attempt missed this, leading to errors.
+*   **Property Declaration:** Basic TypeScript errors like missing property declarations (`cryptoBalances`) are common during refactoring and need careful checking.
+*   **Accessing Typed Properties:** When dealing with union types or interfaces with optional, specific sub-objects (like `PaymentMethod` having `cardDetails` or `bankDetails` but not a generic `details`), type guards (`paymentMethod.type === 'card'`) and direct access to the correct sub-object (`paymentMethod.cardDetails`) are essential. Relying on non-existent generic properties will lead to errors.
+*   **Data Transformation and Service Usage:**
+    *   Dialog components often receive generic data (e.g., all balances) and need to process or filter it for specific tabs or views (e.g., separating fiat and crypto balances in `ngOnInit`).
+    *   Currency amounts often need conversion (e.g., from major units in the form to minor units for the API). This logic should ideally reside in a service (`WalletService.convertToSmallestUnit`) to ensure consistency and avoid duplication. The dialog should use these service methods.
+    *   API calls should be delegated to services. The dialog's submission methods were updated to call `walletService.withdrawFunds()` and `walletService.withdrawCrypto()`.
+*   **Reactive Form Value Subscriptions:** When subscribing to `valueChanges` on a form control (e.g., currency selection), ensure the callback doesn't have unused parameters, which can be a linting issue.
+*   **Error Propagation from Services:** When service calls within a component fail, the error handling in the component should ideally display meaningful messages, potentially from the error response itself (`err.error?.message`).
+*   **Change Detection:** After asynchronous operations (like API calls) that modify component data bound to the template, manually triggering change detection (`cdr.detectChanges()`) can be necessary, especially with `ChangeDetectionStrategy.OnPush`.
+
+**Next Steps:**
+
+*   Thoroughly test the `WithdrawDialogComponent` functionality.
+*   Continue refactoring `WalletComponent` and its remaining dialogs.
+*   Address linting errors in `app.component.ts`.
+
+### Date: 2025-05-11 (Further Updates)
+
+**Goal:** Add missing currency conversion utilities to `WalletService` and fix subsequent linting/formatting issues in `WithdrawDialogComponent`.
+
+**Files Modified:**
+
+*   `/Users/oivindlund/date-night-app/client-angular/src/app/core/services/wallet.service.ts`
+*   `/Users/oivindlund/date-night-app/client-angular/src/app/features/wallet/dialogs/withdraw-dialog.component.ts`
+
+**Key Changes & Learnings:**
+
+*   **Utility Method Placement:** Currency conversion logic (e.g., smallest unit to major unit and vice-versa) is a prime candidate for inclusion in a relevant service (`WalletService`). This promotes reusability and centralizes business logic. The `formatCurrency` method was also updated to use these new utilities for consistency.
+*   **Linter-Driven Development:** After significant refactoring or addition of new logic, running a linter and addressing its feedback is crucial for maintaining code quality and consistency. This often involves:
+    *   **Formatting:** Adjusting newlines, spacing, and indentation in both templates and TypeScript code. For example, HTML attributes spread across multiple lines, or parameters in function calls.
+    *   **Typing:** Ensuring correct types are used, such as `AbstractControl` for form control parameters in custom validators.
+    *   **Syntax:** Correcting minor syntax issues, like ensuring arrow functions have parentheses around single parameters if the linter enforces it (e.g., `(item) => ...` vs `item => ...`).
+*   **Iterative Error Resolution:** Fixing one set of errors can sometimes reveal underlying issues or introduce new, often more minor, ones (like linting problems). This iterative process of coding, testing (or getting linter feedback), and refining is standard.
+*   **Fiat Payment Method Filtering:** The logic for filtering fiat payment methods was revisited. Initially, it strictly matched the bank account currency. It was updated to be more flexible, for instance, to allow all card payment methods for any selected fiat currency, as cards are often currency-agnostic for the user. This kind of domain-specific logic needs careful consideration during refactoring.
+
+**Next Steps:**
+
+*   Verify the `WithdrawDialogComponent` functionality, especially currency conversions and form submissions.
+*   Proceed with refactoring `WalletComponent` and its other dialogs.
+
 ## Table of Contents
 
 - [Stable Patterns](#stable-patterns)

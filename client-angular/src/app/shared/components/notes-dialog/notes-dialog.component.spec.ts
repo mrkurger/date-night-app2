@@ -1,15 +1,22 @@
+import { Input } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
+
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  NB_DIALOG_CONFIG,
+  NbDialogRef,
+  
+} from '@nebular/theme';
 import { NotesDialogComponent, NotesDialogData } from './notes-dialog.component';
 
 describe('NotesDialogComponent', () => {
   let component: NotesDialogComponent;
   let fixture: ComponentFixture<NotesDialogComponent>;
-  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<NotesDialogComponent>>;
+  let dialogRefSpy: jasmine.SpyObj<NbDialogRef<NotesDialogComponent>>;
 
   const mockDialogData: NotesDialogData = {
     title: 'Test Title',
@@ -19,20 +26,20 @@ describe('NotesDialogComponent', () => {
   };
 
   beforeEach(async () => {
-    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+    dialogRefSpy = jasmine.createSpyObj('NbDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
+        NbDialogModule,
+        NbFormFieldModule,
+        NbInputModule,
         NoopAnimationsModule,
         NotesDialogComponent,
       ],
       providers: [
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
-        { provide: MatDialogRef, useValue: dialogRefSpy },
+        { provide: NB_DIALOG_CONFIG, useValue: mockDialogData },
+        { provide: NbDialogRef, useValue: dialogRefSpy },
       ],
     }).compileComponents();
 

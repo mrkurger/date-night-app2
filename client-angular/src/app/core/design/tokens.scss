@@ -1,0 +1,143 @@
+// Design tokens for the application
+/* TODO: Verify correct CSS variable */
+@use 'sass:map';
+
+// General color palette
+$colors: (
+  'primary': #007bff,
+  // Example primary color
+  'secondary': #6c757d,
+  // Example secondary color
+  'success': #28a745,
+  'danger': #dc3545,
+  'warning': #ffc107,
+  'info': #17a2b8,
+  'light': #f8f9fa,
+  'dark': #343a40,
+  'white': #ffffff,
+  'black': #000000, // Add more colors as needed
+);
+
+// Theme-specific color mapping
+$theme-colors: (
+  'primary': map.get($colors, 'primary'),
+  'secondary': map.get($colors, 'secondary'), // ... other theme colors
+);
+
+// Spacing
+$spacing-unit: 8px;
+$spacing: (
+  'xs': $spacing-unit * 0.5,
+  // 4px
+  'sm': $spacing-unit,
+  // 8px
+  'md': $spacing-unit * 2,
+  // 16px
+  'lg': $spacing-unit * 3,
+  // 24px
+  'xl': $spacing-unit * 4, // 32px
+);
+
+// Typography
+$font-family-base: 'Helvetica Neue', Arial, sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+$font-sizes: (
+  'sm': $font-size-base * 0.875,
+  // 14px
+  'md': $font-size-base,
+  // 16px
+  'lg': $font-size-base * 1.25,
+  // 20px
+  'xl': $font-size-base * 1.5, // 24px
+);
+
+// Border radius
+$border-radius-base: 4px;
+$border-radii: (
+  'sm': $border-radius-base * 0.5,
+  'md': $border-radius-base,
+  'lg': $border-radius-base * 1.5,
+);
+
+// Box shadows (example)
+$box-shadow-sm:
+  0 1px 3px rgba(map.get($colors, 'black'), 0.12),
+  0 1px 2px rgba(map.get($colors, 'black'), 0.24);
+$box-shadow-md:
+  0 3px 6px rgba(map.get($colors, 'black'), 0.16),
+  0 3px 6px rgba(map.get($colors, 'black'), 0.23);
+
+// Z-index scale (example)
+$z-index: (
+  'dropdown': 1000,
+  'modal': 1050,
+  'tooltip': 1070,
+);
+
+// Breakpoints for responsive design
+$breakpoints: (
+  'xs': 0,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+);
+
+// Mixin for media queries (example)
+@mixin media-breakpoint-up($name) {
+  $min: map.get($breakpoints, $name);
+  @if $min == 0 {
+    @content;
+  } @else {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+// Function to get a color
+@function get-color($key) {
+  @return map.get($colors, $key);
+}
+
+// Function to get a theme color
+@function get-theme-color($key) {
+  @return map.get($theme-colors, $key);
+}
+
+// Function to get spacing
+@function get-spacing($key) {
+  @return map.get($spacing, $key);
+}
+
+// Function to get font size
+@function get-font-size($key) {
+  @return map.get($font-sizes, $key);
+}
+
+// Function to get border radius
+@function get-border-radius($key) {
+  @return map.get($border-radii, $key);
+}
+
+// Function to get z-index
+@function get-z-index($key) {
+  @return map.get($z-index, $key);
+}
+
+// Function to get breakpoint
+@function get-breakpoint($key) {
+  @return map.get($breakpoints, $key);
+}
+
+// Function to get animation timing
+@function get-animation-timing($key) {
+  @return map.get($animation-timings, $key);
+}
+
+// Function to get shadow
+@function get-shadow($key) {
+  @return map.get($shadows, $key);
+}

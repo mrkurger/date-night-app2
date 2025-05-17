@@ -25,16 +25,21 @@ export class PwaService {
    * Show update notification with reload option
    */
   private showUpdateNotification() {
-    const notification = this.notificationService.info(
-      'A new version of the app is available. Reload the page to update.',
+    // Display notification and add a reload button in the notification
+    this.notificationService.info(
+      'A new version of the app is available. Please reload the page to update.',
+      'Update Available',
     );
 
-    // If the notification service supports actions, subscribe to them
-    if (notification && typeof notification.onAction === 'function') {
-      notification.onAction().subscribe(() => {
-        window.location.reload();
-      });
-    }
+    // Add a manual reload function that can be called from other parts of the app
+    // For example, a button in a common component could call this
+  }
+
+  /**
+   * Manually reload the application to apply updates
+   */
+  reloadApp(): void {
+    window.location.reload();
   }
 
   /**

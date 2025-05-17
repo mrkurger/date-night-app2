@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 /**

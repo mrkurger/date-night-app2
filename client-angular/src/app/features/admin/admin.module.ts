@@ -9,60 +9,60 @@
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AdminRoutingModule } from './admin-routing.module';
+
+// Nebular imports
+import { NebularModule } from "../shared/nebular.module";
+import {
+  NbTableModule,
+  
+} from '@nebular/theme';
+
+// Charts
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+// Custom components
 import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
 import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
 import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { RevenueAnalyticsComponent } from './components/revenue-analytics/revenue-analytics.component';
+import { ContentModerationComponent } from './components/content-moderation/content-moderation.component';
+import { SystemHealthComponent } from './components/system-health/system-health.component';
+import { AuditLogComponent } from './components/audit-log/audit-log.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 /**
  * Admin Module
  *
- * Note: All components in this module are standalone components.
- * They are imported in the module's imports array rather than being declared
- * in the declarations array. This is the recommended approach for Angular 19+.
+ * Provides administrative functionality including:
+ * - User Management & Moderation
+ * - System Performance Monitoring
+ * - Error Tracking & Analysis
+ * - Revenue Analytics
+ * - Content Moderation
+ * - System Health Monitoring
+ * - Audit Logging
+ * - Administrative Settings
+ *
+ * All components are standalone and lazy-loaded.
+ * Protected by AdminGuard for admin-only access.
  */
 @NgModule({
-  declarations: [], // No declarations as all components are standalone
   imports: [
     CommonModule,
     AdminRoutingModule,
-    // Material modules and other shared modules
-    MatTabsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatIconModule,
     ReactiveFormsModule,
-    NgxChartsModule,
-    // Standalone components
-    TelemetryDashboardComponent,
-    ErrorDashboardComponent,
+    NebularModule,
+    // Import standalone components
+    AuditLogComponent,
+    AdminSettingsComponent,
     PerformanceDashboardComponent,
+    TelemetryDashboardComponent,
+    ContentModerationComponent
   ],
+  // Only declare non-standalone components
+  declarations: [],
 })
 export class AdminModule {}

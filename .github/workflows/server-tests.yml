@@ -17,7 +17,11 @@ on:
     paths:
       - 'server/**'
 
-# Defines the jobs to be run in the workflow.
+# Add concurrency settings to cancel in-progress runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # 'test' job: Runs server-side tests.
   test:

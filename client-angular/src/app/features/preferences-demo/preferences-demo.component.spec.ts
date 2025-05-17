@@ -12,7 +12,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PreferencesDemoComponent } from './preferences-demo.component';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { BehaviorSubject } from 'rxjs';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 
 describe('PreferencesDemoComponent', () => {
   let component: PreferencesDemoComponent;

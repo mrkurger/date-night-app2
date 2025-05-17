@@ -15,25 +15,27 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
+import { NgModule, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+
+// Import Nebular modules directly for testing
+import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@nebular/theme';
 
 // Mock components
 @Component({
   selector: 'app-main-layout',
   template: '<ng-content></ng-content>',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbCardModule],
 })
 export class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
 
 @Component({
-  selector: 'emerald-app-card',
+  selector: 'nb-card',
   template: '<div>Mock App Card</div>',
   standalone: true,
   imports: [CommonModule],
@@ -57,7 +59,7 @@ export class MockAppCardComponent {
 }
 
 @Component({
-  selector: 'emerald-skeleton-loader',
+  selector: 'nb-skeleton',
   template: '<div>Loading...</div>',
   standalone: true,
   imports: [CommonModule],
@@ -76,6 +78,10 @@ export class MockSkeletonLoaderComponent {
     MockMainLayoutComponent,
     MockAppCardComponent,
     MockSkeletonLoaderComponent,
+    NbCardModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
   ],
   exports: [
     CommonModule,

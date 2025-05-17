@@ -2,108 +2,135 @@
   <h2>{{ isEditMode ? 'Edit Advertisement' : 'Create New Advertisement' }}</h2>
 
   <div *ngIf="loading" class="loading-spinner">
-    <mat-spinner diameter="40"></mat-spinner>
+    <nb-spinner status="primary" size="large"></nb-spinner>
   </div>
 
-  <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
-    <mat-card>
-      <mat-card-content>
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Title</mat-label>
-            <input matInput formControlName="title" placeholder="Enter a catchy title" />
-            <mat-error *ngIf="adForm.get('title')?.hasError('required')">
+  <nb-card>
+    <nb-card-header>
+      <h3>{{ isEditMode ? 'Edit' : 'Create' }} Advertisement</h3>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="form-group">
+          <label for="title" class="label">Title</label>
+          <nb-form-field>
+            <input nbInput fullWidth id="title" formControlName="title" placeholder="Enter title" />
+            <nb-icon nbPrefix icon="edit-2-outline"></nb-icon>
+            
               Title is required
-            </mat-error>
-            <mat-error *ngIf="adForm.get('title')?.hasError('maxlength')">
-              Title cannot exceed 100 characters
-            </mat-error>
-          </mat-form-field>
+            
+            
+              Title must be less than 100 characters
+            
+          </nb-form-field>
         </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Description</mat-label>
+        <div class="form-group">
+          <label for="description" class="label">Description</label>
+          <nb-form-field>
             <textarea
-              matInput
+              nbInput
+              fullWidth
+              id="description"
               formControlName="description"
-              rows="5"
-              placeholder="Describe your services in detail"
+              placeholder="Enter description"
+              rows="4"
             ></textarea>
-            <mat-error *ngIf="adForm.get('description')?.hasError('required')">
+            
               Description is required
-            </mat-error>
-            <mat-error *ngIf="adForm.get('description')?.hasError('maxlength')">
-              Description cannot exceed 1000 characters
-            </mat-error>
-          </mat-form-field>
+            
+            
+              Description must be less than 1000 characters
+            
+          </nb-form-field>
         </div>
 
-        <div class="form-row two-columns">
-          <mat-form-field appearance="outline">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName="category">
-              <mat-option *ngFor="let category of categories" [value]="category">
-                {{ category }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="adForm.get('category')?.hasError('required')">
-              Category is required
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Price (USD)</mat-label>
-            <input matInput type="number" formControlName="price" placeholder="0" />
-            <span matPrefix>$&nbsp;</span>
-            <mat-error *ngIf="adForm.get('price')?.hasError('required')">
+        <div class="form-group">
+          <label for="price" class="label">Price</label>
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              id="price"
+              formControlName="price"
+              placeholder="Enter price"
+            />
+            <nb-icon nbPrefix icon="pricetags-outline"></nb-icon>
+            
               Price is required
-            </mat-error>
-            <mat-error *ngIf="adForm.get('price')?.hasError('min')">
-              Price cannot be negative
-            </mat-error>
-          </mat-form-field>
+            
+             Price must be greater than 0 
+          </nb-form-field>
         </div>
 
-        <div class="form-row two-columns">
-          <mat-form-field appearance="outline">
-            <mat-label>County</mat-label>
-            <mat-select formControlName="county" (selectionChange)="onCountyChange()">
-              <mat-option *ngFor="let county of counties" [value]="county">
-                {{ county }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="adForm.get('county')?.hasError('required')">
-              County is required
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>City</mat-label>
-            <mat-select formControlName="city">
-              <mat-option *ngFor="let city of cities" [value]="city.name">
-                {{ city.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="adForm.get('city')?.hasError('required')">
-              City is required
-            </mat-error>
-          </mat-form-field>
+        <div class="form-group">
+          <label for="location" class="label">Location</label>
+          <nb-form-field>
+            <nb-select
+              fullWidth
+              id="location"
+              formControlName="location"
+              placeholder="Select location"
+            >
+              <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
+            </nb-select>
+            
+              Location is required
+            
+          </nb-form-field>
         </div>
 
-        <div class="form-row">
-          <mat-checkbox formControlName="isActive" color="primary">
-            Make this advertisement active immediately
-          </mat-checkbox>
+        <div class="form-group">
+          <label for="category" class="label">Category</label>
+          <nb-form-field>
+            <nb-select
+              fullWidth
+              id="category"
+              formControlName="category"
+              placeholder="Select category"
+            >
+              <nb-option *ngFor="let category of categories" [value]="category.toLowerCase()">
+                {{ category }}
+              </nb-option>
+            </nb-select>
+            
+              Category is required
+            
+          </nb-form-field>
         </div>
-      </mat-card-content>
 
-      <mat-card-actions align="end">
-        <button mat-button type="button" (click)="onCancel()">Cancel</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="adForm.invalid">
-          {{ isEditMode ? 'Update' : 'Create' }} Advertisement
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
+        <div class="form-group">
+          <label for="contactInfo" class="label">Contact Information</label>
+          <nb-form-field>
+            <input
+              nbInput
+              fullWidth
+              id="contactInfo"
+              formControlName="contactInfo"
+              placeholder="Enter contact information"
+            />
+            <nb-icon nbPrefix icon="phone-outline"></nb-icon>
+            
+              Contact information is required
+            
+          </nb-form-field>
+        </div>
+
+        <div class="form-group">
+          <nb-checkbox formControlName="isActive">Active</nb-checkbox>
+        </div>
+
+        <div class="form-group">
+          <nb-checkbox formControlName="isTouring">Touring</nb-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button nbButton status="primary" size="large" [disabled]="!adForm.valid" type="submit">
+            {{ isEditMode ? 'Update' : 'Create' }} Advertisement
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
 </div>

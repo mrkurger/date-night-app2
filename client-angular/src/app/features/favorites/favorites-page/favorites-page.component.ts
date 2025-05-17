@@ -1,3 +1,4 @@
+import { Input, OnInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,28 +8,10 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 
 import {
   FavoriteService,
@@ -43,6 +26,12 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
+import { AppSortComponent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortEvent } from '../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
+
+// Import NebularModule directly for standalone components
+import { NebularModule } from '../../../shared/nebular.module';
 
 /**
  * Interface for saved filter presets
@@ -61,31 +50,19 @@ interface FilterPreset {
 @Component({
   selector: 'app-favorites-page',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatCardModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    FavoriteButtonComponent,
-    LoadingSpinnerComponent,
+    NebularModule,
+
+    // These components are imported but not used in the template
+    // FavoriteButtonComponent,
+    // LoadingSpinnerComponent,
+    // AppSortComponent,
+    // AppSortHeaderComponent,
   ],
   template: `
     <div class="favorites-page">
@@ -94,781 +71,578 @@ interface FilterPreset {
 
         <div class="favorites-actions" *ngIf="favorites && favorites.length > 0">
           <button
-            mat-raised-button
-            color="primary"
+            nbButton
+            status="primary"
             [disabled]="selectedFavorites.length === 0"
-            [matMenuTriggerFor]="batchMenu"
+            [nbContextMenu]="batchActions"
+            nbContextMenuTag="batch-menu"
           >
             Batch Actions ({{ selectedFavorites.length }})
+            <nb-icon icon="chevron-down-outline"></nb-icon>
           </button>
-
-          <mat-menu #batchMenu="matMenu">
-            <button mat-menu-item (click)="removeFavoritesBatch()">
-              <mat-icon>delete</mat-icon>
-              <span>Remove Selected</span>
-            </button>
-            <button mat-menu-item (click)="openTagsDialog()">
-              <mat-icon>label</mat-icon>
-              <span>Add Tags to Selected</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('high')">
-              <mat-icon>priority_high</mat-icon>
-              <span>Set High Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('normal')">
-              <mat-icon>remove_circle_outline</mat-icon>
-              <span>Set Normal Priority</span>
-            </button>
-            <button mat-menu-item (click)="setPriorityBatch('low')">
-              <mat-icon>arrow_downward</mat-icon>
-              <span>Set Low Priority</span>
-            </button>
-          </mat-menu>
         </div>
       </div>
 
       <div class="filters-container" *ngIf="favorites && favorites.length > 0">
         <div class="filters-header">
           <h3>Filters</h3>
-          <button mat-button color="primary" (click)="toggleAdvancedFilters()">
+          <button nbButton ghost (click)="toggleAdvancedFilters()">
             {{ showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters' }}
-            <mat-icon>{{ showAdvancedFilters ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <nb-icon [icon]="showAdvancedFilters ? 'chevron-up-outline' : 'chevron-down-outline'">
+            </nb-icon>
           </button>
         </div>
 
         <div class="basic-filters">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Search favorites</mat-label>
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search-outline"></nb-icon>
             <input
-              matInput
+              nbInput
+              fullWidth
               [(ngModel)]="filterOptions.search"
               (input)="onSearchChange($event)"
               placeholder="Search by title, description, or notes"
             />
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+          </nb-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Sort by</mat-label>
-            <mat-select [(ngModel)]="filterOptions.sort" (selectionChange)="applyFilters()">
-              <mat-option value="newest">Newest first</mat-option>
-              <mat-option value="oldest">Oldest first</mat-option>
-              <mat-option value="price-asc">Price: Low to High</mat-option>
-              <mat-option value="price-desc">Price: High to Low</mat-option>
-              <mat-option value="title-asc">Title: A to Z</mat-option>
-              <mat-option value="title-desc">Title: Z to A</mat-option>
-              <mat-option value="priority-high">Priority: High to Low</mat-option>
-              <mat-option value="priority-low">Priority: Low to High</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <nb-select
+            fullWidth
+            [(ngModel)]="filterOptions.sort"
+            (selectedChange)="applyFilters()"
+            placeholder="Sort by"
+          >
+            <nb-option value="newest">Newest first</nb-option>
+            <nb-option value="oldest">Oldest first</nb-option>
+            <nb-option value="price-asc">Price: Low to High</nb-option>
+            <nb-option value="price-desc">Price: High to Low</nb-option>
+            <nb-option value="title-asc">Title: A to Z</nb-option>
+            <nb-option value="title-desc">Title: Z to A</nb-option>
+            <nb-option value="priority-high">Priority: High to Low</nb-option>
+            <nb-option value="priority-low">Priority: Low to High</nb-option>
+          </nb-select>
 
           <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
-            <div class="tags-label">Filter by tag:</div>
-            <div class="tags-chips">
-              <mat-chip-listbox multiple [(ngModel)]="selectedTagFilters" (change)="applyFilters()">
-                <mat-chip-option *ngFor="let tag of userTags" [value]="tag.tag">
-                  {{ tag.tag }} ({{ tag.count }})
-                </mat-chip-option>
-              </mat-chip-listbox>
-            </div>
+            <label class="label">Filter by tag:</label>
+            <nb-tag-list>
+              <nb-tag
+                *ngFor="let tag of userTags"
+                [text]="tag.tag + ' (' + tag.count + ')'"
+                [selected]="selectedTagFilters.includes(tag.tag)"
+                (click)="toggleTagFilter(tag.tag)"
+                appearance="outline"
+                status="basic"
+              >
+              </nb-tag>
+            </nb-tag-list>
           </div>
         </div>
 
         <div class="advanced-filters" *ngIf="showAdvancedFilters">
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Priority</mat-label>
-              <mat-select [(ngModel)]="filterOptions.priority" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option value="high">High</mat-option>
-                <mat-option value="normal">Normal</mat-option>
-                <mat-option value="low">Low</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Category</mat-label>
-              <mat-select [(ngModel)]="filterOptions.category" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                  {{ category.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.priority"
+              (selectedChange)="applyFilters()"
+              placeholder="Priority"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option value="high">
+                <nb-icon icon="arrow-up-outline" class="priority-icon high"></nb-icon>
+                High
+              </nb-option>
+              <nb-option value="normal">
+                <nb-icon icon="minus-outline" class="priority-icon normal"></nb-icon>
+                Normal
+              </nb-option>
+              <nb-option value="low">
+                <nb-icon icon="arrow-down-outline" class="priority-icon low"></nb-icon>
+                Low
+              </nb-option>
+            </nb-select>
           </div>
 
           <div class="filter-row">
-            <mat-form-field appearance="outline">
-              <mat-label>County</mat-label>
-              <mat-select [(ngModel)]="filterOptions.county" (selectionChange)="onCountyChange()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let county of counties" [value]="county">
-                  {{ county }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>City</mat-label>
-              <mat-select [(ngModel)]="filterOptions.city" (selectionChange)="applyFilters()">
-                <mat-option [value]="undefined">Any</mat-option>
-                <mat-option *ngFor="let city of cities" [value]="city">
-                  {{ city }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.category"
+              (selectedChange)="applyFilters()"
+              placeholder="Category"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option *ngFor="let category of categories" [value]="category.value">
+                {{ category.label }}
+              </nb-option>
+            </nb-select>
           </div>
 
           <div class="filter-row">
-            <div class="price-range">
-              <span class="range-label">Price Range:</span>
-              <div class="price-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>Min</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMin"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>Max</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="filterOptions.priceMax"
-                    (change)="applyFilters()"
-                    min="0"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.county"
+              (selectedChange)="onCountyChange()"
+              placeholder="County"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option *ngFor="let county of counties" [value]="county">
+                {{ county }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="filter-row" *ngIf="filterOptions.county">
+            <nb-select
+              fullWidth
+              [(ngModel)]="filterOptions.city"
+              (selectedChange)="applyFilters()"
+              placeholder="City"
+            >
+              <nb-option [value]="undefined">Any</nb-option>
+              <nb-option *ngFor="let city of cities" [value]="city">
+                {{ city }}
+              </nb-option>
+            </nb-select>
           </div>
 
           <div class="filter-row">
-            <div class="date-range">
-              <span class="range-label">Date Added:</span>
-              <div class="date-inputs">
-                <mat-form-field appearance="outline">
-                  <mat-label>From</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="fromPicker"
-                    [(ngModel)]="dateFrom"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #fromPicker></mat-datepicker>
-                </mat-form-field>
-                <span class="range-separator">to</span>
-                <mat-form-field appearance="outline">
-                  <mat-label>To</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="toPicker"
-                    [(ngModel)]="dateTo"
-                    (dateChange)="onDateChange()"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #toPicker></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
+            <nb-form-field>
+              <nb-icon nbPrefix icon="calendar-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="dateFrom"
+                [(ngModel)]="filterOptions.dateFrom"
+                (ngModelChange)="onDateChange()"
+                placeholder="From date"
+              />
+              <nb-datepicker #dateFrom></nb-datepicker>
+            </nb-form-field>
+
+            <nb-form-field>
+              <nb-icon nbPrefix icon="calendar-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="dateTo"
+                [(ngModel)]="filterOptions.dateTo"
+                (ngModelChange)="onDateChange()"
+                placeholder="To date"
+              />
+              <nb-datepicker #dateTo></nb-datepicker>
+            </nb-form-field>
           </div>
 
-          <div class="filter-actions">
-            <button mat-button color="primary" (click)="saveFilterPreset()">
-              <mat-icon>save</mat-icon>
-              Save Filter Preset
-            </button>
-            <button mat-button [matMenuTriggerFor]="presetMenu" *ngIf="filterPresets.length > 0">
-              <mat-icon>filter_list</mat-icon>
-              Load Preset
-            </button>
-            <mat-menu #presetMenu="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let preset of filterPresets"
-                (click)="loadFilterPreset(preset)"
-              >
-                {{ preset.name }}
-              </button>
-            </mat-menu>
+          <div class="filter-row">
+            <nb-form-field>
+              <nb-icon nbPrefix icon="pricetags-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                type="number"
+                [(ngModel)]="filterOptions.priceMin"
+                (ngModelChange)="applyFilters()"
+                placeholder="Min price"
+              />
+            </nb-form-field>
+
+            <nb-form-field>
+              <nb-icon nbPrefix icon="pricetags-outline"></nb-icon>
+              <input
+                nbInput
+                fullWidth
+                type="number"
+                [(ngModel)]="filterOptions.priceMax"
+                (ngModelChange)="applyFilters()"
+                placeholder="Max price"
+              />
+            </nb-form-field>
           </div>
         </div>
 
-        <div class="filter-summary" *ngIf="isFiltered">
-          <div class="active-filters">
-            <span class="filter-label">Active filters:</span>
-            <mat-chip-set>
-              <mat-chip *ngIf="filterOptions.search" (removed)="clearSearchFilter()">
-                Search: {{ filterOptions.search }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.priority" (removed)="clearPriorityFilter()">
-                Priority: {{ filterOptions.priority | titlecase }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.category" (removed)="clearCategoryFilter()">
-                Category: {{ getCategoryLabel(filterOptions.category) }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.county" (removed)="clearCountyFilter()">
-                County: {{ filterOptions.county }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip *ngIf="filterOptions.city" (removed)="clearCityFilter()">
-                City: {{ filterOptions.city }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip
-                *ngIf="filterOptions.priceMin !== undefined || filterOptions.priceMax !== undefined"
-                (removed)="clearPriceFilter()"
-              >
-                Price: {{ getPriceRangeLabel() }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip
-                *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
-                (removed)="clearDateFilter()"
-              >
-                Date: {{ getDateRangeLabel() }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <mat-chip *ngFor="let tag of selectedTagFilters" (removed)="removeTagFilter(tag)">
-                Tag: {{ tag }}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-            </mat-chip-set>
-          </div>
-          <button mat-button color="primary" (click)="resetFilters()">
-            <mat-icon>clear</mat-icon>
-            Clear All Filters
+        <div class="active-filters" *ngIf="isFiltered">
+          <h4>Active Filters:</h4>
+          <nb-tag-list>
+            <nb-tag
+              *ngIf="filterOptions.search"
+              (remove)="clearSearchFilter()"
+              removable
+              status="primary"
+            >
+              Search: {{ filterOptions.search }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.priority"
+              (remove)="clearPriorityFilter()"
+              removable
+              status="primary"
+            >
+              Priority: {{ filterOptions.priority | titlecase }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.category"
+              (remove)="clearCategoryFilter()"
+              removable
+              status="primary"
+            >
+              Category: {{ getCategoryLabel(filterOptions.category) }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.county"
+              (remove)="clearCountyFilter()"
+              removable
+              status="primary"
+            >
+              County: {{ filterOptions.county }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.city"
+              (remove)="clearCityFilter()"
+              removable
+              status="primary"
+            >
+              City: {{ filterOptions.city }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.priceMin || filterOptions.priceMax"
+              (remove)="clearPriceFilter()"
+              removable
+              status="primary"
+            >
+              Price: {{ getPriceRangeLabel() }}
+            </nb-tag>
+
+            <nb-tag
+              *ngIf="filterOptions.dateFrom || filterOptions.dateTo"
+              (remove)="clearDateFilter()"
+              removable
+              status="primary"
+            >
+              Date: {{ getDateRangeLabel() }}
+            </nb-tag>
+
+            <nb-tag
+              *ngFor="let tag of selectedTagFilters"
+              (remove)="removeTagFilter(tag)"
+              removable
+              status="primary"
+            >
+              Tag: {{ tag }}
+            </nb-tag>
+          </nb-tag-list>
+
+          <button nbButton ghost size="small" (click)="resetFilters()">
+            Clear all filters
+            <nb-icon icon="close-outline"></nb-icon>
           </button>
         </div>
       </div>
 
-      <div class="loading-container" *ngIf="loading">
-        <app-loading-spinner></app-loading-spinner>
-        <p>Loading your favorites...</p>
-      </div>
+      <div class="favorites-content">
+        <nb-card *ngIf="loading">
+          <nb-card-body>
+            <nb-spinner size="large"></nb-spinner>
+          </nb-card-body>
+        </nb-card>
 
-      <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)">
-        <mat-card>
-          <mat-card-content>
-            <mat-icon class="empty-icon">favorite_border</mat-icon>
-            <h3>No favorites yet</h3>
-            <p>Browse ads and click the heart icon to add them to your favorites.</p>
-            <button mat-raised-button color="primary" routerLink="/ads">Browse Ads</button>
-          </mat-card-content>
-        </mat-card>
-      </div>
+        <nb-alert *ngIf="error" status="danger">
+          Failed to load favorites. Please try again later.
+        </nb-alert>
 
-      <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0">
-        <mat-card
-          *ngFor="let favorite of favorites"
-          class="favorite-card"
-          [ngClass]="getPriorityClass(favorite)"
-        >
-          <div class="favorite-header">
-            <div class="favorite-select">
-              <mat-checkbox
+        <nb-alert *ngIf="!loading && (!favorites || favorites.length === 0)" status="info">
+          You haven't added any favorites yet.
+        </nb-alert>
+
+        <nb-list *ngIf="!loading && favorites && favorites.length > 0">
+          <nb-list-item *ngFor="let favorite of favorites">
+            <div class="favorite-item">
+              <nb-checkbox
                 [(ngModel)]="favorite.selected"
-                (change)="updateSelectedFavorites()"
-                color="primary"
-              ></mat-checkbox>
-            </div>
+                (ngModelChange)="updateSelectedFavorites()"
+              ></nb-checkbox>
 
-            <img
-              [src]="
-                favorite.ad.images && favorite.ad.images.length > 0
-                  ? favorite.ad.images[0]
-                  : 'assets/images/placeholder.jpg'
-              "
-              [alt]="favorite.ad.title"
-              class="favorite-image"
-              [routerLink]="['/ads', favorite.ad._id]"
-            />
+              <div class="favorite-content">
+                <div class="favorite-header">
+                  <h3>
+                    <a [routerLink]="['/ads', getAdIdAsString(favorite.ad)]">
+                      {{
+                        favorite.ad && typeof favorite.ad !== 'string'
+                          ? favorite.ad.title
+                          : 'View Ad'
+                      }}
+                    </a>
+                  </h3>
 
-            <div class="favorite-info">
-              <h3 class="favorite-title" [routerLink]="['/ads', favorite.ad._id]">
-                {{ favorite.ad.title }}
-              </h3>
+                  <div class="favorite-actions">
+                    <button
+                      nbButton
+                      ghost
+                      size="small"
+                      [nbContextMenu]="[
+                        {
+                          title: 'Edit Notes',
+                          icon: 'edit-outline',
+                          data: favorite,
+                        },
+                        {
+                          title: 'Manage Tags',
+                          icon: 'bookmark-outline',
+                          data: favorite,
+                        },
+                        {
+                          title: 'Set Priority',
+                          icon: 'arrow-up-outline',
+                          children: [
+                            {
+                              title: 'High',
+                              icon: 'arrow-up-outline',
+                              data: { favorite, priority: 'high' },
+                            },
+                            {
+                              title: 'Normal',
+                              icon: 'minus-outline',
+                              data: { favorite, priority: 'normal' },
+                            },
+                            {
+                              title: 'Low',
+                              icon: 'arrow-down-outline',
+                              data: { favorite, priority: 'low' },
+                            },
+                          ],
+                        },
+                        {
+                          title: favorite.notificationsEnabled
+                            ? 'Disable Notifications'
+                            : 'Enable Notifications',
+                          icon: favorite.notificationsEnabled ? 'bell-off-outline' : 'bell-outline',
+                          data: favorite,
+                        },
+                        {
+                          title: 'Remove',
+                          icon: 'trash-2-outline',
+                          data: favorite,
+                        },
+                      ]"
+                      nbContextMenuTag="favorite-menu"
+                    >
+                      <nb-icon icon="more-vertical-outline"></nb-icon>
+                    </button>
+                  </div>
+                </div>
 
-              <div class="favorite-details">
-                <span class="favorite-location">
-                  <mat-icon>location_on</mat-icon>
-                  {{ favorite.ad.location }}
-                </span>
+                <div class="favorite-meta">
+                  <nb-tag
+                    [status]="getPriorityClass(favorite)"
+                    [icon]="getPriorityIcon(favorite.priority)"
+                  >
+                    {{ favorite.priority | titlecase }} Priority
+                  </nb-tag>
 
-                <span class="favorite-price" *ngIf="favorite.ad.price">
-                  <mat-icon>attach_money</mat-icon>
-                  {{ favorite.ad.price | currency: 'NOK' : 'symbol' : '1.0-0' }}
-                </span>
+                  <nb-tag status="basic" icon="calendar-outline">
+                    Added {{ favorite.dateAdded || favorite.createdAt | date }}
+                  </nb-tag>
 
-                <span class="favorite-date">
-                  <mat-icon>event</mat-icon>
-                  Added {{ favorite.createdAt | date: 'mediumDate' }}
-                </span>
+                  <nb-tag
+                    *ngIf="favorite.notificationsEnabled"
+                    status="success"
+                    icon="bell-outline"
+                  >
+                    Notifications On
+                  </nb-tag>
+                </div>
 
-                <span class="favorite-priority" [ngClass]="'priority-' + favorite.priority">
-                  <mat-icon>{{ getPriorityIcon(favorite.priority) }}</mat-icon>
-                  {{ favorite.priority | titlecase }} Priority
-                </span>
+                <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
+                  <nb-tag-list>
+                    <nb-tag
+                      *ngFor="let tag of favorite.tags"
+                      status="basic"
+                      appearance="outline"
+                      size="tiny"
+                    >
+                      {{ tag }}
+                    </nb-tag>
+                  </nb-tag-list>
+                </div>
+
+                <p class="favorite-notes" *ngIf="favorite.notes">
+                  {{ favorite.notes }}
+                </p>
               </div>
-
-              <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
-                <mat-chip-listbox>
-                  <mat-chip *ngFor="let tag of favorite.tags">{{ tag }}</mat-chip>
-                </mat-chip-listbox>
-              </div>
             </div>
-
-            <div class="favorite-actions">
-              <app-favorite-button
-                [adId]="this.getAdIdAsString(favorite.ad._id)"
-                (favoriteChanged)="onFavoriteRemoved($event, favorite)"
-              ></app-favorite-button>
-
-              <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="['/ads', favorite.ad._id]">
-                  <mat-icon>visibility</mat-icon>
-                  <span>View Ad</span>
-                </button>
-                <button mat-menu-item (click)="openNotesDialog(favorite)">
-                  <mat-icon>note</mat-icon>
-                  <span>Edit Notes</span>
-                </button>
-                <button mat-menu-item (click)="openTagsDialogForSingle(favorite)">
-                  <mat-icon>label</mat-icon>
-                  <span>Edit Tags</span>
-                </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item [matMenuTriggerFor]="priorityMenu">
-                  <mat-icon>priority_high</mat-icon>
-                  <span>Set Priority</span>
-                </button>
-                <button mat-menu-item (click)="toggleNotifications(favorite)">
-                  <mat-icon>{{
-                    favorite.notificationsEnabled ? 'notifications' : 'notifications_off'
-                  }}</mat-icon>
-                  <span>{{
-                    favorite.notificationsEnabled ? 'Disable Notifications' : 'Enable Notifications'
-                  }}</span>
-                </button>
-                <mat-divider></mat-divider>
-                <button
-                  mat-menu-item
-                  (click)="
-                    removeFavorite(this.getAdIdAsString(this.getAdIdAsString(favorite.ad._id)))
-                  "
-                >
-                  <mat-icon>delete</mat-icon>
-                  <span>Remove from Favorites</span>
-                </button>
-              </mat-menu>
-
-              <mat-menu #priorityMenu="matMenu">
-                <button mat-menu-item (click)="updatePriority(favorite, 'high')">
-                  <mat-icon>arrow_upward</mat-icon>
-                  <span>High</span>
-                </button>
-                <button mat-menu-item (click)="updatePriority(favorite, 'normal')">
-                  <mat-icon>remove</mat-icon>
-                  <span>Normal</span>
-                </button>
-                <button mat-menu-item (click)="updatePriority(favorite, 'low')">
-                  <mat-icon>arrow_downward</mat-icon>
-                  <span>Low</span>
-                </button>
-              </mat-menu>
-            </div>
-          </div>
-
-          <mat-divider *ngIf="favorite.notes"></mat-divider>
-
-          <div class="favorite-notes" *ngIf="favorite.notes">
-            <mat-icon>note</mat-icon>
-            <p>{{ favorite.notes }}</p>
-          </div>
-
-          <mat-card-actions>
-            <button mat-button color="primary" [routerLink]="['/ads', favorite.ad._id]">
-              <mat-icon>visibility</mat-icon>
-              View Ad
-            </button>
-
-            <button
-              mat-button
-              color="accent"
-              [routerLink]="['/chat']"
-              [queryParams]="{ userId: favorite.ad.userId }"
-            >
-              <mat-icon>chat</mat-icon>
-              Contact Advertiser
-            </button>
-
-            <mat-slide-toggle
-              [checked]="favorite.notificationsEnabled"
-              (change)="toggleNotifications(favorite)"
-              color="primary"
-              class="notifications-toggle"
-            >
-              Notifications
-            </mat-slide-toggle>
-          </mat-card-actions>
-        </mat-card>
+          </nb-list-item>
+        </nb-list>
       </div>
     </div>
   `,
   styles: [
     `
+      :host {
+        display: block;
+        padding: var(--padding);
+      }
+
       .favorites-page {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
       }
 
       .favorites-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: var(--margin);
       }
 
       .page-title {
         margin: 0;
-        color: #333;
-        font-size: 2rem;
+        color: var(--text-basic-color);
       }
 
       .filters-container {
-        margin-bottom: 24px;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 16px;
-        background-color: #f9f9f9;
+        background-color: var(--card-background-color);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: var(--margin);
+        box-shadow: var(--shadow);
       }
 
       .filters-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-      }
+        margin-bottom: var(--margin);
 
-      .filters-header h3 {
-        margin: 0;
-        font-size: 18px;
-        color: #333;
+        h3 {
+          margin: 0;
+          color: var(--text-basic-color);
+        }
       }
 
       .basic-filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 16px;
-        align-items: flex-start;
+        display: grid;
+        gap: var(--spacing);
+        margin-bottom: var(--margin);
       }
 
       .advanced-filters {
-        background-color: #f0f0f0;
-        border-radius: 4px;
-        padding: 16px;
-        margin-bottom: 16px;
+        display: grid;
+        gap: var(--spacing);
+        padding-top: var(--padding);
+        border-top: 1px solid var(--divider-color);
       }
 
       .filter-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-
-      .filter-row mat-form-field {
-        flex: 1;
-        min-width: 200px;
-      }
-
-      .price-range,
-      .date-range {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .range-label {
-        font-weight: 500;
-        color: #666;
-        margin-bottom: 8px;
-      }
-
-      .price-inputs,
-      .date-inputs {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .price-inputs mat-form-field,
-      .date-inputs mat-form-field {
-        flex: 1;
-      }
-
-      .range-separator {
-        color: #666;
-        margin: 0 8px;
-      }
-
-      .filter-actions {
-        display: flex;
-        gap: 16px;
-        margin-top: 16px;
-      }
-
-      .filter-summary {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 16px;
-        padding-top: 16px;
-        border-top: 1px solid #e0e0e0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing);
       }
 
       .active-filters {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 8px;
+        gap: var(--spacing);
+        padding-top: var(--padding);
+        border-top: 1px solid var(--divider-color);
+
+        h4 {
+          margin: 0;
+          color: var(--text-basic-color);
+        }
       }
 
-      .filter-label {
-        font-weight: 500;
-        color: #666;
+      .favorite-item {
+        display: flex;
+        gap: var(--spacing);
+        width: 100%;
       }
 
-      .search-field {
+      .favorite-content {
         flex: 1;
-        min-width: 250px;
-      }
-
-      .tags-filter {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .tags-label {
-        font-weight: 500;
-        color: #666;
-      }
-
-      .loading-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-      }
-
-      .loading-container p {
-        margin-top: 20px;
-        color: #666;
-      }
-
-      .no-favorites {
-        text-align: center;
-        padding: 40px 0;
-      }
-
-      .no-favorites mat-card {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 30px;
-      }
-
-      .empty-icon {
-        font-size: 64px;
-        height: 64px;
-        width: 64px;
-        color: #ccc;
-        margin-bottom: 20px;
-      }
-
-      .no-favorites h3 {
-        margin-bottom: 10px;
-        color: #333;
-      }
-
-      .no-favorites p {
-        margin-bottom: 20px;
-        color: #666;
-      }
-
-      .favorite-card {
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .favorite-card.priority-high {
-        border-left: 4px solid #f44336;
-      }
-
-      .favorite-card.priority-normal {
-        border-left: 4px solid #2196f3;
-      }
-
-      .favorite-card.priority-low {
-        border-left: 4px solid #4caf50;
       }
 
       .favorite-header {
         display: flex;
-        padding: 16px;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--margin);
+
+        h3 {
+          margin: 0;
+          font-size: var(--text-heading-6-font-size);
+
+          a {
+            color: var(--text-basic-color);
+            text-decoration: none;
+
+            &:hover {
+              color: var(--color-primary-hover);
+            }
+          }
+        }
       }
 
-      .favorite-select {
-        display: flex;
-        align-items: center;
-        margin-right: 16px;
-      }
-
-      .favorite-image {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      .favorite-info {
-        flex: 1;
-        margin-left: 16px;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .favorite-title {
-        margin: 0 0 10px 0;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-
-      .favorite-title:hover {
-        color: #3f51b5;
-      }
-
-      .favorite-details {
+      .favorite-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-      }
-
-      .favorite-location,
-      .favorite-price,
-      .favorite-date,
-      .favorite-priority {
-        display: flex;
-        align-items: center;
-      }
-
-      .favorite-priority.priority-high {
-        color: #f44336;
-      }
-
-      .favorite-priority.priority-normal {
-        color: #2196f3;
-      }
-
-      .favorite-priority.priority-low {
-        color: #4caf50;
-      }
-
-      .favorite-details mat-icon {
-        font-size: 16px;
-        height: 16px;
-        width: 16px;
-        margin-right: 4px;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--margin);
       }
 
       .favorite-tags {
-        margin-top: 8px;
-      }
-
-      .favorite-actions {
-        display: flex;
-        align-items: flex-start;
+        margin-bottom: var(--margin);
       }
 
       .favorite-notes {
-        display: flex;
-        padding: 16px;
-        background-color: #f9f9f9;
-        border-radius: 0 0 8px 8px;
-      }
-
-      .favorite-notes mat-icon {
-        margin-right: 8px;
-        color: #666;
-      }
-
-      .favorite-notes p {
         margin: 0;
-        color: #555;
-        white-space: pre-line;
+        color: var(--text-hint-color);
+        font-style: italic;
       }
 
-      .notifications-toggle {
-        margin-left: auto;
+      .priority-icon {
+        &.high {
+          color: var(--color-danger-default);
+        }
+
+        &.normal {
+          color: var(--color-warning-default);
+        }
+
+        &.low {
+          color: var(--color-success-default);
+        }
       }
 
-      @media (max-width: 768px) {
-        .favorite-header {
-          flex-direction: column;
-        }
+      nb-checkbox {
+        margin-top: var(--spacing-xs);
+      }
 
-        .favorite-image {
-          width: 100%;
-          height: 200px;
-          margin-bottom: 16px;
-        }
+      nb-tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+      }
 
-        .favorite-info {
-          margin-left: 0;
-        }
+      nb-spinner {
+        margin: var(--margin) auto;
+      }
 
-        .favorite-actions {
-          margin-top: 16px;
-          justify-content: flex-end;
-          width: 100%;
+      nb-alert {
+        margin-bottom: var(--margin);
+      }
+
+      nb-list-item {
+        padding: var(--card-padding);
+        border-radius: var(--card-border-radius);
+        background-color: var(--card-background-color);
+        margin-bottom: var(--margin);
+        box-shadow: var(--shadow);
+
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     `,
@@ -881,6 +655,7 @@ export class FavoritesPageComponent implements OnInit {
   userTags: FavoriteTag[] = [];
   selectedFavorites: string[] = [];
   filterOptions: FavoriteFilterOptions = {
+    search: '',
     sort: 'newest',
   };
   selectedTagFilters: string[] = [];
@@ -899,12 +674,44 @@ export class FavoritesPageComponent implements OnInit {
   ];
   private searchSubject = new Subject<string>();
 
+  batchActions = [
+    {
+      title: 'Remove Selected',
+      icon: 'trash-2-outline',
+      data: 'remove',
+    },
+    {
+      title: 'Add Tags to Selected',
+      icon: 'pricetags-outline',
+      data: 'tags',
+    },
+    {
+      title: 'Set High Priority',
+      icon: 'arrow-up-outline',
+      data: 'priority-high',
+    },
+    {
+      title: 'Set Normal Priority',
+      icon: 'minus-outline',
+      data: 'priority-normal',
+    },
+    {
+      title: 'Set Low Priority',
+      icon: 'arrow-down-outline',
+      data: 'priority-low',
+    },
+  ];
+
   constructor(
     private favoriteService: FavoriteService,
     private dialogService: DialogService,
     private notificationService: NotificationService,
     private router: Router,
-  ) {}
+  ) {
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => this.applyFilters());
+  }
 
   ngOnInit(): void {
     this.loadFavorites();
@@ -912,7 +719,6 @@ export class FavoritesPageComponent implements OnInit {
     this.loadLocationData();
     this.loadFilterPresets();
 
-    // Set up search debounce
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilters());
@@ -983,6 +789,7 @@ export class FavoritesPageComponent implements OnInit {
    */
   resetFilters(): void {
     this.filterOptions = {
+      search: '',
       sort: 'newest',
     };
     this.selectedTagFilters = [];
@@ -1499,18 +1306,31 @@ export class FavoritesPageComponent implements OnInit {
   getPriorityIcon(priority: string): string {
     switch (priority) {
       case 'high':
-        return 'arrow_upward';
+        return 'arrow-up-outline';
       case 'low':
-        return 'arrow_downward';
+        return 'arrow-down-outline';
       default:
-        return 'remove_circle_outline';
+        return 'minus-outline';
     }
   }
 
   /**
    * Convert ad ID to string regardless of its type
    */
-  getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+  getAdIdAsString(adId: any): string {
+    if (!adId) return '';
+    if (typeof adId === 'string') return adId;
+    if (adId._id) return adId._id;
+    return JSON.stringify(adId);
+  }
+
+  toggleTagFilter(tag: string): void {
+    const index = this.selectedTagFilters.indexOf(tag);
+    if (index === -1) {
+      this.selectedTagFilters.push(tag);
+    } else {
+      this.selectedTagFilters.splice(index, 1);
+    }
+    this.applyFilters();
   }
 }

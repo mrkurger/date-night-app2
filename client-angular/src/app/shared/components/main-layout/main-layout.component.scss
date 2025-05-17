@@ -1,4 +1,4 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 // Define CSS variables for use in the component
 :host {
@@ -167,7 +167,7 @@
 .nav-divider {
   height: 1px;
   background-color: var(--sidebar-border-color);
-  margin: 16px 16px;
+  margin: 16px;
 }
 
 .sidebar-footer {
@@ -191,12 +191,12 @@
   padding: 8px 0;
 
   ::ng-deep {
-    .emerald-toggle-container {
+    .nb-toggle-container {
       width: 100%;
       justify-content: space-between;
     }
 
-    .emerald-toggle__label {
+    .nb-toggle__label {
       font-size: 14px;
       font-weight: 500;
     }

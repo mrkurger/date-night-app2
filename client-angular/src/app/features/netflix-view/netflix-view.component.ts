@@ -16,8 +16,24 @@ import {
   ElementRef,
   ViewChildren,
   QueryList,
+  ViewChild,
+  TemplateRef,
+  Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbLayoutModule,
+} from '@nebular/theme';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -28,35 +44,38 @@ import { AuthService } from '../../core/services/auth.service';
 import { Ad } from '../../core/models/ad.interface';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
-// Import Emerald components
-import { AppCardComponent } from '../../shared/emerald/components/app-card/app-card.component';
-import { CardGridComponent } from '../../shared/emerald/components/card-grid/card-grid.component';
-import { PageHeaderComponent } from '../../shared/emerald/components/page-header/page-header.component';
-import { SkeletonLoaderComponent } from '../../shared/emerald/components/skeleton-loader/skeleton-loader.component';
-import { LabelComponent } from '../../shared/emerald/components/label/label.component';
-import { FloatingActionButtonComponent } from '../../shared/emerald/components/floating-action-button/floating-action-button.component';
-import { ToggleComponent } from '../../shared/emerald/components/toggle/toggle.component';
+// AppSortComponent is imported but not used in the template
+// import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+
+interface GetAdsResponse {
+  ads: Ad[];
+  total: number;
+  page: number;
+  limit: number;
+}
 
 @Component({
   selector: 'app-netflix-view',
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,
-    // Add Emerald components
-    AppCardComponent,
-    CardGridComponent,
-    PageHeaderComponent,
-    SkeletonLoaderComponent,
-    LabelComponent,
-    FloatingActionButtonComponent,
-    ToggleComponent,
+    NbLayoutModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbCardModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add schema for custom elements
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
@@ -140,7 +159,8 @@ export class NetflixViewComponent implements OnInit {
 
             // Get all ads for other categories
             this.adService.getAds().subscribe({
-              next: (allAds) => {
+              next: (response: GetAdsResponse) => {
+                const allAds = response.ads;
                 if (allAds && allAds.length > 0) {
                   // If we don't have a featured ad yet, set one from all ads
                   if (!this.featuredAd && allAds.length > 0) {
@@ -180,24 +200,18 @@ export class NetflixViewComponent implements OnInit {
               error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
-                console.error('Error loading all ads:', err);
               },
             });
           },
           error: (err) => {
-            console.error('Error loading trending ads:', err);
-            // Continue loading other categories even if trending fails
-            this.adsByCategory['Most Popular'] = [];
-            // Pass an empty array since allAds is not defined in this scope
-            this.loadRemainingCategories([]);
+            this.error = 'Failed to load trending ads. Please try again.';
+            this.loading = false;
           },
         });
       },
       error: (err) => {
-        console.error('Error loading featured ads:', err);
-        // Continue loading other categories even if featured fails
-        this.adsByCategory['Featured'] = [];
-        this.loadTrendingAndRemainingAds();
+        this.error = 'Failed to load featured ads. Please try again.';
+        this.loading = false;
       },
     });
   }
@@ -209,28 +223,22 @@ export class NetflixViewComponent implements OnInit {
         this.loadRemainingCategories();
       },
       error: (err) => {
-        console.error('Error loading trending ads:', err);
-        this.adsByCategory['Most Popular'] = [];
-        this.loadRemainingCategories();
+        this.error = 'Failed to load trending ads. Please try again.';
+        this.loading = false;
       },
     });
   }
 
   private loadRemainingCategories(existingAds?: Ad[]): void {
-    if (existingAds && existingAds.length > 0) {
-      this.processAllAds(existingAds);
-    } else {
-      this.adService.getAds().subscribe({
-        next: (allAds) => {
-          this.processAllAds(allAds);
-        },
-        error: (err) => {
-          this.error = 'Failed to load ads. Please try again.';
-          this.loading = false;
-          console.error('Error loading all ads:', err);
-        },
-      });
-    }
+    this.adService.getAds().subscribe({
+      next: (response: GetAdsResponse) => {
+        this.processAllAds(response.ads);
+      },
+      error: (err) => {
+        this.error = 'Failed to load ads. Please try again.';
+        this.loading = false;
+      },
+    });
   }
 
   private processAllAds(allAds: Ad[]): void {
@@ -335,7 +343,7 @@ export class NetflixViewComponent implements OnInit {
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        this.router.navigateByUrl(`/chat/${room._id}`);
+        this.router.navigateByUrl(`/chat/${room.id}`);
       },
       error: (err) => {
         this.notificationService.error('Failed to start chat');
@@ -370,9 +378,9 @@ export class NetflixViewComponent implements OnInit {
    * @param event The action event from the AppCard component
    * @param adId The ID of the ad
    */
-  onCardAction(event: { id: string; itemId?: string }, adId: string): void {
-    // Use the itemId from the event if available, otherwise use the provided adId
-    const targetAdId = event.itemId || adId;
+  onCardAction(event: { id: string; itemId?: string }): void {
+    // Use the itemId from the event
+    const targetAdId = event.itemId;
 
     switch (event.id) {
       case 'view':
@@ -481,71 +489,8 @@ export class NetflixViewComponent implements OnInit {
    * Open the filters modal
    */
   openFilters(): void {
-    // Open filters modal using Bootstrap
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = new bootstrap.Modal(modal);
-          bsModal.show();
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.add('show');
-          modal.style.display = 'block';
-          document.body.classList.add('modal-open');
-
-          // Create backdrop if it doesn't exist
-          let backdrop = document.querySelector('.modal-backdrop');
-          if (!backdrop) {
-            backdrop = document.createElement('div');
-            backdrop.className = 'modal-backdrop fade show';
-            document.body.appendChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error opening modal:', error);
-        // Simple fallback
-        modal.style.display = 'block';
-      }
-    }
-  }
-
-  /**
-   * Close the filters modal
-   */
-  closeFilters(): void {
-    const modal = document.getElementById('filtersModal');
-    if (modal) {
-      try {
-        // Try to use Bootstrap's modal API if available
-        // @ts-expect-error - Bootstrap is loaded globally and not via import
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          // @ts-expect-error - Bootstrap is loaded globally and not via import
-          const bsModal = bootstrap.Modal.getInstance(modal);
-          if (bsModal) {
-            bsModal.hide();
-          }
-        } else {
-          // Fallback implementation if Bootstrap is not available
-          modal.classList.remove('show');
-          modal.style.display = 'none';
-          document.body.classList.remove('modal-open');
-
-          // Remove backdrop
-          const backdrop = document.querySelector('.modal-backdrop');
-          if (backdrop) {
-            backdrop.parentNode?.removeChild(backdrop);
-          }
-        }
-      } catch (error) {
-        console.error('Error closing modal:', error);
-        // Simple fallback
-        modal.style.display = 'none';
-      }
-    }
+    // Apply filters directly
+    this.applyFilters();
   }
 
   /**

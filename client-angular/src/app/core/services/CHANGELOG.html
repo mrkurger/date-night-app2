@@ -154,6 +154,46 @@
 
     <div class="version">
       <div class="version-header">
+        <span class="version-number">Version 1.4.0</span>
+        <span class="version-date">May 16, 2025</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>
+            Added new
+            <a href="./GLOSSARY.html#WebSocketFallbackService" class="tooltip"
+              >WebSocketFallbackService<span class="tooltip-text"
+                >Service for handling WebSocket connection failures</span
+              ></a
+            >
+            to prevent console error flooding
+          </li>
+          <li>
+            Implemented WebSocket polyfill script to intercept and manage WebSocket connections
+          </li>
+          <li>
+            Added custom reconnection logic to prevent excessive reconnection attempts
+          </li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type fix">Fixes</span></h3>
+        <ul class="change-list">
+          <li>
+            Fixed WebSocket connection errors to 'ws://localhost:4201/' in development mode
+          </li>
+          <li>Updated Angular dev server configuration to improve WebSocket stability</li>
+          <li>Modified CSP policy to allow WebSocket connections from all local addresses</li>
+          <li>Disabled HMR in development mode to prevent WebSocket connection issues</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
         <span class="version-number">Version 1.3.0</span>
         <span class="version-date">May 7, 2024</span>
       </div>

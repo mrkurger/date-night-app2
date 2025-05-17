@@ -1,14 +1,16 @@
+/* Reviews list container */
 .reviews-list-container {
   padding: 20px 0;
 }
 
+/* Loading container */
 .loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 0;
-  color: #6c757d;
+  color: var(--neutral-600);
 
   .spinner-border {
     width: 3rem;
@@ -17,10 +19,11 @@
   }
 }
 
+/* Empty state */
 .empty-state {
   text-align: center;
   padding: 40px 0;
-  color: #6c757d;
+  color: var(--neutral-600);
 
   .empty-icon {
     font-size: 3rem;
@@ -38,16 +41,18 @@
   }
 }
 
+/* Reviews list */
 .reviews-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Review item */
 .review-item {
-  background-color: #fff;
+  background-color: var(--neutral-100);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   transition:
     transform 0.2s ease,
@@ -55,31 +60,34 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
   }
 }
 
+/* Review header */
 .review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+  background-color: var(--neutral-50);
+  border-bottom: 1px solid var(--neutral-200);
 }
 
+/* User info */
 .user-info {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+/* Avatar */
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #e9ecef;
+  background-color: var(--neutral-200);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,12 +99,13 @@
   }
 
   &.anonymous {
-    background-color: #6c757d;
-    color: #fff;
+    background-color: var(--neutral-600);
+    color: var(--neutral-100);
     font-size: 1.2rem;
   }
 }
 
+/* User details */
 .user-details {
   display: flex;
   flex-direction: column;
@@ -106,18 +115,20 @@
   font-size: 1rem;
   font-weight: 500;
   margin: 0;
-  color: #212529;
+  color: var(--neutral-900);
 }
 
 .review-date {
   font-size: 0.8rem;
-  color: #6c757d;
+  color: var(--neutral-600);
 }
 
+/* Review content */
 .review-content {
   padding: 20px;
 }
 
+/* Rating */
 .rating {
   display: flex;
   align-items: center;
@@ -130,11 +141,11 @@
   gap: 2px;
 
   i {
-    color: #e4e5e9;
+    color: var(--neutral-300);
     font-size: 1.2rem;
 
     &.filled {
-      color: #ffc107;
+      color: var(--warning);
     }
   }
 }
@@ -142,29 +153,31 @@
 .rating-value {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #495057;
+  color: var(--neutral-700);
 }
 
+/* Review title and text */
 .review-title {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #212529;
+  color: var(--neutral-900);
 }
 
 .review-text {
   font-size: 1rem;
   line-height: 1.5;
-  color: #495057;
+  color: var(--neutral-700);
   margin-bottom: 15px;
   white-space: pre-line;
 }
 
+/* Ad info */
 .ad-info {
   margin-bottom: 15px;
 
   .ad-link {
-    color: #007bff;
+    color: var(--primary);
     text-decoration: none;
     font-size: 0.9rem;
     display: inline-flex;
@@ -181,6 +194,7 @@
   }
 }
 
+/* Review feedback */
 .review-feedback {
   display: flex;
   gap: 10px;
@@ -189,11 +203,11 @@
 
 .feedback-btn {
   background: none;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--neutral-300);
   border-radius: 4px;
   padding: 6px 12px;
   font-size: 0.9rem;
-  color: #6c757d;
+  color: var(--neutral-600);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -201,13 +215,13 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: #f8f9fa;
+    background-color: var(--neutral-50);
   }
 
   &.active {
-    background-color: #e9ecef;
-    border-color: #ced4da;
-    color: #495057;
+    background-color: var(--neutral-200);
+    border-color: var(--neutral-400);
+    color: var(--neutral-700);
   }
 
   i {
@@ -215,6 +229,7 @@
   }
 }
 
+/* Pagination */
 .pagination-container {
   margin-top: 30px;
   display: flex;
@@ -229,18 +244,18 @@
   gap: 5px;
 }
 
-.page-item {
+:is(.page-item) {
   &.active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
+    background-color: var(--primary);
+    color: var(--neutral-100);
+    border-color: var(--primary);
   }
 
   &.disabled .page-link {
-    color: #6c757d;
+    color: var(--neutral-600);
     pointer-events: none;
-    background-color: #fff;
-    border-color: #dee2e6;
+    background-color: var(--neutral-100);
+    border-color: var(--neutral-300);
   }
 }
 
@@ -251,18 +266,18 @@
   min-width: 36px;
   height: 36px;
   padding: 0 10px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--neutral-300);
   border-radius: 4px;
-  background-color: #fff;
-  color: #007bff;
+  background-color: var(--neutral-100);
+  color: var(--primary);
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover:not(.ellipsis) {
-    background-color: #e9ecef;
-    border-color: #dee2e6;
-    color: #0056b3;
+    background-color: var(--neutral-200);
+    border-color: var(--neutral-300);
+    color: var(--primary-dark);
   }
 
   &.ellipsis {

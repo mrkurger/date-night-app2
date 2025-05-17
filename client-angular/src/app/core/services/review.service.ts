@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
+import {
+  /*DEPRECATED:NbSortComponent*/,
+  /*DEPRECATED:NbSortHeaderComponent*/,
+} from '../../shared/components/custom-nebular-components';
+
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // Removed unused catchError import
 import { environment } from '../../../environments/environment';
 import { Review } from '../models/review.interface';
+import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +34,7 @@ export class ReviewService {
    * @param advertiserId Advertiser ID
    * @param page Page number
    * @param limit Items per page
-   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getAdvertiserReviews(
     advertiserId: string,
@@ -44,7 +52,7 @@ export class ReviewService {
    * @param advertiserId Advertiser ID
    * @param page Page number
    * @param limit Items per page
-   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getReviewsByAdvertiser(
     advertiserId: string,
@@ -62,7 +70,7 @@ export class ReviewService {
    * @param adId Ad ID
    * @param page Page number
    * @param limit Items per page
-   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getReviewsByAd(
     adId: string,

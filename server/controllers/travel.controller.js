@@ -5,6 +5,7 @@ import { asyncHandler } from '../middleware/asyncHandler.js';
 // eslint-disable-next-line no-unused-vars
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
+import { sendError } from '../utils/response.js';
 
 /**
  * Travel Controller for handling travel-related API endpoints
@@ -173,5 +174,10 @@ const travelController = {
     });
   }),
 };
+
+export async function someHandler(req, res) {
+  // TODO: Implement travel handler
+  return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
+}
 
 export default travelController;

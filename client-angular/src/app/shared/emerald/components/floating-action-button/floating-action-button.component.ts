@@ -1,3 +1,7 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,19 +13,18 @@
 // - ANIMATION_DURATION: Duration of animations in milliseconds (default: 300)
 //   Related to: floating-action-button.component.scss
 // ===================================================
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * Emerald FloatingActionButton Component
+ * /*DEPRECATED:Emerald*/ FloatingActionButton Component
  *
  * A floating action button for primary actions.
  * This component provides a prominent way to promote a primary action.
  *
- * Documentation: https://docs-emerald.condorlabs.io/FloatingActionButton
+ * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/FloatingActionButton
  */
 @Component({
-  selector: 'emerald-floating-action-button',
+  selector: 'nb-fab',
   templateUrl: './floating-action-button.component.html',
   styleUrls: ['./floating-action-button.component.scss'],
   standalone: true,

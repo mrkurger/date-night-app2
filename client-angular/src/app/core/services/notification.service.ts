@@ -8,7 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -46,99 +46,47 @@ export class NotificationService {
   private toasts: ToastNotification[] = [];
 
   constructor(
-    private snackBar: MatSnackBar,
+    private toastrService: NbToastrService,
     private http: HttpClient,
   ) {
     // Initialize with 0 unread notifications
     this.unreadCountSubject.next(0);
   }
 
-  success(message: string, action = 'Close', options = {}) {
-    const snackBarRef = this.snackBar.open(message, action, {
+  success(message: string, title: string = 'Success'): void {
+    this.toastrService.show(message, title, {
+      status: 'success',
       duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-      ...options,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
     });
-
-    // Also add to toasts
-    this.addToast({
-      id: this.generateId(),
-      message,
-      type: NotificationType.SUCCESS,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 3000,
-    });
-
-    return snackBarRef;
   }
 
-  error(message: string, action = 'Close', options = {}) {
-    const snackBarRef = this.snackBar.open(message, action, {
+  error(message: string, title: string = 'Error'): void {
+    this.toastrService.show(message, title, {
+      status: 'danger',
       duration: 5000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar'],
-      ...options,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
     });
-
-    // Also add to toasts
-    this.addToast({
-      id: this.generateId(),
-      message,
-      type: NotificationType.ERROR,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 5000,
-    });
-
-    return snackBarRef;
   }
 
-  warning(message: string, action = 'Close', options = {}) {
-    const snackBarRef = this.snackBar.open(message, action, {
+  warning(message: string, title: string = 'Warning'): void {
+    this.toastrService.show(message, title, {
+      status: 'warning',
       duration: 4000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: ['warning-snackbar'],
-      ...options,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
     });
-
-    // Also add to toasts
-    this.addToast({
-      id: this.generateId(),
-      message,
-      type: NotificationType.WARNING,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 4000,
-    });
-
-    return snackBarRef;
   }
 
-  info(message: string, action = 'Close', options = {}) {
-    const snackBarRef = this.snackBar.open(message, action, {
+  info(message: string, title: string = 'Info'): void {
+    this.toastrService.show(message, title, {
+      status: 'info',
       duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: ['info-snackbar'],
-      ...options,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
     });
+  }
 
-    // Also add to toasts
-    this.addToast({
-      id: this.generateId(),
-      message,
-      type: NotificationType.INFO,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 3000,
-    });
-
-    return snackBarRef;
+  dismiss(): void {
+    // NbToastrService automatically handles dismissal
   }
 
   // Add a toast notification

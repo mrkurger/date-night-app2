@@ -1,0 +1,153 @@
+// ===================================================
+// NEBULAR MODULE CONFIGURATION
+// ===================================================
+// This file contains all Nebular module imports and exports
+// for consistent UI components across the application
+// ===================================================
+import { NgModule, ModuleWithProviders, Type } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  NbThemeModule,
+  NbMenuModule,
+  NbToastrModule,
+  NbDialogModule,
+  NbSidebarModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbWindowModule,
+  NbLayoutModule,
+  NbButtonModule,
+  NbCardModule,
+  NbIconModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbUserModule,
+  NbActionsModule,
+  NbContextMenuModule,
+  NbSpinnerModule,
+  NbChatModule,
+  NbListModule,
+  NbSelectModule,
+  NbAccordionModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbToggleModule,
+  NbPopoverModule,
+  NbTooltipModule,
+  NbTabsetModule,
+  NbRouteTabsetModule,
+  NbBadgeModule,
+  NbAlertModule,
+  NbSearchModule,
+  NbTagModule,
+  NbTreeGridModule,
+  NbStepperModule,
+  NbCalendarModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+
+/**
+ * Core Nebular modules that need to be configured at the root level
+ */
+const ROOT_NEBULAR_MODULES: Array<ModuleWithProviders<any>> = [
+  NbThemeModule.forRoot({ name: 'default' }),
+  NbMenuModule.forRoot(),
+  NbToastrModule.forRoot(),
+  NbDialogModule.forRoot(),
+  NbSidebarModule.forRoot(),
+  NbDatepickerModule.forRoot(),
+  NbTimepickerModule.forRoot(),
+  NbWindowModule.forRoot(),
+];
+
+/**
+ * Feature Nebular modules that can be imported multiple times
+ */
+const FEATURE_NEBULAR_MODULES: Array<Type<any>> = [
+  NbLayoutModule,
+  NbButtonModule,
+  NbCardModule,
+  NbIconModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbUserModule,
+  NbActionsModule,
+  NbContextMenuModule,
+  NbSpinnerModule,
+  NbChatModule,
+  NbListModule,
+  NbSelectModule,
+  NbAccordionModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbDatepickerModule,
+  NbToggleModule,
+  NbPopoverModule,
+  NbTooltipModule,
+  NbTabsetModule,
+  NbRouteTabsetModule,
+  NbBadgeModule,
+  NbAlertModule,
+  NbSearchModule,
+  NbTagModule,
+  NbTreeGridModule,
+  NbStepperModule,
+  NbCalendarModule,
+  NbEvaIconsModule,
+];
+
+/**
+ * NebularModule
+ *
+ * This module provides all Nebular components, directives, and services
+ * needed throughout the application. It should be imported in the SharedModule.
+ */
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...ROOT_NEBULAR_MODULES,
+    ...FEATURE_NEBULAR_MODULES,
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...FEATURE_NEBULAR_MODULES,
+    // Export all individual modules for standalone components
+    NbLayoutModule,
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbUserModule,
+    NbActionsModule,
+    NbContextMenuModule,
+    NbSpinnerModule,
+    NbChatModule,
+    NbListModule,
+    NbSelectModule,
+    NbAccordionModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbDatepickerModule,
+    NbToggleModule,
+    NbPopoverModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    NbRouteTabsetModule,
+    NbBadgeModule,
+    NbAlertModule,
+    NbSearchModule,
+    NbTagModule,
+    NbTreeGridModule,
+    NbStepperModule,
+    NbCalendarModule,
+    NbEvaIconsModule,
+  ],
+})
+export class NebularModule {}

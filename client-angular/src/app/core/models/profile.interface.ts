@@ -9,8 +9,12 @@ export interface Profile extends User {
     country: string;
   };
   preferences?: {
-    notifications: boolean;
-    visibility: 'public' | 'private';
+    emailNotifications: boolean;
+    pushNotifications: boolean;
+    theme: 'light' | 'dark';
+    language: string;
+    notifications?: boolean;
+    visibility?: 'public' | 'private';
   };
 }
 
@@ -23,7 +27,11 @@ export interface ProfileUpdateDTO {
     country: string;
   };
   preferences?: {
-    notifications: boolean;
-    visibility: 'public' | 'private';
+    emailNotifications?: boolean;
+    pushNotifications?: boolean;
+    theme?: 'light' | 'dark';
+    language?: string;
+    notifications?: boolean;
+    visibility?: 'public' | 'private';
   };
 }

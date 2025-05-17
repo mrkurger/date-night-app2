@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Material UI to Nebular Migration Guide</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      code {
+        background: #f7f9fc;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      pre {
+        background: #f7f9fc;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+      .note {
+        background: #e7f1ff;
+        border-left: 4px solid #3366ff;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+      }
+      th,
+      td {
+        border: 1px solid #edf1f7;
+        padding: 0.5rem;
+        text-align: left;
+      }
+      th {
+        background: #f7f9fc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Material UI to Nebular Migration Guide</h1>
+
+    <div class="note">
+      This guide documents the process of migrating from Angular Material UI to Nebular UI in the
+      DateNight.io application.
+    </div>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#migration-steps">Migration Steps</a></li>
+      <li><a href="#component-mapping">Component Mapping</a></li>
+      <li><a href="#theme-migration">Theme Migration</a></li>
+      <li><a href="#common-issues">Common Issues</a></li>
+    </ul>
+
+    <h2 id="prerequisites">Prerequisites</h2>
+    <ul>
+      <li>Angular 19.2.10 or higher</li>
+      <li>Node.js 22.14.0 or higher</li>
+      <li>npm 10.9.2 or higher</li>
+    </ul>
+
+    <h2 id="migration-steps">Migration Steps</h2>
+
+    <h3>1. Install Nebular</h3>
+    <pre>npm install @nebular/theme @nebular/eva-icons eva-icons</pre>
+
+    <h3>2. Run Migration Script</h3>
+    <pre>./migrate-to-nebular.sh</pre>
+
+    <h3>3. Update Theme Configuration</h3>
+    <p>Update your styles.scss:</p>
+    <pre>
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/dark' as dark-theme;
+@use '@nebular/theme/styles/globals' as *;
+
+$nb-themes: nb-register-theme($theme, default, default-theme.default);
+$nb-themes: nb-register-theme($dark-theme, dark, dark-theme.dark);
+
+@include nb-install() {
+  @include nb-theme-global();
+}</pre
+    >
+
+    <h3>4. Update App Module</h3>
+    <p>Import required Nebular modules:</p>
+    <pre>
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+
+@NgModule({
+  imports: [
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbEvaIconsModule
+  ]
+})</pre
+    >
+
+    <h2 id="component-mapping">Component Mapping</h2>
+    <table>
+      <tr>
+        <th>Material UI</th>
+        <th>Nebular</th>
+      </tr>
+      <tr>
+        <td>mat-button</td>
+        <td>nbButton</td>
+      </tr>
+      <tr>
+        <td>mat-card</td>
+        <td>nb-card</td>
+      </tr>
+      <tr>
+        <td>mat-dialog</td>
+        <td>nb-dialog</td>
+      </tr>
+      <tr>
+        <td>mat-snackbar</td>
+        <td>nb-toastr</td>
+      </tr>
+      <tr>
+        <td>mat-menu</td>
+        <td>nb-menu</td>
+      </tr>
+      <tr>
+        <td>mat-sidenav</td>
+        <td>nb-sidebar</td>
+      </tr>
+      <tr>
+        <td>mat-toolbar</td>
+        <td>nb-layout-header</td>
+      </tr>
+      <tr>
+        <td>mat-icon</td>
+        <td>nb-icon</td>
+      </tr>
+      <tr>
+        <td>mat-form-field</td>
+        <td>nb-form-field</td>
+      </tr>
+    </table>
+
+    <h2 id="theme-migration">Theme Migration</h2>
+    <p>
+      Nebular uses a different theming system than Material UI. Here's how to migrate your themes:
+    </p>
+
+    <h3>Colors</h3>
+    <pre>
+// Material UI
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink);
+
+// Nebular
+$theme: (
+  color-primary-100: #f2f6ff,
+  color-primary-200: #d9e4ff,
+  color-primary-300: #a6c1ff,
+  color-primary-400: #598bff,
+  color-primary-500: #3366ff,
+  color-primary-600: #274bdb,
+  color-primary-700: #1a34b8,
+  color-primary-800: #102694,
+  color-primary-900: #091c7a
+);</pre
+    >
+
+    <h3>Typography</h3>
+    <pre>
+// Material UI
+@include mat-core();
+@include angular-material-typography($typography);
+
+// Nebular
+@include nb-typography();
+$nb-enable-css-custom-properties: true;</pre
+    >
+
+    <h2 id="common-issues">Common Issues</h2>
+
+    <h3>1. Icon Migration</h3>
+    <p>Nebular uses Eva Icons instead of Material Icons. You'll need to update icon names:</p>
+    <pre>
+// Material UI
+&lt;mat-icon>menu&lt;/mat-icon>
+
+// Nebular
+&lt;nb-icon icon="menu-outline">&lt;/nb-icon></pre
+    >
+
+    <h3>2. Form Controls</h3>
+    <p>Nebular form controls have a different structure:</p>
+    <pre>
+// Material UI
+&lt;mat-form-field>
+  &lt;input matInput>
+&lt;/mat-form-field>
+
+// Nebular
+&lt;nb-form-field>
+  &lt;input nbInput>
+&lt;/nb-form-field></pre
+    >
+
+    <h3>3. Dialog Service</h3>
+    <p>Nebular dialogs work slightly differently:</p>
+    <pre>
+// Material UI
+this.dialog.open(MyDialog, { data: { ... } });
+
+// Nebular
+this.dialogService.open(MyDialog, { 
+  context: { ... }
+});</pre
+    >
+
+    <div class="note">
+      <strong>Note:</strong> After running the migration script, you should:
+      <ol>
+        <li>Test all components thoroughly</li>
+        <li>Check for any remaining Material UI references</li>
+        <li>Update custom components that might need manual migration</li>
+        <li>Verify all styles are working correctly</li>
+        <li>Test the application in both light and dark themes</li>
+      </ol>
+    </div>
+  </body>
+</html>

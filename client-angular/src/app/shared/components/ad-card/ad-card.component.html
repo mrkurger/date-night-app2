@@ -27,7 +27,7 @@
 
     <!-- Image Count Badge -->
     <div class="image-count" *ngIf="getImageCount() > 1">
-      <mat-icon>photo_library</mat-icon>
+      <nb-icon icon="photo_library"></nb-icon>
       <span>{{ getImageCount() }}</span>
     </div>
 
@@ -57,7 +57,7 @@
 
       <!-- Location -->
       <p class="ad-card-location" *ngIf="ad.location && showLocation">
-        <mat-icon>location_on</mat-icon>
+        <nb-icon icon="location_on"></nb-icon>
         <span>{{ ad.location }}</span>
       </p>
     </div>
@@ -78,37 +78,32 @@
       <!-- Meta Information -->
       <div class="ad-card-meta">
         <span class="ad-card-date" *ngIf="ad.createdAt">
-          <mat-icon>access_time</mat-icon>
+          <nb-icon icon="access_time"></nb-icon>
           {{ getTimeSince() }}
         </span>
 
         <span class="ad-card-views" *ngIf="ad.viewCount">
-          <mat-icon>visibility</mat-icon>
+          <nb-icon icon="visibility"></nb-icon>
           {{ ad.viewCount }}
         </span>
       </div>
 
       <!-- Action Buttons -->
       <div class="ad-card-actions" *ngIf="showActions">
-        <button mat-icon-button color="primary" matTooltip="View Details" (click)="onViewDetails()">
-          <mat-icon>info</mat-icon>
+        <button nbButton ghost color="primary" nbTooltip="View Details" (click)="onViewDetails()">
+          <nb-icon icon="info"></nb-icon>
         </button>
 
-        <button
-          mat-icon-button
-          color="accent"
-          matTooltip="Add to Favorites"
-          (click)="onLike($event)"
-        >
-          <mat-icon>favorite_border</mat-icon>
+        <button nbButton ghost color="accent" nbTooltip="Add to Favorites" (click)="onLike($event)">
+          <nb-icon icon="favorite_border"></nb-icon>
         </button>
 
-        <button mat-icon-button color="primary" matTooltip="Start Chat" (click)="onChat($event)">
-          <mat-icon>chat</mat-icon>
+        <button nbButton ghost color="primary" nbTooltip="Start Chat" (click)="onChat($event)">
+          <nb-icon icon="chat"></nb-icon>
         </button>
 
-        <button mat-icon-button matTooltip="Share" (click)="onShare($event)">
-          <mat-icon>share</mat-icon>
+        <button nbButton ghost nbTooltip="Share" (click)="onShare($event)">
+          <nb-icon icon="share"></nb-icon>
         </button>
       </div>
     </div>

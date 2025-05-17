@@ -8,46 +8,79 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { NebularModule } from '../../../shared/nebular.module';
+
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import { TelemetryService } from '../../core/services/telemetry.service';
-import { Chart, registerables } from 'chart.js';
+import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
+import { Chart, registerables, ChartConfiguration } from 'chart.js';
+
+import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
+import {
+  TelemetryService,
+  ErrorTelemetry,
+  ErrorStatistics,
+  PerformanceStatistics,
+  TelemetryFilters,
+} from '../../core/services/telemetry.service';
 
 // Register Chart.js components
 Chart.register(...registerables);
 
+/**
+ * Valid date range options for filtering telemetry data
+ */
+type DateRangeType = 'today' | 'yesterday' | 'last7days' | 'last30days' | 'custom';
+
+/**
+ * Date range object used for filtering
+ */
+interface DateRange {
+  startDate: string;
+  endDate: string;
+}
+
+/**
+ * Performance data column keys for the table
+ */
+type PerformanceColumnKey = 'url' | 'method' | 'avgDuration' | 'p95Duration' | 'count';
+
+/**
+ * Error data column keys for the table
+ */
+type ErrorColumnKey =
+  | 'timestamp'
+  | 'type'
+  | 'category'
+  | 'statusCode'
+  | 'url'
+  | 'message'
+  | 'actions';
+
+/**
+ * TelemetryDashboardComponent provides a comprehensive view of application telemetry data,
+ * including error tracking and performance metrics. It supports filtering by date range
+ * and displays data through interactive charts and tables.
+ */
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    MatTabsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbListModule,
+    NbTreeGridModule,
+    ErrorDetailsDialogComponent,
   ],
   template: `
     <div class="dashboard-container">
@@ -55,220 +88,225 @@ Chart.register(...registerables);
 
       <div class="filter-section">
         <form [formGroup]="filterForm" class="filter-form">
-          <mat-form-field appearance="outline">
-            <mat-label>Date Range</mat-label>
-            <mat-select formControlName="dateRange">
-              <mat-option value="today">Today</mat-option>
-              <mat-option value="yesterday">Yesterday</mat-option>
-              <mat-option value="last7days">Last 7 Days</mat-option>
-              <mat-option value="last30days">Last 30 Days</mat-option>
-              <mat-option value="custom">Custom Range</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <nb-form-field>
+            <nb-select fullWidth formControlName="dateRange" placeholder="Date Range">
+              <nb-option value="today">Today</nb-option>
+              <nb-option value="yesterday">Yesterday</nb-option>
+              <nb-option value="last7days">Last 7 Days</nb-option>
+              <nb-option value="last30days">Last 30 Days</nb-option>
+              <nb-option value="custom">Custom Range</nb-option>
+            </nb-select>
+          </nb-form-field>
 
           <ng-container *ngIf="filterForm.get('dateRange')?.value === 'custom'">
-            <mat-form-field appearance="outline">
-              <mat-label>Start Date</mat-label>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
-              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-              <mat-datepicker #startPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="startPicker"
+                formControlName="startDate"
+                placeholder="Start Date"
+              />
+              <nb-datepicker #startPicker></nb-datepicker>
+            </nb-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>End Date</mat-label>
-              <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
-              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-              <mat-datepicker #endPicker></mat-datepicker>
-            </mat-form-field>
+            <nb-form-field>
+              <input
+                nbInput
+                fullWidth
+                [nbDatepicker]="endPicker"
+                formControlName="endDate"
+                placeholder="End Date"
+              />
+              <nb-datepicker #endPicker></nb-datepicker>
+            </nb-form-field>
           </ng-container>
 
-          <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+          <button nbButton status="primary" (click)="applyFilters()">Apply Filters</button>
         </form>
       </div>
 
-      <mat-tabs>
-        <mat-tab label="Error Analysis">
+      <nb-tabset>
+        <nb-tab tabTitle="Error Analysis">
           <div class="tab-content">
             <div class="loading-container" *ngIf="isLoadingErrors">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner status="primary"></nb-spinner>
               <p>Loading error data...</p>
             </div>
 
             <div class="charts-container" *ngIf="!isLoadingErrors">
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Errors by Type</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Errors by Type</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #errorsByTypeChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
 
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Errors Over Time</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Errors Over Time</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #errorsOverTimeChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
             </div>
 
-            <mat-card class="table-card" *ngIf="!isLoadingErrors">
-              <mat-card-header>
-                <mat-card-title>Recent Errors</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
+            <nb-card class="table-card" *ngIf="!isLoadingErrors">
+              <nb-card-header>
+                <h4>Recent Errors</h4>
+              </nb-card-header>
+              <nb-card-body>
                 <div class="table-container">
-                  <table mat-table [dataSource]="errorDataSource" matSort>
-                    <ng-container matColumnDef="timestamp">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-                      <td mat-cell *matCellDef="let error">
-                        {{ error.timestamp | date: 'medium' }}
+                  <table [nbTreeGrid]="errorDataSource">
+                    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="errorColumns"></tr>
+                    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: errorColumns"></tr>
+
+                    <ng-container nbTreeGridColumn="timestamp">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Timestamp</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.timestamp | date: 'medium' }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="errorCode">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Code</th>
-                      <td mat-cell *matCellDef="let error">{{ error.errorCode }}</td>
+                    <ng-container nbTreeGridColumn="type">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Type</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.type }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="statusCode">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                      <td mat-cell *matCellDef="let error">{{ error.statusCode }}</td>
+                    <ng-container nbTreeGridColumn="category">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Category</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.category }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="url">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>
-                      <td mat-cell *matCellDef="let error">{{ error.url }}</td>
+                    <ng-container nbTreeGridColumn="statusCode">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Status</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.statusCode }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="userMessage">
-                      <th mat-header-cell *matHeaderCellDef>User Message</th>
-                      <td mat-cell *matCellDef="let error">{{ error.userMessage }}</td>
+                    <ng-container nbTreeGridColumn="url">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>URL</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.url }}
+                      </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let error">
-                        <button mat-icon-button color="primary" (click)="viewErrorDetails(error)">
-                          <mat-icon>visibility</mat-icon>
+                    <ng-container nbTreeGridColumn="message">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Message</th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        {{ error.data.message }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container nbTreeGridColumn="actions">
+                      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
+                      <td nbTreeGridCell *nbTreeGridCellDef="let error">
+                        <button nbButton ghost (click)="viewErrorDetails(error.data)">
+                          <nb-icon icon="eye-outline"></nb-icon>
                         </button>
                       </td>
                     </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="errorColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: errorColumns"></tr>
                   </table>
 
-                  <mat-paginator
-                    [pageSizeOptions]="[10, 25, 50]"
-                    showFirstLastButtons
-                  ></mat-paginator>
+                  <div class="pagination-container">
+                    <nb-select [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
+                      <nb-option [value]="size" *ngFor="let size of pageSizeOptions">
+                        {{ size }} per page
+                      </nb-option>
+                    </nb-select>
+                    <div class="pagination-controls">
+                      <button
+                        nbButton
+                        ghost
+                        [disabled]="currentPage === 1"
+                        (click)="previousPage()"
+                      >
+                        <nb-icon icon="arrow-left"></nb-icon>
+                      </button>
+                      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                      <button
+                        nbButton
+                        ghost
+                        [disabled]="currentPage === totalPages"
+                        (click)="nextPage()"
+                      >
+                        <nb-icon icon="arrow-right"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </mat-card-content>
-            </mat-card>
+              </nb-card-body>
+            </nb-card>
           </div>
-        </mat-tab>
+        </nb-tab>
 
-        <mat-tab label="Performance Metrics">
+        <nb-tab tabTitle="Performance Metrics">
           <div class="tab-content">
             <div class="loading-container" *ngIf="isLoadingPerformance">
-              <mat-spinner diameter="40"></mat-spinner>
+              <nb-spinner status="primary"></nb-spinner>
               <p>Loading performance data...</p>
             </div>
 
             <div class="charts-container" *ngIf="!isLoadingPerformance">
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Average Response Time by Endpoint</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Average Response Time by Endpoint</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #responseTimeByEndpointChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
 
-              <mat-card class="chart-card">
-                <mat-card-header>
-                  <mat-card-title>Response Time Trends</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
+              <nb-card class="chart-card">
+                <nb-card-header>
+                  <h4>Response Time Trends</h4>
+                </nb-card-header>
+                <nb-card-body>
                   <canvas #responseTimeTrendsChart></canvas>
-                </mat-card-content>
-              </mat-card>
+                </nb-card-body>
+              </nb-card>
             </div>
-
-            <mat-card class="table-card" *ngIf="!isLoadingPerformance">
-              <mat-card-header>
-                <mat-card-title>Endpoint Performance</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="table-container">
-                  <table mat-table [dataSource]="performanceDataSource" matSort>
-                    <ng-container matColumnDef="url">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Endpoint</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.url }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="method">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Method</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.method }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="avgDuration">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Avg. Duration (ms)</th>
-                      <td mat-cell *matCellDef="let perf">
-                        {{ perf.avgDuration | number: '1.0-0' }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="p95Duration">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>P95 Duration (ms)</th>
-                      <td mat-cell *matCellDef="let perf">
-                        {{ perf.p95Duration | number: '1.0-0' }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="count">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request Count</th>
-                      <td mat-cell *matCellDef="let perf">{{ perf.count }}</td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="performanceColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: performanceColumns"></tr>
-                  </table>
-
-                  <mat-paginator
-                    [pageSizeOptions]="[10, 25, 50]"
-                    showFirstLastButtons
-                  ></mat-paginator>
-                </div>
-              </mat-card-content>
-            </mat-card>
           </div>
-        </mat-tab>
-      </mat-tabs>
+        </nb-tab>
+      </nb-tabset>
     </div>
   `,
   styles: [
     `
+      :host {
+        display: block;
+      }
+
       .dashboard-container {
-        padding: 20px;
+        padding: 2rem;
+      }
+
+      h1 {
+        margin-bottom: 2rem;
+        color: var(--text-basic-color);
       }
 
       .filter-section {
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
       }
 
       .filter-form {
         display: flex;
+        gap: 1rem;
+        align-items: flex-start;
         flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
       }
 
-      .tab-content {
-        padding: 20px 0;
+      nb-form-field {
+        min-width: 200px;
       }
 
       .loading-container {
@@ -276,22 +314,19 @@ Chart.register(...registerables);
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 40px;
+        padding: 2rem;
+        gap: 1rem;
       }
 
       .charts-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-        gap: 20px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
       }
 
       .chart-card {
-        height: 350px;
-      }
-
-      .table-card {
-        margin-bottom: 20px;
+        height: 100%;
       }
 
       .table-container {
@@ -301,38 +336,122 @@ Chart.register(...registerables);
       table {
         width: 100%;
       }
+
+      .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 1rem 0;
+      }
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      nb-icon {
+        color: var(--text-basic-color);
+      }
     `,
   ],
 })
 export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
-  @ViewChild('errorsByTypeChart') errorsByTypeChartRef!: ElementRef;
-  @ViewChild('errorsOverTimeChart') errorsOverTimeChartRef!: ElementRef;
-  @ViewChild('responseTimeByEndpointChart') responseTimeByEndpointChartRef!: ElementRef;
-  @ViewChild('responseTimeTrendsChart') responseTimeTrendsChartRef!: ElementRef;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('errorsByTypeChart')
+  private errorsByTypeChartRef!: ElementRef<HTMLCanvasElement>;
 
-  filterForm: FormGroup;
+  @ViewChild('errorsOverTimeChart')
+  private errorsOverTimeChartRef!: ElementRef<HTMLCanvasElement>;
 
-  isLoadingErrors = true;
-  isLoadingPerformance = true;
+  @ViewChild('responseTimeByEndpointChart')
+  private responseTimeByEndpointChartRef!: ElementRef<HTMLCanvasElement>;
 
-  errorDataSource: any[] = [];
-  performanceDataSource: any[] = [];
+  @ViewChild('responseTimeTrendsChart')
+  private responseTimeTrendsChartRef!: ElementRef<HTMLCanvasElement>;
 
-  errorColumns = ['timestamp', 'errorCode', 'statusCode', 'url', 'userMessage', 'actions'];
-  performanceColumns = ['url', 'method', 'avgDuration', 'p95Duration', 'count'];
+  // Form and loading state
+  protected filterForm: FormGroup;
+  protected isLoadingErrors = true;
+  protected isLoadingPerformance = true;
 
-  // Chart instances
-  errorsByTypeChart: Chart | null = null;
-  errorsOverTimeChart: Chart | null = null;
-  responseTimeByEndpointChart: Chart | null = null;
-  responseTimeTrendsChart: Chart | null = null;
+  // Data sources for tables
+  protected errorDataSource: Array<{ data: ErrorTelemetry }> = [];
+  protected performanceDataSource: PerformanceStatistics['byEndpoint'] = [];
+
+  // Table columns with typed arrays
+  protected readonly errorColumns: ErrorColumnKey[] = [
+    'timestamp',
+    'type',
+    'category',
+    'statusCode',
+    'url',
+    'message',
+    'actions',
+  ];
+
+  protected readonly performanceColumns: PerformanceColumnKey[] = [
+    'url',
+    'method',
+    'avgDuration',
+    'p95Duration',
+    'count',
+  ];
+
+  // Pagination state with reasonable defaults
+  protected currentPage = 1;
+  protected readonly defaultPageSize = 10;
+  protected readonly pageSizeOptions = [10, 25, 50];
+  protected pageSize = this.defaultPageSize;
+  protected totalPages = 1;
+
+  // Charts instances
+  private errorsByTypeChart: Chart | null = null;
+  private errorsOverTimeChart: Chart | null = null;
+  private responseTimeByEndpointChart: Chart | null = null;
+  private responseTimeTrendsChart: Chart | null = null;
+
+  // Chart colors using CSS custom properties when possible
+  private readonly chartColors = {
+    primary: 'var(--primary-500, #FF6384)',
+    secondary: 'var(--info-500, #36A2EB)',
+    tertiary: 'var(--warning-500, #FFCE56)',
+    quaternary: 'var(--success-500, #4BC0C0)',
+    quinary: 'var(--basic-600, #9966FF)',
+    success: 'var(--success-500, #8AC249)',
+    warning: 'var(--warning-500, #FF9F40)',
+    danger: 'var(--danger-500, #EA5545)',
+    info: 'var(--info-500, #46BFBD)',
+    accent: 'var(--primary-300, #F46A9B)',
+  };
 
   constructor(
-    private telemetryService: TelemetryService,
-    private fb: FormBuilder,
+    private readonly telemetryService: TelemetryService,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
   ) {
+    this.initializeForm();
+  }
+
+  /**
+   * On component initialization, load both error and performance data
+   */
+  ngOnInit(): void {
+    this.loadErrorData();
+    this.loadPerformanceData();
+  }
+
+  /**
+   * Chart initialization is handled by the data loading functions
+   */
+  ngAfterViewInit(): void {
+    // Charts are initialized in loadErrorData and loadPerformanceData
+  }
+
+  /**
+   * Initialize the filter form with default date range configuration
+   */
+  private initializeForm(): void {
     this.filterForm = this.fb.group({
       dateRange: ['last7days'],
       startDate: [null],
@@ -340,120 +459,170 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
+  /**
+   * Apply the current filter settings and reload all data
+   */
+  protected applyFilters(): void {
     this.loadErrorData();
     this.loadPerformanceData();
   }
 
-  ngAfterViewInit(): void {
-    // Charts will be initialized after data is loaded
-  }
-
-  applyFilters(): void {
+  /**
+   * Handle changes to the page size in the error table
+   * @param newSize New number of items per page
+   */
+  protected onPageSizeChange(newSize: number): void {
+    this.pageSize = newSize;
+    this.currentPage = 1;
     this.loadErrorData();
-    this.loadPerformanceData();
   }
 
-  loadErrorData(): void {
+  /**
+   * Navigate to the previous page in the error table
+   */
+  protected previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadErrorData();
+    }
+  }
+
+  /**
+   * Navigate to the next page in the error table
+   */
+  protected nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadErrorData();
+    }
+  }
+
+  /**
+   * Calculate the date range based on the selected filter option
+   * @param range Selected date range type
+   * @returns Object containing start and end dates
+   */
+  private calculateDateRange(range: DateRangeType): DateRange {
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+
+    switch (range) {
+      case 'today':
+        return { startDate: today, endDate: today };
+
+      case 'yesterday': {
+        const yesterday = new Date(now);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const date = yesterday.toISOString().split('T')[0];
+        return { startDate: date, endDate: date };
+      }
+
+      case 'last7days': {
+        const last7 = new Date(now);
+        last7.setDate(last7.getDate() - 7);
+        return {
+          startDate: last7.toISOString().split('T')[0],
+          endDate: today,
+        };
+      }
+
+      case 'last30days': {
+        const last30 = new Date(now);
+        last30.setDate(last30.getDate() - 30);
+        return {
+          startDate: last30.toISOString().split('T')[0],
+          endDate: today,
+        };
+      }
+
+      case 'custom':
+      default:
+        return {
+          startDate: this.filterForm.get('startDate')?.value,
+          endDate: this.filterForm.get('endDate')?.value,
+        };
+    }
+  }
+
+  /**
+   * Get filters from form controls for API requests
+   * @returns Filter parameters object
+   */
+  private getFiltersFromForm(): TelemetryFilters {
+    const filters: TelemetryFilters = {
+      page: this.currentPage.toString(),
+      pageSize: this.pageSize.toString(),
+    };
+
+    const dateRange = this.filterForm.get('dateRange')?.value as DateRangeType;
+    const { startDate, endDate } = this.calculateDateRange(dateRange);
+
+    if (startDate) filters.startDate = startDate;
+    if (endDate) filters.endDate = endDate;
+
+    return filters;
+  }
+
+  /**
+   * Load error telemetry data and update charts/tables
+   */
+  private loadErrorData(): void {
     this.isLoadingErrors = true;
-
     const filters = this.getFiltersFromForm();
 
     this.telemetryService.getErrorStatistics(filters).subscribe({
-      next: (data) => {
+      next: (data: ErrorStatistics) => {
         this.isLoadingErrors = false;
-
-        // Process data for charts and tables
-        this.errorDataSource = data.recentErrors || [];
-
-        // Initialize charts
+        this.errorDataSource = data.errors.map((error) => ({ data: error }));
+        this.totalPages = Math.ceil(data.total / this.pageSize);
         this.initErrorCharts(data);
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error('Failed to load error data:', err);
         this.isLoadingErrors = false;
       },
     });
   }
 
-  loadPerformanceData(): void {
+  /**
+   * Load performance telemetry data and update charts
+   */
+  private loadPerformanceData(): void {
     this.isLoadingPerformance = true;
-
     const filters = this.getFiltersFromForm();
 
     this.telemetryService.getPerformanceStatistics(filters).subscribe({
-      next: (data) => {
+      next: (data: PerformanceStatistics) => {
         this.isLoadingPerformance = false;
-
-        // Process data for charts and tables
-        this.performanceDataSource = data.byEndpoint || [];
-
-        // Initialize charts
+        this.performanceDataSource = data.byEndpoint;
         this.initPerformanceCharts(data);
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error('Failed to load performance data:', err);
         this.isLoadingPerformance = false;
       },
     });
   }
 
-  getFiltersFromForm(): any {
-    const filters: any = {};
-    const dateRange = this.filterForm.get('dateRange')?.value;
-
-    if (dateRange === 'custom') {
-      const startDate = this.filterForm.get('startDate')?.value;
-      const endDate = this.filterForm.get('endDate')?.value;
-
-      if (startDate) {
-        filters.startDate = startDate.toISOString();
-      }
-
-      if (endDate) {
-        filters.endDate = endDate.toISOString();
-      }
-    } else {
-      filters.dateRange = dateRange;
-    }
-
-    return filters;
-  }
-
-  initErrorCharts(data: any): void {
-    // Destroy existing charts
-    if (this.errorsByTypeChart) {
-      this.errorsByTypeChart.destroy();
-    }
-
-    if (this.errorsOverTimeChart) {
-      this.errorsOverTimeChart.destroy();
-    }
+  /**
+   * Initialize and update error-related charts with new data
+   * @param data Error statistics data
+   */
+  private initErrorCharts(data: ErrorStatistics): void {
+    // Cleanup existing charts
+    this.destroyCharts(this.errorsByTypeChart, this.errorsOverTimeChart);
 
     // Errors by Type chart
-    if (data.byErrorCode && this.errorsByTypeChartRef) {
-      const labels = Object.keys(data.byErrorCode);
-      const values = Object.values(data.byErrorCode) as number[];
-
-      this.errorsByTypeChart = new Chart(this.errorsByTypeChartRef.nativeElement, {
+    if (data.statistics?.byCategory && this.errorsByTypeChartRef) {
+      const byCategory = data.statistics.byCategory;
+      const config: ChartConfiguration = {
         type: 'pie',
         data: {
-          labels,
+          labels: byCategory.map((item) => item.category),
           datasets: [
             {
-              data: values,
-              backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF',
-                '#FF9F40',
-                '#8AC249',
-                '#EA5545',
-                '#F46A9B',
-                '#EF9B20',
-              ],
+              data: byCategory.map((item) => item.count),
+              backgroundColor: Object.values(this.chartColors),
             },
           ],
         },
@@ -466,27 +635,27 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
             },
             title: {
               display: true,
-              text: 'Errors by Type',
+              text: 'Errors by Category',
             },
           },
         },
-      });
+      };
+
+      this.errorsByTypeChart = new Chart(this.errorsByTypeChartRef.nativeElement, config);
     }
 
     // Errors Over Time chart
-    if (data.byTimeRange && this.errorsOverTimeChartRef) {
-      const labels = data.byTimeRange.map((item: any) => item.date);
-      const values = data.byTimeRange.map((item: any) => item.count);
-
-      this.errorsOverTimeChart = new Chart(this.errorsOverTimeChartRef.nativeElement, {
+    if (data.statistics?.byDay && this.errorsOverTimeChartRef) {
+      const byDay = data.statistics.byDay;
+      const config: ChartConfiguration = {
         type: 'line',
         data: {
-          labels,
+          labels: byDay.map((item) => item.date),
           datasets: [
             {
               label: 'Error Count',
-              data: values,
-              borderColor: '#FF6384',
+              data: byDay.map((item) => item.count),
+              borderColor: this.chartColors.primary,
               backgroundColor: 'rgba(255, 99, 132, 0.1)',
               fill: true,
               tension: 0.4,
@@ -518,92 +687,87 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
             },
           },
         },
-      });
+      };
+
+      this.errorsOverTimeChart = new Chart(this.errorsOverTimeChartRef.nativeElement, config);
     }
   }
 
-  initPerformanceCharts(data: any): void {
-    // Destroy existing charts
-    if (this.responseTimeByEndpointChart) {
-      this.responseTimeByEndpointChart.destroy();
-    }
-
-    if (this.responseTimeTrendsChart) {
-      this.responseTimeTrendsChart.destroy();
-    }
+  /**
+   * Initialize and update performance-related charts with new data
+   * @param data Performance statistics data
+   */
+  private initPerformanceCharts(data: PerformanceStatistics): void {
+    // Cleanup existing charts
+    this.destroyCharts(this.responseTimeByEndpointChart, this.responseTimeTrendsChart);
 
     // Response Time by Endpoint chart
     if (data.byEndpoint && this.responseTimeByEndpointChartRef) {
-      const endpoints = data.byEndpoint.map((item: any) => item.url);
-      const avgDurations = data.byEndpoint.map((item: any) => item.avgDuration);
-      const p95Durations = data.byEndpoint.map((item: any) => item.p95Duration);
-
-      this.responseTimeByEndpointChart = new Chart(
-        this.responseTimeByEndpointChartRef.nativeElement,
-        {
-          type: 'bar',
-          data: {
-            labels: endpoints,
-            datasets: [
-              {
-                label: 'Average Duration (ms)',
-                data: avgDurations,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 1,
-              },
-              {
-                label: 'P95 Duration (ms)',
-                data: p95Durations,
-                backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                borderColor: 'rgb(255, 159, 64)',
-                borderWidth: 1,
-              },
-            ],
+      const config: ChartConfiguration = {
+        type: 'bar',
+        data: {
+          labels: data.byEndpoint.map((item) => item.url),
+          datasets: [
+            {
+              label: 'Average Duration (ms)',
+              data: data.byEndpoint.map((item) => item.avgDuration),
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgb(54, 162, 235)',
+              borderWidth: 1,
+            },
+            {
+              label: 'P95 Duration (ms)',
+              data: data.byEndpoint.map((item) => item.p95Duration),
+              backgroundColor: 'rgba(255, 159, 64, 0.5)',
+              borderColor: 'rgb(255, 159, 64)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Response Time by Endpoint',
+            },
           },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
+          scales: {
+            y: {
+              beginAtZero: true,
               title: {
                 display: true,
-                text: 'Response Time by Endpoint',
+                text: 'Duration (ms)',
               },
             },
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Duration (ms)',
-                },
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Endpoint',
-                },
+            x: {
+              title: {
+                display: true,
+                text: 'Endpoint',
               },
             },
           },
         },
+      };
+
+      this.responseTimeByEndpointChart = new Chart(
+        this.responseTimeByEndpointChartRef.nativeElement,
+        config,
       );
     }
 
     // Response Time Trends chart
-    if (data.byTimeRange && this.responseTimeTrendsChartRef) {
-      const dates = data.byTimeRange.map((item: any) => item.date);
-      const avgDurations = data.byTimeRange.map((item: any) => item.avgDuration);
-
-      this.responseTimeTrendsChart = new Chart(this.responseTimeTrendsChartRef.nativeElement, {
+    if (data.byDate && this.responseTimeTrendsChartRef) {
+      const config: ChartConfiguration = {
         type: 'line',
         data: {
-          labels: dates,
+          labels: data.byDate.map((item) => item.date),
           datasets: [
             {
               label: 'Average Response Time (ms)',
-              data: avgDurations,
-              borderColor: '#4BC0C0',
+              data: data.byDate.map((item) => item.avgDuration),
+              borderColor: this.chartColors.quaternary,
               backgroundColor: 'rgba(75, 192, 192, 0.1)',
               fill: true,
               tension: 0.4,
@@ -635,13 +799,37 @@ export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
             },
           },
         },
-      });
+      };
+
+      this.responseTimeTrendsChart = new Chart(
+        this.responseTimeTrendsChartRef.nativeElement,
+        config,
+      );
     }
   }
 
-  viewErrorDetails(error: unknown): void {
-    // Open a dialog or navigate to a details page
-    console.warn('Error details:', error);
-    // Implement dialog or navigation logic
+  /**
+   * Safely destroy Chart.js instances
+   * @param charts Chart instances to clean up
+   */
+  private destroyCharts(...charts: (Chart | null)[]): void {
+    charts.forEach((chart) => {
+      if (chart) {
+        chart.destroy();
+      }
+    });
+  }
+
+  /**
+   * Open detailed view for a specific error
+   * @param error Error telemetry data to display
+   */
+  protected viewErrorDetails(error: ErrorTelemetry): void {
+    this.dialog.open(ErrorDetailsDialogComponent, {
+      width: '800px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      data: error,
+    });
   }
 }

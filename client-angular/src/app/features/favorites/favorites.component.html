@@ -35,7 +35,7 @@
       ></app-empty-state>
 
       <!-- Favorites grid -->
-      <app-card-grid
+      <nb-card-grid
         *ngIf="!loading && !error && favorites.length > 0"
         [cards]="favoriteCards"
         [showActions]="true"

@@ -1,8 +1,8 @@
-@use '../../../core/design/design-tokens' as tokens;
+
 
 .breadcrumbs {
-  padding: tokens.$spacing-3 0;
-  margin-bottom: tokens.$spacing-4;
+  padding: 0.75rem 0;
+  margin-bottom: 1rem;
 }
 
 .breadcrumb-list {
@@ -17,24 +17,24 @@
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  font-size: tokens.$font-size-sm;
-  color: tokens.$neutral-600;
+  font-size: var(--font-size-sm);
+  color: var(--neutral-600);
 
   &.active {
-    color: tokens.$neutral-900;
-    font-weight: tokens.$font-weight-medium;
+    color: var(--neutral-900);
+    font-weight: var(--font-weight-medium);
   }
 }
 
 .breadcrumb-link {
   display: flex;
   align-items: center;
-  color: tokens.$neutral-600;
+  color: var(--neutral-600);
   text-decoration: none;
-  transition: color tokens.$transition-normal tokens.$transition-ease;
+  transition: color var(--transition-normal) var(--transition-ease);
 
   &:hover {
-    color: tokens.$primary-500;
+    color: var(--primary-500);
     text-decoration: underline;
   }
 }
@@ -49,26 +49,26 @@
   font-size: 16px;
   width: 16px;
   height: 16px;
-  margin-right: tokens.$spacing-1;
+  margin-right: 0.25rem;
 }
 
 .breadcrumb-separator {
   font-size: 18px;
   width: 18px;
   height: 18px;
-  margin: 0 tokens.$spacing-2;
-  color: tokens.$neutral-400;
+  margin: 0 0.5rem;
+  color: var(--neutral-400);
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
   .breadcrumbs {
-    padding: tokens.$spacing-2 0;
-    margin-bottom: tokens.$spacing-3;
+    padding: 0.5rem 0;
+    margin-bottom: 0.75rem;
   }
 
   .breadcrumb-item {
-    font-size: tokens.$font-size-xs;
+    font-size: var(--font-size-xs);
   }
 
   .breadcrumb-icon {
@@ -81,6 +81,6 @@
     font-size: 16px;
     width: 16px;
     height: 16px;
-    margin: 0 tokens.$spacing-1;
+    margin: 0 0.25rem;
   }
 }
