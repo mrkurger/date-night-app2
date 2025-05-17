@@ -48,12 +48,12 @@ runs:
         echo "Using npm install for safer dependency resolution..."
         
         # First try with --no-audit to speed up installation
-        npm install --no-audit || npm install
-        
-        # If requested, update the lockfile
         if [ "${{ inputs.update-lockfile }}" = "true" ]; then
-          echo "Updating lockfile..."
-          npm install
+          echo "Installing dependencies and updating lockfile..."
+          npm install --no-audit --package-lock-only || npm install --package-lock-only
+        else
+          echo "Installing dependencies..."
+          npm install --no-audit || npm install
         fi
       shell: bash
       
