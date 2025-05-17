@@ -5,8 +5,9 @@
 // and configurations across the application.
 // ===================================================
 
-import { NgModule, ModuleWithProviders, Type } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Import all required Nebular modules
@@ -22,112 +23,134 @@ import {
   NbWindowModule,
   NbCardModule,
   NbButtonModule,
+  NbIconModule,
   NbInputModule,
   NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
   NbSelectModule,
-  NbContextMenuModule,
-  NbTabsetModule,
-  NbUserModule,
-  NbActionsModule,
-  NbSearchModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbPopoverModule,
-  NbListModule,
-  NbCalendarModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbAccordionModule,
-  NbToggleModule,
-  NbTableModule,
-  NbOverlayModule,
   NbAutocompleteModule,
+  NbTagModule,
+  NbTooltipModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbBadgeModule,
+  NbUserModule,
+  NbSearchModule,
+  NbContextMenuModule,
+  NbPopoverModule,
+  NbTabsetModule,
+  NbAccordionModule,
+  NbListModule,
+  NbStepperModule,
+  NbProgressBarModule,
+  NbActionsModule,
+  NbTreeGridModule,
+  NbTableModule,
+  NbCalendarModule,
+  NbChatModule,
+  NbRouteTabsetModule,
+  NbToggleModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-// Import custom Nebular-compatible components
-import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { NbPaginatorModule } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
-import { NbDataTableModule } from './components/custom-nebular-components/nb-data-table/nb-data-table.module';
-import { NbAdvancedFormModule } from './components/custom-nebular-components/nb-advanced-form/nb-advanced-form.module';
-import { NbNavigationModule } from './components/custom-nebular-components/nb-navigation/nb-navigation.module';
+// Import custom Nebular components
+import { NbAdvancedFormComponent } from './components/custom-nebular-components/nb-advanced-form/nb-advanced-form.component';
+import { NbFormArrayComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-array/form-array.component';
+import { NbFormGroupComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-group/form-group.component';
+import { NbFormValidationComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-validation/form-validation.component';
+import { NbFormErrorComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-error/form-error.component';
 
-// Custom component ID generator
-export function customComponentIdGenerator(componentType: any): string {
-  return `custom-${componentType.name}-${Math.random().toString(36).substring(2, 8)}`;
-}
+import { NbNavigationComponent } from './components/custom-nebular-components/nb-navigation/nb-navigation.component';
+import { NbSideMenuComponent } from './components/custom-nebular-components/nb-navigation/components/side-menu/side-menu.component';
+import { NbTopMenuComponent } from './components/custom-nebular-components/nb-navigation/components/top-menu/top-menu.component';
+import { NbUserMenuComponent } from './components/custom-nebular-components/nb-navigation/components/user-menu/user-menu.component';
+import { NbSearchBarComponent } from './components/custom-nebular-components/nb-navigation/components/search-bar/search-bar.component';
+import { NbBreadcrumbsComponent } from './components/custom-nebular-components/nb-navigation/components/breadcrumbs/breadcrumbs.component';
+import { NbThemeToggleComponent } from './components/custom-nebular-components/nb-theme-toggle/nb-theme-toggle.component';
 
-// Root Nebular modules (configured once at app level)
-const ROOT_NEBULAR_MODULES: Array<ModuleWithProviders<any>> = [
-  NbThemeModule.forRoot({
-    name: 'default',
-  }),
+import { NbDataTableComponent } from './components/custom-nebular-components/nb-data-table/nb-data-table.component';
+import { NbDataTableHeaderComponent } from './components/custom-nebular-components/nb-data-table/components/header/header.component';
+import { NbDataTablePaginatorComponent } from './components/custom-nebular-components/nb-data-table/components/paginator/paginator.component';
+import { NbDataTableFilterComponent } from './components/custom-nebular-components/nb-data-table/components/filter/filter.component';
+import { NbDataTableSortComponent } from './components/custom-nebular-components/nb-data-table/components/sort/sort.component';
+
+// Array of all Nebular modules that need to be configured at root level
+const ROOT_NEBULAR_MODULES = [
+  NbThemeModule.forRoot({ name: 'default' }),
   NbMenuModule.forRoot(),
-  NbToastrModule.forRoot({
-    duration: 3000,
-    position: 'top-right',
-  }),
-  NbDialogModule.forRoot({
-    hasBackdrop: true,
-    closeOnBackdropClick: true,
-    closeOnEsc: true,
-  }),
+  NbToastrModule.forRoot(),
+  NbDialogModule.forRoot(),
   NbSidebarModule.forRoot(),
   NbDatepickerModule.forRoot(),
   NbTimepickerModule.forRoot(),
   NbWindowModule.forRoot(),
 ];
 
-// Feature Nebular modules (can be imported multiple times)
-const FEATURE_NEBULAR_MODULES: Array<Type<any>> = [
+// Array of feature Nebular modules that can be imported multiple times
+const FEATURE_NEBULAR_MODULES = [
   NbLayoutModule,
   NbCardModule,
   NbButtonModule,
+  NbIconModule,
   NbInputModule,
   NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
   NbSelectModule,
-  NbContextMenuModule,
-  NbTabsetModule,
-  NbUserModule,
-  NbActionsModule,
-  NbSearchModule,
   NbCheckboxModule,
   NbRadioModule,
-  NbPopoverModule,
-  NbListModule,
-  NbCalendarModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbAccordionModule,
-  NbToggleModule,
-  NbTableModule,
-  NbOverlayModule,
   NbAutocompleteModule,
+  NbTagModule,
+  NbTooltipModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbBadgeModule,
+  NbUserModule,
+  NbSearchModule,
+  NbContextMenuModule,
+  NbPopoverModule,
+  NbTabsetModule,
+  NbAccordionModule,
+  NbListModule,
+  NbStepperModule,
+  NbProgressBarModule,
+  NbActionsModule,
+  NbTreeGridModule,
+  NbTableModule,
+  NbCalendarModule,
+  NbChatModule,
+  NbRouteTabsetModule,
+  NbToggleModule,
   NbEvaIconsModule,
 ];
 
-// Custom Nebular-compatible modules
-const CUSTOM_NEBULAR_MODULES = [
-  NbPaginatorModule,
-  NbDataTableModule,
-  NbAdvancedFormModule,
-  NbNavigationModule,
+// Array of custom form components
+const FORM_COMPONENTS = [
+  NbAdvancedFormComponent,
+  NbFormArrayComponent,
+  NbFormGroupComponent,
+  NbFormValidationComponent,
+  NbFormErrorComponent,
 ];
 
-// Custom Nebular-compatible components
-const CUSTOM_NEBULAR_COMPONENTS = [NbErrorComponent];
+// Array of custom navigation components
+const NAVIGATION_COMPONENTS = [
+  NbNavigationComponent,
+  NbSideMenuComponent,
+  NbTopMenuComponent,
+  NbUserMenuComponent,
+  NbSearchBarComponent,
+  NbBreadcrumbsComponent,
+  NbThemeToggleComponent,
+];
+
+// Array of custom data table components
+const DATA_TABLE_COMPONENTS = [
+  NbDataTableComponent,
+  NbDataTableHeaderComponent,
+  NbDataTablePaginatorComponent,
+  NbDataTableFilterComponent,
+  NbDataTableSortComponent,
+];
 
 /**
  * NebularModule
@@ -136,28 +159,24 @@ const CUSTOM_NEBULAR_COMPONENTS = [NbErrorComponent];
  * needed throughout the application. It should be imported in the SharedModule.
  */
 @NgModule({
+  declarations: [...FORM_COMPONENTS, ...NAVIGATION_COMPONENTS, ...DATA_TABLE_COMPONENTS],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     ...ROOT_NEBULAR_MODULES,
     ...FEATURE_NEBULAR_MODULES,
-    ...CUSTOM_NEBULAR_MODULES,
-    ...CUSTOM_NEBULAR_COMPONENTS,
   ],
   exports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     ...FEATURE_NEBULAR_MODULES,
-    ...CUSTOM_NEBULAR_MODULES,
-    ...CUSTOM_NEBULAR_COMPONENTS,
-  ],
-  providers: [
-    {
-      provide: 'componentIdGenerator',
-      useValue: customComponentIdGenerator,
-    },
+    ...FORM_COMPONENTS,
+    ...NAVIGATION_COMPONENTS,
+    ...DATA_TABLE_COMPONENTS,
   ],
 })
 export class NebularModule {

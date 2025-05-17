@@ -213,7 +213,7 @@ export default async function fileAccess(req, res, next) {
  * @param {Response} res - Express response object
  * @param {Function} _next - Express next function (not used as this handler sends response directly)
  */
-// eslint-disable-next-line no-unused-vars
+
 export const secureFileServing = (req, res, _next) => {
   try {
     const filePath = req.params[0];

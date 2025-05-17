@@ -15,19 +15,17 @@ export interface TableColumn<T = any> {
   template: `
     <nb-card>
       <nb-card-header *ngIf="showHeader">
-        <nb-data-table-header
-          [title]="title"
-          [columns]="columns"
-          [selectedColumns]="visibleColumns"
-          (columnsChange)="onColumnsChange($event)"
-        >
-        </nb-data-table-header>
+        <div class="header-container">
+          <h5 class="title">{{ title }}</h5>
+          <div class="actions">
+            <ng-content select="[tableActions]"></ng-content>
+          </div>
+        </div>
       </nb-card-header>
 
       <nb-card-body>
         <div class="table-responsive">
           <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="onSort($event)">
-            <!-- Table Header -->
             <tr nbTreeGridHeader>
               <th
                 *ngFor="let column of visibleColumns"
@@ -46,7 +44,6 @@ export interface TableColumn<T = any> {
               </th>
             </tr>
 
-            <!-- Table Body -->
             <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: getColumnProps()">
               <td
                 nbTreeGridCell
@@ -64,25 +61,46 @@ export interface TableColumn<T = any> {
           </table>
         </div>
 
-        <!-- Loading Spinner -->
+        <!-- Loading State -->
         <div class="spinner-container" *ngIf="loading">
           <nb-spinner status="primary"></nb-spinner>
         </div>
 
-        <!-- No Data Message -->
-        <div class="no-data" *ngIf="!loading && (!data || data.length === 0)">
-          {{ noDataMessage }}
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!loading && (!data || data.length === 0)">
+          {{ emptyMessage }}
         </div>
       </nb-card-body>
 
       <nb-card-footer *ngIf="showPaginator">
-        <nb-data-table-paginator
-          [page]="currentPage"
-          [pageSize]="pageSize"
-          [total]="totalItems"
-          (pageChange)="onPageChange($event)"
-        >
-        </nb-data-table-paginator>
+        <div class="footer-container">
+          <div class="page-size">
+            <span>Items per page:</span>
+            <nb-select [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
+              <nb-option *ngFor="let size of pageSizes" [value]="size">{{ size }}</nb-option>
+            </nb-select>
+          </div>
+
+          <div class="pagination">
+            <button
+              nbButton
+              ghost
+              [disabled]="currentPage === 1"
+              (click)="onPageChange(currentPage - 1)"
+            >
+              <nb-icon icon="chevron-left-outline"></nb-icon>
+            </button>
+            <span class="page-info"> Page {{ currentPage }} of {{ totalPages }} </span>
+            <button
+              nbButton
+              ghost
+              [disabled]="currentPage === totalPages"
+              (click)="onPageChange(currentPage + 1)"
+            >
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
       </nb-card-footer>
     </nb-card>
 
@@ -100,6 +118,18 @@ export interface TableColumn<T = any> {
     `
       :host {
         display: block;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .title {
+        margin: 0;
+        color: nb-theme(text-basic-color);
+        font-weight: nb-theme(text-heading-5-font-weight);
       }
 
       .table-responsive {
@@ -153,10 +183,38 @@ export interface TableColumn<T = any> {
         padding: 2rem;
       }
 
-      .no-data {
+      .empty-state {
         text-align: center;
         padding: 2rem;
         color: nb-theme(text-hint-color);
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-size {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        span {
+          color: nb-theme(text-hint-color);
+          font-size: nb-theme(text-caption-font-size);
+        }
+      }
+
+      .pagination {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .page-info {
+          color: nb-theme(text-hint-color);
+          font-size: nb-theme(text-caption-font-size);
+        }
       }
     `,
   ],
@@ -169,12 +227,13 @@ export class NbDataTableComponent<T = any> implements OnInit {
   @Input() showHeader = true;
   @Input() showPaginator = true;
   @Input() pageSize = 10;
+  @Input() pageSizes = [5, 10, 25, 50];
   @Input() currentPage = 1;
-  @Input() totalItems = 0;
-  @Input() noDataMessage = 'No data available';
+  @Input() emptyMessage = 'No data available';
 
   @Output() sortChange = new EventEmitter<NbSortRequest>();
   @Output() pageChange = new EventEmitter<number>();
+  @Output() pageSizeChange = new EventEmitter<number>();
   @Output() filterChange = new EventEmitter<{ column: TableColumn<T>; value: any }>();
   @Output() columnsChange = new EventEmitter<TableColumn<T>[]>();
 
@@ -185,6 +244,10 @@ export class NbDataTableComponent<T = any> implements OnInit {
   filters: { [key: string]: any } = {};
   sortColumn: string | null = null;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
+
+  get totalPages(): number {
+    return Math.ceil(this.data.length / this.pageSize);
+  }
 
   ngOnInit() {
     this.visibleColumns = this.columns.filter((col) => !col.hidden);
@@ -229,7 +292,15 @@ export class NbDataTableComponent<T = any> implements OnInit {
   }
 
   onPageChange(page: number) {
-    this.currentPage = page;
-    this.pageChange.emit(page);
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.pageChange.emit(page);
+    }
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.pageSizeChange.emit(size);
   }
 }

@@ -1,9 +1,15 @@
-scripts/**/*.cjs
-scripts/**/*.js
-src/assets/js/**/*.js
-src/ngsw-worker.js
-src/app/core/utils/test-runner.js
+# Ignore all script files
+scripts/**/*
 run-single-test.js
+
+# Ignore asset files
+src/assets/**/*
+src/ngsw-worker.js
+
+# Ignore test utilities
+src/app/core/utils/test-runner.js
+
+# Ignore problematic components
 src/app/features/admin/components/alert-management/alert-management.component.ts
 src/app/features/auth/components/register/register.component.ts
 src/app/features/features.module.ts
@@ -12,3 +18,12 @@ src/app/shared/modules/shared.module.ts
 src/app/features/chat/chat.component.fixed.ts
 src/app/features/wallet/wallet.component.ts
 src/app/shared/components/custom-nebular-components/nb-paginator/nb-paginator.component.ts
+
+# Ignore node_modules
+node_modules/
+
+# Ignore dist
+dist/
+
+# Ignore .angular
+.angular/

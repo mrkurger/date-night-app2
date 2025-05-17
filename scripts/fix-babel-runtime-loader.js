@@ -4,7 +4,7 @@
  * This script creates a custom module loader to handle the missing @babel/runtime/helpers/asyncToGenerator.js issue
  */
 
-import fs from 'fs';
+import * as fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 

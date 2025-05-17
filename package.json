@@ -170,7 +170,8 @@
       "@octokit/plugin-paginate-rest": "11.4.2",
       "@octokit/plugin-request-log": "4.0.0",
       "@octokit/plugin-rest-endpoint-methods": "10.0.0"
-    }
+    },
+    "@babel/runtime": "7.27.1"
   },
   "engines": {
     "node": "22.14.0",

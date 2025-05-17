@@ -1,7 +1,8 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export type Theme = 'light' | 'dark' | 'system';
+export type ThemeName = 'default' | 'dark' | 'cosmic' | 'corporate';
 
 /**
  * Service for managing application theme
@@ -11,45 +12,67 @@ export type Theme = 'light' | 'dark' | 'system';
   providedIn: 'root',
 })
 export class ThemeService {
-  private renderer: Renderer2;
-  private themeSubject = new BehaviorSubject<Theme>(this.getInitialTheme());
-  private darkModeMediaQuery: MediaQueryList;
+  private currentTheme = new BehaviorSubject<ThemeName>('default');
+  private darkMode = new BehaviorSubject<boolean>(false);
 
   /**
    * Observable that emits the current theme
    */
-  public theme$: Observable<Theme> = this.themeSubject.asObservable();
+  public theme$: Observable<ThemeName> = this.currentTheme.asObservable();
 
   /**
    * Observable that emits whether dark mode is currently active
    */
-  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
-  public isDarkMode$: Observable<boolean> = this.isDarkModeSubject.asObservable();
+  public isDarkMode$: Observable<boolean> = this.darkMode.asObservable();
 
-  constructor(rendererFactory: RendererFactory2) {
-    this.renderer = rendererFactory.createRenderer(null, null);
-    this.darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  constructor(private nbThemeService: NbThemeService) {
+    // Initialize theme from local storage
+    const savedTheme = localStorage.getItem('theme') as ThemeName;
+    if (savedTheme) {
+      this.setTheme(savedTheme);
+    }
 
-    // Initialize theme
-    this.applyTheme(this.themeSubject.value);
+    // Initialize dark mode from local storage and system preference
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode !== null) {
+      this.setDarkMode(savedDarkMode === 'true');
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.setDarkMode(prefersDark);
+    }
 
-    // Listen for system preference changes
-    this.darkModeMediaQuery.addEventListener('change', (e) => {
-      if (this.themeSubject.value === 'system') {
-        this.updateThemeClasses(e.matches ? 'dark' : 'light');
-        this.isDarkModeSubject.next(e.matches);
+    // Listen for system dark mode changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (localStorage.getItem('darkMode') === null) {
+        this.setDarkMode(e.matches);
       }
     });
+  }
+
+  /**
+   * Get the current theme
+   * @returns The current theme
+   */
+  public getCurrentTheme(): Observable<ThemeName> {
+    return this.currentTheme.asObservable();
+  }
+
+  /**
+   * Check if dark mode is currently active
+   * @returns True if dark mode is active, false otherwise
+   */
+  public getDarkMode(): Observable<boolean> {
+    return this.darkMode.asObservable();
   }
 
   /**
    * Set the application theme
    * @param theme The theme to set ('light', 'dark', or 'system')
    */
-  public setTheme(theme: Theme): void {
-    this.themeSubject.next(theme);
-    localStorage.setItem('theme', theme);
-    this.applyTheme(theme);
+  public setTheme(themeName: ThemeName): void {
+    this.nbThemeService.changeTheme(themeName);
+    this.currentTheme.next(themeName);
+    localStorage.setItem('theme', themeName);
   }
 
   /**
@@ -57,79 +80,56 @@ export class ThemeService {
    * If current theme is 'system', it will switch to either 'light' or 'dark'
    * based on the current system preference
    */
-  public toggleTheme(): void {
-    const currentTheme = this.themeSubject.value;
-    const isDarkMode = this.isDarkModeSubject.value;
-
-    if (currentTheme === 'system') {
-      // If system preference is dark, switch to light, otherwise switch to dark
-      this.setTheme(isDarkMode ? 'light' : 'dark');
-    } else {
-      // Toggle between light and dark
-      this.setTheme(currentTheme === 'light' ? 'dark' : 'light');
-    }
+  public toggleDarkMode(): void {
+    this.setDarkMode(!this.darkMode.value);
   }
 
   /**
-   * Get the current theme
-   * @returns The current theme
+   * Set dark mode
+   * @param isDark True if dark mode should be active, false otherwise
    */
-  public getCurrentTheme(): Theme {
-    return this.themeSubject.value;
+  public setDarkMode(isDark: boolean): void {
+    this.darkMode.next(isDark);
+    localStorage.setItem('darkMode', isDark.toString());
+    this.setTheme(isDark ? 'dark' : 'default');
   }
 
-  /**
-   * Check if dark mode is currently active
-   * @returns True if dark mode is active, false otherwise
-   */
-  public isDarkMode(): boolean {
-    return this.isDarkModeSubject.value;
-  }
+  // Custom theme configuration
+  private customThemeVariables = {
+    default: {
+      'color-primary-100': '#F2F6FF',
+      'color-primary-200': '#D9E4FF',
+      'color-primary-300': '#A6C1FF',
+      'color-primary-400': '#598BFF',
+      'color-primary-500': '#3366FF',
+      'color-primary-600': '#274BDB',
+      'color-primary-700': '#1A34B8',
+      'color-primary-800': '#102694',
+      'color-primary-900': '#091C7A',
+    },
+    dark: {
+      'color-primary-100': '#1A1F33',
+      'color-primary-200': '#2A3154',
+      'color-primary-300': '#3B4475',
+      'color-primary-400': '#4C5696',
+      'color-primary-500': '#5D69B7',
+      'color-primary-600': '#6E7CD8',
+      'color-primary-700': '#7F8FF9',
+      'color-primary-800': '#90A2FF',
+      'color-primary-900': '#A1B5FF',
+    },
+  };
 
   /**
-   * Apply the specified theme
-   * @param theme The theme to apply
+   * Apply custom theme
    */
-  private applyTheme(theme: Theme): void {
-    if (theme === 'system') {
-      // Use system preference
-      const prefersDark = this.darkModeMediaQuery.matches;
-      this.updateThemeClasses(prefersDark ? 'dark' : 'light');
-      this.isDarkModeSubject.next(prefersDark);
-    } else {
-      // Use explicit theme
-      this.updateThemeClasses(theme);
-      this.isDarkModeSubject.next(theme === 'dark');
-    }
-  }
+  public applyCustomTheme(): void {
+    const variables = this.darkMode.value
+      ? this.customThemeVariables.dark
+      : this.customThemeVariables.default;
 
-  /**
-   * Update the theme classes on the document body
-   * @param theme The theme to apply ('light' or 'dark')
-   */
-  private updateThemeClasses(theme: 'light' | 'dark'): void {
-    if (theme === 'dark') {
-      this.renderer.addClass(document.body, 'dark-theme');
-      this.renderer.removeClass(document.body, 'light-theme');
-    } else {
-      this.renderer.addClass(document.body, 'light-theme');
-      this.renderer.removeClass(document.body, 'dark-theme');
-    }
-  }
-
-  /**
-   * Get the initial theme from localStorage or system preference
-   * @returns The initial theme
-   */
-  private getInitialTheme(): Theme {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-
-    // If a valid theme is saved, use it
-    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
-      return savedTheme;
-    }
-
-    // Otherwise, default to 'system'
-    return 'system';
+    Object.entries(variables).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(`--${key}`, value);
+    });
   }
 }

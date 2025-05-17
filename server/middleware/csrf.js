@@ -36,10 +36,10 @@ let generateToken, doubleCsrfProtection, validateRequest;
 
 if (isTestEnvironment) {
   // Mock implementations for testing
-  // eslint-disable-next-line no-unused-vars
+
   generateToken = _res => 'test-csrf-token';
   doubleCsrfProtection = (_req, _res, next) => next();
-  // eslint-disable-next-line no-unused-vars
+
   validateRequest = (_req, _res) => true;
 } else {
   // Real implementations for production/development

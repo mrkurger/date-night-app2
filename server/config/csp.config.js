@@ -26,10 +26,10 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // Base CSP directives used in both development and production
 const baseDirectives = {
   'default-src': ["'self'"],
-  'img-src': ["'self'", 'data:', 'blob:', 'https://docs-emerald.condorlabs.io'],
-  'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://docs-emerald.condorlabs.io'],
-  'style-src': ["'self'", 'https://fonts.googleapis.com', 'https://docs-emerald.condorlabs.io'],
-  'connect-src': ["'self'", 'ws:', 'wss:', 'https://docs-emerald.condorlabs.io'],
+  'img-src': ["'self'", 'data:', 'blob:', ''],
+  'font-src': ["'self'", 'https://fonts.gstatic.com', ''],
+  'style-src': ["'self'", 'https://fonts.googleapis.com', ''],
+  'connect-src': ["'self'", 'ws:', 'wss:', ''],
   'frame-src': ["'self'"],
   'object-src': ["'none'"],
   'base-uri': ["'self'"],
@@ -41,12 +41,12 @@ const baseDirectives = {
 // Development-specific CSP directives (no unsafe-eval/inline)
 const developmentDirectives = {
   ...baseDirectives,
-  'script-src': ["'self'", 'https://cdn.jsdelivr.net', 'https://docs-emerald.condorlabs.io'],
+  'script-src': ["'self'", 'https://cdn.jsdelivr.net', ''],
   'connect-src': [
     ...baseDirectives['connect-src'],
     'http://localhost:*',
     'ws://localhost:*',
-    'https://docs-emerald.condorlabs.io',
+    '',
   ],
 };
 
@@ -56,7 +56,7 @@ const productionDirectives = {
   'script-src': [
     "'self'",
     'https://cdn.jsdelivr.net',
-    'https://docs-emerald.condorlabs.io',
+    '',
     // Allow Angular's inline scripts with nonces or hashes in production
     "'sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'",
   ],
