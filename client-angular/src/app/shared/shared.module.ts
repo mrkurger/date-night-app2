@@ -39,7 +39,7 @@ import {
 
 // Import custom components
 import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { _NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
 
 const NEBULAR_MODULES = [
   // Basic Nebular modules
@@ -99,7 +99,6 @@ const CUSTOM_MODULES = [];
     ...NEBULAR_MODULES,
     ...CUSTOM_MODULES,
     ...CUSTOM_COMPONENTS,
-    NbErrorComponent,
     NebularModule,
   ],
   exports: [

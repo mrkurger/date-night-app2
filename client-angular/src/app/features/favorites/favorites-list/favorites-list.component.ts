@@ -573,7 +573,7 @@ export class FavoritesListComponent implements OnInit {
 
     dialogRef.onClose.subscribe((result) => {
       if (result !== undefined) {
-        this.updateNotes(favorite, result);
+        this.updateNotes(favorite,_result));
       }
     });
   }

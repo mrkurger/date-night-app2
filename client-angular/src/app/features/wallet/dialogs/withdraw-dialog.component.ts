@@ -94,8 +94,7 @@ export interface PaymentMethod {
 }
 
 export interface WalletCryptoNetwork {
-  name: string;
-  value: string;
+  name: string;_value: string;
   fee?: string;
   memoRequired?: boolean;
 }

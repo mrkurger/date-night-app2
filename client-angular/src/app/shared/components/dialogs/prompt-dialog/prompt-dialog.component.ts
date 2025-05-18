@@ -1,37 +1,58 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+} from '@nebular/theme';
+
+export interface PromptDialogData {
+  title: string;
+  message: string;
+  defaultValue: string;
+  confirmText: string;
+  cancelText: string;
+  placeholder?: string;
+  required?: boolean;
+}
 
 @Component({
   selector: 'nb-prompt-dialog',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+  ],
   template: `
     <nb-card>
       <nb-card-header>
-        <h4 class="dialog-title">{{ title }}</h4>
+        <h4 class="dialog-title">{{ data.title }}</h4>
       </nb-card-header>
       <nb-card-body>
-        <form [formGroup]="form" (ngSubmit)="confirm()">
-          <p class="dialog-message">{{ message }}</p>
-          <nb-form-field>
-            <input
-              nbInput
-              fullWidth
-              formControlName="value"
-              [placeholder]="placeholder"
-              [autofocus]="true"
-            />
-            <nb-error *ngIf="form.get('value')?.errors?.required">
-              This field is required
-            </nb-error>
-          </nb-form-field>
-        </form>
+        <p class="dialog-message">{{ data.message }}</p>
+        <nb-form-field>
+          <input
+            nbInput
+            fullWidth
+            [(ngModel)]="value"
+            [placeholder]="data.placeholder || ''"
+            [required]="data.required"
+          />
+        </nb-form-field>
       </nb-card-body>
       <nb-card-footer class="dialog-actions">
         <button nbButton ghost (click)="cancel()">
-          {{ cancelText }}
+          {{ data.cancelText }}
         </button>
-        <button nbButton status="primary" (click)="confirm()" [disabled]="!form.valid">
-          {{ confirmText }}
+        <button nbButton status="primary" (click)="confirm()" [disabled]="data.required && !value">
+          {{ data.confirmText }}
         </button>
       </nb-card-footer>
     </nb-card>
@@ -56,43 +77,21 @@ import { NbDialogRef } from '@nebular/theme';
         justify-content: flex-end;
         gap: 1rem;
       }
-
-      nb-form-field {
-        width: 100%;
-      }
     `,
   ],
 })
-export class PromptDialogComponent implements OnInit {
-  @Input() title = '';
-  @Input() message = '';
-  @Input() defaultValue = '';
-  @Input() placeholder = '';
-  @Input() confirmText = 'OK';
-  @Input() cancelText = 'Cancel';
-  @Input() required = true;
-
-  form: FormGroup;
+export class PromptDialogComponent {
+  value: string;
 
   constructor(
     private dialogRef: NbDialogRef<PromptDialogComponent>,
-    private fb: FormBuilder,
+    @Inject('PROMPT_DIALOG_DATA') public data: PromptDialogData,
   ) {
-    this.form = this.fb.group({
-      value: ['', this.required ? Validators.required : []],
-    });
-  }
-
-  ngOnInit() {
-    if (this.defaultValue) {
-      this.form.patchValue({ value: this.defaultValue });
-    }
+    this.value = data.defaultValue;
   }
 
   confirm() {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value.value);
-    }
+    this.dialogRef.close(this.value);
   }
 
   cancel() {

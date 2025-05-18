@@ -4,8 +4,7 @@ import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 
 export interface InfoPanelItem {
-  label: string;
-  value: string | number | boolean;
+  label: string;_value: string | number | boolean;
   icon?: string;
   type?: 'text' | 'badge' | 'progress' | 'boolean';
   status?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic';

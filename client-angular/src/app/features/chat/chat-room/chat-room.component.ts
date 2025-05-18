@@ -51,7 +51,9 @@ interface ChatUser {
   selector: 'app-chat-room',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -79,6 +81,10 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   currentUserId = '';
   otherUser: ChatUser | null = null;
 
+  isEncryptionEnabled = false;
+  isMessageExpiryEnabled = false;
+  messageExpiryTime = 24; // Default 24 hours
+
   private subscriptions: Subscription[] = [];
   private shouldScrollToBottom = true;
   private oldestMessageId: string | null = null;
@@ -94,6 +100,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   chatActions = [
     { title: 'View Profile', icon: 'person-outline' },
+    { title: 'Pin Chat', icon: 'bookmark-outline' },
+    { title: 'Enable Message Expiry', icon: 'clock-outline' },
     { title: 'Clear Chat', icon: 'trash-2-outline' },
     { title: 'Block User', icon: 'slash-outline' },
     { title: 'Report', icon: 'alert-triangle-outline' },
@@ -109,7 +117,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef,
   ) {
-    this.currentUserId = this.authService.getCurrentUserId();
+    const currentUser = this.authService.getCurrentUser();
+    this.currentUserId = currentUser?._id || '';
   }
 
   ngOnInit(): void {
@@ -385,13 +394,101 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   /**
+   * Toggle message expiry
+   */
+  toggleMessageExpiry(): void {
+    if (!this.room) return;
+
+    this.isMessageExpiryEnabled = !this.isMessageExpiryEnabled;
+    this.chatService
+      .updateRoomSettings(this.roomId, {
+        messageExpiryEnabled: this.isMessageExpiryEnabled,
+        messageExpiryTime: this.messageExpiryTime,
+      })
+      .subscribe(
+        () => {
+          this.notificationService.success(
+            this.isMessageExpiryEnabled ? 'Message expiry enabled' : 'Message expiry disabled',
+          );
+        },
+        (error) => {
+          console.error('Error updating message expiry settings:', error);
+          this.notificationService.error('Failed to update message expiry settings');
+          // Revert state on error
+          this.isMessageExpiryEnabled = !this.isMessageExpiryEnabled;
+        },
+      );
+  }
+
+  /**
+   * Toggle encryption for the chat room
+   */
+  toggleEncryption(): void {
+    if (!this.room) return;
+
+    this.isEncryptionEnabled = !this.isEncryptionEnabled;
+    this.chatService
+      .updateRoomSettings(this.roomId, {
+        encryptionEnabled: this.isEncryptionEnabled,
+      })
+      .subscribe(
+        () => {
+          this.notificationService.success(
+            this.isEncryptionEnabled
+              ? 'End-to-end encryption enabled'
+              : 'End-to-end encryption disabled',
+          );
+        },
+        (error) => {
+          console.error('Error updating encryption settings:', error);
+          this.notificationService.error('Failed to update encryption settings');
+          // Revert state on error
+          this.isEncryptionEnabled = !this.isEncryptionEnabled;
+        },
+      );
+  }
+
+  /**
+   * Update message expiry time
+   */
+  updateMessageExpiryTime(hours: number): void {
+    if (!this.room || !this.isMessageExpiryEnabled) return;
+
+    this.messageExpiryTime = hours;
+    this.chatService
+      .updateRoomSettings(this.roomId, {
+        messageExpiryTime: hours,
+      })
+      .subscribe(
+        () => {
+          this.notificationService.success('Message expiry time updated');
+        },
+        (error) => {
+          console.error('Error updating message expiry time:', error);
+          this.notificationService.error('Failed to update message expiry time');
+        },
+      );
+  }
+
+  /**
    * Handle settings changes
    */
   onSettingsChanged(settings: any): void {
     this.showSettings = false;
-    this.notificationService.success('Chat settings updated');
 
-    // Reload room to get updated settings
+    if (settings.messageExpiry !== undefined) {
+      this.toggleMessageExpiry();
+    }
+
+    if (settings.encryption !== undefined) {
+      this.toggleEncryption();
+    }
+
+    if (settings.expiryTime !== undefined) {
+      this.updateMessageExpiryTime(settings.expiryTime);
+    }
+
+    this.notificationService.success('Chat settings updated');
     this.loadRoom();
   }
 

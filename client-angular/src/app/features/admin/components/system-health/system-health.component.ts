@@ -9,8 +9,7 @@ import { Subject, interval } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 interface SystemMetric {
-  name: string;
-  value: number;
+  name: string;_value: number;
   unit: string;
   status: 'success' | 'warning' | 'danger';
   trend: 'up' | 'down' | 'stable';
@@ -19,8 +18,7 @@ interface SystemMetric {
 interface TimeSeriesData {
   name: string;
   series: {
-    name: string;
-    value: number;
+    name: string;_value: number;
   }[];
 }
 
@@ -138,8 +136,7 @@ export class SystemHealthComponent implements OnInit, OnDestroy {
 
   systemMetrics: SystemMetric[] = [
     {
-      name: 'CPU Usage',
-      value: 45,
+      name: 'CPU Usage',_value: 45,
       unit: '%',
       status: 'success',
       trend: 'stable',

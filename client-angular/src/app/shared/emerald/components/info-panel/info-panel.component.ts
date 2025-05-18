@@ -140,8 +140,7 @@ export class InfoPanelComponent implements OnInit {
  * InfoPanel Item Interface
  */
 export interface InfoPanelItem {
-  label: string;
-  value: string | number | boolean;
+  label: string;_value: string | number | boolean;
   icon?: string;
   type?: 'text' | 'badge' | 'progress' | 'boolean';
   variant?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';

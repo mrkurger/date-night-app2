@@ -1,22 +1,33 @@
-import { Component, Input } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NbDialogRef, NbCardModule, NbButtonModule } from '@nebular/theme';
+
+export interface ConfirmDialogData {
+  title: string;
+  message: string;
+  confirmText: string;
+  cancelText: string;
+  status: 'primary' | 'success' | 'warning' | 'danger';
+}
 
 @Component({
   selector: 'nb-confirm-dialog',
+  standalone: true,
+  imports: [CommonModule, NbCardModule, NbButtonModule],
   template: `
-    <nb-card [status]="status" accent="true">
+    <nb-card [status]="data.status" accent="true">
       <nb-card-header>
-        <h4 class="dialog-title">{{ title }}</h4>
+        <h4 class="dialog-title">{{ data.title }}</h4>
       </nb-card-header>
       <nb-card-body>
-        <p class="dialog-message">{{ message }}</p>
+        <p class="dialog-message">{{ data.message }}</p>
       </nb-card-body>
       <nb-card-footer class="dialog-actions">
         <button nbButton ghost (click)="cancel()">
-          {{ cancelText }}
+          {{ data.cancelText }}
         </button>
-        <button nbButton [status]="status" (click)="confirm()">
-          {{ confirmText }}
+        <button nbButton [status]="data.status" (click)="confirm()">
+          {{ data.confirmText }}
         </button>
       </nb-card-footer>
     </nb-card>
@@ -45,13 +56,10 @@ import { NbDialogRef } from '@nebular/theme';
   ],
 })
 export class ConfirmDialogComponent {
-  @Input() title = '';
-  @Input() message = '';
-  @Input() confirmText = 'Confirm';
-  @Input() cancelText = 'Cancel';
-  @Input() status: 'primary' | 'success' | 'warning' | 'danger' = 'primary';
-
-  constructor(private dialogRef: NbDialogRef<ConfirmDialogComponent>) {}
+  constructor(
+    private dialogRef: NbDialogRef<ConfirmDialogComponent>,
+    @Inject('CONFIRM_DIALOG_DATA') public data: ConfirmDialogData,
+  ) {}
 
   confirm() {
     this.dialogRef.close(true);

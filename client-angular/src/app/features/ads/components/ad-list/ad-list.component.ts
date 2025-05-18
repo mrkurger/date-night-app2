@@ -49,8 +49,7 @@ import { RouterLink } from '@angular/router';
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];
-  loading = false;
-  error: string | null = null;
+  loading = false;_error: string | null = null;
 
   constructor(private adService: AdService) {}
 

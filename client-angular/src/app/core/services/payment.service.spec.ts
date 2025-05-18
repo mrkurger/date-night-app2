@@ -8,7 +8,33 @@ import {
   BoostAdResult,
   FeatureAdResult,
 } from './payment.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../// ...existing code...
+
+// Remove duplicate newMessage as it's handled by the form
+// newMessage = '';  // <- Remove this line
+
+constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private chatService: ChatService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef,
+) {
+    const currentUser = this.authService.getCurrentUser();
+    this.currentUserId = currentUser?._id || '';
+
+    // Initialize the form here instead
+    this.messageForm = new FormGroup({
+        message: new FormControl('', [Validators.required])
+    });
+}<!-- Replace [(ngModel)]="newMessage" with [formControl] -->
+<input nbInput
+       fullWidth
+       [formControl]="messageForm.get('message')"
+       (keyup)="onTyping()"
+       placeholder="Type a message..."
+       #messageInput>../environments/environment';
 
 describe('PaymentService', () => {
   let service: PaymentService;

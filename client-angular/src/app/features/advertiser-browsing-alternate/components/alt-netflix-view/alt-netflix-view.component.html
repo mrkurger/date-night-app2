@@ -1,1 +1,97 @@
 <p>Placeholder for AltNetflixViewComponent. Content will be a grid of ad cards.</p>
+
+<!-- Netflix-style grid layout for advertisers -->
+<div class="netflix-grid-container">
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading-container">
+    <nb-spinner status="primary"></nb-spinner>
+  </div>
+
+  <!-- Empty state -->
+  <nb-card *ngIf="!loading && advertisers.length === 0" class="empty-state">
+    <nb-card-body>
+      <nb-icon icon="alert-circle-outline" status="warning"></nb-icon>
+      <h3>No Advertisers Found</h3>
+      <p>Try adjusting your search criteria or check back later.</p>
+    </nb-card-body>
+  </nb-card>
+
+  <!-- Grid layout -->
+  <div *ngIf="!loading && advertisers.length > 0" class="grid-layout">
+    <nb-card
+      *ngFor="let advertiser of advertisers"
+      class="advertiser-card"
+      [ngClass]="{ premium: advertiser.isPremium }"
+      (mouseenter)="onCardHover(advertiser.id, true)"
+      (mouseleave)="onCardHover(advertiser.id, false)"
+    >
+      <!-- Card Header with Image -->
+      <nb-card-header class="card-image-header">
+        <div class="image-container">
+          <img
+            [src]="advertiser.image || 'assets/images/placeholder.jpg'"
+            [alt]="advertiser.name"
+            class="advertiser-image"
+          />
+          <div class="image-overlay">
+            <div class="status-badges">
+              <nb-badge *ngIf="advertiser.isOnline" status="success" text="Online"></nb-badge>
+              <nb-badge *ngIf="advertiser.isPremium" status="warning" text="Premium"></nb-badge>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <!-- Card Body -->
+      <nb-card-body>
+        <div class="advertiser-info">
+          <h4 class="advertiser-name">
+            {{ advertiser.name }}
+            <span class="age" *ngIf="advertiser.age">, {{ advertiser.age }}</span>
+          </h4>
+          <p class="location" *ngIf="advertiser.location">
+            <nb-icon icon="pin-outline"></nb-icon>
+            {{ advertiser.location }}
+          </p>
+          <p class="description" *ngIf="advertiser.description">
+            {{ advertiser.description | slice : 0 : 100
+            }}{{ advertiser.description.length > 100 ? '...' : '' }}
+          </p>
+        </div>
+
+        <!-- Tags -->
+        <div class="tags-container" *ngIf="advertiser.tags?.length">
+          <nb-tag-list>
+            <nb-tag
+              *ngFor="let tag of advertiser.tags"
+              [text]="tag"
+              appearance="filled"
+              status="primary"
+              size="tiny"
+            >
+            </nb-tag>
+          </nb-tag-list>
+        </div>
+      </nb-card-body>
+
+      <!-- Card Footer -->
+      <nb-card-footer>
+        <div class="action-buttons">
+          <button nbButton ghost size="small" (click)="onFavorite(advertiser)">
+            <nb-icon
+              [icon]="advertiser.isFavorite ? 'heart' : 'heart-outline'"
+              [status]="advertiser.isFavorite ? 'danger' : 'basic'"
+            >
+            </nb-icon>
+          </button>
+          <button nbButton ghost size="small" (click)="onChat(advertiser)">
+            <nb-icon icon="message-circle-outline"></nb-icon>
+          </button>
+          <button nbButton filled status="primary" size="small" (click)="onViewProfile(advertiser)">
+            View Profile
+          </button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

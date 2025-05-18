@@ -1,11 +1,18 @@
-/* eslint-disable @typescript-eslint/no-require-imports, no-undef */
-// This is a custom module loader to handle the missing @babel/runtime/helpers/asyncToGenerator.js
-// It intercepts require calls for the missing module and returns the actual implementation
+/**
+ * Custom module loader to handle the missing @babel/runtime/helpers/asyncToGenerator.js
+ * It intercepts require calls for the missing module and returns the actual implementation
+ *
+ * @fileoverview Node.js script that overrides the require function to handle missing Babel runtime helpers
+ * @global require - The require function is available in Node.js
+ * @global __dirname - The directory name is available in Node.js
+ * @global console - The console object is available in Node.js
+ */
+
+/* global require, __dirname, console */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const Module = require('module');
 const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const fs = require('fs');
 
 // Store the original require function
 const originalRequire = Module.prototype.require;
@@ -20,7 +27,11 @@ const actualImplementationPath = path.resolve(
 const missingModulePath =
   '/Users/oivindlund/date-night-app/node_modules/@angular-devkit/build-angular/node_modules/@babel/runtime/helpers/asyncToGenerator.js';
 
-// Override the require function
+/**
+ * Override the require function to intercept requests for the missing module
+ * @param {string} id - The module ID to require
+ * @returns {*} - The required module
+ */
 Module.prototype.require = function (id) {
   // If the requested module is the missing one, return the actual implementation
   if (id === missingModulePath) {
@@ -35,5 +46,4 @@ Module.prototype.require = function (id) {
 };
 
 // Log that the loader is active
-
 console.log('Babel runtime helper loader is active');

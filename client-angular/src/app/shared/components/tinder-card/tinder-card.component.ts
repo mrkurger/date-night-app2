@@ -19,17 +19,8 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-import {
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
-} from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbIconModule, NbTagModule } from '@nebular/theme';
 
 export interface TinderCardMedia {
   type: 'image' | 'video';
@@ -49,7 +40,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 @Component({
   selector: 'nb-tinder-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
   template: `
     <nb-card
       #card

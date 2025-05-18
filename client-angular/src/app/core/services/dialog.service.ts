@@ -5,7 +5,6 @@ import {
   NbCardModule,
   NbButtonModule,
 } from '@nebular/theme';
-import { _NebularModule } from '../../shared/nebular.module';
 
 import { Injectable, Component, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,9 +35,18 @@ import {
   TagsDialogComponent,
   TagsDialogData,
 } from '../../shared/components/tags-dialog/tags-dialog.component';
-import { ConfirmDialogComponent } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
-import { AlertDialogComponent } from '../../shared/components/dialogs/alert-dialog/alert-dialog.component';
-import { PromptDialogComponent } from '../../shared/components/dialogs/prompt-dialog/prompt-dialog.component';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogData,
+} from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
+import {
+  AlertDialogComponent,
+  AlertDialogData,
+} from '../../shared/components/dialogs/alert-dialog/alert-dialog.component';
+import {
+  PromptDialogComponent,
+  PromptDialogData,
+} from '../../shared/components/dialogs/prompt-dialog/prompt-dialog.component';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -52,28 +60,8 @@ export interface DialogConfig<T = any> extends Omit<NbDialogConfig<T>, 'context'
   context?: T;
 }
 
-interface ConfirmDialogContext {
-  title: string;
-  message: string;
-  confirmText: string;
-  cancelText: string;
-  status: 'primary' | 'success' | 'warning' | 'danger';
-}
-
-interface AlertDialogContext {
-  title: string;
-  message: string;
-  buttonText: string;
-}
-
-interface PromptDialogContext {
-  title: string;
-  message: string;
-  defaultValue: string;
-  confirmText: string;
-  cancelText: string;
-  placeholder?: string;
-  required?: boolean;
+interface DialogContext<T> {
+  data: T;
 }
 
 /**
@@ -99,11 +87,10 @@ export class DialogService {
    * Opens a dialog for writing or editing a review
    */
   openReviewDialog(data: ReviewDialogData): Observable<unknown> {
-    return this.nbDialogService.open(ReviewDialogComponent, {
-      context: { data },
-      closeOnBackdropClick: false,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<ReviewDialogComponent>(ReviewDialogComponent, {
+      ...this.defaultConfig,
+      context: data,
+      providers: [{ provide: 'REVIEW_DIALOG_DATA', useValue: data }],
     }).onClose;
   }
 
@@ -113,11 +100,10 @@ export class DialogService {
   reportReview(reviewId: string): Observable<string | undefined> {
     const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' };
 
-    return this.nbDialogService.open(ReportDialogComponent, {
-      context: { data: dialogData },
-      closeOnBackdropClick: true,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<ReportDialogComponent>(ReportDialogComponent, {
+      ...this.defaultConfig,
+      context: dialogData,
+      providers: [{ provide: 'REPORT_DIALOG_DATA', useValue: dialogData }],
     }).onClose;
   }
 
@@ -127,11 +113,10 @@ export class DialogService {
    * @returns Observable that resolves with the response text or undefined if canceled
    */
   openResponseDialog(data: ResponseDialogData): Observable<string | undefined> {
-    return this.nbDialogService.open(ResponseDialogComponent, {
-      context: { data },
-      closeOnBackdropClick: true,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<ResponseDialogComponent>(ResponseDialogComponent, {
+      ...this.defaultConfig,
+      context: data,
+      providers: [{ provide: 'RESPONSE_DIALOG_DATA', useValue: data }],
     }).onClose;
   }
 
@@ -139,11 +124,10 @@ export class DialogService {
    * Opens a dialog for adding or editing a favorite
    */
   openFavoriteDialog(data: FavoriteDialogData): Observable<FavoriteDialogResult | undefined> {
-    return this.nbDialogService.open(FavoriteDialogComponent, {
-      context: { data },
-      closeOnBackdropClick: true,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<FavoriteDialogComponent>(FavoriteDialogComponent, {
+      ...this.defaultConfig,
+      context: data,
+      providers: [{ provide: 'FAVORITE_DIALOG_DATA', useValue: data }],
     }).onClose;
   }
 
@@ -151,11 +135,10 @@ export class DialogService {
    * Opens a dialog for editing notes
    */
   openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
-    return this.nbDialogService.open(NotesDialogComponent, {
-      context: { data },
-      closeOnBackdropClick: true,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<NotesDialogComponent>(NotesDialogComponent, {
+      ...this.defaultConfig,
+      context: data,
+      providers: [{ provide: 'NOTES_DIALOG_DATA', useValue: data }],
     }).onClose;
   }
 
@@ -163,20 +146,10 @@ export class DialogService {
    * Opens a dialog for managing tags
    */
   openTagsDialog(data: TagsDialogData): Observable<string[] | undefined> {
-    const context = {
-      data: {
-        title: data.title,
-        tags: data.tags || [],
-        suggestedTags: data.suggestedTags || [],
-        maxTags: data.maxTags || 20,
-      },
-    };
-
-    return this.nbDialogService.open(TagsDialogComponent, {
-      context,
-      closeOnBackdropClick: true,
-      hasBackdrop: true,
-      backdropClass: 'dialog-backdrop',
+    return this.nbDialogService.open<TagsDialogComponent>(TagsDialogComponent, {
+      ...this.defaultConfig,
+      context: data,
+      providers: [{ provide: 'TAGS_DIALOG_DATA', useValue: data }],
     }).onClose;
   }
 
@@ -233,13 +206,12 @@ export class DialogService {
    * @returns Dialog reference
    */
   open<T, D = any>(component: Type<T>, config?: DialogConfig<D>): NbDialogRef<T> {
-    const dialogConfig: Partial<NbDialogConfig<D>> = {
+    return this.nbDialogService.open<T>(component, {
       ...this.defaultConfig,
       ...config,
       context: config?.data || config?.context,
-    };
-
-    return this.nbDialogService.open<T>(component, dialogConfig);
+      providers: [{ provide: 'DIALOG_DATA', useValue: config?.data || config?.context }],
+    });
   }
 
   /**
@@ -258,7 +230,7 @@ export class DialogService {
     cancelText: string = 'Cancel',
     status: 'primary' | 'success' | 'warning' | 'danger' = 'primary',
   ): Observable<boolean> {
-    const context: ConfirmDialogContext = {
+    const data: ConfirmDialogData = {
       title,
       message,
       confirmText,
@@ -266,13 +238,11 @@ export class DialogService {
       status,
     };
 
-    const dialogConfig: Partial<NbDialogConfig<ConfirmDialogContext>> = {
+    return this.nbDialogService.open<ConfirmDialogComponent>(ConfirmDialogComponent, {
       ...this.defaultConfig,
-      context,
-    };
-
-    return this.nbDialogService.open<ConfirmDialogComponent>(ConfirmDialogComponent, dialogConfig)
-      .onClose;
+      context: data,
+      providers: [{ provide: 'CONFIRM_DIALOG_DATA', useValue: data }],
+    }).onClose;
   }
 
   /**
@@ -283,19 +253,17 @@ export class DialogService {
    * @returns Observable that resolves when the dialog is closed
    */
   alert(title: string, message: string, buttonText: string = 'OK'): Observable<void> {
-    const context: AlertDialogContext = {
+    const data: AlertDialogData = {
       title,
       message,
       buttonText,
     };
 
-    const dialogConfig: Partial<NbDialogConfig<AlertDialogContext>> = {
+    return this.nbDialogService.open<AlertDialogComponent>(AlertDialogComponent, {
       ...this.defaultConfig,
-      context,
-    };
-
-    return this.nbDialogService.open<AlertDialogComponent>(AlertDialogComponent, dialogConfig)
-      .onClose;
+      context: data,
+      providers: [{ provide: 'ALERT_DIALOG_DATA', useValue: data }],
+    }).onClose;
   }
 
   /**
@@ -312,7 +280,7 @@ export class DialogService {
     defaultValue: string = '',
     config?: DialogConfig,
   ): Observable<string | null> {
-    const context: PromptDialogContext = {
+    const data: PromptDialogData = {
       title,
       message,
       defaultValue,
@@ -322,14 +290,12 @@ export class DialogService {
       required: config?.data?.required,
     };
 
-    const dialogConfig: Partial<NbDialogConfig<PromptDialogContext>> = {
+    return this.nbDialogService.open<PromptDialogComponent>(PromptDialogComponent, {
       ...this.defaultConfig,
       ...config,
-      context,
-    };
-
-    return this.nbDialogService.open<PromptDialogComponent>(PromptDialogComponent, dialogConfig)
-      .onClose;
+      context: data,
+      providers: [{ provide: 'PROMPT_DIALOG_DATA', useValue: data }],
+    }).onClose;
   }
 }
 

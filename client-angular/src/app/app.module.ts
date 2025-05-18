@@ -1,26 +1,22 @@
 import { NgModule } from '@angular/core';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import {
-  NbThemeModule,
-  NbSidebarModule,
-  NbMenuModule,
-  NbDialogModule,
-  NbToastrModule,
-  NbWindowModule,
-} from '@nebular/theme';
 
-// Using AppComponent in bootstrap array
+// Nebular imports
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+
+// App imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { NebularModule } from './shared/nebular.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,13 +25,12 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    // Nebular Root Modules
+
+    // Nebular Core Modules
     NbThemeModule.forRoot({ name: 'default' }),
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbToastrModule.forRoot(),
-    NbWindowModule.forRoot(),
+    NbEvaIconsModule,
+    NbLayoutModule,
+    NebularModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

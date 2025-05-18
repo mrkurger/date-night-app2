@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -19,25 +20,19 @@
             "outputPath": "dist/client-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js", "src/polyfills.ts"],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest",
-              {
-                "glob": "**/*",
-                "input": "node_modules/eva-icons/style/fonts/",
-                "output": "/assets/fonts/"
-              }
-            ],
+            "inlineStyleLanguage": "scss",
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "node_modules/@fontsource/inter/index.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles", "src/app/core/design"]
+              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
             }
           },
           "configurations": {
@@ -45,13 +40,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2MB",
-                  "maximumError": "5MB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "50kb",
-                  "maximumError": "100kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "outputHashing": "all"
@@ -74,36 +69,24 @@
               "buildTarget": "client-angular:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "port": 4201,
-            "host": "localhost",
-            "hmr": false,
-            "liveReload": true,
-            "allowedHosts": ["localhost"],
-            "disableHostCheck": true,
-            "webSocketOptions": {
-              "reconnectInterval": 3000
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
-
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "node_modules/@fontsource/inter/index.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles", "src/app/core/design"]
+              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
             }
           }
         }
@@ -127,7 +110,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "public"
               },
               "src/manifest.webmanifest",
               "src/assets",
@@ -140,12 +124,11 @@
             ],
             "styles": [
               "./node_modules/@nebular/theme/styles/prebuilt/default.css",
-
               "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles", "src/app/core/design"]
+              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
             }
           },
           "configurations": {
@@ -200,12 +183,11 @@
             ],
             "styles": [
               "./node_modules/@nebular/theme/styles/prebuilt/default.css",
-
               "src/styles.scss"
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles", "src/app/core/design"]
+              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
             }
           }
         }

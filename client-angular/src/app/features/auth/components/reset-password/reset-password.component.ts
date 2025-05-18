@@ -1,21 +1,4 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
-import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -25,9 +8,9 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
-
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
+import { NebularModule } from '../../../../shared/nebular.module';
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -48,18 +31,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbTooltipModule,
-    NbAlertModule,
-  ],
+  imports: [NebularModule, ReactiveFormsModule, RouterLink],
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;

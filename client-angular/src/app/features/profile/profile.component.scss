@@ -1,4 +1,6 @@
 @use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/global/breakpoints' as *;
+@use '../../core/styles/breakpoints' as bp;
 
 .profile-card {
   margin: 2rem auto;
@@ -62,7 +64,7 @@
       flex: 1;
     }
 
-    @include nb-media-breakpoint-down(sm) {
+    @include media-breakpoint-down(sm) {
       flex-direction: column;
       gap: 1.5rem;
     }
@@ -135,73 +137,73 @@
 .profile-header {
   display: flex;
   align-items: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: nb-theme(spacing-lg);
 
   .avatar {
-    margin-right: var(--space-4);
+    margin-right: nb-theme(spacing-md);
   }
 
   .profile-title {
-    margin-bottom: var(--space-1);
+    margin-bottom: nb-theme(spacing-xs);
   }
 
   .profile-subtitle {
-    color: var(--neutral-600);
+    color: nb-theme(text-hint-color);
     margin: 0;
   }
 }
 
 .profile-section {
-  margin-bottom: var(--space-6);
+  margin-bottom: nb-theme(spacing-lg);
 
   .section-title {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    margin-bottom: var(--space-4);
-    color: var(--neutral-800);
-    border-bottom: var(--border-width-thin) solid var(--neutral-300);
-    padding-bottom: var(--space-2);
+    font-size: nb-theme(text-heading-4-font-size);
+    font-weight: nb-theme(text-heading-4-font-weight);
+    margin-bottom: nb-theme(spacing-md);
+    color: nb-theme(text-basic-color);
+    border-bottom: 1px solid nb-theme(divider-color);
+    padding-bottom: nb-theme(spacing-sm);
   }
 }
 
 .profile-info-item {
   display: flex;
-  margin-bottom: var(--space-3);
+  margin-bottom: nb-theme(spacing-sm);
 
   .info-label {
-    font-weight: var(--font-weight-medium);
+    font-weight: nb-theme(text-font-weight-medium);
     width: 120px;
-    color: var(--neutral-700);
+    color: nb-theme(text-basic-color);
   }
 
   .info-value {
-    color: var(--neutral-800);
+    color: nb-theme(text-basic-color);
     flex: 1;
   }
 }
 
 .profile-actions {
   display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-6);
+  gap: nb-theme(spacing-sm);
+  margin-top: nb-theme(spacing-lg);
 }
 
 .error-message {
-  background-color: rgba(255, 71, 87, 0.1);
-  color: var(--error);
-  padding: var(--space-3);
-  border-radius: var(--border-radius-md);
-  margin-bottom: var(--space-4);
+  background-color: nb-theme(color-danger-100);
+  color: nb-theme(text-danger-color);
+  padding: nb-theme(spacing-sm);
+  border-radius: nb-theme(border-radius);
+  margin-bottom: nb-theme(spacing-md);
 }
 
-@media (max-width: 768px) {
+@include media-breakpoint-down(md) {
   .profile-header {
     flex-direction: column;
     text-align: center;
 
     .avatar {
       margin-right: 0;
-      margin-bottom: var(--space-4);
+      margin-bottom: nb-theme(spacing-md);
     }
   }
 
@@ -210,11 +212,21 @@
 
     .info-label {
       width: 100%;
-      margin-bottom: var(--space-1);
+      margin-bottom: nb-theme(spacing-xs);
     }
   }
 
   .profile-actions {
     flex-direction: column;
+  }
+}
+
+.profile-container {
+  display: flex;
+  gap: 2rem;
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }

@@ -7,15 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 interface RevenueData {
-  name: string;
-  value: number;
+  name: string;_value: number;
 }
 
 interface TimeSeriesData {
   name: string;
   series: {
-    name: string;
-    value: number;
+    name: string;_value: number;
   }[];
 }
 

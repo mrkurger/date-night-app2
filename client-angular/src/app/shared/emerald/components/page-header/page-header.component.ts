@@ -38,7 +38,7 @@ export class PageHeaderComponent {
   /**
    * Handle action click
    */
-  onActionClick(action: HeaderAction, event: Event): void {
+  onActionClick(action: HeaderAction,_event: Event): void {
     event.preventDefault();
     this.actionClick.emit(action);
 

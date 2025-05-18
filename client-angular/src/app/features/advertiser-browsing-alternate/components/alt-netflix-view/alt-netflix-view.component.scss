@@ -1,1 +1,202 @@
 /* Styles for AltNetflixViewComponent */
+
+@use '@nebular/theme/styles/theming' as *;
+
+.netflix-grid-container {
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+
+  nb-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: nb-theme(text-hint-color);
+  }
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem;
+}
+
+.advertiser-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: nb-theme(shadow-lg);
+  }
+
+  &.premium {
+    border: 2px solid nb-theme(color-warning-500);
+  }
+
+  .card-image-header {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: nb-theme(card-border-radius) nb-theme(card-border-radius) 0 0;
+  }
+
+  .image-container {
+    position: relative;
+    padding-top: 133.33%; // 3:4 aspect ratio
+    width: 100%;
+
+    .advertiser-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .advertiser-image {
+      transform: scale(1.05);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0) 30%,
+        rgba(0, 0, 0, 0) 70%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+
+      .status-badges {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  nb-card-body {
+    padding: 1rem;
+
+    .advertiser-info {
+      margin-bottom: 1rem;
+
+      .advertiser-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+
+        .age {
+          font-weight: normal;
+          color: nb-theme(text-hint-color);
+        }
+      }
+
+      .location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: nb-theme(text-hint-color);
+        margin-bottom: 0.5rem;
+
+        nb-icon {
+          font-size: 1rem;
+        }
+      }
+
+      .description {
+        font-size: 0.875rem;
+        line-height: 1.4;
+        color: nb-theme(text-basic-color);
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .tags-container {
+      margin-top: 0.5rem;
+
+      nb-tag-list {
+        gap: 0.25rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  nb-card-footer {
+    padding: 1rem;
+    border-top: 1px solid nb-theme(divider-color);
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      button:last-child {
+        margin-left: auto;
+      }
+
+      nb-icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .grid-layout {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .advertiser-card {
+    nb-card-body {
+      padding: 0.75rem;
+
+      .advertiser-info {
+        .advertiser-name {
+          font-size: 1.125rem;
+        }
+
+        .description {
+          font-size: 0.8125rem;
+        }
+      }
+    }
+
+    nb-card-footer {
+      padding: 0.75rem;
+    }
+  }
+}

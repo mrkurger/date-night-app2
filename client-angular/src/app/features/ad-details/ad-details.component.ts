@@ -25,8 +25,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AdDetailsComponent implements OnInit {
   ad: Ad | null = null;
-  loading = true;
-  error: string | null = null;
+  loading = true;_error: string | null = null;
   isOwner = false;
   currentImageIndex = 0;
   currentImage: { url: string; type?: string } | null = null;

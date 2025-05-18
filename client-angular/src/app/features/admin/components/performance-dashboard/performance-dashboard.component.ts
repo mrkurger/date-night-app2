@@ -172,14 +172,13 @@ export class PerformanceDashboardComponent implements OnInit {
 
     // Format for chart
     return buckets.map((bucket) => ({
-      name: bucket.name,
-      value: bucket.count,
+      name: bucket.name,_value: bucket.count,
     }));
   }
 
   transformTimeSeriesData(data: any[]): any[] {
     // Group by day and calculate average
-    const groupedByDay = data.reduce((acc, item) => {
+    const groupedByDay = data.reduce((acc,_item)=> {
       const date = new Date(item.date);
       const day = date.toISOString().split('T')[0];
 
@@ -194,8 +193,7 @@ export class PerformanceDashboardComponent implements OnInit {
 
     // Convert to series format
     const series = Object.keys(groupedByDay).map((day) => ({
-      name: day,
-      value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
+      name: day,_value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
     }));
 
     // NbSortEvent by date

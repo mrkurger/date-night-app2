@@ -229,13 +229,17 @@
           <!-- Dynamic View Content -->
           <div [ngSwitch]="activeView">
             <div *ngSwitchCase="'grid'">
-              <app-alt-netflix-view [advertisers]="displayedAdvertisers"></app-alt-netflix-view>
-              <!-- <p class="placeholder-text">Grid View (Content from AltNetflixViewComponent will go here)</p>
-                 <div *ngFor="let ad of displayedAdvertisers">{{ad.name}} - Regular</div> -->
+              <app-alt-netflix-view
+                [advertisers]="displayedAdvertisers"
+                [loading]="isLoading"
+                (favorite)="onAdvertiserFavorite($event)"
+                (chat)="onAdvertiserChat($event)"
+                (viewProfile)="onAdvertiserProfile($event)"
+              >
+              </app-alt-netflix-view>
             </div>
             <div *ngSwitchCase="'cards'">
               <app-alt-tinder-view [advertisers]="displayedAdvertisers"></app-alt-tinder-view>
-              <!-- <p class="placeholder-text">Cards View (Content from AltTinderViewComponent will go here)</p> -->
             </div>
             <!-- Other cases for map, nearby, featured will show their placeholder text from nb-tab -->
             <p *ngSwitchDefault class="placeholder-text">

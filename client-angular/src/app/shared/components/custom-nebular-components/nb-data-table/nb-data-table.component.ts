@@ -279,8 +279,7 @@ export class NbDataTableComponent<T = any> implements OnInit {
     if (this.activeFilterColumn) {
       this.filters[this.activeFilterColumn.prop as string] = value;
       this.filterChange.emit({
-        column: this.activeFilterColumn,
-        value,
+        column: this.activeFilterColumn,_value,
       });
     }
     this.showFilter = false;

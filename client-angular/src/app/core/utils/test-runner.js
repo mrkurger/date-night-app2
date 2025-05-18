@@ -1,11 +1,22 @@
 /**
  * Simple test runner for utility functions
  * This allows us to test utility functions without the Angular test infrastructure
+ *
+ * @fileoverview This file contains utility functions for URL manipulation and a simple test framework
+ * @global URL - The URL constructor is available in modern browsers and Node.js
+ * @global console - The console object is available in browsers and Node.js
  */
+
+/* global URL, console */
 
 // Define the utility functions directly in this file for testing
 // URL utilities
 
+/**
+ * Checks if a string is a valid URL
+ * @param {string} url - The URL to validate
+ * @returns {boolean} - Whether the URL is valid
+ */
 function isValidUrl(url) {
   if (!url) {
     return false;
@@ -19,11 +30,17 @@ function isValidUrl(url) {
 
     const urlObj = new URL(url);
     return !!urlObj.hostname;
-  } catch (error) {
+  } catch (/* unused error */) {
     return false;
   }
 }
 
+/**
+ * Adds query parameters to a URL
+ * @param {string} url - The base URL
+ * @param {Object} params - The query parameters to add
+ * @returns {string} - The URL with query parameters
+ */
 function addQueryParams(url, params) {
   if (!url) {
     return '';
@@ -42,11 +59,16 @@ function addQueryParams(url, params) {
     });
 
     return urlObj.toString();
-  } catch (error) {
+  } catch (/* unused error */) {
     return url;
   }
 }
 
+/**
+ * Extracts query parameters from a URL
+ * @param {string} url - The URL to extract parameters from
+ * @returns {Object} - The extracted query parameters
+ */
 function getQueryParams(url) {
   if (!url) {
     return {};
@@ -66,11 +88,16 @@ function getQueryParams(url) {
     });
 
     return params;
-  } catch (error) {
+  } catch (/* unused error */) {
     return {};
   }
 }
 
+/**
+ * Joins URL path segments with forward slashes
+ * @param {...string} segments - The path segments to join
+ * @returns {string} - The joined path
+ */
 function joinUrlPaths(...segments) {
   return segments
     .map((segment) => (segment ? segment.replace(/^\/+|\/+$/g, '') : '')) // Remove leading/trailing slashes
@@ -79,11 +106,21 @@ function joinUrlPaths(...segments) {
 }
 
 // Simple test framework
+/**
+ * Defines a test suite
+ * @param {string} name - The name of the test suite
+ * @param {Function} fn - The function containing the tests
+ */
 function describe(name, fn) {
   console.log(`\n${name}`);
   fn();
 }
 
+/**
+ * Defines a test case
+ * @param {string} name - The name of the test case
+ * @param {Function} fn - The test function
+ */
 function it(name, fn) {
   try {
     fn();
@@ -94,6 +131,11 @@ function it(name, fn) {
   }
 }
 
+/**
+ * Creates an expectation for a value
+ * @param {*} actual - The actual value
+ * @returns {Object} - An object with assertion methods
+ */
 function expect(actual) {
   return {
     toBe(expected) {
@@ -111,7 +153,9 @@ function expect(actual) {
   };
 }
 
-// Run the tests
+/**
+ * Run the tests for URL utilities
+ */
 describe('URL Utilities', () => {
   describe('isValidUrl', () => {
     it('should return true for valid URLs', () => {
@@ -196,4 +240,5 @@ describe('URL Utilities', () => {
   });
 });
 
+// Log test completion
 console.log('\nTests completed!');

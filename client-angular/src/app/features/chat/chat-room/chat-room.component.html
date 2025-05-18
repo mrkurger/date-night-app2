@@ -14,9 +14,48 @@
       </div>
     </nb-card-header>
 
-    <nb-card-body>
-      <div class="messages-container" #messageContainer>
+    <!-- Chat Settings Dialog -->
+    <ng-template #settingsDialog>
+      <nb-card>
+        <nb-card-header>
+          Chat Settings
+          <button nbButton ghost size="small" (click)="toggleSettings()">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="setting-item">
+            <nb-checkbox [checked]="isMessageExpiryEnabled" (checkedChange)="toggleMessageExpiry()">
+              Enable Message Expiry
+            </nb-checkbox>
+            <nb-select
+              *ngIf="isMessageExpiryEnabled"
+              [selected]="messageExpiryTime"
+              (selectedChange)="updateMessageExpiryTime($event)"
+            >
+              <nb-option [value]="1">1 hour</nb-option>
+              <nb-option [value]="24">24 hours</nb-option>
+              <nb-option [value]="72">3 days</nb-option>
+              <nb-option [value]="168">7 days</nb-option>
+            </nb-select>
+          </div>
+
+          <div class="setting-item">
+            <nb-checkbox [checked]="isEncryptionEnabled" (checkedChange)="toggleEncryption()">
+              Enable End-to-End Encryption
+            </nb-checkbox>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </ng-template>
+
+    <nb-card-body [nbSpinner]="loading">
+      <div class="messages-container" #messageContainer (scroll)="onScroll($event)">
         <div class="message-list">
+          <div *ngIf="loadingMore" class="loading-more">
+            <nb-spinner size="small"></nb-spinner>
+            Loading more messages...
+          </div>
           <app-chat-message
             *ngFor="let message of messages"
             [message]="message"
@@ -41,6 +80,25 @@
             formControlName="message"
             placeholder="Type a message..."
             [status]="messageForm.get('message')?.errors ? 'danger' : 'basic'"
+            (input)="onTyping()"
+          />
+          <button
+            nbButton
+            ghost
+            type="button"
+            (click)="fileInput.click()"
+            nbTooltip="Send files"
+            nbSuffix
+          >
+            <nb-icon icon="attach-outline"></nb-icon>
+          </button>
+          <input
+            type="file"
+            #fileInput
+            style="display: none"
+            multiple
+            (change)="onFileSelected($event)"
+            accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.txt"
           />
           <button nbButton type="submit" status="primary" [disabled]="!messageForm.valid" nbSuffix>
             <nb-icon icon="paper-plane-outline"></nb-icon>

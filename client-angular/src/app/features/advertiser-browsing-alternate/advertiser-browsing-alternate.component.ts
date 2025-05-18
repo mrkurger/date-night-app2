@@ -86,6 +86,7 @@ interface Advertiser {
   image: string;
   isPremium: boolean;
   isOnline: boolean;
+  isFavorite?: boolean;
 }
 
 @Component({
@@ -126,6 +127,9 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     { title: 'Newest', link: '/advertiser-browsing-alt/rankings?type=new' },
   ];
   mobileMenuItems: NbMenuItem[] = [];
+
+  // Add new properties for handling advertiser interactions
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -354,9 +358,56 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   }
 
   filterAndDisplayAds(): void {
-    // For now, just show non-premium ads. Later, this will incorporate filters.
-    this.displayedAdvertisers = this.allAdvertisers.filter((ad) => !ad.isPremium);
-    // Update other states as needed
+    this.isLoading = true;
+    // Simulate API call delay
+    setTimeout(() => {
+      if (this.searchQuery) {
+        const query = this.searchQuery.toLowerCase();
+        this.displayedAdvertisers = this.allAdvertisers.filter(
+          (ad) =>
+            ad.name.toLowerCase().includes(query) ||
+            ad.location?.toLowerCase().includes(query) ||
+            ad.description?.toLowerCase().includes(query) ||
+            ad.tags?.some((tag) => tag.toLowerCase().includes(query)),
+        );
+        this.searchResultCount = this.displayedAdvertisers.length;
+        this.pageTitle = `Search Results for "${this.searchQuery}"`;
+        this.isSearchingResult = true;
+      } else {
+        this.displayedAdvertisers = this.allAdvertisers.filter((ad) => !ad.isPremium);
+        this.searchResultCount = null;
+        this.pageTitle = '';
+        this.isSearchingResult = false;
+      }
+      this.isLoading = false;
+    }, 500); // Simulate network delay
+  }
+
+  // Add new methods for handling advertiser interactions
+  onAdvertiserFavorite(advertiser: Advertiser): void {
+    // Toggle favorite status
+    const index = this.displayedAdvertisers.findIndex((ad) => ad.id === advertiser.id);
+    if (index !== -1) {
+      this.displayedAdvertisers[index] = {
+        ...this.displayedAdvertisers[index],
+        isFavorite: !this.displayedAdvertisers[index].isFavorite,
+      };
+      // TODO: Call favorite service to persist changes
+    }
+  }
+
+  onAdvertiserChat(advertiser: Advertiser): void {
+    // Navigate to chat or open chat widget
+    this.router.navigate(['/chat'], {
+      queryParams: {
+        advertiserId: advertiser.id,
+      },
+    });
+  }
+
+  onAdvertiserProfile(advertiser: Advertiser): void {
+    // Navigate to advertiser profile
+    this.router.navigate(['/advertiser-profile', advertiser.id]);
   }
 
   // TODO: Add loadMore for infinite scroll if implementing full NetflixView functionality

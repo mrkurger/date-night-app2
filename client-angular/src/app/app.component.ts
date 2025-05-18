@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from './core/services/theme.service';
 // ThemeToggleComponent is not used in the template
@@ -7,11 +6,12 @@ import { Subscription } from 'rxjs';
 import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
 import { NavigationComponent } from './core/components/navigation/navigation.component';
 import { NbIconLibraries } from '@nebular/theme';
+import { NebularModule } from './shared/nebular.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavigationComponent],
+  imports: [RouterModule, NebularModule, NavigationComponent],
   template: `
     <app-navigation>
       <router-outlet></router-outlet>

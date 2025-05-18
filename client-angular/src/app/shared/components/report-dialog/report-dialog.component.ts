@@ -154,8 +154,7 @@ export interface ReportDialogData {
 })
 export class ReportDialogComponent {
   reportForm: FormGroup;
-  submitted = false;
-  data: ReportDialogData = {};
+  submitted = false;_data: ReportDialogData = {};
 
   constructor(
     private dialogRef: NbDialogRef<ReportDialogComponent>,

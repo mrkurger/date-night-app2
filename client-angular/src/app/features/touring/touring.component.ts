@@ -90,7 +90,7 @@ export class TouringComponent implements OnInit {
         catchError((error) => {
           this.notificationService.error('Failed to load touring advertisers');
           console.error('Error loading touring advertisers:', error);
-          return of({ success: false, count: 0, data: [] });
+          return of({ success: false, count: 0,_data: [] });
         }),
         finalize(() => {
           this.loading = false;
@@ -114,7 +114,7 @@ export class TouringComponent implements OnInit {
         catchError((error) => {
           this.notificationService.error('Failed to load upcoming tours');
           console.error('Error loading upcoming tours:', error);
-          return of({ success: false, count: 0, data: [] });
+          return of({ success: false, count: 0,_data: [] });
         }),
         finalize(() => {
           this.loading = false;

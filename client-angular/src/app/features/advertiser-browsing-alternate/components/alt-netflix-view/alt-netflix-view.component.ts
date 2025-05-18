@@ -1,20 +1,65 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import { NbCardModule } from '@nebular/theme'; // Example import
+import {
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbBadgeModule,
+  NbSpinnerModule,
+  NbTagModule,
+} from '@nebular/theme';
+
 interface Advertiser {
-  id: number;
+  id: number | string;
   name: string;
+  age?: number;
+  location?: string;
+  description?: string;
+  tags?: string[];
+  image?: string;
+  isPremium?: boolean;
+  isOnline?: boolean;
+  isFavorite?: boolean;
 }
 
 @Component({
   selector: 'app-alt-netflix-view',
   standalone: true,
-  imports: [NebularModule, CommonModule, NbCardModule],
+  imports: [
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbSpinnerModule,
+    NbTagModule,
+  ],
   templateUrl: './alt-netflix-view.component.html',
   styleUrls: ['./alt-netflix-view.component.scss'],
 })
 export class AltNetflixViewComponent {
   @Input() advertisers: Advertiser[] = [];
-  // TODO: Implement Netflix-style view logic and card conversion
+  @Input() loading = false;
+
+  @Output() favorite = new EventEmitter<Advertiser>();
+  @Output() chat = new EventEmitter<Advertiser>();
+  @Output() viewProfile = new EventEmitter<Advertiser>();
+
+  hoveredCardId: number | string | null = null;
+
+  onCardHover(id: number | string, isHovered: boolean): void {
+    this.hoveredCardId = isHovered ? id : null;
+  }
+
+  onFavorite(advertiser: Advertiser): void {
+    this.favorite.emit(advertiser);
+  }
+
+  onChat(advertiser: Advertiser): void {
+    this.chat.emit(advertiser);
+  }
+
+  onViewProfile(advertiser: Advertiser): void {
+    this.viewProfile.emit(advertiser);
+  }
 }

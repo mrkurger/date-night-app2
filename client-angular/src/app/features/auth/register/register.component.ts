@@ -1,20 +1,4 @@
 import { OnInit } from '@angular/core';
-import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   FormBuilder,
@@ -25,13 +9,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
-
 import { finalize } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../../shared/nebular.module';
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -51,17 +33,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   styleUrls: ['./register.component.scss', './social-login.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, ReactiveFormsModule,
-    CommonModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbAlertModule,
-    RouterLink,
-    NgIf,
-    NbIconModule,
-  ],
+  imports: [NebularModule, ReactiveFormsModule, RouterLink],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

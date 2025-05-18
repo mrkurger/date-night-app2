@@ -210,7 +210,7 @@ export class PageHeaderComponent {
    * @param action The action that was clicked
    * @param event The click event
    */
-  onActionClick(action: HeaderAction, event: Event): void {
+  onActionClick(action: HeaderAction,_event: Event): void {
     event.preventDefault();
     this.actionClick.emit(action);
 

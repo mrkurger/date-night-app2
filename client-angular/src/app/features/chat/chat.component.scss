@@ -1,6 +1,7 @@
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default' as default-theme;
 @use '@nebular/theme/styles/global/breakpoints' as *;
+@use '../../core/styles/breakpoints' as bp;
 
 /* Removed emerald-ui import as it's causing build issues */
 
@@ -67,17 +68,14 @@ $mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
 // Chat Container
 .chat-container {
   display: grid;
-  grid-template-columns: $sidebar-width 1fr;
-  gap: 0;
-  height: calc(100vh - nb-theme(header-height));
-  max-width: 1400px;
-  margin: 0 auto;
+  grid-template-columns: 300px 1fr;
+  min-height: 600px;
+  max-height: 800px;
   background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(card-border-radius);
-  overflow: hidden;
+  border-radius: nb-theme(border-radius);
   box-shadow: nb-theme(shadow);
 
-  @include nb-media-breakpoint-down(md) {
+  @include media-breakpoint-down(md) {
     grid-template-columns: 1fr;
     height: 100vh;
     border-radius: 0;
@@ -93,7 +91,7 @@ $mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
   flex-direction: column;
   overflow: hidden;
 
-  @include nb-media-breakpoint-down(md) {
+  @include bp.breakpoint-down(md) {
     display: none;
     &.mobile-visible {
       display: flex;

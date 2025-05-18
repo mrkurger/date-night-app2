@@ -403,13 +403,13 @@ export class ReviewListComponent implements OnInit {
       .respondToReview(reviewId, review.title, review.content)
       .subscribe((response) => {
         if (response) {
-          this.respondToReview(reviewId, response);
+          this.respondToReview(reviewId,_response));
         }
       });
   }
 
-  respondToReview(reviewId: string, response: string): void {
-    this.reviewService.respondToReview(reviewId, response).subscribe({
+  respondToReview(reviewId: string,_response: string): void {
+    this.reviewService.respondToReview(reviewId,_response)).subscribe({
       next: () => {
         // Update the review in the list
         const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);

@@ -81,7 +81,7 @@ export class StarRatingComponent {
     const rating = this.hoveredRating ?? this.rating;
     return Array(5)
       .fill(0)
-      .map((_, index) => {
+      .map((_,_index)=> {
         const position = index + 1;
         return {
           filled: rating >= position,

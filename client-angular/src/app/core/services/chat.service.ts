@@ -18,36 +18,30 @@ export interface ChatMessage {
   id: string;
   roomId: string;
   sender: string | ChatParticipant;
-  senderId?: string; // ID of the sender (for convenience)
+  senderId?: string;
   receiver: string;
   content: string;
   message?: string; // Legacy support
   timestamp: Date;
   read: boolean;
-  isEncrypted?: boolean;
-  createdAt?: Date;
   type?: 'text' | 'system' | 'image' | 'file' | 'notification';
-  expiresAt?: Date | number | string;
+  attachments?: Array<{
+    id: string;
+    name: string;
+    type: string;
+    size: number;
+    url: string;
+    timestamp?: Date | string;
+  }>;
+  replyTo?: string;
+  metadata?: any;
+  isEncrypted?: boolean;
   encryptionData?: {
     iv: string;
     authTag?: string;
   };
-  attachments?:
-    | Array<{
-        id: string;
-        name: string;
-        type: string;
-        size: number;
-        url: string;
-        timestamp?: Date | string;
-      }>
-    | Array<{
-        url: string;
-        type: string;
-        name?: string;
-        size?: number;
-        timestamp?: Date | string;
-      }>;
+  createdAt: Date;
+  expiresAt?: Date | number | string;
 }
 
 export interface ChatParticipant {
@@ -69,12 +63,35 @@ export interface ChatParticipant {
 export interface ChatRoom {
   id: string;
   name?: string;
+  type: 'direct' | 'group' | 'ad';
   participants: ChatParticipant[];
   lastMessage?: ChatMessage;
   unreadCount: number;
   createdAt: Date;
   updatedAt: Date;
   pinned?: boolean;
+  messageExpiryEnabled?: boolean;
+  messageExpiryTime?: number;
+  encryptionEnabled?: boolean;
+  encryptionVersion?: number;
+  encryption?: {
+    enabled: boolean;
+    enabledBy?: string;
+    enabledAt?: Date;
+    disabledBy?: string;
+    disabledAt?: Date;
+  };
+  isActive?: boolean;
+  ad?: {
+    id: string;
+    title: string;
+    profileImage?: string;
+  };
+}
+
+export interface RoomSettings {
+  messageExpiryEnabled?: boolean;
+  messageExpiryTime?: number;
   encryptionEnabled?: boolean;
 }
 
@@ -192,5 +209,12 @@ export class ChatService {
 
   archiveRoom(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/archive`, {});
+  }
+
+  /**
+   * Update room settings
+   */
+  updateRoomSettings(roomId: string, settings: RoomSettings): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/settings`, settings);
   }
 }

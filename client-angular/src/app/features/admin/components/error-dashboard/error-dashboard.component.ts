@@ -67,7 +67,7 @@ interface ErrorData {
   styleUrls: ['./error-dashboard.component.scss'],
 })
 export class ErrorDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(AppSortComponent) sort: AppSortComponent;
+  @ViewChild(AppSortComponent)_sort): AppSortComponent;
   @ViewChild('errorDetailsDialog') errorDetailsDialog!: TemplateRef<any>;
 
   filterForm: FormGroup;
@@ -214,8 +214,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
 
   private transformDistributionData(distribution: any[]): any[] {
     return distribution.map((item) => ({
-      name: item.category,
-      value: item.count,
+      name: item.category,_value: item.count,
     }));
   }
 

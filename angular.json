@@ -10,24 +10,27 @@
           "style": "scss"
         }
       },
-      "root": "client-angular",
-      "sourceRoot": "client-angular/src",
+      "root": "",
+      "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/client-angular",
-            "index": "client-angular/src/index.html",
-            "main": "client-angular/src/main.ts",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
             "polyfills": ["zone.js"],
-            "tsConfig": "client-angular/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["client-angular/src/favicon.ico", "client-angular/src/assets"],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "/node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "/node_modules/eva-icons/style/eva-icons.css",
-              "client-angular/src/styles.scss"
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "node_modules/eva-icons/style/eva-icons.css",
+              "node_modules/@fontsource/inter/index.css",
+              "node_modules/@fontsource/poppins/index.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -48,12 +51,9 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -70,38 +70,22 @@
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "client-angular:build"
-          }
-        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
               "node_modules/eva-icons/style/eva-icons.css",
+              "node_modules/@fontsource/inter/index.css",
+              "node_modules/@fontsource/poppins/index.css",
+              "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
             "scripts": []
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "client-angular/e2e/protractor.conf.js",
-            "devServerTarget": "client-angular:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "client-angular:serve:production"
-            }
           }
         }
       }

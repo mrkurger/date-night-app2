@@ -97,7 +97,7 @@ export class DebugInfoComponent implements OnInit {
   userAgent = navigator.userAgent;
   screenSize = `${window.innerWidth}x${window.innerHeight}`;
   memoryUsage = 'N/A';
-  performanceMetrics: Array<{ name: string; value: string }> = [];
+  performanceMetrics: Array<{ name: string;_value: string }> = [];
 
   ngOnInit() {
     this.updatePerformanceMetrics();

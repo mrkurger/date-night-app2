@@ -27,8 +27,7 @@ import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner
 import { NotificationService } from '../../core/services/notification.service';
 
 export interface Favorite {
-  _id: string;
-  user: string;
+  _id: string;_user: string;
   ad: {
     _id: string;
     title: string;
@@ -305,8 +304,7 @@ export interface Favorite {
 })
 export class FavoritesComponent implements OnInit {
   favorites: Favorite[] = [];
-  loading = true;
-  error: string | null = null;
+  loading = true;_error: string | null = null;
 
   constructor(
     private http: HttpClient,

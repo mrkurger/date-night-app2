@@ -348,8 +348,7 @@ export class ErrorDashboardComponent implements OnInit {
       .getErrorStatistics({
         ...filters,
         page: this.currentPage,
-        limit: this.pageSize,
-        sort: this.sortField,
+        limit: this.pageSize,_sort: this.sortField,
         order: this.sortDirection,
       })
       .pipe(

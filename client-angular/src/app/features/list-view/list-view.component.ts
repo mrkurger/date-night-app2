@@ -44,8 +44,7 @@ interface HeaderAction {
 }
 
 interface FilterItem {
-  key: string;
-  value: any;
+  key: string;_value: any;
   label: string;
 }
 
@@ -70,8 +69,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   // Data
   ads: Ad[] = [];
   filteredAds: Ad[] = [];
-  loading = true;
-  error: string | null = null;
+  loading = true;_error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
 
@@ -92,8 +90,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   // Sort menu items for NbMenu
   sortMenuItems = this.sortOptions.map((option) => ({
-    title: option.label,
-    data: { value: option.value },
+    title: option.label,_data: { value: option.value },
   }));
 
   // Search debouncing

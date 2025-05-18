@@ -1,19 +1,28 @@
-import { Component, Input } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NbDialogRef, NbCardModule, NbButtonModule } from '@nebular/theme';
+
+export interface AlertDialogData {
+  title: string;
+  message: string;
+  buttonText: string;
+}
 
 @Component({
   selector: 'nb-alert-dialog',
+  standalone: true,
+  imports: [CommonModule, NbCardModule, NbButtonModule],
   template: `
     <nb-card>
       <nb-card-header>
-        <h4 class="dialog-title">{{ title }}</h4>
+        <h4 class="dialog-title">{{ data.title }}</h4>
       </nb-card-header>
       <nb-card-body>
-        <p class="dialog-message">{{ message }}</p>
+        <p class="dialog-message">{{ data.message }}</p>
       </nb-card-body>
       <nb-card-footer class="dialog-actions">
         <button nbButton status="primary" (click)="close()">
-          {{ buttonText }}
+          {{ data.buttonText }}
         </button>
       </nb-card-footer>
     </nb-card>
@@ -41,11 +50,10 @@ import { NbDialogRef } from '@nebular/theme';
   ],
 })
 export class AlertDialogComponent {
-  @Input() title = '';
-  @Input() message = '';
-  @Input() buttonText = 'OK';
-
-  constructor(private dialogRef: NbDialogRef<AlertDialogComponent>) {}
+  constructor(
+    private dialogRef: NbDialogRef<AlertDialogComponent>,
+    @Inject('ALERT_DIALOG_DATA') public data: AlertDialogData,
+  ) {}
 
   close() {
     this.dialogRef.close();

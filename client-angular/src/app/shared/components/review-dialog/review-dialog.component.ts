@@ -1,7 +1,8 @@
-import { NbDialogRef, , ,  } from '@nebular/theme';
-import { _NebularModule } from '../../nebular.module';
-
 import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NbDialogRef, NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import { ReviewFormComponent } from '../review-form/review-form.component';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,9 +12,6 @@ import { Component, Inject } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-
-import { ReviewFormComponent } from '../review-form/review-form.component';
 
 export interface ReviewData {
   adId?: string;
@@ -40,7 +38,7 @@ export interface ReviewDialogData {
 @Component({
   selector: 'app-review-dialog',
   standalone: true,
-  imports: [CommonModule, ReviewFormComponent],
+  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
   template: `
     <nb-card class="review-dialog-container">
       <nb-card-header class="dialog-header">

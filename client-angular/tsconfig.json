@@ -28,7 +28,6 @@
     "typeRoots": ["node_modules/@types", "src/typings.d.ts"]
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true

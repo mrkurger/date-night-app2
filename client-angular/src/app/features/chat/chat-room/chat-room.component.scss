@@ -149,6 +149,103 @@
         cursor: not-allowed;
       }
     }
+
+    height: 100%;
+
+    nb-card {
+      height: 100%;
+      margin: 0;
+    }
+
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .messages-container {
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-list {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 1rem;
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: nb-theme(text-hint-color);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    .loading-more {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: nb-theme(text-hint-color);
+      font-size: 0.875rem;
+      padding: 1rem 0;
+    }
+
+    nb-card-footer {
+      padding: 1rem;
+    }
+
+    nb-form-field {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      input {
+        flex: 1;
+      }
+    }
+
+    // Settings dialog styles
+    .setting-item {
+      margin-bottom: 1.5rem;
+
+      nb-checkbox {
+        margin-bottom: 0.5rem;
+      }
+
+      nb-select {
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+    }
+
+    .encryption-info {
+      font-size: 0.875rem;
+      color: nb-theme(text-hint-color);
+      margin-top: 0.5rem;
+    }
+
+    // Message expiry badge
+    .expiry-badge {
+      background-color: nb-theme(color-warning-default);
+      color: nb-theme(text-control-color);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      margin-left: 0.5rem;
+    }
+
+    // Encryption icon for messages
+    .encryption-icon {
+      color: nb-theme(color-success-default);
+      margin-right: 0.25rem;
+    }
   }
 
   // Responsive styles

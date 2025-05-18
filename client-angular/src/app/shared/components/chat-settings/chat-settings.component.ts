@@ -8,7 +8,6 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -18,15 +17,15 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbFormFieldModule,
+  NbSelectModule,
+  NbAlertModule,
   NbToggleModule,
-  ,
-  ,
+  NbSpinnerModule,
+  NbOptionModule,
 } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 
@@ -43,10 +42,20 @@ export interface ChatSettings {
 @Component({
   selector: 'app-chat-settings',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NbToggleModule],
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbFormFieldModule,
+    NbSelectModule,
+    NbAlertModule,
+    NbToggleModule,
+    NbSpinnerModule,
+    NbOptionModule,
+  ],
   template: `
     <nb-card>
       <nb-card-header>
@@ -173,10 +182,7 @@ export class ChatSettingsComponent implements OnInit {
     { value: 168, label: '1 week' },
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-  ) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.initForm();

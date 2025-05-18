@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   NbCardModule,
   NbButtonModule,
@@ -51,11 +51,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    // Import standalone components
+    LoginComponent,
+    RegisterComponent,
+    AuthLayoutComponent,
+    RequestPasswordComponent,
+    ResetPasswordComponent,
+    // Import Nebular modules
     NbCardModule,
     NbInputModule,
     NbButtonModule,
@@ -69,15 +75,7 @@ const routes: Routes = [
     NbBadgeModule,
     NbTagModule,
     NbSelectModule,
-
-    // Components
-    LoginComponent,
-    RegisterComponent,
-    AuthLayoutComponent,
-    RequestPasswordComponent,
-    ResetPasswordComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // No exports needed for standalone components
 })
 export class AuthModule {}

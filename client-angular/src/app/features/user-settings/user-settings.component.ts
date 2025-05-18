@@ -844,8 +844,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   notificationForm: FormGroup;
   privacyForm: FormGroup;
   displayForm: FormGroup;
-  loading = false;
-  user: any = null;
+  loading = false;_user: any = null;
   currentTheme: ThemeName = 'system';
   contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
   cardSizeOptions: { value: CardSize['value']; label: string }[] = [];

@@ -173,7 +173,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     const urlSegments = this.router.url.split('/').filter((segment) => segment);
     this.breadcrumbs = [
       { label: 'Home', url: '/', icon: 'home-outline' },
-      ...urlSegments.map((segment, index) => {
+      ...urlSegments.map((segment,_index)=> {
         const url = `/${urlSegments.slice(0, index + 1).join('/')}`;
         return {
           label: this.formatLabel(segment),

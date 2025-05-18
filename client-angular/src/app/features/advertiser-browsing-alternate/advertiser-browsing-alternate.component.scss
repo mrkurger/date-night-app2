@@ -1,7 +1,9 @@
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/global/breakpoints' as *;
+@use '../../core/styles/breakpoints' as bp;
+
 /* Styles for the converted React/Tailwind components will go here */
 /* We will aim to use Nebular's theming capabilities as much as possible */
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/dark' as *; // Or cosmic, or your custom dark theme
 
 // Define specific colors from Tailwind's theme for precise matching
 $tailwind-gray-900: #111827;
@@ -205,9 +207,7 @@ $tailwind-white: #ffffff;
 }
 
 .mobile-menu-toggle {
-  // This class is from bootstrap (d-md-none). Ensure Nebular reset or custom styles don't interfere
-  // Or use Nebular's built-in responsive directives if preferred.
-  @include nb-media-breakpoint-up(md) {
+  @include media-breakpoint-up(md) {
     display: none !important;
   }
   button.nb-button[nbButton][ghost] {
@@ -215,6 +215,12 @@ $tailwind-white: #ffffff;
     &:hover {
       color: $tailwind-white;
     }
+  }
+}
+
+.mobile-only {
+  @include media-breakpoint-up(md) {
+    display: none !important;
   }
 }
 
@@ -242,7 +248,7 @@ $tailwind-white: #ffffff;
     margin: 0 auto;
     max-width: 1280px; // Match header container
 
-    @include nb-media-breakpoint-up(md) {
+    @include bp.breakpoint-up(md) {
       flex-direction: row;
       padding: 0 1rem; // md:py-0
       gap: 1rem; // md gap
@@ -253,7 +259,7 @@ $tailwind-white: #ffffff;
     text-align: center;
     font-size: nb-theme(text-paragraph-2-font-size); // text-sm
     line-height: nb-theme(text-paragraph-2-line-height); // leading-loose
-    @include nb-media-breakpoint-up(md) {
+    @include bp.breakpoint-up(md) {
       text-align: left;
     }
   }
@@ -359,7 +365,7 @@ $tailwind-white: #ffffff;
       // background-color: nb-theme(background-basic-color-2);
       // padding: 1rem;
       // border-radius: nb-theme(card-border-radius);
-      @include nb-media-breakpoint-down(md) {
+      @include bp.breakpoint-down(md) {
         // Hide sidebar on medium and below
         display: none;
       }

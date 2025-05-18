@@ -70,8 +70,7 @@ export class WalletComponent {
       },
     },
   ];
-  loading = false;
-  error: string | null = null;
+  loading = false;_error: string | null = null;
 
   openTransactionDetails(transaction: any): void {
     console.log('Transaction details:', transaction);

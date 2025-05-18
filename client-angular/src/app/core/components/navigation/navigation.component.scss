@@ -1,8 +1,12 @@
-@use '@nebular/theme' as nb;
 @use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/global/breakpoints' as *;
+@use '../../styles/breakpoints' as bp;
 
 :host {
   display: block;
+  width: 100%;
+  background-color: nb-theme(background-basic-color-1);
+  border-bottom: 1px solid nb-theme(border-basic-color-3);
 
   ::ng-deep {
     .menu-sidebar {
@@ -27,6 +31,19 @@
   }
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include bp.breakpoint-up(md) {
+    padding: 1rem 2rem;
+  }
+}
+
 .header-container {
   display: flex;
   align-items: center;
@@ -37,7 +54,7 @@
   background-color: nb-theme(background-basic-color-1);
   border-bottom: 1px solid nb-theme(divider-color);
 
-  @include media-breakpoint-down(sm) {
+  @include bp.breakpoint-down(sm) {
     padding: 0.5rem;
   }
 }
@@ -55,12 +72,12 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: nb.$color-primary-200;
+    color: nb-theme(color-primary-200);
   }
 }
 
 .sidebar-toggle {
-  @include media-breakpoint-up(lg) {
+  @include bp.breakpoint-up(lg) {
     display: none;
   }
 }
@@ -101,7 +118,7 @@
       border: 1px solid nb-theme(border-basic-color-3);
       transition: all 0.2s;
 
-      @include media-breakpoint-down(sm) {
+      @include bp.breakpoint-down(sm) {
         display: none;
       }
     }
@@ -118,7 +135,7 @@
       }
     }
 
-    @include media-breakpoint-down(sm) {
+    @include bp.breakpoint-down(sm) {
       padding: 0.5rem;
     }
   }
@@ -136,14 +153,14 @@
 
     .user-name,
     .user-title {
-      @include media-breakpoint-down(sm) {
+      @include bp.breakpoint-down(sm) {
         display: none;
       }
     }
   }
 
   button {
-    @include media-breakpoint-down(sm) {
+    @include bp.breakpoint-down(sm) {
       padding: 0.5rem;
       min-width: auto;
 
@@ -177,12 +194,12 @@ nb-sidebar {
   margin-bottom: 0.5rem;
 
   a {
-    color: nb.$text-basic-color;
+    color: nb-theme(text-basic-color);
     text-decoration: none;
     transition: color 0.2s ease;
 
     &:hover {
-      color: nb.$color-primary-500;
+      color: nb-theme(color-primary-500);
       text-decoration: underline;
     }
   }
@@ -196,7 +213,7 @@ nb-sidebar {
 .main-content {
   padding: 1rem;
 
-  @include media-breakpoint-up(md) {
+  @include bp.breakpoint-up(md) {
     padding: 2rem;
   }
 }
@@ -211,7 +228,7 @@ nb-layout-footer {
 }
 
 // Responsive adjustments
-@media (max-width: 768px) {
+@include bp.breakpoint-down(md) {
   .logo {
     font-size: 1.25rem;
   }

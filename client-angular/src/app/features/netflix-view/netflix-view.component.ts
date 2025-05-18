@@ -85,8 +85,7 @@ export class NetflixViewComponent implements OnInit {
   adsByCategory: { [key: string]: Ad[] } = {};
 
   // Component state
-  loading = true;
-  error: string | null = null;
+  loading = true;_error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
 

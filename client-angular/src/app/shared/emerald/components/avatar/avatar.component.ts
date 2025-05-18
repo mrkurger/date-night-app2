@@ -103,7 +103,7 @@ export class AvatarComponent implements OnInit {
   /**
    * Handle dropdown item click
    */
-  onItemClick(item: DropdownItem, event: Event): void {
+  onItemClick(item: DropdownItem,_event: Event): void {
     event.stopPropagation();
     this.itemClick.emit(item);
     this.closeDropdown();

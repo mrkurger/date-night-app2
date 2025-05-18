@@ -1,26 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
+import { NebularModule } from '../../../../shared/nebular.module';
 
 @Component({
   selector: 'app-request-password',
@@ -28,18 +11,7 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./request-password.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbAlertModule,
-    NbTooltipModule,
-  ],
+  imports: [NebularModule, ReactiveFormsModule, RouterLink],
 })
 export class RequestPasswordComponent {
   requestForm: FormGroup;
@@ -47,11 +19,7 @@ export class RequestPasswordComponent {
   errorMessage = '';
   successMessage = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.requestForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });

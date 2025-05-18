@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import {
   NbMenuModule,
@@ -23,24 +22,12 @@ import { AppMenuItem } from '../../models/menu.model';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
 import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keyboard-shortcuts-help/keyboard-shortcuts-help.component';
+import { NebularModule } from '../../../shared/nebular.module';
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbMenuModule,
-    NbSidebarModule,
-    NbLayoutModule,
-    NbButtonModule,
-    NbIconModule,
-    NbContextMenuModule,
-    NbUserModule,
-    NbActionsModule,
-    BreadcrumbsComponent,
-    ThemeToggleComponent,
-  ],
+  imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })

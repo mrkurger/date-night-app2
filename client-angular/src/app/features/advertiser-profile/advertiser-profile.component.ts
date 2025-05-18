@@ -78,8 +78,7 @@ import { Ad } from '../../core/models/ad.interface';
 })
 export class AdvertiserProfileComponent implements OnInit {
   ad: Ad | null = null;
-  loading = true;
-  error: string | null = null;
+  loading = true;_error: string | null = null;
   isOwner = false;
   editMode = false;
   adForm: FormGroup;

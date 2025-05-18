@@ -1,17 +1,14 @@
 import { OnInit } from '@angular/core';
-import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-} from '@nebular/theme';
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
+
+import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { NebularModule } from '../../../shared/nebular.module';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -21,15 +18,6 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { UserService } from '../../../core/services/user.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { finalize } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
-import { NbAuthService, NbAuthResult } from '@nebular/auth';
-
-// Nebular Modules
 
 @Component({
   selector: 'app-login',
@@ -37,18 +25,7 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
   styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-  ],
+  imports: [NebularModule, ReactiveFormsModule, RouterLink],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

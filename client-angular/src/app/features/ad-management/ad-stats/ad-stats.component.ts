@@ -57,15 +57,15 @@ export class AdStatsComponent implements OnInit {
   ) {}
 
   getTotalViews(data: any[]): number {
-    return data.reduce((sum, item) => sum + (item.views || 0), 0);
+    return data.reduce((sum,_item)=> sum + (item.views || 0), 0);
   }
 
   getTotalClicks(data: any[]): number {
-    return data.reduce((sum, item) => sum + (item.clicks || 0), 0);
+    return data.reduce((sum,_item)=> sum + (item.clicks || 0), 0);
   }
 
   getTotalInquiries(data: any[]): number {
-    return data.reduce((sum, item) => sum + (item.inquiries || 0), 0);
+    return data.reduce((sum,_item)=> sum + (item.inquiries || 0), 0);
   }
 
   getConversionRate(data: any[]): number {
@@ -96,7 +96,7 @@ export class AdStatsComponent implements OnInit {
     }
   }
 
-  getBarHeight(item: any, data: any[]): string {
+  getBarHeight(item: any,_data: any[]): string {
     const maxValue = Math.max(...data.map((d) => d.value));
     const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
     return `${percentage}%`;
@@ -153,12 +153,10 @@ export class AdStatsComponent implements OnInit {
     this.totalItems = sampleData.length;
 
     this.viewsData = sampleData.map((item) => ({
-      name: item.date,
-      value: item.views,
+      name: item.date,_value: item.views,
     }));
     this.clicksData = sampleData.map((item) => ({
-      name: item.date,
-      value: item.clicks,
+      name: item.date,_value: item.clicks,
     }));
 
     // Initialize the tree grid data source

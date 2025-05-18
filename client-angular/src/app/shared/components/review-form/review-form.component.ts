@@ -35,8 +35,7 @@ export interface ReviewData {
   categories: {
     communication: number;
     appearance: number;
-    location: number;
-    value: number;
+    location: number;_value: number;
   };
 }
 

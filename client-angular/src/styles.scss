@@ -11,6 +11,14 @@
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
 
+// Import Nebular theme styles
+@use '@nebular/theme/styles/globals' as *;
+
+// Include Nebular theme styles
+@include nb-install() {
+  @include nb-theme-global();
+}
+
 :root {
   --nb-theme-margin: 1rem;
   --nb-theme-margin-lg: 1.5rem;
@@ -33,7 +41,6 @@
   --color-basic-600: #8f9bb3;
 }
 
-
 // Nebular theme and Eva Icons are now loaded via index.html
 
 // Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
@@ -53,8 +60,7 @@ nb-card {
   margin-bottom: nb-theme(card-margin-bottom);
   border-radius: nb-theme(card-border-radius);
   box-shadow: nb-theme(card-shadow);
-  transition:
-    transform 0.2s nb-theme(transition-timing-function),
+  transition: transform 0.2s nb-theme(transition-timing-function),
     box-shadow 0.2s nb-theme(transition-timing-function);
 
   &:hover {

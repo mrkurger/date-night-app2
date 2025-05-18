@@ -1,10 +1,16 @@
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import { NbProgressBarModule, _NbToastrService } from '@nebular/theme';
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {
+  NbCardModule,
+  NbProgressBarModule,
+  NbTabsetModule,
+  NbSelectModule,
+  NbListModule,
+  NbBadgeModule,
+  NbAlertModule,
+  NbToastrService,
+} from '@nebular/theme';
 
 interface ErrorLog {
   id: string;
@@ -58,8 +64,17 @@ interface SecurityMetrics {
 @Component({
   selector: 'app-error-security-dashboard',
   standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule, FormsModule, NgxChartsModule, NbProgressBarModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbCardModule,
+    NbProgressBarModule,
+    NbTabsetModule,
+    NbSelectModule,
+    NbListModule,
+    NbBadgeModule,
+    NbAlertModule,
+  ],
   template: `
     <div class="error-security-dashboard">
       <!-- Security Metrics Overview -->
@@ -143,7 +158,7 @@ interface SecurityMetrics {
                     <div class="error-header">
                       <nb-badge [text]="error.level" [status]="getErrorStatus(error.level)">
                       </nb-badge>
-                      <span class="timestamp">{{ error.timestamp | date: 'medium' }}</span>
+                      <span class="timestamp">{{ error.timestamp | date : 'medium' }}</span>
                     </div>
                     <div class="error-message">{{ error.message }}</div>
                     <div class="error-details" *ngIf="error.component || error.url">
@@ -188,7 +203,7 @@ interface SecurityMetrics {
                       >
                       </nb-badge>
                       <span class="alert-type">{{ alert.type }}</span>
-                      <span class="timestamp">{{ alert.timestamp | date: 'medium' }}</span>
+                      <span class="timestamp">{{ alert.timestamp | date : 'medium' }}</span>
                     </div>
                     <div class="alert-description">{{ alert.description }}</div>
                     <div class="alert-details">
@@ -386,7 +401,7 @@ export class ErrorSecurityDashboardComponent implements OnInit {
   vulnerabilities: Vulnerability[] = [];
   filteredVulnerabilities: Vulnerability[] = [];
 
-  constructor(/* private toastrService: _NbToastrService */) {}
+  constructor(private toastrService: NbToastrService) {}
 
   ngOnInit() {
     this.loadData();
