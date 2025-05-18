@@ -1,0 +1,89 @@
+name: Workflow Health Check
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+  workflow_dispatch:  # Allow manual triggers
+
+env:
+  ARTIFACTS_RETENTION: 14
+
+permissions:
+  actions: read       # For reading workflow runs
+  contents: write    # For committing health check results
+  issues: write      # For creating issue reports
+  pull-requests: write # For commenting on PRs
+  checks: write      # For creating check runs
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm install @octokit/rest@20
+      
+      - name: Run Health Check
+        run: node .github/scripts/check-workflow-health.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload Health Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-health-reports-${{ github.run_id }}
+          path: |
+            workflow-health-report.md
+            workflow-health-data.json
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
+      
+      - name: Update Documentation
+        run: |
+          cp workflow-health-report.md docs/workflow-health/latest.md
+          DATE_STAMP=$(date +%Y-%m-%d)
+          cp workflow-health-report.md "docs/workflow-health/archive/${DATE_STAMP}.md"
+          
+          # Update index
+          cat > docs/workflow-health/index.html << EOL
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <title>Workflow Health Reports</title>
+              <style>
+                  body { font-family: system-ui; max-width: 800px; margin: 0 auto; padding: 2rem; }
+                  .reports { margin: 2rem 0; }
+                  .report-link { display: block; margin: 0.5rem 0; }
+              </style>
+          </head>
+          <body>
+              <h1>Workflow Health Reports</h1>
+              <p><a href="latest.md">View Latest Report</a></p>
+              <div class="reports">
+                  <h2>Archive</h2>
+                  $(ls -1 docs/workflow-health/archive/*.md | sort -r | sed 's/.*\/\(.*\)\.md/<a class="report-link" href="archive\/\1.md">\1<\/a>/')
+              </div>
+          </body>
+          </html>
+          EOL
+      
+      - name: Commit Updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/workflow-health/
+          git commit -m "docs: update workflow health reports [skip ci]" || echo "No changes to commit"
+          git push || echo "No changes to push"

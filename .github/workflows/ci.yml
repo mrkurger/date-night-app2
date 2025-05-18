@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read       # For checking out code
+  checks: write       # For creating check runs
+  pull-requests: write # For commenting on PRs
+  statuses: write    # For setting commit status
+
 jobs:
   lint-client:
     runs-on: ubuntu-latest

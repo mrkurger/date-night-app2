@@ -6,6 +6,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  checks: write        # For publishing test results
+  pull-requests: write # For commenting test results
+  actions: read       # For checking build status
+
 jobs:
   server-tests:
     name: Server Tests

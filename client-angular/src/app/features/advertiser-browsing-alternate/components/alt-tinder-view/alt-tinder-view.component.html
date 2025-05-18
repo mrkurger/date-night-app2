@@ -1,1 +1,280 @@
 <p>Placeholder for AltTinderViewComponent. Content will be swipeable cards.</p>
+
+<!-- Main container with ARIA landmarks -->
+<div
+  class="tinder-view-container"
+  [class.dark-theme]="isDarkMode"
+  role="main"
+  aria-label="Profile Card Stack"
+>
+  <!-- Mobile header -->
+  <div class="mobile-header md:hidden" role="banner">
+    <button
+      nbButton
+      ghost
+      (click)="goBack()"
+      aria-label="Go back"
+      nbTooltip="Go back to previous page"
+    >
+      <nb-icon icon="arrow-left"></nb-icon>
+    </button>
+  </div>
+
+  <div class="tinder-container">
+    <!-- Header section -->
+    <div class="tinder-header" role="heading" aria-level="1">
+      <h1 class="tinder-title">Discover</h1>
+      <div class="tinder-actions">
+        <button
+          nbButton
+          status="primary"
+          (click)="openFilters(filtersDialog)"
+          aria-label="Open filters"
+          nbTooltip="Filter profiles"
+        >
+          <nb-icon icon="options-2-outline"></nb-icon>
+          Filters
+        </button>
+        <button
+          nbButton
+          status="warning"
+          (click)="onBoost()"
+          aria-label="Boost profile visibility"
+          nbTooltip="Get more visibility"
+          class="boost-button"
+        >
+          <nb-icon icon="flash-outline"></nb-icon>
+          Boost
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading" role="status" aria-live="polite">
+      <nb-spinner size="large"></nb-spinner>
+      <p class="loading-text">Finding matches for you...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-container" *ngIf="error && !loading" role="alert" aria-live="assertive">
+      <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
+      <p class="error-text">{{ error }}</p>
+      <button
+        nbButton
+        status="primary"
+        (click)="loadSwipeAds()"
+        aria-label="Try loading profiles again"
+      >
+        <nb-icon icon="refresh-outline"></nb-icon>
+        Try Again
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      class="empty-container"
+      *ngIf="!loading && !error && (!ads || ads.length === 0)"
+      role="status"
+      aria-live="polite"
+    >
+      <nb-icon icon="search-outline" class="empty-icon"></nb-icon>
+      <p class="empty-text">No more profiles to show</p>
+      <p class="empty-subtext">Try adjusting your filters or check back later</p>
+    </div>
+
+    <!-- Card Stack Area -->
+    <div
+      class="swipe-area"
+      *ngIf="!loading && !error && currentAd"
+      role="region"
+      aria-label="Profile cards"
+      (touchstart)="onTouchStart($event)"
+    >
+      <!-- Card Stack -->
+      <div class="card-stack" [style.perspective]="PERSPECTIVE + 'px'">
+        <div
+          class="card-wrapper"
+          *ngFor="let advertiser of visibleAdvertisers; let i = index"
+          [class.top-card]="i === currentIndex"
+          [style.zIndex]="advertisers.length - i"
+          [@cardAnimation]="i === currentIndex ? cardState : 'default'"
+          [style.transform]="getCardTransform(i)"
+          (pan)="onPan($event, i)"
+          (panend)="onPanEnd($event, i)"
+          [attr.aria-hidden]="i !== currentIndex"
+        >
+          <nb-card
+            class="tinder-card"
+            [ngClass]="{ premium: advertiser.isPremium }"
+            role="article"
+            [attr.aria-label]="'Profile of ' + advertiser.name"
+          >
+            <!-- Card Header with Image -->
+            <nb-card-header class="card-image-header">
+              <div class="image-container">
+                <img
+                  [src]="advertiser.image || 'assets/images/placeholder.jpg'"
+                  [alt]="advertiser.name + '\'s profile picture'"
+                  class="advertiser-image"
+                  loading="lazy"
+                />
+                <div class="image-overlay">
+                  <div class="status-badges" role="status">
+                    <nb-badge
+                      *ngIf="advertiser.isOnline"
+                      status="success"
+                      text="Online"
+                      aria-label="User is online"
+                    ></nb-badge>
+                    <nb-badge
+                      *ngIf="advertiser.isPremium"
+                      status="warning"
+                      text="Premium"
+                      aria-label="Premium profile"
+                    ></nb-badge>
+                  </div>
+                </div>
+              </div>
+            </nb-card-header>
+
+            <!-- Card Content -->
+            <nb-card-body>
+              <div class="advertiser-info">
+                <h3 class="advertiser-name">
+                  {{ advertiser.name }}
+                  <span class="age" *ngIf="advertiser.age">, {{ advertiser.age }}</span>
+                </h3>
+                <p class="location" *ngIf="advertiser.location">
+                  <nb-icon icon="pin-outline"></nb-icon>
+                  {{ advertiser.location }}
+                </p>
+                <p class="description" *ngIf="advertiser.description">
+                  {{ advertiser.description | slice : 0 : 150
+                  }}{{ advertiser.description.length > 150 ? '...' : '' }}
+                </p>
+
+                <!-- Tags -->
+                <div
+                  class="tags-container"
+                  *ngIf="advertiser.tags?.length"
+                  role="list"
+                  aria-label="Profile tags"
+                >
+                  <nb-tag-list>
+                    <nb-tag
+                      *ngFor="let tag of advertiser.tags"
+                      [text]="tag"
+                      appearance="filled"
+                      status="primary"
+                      size="tiny"
+                      role="listitem"
+                    >
+                    </nb-tag>
+                  </nb-tag-list>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <!-- Swipe Indicators -->
+          <div
+            class="swipe-overlay"
+            [class.visible]="isDragging && i === currentIndex"
+            aria-hidden="true"
+          >
+            <div
+              class="like-indicator"
+              [class.visible]="swipeDirection === 'right'"
+              [@overlayAnimation]
+            >
+              <nb-icon icon="checkmark-circle-2-outline" status="success"></nb-icon>
+              <span>LIKE</span>
+            </div>
+            <div
+              class="nope-indicator"
+              [class.visible]="swipeDirection === 'left'"
+              [@overlayAnimation]
+            >
+              <nb-icon icon="close-circle-outline" status="danger"></nb-icon>
+              <span>NOPE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div
+      class="action-buttons"
+      *ngIf="!loading && !error && currentAd"
+      role="group"
+      aria-label="Profile actions"
+    >
+      <button
+        nbButton
+        ghost
+        size="large"
+        class="action-button rewind"
+        (click)="onRewind()"
+        [disabled]="cardState !== 'default' || currentIndex === 0"
+        aria-label="Rewind to previous profile"
+        nbTooltip="Go back to previous profile"
+      >
+        <nb-icon icon="corner-up-left-outline" status="basic"></nb-icon>
+      </button>
+      <button
+        nbButton
+        ghost
+        size="large"
+        class="action-button nope"
+        (click)="onNope()"
+        [disabled]="cardState !== 'default'"
+        aria-label="Dislike profile"
+        nbTooltip="Not interested"
+      >
+        <nb-icon icon="close-circle-outline" status="danger"></nb-icon>
+      </button>
+      <button
+        nbButton
+        ghost
+        size="large"
+        class="action-button superlike"
+        (click)="onSuperlike()"
+        [disabled]="cardState !== 'default'"
+        aria-label="Super like profile"
+        nbTooltip="Super like"
+      >
+        <nb-icon icon="star-outline" status="info"></nb-icon>
+      </button>
+      <button
+        nbButton
+        ghost
+        size="large"
+        class="action-button like"
+        (click)="onLike()"
+        [disabled]="cardState !== 'default'"
+        aria-label="Like profile"
+        nbTooltip="Like"
+      >
+        <nb-icon icon="heart-outline" status="success"></nb-icon>
+      </button>
+      <button
+        nbButton
+        ghost
+        size="large"
+        class="action-button info"
+        (click)="onInfo()"
+        [disabled]="cardState !== 'default'"
+        aria-label="View profile details"
+        nbTooltip="View details"
+      >
+        <nb-icon icon="info-outline"></nb-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters Dialog -->
+  <ng-template #filtersDialog let-ref="dialogRef">
+    <!-- ... existing filters dialog code ... -->
+  </ng-template>
+</div>

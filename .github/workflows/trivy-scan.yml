@@ -5,6 +5,13 @@ on:
     branches:
       - "**" # Triggers on any branch where commits are pushed
 
+permissions:
+  contents: read
+  security-events: write  # For uploading security scan results
+  issues: write         # For creating security issues
+  checks: write        # For creating check runs
+  pull-requests: write # For commenting on PRs
+
 jobs:
   trivy-scan:
     name: Run Trivy Scan

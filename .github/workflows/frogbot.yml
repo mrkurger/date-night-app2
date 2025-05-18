@@ -5,6 +5,12 @@ on:
     branches: [ main; Nebular-UI-Refactor ] # Change if your default branch is different
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write  # For updating PR with scan results
+  security-events: write  # For submitting security analysis
+  actions: read
+
 jobs:
   frogbot-scan:
     runs-on: ubuntu-latest

@@ -1,82 +1,68 @@
-# .github/workflows/base-config.yml
-# Shared configuration file for reusable workflow properties and jobs
 name: Base Configuration
 
 on:
-  workflow_call:  # Allows this workflow to be called by other workflows
+  workflow_call:
     inputs:
       node-version:
         description: 'Node.js version to use'
         required: false
         type: string
-        default: '20.x'  # Use stable LTS version by default
+        default: '20.x'
+      package-manager:
+        description: 'Package manager to use (npm or pnpm)'
+        required: false
+        type: string
+        default: 'pnpm'
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
 
 env:
-  # Directory structure for reports and artifacts
-  REPORTS_DIR: downloaded-reports
-  ARTIFACTS_DIR: .github/artifacts
-  REPORTS_SECURITY: downloaded-reports/security
-  REPORTS_TESTING: downloaded-reports/testing
-  REPORTS_DOCS: downloaded-reports/docs
-  REPORTS_ANGULAR: downloaded-reports/angular
-  REPORTS_SERVER: downloaded-reports/server
-  REPORTS_SNYK: downloaded-reports/snyk
-  RETENTION_ARTIFACTS: 14  # Retain artifacts for 14 days
+  CI: true
+  REPORTS_DIR: reports
+  ARTIFACTS_RETENTION: 14
 
 jobs:
-  # Job for setting up the Node.js environment
-  node-setup:
-    name: Setup Node.js Environment
+  setup:
     runs-on: ubuntu-latest
-    outputs:
-      node-path: ${{ steps.get-node-path.outputs.node-path }}
+    timeout-minutes: 15
+    
     steps:
-      # Step 1: Checkout the repository
       - uses: actions/checkout@v4
       
-      # Step 2: Setup Node.js
       - name: Setup Node.js
-        id: node-setup
-        uses: actions/setup-node@v3
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ inputs.node-version }}
-          cache: 'npm'
-      
-      # Step 3: Output Node.js path
-      - name: Get Node.js Path
-        id: get-node-path
-        run: echo "node-path=$(which node)" >> $GITHUB_OUTPUT
-
-  # Job for setting up a MongoDB service
-  mongodb-setup:
-    name: Setup MongoDB Service
-    runs-on: ubuntu-latest
-    services:
-      mongodb:
-        image: mongo:6  # Use MongoDB version 6
-        ports:
-          - 27017:27017  # Expose default MongoDB port
-
-  # Job for setting up report directories
-  setup-reports:
-    name: Setup Report Directories
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Create necessary report directories
-      - name: Create Report Directories
+          
+      - name: Verify Dependencies
+        id: deps
         run: |
-          mkdir -p \
-            ${{ env.REPORTS_SECURITY }} \
-            ${{ env.REPORTS_TESTING }} \
-            ${{ env.REPORTS_DOCS }} \
-            ${{ env.REPORTS_ANGULAR }} \
-            ${{ env.REPORTS_SERVER }} \
-            ${{ env.REPORTS_SNYK }}
-
-      # Step 2: Upload report directories as an artifact
-      - name: Upload Reports Artifact
-        uses: actions/upload-artifact@v4
+          if [ -f "pnpm-lock.yaml" ]; then
+            npm install -g pnpm
+            pnpm install --frozen-lockfile
+          else
+            npm ci
+          fi
+        continue-on-error: true
+          
+      - name: Fallback Install
+        if: steps.deps.outcome == 'failure'
+        run: |
+          echo "Clean install failed, attempting regular install..."
+          rm -rf node_modules
+          npm install
+          
+      - name: Cache dependencies
+        uses: actions/cache@v3
         with:
-          name: reports
-          path: ${{ env.REPORTS_DIR }}
-          retention-days: ${{ env.RETENTION_ARTIFACTS }}
+          path: |
+            ~/.npm
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-

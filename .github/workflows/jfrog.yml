@@ -1,6 +1,11 @@
 name: "JFrog Integration Example"
 on: push
 
+permissions:
+  contents: write    # For publishing artifacts
+  actions: read     # For reading build status
+  pull-requests: write # For commenting results
+
 jobs:
   build:
      runs-on: ubuntu-latest

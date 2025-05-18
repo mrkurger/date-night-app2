@@ -9,7 +9,10 @@
     "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && pnpm install",
     "build": "cd client-angular && pnpm build",
     "test": "cd client-angular && pnpm test",
-    "lint": "cd client-angular && pnpm lint"
+    "lint": "cd client-angular && pnpm lint",
+    "prepare": "node .github/scripts/disable-husky-in-ci.js",
+    "docs:ensure": "node .github/scripts/ensure-docs.js",
+    "docs:update": "npm run docs:ensure"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.12",

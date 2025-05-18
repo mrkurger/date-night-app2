@@ -1,4 +1,4 @@
-name: Error Monitoring
+name: Sync Workflow Errors
 
 on:
   workflow_run:
@@ -7,18 +7,25 @@ on:
     branches: [main, develop]
     conclusions: [failure, cancelled, timed_out]
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual triggers
 
 env:
   ARTIFACTS_RETENTION: 14
+
+permissions:
+  actions: read       # For reading workflow runs
+  contents: write    # For committing error reports
+  issues: write      # For creating error issues
+  pull-requests: write # For commenting on PRs
+  checks: write      # For creating check runs
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  monitor:
+  sync-errors:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -44,19 +51,32 @@ jobs:
       - name: Disable Husky
         run: node .github/scripts/disable-husky-in-ci.js
       
-      - name: Process Workflow Errors
-        id: process-errors
+      - name: Fetch Workflow Logs
+        id: fetch-logs
         run: |
-          mkdir -p workflow-error-logs
-          node .github/scripts/process-workflow-errors.js
+          mkdir -p workflow-error-logs-temp
+          node .github/scripts/fetch-workflow-logs.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
           
+      - name: Run Analyzer Tests
+        run: |
+          echo "Running error analyzer tests..."
+          node .github/scripts/test-error-analyzer.js
+          
       - name: Generate Error Report
         if: success()
         run: |
+          echo "Generating error report..."
           node .github/scripts/analyze-workflow-errors.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Run Error Pattern Validation
+        run: |
+          echo "Validating error patterns against latest logs..."
+          node .github/scripts/validate-error-patterns.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
@@ -66,6 +86,6 @@ jobs:
         with:
           name: workflow-error-logs-${{ github.run_id }}
           path: |
-            workflow-error-logs/
+            workflow-error-logs-temp/
             workflow-error-report.md
           retention-days: ${{ env.ARTIFACTS_RETENTION }}

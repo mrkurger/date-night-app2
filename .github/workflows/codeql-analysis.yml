@@ -14,6 +14,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write  # Required for CodeQL Analysis
+  pull-requests: write   # For commenting analysis results
+  issues: write         # For creating security issues
+
 jobs:
   analyze:
     name: Analyze

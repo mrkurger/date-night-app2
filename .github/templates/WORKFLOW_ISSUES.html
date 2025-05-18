@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workflow Issues Documentation</title>
+    <style>
+        body {
+            font-family: system-ui;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .error-pattern {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .error-pattern h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .recommendation {
+            background: #f5f7ff;
+            padding: 1rem;
+            border-left: 4px solid #4a5aef;
+            margin: 1rem 0;
+        }
+        .code {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Common Workflow Issues</h1>
+    
+    <h2>Angular Tests & Builds</h2>
+    
+    <article class="error-pattern">
+        <h3>TypeScript Compilation Errors</h3>
+        <p>Issues with types, imports, and module declarations in Angular components.</p>
+        <div class="recommendation">
+            <strong>Resolution:</strong>
+            <ul>
+                <li>Use strict type checking with <code>--strict</code> flag</li>
+                <li>Update imports to use correct paths</li>
+                <li>Ensure proper module declarations</li>
+                <li>Check standalone component configuration</li>
+            </ul>
+        </div>
+    </article>
+
+    <article class="error-pattern">
+        <h3>SCSS Deprecations</h3>
+        <p>Using deprecated SCSS features and syntax.</p>
+        <div class="recommendation">
+            <strong>Resolution:</strong>
+            <ul>
+                <li>Replace <code>@import</code> with <code>@use</code> and <code>@forward</code></li>
+                <li>Update color functions to modern alternatives</li>
+                <li>Use CSS <code>calc()</code> for divisions</li>
+            </ul>
+        </div>
+    </article>
+
+    <article class="error-pattern">
+        <h3>HTTP Testing Issues</h3>
+        <p>Problems with HttpTestingController in Angular tests.</p>
+        <div class="recommendation">
+            <strong>Resolution:</strong>
+            <ul>
+                <li>Verify expectOne/expectMany usage</li>
+                <li>Check request matching criteria</li>
+                <li>Ensure proper test cleanup</li>
+            </ul>
+        </div>
+    </article>
+
+    <h2>Server Tests</h2>
+    
+    <article class="error-pattern">
+        <h3>MongoDB Connection Issues</h3>
+        <p>Database connection failures in tests.</p>
+        <div class="recommendation">
+            <strong>Resolution:</strong>
+            <ul>
+                <li>Verify MongoDB service is running</li>
+                <li>Check connection string format</li>
+                <li>Ensure proper environment variables</li>
+            </ul>
+        </div>
+    </article>
+
+    <h2>CI Environment</h2>
+    
+    <article class="error-pattern">
+        <h3>Husky Git Hooks</h3>
+        <p>Git hooks failing in CI environment.</p>
+        <div class="recommendation">
+            <strong>Resolution:</strong>
+            <ul>
+                <li>Run disable-husky-in-ci.js in prepare script</li>
+                <li>Add CI detection to .huskyrc</li>
+                <li>Skip hooks in CI environment</li>
+            </ul>
+        </div>
+    </article>
+
+    <script>
+        // Add tooltips and links to error patterns
+        document.querySelectorAll('.error-pattern').forEach(pattern => {
+            const title = pattern.querySelector('h3').textContent;
+            pattern.setAttribute('title', `Click for more details about "${title}"`);
+            pattern.style.cursor = 'pointer';
+            pattern.addEventListener('click', () => {
+                window.location.href = `#${title.toLowerCase().replace(/\s+/g, '-')}`;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -19,7 +19,12 @@ on:
       node-version:
         description: 'Specify Node.js version'
         required: false
-        default: '22.14.0'
+        default: '20.x'
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write  # For reporting lint status on PRs
 
 jobs:
   lint-angular-client:

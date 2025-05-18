@@ -1,0 +1,49 @@
+name: Documentation
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+      - '**/*.html'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+      - '**/*.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+env:
+  ARTIFACTS_RETENTION: 14
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install Dependencies
+        run: |
+          npm ci
+          
+      - name: Generate Documentation
+        run: |
+          node .github/scripts/generate-docs.js
+          
+      - name: Upload Documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: docs/
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}

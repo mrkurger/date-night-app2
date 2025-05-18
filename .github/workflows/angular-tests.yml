@@ -16,6 +16,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  checks: write       # For reporting test results
+  pull-requests: write # For updating PR with test results
+  issues: write      # For creating issues on test failures
+
 jobs:
   test:
     runs-on: ubuntu-latest

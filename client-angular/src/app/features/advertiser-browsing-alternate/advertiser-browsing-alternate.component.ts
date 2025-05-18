@@ -410,6 +410,39 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/advertiser-profile', advertiser.id]);
   }
 
+  // Add new methods for Tinder view interactions
+  onAdvertiserLike(advertiser: Advertiser): void {
+    // Toggle favorite status and handle like action
+    const index = this.displayedAdvertisers.findIndex((ad) => ad.id === advertiser.id);
+    if (index !== -1) {
+      this.displayedAdvertisers[index] = {
+        ...this.displayedAdvertisers[index],
+        isFavorite: true,
+      };
+      // TODO: Call favorite/like service to persist changes
+      // TODO: Show notification or feedback
+    }
+  }
+
+  onAdvertiserNope(advertiser: Advertiser): void {
+    // Handle nope/reject action
+    // TODO: Update user preferences or filtering based on rejection
+    // TODO: Show notification or feedback
+  }
+
+  onRefreshAdvertisers(): void {
+    // Reload advertisers list
+    this.isLoading = true;
+    // Simulate API call delay
+    setTimeout(() => {
+      // For now, just shuffle the existing list
+      this.displayedAdvertisers = [...this.allAdvertisers]
+        .sort(() => Math.random() - 0.5)
+        .filter((ad) => !ad.isPremium);
+      this.isLoading = false;
+    }, 1000);
+  }
+
   // TODO: Add loadMore for infinite scroll if implementing full NetflixView functionality
   // TODO: Implement actual API calls instead of mock data
   // TODO: Implement logic for selectedLocation and its impact on filtering

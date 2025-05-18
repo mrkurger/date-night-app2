@@ -239,7 +239,15 @@
               </app-alt-netflix-view>
             </div>
             <div *ngSwitchCase="'cards'">
-              <app-alt-tinder-view [advertisers]="displayedAdvertisers"></app-alt-tinder-view>
+              <app-alt-tinder-view
+                [advertisers]="displayedAdvertisers"
+                [loading]="isLoading"
+                (like)="onAdvertiserLike($event)"
+                (nope)="onAdvertiserNope($event)"
+                (info)="onAdvertiserProfile($event)"
+                (refresh)="onRefreshAdvertisers()"
+              >
+              </app-alt-tinder-view>
             </div>
             <!-- Other cases for map, nearby, featured will show their placeholder text from nb-tab -->
             <p *ngSwitchDefault class="placeholder-text">

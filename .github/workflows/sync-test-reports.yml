@@ -2,19 +2,27 @@ name: Sync Test Reports
 
 on:
   workflow_run:
-    workflows: ['Angular Tests', 'Server Tests']
+    workflows: 
+      - 'Angular Tests'
+      - 'Server Tests'
     types:
       - completed
+    branches:
+      - main
+      - develop
   workflow_dispatch: # Allow manual triggering
+
+permissions:
+  contents: write    # For committing test reports
+  actions: read      # For reading workflow artifacts
+  checks: write      # For updating check runs with test results
+  pull-requests: write # For commenting test results on PRs
 
 jobs:
   sync-reports:
     runs-on: ubuntu-latest
     env:
       CI: true
-    permissions:
-      contents: write
-      actions: read # Add permission to read actions/artifacts
 
     steps:
       - uses: actions/checkout@v4

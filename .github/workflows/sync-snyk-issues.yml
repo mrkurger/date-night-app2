@@ -10,12 +10,16 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write       # For committing sync results
+  security-events: write # For submitting security analysis
+  issues: write        # For creating/updating issues
+  pull-requests: write # For creating security fix PRs
+  actions: read       # For checking build status
+
 jobs:
   sync-snyk-issues:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      security-events: read
     timeout-minutes: 45 # Add timeout to prevent runaway jobs
 
     steps:

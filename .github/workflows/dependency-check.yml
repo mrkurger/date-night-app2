@@ -14,11 +14,16 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write     # For creating dependency update PRs
+  pull-requests: write # For creating and updating PRs
+  issues: write      # For creating dependency issues
+  security-events: write # For submitting dependency review results
+  actions: read      # For checking workflow status
+
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
       pull-requests: write
     timeout-minutes: 30 # Add timeout to prevent runaway jobs
     

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scripts Glossary</title>
+    <style>
+        body { font-family: system-ui; max-width: 800px; margin: 0 auto; padding: 2rem; }
+        dl { margin-bottom: 2rem; }
+        dt { font-weight: bold; color: #333; margin-top: 1rem; }
+        dd { margin-left: 1rem; margin-bottom: 1rem; }
+        .function-signature { font-family: monospace; background: #f5f5f5; padding: 0.2rem 0.4rem; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Scripts Glossary</h1>
+    
+    <dl>
+        <dt id="disableHuskyInCI"><span class="function-signature">disableHuskyInCI()</span></dt>
+        <dd>
+            Creates a .huskyrc file that prevents Husky git hooks from running in CI environments.
+            Located in <code>disable-husky-in-ci.js</code>.
+        </dd>
+
+        <dt id="ensureDocs"><span class="function-signature">ensureDocs(dirPath: string)</span></dt>
+        <dd>
+            Ensures required HTML documentation files (CHANGELOG.html, AILESSONS.html, GLOSSARY.html) exist in the specified directory.
+            Creates missing files with default templates. Located in <code>ensure-docs.js</code>.
+            <ul>
+                <li><strong>Parameters:</strong>
+                    <ul>
+                        <li>dirPath: string - Directory path to check/create docs</li>
+                    </ul>
+                </li>
+                <li><strong>Returns:</strong> Promise&lt;void&gt;</li>
+            </ul>
+        </dd>
+    </dl>
+</body>
+</html>
