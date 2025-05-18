@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Index - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Index</h1>
+
+      <h1>Documentation Index</h1>
+<p>This document serves as a central reference for all documentation in the Date Night App project. It provides a comprehensive list of all documentation files, organized by category, with descriptions and links.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#project-documentation">Project Documentation</a></li>
+<li><a href="#development-guides">Development Guides</a></li>
+<li><a href="#testing-documentation">Testing Documentation</a></li>
+<li><a href="#uiux-documentation">UI/UX Documentation</a></li>
+<li><a href="#customization-documentation">Customization Documentation</a></li>
+<li><a href="#emerald-component-documentation">Emerald Component Documentation</a></li>
+<li><a href="#lessons-learned">Lessons Learned</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#maintenance-documentation">Maintenance Documentation</a></li>
+</ul>
+<h2>Project Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>README.md</td>
+<td>Main project documentation</td>
+<td><a href="/README.md">/README.md</a></td>
+</tr>
+<tr>
+<td>ChangeLog.md</td>
+<td>History of changes to the project</td>
+<td><a href="/docs/ChangeLog.md">/docs/CHANGELOG.MD</a></td>
+</tr>
+<tr>
+<td>Requirements.md</td>
+<td>Project requirements and specifications</td>
+<td><a href="/docs/requirements.md">/docs/REQUIREMENTS.MD</a></td>
+</tr>
+<tr>
+<td>Task List</td>
+<td>Current tasks and their status</td>
+<td><a href="/docs/TASK_LIST.MD">/docs/TASK_LIST.MD</a></td>
+</tr>
+<tr>
+<td>Completion Plan 2024</td>
+<td>Plan for completing the project in 2024</td>
+<td><a href="/docs/COMPLETION_PLAN_2024.MD">/docs/COMPLETION_PLAN_2024.MD</a></td>
+</tr>
+<tr>
+<td>Migration Completion Plan</td>
+<td>Plan for completing the Angular migration</td>
+<td><a href="/docs/MIGRATION_COMPLETION_PLAN.MD">/docs/MIGRATION_COMPLETION_PLAN.MD</a></td>
+</tr>
+<tr>
+<td>Implementation Plan</td>
+<td>General implementation plan</td>
+<td><a href="/docs/IMPLEMENTATION_PLAN.MD">/docs/IMPLEMENTATION_PLAN.MD</a></td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>System architecture documentation</td>
+<td><a href="/docs/ARCHITECTURE.md">/docs/ARCHITECTURE.MD</a></td>
+</tr>
+<tr>
+<td>Deprecated Code</td>
+<td>List of deprecated code that should be avoided</td>
+<td><a href="/docs/DEPRECATED.md">/docs/DEPRECATED.MD</a></td>
+</tr>
+<tr>
+<td>Code Duplication</td>
+<td>List of code duplication that should be refactored</td>
+<td><a href="/docs/DUPLICATES.md">/docs/DUPLICATES.MD</a></td>
+</tr>
+<tr>
+<td>Documentation Improvements</td>
+<td>Summary of documentation improvements</td>
+<td><a href="/docs/DOCUMENTATION_IMPROVEMENTS.MD">/docs/DOCUMENTATION_IMPROVEMENTS.MD</a></td>
+</tr>
+<tr>
+<td>Codebase Analysis</td>
+<td>Analysis of the codebase</td>
+<td><a href="/docs/CODEBASE_ANALYSIS.MD">/docs/CODEBASE_ANALYSIS.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Development Guides</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Setup Guide</td>
+<td>Guide for setting up the development environment</td>
+<td><a href="/SETUP.md">/SETUP.MD</a></td>
+</tr>
+<tr>
+<td>Node.js Installation Guide</td>
+<td>Guide for installing Node.js</td>
+<td><a href="/nodejs-installation-guide.md">/NODEJS-INSTALLATION-GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Specific Version Installation Guide</td>
+<td>Guide for installing specific versions of Node.js</td>
+<td><a href="/specific-version-installation-guide.md">/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>MongoDB Troubleshooting</td>
+<td>Guide for troubleshooting MongoDB issues</td>
+<td><a href="/MONGODB_TROUBLESHOOTING.md">/MONGODB_TROUBLESHOOTING.MD</a></td>
+</tr>
+<tr>
+<td>Angular Build Optimization</td>
+<td>Guide for optimizing Angular builds</td>
+<td><a href="/docs/ANGULAR_BUILD_OPTIMIZATION.md">/docs/ANGULAR_BUILD_OPTIMIZATION.MD</a></td>
+</tr>
+<tr>
+<td>Angular Migration Guide</td>
+<td>Guide for migrating from AngularJS to Angular</td>
+<td><a href="/client-angular/MIGRATION_GUIDE.md">/client-angular/MIGRATION_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Angular README</td>
+<td>Documentation for the Angular client</td>
+<td><a href="/client-angular/README.md">/client-angular/README.md</a></td>
+</tr>
+<tr>
+<td>Angular Cleanup Instructions</td>
+<td>Instructions for cleaning up the Angular codebase</td>
+<td><a href="/client-angular/src/app/CLEANUP_INSTRUCTIONS.md">/client-angular/src/app/CLEANUP_INSTRUCTIONS.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Testing Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Testing Guide</td>
+<td>General testing strategy and guidelines</td>
+<td><a href="/docs/TESTING_GUIDE.md">/docs/TESTING_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Angular Testing Lessons</td>
+<td>Lessons learned from Angular testing</td>
+<td><a href="/docs/ANGULAR_TESTING_LESSONS.md">/docs/ANGULAR_TESTING_LESSONS.MD</a></td>
+</tr>
+<tr>
+<td>Unit Testing Lessons</td>
+<td>Lessons learned from unit testing</td>
+<td><a href="/docs/UnitTestLessons.md">/docs/UNITTESTLESSONS.MD</a></td>
+</tr>
+<tr>
+<td>Unit Testing Strategy</td>
+<td>Strategy for unit testing</td>
+<td><a href="/docs/UnitStrat.md">/docs/UNITSTRAT.MD</a></td>
+</tr>
+<tr>
+<td>Example Unit Strategy</td>
+<td>Example of a unit testing strategy</td>
+<td><a href="/docs/Example_UnitStrat.md">/docs/EXAMPLE_UNITSTRAT.MD</a></td>
+</tr>
+<tr>
+<td>Frontend Testing Review</td>
+<td>Review of frontend testing</td>
+<td><a href="/FRONTEND_TESTING_REVIEW.md">/FRONTEND_TESTING_REVIEW.MD</a></td>
+</tr>
+<tr>
+<td>Testing Improvements</td>
+<td>Improvements to testing</td>
+<td><a href="/TESTING_IMPROVEMENTS.md">/TESTING_IMPROVEMENTS.MD</a></td>
+</tr>
+<tr>
+<td>Angular Test Fixes</td>
+<td>Fixes for Angular tests</td>
+<td><a href="/client-angular/TEST_FIXES.md">/client-angular/TEST_FIXES.MD</a></td>
+</tr>
+<tr>
+<td>Server Tests README</td>
+<td>Documentation for server tests</td>
+<td><a href="/server/tests/README.md">/server/tests/README.md</a></td>
+</tr>
+</tbody></table>
+<h2>UI/UX Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UI/UX Roadmap</td>
+<td>Roadmap for UI/UX improvements</td>
+<td><a href="/docs/UI_UX_ROADMAP.MD">/docs/UI_UX_ROADMAP.MD</a></td>
+</tr>
+<tr>
+<td>UI/UX Implementation</td>
+<td>Implementation details for UI/UX</td>
+<td><a href="/docs/UI_UX_IMPLEMENTATION.MD">/docs/UI_UX_IMPLEMENTATION.MD</a></td>
+</tr>
+<tr>
+<td>UI/UX Improvement Summary</td>
+<td>Summary of UI/UX improvements</td>
+<td><a href="/docs/UI_UX_IMPROVEMENT_SUMMARY.MD">/docs/UI_UX_IMPROVEMENT_SUMMARY.MD</a></td>
+</tr>
+<tr>
+<td>UI/UX Completion Report</td>
+<td>Report on UI/UX completion</td>
+<td><a href="/docs/UI_UX_COMPLETION_REPORT.MD">/docs/UI_UX_COMPLETION_REPORT.MD</a></td>
+</tr>
+<tr>
+<td>UI Components Technical</td>
+<td>Technical details of UI components</td>
+<td><a href="/docs/UI_COMPONENTS_TECHNICAL.MD">/docs/UI_COMPONENTS_TECHNICAL.MD</a></td>
+</tr>
+<tr>
+<td>Styling Guide</td>
+<td>Guide for styling components</td>
+<td><a href="/docs/STYLING_GUIDE.MD">/docs/STYLING_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Design System Usage</td>
+<td>Core design system documentation</td>
+<td><a href="/docs/DESIGN_SYSTEM_USAGE_GUIDE.MD">/docs/DESIGN_SYSTEM_USAGE_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Components</td>
+<td>UI component library documentation</td>
+<td><a href="/docs/EMERALD_COMPONENTS.MD">/docs/EMERALD_COMPONENTS.MD</a></td>
+</tr>
+<tr>
+<td>Theming Guide</td>
+<td>Guide for theming the application</td>
+<td><a href="/docs/THEMING_GUIDE.MD">/docs/THEMING_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>UI/UX Completion README</td>
+<td>README for UI/UX completion</td>
+<td><a href="/UI-UX-COMPLETION-README.md">/UI-UX-COMPLETION-README.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Customization Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Customization Guide</td>
+<td>Guide for using the customization system</td>
+<td><a href="/docs/CUSTOMIZATION_GUIDE.md">/docs/CUSTOMIZATION_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Configuration Index</td>
+<td>Index of all customizable settings</td>
+<td><a href="/docs/CONFIG_INDEX.md">/docs/CONFIG_INDEX.MD</a></td>
+</tr>
+<tr>
+<td>CSP Configuration</td>
+<td>Guide for configuring Content Security Policy</td>
+<td><a href="/docs/CSP_CONFIGURATION.MD">/docs/CSP_CONFIGURATION.MD</a></td>
+</tr>
+<tr>
+<td>Location Data</td>
+<td>Documentation for location data</td>
+<td><a href="/docs/LOCATION_DATA.MD">/docs/LOCATION_DATA.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Emerald Component Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Emerald Components</td>
+<td>Documentation for Emerald UI components</td>
+<td><a href="/docs/EMERALD_COMPONENTS.MD">/docs/EMERALD_COMPONENTS.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Components Changelog</td>
+<td>Changelog for Emerald components</td>
+<td><a href="/docs/EMERALD_COMPONENTS_CHANGELOG.MD">/docs/EMERALD_COMPONENTS_CHANGELOG.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Implementation Plan</td>
+<td>Plan for implementing Emerald components</td>
+<td><a href="/docs/EMERALD_IMPLEMENTATION_PLAN.MD">/docs/EMERALD_IMPLEMENTATION_PLAN.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Implementation Report</td>
+<td>Report on Emerald implementation</td>
+<td><a href="/docs/EMERALD_IMPLEMENTATION_REPORT.MD">/docs/EMERALD_IMPLEMENTATION_REPORT.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Implementation Summary</td>
+<td>Summary of Emerald implementation</td>
+<td><a href="/docs/EMERALD_IMPLEMENTATION_SUMMARY.MD">/docs/EMERALD_IMPLEMENTATION_SUMMARY.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Testing Guide</td>
+<td>Guide for testing Emerald components</td>
+<td><a href="/docs/EMERALD_TESTING_GUIDE.MD">/docs/EMERALD_TESTING_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Emerald Components README</td>
+<td>README for Emerald components</td>
+<td><a href="/client-angular/src/app/shared/emerald/README.md">/client-angular/src/app/shared/emerald/README.md</a></td>
+</tr>
+<tr>
+<td>Emerald Components List</td>
+<td>List of Emerald components</td>
+<td><a href="/client-angular/src/app/shared/emerald/COMPONENTS.md">/client-angular/src/app/shared/emerald/COMPONENTS.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Lessons Learned</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AI Lessons</td>
+<td>Lessons learned by the AI while working on the project</td>
+<td><a href="/docs/AILessons.md">/docs/AILESSONS.MD</a></td>
+</tr>
+<tr>
+<td>Unit Testing Lessons</td>
+<td>Comprehensive lessons learned from unit testing</td>
+<td><a href="/docs/UnitTestingLessons.md">/docs/UNITTESTINGLESSONS.MD</a></td>
+</tr>
+</tbody></table>
+<h2>API Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Travel Module</td>
+<td>Documentation for the travel module API</td>
+<td><a href="/server/docs/TRAVEL_MODULE.MD">/server/docs/TRAVEL_MODULE.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Security Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>End-to-End Encryption</td>
+<td>Implementation details of the E2EE chat system</td>
+<td><a href="/docs/END_TO_END_ENCRYPTION.md">/docs/END_TO_END_ENCRYPTION.MD</a></td>
+</tr>
+<tr>
+<td>Security Best Practices</td>
+<td>Security best practices for the application</td>
+<td><a href="/docs/SECURITY_BEST_PRACTICES.md">/docs/SECURITY_BEST_PRACTICES.MD</a></td>
+</tr>
+<tr>
+<td>Authentication Flow</td>
+<td>Details of the authentication system</td>
+<td><a href="/docs/AUTHENTICATION_FLOW.md">/docs/AUTHENTICATION_FLOW.MD</a></td>
+</tr>
+<tr>
+<td>Data Protection</td>
+<td>How user data is protected in the application</td>
+<td><a href="/docs/DATA_PROTECTION.md">/docs/DATA_PROTECTION.MD</a></td>
+</tr>
+<tr>
+<td>Snyk Workflow</td>
+<td>Documentation for the Snyk security scanning workflow</td>
+<td><a href="/docs/SNYK_WORKFLOW.md">/docs/SNYK_WORKFLOW.MD</a></td>
+</tr>
+<tr>
+<td>Snyk Token Setup</td>
+<td>Guide for setting up Snyk API token</td>
+<td><a href="/docs/SNYK_TOKEN_SETUP.md">/docs/SNYK_TOKEN_SETUP.MD</a></td>
+</tr>
+<tr>
+<td>Security Remediation Guide</td>
+<td>Guide for fixing security vulnerabilities</td>
+<td><a href="/docs/SECURITY_REMEDIATION_GUIDE.md">/docs/SECURITY_REMEDIATION_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Snyk Reports README</td>
+<td>Overview of Snyk security reports</td>
+<td><a href="/docs/snyk-reports/README.md">/docs/snyk-reports/README.md</a></td>
+</tr>
+</tbody></table>
+<h2>Maintenance Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Documentation Index</td>
+<td>This document</td>
+<td><a href="/docs/DOCUMENTATION_INDEX.md">/docs/DOCUMENTATION_INDEX.MD</a></td>
+</tr>
+<tr>
+<td>Snyk Workflow</td>
+<td>Documentation for the Snyk security workflow</td>
+<td><a href="/docs/SNYK_WORKFLOW.md">/docs/SNYK_WORKFLOW.MD</a></td>
+</tr>
+<tr>
+<td>GitHub Insights Workflow</td>
+<td>Documentation for the GitHub Insights workflow</td>
+<td><a href="/docs/GITHUB_INSIGHTS_WORKFLOW.md">/docs/GITHUB_INSIGHTS_WORKFLOW.MD</a></td>
+</tr>
+<tr>
+<td>Security Alerts Workflow</td>
+<td>Documentation for the Security Alerts workflow</td>
+<td><a href="/docs/SECURITY_ALERTS_WORKFLOW.md">/docs/SECURITY_ALERTS_WORKFLOW.MD</a></td>
+</tr>
+<tr>
+<td>Workflow Error Monitoring</td>
+<td>Documentation for workflow error monitoring</td>
+<td><a href="/docs/WORKFLOW_ERROR_MONITORING.md">/docs/WORKFLOW_ERROR_MONITORING.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Feature Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADS</td>
+<td>Documentation for the advertisement feature</td>
+<td><a href="/docs/features/ADS.MD">/docs/features/ADS.MD</a></td>
+</tr>
+<tr>
+<td>AUTH</td>
+<td>Documentation for the authentication feature</td>
+<td><a href="/docs/features/AUTH.MD">/docs/features/AUTH.MD</a></td>
+</tr>
+<tr>
+<td>CHAT</td>
+<td>Documentation for the chat feature</td>
+<td><a href="/docs/features/CHAT.MD">/docs/features/CHAT.MD</a></td>
+</tr>
+<tr>
+<td>FAVORITES</td>
+<td>Documentation for the favorites feature</td>
+<td><a href="/docs/features/FAVORITES.MD">/docs/features/FAVORITES.MD</a></td>
+</tr>
+<tr>
+<td>PROFILE</td>
+<td>Documentation for the user profile feature</td>
+<td><a href="/docs/features/PROFILE.MD">/docs/features/PROFILE.MD</a></td>
+</tr>
+<tr>
+<td>REVIEWS</td>
+<td>Documentation for the reviews feature</td>
+<td><a href="/docs/features/REVIEWS.MD">/docs/features/REVIEWS.MD</a></td>
+</tr>
+<tr>
+<td>TOURING</td>
+<td>Documentation for the travel itinerary feature</td>
+<td><a href="/docs/features/TOURING.MD">/docs/features/TOURING.MD</a></td>
+</tr>
+<tr>
+<td>USER PREFS</td>
+<td>Documentation for the user preferences feature</td>
+<td><a href="/docs/features/USER_PREFS.MD">/docs/features/USER_PREFS.MD</a></td>
+</tr>
+<tr>
+<td>WALLET</td>
+<td>Documentation for the wallet feature</td>
+<td><a href="/docs/features/WALLET.MD">/docs/features/WALLET.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Implementation Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Implementation Summary</td>
+<td>Summary of implemented features</td>
+<td><a href="/docs/IMPLEMENTATION_SUMMARY.MD">/docs/IMPLEMENTATION_SUMMARY.MD</a></td>
+</tr>
+<tr>
+<td>Dependency Management</td>
+<td>Documentation for dependency management</td>
+<td><a href="/docs/DEPENDENCY_MANAGEMENT.MD">/docs/DEPENDENCY_MANAGEMENT.MD</a></td>
+</tr>
+<tr>
+<td>CI/CD Guide</td>
+<td>Guide for CI/CD pipelines</td>
+<td><a href="/docs/CI_CD_GUIDE.MD">/docs/CI_CD_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Theming Guide</td>
+<td>Guide for theming the application</td>
+<td><a href="/docs/THEMING_GUIDE.MD">/docs/THEMING_GUIDE.MD</a></td>
+</tr>
+<tr>
+<td>Error Handling &amp; Telemetry</td>
+<td>Documentation for error handling and telemetry</td>
+<td><a href="/docs/ERRORHANDLINGTELEMETRY.MD">/docs/ERRORHANDLINGTELEMETRY.MD</a></td>
+</tr>
+<tr>
+<td>Component Library</td>
+<td>Documentation for the component library</td>
+<td><a href="/docs/COMPONENT_LIBRARY.MD">/docs/COMPONENT_LIBRARY.MD</a></td>
+</tr>
+<tr>
+<td>API Documentation</td>
+<td>Documentation for the API</td>
+<td><a href="/docs/API_DOCUMENTATION.MD">/docs/API_DOCUMENTATION.MD</a></td>
+</tr>
+<tr>
+<td>Database Schema</td>
+<td>Documentation for the database schema</td>
+<td><a href="/docs/DATABASE_SCHEMA_DETAIL.MD">/docs/DATABASE_SCHEMA_DETAIL.MD</a></td>
+</tr>
+<tr>
+<td>Deployment Guide</td>
+<td>Guide for deploying the application</td>
+<td><a href="/docs/DEPLOYMENT.MD">/docs/DEPLOYMENT.MD</a></td>
+</tr>
+</tbody></table>
+<h2>Decentralized Documentation</h2>
+<p>The Date Night App uses a decentralized documentation approach where each component has its own documentation files stored alongside the code. These files are then aggregated into a central HTML documentation system.</p>
+<h3>Component Documentation Files</h3>
+<p>Each component directory contains:</p>
+<ul>
+<li><strong>CHANGELOG.md</strong> - History of changes to the component</li>
+<li><strong>AILESSONS.md</strong> - Lessons learned and best practices for the component</li>
+</ul>
+<h3>HTML Documentation</h3>
+<p>The component documentation is aggregated into a central HTML documentation system located in <code>/docs/html-docs/</code>. This documentation is organized by component type:</p>
+<ul>
+<li><code>/docs/html-docs/server/</code> - Server components</li>
+<li><code>/docs/html-docs/client/</code> - Client components</li>
+<li><code>/docs/html-docs/features/</code> - Features</li>
+<li><code>/docs/html-docs/components/</code> - UI components</li>
+<li><code>/docs/html-docs/services/</code> - Services</li>
+<li><code>/docs/html-docs/models/</code> - Data models</li>
+<li><code>/docs/html-docs/design/</code> - Design system</li>
+</ul>
+<p>For more information, see <a href="/docs/DECENTRALIZED_DOCUMENTATION_GUIDE.MD">DECENTRALIZED_DOCUMENTATION_GUIDE.MD</a>.</p>
+<h2>Documentation Standards</h2>
+<p>When creating or updating documentation, follow these standards:</p>
+<ol>
+<li><p><strong>File Naming</strong>: Use consistent file naming conventions</p>
+<ul>
+<li>Use <code>.md</code> extension for all documentation files</li>
+<li>Use UPPERCASE with underscores for all documentation files (e.g., README.MD, SETUP.MD, UI_UX_ROADMAP.MD)</li>
+<li>For component documentation files, use CHANGELOG.md and AILESSONS.md</li>
+<li>This ensures consistency and makes documentation files easily identifiable</li>
+</ul>
+</li>
+<li><p><strong>Structure</strong>: Include the following sections in all documentation files</p>
+<ul>
+<li>Title (H1)</li>
+<li>Brief description</li>
+<li>Table of Contents</li>
+<li>Main content with proper headings (H2, H3, etc.)</li>
+<li>Conclusion or summary (if applicable)</li>
+</ul>
+</li>
+<li><p><strong>Formatting</strong>: Use consistent formatting</p>
+<ul>
+<li>Use Markdown formatting for all documentation</li>
+<li>Use tables for structured data</li>
+<li>Use code blocks for code examples</li>
+<li>Use lists for sequential steps or related items</li>
+<li>Use blockquotes for important notes or warnings</li>
+</ul>
+</li>
+<li><p><strong>Links</strong>: Use relative links to other documentation files</p>
+<ul>
+<li>Use relative links to files in the same directory (e.g., <code>[link](EXAMPLE.MD)</code>)</li>
+<li>Use absolute links to files in different directories (e.g., <code>[link](/docs/EXAMPLE.MD)</code>)</li>
+</ul>
+</li>
+<li><p><strong>Images</strong>: Use images to illustrate complex concepts</p>
+<ul>
+<li>Store images in the <code>/docs/images</code> directory</li>
+<li>Use descriptive file names for images</li>
+<li>Include alt text for all images</li>
+</ul>
+</li>
+<li><p><strong>Updates</strong>: Keep documentation up to date</p>
+<ul>
+<li>Update documentation when code changes</li>
+<li>Add new documentation for new features</li>
+<li>Remove documentation for removed features</li>
+<li>Update the Documentation Index when adding or removing documentation files</li>
+<li>For component documentation, update the CHANGELOG.md and AILESSONS.md files</li>
+</ul>
+</li>
+</ol>
+<h2>Documentation Maintenance</h2>
+<p>To maintain the documentation:</p>
+<ol>
+<li><p><strong>Regular Reviews</strong>: Review documentation regularly to ensure it&#39;s up to date</p>
+</li>
+<li><p><strong>Documentation Testing</strong>: Test documentation links to ensure they&#39;re valid</p>
+</li>
+<li><p><strong>User Feedback</strong>: Collect and incorporate user feedback on documentation</p>
+</li>
+<li><p><strong>Documentation Metrics</strong>: Track documentation usage and identify areas for improvement</p>
+</li>
+<li><p><strong>HTML Documentation Updates</strong>: Run the update script after changing component documentation:</p>
+<pre><code class="language-bash">node scripts/update_html_docs.mjs
+</code></pre>
+</li>
+<li><p><strong>Component Documentation</strong>: Ensure all components have up-to-date CHANGELOG.md and AILESSONS.md files</p>
+</li>
+</ol>
+<h2>Contributing to Documentation</h2>
+<p>When contributing to documentation:</p>
+<ol>
+<li><strong>Follow Standards</strong>: Follow the documentation standards outlined above</li>
+<li><strong>Be Clear and Concise</strong>: Write clear, concise documentation that&#39;s easy to understand</li>
+<li><strong>Include Examples</strong>: Include examples to illustrate concepts</li>
+<li><strong>Update Related Documents</strong>: Update related documents when making changes</li>
+<li><strong>Update the Documentation Index</strong>: Update this document when adding or removing documentation files</li>
+<li><strong>Component Documentation</strong>: When working on a component:<ul>
+<li>Update the CHANGELOG.md file with changes made</li>
+<li>Add lessons learned to the AILESSONS.md file</li>
+<li>Run the HTML documentation update script after making changes</li>
+</ul>
+</li>
+<li><strong>New Components</strong>: For new components:<ul>
+<li>Run the decentralized documentation script to create template files</li>
+<li>Update the template files with component-specific information</li>
+<li>Run the HTML documentation update script to include the new component</li>
+</ul>
+</li>
+</ol>
+<p>For more information on the decentralized documentation approach, see <a href="/docs/DECENTRALIZED_DOCUMENTATION_GUIDE.MD">DECENTRALIZED_DOCUMENTATION_GUIDE.MD</a>.</p>
+<h2>Document History</h2>
+<ul>
+<li><strong>2025-05-02</strong>: Added decentralized documentation approach with component-specific files</li>
+<li><strong>2025-05-01</strong>: Implemented HTML-based documentation structure</li>
+<li><strong>2025-04-15</strong>: Added new sections for Feature Documentation and Implementation Documentation</li>
+<li><strong>2025-03-10</strong>: Initial version of the documentation index</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Restructuring Plan - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Restructuring Plan</h1>
+
+      <h1>Documentation Restructuring Plan</h1>
+<h2>Overview</h2>
+<p>This document outlines the plan for restructuring the documentation in the Date Night App repository to follow the HTML-based approach used in the <code>docs/component-library/</code> directory. The goal is to create a cohesive, maintainable documentation system that can be viewed directly on GitHub and as a website hosted in the repository.</p>
+<h2>Current State</h2>
+<p>The current documentation structure has several issues:</p>
+<ol>
+<li><strong>Inconsistent formats</strong>: Documentation exists in various formats and locations</li>
+<li><strong>Large files</strong>: Some documentation files like AILESSONS.MD and CHANGELOG.MD are too large</li>
+<li><strong>Scattered information</strong>: Related documentation is spread across different files and directories</li>
+<li><strong>Limited navigation</strong>: No easy way to navigate between related documentation</li>
+<li><strong>No central index</strong>: No single entry point for all documentation</li>
+</ol>
+<h2>Target State</h2>
+<p>The target documentation structure will:</p>
+<ol>
+<li><strong>Use HTML for all documentation</strong>: Follow the approach used in <code>docs/component-library/</code></li>
+<li><strong>Split large files</strong>: Break down large files into smaller, more focused files</li>
+<li><strong>Organize by feature/component</strong>: Group documentation by the feature or component it describes</li>
+<li><strong>Create a central index</strong>: Provide a single entry point for all documentation</li>
+<li><strong>Support GitHub and web viewing</strong>: Ensure documentation is accessible both on GitHub and as a website</li>
+</ol>
+<h2>Implementation Plan</h2>
+<h3>Phase 1: Setup Documentation Framework</h3>
+<ol>
+<li><p><strong>Create directory structure</strong>:</p>
+<ul>
+<li><code>/docs/html-docs/</code> - Root directory for HTML documentation</li>
+<li><code>/docs/html-docs/templates/</code> - HTML templates and CSS</li>
+<li><code>/docs/html-docs/components/</code> - Component documentation</li>
+<li><code>/docs/html-docs/server/</code> - Server documentation</li>
+<li><code>/docs/html-docs/features/</code> - Feature documentation</li>
+<li><code>/docs/html-docs/guides/</code> - Development and usage guides</li>
+<li><code>/docs/html-docs/api/</code> - API documentation</li>
+<li><code>/docs/html-docs/lessons/</code> - Split from AILESSONS.MD</li>
+<li><code>/docs/html-docs/changelog/</code> - Split from CHANGELOG.MD</li>
+</ul>
+</li>
+<li><p><strong>Create template files</strong>:</p>
+<ul>
+<li><code>index.html</code> - Template for index pages</li>
+<li><code>page.html</code> - Template for content pages</li>
+<li><code>styles.css</code> - Shared styles for all pages</li>
+</ul>
+</li>
+<li><p><strong>Create main index file</strong>:</p>
+<ul>
+<li><code>/docs/html-docs/index.html</code> - Main entry point for documentation</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 2: Split Large Documentation Files</h3>
+<ol>
+<li><p><strong>Split AILESSONS.MD</strong>:</p>
+<ul>
+<li>Create an index file at <code>/docs/html-docs/lessons/index.html</code></li>
+<li>Split each section into a separate file in <code>/docs/html-docs/lessons/</code></li>
+</ul>
+</li>
+<li><p><strong>Split CHANGELOG.MD</strong>:</p>
+<ul>
+<li>Create an index file at <code>/docs/html-docs/changelog/index.html</code></li>
+<li>Split by version/date into separate files in <code>/docs/html-docs/changelog/</code></li>
+</ul>
+</li>
+</ol>
+<h3>Phase 3: Migrate Existing Documentation</h3>
+<ol>
+<li><p><strong>Migrate component documentation</strong>:</p>
+<ul>
+<li>Copy and adapt the structure from <code>docs/component-library/</code></li>
+<li>Ensure all component documentation is in HTML format</li>
+</ul>
+</li>
+<li><p><strong>Migrate server documentation</strong>:</p>
+<ul>
+<li>Convert server documentation to HTML format</li>
+<li>Organize by module/feature</li>
+</ul>
+</li>
+<li><p><strong>Migrate feature documentation</strong>:</p>
+<ul>
+<li>Convert feature documentation to HTML format</li>
+<li>Ensure each feature has its own directory with relevant documentation</li>
+</ul>
+</li>
+<li><p><strong>Migrate guides and tutorials</strong>:</p>
+<ul>
+<li>Convert development and usage guides to HTML format</li>
+<li>Organize by topic</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 4: Create Cross-References and Navigation</h3>
+<ol>
+<li><p><strong>Update all internal links</strong>:</p>
+<ul>
+<li>Ensure all links between documentation files are updated to point to the new structure</li>
+</ul>
+</li>
+<li><p><strong>Create navigation menus</strong>:</p>
+<ul>
+<li>Add consistent navigation to all documentation pages</li>
+<li>Include breadcrumbs for easy navigation</li>
+</ul>
+</li>
+<li><p><strong>Add search functionality</strong>:</p>
+<ul>
+<li>Implement simple search functionality for the documentation</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 5: Documentation Maintenance</h3>
+<ol>
+<li><p><strong>Create documentation update guidelines</strong>:</p>
+<ul>
+<li>Document how to update and maintain the new documentation structure</li>
+</ul>
+</li>
+<li><p><strong>Update build process</strong>:</p>
+<ul>
+<li>Ensure documentation is built and validated as part of the CI/CD process</li>
+</ul>
+</li>
+<li><p><strong>Create documentation testing</strong>:</p>
+<ul>
+<li>Implement tests to validate documentation links and structure</li>
+</ul>
+</li>
+</ol>
+<h2>Implementation Details</h2>
+<h3>Directory Structure</h3>
+<p>The new documentation structure will be organized as follows:</p>
+<pre><code>/docs/html-docs/
+├── index.html                  # Main documentation index
+├── templates/                  # Shared templates and styles
+│   ├── index.html             # Template for index pages
+│   ├── page.html              # Template for content pages
+│   └── styles.css             # Shared styles
+├── components/                 # Component documentation
+│   ├── index.html             # Components index
+│   ├── ui/                    # UI components
+│   ├── forms/                 # Form components
+│   └── ...
+├── server/                     # Server documentation
+│   ├── index.html             # Server index
+│   ├── api/                   # API endpoints
+│   ├── models/                # Data models
+│   └── ...
+├── features/                   # Feature documentation
+│   ├── index.html             # Features index
+│   ├── auth/                  # Authentication feature
+│   ├── chat/                  # Chat feature
+│   └── ...
+├── guides/                     # Development and usage guides
+│   ├── index.html             # Guides index
+│   ├── setup.html             # Setup guide
+│   ├── contributing.html      # Contributing guide
+│   └── ...
+├── api/                        # API documentation
+│   ├── index.html             # API index
+│   ├── endpoints.html         # API endpoints
+│   └── ...
+├── lessons/                    # Lessons learned (from AILESSONS.MD)
+│   ├── index.html             # Lessons index
+│   ├── error-handling.html    # Error handling lessons
+│   ├── testing.html           # Testing lessons
+│   └── ...
+└── changelog/                  # Changelog (from CHANGELOG.MD)
+    ├── index.html             # Changelog index
+    ├── 2025-04.html           # April 2025 changes
+    ├── 2025-03.html           # March 2025 changes
+    └── ...
+</code></pre>
+<h3>HTML Templates</h3>
+<p>The HTML templates will provide a consistent structure for all documentation pages:</p>
+<ol>
+<li><strong>Header</strong>: Common header with navigation</li>
+<li><strong>Sidebar</strong>: Context-specific navigation</li>
+<li><strong>Content</strong>: Main documentation content</li>
+<li><strong>Footer</strong>: Common footer with links and copyright</li>
+</ol>
+<h3>Documentation Content</h3>
+<p>Each documentation file will follow a consistent structure:</p>
+<ol>
+<li><strong>Title</strong>: Clear, descriptive title</li>
+<li><strong>Description</strong>: Brief description of the content</li>
+<li><strong>Table of Contents</strong>: For longer pages</li>
+<li><strong>Main Content</strong>: Organized with clear headings</li>
+<li><strong>Related Links</strong>: Links to related documentation</li>
+<li><strong>Last Updated</strong>: Date of last update</li>
+</ol>
+<h2>Migration Strategy</h2>
+<p>The migration will be performed in stages:</p>
+<ol>
+<li><strong>Create the new structure</strong>: Set up the directory structure and templates</li>
+<li><strong>Migrate high-priority documentation</strong>: Start with the most frequently used documentation</li>
+<li><strong>Migrate remaining documentation</strong>: Convert all remaining documentation</li>
+<li><strong>Update references</strong>: Update all references to documentation</li>
+<li><strong>Deprecate old documentation</strong>: Mark old documentation as deprecated</li>
+</ol>
+<h2>Tools and Scripts</h2>
+<p>To facilitate the migration, we&#39;ll create the following scripts:</p>
+<ol>
+<li><strong>restructure_documentation.mjs</strong>: Main script to set up the new structure</li>
+<li><strong>split_markdown.mjs</strong>: Script to split large markdown files</li>
+<li><strong>convert_to_html.mjs</strong>: Script to convert markdown to HTML</li>
+<li><strong>update_links.mjs</strong>: Script to update internal links</li>
+<li><strong>validate_docs.mjs</strong>: Script to validate the documentation structure</li>
+</ol>
+<h2>Timeline</h2>
+<p>The documentation restructuring will be completed in the following timeline:</p>
+<ol>
+<li><strong>Phase 1</strong>: 1 week</li>
+<li><strong>Phase 2</strong>: 1 week</li>
+<li><strong>Phase 3</strong>: 2 weeks</li>
+<li><strong>Phase 4</strong>: 1 week</li>
+<li><strong>Phase 5</strong>: 1 week</li>
+</ol>
+<p>Total estimated time: 6 weeks</p>
+<h2>Success Criteria</h2>
+<p>The documentation restructuring will be considered successful when:</p>
+<ol>
+<li>All documentation is available in HTML format</li>
+<li>Large documentation files are split into smaller, focused files</li>
+<li>Documentation is organized by feature/component</li>
+<li>A central index provides access to all documentation</li>
+<li>Documentation is accessible both on GitHub and as a website</li>
+<li>All internal links are updated to point to the new structure</li>
+<li>Documentation is maintained as part of the development process</li>
+</ol>
+<h2>Conclusion</h2>
+<p>This documentation restructuring plan provides a comprehensive approach to improving the documentation in the Date Night App repository. By following the HTML-based approach used in the <code>docs/component-library/</code> directory, we&#39;ll create a cohesive, maintainable documentation system that enhances the developer experience and ensures documentation remains up-to-date.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

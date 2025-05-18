@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Improvement Checklist - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Improvement Checklist</h1>
+
+      <h1>Documentation Improvement Checklist</h1>
+<p>This checklist is based on the detailed plans in <code>docs/DOCS_IMPROVEMENT_PLAN.MD</code> and <code>docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD</code> and ensures every aspect of the documentation improvement plan is tracked and completed.</p>
+<h2>Phase 1: Foundational Content &amp; Accuracy</h2>
+<h3>README Files Enhancement</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>Root README.md</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Add comprehensive project overview</li>
+<li><input checked="" disabled="" type="checkbox"> Update tech stack information (Angular ~19, Node ~22)</li>
+<li><input checked="" disabled="" type="checkbox"> Add links to key docs using UPPERCASE.md format</li>
+<li><input checked="" disabled="" type="checkbox"> Include basic setup/run commands</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>client-angular/README.md</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Add detailed setup, build, testing, running instructions</li>
+<li><input checked="" disabled="" type="checkbox"> Include environment variable requirements</li>
+<li><input checked="" disabled="" type="checkbox"> Add link/instructions for Component Library once implemented</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>server/README.md</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Add detailed setup, build, testing, running instructions</li>
+<li><input checked="" disabled="" type="checkbox"> Include environment variable requirements</li>
+<li><input checked="" disabled="" type="checkbox"> Add link/instructions for API Documentation once implemented</li>
+</ul>
+</li>
+</ul>
+<h3>Core Guide Content Verification &amp; Updates</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ARCHITECTURE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/SETUP.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Create file if missing</li>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/NODEJS-INSTALLATION-GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/MONGODB_TROUBLESHOOTING.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ANGULAR_BUILD_OPTIMIZATION.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/CODE_FORMATTING.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update to reflect current project state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>AILESSONS.MD Curation</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/AILESSONS.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Identify stable, important patterns sections</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure these sections have concise summaries with links to canonical docs</li>
+<li><input checked="" disabled="" type="checkbox"> Identify obsolete sections and mark clearly or move to appendix/outdated</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Configuration Index Regeneration</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/CONFIG_INDEX.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Created and ran <code>node scripts/update-config-index.js</code></li>
+<li><input checked="" disabled="" type="checkbox"> Verified correct update</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/CUSTOMIZATION_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Verify process description accuracy</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Meta-Doc Content Updates</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/DEPRECATED.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review timelines</li>
+<li><input checked="" disabled="" type="checkbox"> Verify &quot;Deprecated Dependencies&quot; section was NOT removed (it&#39;s still needed)</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/DUPLICATES.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update &quot;Status&quot; column for each duplication</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/DOCUMENTATION_STYLE_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Add rule about using UPPERCASE.md filenames</li>
+<li><input checked="" disabled="" type="checkbox"> Review other guidelines for consistency</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h2>Phase 2: Consolidation &amp; Core Content Creation</h2>
+<h3>Content Consolidation</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/DEPENDENCY_MANAGEMENT.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Merge and synthesize appended content</li>
+<li><input checked="" disabled="" type="checkbox"> Restructure logically</li>
+<li><input checked="" disabled="" type="checkbox"> Remove redundancies</li>
+<li><input checked="" disabled="" type="checkbox"> Add appropriate headings</li>
+<li><input checked="" disabled="" type="checkbox"> Remove raw appended content and TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/CI_CD_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Merge and synthesize appended content</li>
+<li><input checked="" disabled="" type="checkbox"> Restructure logically</li>
+<li><input checked="" disabled="" type="checkbox"> Remove redundancies</li>
+<li><input checked="" disabled="" type="checkbox"> Add appropriate headings</li>
+<li><input checked="" disabled="" type="checkbox"> Remove raw appended content and TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/THEMING_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Merge and synthesize appended content</li>
+<li><input checked="" disabled="" type="checkbox"> Restructure logically</li>
+<li><input checked="" disabled="" type="checkbox"> Remove redundancies</li>
+<li><input checked="" disabled="" type="checkbox"> Add appropriate headings</li>
+<li><input checked="" disabled="" type="checkbox"> Remove raw appended content and TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Specific Topic Content Merging</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ERRORHANDLINGTELEMETRY.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Integrate key information from deleted source files</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/TESTING_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Integrate key information from deleted source files</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ANGULAR_TESTING_LESSONS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Integrate key information from deleted source files</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/SECURITY_BEST_PRACTICES.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Integrate key information from deleted source files</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>ARCHITECTURE.MD Core Content</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/ARCHITECTURE.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Detail high-level structure (client-server)</li>
+<li><input checked="" disabled="" type="checkbox"> Document key technologies, core libraries, main data flows</li>
+<li><input checked="" disabled="" type="checkbox"> Document authentication mechanism and key design patterns</li>
+<li><input checked="" disabled="" type="checkbox"> Verify/update/create architecture diagrams</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure link to DATABASE_SCHEMA_DETAIL.MD is present</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>API Documentation Implementation</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>Server Project</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Integrate Swagger/OpenAPI tools</li>
+<li><input checked="" disabled="" type="checkbox"> Annotate Express routes, controllers, and models (started with ad.routes.js)</li>
+<li><input checked="" disabled="" type="checkbox"> Configure swagger-ui-express to serve interactive docs</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/API_DOCUMENTATION.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Replace placeholder with link to live docs or embed specification</li>
+<li><input checked="" disabled="" type="checkbox"> Update server/README.md with access instructions</li>
+</ul>
+</li>
+</ul>
+<h3>Component Library Implementation</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>Client-Angular Project</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Set up Storybook or Compodoc</li>
+<li><input checked="" disabled="" type="checkbox"> Create documentation for shared/Emerald UI components</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/COMPONENT_LIBRARY.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Replace placeholder with link to running Storybook/Compodoc</li>
+<li><input checked="" disabled="" type="checkbox"> Update client-angular/README.md with instructions</li>
+</ul>
+</li>
+</ul>
+<h3>Database Schema Documentation</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/DATABASE_SCHEMA_DETAIL.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Generate schema documentation from Mongoose models</li>
+<li><input checked="" disabled="" type="checkbox"> Replace placeholder with generated documentation</li>
+</ul>
+</li>
+</ul>
+<h2>Phase 3: Refinement, Feature Docs &amp; Developer Experience</h2>
+<h3>Conciseness Edits</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/AILESSONS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Apply conciseness strategy</li>
+<li><input checked="" disabled="" type="checkbox"> Remove redundancy, trim intros/conclusions</li>
+<li><input checked="" disabled="" type="checkbox"> Use lists/tables, active voice, remove filler words</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ERRORHANDLINGTELEMETRY.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Apply conciseness strategy</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/ANGULAR_TESTING_LESSONS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Apply conciseness strategy</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/CUSTOMIZATION_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Apply conciseness strategy</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/EMERALD_COMPONENTS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Apply conciseness strategy</li>
+</ul>
+</li>
+</ul>
+<h3>Feature Documentation</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/ADS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/AUTH.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/CHAT.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/FAVORITES.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/PROFILE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/REVIEWS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/TEMPORARY_MESSAGES.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/TOURING.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/USER_PREFS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/features/WALLET.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Document client-side components, services, state management</li>
+<li><input checked="" disabled="" type="checkbox"> Document server-side API endpoints, controllers, services, models</li>
+<li><input checked="" disabled="" type="checkbox"> Explain data flow and key logic</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Implementation Summary</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/IMPLEMENTATION_SUMMARY.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Write concise summary of key implemented features</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure links to detailed feature docs are correct</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Emerald UI / Theming Content Updates</h3>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/EMERALD_COMPONENTS.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review and update based on current state</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure accuracy of props, events, examples</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/EMERALD_COMPONENTS_CHANGELOG.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review and update based on current state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>docs/THEMING_GUIDE.MD</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review and update based on current state</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>CONTRIBUTING.MD Content</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>CONTRIBUTING.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Detail code style (link CODE_FORMATTING.MD)</li>
+<li><input checked="" disabled="" type="checkbox"> Document branching strategy</li>
+<li><input checked="" disabled="" type="checkbox"> Document commit message format</li>
+<li><input checked="" disabled="" type="checkbox"> Document PR process</li>
+<li><input checked="" disabled="" type="checkbox"> Document testing requirements (link TESTING_GUIDE.MD)</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>DEPLOYMENT.MD Content</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/DEPLOYMENT.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Document deployment process for different environments</li>
+<li><input checked="" disabled="" type="checkbox"> Include steps, required environment variables, build commands</li>
+<li><input checked="" disabled="" type="checkbox"> Include platform-specific instructions</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>AI Lessons Integration</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review curated docs/AILESSONS.MD</li>
+<li><input checked="" disabled="" type="checkbox"> Identify stable, valuable patterns or insights</li>
+<li><input checked="" disabled="" type="checkbox"> Copy or synthesize insights into relevant canonical documents</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure AILESSONS.MD remains primarily a log</li>
+</ul>
+<h2>Phase 4: Finalization &amp; Verification</h2>
+<h3>Internal Links Update</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Update all internal links in all .md files to use UPPERCASE.md format</li>
+<li><input checked="" disabled="" type="checkbox"> Verify all links work correctly</li>
+</ul>
+<h3>Tables of Contents (TOCs) Update</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review and update TOCs in all modified files</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure TOCs accurately reflect current heading structure</li>
+</ul>
+<h3>DOCUMENTATION_INDEX.MD Finalization</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>docs/DOCUMENTATION_INDEX.MD</strong><ul>
+<li><input checked="" disabled="" type="checkbox"> Ensure all current documentation files are listed</li>
+<li><input checked="" disabled="" type="checkbox"> Ensure all filenames use UPPERCASE.md format</li>
+<li><input checked="" disabled="" type="checkbox"> Verify descriptions are accurate</li>
+<li><input checked="" disabled="" type="checkbox"> Check all links point to correct files</li>
+<li><input checked="" disabled="" type="checkbox"> Remove TODO comments</li>
+</ul>
+</li>
+</ul>
+<h3>Final Review and Commit</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Review all changes with git status and git diff</li>
+<li><input checked="" disabled="" type="checkbox"> Stage all changes</li>
+<li><input checked="" disabled="" type="checkbox"> Commit with descriptive message</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
