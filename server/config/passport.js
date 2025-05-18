@@ -15,7 +15,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as RedditStrategy } from 'passport-reddit';
 import AppleStrategy from 'passport-apple';
 import bcrypt from 'bcrypt';
-import { User } from '../components/users';
+import { User } from '../models/user.model.js';
 import config from './environment';
 
 // Local Strategy (username/password)

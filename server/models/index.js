@@ -21,6 +21,8 @@ import TokenBlacklist from './token-blacklist.model.js';
 import Transaction from './transaction.model.js';
 import Verification from './verification.model.js';
 import Wallet from './wallet.model.js';
+import AdvertiserProfile from './advertiserProfile.model.js';
+import Appointment from './appointment.model.js';
 
 export {
   User,
@@ -37,4 +39,6 @@ export {
   Transaction,
   Verification,
   Wallet,
+  AdvertiserProfile,
+  Appointment,
 };

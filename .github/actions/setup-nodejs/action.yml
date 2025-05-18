@@ -1,106 +1,6 @@
 name: 'Setup Node.js and Install Dependencies'
-description: 'Sets up Node.js and installs dependencies with robust error handling for lockfile mismatches.'
-runs:
-  using: 'composite'
-  steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version || '22.x' }}
-        cache: ${{ inputs.cache-strategy || 'npm' }}
-        
-    - name: Check npm version
-      run: |
-        echo "Using npm version: $(npm --version)"
-        echo "Using node version: $(node --version)"
-      shell: bash
-      
-    - name: Verify package.json and lockfile
-      run: |
-        if [ -f package.json ]; then
-          echo "Found package.json"
-          
-          # Check if lockfile exists
-          if [ -f package-lock.json ]; then
-            echo "Found package-lock.json"
-            
-            # Check if package-lock.json is valid JSON
-            if ! jq empty package-lock.json 2>/dev/null; then
-              echo "Warning: package-lock.json is not valid JSON. Will use npm install instead of npm ci."
-              echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
-            else
-              echo "Lockfile is valid JSON"
-              echo "LOCKFILE_VALID=true" >> $GITHUB_ENV
-            fi
-          else
-            echo "No package-lock.json found. Will use npm install."
-            echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
-          fi
-        else
-          echo "Error: package.json not found!"
-          exit 1
-        fi
-      shell: bash
-      
-    - name: Install dependencies (safe mode)
-      if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
-      run: |
-        echo "Using npm install for safer dependency resolution..."
-        
-        # First try with --no-audit to speed up installation
-        if [ "${{ inputs.update-lockfile }}" = "true" ]; then
-          echo "Installing dependencies and updating lockfile..."
-          npm install --no-audit --package-lock-only || npm install --package-lock-only
-        else
-          echo "Installing dependencies..."
-          npm install --no-audit || npm install
-        fi
-      shell: bash
-      
-    - name: Install dependencies (strict mode)
-      if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
-      run: |
-        echo "Using npm ci for clean installation..."
-        
-        # Try npm ci first, fall back to npm install if it fails
-        npm ci || {
-          echo "npm ci failed, falling back to npm install..."
-          npm install
-          
-          # If requested, update the lockfile
-          if [ "${{ inputs.update-lockfile }}" = "true" ]; then
-            echo "Updating lockfile..."
-            npm install
-          fi
-        }
-      shell: bash
-      
-    - name: Check for missing dependencies
-      if: ${{ inputs.check-missing == 'true' }}
-      run: |
-        echo "Checking for missing dependencies..."
-        
-        # Extract dependencies from package.json
-        DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
-        
-        # Check if each dependency is installed
-        MISSING=""
-        for DEP in $DEPS; do
-          if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
-            MISSING="$MISSING $DEP"
-          fi
-        done
-        
-        if [ -n "$MISSING" ]; then
-          echo "Warning: The following dependencies might be missing:$MISSING"
-          echo "Attempting to install missing dependencies..."
-          for DEP in $MISSING; do
-            npm install $DEP || echo "Failed to install $DEP"
-          done
-        else
-          echo "All dependencies appear to be installed."
-        fi
-      shell: bash
+description: 'Sets up Node.js and installs dependencies with robust error handling for lockfile mismatches and monorepo support.'
+
 inputs:
   node-version:
     description: 'Node.js version to use'
@@ -122,3 +22,113 @@ inputs:
     description: 'Check for and attempt to install missing dependencies'
     required: false
     default: 'false'
+  working-directory:
+    description: 'Directory to run npm commands in'
+    required: false
+    default: '.'
+
+outputs:
+  lockfile-valid:
+    description: 'Whether the lockfile is valid JSON'
+    value: ${{ env.LOCKFILE_VALID }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Ensure jq is installed
+      shell: bash
+      run: |
+        if ! command -v jq >/dev/null 2>&1; then
+          echo "jq is required but not installed!"
+          exit 1
+        fi
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.cache-strategy }}
+
+    - name: Move to project directory
+      shell: bash
+      run: cd "${{ inputs.working-directory }}"
+      working-directory: ${{ inputs.working-directory }}
+
+    - name: Check npm and node version
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Using npm version: $(npm --version)"
+        echo "Using node version: $(node --version)"
+
+    - name: Verify package.json and lockfile
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: |
+        if [ -f package.json ]; then
+          echo "Found package.json"
+          if [ -f package-lock.json ]; then
+            echo "Found package-lock.json"
+            if ! jq empty package-lock.json 2>/dev/null; then
+              echo "Warning: package-lock.json is not valid JSON. Will use npm install instead of npm ci."
+              echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
+            else
+              echo "Lockfile is valid JSON"
+              echo "LOCKFILE_VALID=true" >> $GITHUB_ENV
+            fi
+          else
+            echo "No package-lock.json found. Will use npm install."
+            echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
+          fi
+        else
+          echo "Error: package.json not found!"
+          exit 1
+        fi
+
+    - name: Install dependencies (safe mode)
+      if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: |
+        echo "Using npm install for safe dependency resolution..."
+        if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+          npm install --no-audit --package-lock-only || npm install --package-lock-only
+        else
+          npm install --no-audit || npm install
+        fi
+
+    - name: Install dependencies (strict mode)
+      if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: |
+        echo "Using npm ci for clean installation..."
+        npm ci || {
+          echo "npm ci failed, falling back to npm install..."
+          npm install
+          if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+            npm install
+          fi
+        }
+
+    - name: Check for missing dependencies
+      if: ${{ inputs.check-missing == 'true' }}
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: |
+        echo "Checking for missing dependencies..."
+        DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+        MISSING=""
+        for DEP in $DEPS; do
+          if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
+            MISSING="$MISSING $DEP"
+          fi
+        done
+        if [ -n "$MISSING" ]; then
+          echo "Warning: The following dependencies might be missing:$MISSING"
+          for DEP in $MISSING; do
+            npm install $DEP || echo "Failed to install $DEP"
+          done
+        else
+          echo "All dependencies appear to be installed."
+        fi

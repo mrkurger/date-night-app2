@@ -1,38 +1,83 @@
-// Import required modules using ESModules syntax
+/**
+ * handle-workflow-errors.js
+ *
+ * This script processes a GitHub workflow_run event payload and writes a detailed error report as a JSON file.
+ * It also attempts to extract job/step errors for deeper diagnostics.
+ * Usage: import handleError from './.github/scripts/handle-workflow-errors.js'; await handleError(context.payload.workflow_run, context);
+ */
+
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { Octokit } from '@octokit/rest';
-import fs from 'fs-extra';
 
 /**
- * Handles workflow errors by logging them and optionally creating a GitHub issue.
- * @param {Object} error - The error object containing message and stack.
- * @param {Object} context - The context of the workflow run.
+ * Helper to fetch job/step errors from the run using Octokit.
+ * @param {object} context - GitHub Actions context (should contain repo and run_id)
+ * @returns {Promise<object[]>} Array of failed job/step info, or empty array if unavailable.
  */
-export async function handleWorkflowError(error, context) {
+async function fetchJobErrors(context) {
   try {
-    // Create an error report object
-    const errorReport = {
-      timestamp: new Date().toISOString(),
-      workflow: context.workflow,
-      error: error.message,
-      stack: error.stack,
-    };
-
-    // Save the error report to an artifact directory
-    await fs.writeJSON('./workflow-error-logs/error.json', errorReport, { spaces: 2 });
-
-    // Optional: Create a GitHub issue for critical errors
-    if (process.env.GITHUB_TOKEN && error.critical) {
-      const octokit = new Octokit({
-        auth: process.env.GITHUB_TOKEN,
-      });
-
-      await octokit.issues.create({
-        ...context.repo,
-        title: `Workflow Error: ${context.workflow}`,
-        body: `Error in workflow: ${error.message}\n\nStack: ${error.stack}`,
-      });
-    }
-  } catch (e) {
-    console.error('Error handling workflow error:', e);
+    if (!process.env.GITHUB_TOKEN || !context || !context.repo || !context.run_id) return [];
+    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+    const { owner, repo } = context.repo;
+    const jobsResp = await octokit.actions.listJobsForWorkflowRun({
+      owner,
+      repo,
+      run_id: context.run_id,
+      per_page: 50
+    });
+    return jobsResp.data.jobs
+      .filter(job => job.conclusion === 'failure')
+      .map(job => ({
+        job_name: job.name,
+        status: job.status,
+        conclusion: job.conclusion,
+        steps: (job.steps || []).filter(step => step.conclusion === 'failure')
+      }));
+  } catch (err) {
+    console.error('[handle-workflow-errors.js] Failed to fetch job errors:', err);
+    return [];
   }
+}
+
+/**
+ * Main handler to process workflow_run payload and save error diagnostics.
+ * @param {object} workflowRun - The workflow_run payload.
+ * @param {object} context - GitHub Actions context (optional, for job/step error extraction).
+ */
+export default async function handleError(workflowRun, context = null) {
+  // Directory for error logs
+  const errorLogsDir = path.resolve(process.cwd(), 'workflow-error-logs');
+  await fs.mkdir(errorLogsDir, { recursive: true });
+
+  // File for this error report
+  const reportFilename = `error-report-${workflowRun.id}-${workflowRun.run_attempt || 1}.json`;
+  const reportPath = path.join(errorLogsDir, reportFilename);
+
+  // Optionally collect job/step errors
+  let jobErrors = [];
+  if (context) jobErrors = await fetchJobErrors(context);
+
+  // Build error report
+  const errorReport = {
+    generated_at: new Date().toISOString(),
+    workflow: {
+      id: workflowRun.id,
+      name: workflowRun.name,
+      run_number: workflowRun.run_number,
+      run_attempt: workflowRun.run_attempt,
+      status: workflowRun.status,
+      conclusion: workflowRun.conclusion,
+      url: workflowRun.html_url,
+      event: workflowRun.event,
+      actor: workflowRun.actor ? workflowRun.actor.login : null,
+      created_at: workflowRun.created_at,
+      updated_at: workflowRun.updated_at,
+    },
+    failed_jobs: jobErrors,
+    raw_payload: workflowRun
+  };
+
+  await fs.writeFile(reportPath, JSON.stringify(errorReport, null, 2), 'utf8');
+  console.log(`[handleError] Error report written to ${reportPath}`);
 }

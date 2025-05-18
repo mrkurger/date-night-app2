@@ -2,6 +2,7 @@
   "name": "date-night-app",
   "version": "1.0.0",
   "description": "DateNight.io application",
+  "type": "module",
   "workspaces": [
     "client-angular",
     "server"
@@ -76,7 +77,13 @@
     "docs:improve": "bash ./scripts/run_docs_improvement.sh",
     "docs:status": "node ./scripts/docs_improvement_helper.js --report",
     "docs:rename": "node ./scripts/rename_docs_to_uppercase.js",
-    "docs:generate-feature": "node ./scripts/generate_feature_docs.js"
+    "docs:generate-feature": "node ./scripts/generate_feature_docs.js",
+    "generate:ci-report": "node .github/scripts/generate-ci-report.js",
+    "generate:docs": "node .github/scripts/generate-docs.js",
+    "generate:screenshots": "node .github/scripts/generate-ui-screenshots.js",
+    "scan:trivy": "node .github/scripts/run-trivy-scan.js",
+    "pentest:zap": "bash .github/scripts/run-pentest.sh",
+    "verify:lockfiles": "node .github/scripts/verify-lockfiles.js"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "...",
@@ -113,7 +120,10 @@
     "prisma": "6.7.0",
     "ts-morph": "25.0.1",
     "ts-node": "10.9.2",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "@octokit/rest": "^21.1.1",
+    "fs-extra": "^11.3.0",
+    "puppeteer": "^22.5.0"
   },
   "dependencies": {
     "@angular/compiler": "19.2.10",
@@ -176,6 +186,5 @@
   "engines": {
     "node": "22.14.0",
     "npm": "10.9.2"
-  },
-  "type": "module"
+  }
 }

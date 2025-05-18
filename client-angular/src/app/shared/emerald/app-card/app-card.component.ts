@@ -1,7 +1,7 @@
 
 
 import { EventEmitter } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';

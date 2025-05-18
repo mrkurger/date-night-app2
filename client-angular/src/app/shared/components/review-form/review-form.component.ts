@@ -8,21 +8,21 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
-  NbCardModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbCheckboxModule,
-  NbButtonModule,
-  NbDatepickerModule,
-  NbIconModule,
-  NbStepperModule,
-  NbSelectModule,
-  NbTooltipModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
 
 export interface ReviewData {
@@ -43,20 +43,8 @@ export interface ReviewData {
 @Component({
   selector: 'app-review-form',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbCheckboxModule,
-    NbButtonModule,
-    NbDatepickerModule,
-    NbIconModule,
-    NbStepperModule,
-    NbSelectModule,
-    NbTooltipModule,
-  ],
+  imports: [CommonModule,
+    ReactiveFormsModule],
   template: `<div>Review Form Component</div>`,
   styles: [],
 })

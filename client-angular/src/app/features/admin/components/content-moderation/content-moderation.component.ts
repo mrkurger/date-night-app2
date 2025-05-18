@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NebularModule } from '../../../shared/nebular.module';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import { NbToastrService } from '@nebular/theme';
 
 interface ReportedContent {
@@ -213,17 +213,17 @@ export class ContentModerationComponent implements OnInit {
     }
   }
 
-  reviewReport(report: ReportedContent) {
+  reviewReport(_report: ReportedContent) {
     // TODO: Implement review dialog
     this.toastrService.info('Opening review dialog...');
   }
 
-  takeAction(report: ReportedContent) {
+  takeAction(_report: ReportedContent) {
     // TODO: Implement action dialog
     this.toastrService.warning('Taking action on reported content...');
   }
 
-  approve(report: ReportedContent) {
+  approve(_report: ReportedContent) {
     // TODO: Implement approval
     this.toastrService.success('Content approved');
   }

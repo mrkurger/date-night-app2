@@ -1,13 +1,12 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NebularModule } from '../../nebular.module';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NotificationMessage } from './notification.model';
-import { NbCardModule, NbIconModule } from '@nebular/theme';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule, NebularModule, NbCardModule, NbIconModule],
+  imports: [CommonModule, NebularModule],
   template: `
     <div class="notifications-container">
       <nb-card

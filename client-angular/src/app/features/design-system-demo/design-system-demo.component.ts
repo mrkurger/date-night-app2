@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -26,8 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-design-system-demo',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,

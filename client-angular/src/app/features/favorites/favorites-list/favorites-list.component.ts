@@ -18,7 +18,7 @@ import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // Import NebularModule directly for standalone components if not already present
-import { NebularModule } from '../../../shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
+import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({
   selector: 'app-favorites-list',

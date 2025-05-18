@@ -1,0 +1,56 @@
+@use '@nebular/theme/styles/theming' as *;
+
+.edit-profile-card {
+  margin: 2rem auto;
+  max-width: 700px; // Adjust as needed
+
+  nb-card-header h2 {
+    margin: 0;
+    font-size: nb-theme(card-header-font-size);
+    font-weight: nb-theme(card-header-font-weight);
+  }
+
+  nb-card-body {
+    padding: nb-theme(card-padding);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  nb-form-field {
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: nb-theme(label-text-font-weight);
+    }
+    .caption.status-danger {
+      display: block; // Ensure it takes space
+      margin-top: 0.25rem;
+      color: nb-theme(text-danger-color);
+    }
+  }
+
+  textarea[nbInput] {
+    min-height: 100px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end; // Align buttons to the right
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button[nbButton] {
+      // Default Nebular button styling is usually fine
+      nb-spinner {
+        margin-right: 0.5rem; // Space spinner from text if both are shown
+      }
+      nb-icon {
+        margin-right: 0.25rem; // Space icon from text
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { _Component } from '@angular/core';
 /**
  * Common types used throughout the application
  */

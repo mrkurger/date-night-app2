@@ -1,4 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -47,8 +48,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     RouterLink,
     NbCardModule,

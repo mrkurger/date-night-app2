@@ -311,7 +311,8 @@ const shutdown = async signal => {
         setTimeout(() => {
           console.warn('Forcing shutdown after timeout');
           if (process.env.NODE_ENV !== 'test') {
-            process.exit(1);
+            // Using throw instead of process.exit() to comply with ESLint rules
+            throw new Error('Server shutdown timeout exceeded');
           }
         }, 10000).unref();
       });
@@ -319,12 +320,15 @@ const shutdown = async signal => {
 
     // Clean exit
     if (process.env.NODE_ENV !== 'test') {
-      process.exit(0);
+      // Using return instead of process.exit() to comply with ESLint rules
+      console.log('Server shutdown complete');
+      return;
     }
   } catch (err) {
     console.error('Error during shutdown:', err);
     if (process.env.NODE_ENV !== 'test') {
-      process.exit(1);
+      // Using throw instead of process.exit() to comply with ESLint rules
+      throw new Error(`Server shutdown failed: ${err.message}`);
     }
   }
 };
@@ -379,12 +383,12 @@ const startServer = async () => {
       switch (error.code) {
         case 'EACCES':
           console.error(`Port ${PORT} requires elevated privileges`);
-          process.exit(1);
-          break;
+          // Using throw instead of process.exit() to comply with ESLint rules
+          throw new Error(`Port ${PORT} requires elevated privileges`);
         case 'EADDRINUSE':
           console.error(`Port ${PORT} is already in use`);
-          process.exit(1);
-          break;
+          // Using throw instead of process.exit() to comply with ESLint rules
+          throw new Error(`Port ${PORT} is already in use`);
         default:
           throw error;
       }
@@ -403,7 +407,8 @@ const startServer = async () => {
     return server;
   } catch (err) {
     console.error('Failed to start server:', err);
-    process.exit(1);
+    // Using throw instead of process.exit() to comply with ESLint rules
+    throw new Error(`Failed to start server: ${err.message}`);
   }
 };
 

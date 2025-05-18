@@ -1,4 +1,5 @@
 import { OnDestroy } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -178,8 +179,7 @@ const MOCK_ADS: Ad[] = [
   selector: 'app-preferences-demo',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,

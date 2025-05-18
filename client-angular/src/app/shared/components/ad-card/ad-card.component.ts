@@ -14,13 +14,6 @@ import { Ad } from '../../../core/models/ad.interface';
 import { UserPreferencesService } from '../../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
 import { NebularModule } from '../../nebular.module';
-import {
-  NbIconModule,
-  NbBadgeModule,
-  NbCardModule,
-  NbButtonModule,
-  NbTooltipModule,
-} from '@nebular/theme';
 
 @Component({
   selector: 'app-ad-card',

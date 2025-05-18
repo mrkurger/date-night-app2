@@ -1,9 +1,21 @@
-// .github/scripts/generate-insights.js
-module.exports = async ({ github, context }) => {
+/**
+ * generate-insights.js
+ *
+ * This script is intended to generate project insights for GitHub Actions workflows.
+ * 
+ * Usage:
+ *   Import and execute the exported async function in a GitHub Action or node context.
+ * 
+ * TODO!: Implement the actual insights generation logic.
+ */
+
+export default async function generateInsights({ github, context }) {
   try {
-    // Insights generation logic moved from inline script
-    // Add proper error handling
+    // TODO!: Move insights generation logic here.
+    // You may use the 'github' and 'context' objects as provided by GitHub Actions.
+    // Implement metrics extraction, artifact generation, or reporting as needed.
   } catch (error) {
-    core.setFailed(`Insights generation failed: ${error.message}`);
+    // If an error occurs, print it to the console for troubleshooting.
+    console.error(`Insights generation failed: ${error.message}`);
   }
-};
+}

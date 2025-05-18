@@ -17,6 +17,8 @@
 // ===================================================
 
 // Variables
+$sidebar-width: 320px; // Defined variable for clarity, can be customized
+$mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
 
 // Animations
 @keyframes pulse-shadow {
@@ -65,42 +67,43 @@
 // Chat Container
 .chat-container {
   display: grid;
-  grid-template-columns: var(--sidebar-width) /* TODO: Verify correct CSS variable */ 1fr;
-  gap: nb-theme(spacing-md);
-  height: calc(100vh - 140px);
+  grid-template-columns: $sidebar-width 1fr;
+  gap: 0;
+  height: calc(100vh - nb-theme(header-height));
   max-width: 1400px;
   margin: 0 auto;
   background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(border-radius);
+  border-radius: nb-theme(card-border-radius);
   overflow: hidden;
   box-shadow: nb-theme(shadow);
 
-  @include media-breakpoint-down(lg) {
+  @include nb-media-breakpoint-down(md) {
     grid-template-columns: 1fr;
     height: 100vh;
     border-radius: 0;
+    box-shadow: none;
   }
 }
 
 // Chat Sidebar
 .chat-sidebar {
-  background-color: nb-theme(background-basic-color-1);
-  border-right: 1px solid nb-theme(border-basic-color-3);
+  background-color: nb-theme(background-basic-color-2);
+  border-right: 1px solid nb-theme(border-color);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  @include media-breakpoint-down(lg) {
+  @include nb-media-breakpoint-down(md) {
     display: none;
-
     &.mobile-visible {
       display: flex;
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      width: $mobile-sidebar-width;
       height: 100%;
-      z-index: 1000;
+      z-index: nb-theme(z-index-sidebar);
+      box-shadow: nb-theme(shadow-lg);
     }
   }
 }
@@ -109,8 +112,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: nb-theme(padding);
-  border-bottom: 1px solid nb-theme(border-basic-color-3);
+  padding: nb-theme(card-padding-medium);
+  border-bottom: 1px solid nb-theme(divider-color);
   background-color: nb-theme(background-basic-color-1);
 
   h2 {
@@ -127,63 +130,35 @@
 }
 
 .chat-search {
-  padding: nb-theme(padding-sm);
-  border-bottom: 1px solid nb-theme(border-basic-color-3);
-  background-color: nb-theme(background-basic-color-1);
-
-  .search-field {
-    width: 100%;
-    margin-bottom: nb-theme(spacing-md);
-
-    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-  }
-
-  .conversation-filters {
-    display: flex;
-    gap: nb-theme(spacing-xs);
-    margin-top: nb-theme(spacing-md);
-
-    button {
-      flex: 1;
-      min-width: 0;
-      font-size: nb-theme(text-font-size-sm);
-      padding: nb-theme(padding-xs) nb-theme(padding-md);
-
-      &.active {
-        color: nb-theme(color-primary-500);
-        background-color: nb-theme(color-primary-50);
-        font-weight: nb-theme(text-font-weight-medium);
-      }
-    }
-  }
+  padding: nb-theme(card-padding-medium);
+  border-bottom: 1px solid nb-theme(divider-color);
 }
 
-.chat-contacts {
+.conversation-list {
   flex: 1;
   overflow-y: auto;
-  background-color: nb-theme(background-basic-color-1);
-
-  .contacts-loading {
-    padding: nb-theme(padding-md);
-  }
+  background-color: nb-theme(background-basic-color-2);
 }
 
-.contact-item {
+.conversation-item {
   display: flex;
   align-items: center;
   padding: nb-theme(padding-md) nb-theme(padding-lg);
-  border-bottom: 1px solid nb-theme(border-basic-color-1);
+  border-bottom: 1px solid nb-theme(divider-color);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: nb-theme(background-basic-color-2);
+    background-color: nb-theme(background-basic-color-3);
   }
 
   &.active {
-    background-color: nb-theme(color-primary-50);
+    background-color: nb-theme(color-primary-transparent-100);
+    .contact-name,
+    .last-message-time,
+    .last-message {
+      color: nb-theme(text-primary-color);
+    }
   }
 
   &.unread {
@@ -253,17 +228,11 @@
   }
 
   .unread-badge {
-    background-color: nb-theme(color-primary-500);
-    color: nb-theme(background-basic-color-1);
-    font-size: nb-theme(text-font-size-xs);
-    font-weight: nb-theme(text-font-weight-medium);
-    min-width: 20px;
-    height: 20px;
-    border-radius: nb-theme(border-radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 nb-theme(padding-xs);
+    // This class was added in HTML to nb-badge, ensure styles apply if needed beyond nb-badge defaults
+    // background-color: nb-theme(color-primary-500); // Already default for status="primary"
+    // color: nb-theme(text-control-color); // Already default for status="primary"
+    // min-width, height, border-radius are handled by nb-badge
+    // padding: 0 nb-theme(padding-xs); // nb-badge has its own padding logic
   }
 
   .pin-icon {
@@ -271,9 +240,22 @@
     color: nb-theme(text-basic-color-500);
     margin-left: nb-theme(spacing-xs);
   }
+
+  .last-message-time {
+    color: nb-theme(text-hint-color);
+  }
+
+  .last-message {
+    color: nb-theme(text-basic-color);
+  }
+
+  &.active .last-message-time,
+  &.active .last-message {
+    color: nb-theme(text-primary-color);
+  }
 }
 
-.empty-contacts {
+.empty-conversations {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -282,10 +264,8 @@
   color: nb-theme(text-basic-color-600);
   text-align: center;
 
-  mat-icon {
+  nb-icon {
     font-size: 48px;
-    width: 48px;
-    height: 48px;
     margin-bottom: nb-theme(spacing-md);
     color: nb-theme(text-basic-color-400);
   }
@@ -314,8 +294,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: nb-theme(padding-md) nb-theme(padding-lg);
-  border-bottom: 1px solid nb-theme(border-basic-color-2);
+  padding: nb-theme(card-padding-medium);
+  border-bottom: 1px solid nb-theme(divider-color);
   background-color: nb-theme(background-basic-color-1);
   z-index: 10;
 
@@ -363,38 +343,49 @@
     display: flex;
     gap: nb-theme(spacing-xs);
   }
+
+  .contact-details h3 {
+    font-size: nb-theme(text-subtitle-font-size);
+    font-weight: nb-theme(text-subtitle-font-weight);
+    margin-bottom: 0;
+  }
+
+  .status-text {
+    font-size: nb-theme(text-caption-font-size);
+    color: nb-theme(text-hint-color);
+    &.online {
+      color: nb-theme(text-success-color);
+    }
+  }
 }
 
 // Message List
-.message-list {
-  flex: 1;
+.messages-container {
+  flex-grow: 1;
   overflow-y: auto;
-  padding: nb-theme(padding-md);
+  padding: nb-theme(card-padding-medium);
   background-color: nb-theme(background-basic-color-1);
   display: flex;
   flex-direction: column;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
   gap: nb-theme(spacing-md);
+  padding-bottom: nb-theme(padding-sm);
+}
 
-  .message-group {
-    display: flex;
-    flex-direction: column;
-    gap: nb-theme(spacing-md);
-  }
-
-  .date-separator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: nb-theme(spacing-md) 0;
-
-    span {
-      background-color: nb-theme(background-basic-color-3);
-      color: nb-theme(text-basic-color-700);
-      font-size: nb-theme(text-font-size-xs);
-      font-weight: nb-theme(text-font-weight-medium);
-      padding: nb-theme(padding-xs) nb-theme(padding-md);
-      border-radius: nb-theme(border-radius-full);
-    }
+.message-date {
+  text-align: center;
+  margin: nb-theme(spacing-lg) 0;
+  span {
+    background-color: nb-theme(background-basic-color-3);
+    color: nb-theme(text-hint-color);
+    font-size: nb-theme(text-caption-2-font-size);
+    font-weight: nb-theme(text-caption-2-font-weight);
+    padding: nb-theme(button-tiny-padding);
+    border-radius: nb-theme(button-rectangle-border-radius);
   }
 }
 
@@ -411,8 +402,8 @@
     flex-direction: row-reverse;
 
     .message-bubble {
-      background-color: nb-theme(color-primary-500);
-      color: nb-theme(background-basic-color-1);
+      background-color: nb-theme(chat-message-sent-background-color);
+      color: nb-theme(chat-message-sent-text-color);
       border-bottom-right-radius: 4px;
     }
 
@@ -425,7 +416,7 @@
     align-self: flex-start;
 
     .message-bubble {
-      background-color: nb-theme(background-basic-color-2);
+      background-color: nb-theme(chat-message-received-background-color);
       border-bottom-left-radius: 4px;
     }
 
@@ -440,8 +431,8 @@
   }
 
   .message-bubble {
-    padding: nb-theme(padding-md);
-    border-radius: nb-theme(border-radius-lg);
+    padding: nb-theme(chat-message-padding);
+    border-radius: nb-theme(chat-message-border-radius);
     box-shadow: nb-theme(shadow-sm);
     max-width: 100%;
     word-break: break-word;
@@ -473,12 +464,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
 
-      .mat-icon {
-        font-size: 14px;
-        width: 14px;
-        height: 14px;
-        color: nb-theme(background-basic-color-1);
+    p {
+      margin: 0 0 nb-theme(spacing-xs) 0;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }
@@ -517,28 +508,6 @@
       border-radius: nb-theme(border-radius-md);
       padding: nb-theme(padding-md);
       cursor: pointer;
-
-      mat-icon {
-        margin-right: nb-theme(spacing-md);
-        color: nb-theme(text-basic-color-700);
-      }
-
-      .file-info {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .file-name {
-        font-weight: nb-theme(text-font-weight-medium);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .file-size {
-        font-size: nb-theme(text-font-size-xs);
-        color: nb-theme(text-basic-color-600);
-      }
     }
   }
 
@@ -550,8 +519,11 @@
     margin-top: nb-theme(spacing-xs);
 
     .message-time {
-      font-size: nb-theme(text-font-size-xs);
-      color: rgba(255, 255, 255, 0.8);
+      font-size: nb-theme(text-caption-2-font-size);
+      color: nb-theme(chat-message-meta-text-color);
+      margin-top: nb-theme(spacing-xs);
+      display: block;
+      text-align: right;
     }
 
     .message-expiry {
@@ -560,8 +532,6 @@
 
       .expiry-icon {
         font-size: 14px;
-        width: 14px;
-        height: 14px;
         color: nb-theme(color-warning-500);
       }
     }
@@ -658,7 +628,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: nb-theme(color-primary-500);
+      background-color: nb-theme(color-primary-default);
       animation: typingAnimation 1.4s infinite ease-in-out;
 
       &:nth-child(1) {
@@ -698,10 +668,8 @@
   text-align: center;
   margin: auto 0;
 
-  mat-icon {
+  nb-icon {
     font-size: 48px;
-    width: 48px;
-    height: 48px;
     margin-bottom: nb-theme(spacing-md);
     color: nb-theme(text-basic-color-400);
   }
@@ -755,9 +723,9 @@
   display: flex;
   align-items: flex-end;
   gap: nb-theme(spacing-md);
-  padding: nb-theme(padding-md) nb-theme(padding-lg);
-  background-color: nb-theme(background-basic-color-1);
-  border-top: 1px solid nb-theme(border-basic-color-2);
+  padding: nb-theme(card-padding-medium);
+  background-color: nb-theme(background-basic-color-2);
+  border-top: 1px solid nb-theme(divider-color);
 }
 
 .message-input {
@@ -853,12 +821,6 @@
 .send-button {
   width: 40px !important;
   height: 40px !important;
-
-  .mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
 }
 
 // Emoji Picker
@@ -1115,11 +1077,6 @@
 
     &:hover {
       background-color: nb-theme(background-basic-color-3);
-    }
-
-    mat-icon {
-      margin-right: nb-theme(spacing-md);
-      color: nb-theme(text-basic-color-700);
     }
 
     .file-info,

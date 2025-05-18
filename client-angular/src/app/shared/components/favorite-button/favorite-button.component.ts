@@ -8,9 +8,9 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+import { , ,  } from '@nebular/theme';
 
 import { FavoriteService } from '../../../core/services/favorite.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-favorite-button',
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+  imports: [CommonModule],
   template: `
     <button
       nbButton

@@ -25,6 +25,18 @@ jest.mock('fs', () => ({
 
 jest.mock('path', () => ({
   join: jest.fn().mockImplementation((...args) => args.join('/')),
+  resolve: jest.fn().mockImplementation((...args) => args.join('/')), // Basic mock for resolve
+  isAbsolute: jest.fn().mockImplementation(p => p.startsWith('/')), // Basic mock for isAbsolute
+  dirname: jest.fn().mockImplementation(p => p.substring(0, p.lastIndexOf('/')) || '.'), // Basic mock for dirname
+  basename: jest.fn().mockImplementation(p => p.substring(p.lastIndexOf('/') + 1)), // Basic mock for basename
+  parse: jest.fn().mockImplementation(p => {
+    // Add mock for parse
+    const dirname = p.substring(0, p.lastIndexOf('/')) || '.';
+    const basename = p.substring(p.lastIndexOf('/') + 1);
+    const ext = basename.includes('.') ? basename.substring(basename.lastIndexOf('.')) : '';
+    const name = ext ? basename.substring(0, basename.lastIndexOf('.')) : basename;
+    return { root: '', dir: dirname, base: basename, ext, name };
+  }),
 }));
 
 jest.mock('node-cron', () => ({

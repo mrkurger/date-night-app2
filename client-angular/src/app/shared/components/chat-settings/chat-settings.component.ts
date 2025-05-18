@@ -8,7 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -18,15 +18,15 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
   NbToggleModule,
-  NbSpinnerModule,
-  NbAlertModule,
+  ,
+  ,
 } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 
@@ -43,20 +43,10 @@ export interface ChatSettings {
 @Component({
   selector: 'app-chat-settings',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbToggleModule,
-    NbSpinnerModule,
-    NbAlertModule,
-  ],
+    NbToggleModule],
   template: `
     <nb-card>
       <nb-card-header>

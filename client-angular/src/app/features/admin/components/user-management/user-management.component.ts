@@ -1,6 +1,4 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {} from '../../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 

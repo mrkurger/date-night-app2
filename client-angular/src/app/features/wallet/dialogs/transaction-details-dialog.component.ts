@@ -7,6 +7,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbDialogRef,
   NB_DIALOG_CONFIG,
@@ -55,8 +56,7 @@ export interface WalletTransaction {
   styleUrls: ['./transaction-details-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ClipboardModule,

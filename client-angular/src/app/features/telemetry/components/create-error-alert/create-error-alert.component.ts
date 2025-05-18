@@ -1,4 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -23,8 +24,7 @@ import { ErrorCategory } from '../../../../core/models/error.model';
   selector: 'app-create-error-alert',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbFormFieldModule,

@@ -1,130 +1,138 @@
-<div class="profile-container">
-  <div>
-    <div>
-      <h2>My Profile</h2>
+<nb-card class="profile-card">
+  <nb-card-header>
+    <h2>My Profile</h2>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="isLoading" class="loading-container">
+      <nb-spinner status="primary" size="large"></nb-spinner>
     </div>
 
-    <div>
-      <div *ngIf="isLoading" class="loading-spinner">
-        <div class="spinner"></div>
+    <nb-alert status="danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </nb-alert>
+
+    <nb-alert status="success" *ngIf="successMessage">
+      {{ successMessage }}
+    </nb-alert>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="userProfile && !isLoading">
+      <div class="profile-image-section">
+        <img
+          [src]="userProfile.avatar || 'assets/images/default-profile.png'"
+          alt="Profile Image"
+          class="profile-avatar"
+        />
+        <input
+          #fileInput
+          type="file"
+          id="profileImage"
+          accept="image/*"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+        <button
+          nbButton
+          outline
+          status="primary"
+          size="small"
+          (click)="fileInput.click()"
+          class="change-photo-btn"
+        >
+          <nb-icon icon="camera-outline"></nb-icon> Change Photo
+        </button>
       </div>
 
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-
-      <div *ngIf="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="userProfile">
-        <div class="profile-image-container">
-          <img
-            [src]="userProfile.avatar || 'assets/images/default-profile.png'"
-            alt="Profile Image"
-            class="profile-image"
+      <div class="form-row">
+        <nb-form-field class="form-field">
+          <label>First Name</label>
+          <input
+            nbInput
+            fullWidth
+            formControlName="firstName"
+            placeholder="First Name"
+            [status]="
+              profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid
+                ? 'danger'
+                : 'basic'
+            "
           />
-          <div class="image-upload">
-            <button class="btn-primary" (click)="fileInput.click()">📷 Change Photo</button>
-            <input
-              #fileInput
-              type="file"
-              id="profileImage"
-              accept="image/*"
-              hidden
-              (change)="onFileSelected($event)"
-            />
+          <div
+            *ngIf="profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid"
+          >
+            <p class="caption status-danger">First Name is required</p>
           </div>
-        </div>
+        </nb-form-field>
 
-        <div class="form-row">
-          <div class="form-field">
-            <span class="input-icon">👤</span>
-            <input
-              class="{{
-                profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid
-                  ? 'input-error'
-                  : ''
-              }}"
-              formControlName="firstName"
-              placeholder="First Name"
-            />
-            <span
-              *ngIf="profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid"
-              class="error-icon"
-            >
-              ⚠️
-            </span>
+        <nb-form-field class="form-field">
+          <label>Last Name</label>
+          <input
+            nbInput
+            fullWidth
+            formControlName="lastName"
+            placeholder="Last Name"
+            [status]="
+              profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <div *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid">
+            <p class="caption status-danger">Last Name is required</p>
           </div>
+        </nb-form-field>
+      </div>
 
-          <div class="form-field">
-            <span class="input-icon">👤</span>
-            <input
-              class="{{
-                profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid
-                  ? 'input-error'
-                  : ''
-              }}"
-              formControlName="lastName"
-              placeholder="Last Name"
-            />
-            <span
-              *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid"
-              class="error-icon"
-            >
-              ⚠️
-            </span>
-          </div>
-        </div>
+      <nb-form-field>
+        <label>Bio</label>
+        <textarea nbInput fullWidth formControlName="bio" placeholder="Bio" rows="4"></textarea>
+      </nb-form-field>
 
-        <div class="form-field">
-          <span class="input-icon">✏️</span>
-          <textarea formControlName="bio" placeholder="Bio" rows="4"></textarea>
-        </div>
+      <nb-form-field>
+        <label>Phone Number</label>
+        <input nbInput fullWidth formControlName="phoneNumber" placeholder="Phone Number" />
+      </nb-form-field>
 
-        <div class="form-field">
-          <span class="input-icon">📱</span>
-          <input formControlName="phoneNumber" placeholder="Phone Number" />
-        </div>
+      <div class="form-row">
+        <nb-form-field class="form-field">
+          <label>City</label>
+          <input nbInput fullWidth formControlName="location.city" placeholder="City" />
+        </nb-form-field>
 
-        <div class="form-row">
-          <div class="form-field">
-            <span class="input-icon">📍</span>
-            <input formControlName="location.city" placeholder="City" />
-          </div>
+        <nb-form-field class="form-field">
+          <label>Country</label>
+          <input nbInput fullWidth formControlName="location.country" placeholder="Country" />
+        </nb-form-field>
+      </div>
 
-          <div class="form-field">
-            <span class="input-icon">🌎</span>
-            <input formControlName="location.country" placeholder="Country" />
-          </div>
-        </div>
+      <div class="preferences-section">
+        <h3>Preferences</h3>
+        <nb-checkbox formControlName="preferences.notifications" status="primary"
+          >Enable Notifications</nb-checkbox
+        >
 
-        <div class="preferences-section">
-          <h3>Preferences</h3>
+        <nb-form-field>
+          <label>Privacy Setting</label>
+          <nb-select fullWidth formControlName="preferences.privacy" placeholder="Privacy Setting">
+            <nb-option value="public">Public</nb-option>
+            <nb-option value="private">Private</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
 
-          <div class="toggle-field">
-            <input type="checkbox" formControlName="preferences.notifications" id="notifications" />
-            <label for="notifications">Enable Notifications</label>
-          </div>
-
-          <div class="form-field">
-            <span class="input-icon">🔒</span>
-            <select formControlName="preferences.privacy">
-              <option value="" disabled>Privacy Setting</option>
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn-secondary" type="button" routerLink="/dashboard">← Cancel</button>
-          <button class="btn-primary" type="submit" [disabled]="profileForm.invalid || isLoading">
-            💾 Save Changes
-            <span *ngIf="isLoading" class="spinner-small"></span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+      <div class="form-actions">
+        <button nbButton status="basic" type="button" routerLink="/dashboard">
+          <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
+        </button>
+        <button
+          nbButton
+          status="primary"
+          type="submit"
+          [disabled]="profileForm.invalid || isLoading"
+        >
+          <nb-icon icon="save-outline"></nb-icon> Save Changes
+          <nb-spinner *ngIf="isLoading" size="tiny" status="control"></nb-spinner>
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

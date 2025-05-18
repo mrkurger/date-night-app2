@@ -1,12 +1,12 @@
 import { EventEmitter, Output, Input, Component } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
-
+// NebularModule is imported but not used in the imports array
+import { NebularModule as __NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-star-rating',
   standalone: true,
-  imports: [CommonModule, NbIconModule, NbTooltipModule],
+  imports: [CommonModule],
   template: `
     <div class="star-rating" [class.small]="small" [class.readonly]="readonly">
       <span

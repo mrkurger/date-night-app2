@@ -1,269 +1,218 @@
-<app-main-layout>
-  <div class="advertiser-profile-container">
-    <!-- Loading State -->
-    <div class="loading-container" *ngIf="loading">
-      <nb-spinner status="primary" size="large"></nb-spinner>
-      <p class="loading-text">Loading profile...</p>
-    </div>
-
-    <!-- Error State -->
-    <div class="error-container" *ngIf="error && !loading">
-      <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
-      <p class="error-text">{{ error }}</p>
-      <button nbButton status="primary" (click)="loadAd()">
-        <nb-icon icon="refresh-outline"></nb-icon>
-        Try Again
-      </button>
-    </div>
-
-    <!-- Profile Content -->
-    <div class="profile-content" *ngIf="!loading && !error && ad">
-      <nb-card>
-        <nb-card-body>
-          <!-- Profile Header -->
-          <div class="profile-header">
-            <div class="profile-media">
-              <div class="profile-gallery">
-                <div class="main-image">
-                  <img [src]="getMediaUrl(0)" [alt]="ad.title" class="profile-image" />
-                  <nb-badge
-                    *ngIf="ad.isFeatured"
-                    status="warning"
-                    position="top right"
-                    text="Featured"
-                  >
-                    <nb-icon icon="crown-outline"></nb-icon>
-                  </nb-badge>
-                  <nb-badge *ngIf="ad.isTouring" status="info" position="top left" text="Touring">
-                    <nb-icon icon="paper-plane-outline"></nb-icon>
-                  </nb-badge>
-                </div>
-                <div
-                  class="thumbnail-row"
-                  *ngIf="(ad.media && ad.media.length > 1) || (ad.images && ad.images.length > 1)"
-                >
-                  <div class="thumbnail" *ngFor="let i of getMediaIndices(); let idx = index">
-                    <img
-                      [src]="getMediaUrl(i)"
-                      [alt]="'Thumbnail ' + (i + 1)"
-                      class="thumbnail-image"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="profile-info">
-              <div class="profile-title-section">
-                <h1 class="profile-title">{{ ad.title }}</h1>
-                <div class="profile-actions" *ngIf="isOwner">
-                  <button
-                    nbButton
-                    ghost
-                    status="primary"
-                    *ngIf="!editMode"
-                    (click)="toggleEditMode()"
-                  >
-                    <nb-icon icon="edit-2-outline"></nb-icon>
-                    Edit Profile
-                  </button>
-                  <button
-                    nbButton
-                    ghost
-                    status="warning"
-                    *ngIf="!ad.isFeatured"
-                    (click)="upgradeToFeatured()"
-                  >
-                    <nb-icon icon="crown-outline"></nb-icon>
-                    Upgrade to Featured
-                  </button>
-                </div>
-              </div>
-
-              <div class="profile-meta">
-                <div class="profile-meta-item">
-                  <nb-icon icon="map-outline"></nb-icon>
-                  <span>{{ ad.location }}</span>
-                </div>
-                <div class="profile-meta-item" *ngIf="ad.category">
-                  <nb-icon icon="pricetags-outline"></nb-icon>
-                  <span>{{ ad.category }}</span>
-                </div>
-                <div class="profile-meta-item" *ngIf="ad.price">
-                  <nb-icon icon="credit-card-outline"></nb-icon>
-                  <span>{{ ad.price }} NOK</span>
-                </div>
-              </div>
-
-              <div class="profile-tags" *ngIf="ad.tags && ad.tags.length">
-                <nb-tag-list>
-                  <nb-tag *ngFor="let tag of ad.tags" [text]="tag" status="basic"></nb-tag>
-                </nb-tag-list>
-              </div>
-
-              <div class="profile-description" *ngIf="!editMode">
-                <h3 class="section-title">About</h3>
-                <p>{{ ad.description }}</p>
-              </div>
-
-              <!-- Edit Form -->
-              <form
-                [formGroup]="adForm"
-                (ngSubmit)="saveChanges()"
-                *ngIf="editMode"
-                class="edit-form"
-              >
-                <nb-form-field>
-                  <label for="title">Title</label>
-                  <input
-                    nbInput
-                    fullWidth
-                    id="title"
-                    formControlName="title"
-                    [status]="
-                      adForm.get('title')?.invalid && adForm.get('title')?.touched
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  
-                    Title is required
-                  
-                  
-                    Title must be at least 3 characters
-                  
-                </nb-form-field>
-
-                <nb-form-field>
-                  <label for="description">Description</label>
-                  <textarea
-                    nbInput
-                    fullWidth
-                    id="description"
-                    formControlName="description"
-                    rows="5"
-                    [status]="
-                      adForm.get('description')?.invalid && adForm.get('description')?.touched
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  ></textarea>
-                  
-                    Description is required
-                  
-                  
-                    Description must be at least 10 characters
-                  
-                </nb-form-field>
-
-                <div class="form-row">
-                  <nb-form-field>
-                    <label for="location">Location</label>
-                    <input
-                      nbInput
-                      fullWidth
-                      id="location"
-                      formControlName="location"
-                      [status]="
-                        adForm.get('location')?.invalid && adForm.get('location')?.touched
-                          ? 'danger'
-                          : 'basic'
-                      "
-                    />
-                    
-                      Location is required
-                    
-                  </nb-form-field>
-
-                  <nb-form-field>
-                    <label for="category">Category</label>
-                    <nb-select
-                      fullWidth
-                      id="category"
-                      formControlName="category"
-                      [status]="
-                        adForm.get('category')?.invalid && adForm.get('category')?.touched
-                          ? 'danger'
-                          : 'basic'
-                      "
-                    >
-                      <nb-option value="">Select a category</nb-option>
-                      <nb-option value="Escort">Escort</nb-option>
-                      <nb-option value="Striptease">Striptease</nb-option>
-                      <nb-option value="Massage">Massage</nb-option>
-                    </nb-select>
-                    
-                      Category is required
-                    
-                  </nb-form-field>
-                </div>
-
-                <div class="form-row">
-                  <nb-form-field>
-                    <label for="price">Price (NOK)</label>
-                    <input
-                      nbInput
-                      fullWidth
-                      type="number"
-                      id="price"
-                      formControlName="price"
-                      [status]="
-                        adForm.get('price')?.invalid && adForm.get('price')?.touched
-                          ? 'danger'
-                          : 'basic'
-                      "
-                    />
-                    
-                      Price is required
-                    
-                    
-                      Price must be a positive number
-                    
-                  </nb-form-field>
-
-                  <nb-form-field>
-                    <label for="tags">Tags (comma separated)</label>
-                    <input
-                      nbInput
-                      fullWidth
-                      id="tags"
-                      formControlName="tags"
-                      placeholder="e.g. vip, luxury, premium"
-                    />
-                  </nb-form-field>
-                </div>
-
-                <div class="form-actions">
-                  <button nbButton ghost status="basic" type="button" (click)="cancelEdit()">
-                    <nb-icon icon="close-outline"></nb-icon>
-                    Cancel
-                  </button>
-                  <button
-                    nbButton
-                    status="primary"
-                    type="submit"
-                    [disabled]="adForm.invalid || loading"
-                  >
-                    <nb-icon icon="save-outline"></nb-icon>
-                    Save Changes
-                  </button>
-                  <button
-                    nbButton
-                    status="danger"
-                    ghost
-                    type="button"
-                    (click)="deleteAd()"
-                    *ngIf="isOwner"
-                  >
-                    <nb-icon icon="trash-2-outline"></nb-icon>
-                    Delete Ad
-                  </button>
-                </div>
-              </form>
+<div class="advertiser-profile-page">
+  <nb-card *ngIf="advertiser && !isLoading; else loadingOrError" class="profile-card">
+    <nb-card-header class="profile-header">
+      <div class="profile-media">
+        <div class="profile-gallery">
+          <div class="main-image">
+            <img [src]="getMediaUrl(0)" [alt]="ad.title" class="profile-image" />
+            <nb-badge *ngIf="ad.isFeatured" status="warning" position="top right" text="Featured">
+              <nb-icon icon="crown-outline"></nb-icon>
+            </nb-badge>
+            <nb-badge *ngIf="ad.isTouring" status="info" position="top left" text="Touring">
+              <nb-icon icon="paper-plane-outline"></nb-icon>
+            </nb-badge>
+          </div>
+          <div
+            class="thumbnail-row"
+            *ngIf="(ad.media && ad.media.length > 1) || (ad.images && ad.images.length > 1)"
+          >
+            <div class="thumbnail" *ngFor="let i of getMediaIndices(); let idx = index">
+              <img [src]="getMediaUrl(i)" [alt]="'Thumbnail ' + (i + 1)" class="thumbnail-image" />
             </div>
           </div>
-        </nb-card-body>
-      </nb-card>
-    </div>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <div class="profile-title-section">
+          <h1 class="profile-title">{{ ad.title }}</h1>
+          <div class="profile-actions" *ngIf="isOwner">
+            <button nbButton ghost status="primary" *ngIf="!editMode" (click)="toggleEditMode()">
+              <nb-icon icon="edit-2-outline"></nb-icon>
+              Edit Profile
+            </button>
+            <button
+              nbButton
+              ghost
+              status="warning"
+              *ngIf="!ad.isFeatured"
+              (click)="upgradeToFeatured()"
+            >
+              <nb-icon icon="crown-outline"></nb-icon>
+              Upgrade to Featured
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-meta">
+          <div class="profile-meta-item">
+            <nb-icon icon="map-outline"></nb-icon>
+            <span>{{ ad.location }}</span>
+          </div>
+          <div class="profile-meta-item" *ngIf="ad.category">
+            <nb-icon icon="pricetags-outline"></nb-icon>
+            <span>{{ ad.category }}</span>
+          </div>
+          <div class="profile-meta-item" *ngIf="ad.price">
+            <nb-icon icon="credit-card-outline"></nb-icon>
+            <span>{{ ad.price }} NOK</span>
+          </div>
+        </div>
+
+        <div class="profile-tags" *ngIf="ad.tags && ad.tags.length">
+          <nb-tag-list>
+            <nb-tag *ngFor="let tag of ad.tags" [text]="tag" status="basic"></nb-tag>
+          </nb-tag-list>
+        </div>
+
+        <div class="profile-description" *ngIf="!editMode">
+          <h3 class="section-title">About</h3>
+          <p>{{ ad.description }}</p>
+        </div>
+
+        <!-- Edit Form -->
+        <form [formGroup]="adForm" (ngSubmit)="saveChanges()" *ngIf="editMode" class="edit-form">
+          <nb-form-field>
+            <label for="title">Title</label>
+            <input
+              nbInput
+              fullWidth
+              id="title"
+              formControlName="title"
+              [status]="
+                adForm.get('title')?.invalid && adForm.get('title')?.touched ? 'danger' : 'basic'
+              "
+            />
+
+            Title is required Title must be at least 3 characters
+          </nb-form-field>
+
+          <nb-form-field>
+            <label for="description">Description</label>
+            <textarea
+              nbInput
+              fullWidth
+              id="description"
+              formControlName="description"
+              rows="5"
+              [status]="
+                adForm.get('description')?.invalid && adForm.get('description')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            ></textarea>
+
+            Description is required Description must be at least 10 characters
+          </nb-form-field>
+
+          <div class="form-row">
+            <nb-form-field>
+              <label for="location">Location</label>
+              <input
+                nbInput
+                fullWidth
+                id="location"
+                formControlName="location"
+                [status]="
+                  adForm.get('location')?.invalid && adForm.get('location')?.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+
+              Location is required
+            </nb-form-field>
+
+            <nb-form-field>
+              <label for="category">Category</label>
+              <nb-select
+                fullWidth
+                id="category"
+                formControlName="category"
+                [status]="
+                  adForm.get('category')?.invalid && adForm.get('category')?.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-option value="">Select a category</nb-option>
+                <nb-option value="Escort">Escort</nb-option>
+                <nb-option value="Striptease">Striptease</nb-option>
+                <nb-option value="Massage">Massage</nb-option>
+              </nb-select>
+
+              Category is required
+            </nb-form-field>
+          </div>
+
+          <div class="form-row">
+            <nb-form-field>
+              <label for="price">Price (NOK)</label>
+              <input
+                nbInput
+                fullWidth
+                type="number"
+                id="price"
+                formControlName="price"
+                [status]="
+                  adForm.get('price')?.invalid && adForm.get('price')?.touched ? 'danger' : 'basic'
+                "
+              />
+
+              Price is required Price must be a positive number
+            </nb-form-field>
+
+            <nb-form-field>
+              <label for="tags">Tags (comma separated)</label>
+              <input
+                nbInput
+                fullWidth
+                id="tags"
+                formControlName="tags"
+                placeholder="e.g. vip, luxury, premium"
+              />
+            </nb-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button nbButton ghost status="basic" type="button" (click)="cancelEdit()">
+              <nb-icon icon="close-outline"></nb-icon>
+              Cancel
+            </button>
+            <button nbButton status="primary" type="submit" [disabled]="adForm.invalid || loading">
+              <nb-icon icon="save-outline"></nb-icon>
+              Save Changes
+            </button>
+            <button
+              nbButton
+              status="danger"
+              ghost
+              type="button"
+              (click)="deleteAd()"
+              *ngIf="isOwner"
+            >
+              <nb-icon icon="trash-2-outline"></nb-icon>
+              Delete Ad
+            </button>
+          </div>
+        </form>
+      </div>
+    </nb-card-header>
+  </nb-card>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <nb-spinner status="primary" size="large"></nb-spinner>
+    <p class="loading-text">Loading profile...</p>
   </div>
-</app-main-layout>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !loading">
+    <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
+    <p class="error-text">{{ error }}</p>
+    <button nbButton status="primary" (click)="loadAd()">
+      <nb-icon icon="refresh-outline"></nb-icon>
+      Try Again
+    </button>
+  </div>
+</div>

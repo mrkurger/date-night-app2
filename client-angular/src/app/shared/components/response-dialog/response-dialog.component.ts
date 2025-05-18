@@ -1,14 +1,14 @@
 import {
   NbDialogRef,
   NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -19,17 +19,17 @@ import { NebularModule } from '../../nebular.module';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule,
-  FormControl,
+  _FormControl,
 } from '@angular/forms';
 
-import { SharedModule } from '../../shared.module';
+import { _SharedModule } from '../../shared.module';
 
 export interface ResponseDialogData {
   title: string;
@@ -113,16 +113,8 @@ export interface ResponseDialogData {
     `,
   ],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-  ],
+  imports: [CommonModule,
+    ReactiveFormsModule],
 })
 export class ResponseDialogComponent implements OnInit {
   responseForm: FormGroup;

@@ -1,18 +1,38 @@
-const fs = require('fs-extra');
-const { Octokit } = require('@octokit/rest');
+/**
+ * generate-workflow-report.js
+ *
+ * This script collects recent workflow run data from the GitHub API and saves a JSON report.
+ * It is designed for use as an ESModule in GitHub Actions or node environments.
+ *
+ * Usage:
+ *   import generateWorkflowReport from './.github/scripts/generate-workflow-report.js';
+ *   await generateWorkflowReport({ github, context });
+ */
 
-async function generateWorkflowReport() {
+import fs from 'fs/promises';
+import { Octokit } from '@octokit/rest';
+
+/**
+ * Generates a report of recent workflow runs and saves it as a JSON file.
+ * @param {object} options - The options object, expects context.repo and a GITHUB_TOKEN in env.
+ */
+export default async function generateWorkflowReport({ context }) {
+  // Create an authenticated Octokit instance with the GITHUB_TOKEN
   const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
 
-  // Get workflow data
-  const workflows = await octokit.actions.listWorkflowRuns({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
+  // Extract owner and repo from context
+  const { owner, repo } = context.repo;
+
+  // Fetch workflow runs from GitHub Actions API
+  const workflows = await octokit.actions.listWorkflowRunsForRepo({
+    owner,
+    repo,
+    per_page: 10,
   });
 
-  // Generate report
+  // Build a report object with relevant run metadata
   const report = {
     timestamp: new Date().toISOString(),
     workflows: workflows.data.workflow_runs.map(run => ({
@@ -23,8 +43,8 @@ async function generateWorkflowReport() {
     })),
   };
 
-  // Save report
-  await fs.writeJSON('./workflow-reports/latest.json', report, { spaces: 2 });
+  // Ensure output directory exists and save the report as JSON
+  const reportsDir = './workflow-reports';
+  await fs.mkdir(reportsDir, { recursive: true });
+  await fs.writeFile(`${reportsDir}/latest.json`, JSON.stringify(report, null, 2), 'utf8');
 }
-
-module.exports = generateWorkflowReport;

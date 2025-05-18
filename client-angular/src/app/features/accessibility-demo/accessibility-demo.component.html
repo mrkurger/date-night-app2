@@ -13,83 +13,105 @@
 
   <main id="main-content" class="container">
     <!-- Introduction -->
-    <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Introduction</h2>
-      <p>
-        Accessibility is about making our application usable by everyone, including people with
-        disabilities. This includes users who navigate with keyboards, screen readers, or other
-        assistive technologies.
-      </p>
-      <p>
-        The Web Content Accessibility Guidelines (WCAG) provide a set of recommendations for making
-        web content more accessible. DateNight.io aims to meet WCAG 2.1 AA standards.
-      </p>
-    </section>
+    <nb-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Introduction</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <p>
+          Accessibility is about making our application usable by everyone, including people with
+          disabilities. This includes users who navigate with keyboards, screen readers, or other
+          assistive technologies.
+        </p>
+        <p>
+          The Web Content Accessibility Guidelines (WCAG) provide a set of recommendations for
+          making web content more accessible. DateNight.io aims to meet WCAG 2.1 AA standards.
+        </p>
+      </nb-card-body>
+    </nb-card>
 
     <!-- Keyboard Navigation -->
-    <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Keyboard Navigation</h2>
+    <nb-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Keyboard Navigation</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-accordion>
+          <nb-accordion-item expanded>
+            <nb-accordion-item-header> Focusable Elements </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <p>
+                Interactive elements should be keyboard accessible. Users should be able to navigate
+                through all interactive elements using the Tab key.
+              </p>
 
-      <div [class]="bem.element('subsection')">
-        <h3 [class]="bem.element('subsection-title')">Focusable Elements</h3>
-        <p>
-          Interactive elements should be keyboard accessible. Users should be able to navigate
-          through all interactive elements using the Tab key.
-        </p>
+              <div class="row">
+                <div class="col-md-4" *ngFor="let element of focusableElements">
+                  <nb-card>
+                    <nb-card-header>
+                      <h4>{{ element.name }}</h4>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <p>{{ element.description }}</p>
+                      <pre [class]="bem.element('code')">{{ element.code }}</pre>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
 
-        <div [class]="bem.element('example')">
-          <div [class]="bem.element('focusable-grid')">
-            <div *ngFor="let element of focusableElements" [class]="bem.element('focusable-item')">
-              <h4 [class]="bem.element('focusable-name')">{{ element.name }}</h4>
-              <p [class]="bem.element('focusable-description')">{{ element.description }}</p>
-              <pre [class]="bem.element('code')">{{ element.code }}</pre>
-            </div>
-          </div>
-        </div>
-      </div>
+          <nb-accordion-item>
+            <nb-accordion-item-header> Custom Keyboard Handling </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <p>
+                Custom components should implement keyboard navigation patterns that match their
+                visual presentation. For example, a list should support arrow key navigation.
+              </p>
 
-      <div [class]="bem.element('subsection')">
-        <h3 [class]="bem.element('subsection-title')">Custom Keyboard Handling</h3>
-        <p>
-          Custom components should implement keyboard navigation patterns that match their visual
-          presentation. For example, a list should support arrow key navigation.
-        </p>
-
-        <div [class]="bem.element('example')">
-          <p>Use arrow keys to navigate between items, and Enter or Space to activate:</p>
-          <div [class]="bem.element('keyboard-list')">
-            <div
-              *ngFor="let i of [1, 2, 3, 4, 5]"
-              [class]="bem.element('keyboard-item')"
-              tabindex="0"
-              (keydown)="handleKeyDown($event)"
-              (click)="handleItemClick(i)"
-            >
-              Item {{ i }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+              <p>Use arrow keys to navigate between items, and Enter or Space to activate:</p>
+              <nb-list>
+                <nb-list-item
+                  *ngFor="let i of [1, 2, 3, 4, 5]"
+                  tabindex="0"
+                  (keydown)="handleKeyDown($event)"
+                  (click)="handleItemClick(i)"
+                >
+                  <nb-icon icon="arrow-right-outline"></nb-icon> Item {{ i }}
+                </nb-list-item>
+              </nb-list>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
 
     <!-- ARIA Attributes -->
-    <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">ARIA Attributes</h2>
-      <p>
-        ARIA (Accessible Rich Internet Applications) attributes provide additional information to
-        assistive technologies about the roles, states, and properties of elements.
-      </p>
+    <nb-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">ARIA Attributes</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <p>
+          ARIA (Accessible Rich Internet Applications) attributes provide additional information to
+          assistive technologies about the roles, states, and properties of elements.
+        </p>
 
-      <div [class]="bem.element('example')">
-        <div [class]="bem.element('aria-grid')">
-          <div *ngFor="let example of ariaExamples" [class]="bem.element('aria-item')">
-            <h4 [class]="bem.element('aria-name')">{{ example.name }}</h4>
-            <p [class]="bem.element('aria-description')">{{ example.description }}</p>
-            <pre [class]="bem.element('code')">{{ example.code }}</pre>
-          </div>
-        </div>
-      </div>
-    </section>
+        <nb-tabset fullWidth>
+          <nb-tab *ngFor="let example of ariaExamples" [tabTitle]="example.name">
+            <div class="p-4">
+              <h4>{{ example.name }}</h4>
+              <p>{{ example.description }}</p>
+              <nb-card accent="info">
+                <nb-card-body>
+                  <pre [class]="bem.element('code')">{{ example.code }}</pre>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
 
     <!-- Focus Management -->
     <section [class]="bem.element('section')">
@@ -235,33 +257,39 @@
     </section>
 
     <!-- Resources -->
-    <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Resources</h2>
-      <ul [class]="bem.element('resources-list')">
-        <li>
-          <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank"
-            >WCAG 2.1 Quick Reference</a
-          >
-        </li>
-        <li>
-          <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank"
-            >ARIA Authoring Practices Guide</a
-          >
-        </li>
-        <li>
-          <a href="https://webaim.org/resources/contrastchecker/" target="_blank"
-            >WebAIM Contrast Checker</a
-          >
-        </li>
-        <li>
-          <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility" target="_blank"
-            >MDN Web Accessibility</a
-          >
-        </li>
-        <li>
-          <a href="https://www.deque.com/axe/" target="_blank">axe Accessibility Testing Tools</a>
-        </li>
-      </ul>
-    </section>
+    <nb-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Resources</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item>
+            <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">
+              <nb-icon icon="external-link-outline"></nb-icon> WCAG 2.1 Quick Reference
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">
+              <nb-icon icon="external-link-outline"></nb-icon> ARIA Authoring Practices Guide
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://webaim.org/resources/contrastchecker/" target="_blank">
+              <nb-icon icon="color-palette-outline"></nb-icon> WebAIM Contrast Checker
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility" target="_blank">
+              <nb-icon icon="book-open-outline"></nb-icon> MDN Web Accessibility
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://www.deque.com/axe/" target="_blank">
+              <nb-icon icon="checkmark-circle-outline"></nb-icon> axe Accessibility Testing Tools
+            </a>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
   </main>
 </div>

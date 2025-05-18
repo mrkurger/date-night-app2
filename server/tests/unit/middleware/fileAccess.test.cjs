@@ -4,7 +4,7 @@
 
 // Import required modules
 const fs = require('fs');
-const { jest } = require('@jest/globals');
+// Using Jest's global object which is available in the test environment
 
 // Mock fs module
 jest.mock('fs', () => {

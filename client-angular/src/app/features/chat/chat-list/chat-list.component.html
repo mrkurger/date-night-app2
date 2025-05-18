@@ -1,100 +1,84 @@
-<div class="chat-list">
+<div class="chat-list-container">
   <!-- Header -->
-  <div class="chat-list__header">
-    <h1 class="chat-list__title">Messages</h1>
-    <button class="chat-list__new-chat" (click)="createNewChat()">
-      <i class="icon-add"></i>
+  <div class="chat-list-header">
+    <h4 class="chat-list-title">Messages</h4>
+    <button nbButton status="primary" size="small" (click)="createNewChat()">
+      <nb-icon icon="plus-outline"></nb-icon>
       <span>New Chat</span>
     </button>
   </div>
 
   <!-- Loading State -->
-  <div class="chat-list__loading" *ngIf="loading">
-    <div class="spinner"></div>
-    <div>Loading conversations...</div>
+  <div class="state-container loading-state" *ngIf="loading">
+    <nb-spinner status="primary" size="medium"></nb-spinner>
+    <p>Loading conversations...</p>
   </div>
 
   <!-- Error State -->
-  <div class="chat-list__error" *ngIf="error && !loading">
-    <div class="error-message">
-      <i class="icon-error"></i>
-      <p>Failed to load conversations</p>
-      <button class="btn btn--primary" (click)="loadRooms()">Retry</button>
-    </div>
+  <div class="state-container error-state" *ngIf="error && !loading">
+    <nb-icon icon="alert-circle-outline" status="danger" class="state-icon"></nb-icon>
+    <p>Failed to load conversations</p>
+    <button nbButton status="primary" outline size="small" (click)="loadRooms()">
+      <nb-icon icon="refresh-outline"></nb-icon> Retry
+    </button>
   </div>
 
   <!-- Empty State -->
-  <div class="chat-list__empty" *ngIf="!loading && !error && rooms.length === 0">
-    <div class="chat-list__empty-icon">
-      <i class="icon-chat"></i>
-    </div>
-    <div class="chat-list__empty-text">No conversations yet</div>
-    <button class="btn btn--primary" (click)="createNewChat()">Start a new conversation</button>
+  <div class="state-container empty-state" *ngIf="!loading && !error && rooms.length === 0">
+    <nb-icon icon="message-square-outline" class="state-icon"></nb-icon>
+    <p>No conversations yet</p>
+    <button nbButton status="primary" size="small" (click)="createNewChat()">
+      Start a new conversation
+    </button>
   </div>
 
   <!-- Room List -->
-  <div class="chat-list__rooms" *ngIf="!loading && !error && rooms.length > 0">
-    <div
-      class="chat-room-item"
+  <nb-list class="room-list" *ngIf="!loading && !error && rooms.length > 0">
+    <nb-list-item
       *ngFor="let room of rooms"
-      [class.unread]="hasUnreadMessages(room)"
-      [class.pinned]="room.pinned"
+      class="room-item"
+      [class.active]="room.id === selectedRoomId"
       (click)="goToRoom(room.id)"
     >
-      <!-- Room Avatar -->
-      <div class="chat-room-item__avatar">
-        <img src="/assets/img/default-profile.jpg" [alt]="getOtherUserName(room)" />
-        <span class="chat-room-item__status" [class.online]="true"></span>
-      </div>
-
-      <!-- Room Details -->
-      <div class="chat-room-item__details">
-        <div class="chat-room-item__header">
-          <div class="chat-room-item__name">
-            {{ getOtherUserName(room) }}
-            <span class="chat-room-item__pin-indicator" *ngIf="room.pinned">
-              <i class="icon-pin"></i>
-            </span>
-          </div>
-          <div class="chat-room-item__time">
-            {{ getLastMessageTime(room) | timeAgo }}
-          </div>
+      <app-avatar
+        [imageUrl]="room.avatar || '/assets/img/default-profile.jpg'"
+        [name]="getOtherUserName(room)"
+        [status]="isRoomOnline(room) ? 'online' : 'offline'"
+        size="medium"
+      >
+      </app-avatar>
+      <div class="room-details">
+        <div class="room-header">
+          <span class="room-name">{{ getOtherUserName(room) }}</span>
+          <span class="room-time">{{ getLastMessageTime(room) | timeAgo }}</span>
         </div>
-
-        <div class="chat-room-item__message">
-          {{ getLastMessagePreview(room) }}
-        </div>
-
-        <div class="chat-room-item__footer">
-          <div class="chat-room-item__encryption" *ngIf="room.encryptionEnabled">
-            <i class="icon-lock"></i>
-          </div>
-
-          <div class="chat-room-item__badge" *ngIf="hasUnreadMessages(room)">
-            {{ room.unreadCount }}
-          </div>
+        <div class="room-message-preview">
+          <p class="last-message-text">{{ getLastMessagePreview(room) }}</p>
+          <nb-badge
+            *ngIf="hasUnreadMessages(room)"
+            [text]="room.unreadCount"
+            status="primary"
+            position="center-right"
+            class="unread-indicator"
+          >
+          </nb-badge>
         </div>
       </div>
-
-      <!-- Room Actions -->
-      <div class="chat-room-item__actions">
+      <div class="room-actions">
         <button
-          class="chat-room-item__action-btn"
-          [class.active]="room.pinned"
+          nbButton
+          ghost
+          size="tiny"
+          nbTooltip="{{ room.pinned ? 'Unpin' : 'Pin' }}"
           (click)="togglePin($event, room)"
-          title="{{ room.pinned ? 'Unpin' : 'Pin' }}"
+          [class.active]="room.pinned"
         >
-          <i class="icon-pin"></i>
+          <nb-icon icon="pin-outline"></nb-icon>
         </button>
-
-        <button
-          class="chat-room-item__action-btn"
-          (click)="archiveRoom($event, room)"
-          title="Archive"
-        >
-          <i class="icon-archive"></i>
+        <button nbButton ghost size="tiny" nbTooltip="Archive" (click)="archiveRoom($event, room)">
+          <nb-icon icon="archive-outline"></nb-icon>
         </button>
       </div>
-    </div>
-  </div>
+    </nb-list-item>
+  </nb-list>
 </div>

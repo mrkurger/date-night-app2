@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
+import { _NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 

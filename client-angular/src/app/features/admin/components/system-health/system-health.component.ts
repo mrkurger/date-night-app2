@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import { NbToastrService, NbCardModule, NbProgressBarModule, NbBadgeModule } from '@nebular/theme';
-import {} from '../../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -28,8 +27,7 @@ interface TimeSeriesData {
 @Component({
   selector: 'app-system-health',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     NgxChartsModule,
 

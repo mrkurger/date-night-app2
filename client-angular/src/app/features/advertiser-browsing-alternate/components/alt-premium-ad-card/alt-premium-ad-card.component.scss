@@ -1,0 +1,152 @@
+@use '@nebular/theme/styles/theming' as *;
+
+.alt-premium-ad-card {
+  display: block; // Or inline-block if used in a flow that needs it
+  min-width: 280px; // From React component
+  // transition: all 0.3s ease; // Nebular cards have transitions
+
+  &:hover {
+    // box-shadow: nb-theme(shadow-xl); // Example of enhanced shadow on hover
+    // Or use a specific color shadow like the React version: shadow-pink-500/20
+    box-shadow: 0 0 15px 2px rgba(nb-theme(color-primary-500), 0.2);
+  }
+
+  .ad-image-container {
+    position: relative;
+    aspect-ratio: 3 / 4; // Maintain aspect ratio
+    overflow: hidden;
+    border-top-left-radius: nb-theme(card-border-radius);
+    border-top-right-radius: nb-theme(card-border-radius);
+
+    .ad-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    &:hover .ad-image {
+      transform: scale(1.05);
+    }
+
+    .badges-container {
+      position: absolute;
+      top: nb-theme(spacing-sm);
+      left: nb-theme(spacing-sm);
+      display: flex;
+      flex-direction: column; // Stack badges if multiple appear in same corner
+      gap: nb-theme(spacing-xs);
+      z-index: 1;
+      // Individual badge positioning if they are in different corners:
+      .premium-badge {
+        /* Top-left default */
+      }
+      .online-badge {
+        // position: absolute; bottom: nb-theme(spacing-sm); left: nb-theme(spacing-sm);
+      }
+      .vip-badge {
+        // position: absolute; bottom: nb-theme(spacing-sm); right: nb-theme(spacing-sm);
+      }
+    }
+
+    .favorite-button-placeholder {
+      // TODO: Replace with actual favorite button
+      position: absolute;
+      top: nb-theme(spacing-sm);
+      right: nb-theme(spacing-sm);
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: nb-theme(button-border-radius);
+      font-size: 0.75rem;
+    }
+
+    .hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        transparent 100%
+      );
+      padding: nb-theme(card-padding-medium);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 2;
+
+      &.visible {
+        opacity: 1;
+      }
+
+      .overlay-actions {
+        display: flex;
+        gap: nb-theme(spacing-sm);
+        margin-bottom: nb-theme(spacing-sm);
+        button[nbButton] {
+          flex: 1;
+          // Colors are set by status, ensure they are visible on dark overlay
+          nb-icon {
+            margin-right: nb-theme(spacing-xs);
+          }
+        }
+      }
+      .overlay-tags {
+        .tag-item {
+          font-size: nb-theme(text-caption-2-font-size);
+          color: nb-theme(text-control-color); // White on dark overlay
+          margin-right: nb-theme(spacing-sm);
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  nb-card-body {
+    padding: nb-theme(card-padding-medium);
+    .ad-info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: nb-theme(spacing-xs);
+      .ad-name {
+        font-size: nb-theme(text-subtitle-font-size);
+        font-weight: nb-theme(text-subtitle-font-weight);
+        color: nb-theme(text-basic-color);
+        margin: 0;
+      }
+      .ad-rating {
+        display: flex;
+        align-items: center;
+        font-size: nb-theme(text-paragraph-2-font-size);
+        color: nb-theme(text-hint-color);
+        nb-icon {
+          font-size: 1rem; // Adjust star size
+          margin-right: nb-theme(spacing-xxs);
+          // status="warning" handles color
+        }
+      }
+    }
+    .ad-location {
+      font-size: nb-theme(text-caption-font-size);
+      color: nb-theme(text-hint-color);
+      margin-bottom: nb-theme(spacing-sm);
+    }
+    .ad-description {
+      font-size: nb-theme(text-paragraph-2-font-size);
+      color: nb-theme(text-basic-color);
+      line-height: 1.4;
+      // For line-clamp-2 from Tailwind:
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: (1.4em * 2); // Match line height * number of lines
+    }
+  }
+}

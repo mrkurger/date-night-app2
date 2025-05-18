@@ -288,12 +288,12 @@ describe('Review Model', () => {
 
     it('should allow advertiser to respond to a review', async () => {
       const review = new Review(TEST_REVIEW_DATA);
-      const savedReview = await review.save();
+      let savedReview = await review.save();
 
       expect(savedReview.advertiserResponse).toBeUndefined();
 
       const responseContent = 'Thank you for your review!';
-      await savedReview.respondToReview(responseContent);
+      savedReview = await savedReview.respondToReview(responseContent);
 
       expect(savedReview.advertiserResponse).toBeDefined();
       expect(savedReview.advertiserResponse.content).toBe(responseContent);

@@ -7,7 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import { User } from '../users';
+import { User } from '../../models/user.model.js';
 
 export default io => {
   // Store user socket mappings

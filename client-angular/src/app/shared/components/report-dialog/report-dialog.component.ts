@@ -1,14 +1,14 @@
 import {
   NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbIconModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { Component, Inject } from '@angular/core';
 // ===================================================
@@ -26,7 +26,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-  FormControl,
+  _FormControl,
 } from '@angular/forms';
 
 export interface ReportDialogData {
@@ -42,17 +42,8 @@ export interface ReportDialogData {
 @Component({
   selector: 'app-report-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbIconModule,
-  ],
+  imports: [CommonModule,
+    ReactiveFormsModule],
   template: `
     <nb-card class="report-dialog">
       <nb-card-header class="dialog-header">

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbFormFieldModule,
@@ -31,8 +32,7 @@ import { LocationService } from '../../../core/services/location.service';
   styleUrls: ['./ad-form.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbFormFieldModule,
@@ -140,8 +140,10 @@ export class AdFormComponent implements OnInit {
 
           // Create preview
           const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.imagePreviewUrls.push(e.target.result);
+          reader.onload = (e: ProgressEvent<FileReader>) => {
+            if (e.target && e.target.result) {
+              this.imagePreviewUrls.push(e.target.result as string);
+            }
           };
           reader.readAsDataURL(file);
         }

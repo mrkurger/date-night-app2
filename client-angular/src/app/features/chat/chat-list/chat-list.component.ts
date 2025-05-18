@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -26,7 +27,7 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
   selector: 'app-chat-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
+  imports: [NebularModule, CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })

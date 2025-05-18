@@ -1,4 +1,9 @@
-<app-main-layout activeView="tinder">
+<div class="tinder-view-container" [class.dark-theme]="isDarkMode">
+  <div class="mobile-header md:hidden">
+    <button nbButton ghost (click)="goBack()">
+      <nb-icon icon="arrow-left"></nb-icon>
+    </button>
+  </div>
   <div class="tinder-container">
     <div class="tinder-header">
       <h1 class="tinder-title">Discover</h1>
@@ -127,4 +132,4 @@
       </nb-card-footer>
     </nb-card>
   </ng-template>
-</app-main-layout>
+</div>

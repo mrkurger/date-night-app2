@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectorRef } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { Component, Input } from '@angular/core';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 

@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   FormBuilder,
 } from '@angular/forms';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbDialogRef,
   NbCardModule,
@@ -42,8 +43,7 @@ export interface TransferDialogData {
   styleUrls: ['./transfer-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbButtonModule,

@@ -1,0 +1,68 @@
+@use '@nebular/theme/styles/theming' as *;
+
+.chat-widget-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  background-color: nb-theme(color-primary-default);
+  color: nb-theme(text-control-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: nb-theme(shadow-lg);
+  cursor: pointer;
+  z-index: nb-theme(z-index-overlay);
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: nb-theme(color-primary-hover);
+  }
+
+  nb-icon {
+    font-size: 1.75rem;
+  }
+}
+
+.chat-widget-window {
+  position: fixed;
+  bottom: 2rem; // Or bottom: calc(2rem + 56px + 1rem) to sit above FAB
+  right: 2rem;
+  width: 350px;
+  max-height: 500px;
+  z-index: nb-theme(z-index-modal); // Ensure it's above most content but potentially below modals
+  display: flex; // For nb-card to take full height if needed
+  flex-direction: column;
+
+  nb-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: nb-theme(shadow-xl);
+  }
+
+  nb-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // Nebular default header styling is usually good
+  }
+
+  nb-card-body {
+    padding: nb-theme(card-padding-medium);
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  nb-card-footer {
+    display: flex;
+    gap: nb-theme(spacing-sm);
+    align-items: center;
+    .chat-input {
+      flex-grow: 1;
+    }
+  }
+}

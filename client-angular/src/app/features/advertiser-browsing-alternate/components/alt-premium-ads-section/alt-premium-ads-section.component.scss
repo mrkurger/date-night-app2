@@ -1,0 +1,91 @@
+@use '@nebular/theme/styles/theming' as *;
+
+.premium-ads-section {
+  margin-bottom: 2rem;
+  // padding: 1rem; // Padding handled by internal elements or not needed if full bleed
+  // background-color: nb-theme(background-basic-color-2);
+  // border-radius: nb-theme(card-border-radius);
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem; // Slight horizontal padding for header elements
+  }
+
+  .section-title {
+    font-size: 1.75rem; // Made slightly larger
+    font-weight: 600;
+    // color: nb-theme(text-primary-color); // Keep if pink/primary title desired
+    color: nb-theme(text-basic-color);
+  }
+
+  .view-all-link {
+    font-size: nb-theme(text-paragraph-2-font-size);
+    color: nb-theme(text-primary-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    nb-icon {
+      margin-left: nb-theme(spacing-xxs);
+    }
+    &:hover {
+      color: nb-theme(text-primary-hover-color);
+    }
+  }
+
+  .scroll-wrapper {
+    position: relative; // For absolute positioning of scroll buttons
+  }
+
+  .premium-ads-grid-scrollable {
+    // Renamed from premium-ads-grid
+    display: flex; // Changed from grid to flex for horizontal scrolling
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem; // For scrollbar or just spacing if scrollbar is hidden
+    scroll-snap-type: x mandatory; // For snap scrolling from React version
+
+    // Hide scrollbar (cross-browser)
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    .premium-ad-item {
+      // Target the wrapper around app-alt-premium-ad-card
+      flex: 0 0 auto; // Prevent flex items from shrinking/growing, maintain their width
+      scroll-snap-align: start; // Snap alignment
+    }
+  }
+
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(
+      nb-theme(background-basic-color-1),
+      0.8
+    ) !important; // Semi-transparent background
+    border-color: nb-theme(border-basic-color-4) !important;
+    box-shadow: nb-theme(shadow-md);
+
+    &.prev {
+      left: -16px; // Adjust for visibility outside the scroll container
+    }
+    &.next {
+      right: -16px; // Adjust for visibility
+    }
+    &:hover {
+      background-color: rgba(nb-theme(background-basic-color-2), 0.9) !important;
+    }
+    nb-icon {
+      color: nb-theme(text-basic-color);
+    }
+  }
+
+  // Styles for the card itself are in alt-premium-ad-card.component.scss
+}

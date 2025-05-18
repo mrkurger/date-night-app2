@@ -1,12 +1,11 @@
-import {} from '../../../../shared/nebular.module';
-import { NbTableModule, NbDialogService } from '@nebular/theme';
+import { _NbTableModule, NbDialogService } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for component configuration (error-dashboard.component)
 //
 // COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
+// - SETTING_NAME: Description _of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
@@ -15,7 +14,7 @@ import {
   OnDestroy,
   ViewChild,
   TemplateRef,
-  Input,
+  _Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
@@ -30,8 +29,8 @@ import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { TelemetrySocketService } from '../../../../core/services/telemetry-socket.service';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { catchError, finalize, takeUntil } from 'rxjs/operators';
-import { of, Subject } from 'rxjs';
+import { _catchError, finalize, takeUntil } from 'rxjs/operators';
+import { _of, Subject } from 'rxjs';
 
 // Define interfaces for pagination and sorting
 interface ErrorData {
@@ -149,7 +148,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
         .onErrorUpdate()
         .pipe(takeUntil(this.destroy$))
         .subscribe(
-          (update) => {
+          (_update) => {
             this.loadDashboardData();
           },
           (error) => {

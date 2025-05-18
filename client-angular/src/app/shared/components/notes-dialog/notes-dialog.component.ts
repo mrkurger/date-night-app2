@@ -1,12 +1,12 @@
 import {
   NbDialogRef,
-  NbDialogModule,
-  NbCardModule,
-  NbButtonModule,
-  NbFormFieldModule,
-  NbInputModule,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { Component, OnInit, Inject } from '@angular/core';
 // ===================================================
@@ -29,15 +29,8 @@ export interface NotesDialogData {
 @Component({
   selector: 'app-notes-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbDialogModule,
-    NbCardModule,
-    NbButtonModule,
-    NbFormFieldModule,
-    NbInputModule,
-  ],
+  imports: [CommonModule,
+    FormsModule],
   template: `
     <nb-card>
       <nb-card-header>{{ data.title }}</nb-card-header>

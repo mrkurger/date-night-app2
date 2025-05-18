@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -21,8 +22,7 @@ import {
   styleUrls: ['./wallet.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     NbCardModule,
     NbButtonModule,

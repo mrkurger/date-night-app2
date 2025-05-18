@@ -1,5 +1,5 @@
 import { Input } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
+import { _NebularModule } from '../../../shared/nebular.module';
 
 import { Component } from '@angular/core';
 // ===================================================

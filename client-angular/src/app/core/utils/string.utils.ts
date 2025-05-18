@@ -141,7 +141,7 @@ export function formatDate(
  * @param locale The locale to use for formatting (default: 'nb-NO')
  * @returns The relative time string
  */
-export function formatRelativeTime(date: Date | string | number, locale = 'nb-NO'): string {
+export function formatRelativeTime(date: Date | string | number, _locale = 'nb-NO'): string {
   if (!date) {
     return '';
   }
@@ -294,7 +294,7 @@ export function extractDomain(url: string, includeSubdomain = false): string {
       return parts.slice(-2).join('.');
     }
     return hostname;
-  } catch (error) {
+  } catch (_error) {
     return '';
   }
 }

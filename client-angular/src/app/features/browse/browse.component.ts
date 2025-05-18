@@ -15,6 +15,14 @@ import { TinderComponent } from '../tinder/tinder.component';
 import { ListViewComponent } from '../list-view/list-view.component';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
+import { NebularModule } from '../../../app/shared/nebular.module';
+import {
+  NbCardModule,
+  NbTabsetModule,
+  NbIconModule,
+  NbButtonModule,
+  NbLayoutModule,
+} from '@nebular/theme';
 
 @Component({
   selector: 'app-browse',
@@ -22,7 +30,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./browse.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterModule],
+  imports: [NebularModule, CommonModule,
+    RouterModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
+    NetflixViewComponent,
+    TinderComponent,
+    ListViewComponent,
+  ],
 })
 export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -71,17 +89,34 @@ export class BrowseComponent implements OnInit, OnDestroy {
    * Change the active view and update user preferences
    * @param view The view to change to
    */
-  changeView(view: 'netflix' | 'tinder' | 'list'): void {
-    this.activeView = view;
+  changeView(view: string): void {
+    // Map the tab title to the view type
+    let viewType: 'netflix' | 'tinder' | 'list';
+
+    switch (view.toLowerCase()) {
+      case 'discover':
+        viewType = 'netflix';
+        break;
+      case 'swipe':
+        viewType = 'tinder';
+        break;
+      case 'list':
+        viewType = 'list';
+        break;
+      default:
+        viewType = 'netflix';
+    }
+
+    this.activeView = viewType;
 
     // Update the URL without reloading the page
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { view },
+      queryParams: { view: viewType },
       queryParamsHandling: 'merge',
     });
 
     // Save the view preference
-    this.userPreferencesService.setDefaultViewType(view);
+    this.userPreferencesService.setDefaultViewType(viewType);
   }
 }

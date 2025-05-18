@@ -6,9 +6,9 @@
 
     <nb-card-body>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div *ngIf="errorMessage" class="error-message">
+        <nb-alert status="danger" *ngIf="errorMessage" class="error-alert">
           {{ errorMessage }}
-        </div>
+        </nb-alert>
 
         <nb-form-field class="full-width">
           <nb-icon nbPrefix icon="email-outline"></nb-icon>
@@ -98,7 +98,7 @@
             </button>
 
             <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
-              <nb-icon icon="apple-outline"></nb-icon> Apple
+              <nb-icon pack="custom" icon="apple"></nb-icon> Apple
             </button>
 
             <button
@@ -108,7 +108,7 @@
               type="button"
               (click)="socialLogin('microsoft')"
             >
-              <nb-icon icon="microsoft-outline"></nb-icon> Microsoft
+              <nb-icon pack="custom" icon="microsoft"></nb-icon> Microsoft
             </button>
           </div>
         </div>

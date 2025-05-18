@@ -1,8 +1,17 @@
-import {} from '@nebular/theme';
 import { Input } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+// ===================================================
+// DEPRECATION NOTICE
+// ===================================================
+// This MainLayoutComponent is deprecated and scheduled for removal.
+// It uses a custom layout system and non-Nebular components (e.g., Font Awesome icons).
+// The primary application layout is now handled by NavigationComponent (client-angular/src/app/core/components/navigation/navigation.component.ts)
+// which uses Nebular UI components.
+// Feature components should be structured to inject their content into NavigationComponent's <router-outlet>.
+// Any unique and still-required functionality from this component should be migrated to Nebular-compatible
+// shared components or services.
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================

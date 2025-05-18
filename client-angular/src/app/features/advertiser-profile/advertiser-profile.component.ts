@@ -1,4 +1,5 @@
 import { OnInit } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -59,8 +60,7 @@ import { Ad } from '../../core/models/ad.interface';
   styleUrls: ['./advertiser-profile.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,

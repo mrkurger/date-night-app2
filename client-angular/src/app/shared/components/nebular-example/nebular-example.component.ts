@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { StarRatingComponent } from '../star-rating/star-rating.component';
+// These imports are removed as we're using NebularModule instead
 
 /**
  * Example component demonstrating the use of Nebular components
@@ -13,20 +12,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 @Component({
   selector: 'app-nebular-example',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbAlertModule,
-    NbBadgeModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbUserModule,
-    NbTagModule,
-    StarRatingComponent,
-  ],
+  imports: [CommonModule, FormsModule, NebularModule, StarRatingComponent],
   template: `
     <div class="nebular-example">
       <nb-card>

@@ -16,12 +16,22 @@ import { v4 as uuidv4 } from 'uuid';
 import Ad from '../models/ad.model.js'; // Changed path and added .js extension
 
 // Get __dirname equivalent in ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+let __filename;
+let __dirname;
+
+try {
+  __filename = fileURLToPath(import.meta.url);
+  __dirname = path.dirname(__filename);
+} catch (_error) {
+  // Fallback for Jest environment where import.meta.url might not be available
+  __filename = __filename || '';
+  __dirname = __dirname || '';
+}
 
 class MediaService {
   constructor() {
-    // Adjusted paths to use the new __dirname and point to the correct relative 'uploads' directory
+    // Use the pre-defined __dirname from above
+    // Adjusted paths to use the __dirname and point to the correct relative 'uploads' directory
     // Assuming 'uploads' should be at the project root level, not relative to 'services'
     this.uploadDir = path.join(__dirname, '../../uploads'); // Go up two levels from services
     this.thumbnailDir = path.join(this.uploadDir, 'thumbnails');

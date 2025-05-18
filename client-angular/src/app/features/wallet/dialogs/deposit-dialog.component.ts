@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { WalletService, PaymentMethod, WalletBalance } from '../../../core/services/wallet.service';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbToastrService,
   NbDialogRef,
@@ -45,8 +46,7 @@ interface DepositDialogConfig {
   styleUrls: ['./deposit-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbDialogModule,
     NbCardModule,

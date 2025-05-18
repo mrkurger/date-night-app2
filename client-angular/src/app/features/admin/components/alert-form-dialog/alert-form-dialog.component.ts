@@ -1,16 +1,17 @@
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
   NbInputModule,
   NbFormFieldModule,
   NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
+  _NbSpinnerModule,
+  _NbAlertModule,
+  _NbTooltipModule,
+  _NbLayoutModule,
+  _NbBadgeModule,
+  _NbTagModule,
   NbSelectModule,
 } from '@nebular/theme';
 
@@ -30,8 +31,7 @@ import { AlertService } from '../../../../core/services/alert.service';
   selector: 'app-alert-form-dialog',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbButtonModule,

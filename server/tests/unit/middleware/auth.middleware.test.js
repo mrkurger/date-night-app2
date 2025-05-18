@@ -15,7 +15,8 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { protect, optionalAuth, restrictTo } from '../../../middleware/auth.js';
 import User from '../../../models/user.model.js';
-import { TokenBlacklist } from '../../../models/token-blacklist.model.js';
+// Import the default export, which is what auth.js uses
+import TokenBlacklistModel from '../../../models/token-blacklist.model.js';
 import authService from '../../../services/auth.service.js';
 
 // Alias protect as authenticate for backward compatibility with tests
@@ -32,12 +33,20 @@ import { mockModel } from '../../setup.js';
 // Set up mocks before using them
 jest.mock('../../../models/user.model.js');
 
-jest.mock('../../../models/token-blacklist.model.js', () => ({
-  TokenBlacklist: {
-    isBlacklisted: jest.fn().mockResolvedValue(false),
-    blacklist: jest.fn().mockResolvedValue(true),
-  },
-}));
+// Updated mock for token-blacklist.model.js
+// The actual module exports the Mongoose model as a default export.
+// auth.js imports this default export.
+// So, we need to mock the default export.
+jest.mock('../../../models/token-blacklist.model.js', () => {
+  const mockStaticMethods = {
+    isBlacklisted: jest.fn(), // Will be configured in beforeEach or tests
+    // Add other static methods of TokenBlacklist model if they are used
+  };
+  return {
+    __esModule: true, // Important for ES modules
+    default: mockStaticMethods, // This is what `import TokenBlacklist from '...'` will get
+  };
+});
 
 jest.mock('../../../services/auth.service.js');
 
@@ -67,8 +76,9 @@ describe('Auth Middleware', () => {
     res = mockResponse();
     next = mockNext;
 
-    // Mock TokenBlacklist.isBlacklisted
-    TokenBlacklist.isBlacklisted.mockResolvedValue(false);
+    // Configure the default mock behavior for TokenBlacklistModel.isBlacklisted
+    // TokenBlacklistModel here refers to the mocked default export's object
+    TokenBlacklistModel.isBlacklisted.mockResolvedValue(false);
 
     // Mock User.findById
     User.findById = jest.fn().mockResolvedValue(mockUser);
@@ -91,7 +101,7 @@ describe('Auth Middleware', () => {
 
       await authenticate(req, res, next);
 
-      expect(TokenBlacklist.isBlacklisted).toHaveBeenCalledWith(mockToken);
+      expect(TokenBlacklistModel.isBlacklisted).toHaveBeenCalledWith(mockToken);
       expect(User.findById).toHaveBeenCalled();
       expect(mockUser.save).toHaveBeenCalled();
       expect(req.user).toEqual(mockUser);
@@ -104,7 +114,7 @@ describe('Auth Middleware', () => {
 
       await authenticate(req, res, next);
 
-      expect(TokenBlacklist.isBlacklisted).toHaveBeenCalledWith(mockToken);
+      expect(TokenBlacklistModel.isBlacklisted).toHaveBeenCalledWith(mockToken);
       expect(User.findById).toHaveBeenCalled();
       expect(mockUser.save).toHaveBeenCalled();
       expect(req.user).toEqual(mockUser);
@@ -114,7 +124,7 @@ describe('Auth Middleware', () => {
 
     it('should return 401 if token is blacklisted', async () => {
       req.headers.authorization = `Bearer ${mockToken}`;
-      TokenBlacklist.isBlacklisted.mockResolvedValue(true);
+      TokenBlacklistModel.isBlacklisted.mockResolvedValue(true);
 
       await authenticate(req, res, next);
 
@@ -256,11 +266,8 @@ describe('Auth Middleware', () => {
 
     it('should authenticate user if valid token is provided', async () => {
       req.headers.authorization = `Bearer ${mockToken}`;
-
-      // Mock jwt.verify to return a decoded token
+      TokenBlacklistModel.isBlacklisted.mockResolvedValue(false); // Explicitly set for this test case
       jwt.verify.mockReturnValue({ id: mockUser._id, iat: Math.floor(Date.now() / 1000) - 3600 });
-
-      // Mock User.findById to return the mockUser
       User.findById.mockResolvedValue(mockUser);
 
       await optionalAuth(req, res, next);
@@ -271,7 +278,7 @@ describe('Auth Middleware', () => {
 
     it('should continue without authentication if token is blacklisted', async () => {
       req.headers.authorization = `Bearer ${mockToken}`;
-      TokenBlacklist.isBlacklisted.mockResolvedValue(true);
+      TokenBlacklistModel.isBlacklisted.mockResolvedValue(true);
 
       await optionalAuth(req, res, next);
 

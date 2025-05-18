@@ -59,6 +59,7 @@ describe('Safety Service', () => {
     _id: testUserId,
     username: 'testuser',
     email: 'test@example.com',
+    password: 'password123', // Add password to satisfy validation
     safetySettings: {
       emergencyContacts: [
         {

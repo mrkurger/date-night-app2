@@ -1,4 +1,3 @@
-import {} from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -148,7 +147,7 @@ export class SelectComponent implements ControlValueAccessor {
   /**
    * Function to call when the select value changes.
    */
-  onChange = (value: unknown): void => {
+  onChange = (_value: unknown): void => {
     // Will be overridden by registerOnChange
   };
 

@@ -9,6 +9,7 @@ import {
   Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -59,8 +60,7 @@ const TYPING_INDICATOR_DELAY = 500; // ms
   selector: 'app-chat',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     NbCardModule,
     NbButtonModule,

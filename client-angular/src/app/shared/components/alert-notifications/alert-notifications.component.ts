@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NebularModule } from '../../nebular.module';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NbToastrService } from '@nebular/theme';
 
 @Component({

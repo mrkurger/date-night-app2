@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
   NbInputModule,
   NbFormFieldModule,
   NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
+  _NbSpinnerModule,
+  _NbAlertModule,
   NbTooltipModule,
   NbBadgeModule,
   NbTagModule,
@@ -31,7 +32,7 @@ import {
   AlertEvent,
   AlertSeverity,
   AlertConditionType,
-  AlertTimeWindow,
+  _AlertTimeWindow,
   AlertChannel,
 } from '../../../../core/models/alert.model';
 import { Subject } from 'rxjs';
@@ -42,8 +43,7 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
   selector: 'app-alert-management',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbButtonModule,
@@ -60,9 +60,6 @@ import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog
     NbTabsetModule,
     AppSortComponent,
     AppSortHeaderComponent,
-    ,
-    ,
-    ,
     NbPaginatorModule,
   ],
   template: `
@@ -496,7 +493,7 @@ export class AlertManagementComponent implements OnInit, OnDestroy {
       });
   }
 
-  viewAlertDetails(event: AlertEvent): void {
+  viewAlertDetails(_event: AlertEvent): void {
     // TODO: Implement alert details dialog
   }
 }

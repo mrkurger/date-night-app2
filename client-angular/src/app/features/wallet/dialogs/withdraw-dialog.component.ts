@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbDialogRef,
   NB_DIALOG_CONFIG,
@@ -31,7 +32,7 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 
-import { SharedModule } from '../../../shared/shared.module';
+import { _SharedModule } from '../../../shared/shared.module';
 import { WalletService } from '../../../core/services/wallet.service';
 
 export interface WalletBalance {
@@ -134,8 +135,7 @@ export interface WithdrawalRequest {
   styleUrls: ['./withdraw-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,

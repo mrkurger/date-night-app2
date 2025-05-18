@@ -5,15 +5,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import {
-  NbCardModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbButtonModule,
-  NbUserModule,
-  NbBadgeModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
 
 import { ChatMessage } from '../../../core/services/chat.service';
@@ -26,18 +26,10 @@ import { FileSizePipe } from '../../pipes/file-size.pipe';
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbButtonModule,
-    NbUserModule,
-    NbBadgeModule,
+  imports: [CommonModule,
     TimeAgoPipe,
     LinkifyPipe,
-    FileSizePipe,
-  ],
+    FileSizePipe],
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

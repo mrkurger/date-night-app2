@@ -29,7 +29,7 @@ export class AdDetailsComponent implements OnInit {
   error: string | null = null;
   isOwner = false;
   currentImageIndex = 0;
-  currentImage: any = null;
+  currentImage: { url: string; type?: string } | null = null;
   currentImageUrl = '';
   favorites: string[] = [];
 

@@ -10,7 +10,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 

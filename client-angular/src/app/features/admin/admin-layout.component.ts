@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbLayoutModule,
   NbSidebarModule,
@@ -15,8 +16,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-admin-layout',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     NbSidebarModule,
     NbLayoutModule,

@@ -1,0 +1,25 @@
+<div class="chat-widget-fab" (click)="toggleChat()">
+  <nb-icon icon="message-circle-outline"></nb-icon>
+</div>
+
+<div class="chat-widget-window" *ngIf="isOpen">
+  <nb-card>
+    <nb-card-header>
+      <span>Chat</span>
+      <button nbButton ghost size="tiny" (click)="toggleChat()">
+        <nb-icon icon="close-outline"></nb-icon>
+      </button>
+    </nb-card-header>
+    <nb-card-body>
+      <p>Chat window placeholder. Full chat functionality to be implemented.</p>
+      <!-- <nb-chat title="Support Chat">
+        <nb-chat-message type="text" message="Hello! How can I help you?" reply="false" sender="Support Agent" date="new Date()" avatar="/assets/img/support-avatar.png"></nb-chat-message>
+      </nb-chat> -->
+    </nb-card-body>
+    <nb-card-footer *ngIf="false">
+      <!-- Hidden for now -->
+      <input nbInput placeholder="Type your message..." class="chat-input" />
+      <button nbButton status="primary" size="small">Send</button>
+    </nb-card-footer>
+  </nb-card>
+</div>

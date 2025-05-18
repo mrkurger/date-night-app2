@@ -1,0 +1,19 @@
+<div class="paid-placement-sidebar">
+  <h4>Sponsored</h4>
+  <div *ngIf="ads.length === 0" class="no-sponsored-ads">
+    <p>Advertise here!</p>
+  </div>
+  <nb-card *ngFor="let ad of ads" class="paid-ad-item">
+    <nb-card-body>
+      <img
+        [src]="ad.image || '/assets/img/default-placeholder.png'"
+        [alt]="ad.name"
+        class="ad-image-placeholder-small"
+      />
+      <div class="ad-info">
+        <h6>{{ ad.name }}</h6>
+        <p class="ad-location-small">{{ ad.location }}</p>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

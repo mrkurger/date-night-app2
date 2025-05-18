@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { _Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';

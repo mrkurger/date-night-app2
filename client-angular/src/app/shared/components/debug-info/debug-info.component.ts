@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NebularModule } from '../../nebular.module';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import { environment } from '../../../../environments/environment';
 import {
-  NbCardModule,
-  NbIconModule,
-  NbButtonModule,
-  NbListModule,
-  NbAccordionModule,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -22,15 +22,8 @@ import {
 @Component({
   selector: 'app-debug-info',
   standalone: true,
-  imports: [
-    CommonModule,
-    NebularModule,
-    NbCardModule,
-    NbIconModule,
-    NbButtonModule,
-    NbListModule,
-    NbAccordionModule,
-  ],
+  imports: [CommonModule,
+    NebularModule],
   template: `
     <nb-card *ngIf="showDebugInfo" class="debug-info">
       <nb-card-header>

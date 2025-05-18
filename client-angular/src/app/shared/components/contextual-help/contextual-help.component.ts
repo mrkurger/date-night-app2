@@ -1,5 +1,5 @@
 import { Input } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';

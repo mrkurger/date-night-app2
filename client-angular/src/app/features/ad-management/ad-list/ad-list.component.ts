@@ -14,6 +14,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { Ad } from '../../../core/models/ad.model';
 
 @Component({
   selector: 'app-ad-list',
@@ -23,7 +24,7 @@ import { NotificationService } from '../../../core/services/notification.service
   imports: [CommonModule, RouterModule, SharedModule],
 })
 export class AdListComponent implements OnInit {
-  ads: any[] = [];
+  ads: Ad[] = [];
   loading = false;
   error = '';
 

@@ -1,0 +1,52 @@
+@use '@nebular/theme/styles/theming' as *;
+
+.paid-placement-sidebar {
+  padding: nb-theme(card-padding-medium);
+  background-color: nb-theme(background-basic-color-1); // Or a slightly different shade
+  border-radius: nb-theme(card-border-radius);
+  // border: 1px solid nb-theme(divider-color); // Optional border
+  min-width: 250px; // Ensure it has some width
+
+  h4 {
+    font-size: nb-theme(text-subtitle-2-font-size);
+    font-weight: nb-theme(text-subtitle-2-font-weight);
+    color: nb-theme(text-hint-color);
+    margin-bottom: nb-theme(spacing-md);
+    text-transform: uppercase;
+  }
+
+  .no-sponsored-ads {
+    text-align: center;
+    padding: nb-theme(padding-md) 0;
+    color: nb-theme(text-disabled-color);
+  }
+
+  .paid-ad-item {
+    margin-bottom: nb-theme(spacing-md);
+    nb-card-body {
+      display: flex;
+      align-items: center;
+      gap: nb-theme(spacing-sm);
+      padding: nb-theme(card-padding-small); // Smaller padding for these items
+    }
+    .ad-image-placeholder-small {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: nb-theme(button-border-radius); // Or card-border-radius if preferred
+    }
+    .ad-info {
+      h6 {
+        font-size: nb-theme(text-paragraph-font-size);
+        font-weight: nb-theme(text-paragraph-font-weight);
+        color: nb-theme(text-basic-color);
+        margin: 0 0 nb-theme(spacing-xxs) 0;
+      }
+      .ad-location-small {
+        font-size: nb-theme(text-caption-2-font-size);
+        color: nb-theme(text-hint-color);
+        margin: 0;
+      }
+    }
+  }
+}

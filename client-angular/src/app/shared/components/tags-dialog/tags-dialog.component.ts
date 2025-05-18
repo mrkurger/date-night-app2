@@ -1,17 +1,17 @@
 import { Component, Inject } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NbDialogRef,
   NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbTagModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
 
 export interface TagsDialogData {
@@ -28,17 +28,9 @@ export interface TagsDialogData {
 @Component({
   selector: 'app-tags-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbTagModule,
-  ],
+    ReactiveFormsModule],
   template: `
     <nb-card>
       <nb-card-header class="dialog-header">

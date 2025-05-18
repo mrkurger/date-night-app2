@@ -1,25 +1,30 @@
-@use '../../../assets/styles/design-system.scss' as ds;
+@use '@nebular/theme/styles/theming' as *;
 
-.profile-container {
-  padding: 2rem;
-  background-color: var(--background-basic-color-2);
-  min-height: 100vh;
+.profile-card {
+  margin: 2rem auto;
+  max-width: 800px;
 
-  nb-card {
-    margin: 0 auto;
-    max-width: 800px;
+  nb-card-header {
+    h2 {
+      margin: 0;
+      font-size: nb-theme(card-header-font-size);
+      font-weight: nb-theme(card-header-font-weight);
+    }
   }
 
-  h2 {
-    margin: 0;
-    color: var(--text-basic-color);
-    font-weight: 600;
+  nb-card-body {
+    padding: nb-theme(card-padding);
   }
 
-  .loading-spinner {
+  .loading-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 2rem;
+    nb-spinner {
+      margin-bottom: 1rem;
+    }
   }
 
   form {
@@ -28,56 +33,84 @@
     gap: 1.5rem;
   }
 
-  .profile-image-container {
+  .profile-image-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
 
-    .profile-image {
+    .profile-avatar {
       width: 150px;
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--border-basic-color-3);
+      border: 3px solid nb-theme(border-basic-color-3);
+      box-shadow: nb-theme(shadow);
     }
 
-    .image-upload {
-      display: flex;
-      gap: 1rem;
+    .change-photo-btn {
+      margin-top: 0.5rem;
     }
   }
 
   .form-row {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 1.5rem;
 
     nb-form-field {
       flex: 1;
     }
 
-    @media (max-width: 768px) {
+    @include nb-media-breakpoint-down(sm) {
       flex-direction: column;
       gap: 1.5rem;
     }
   }
 
+  nb-form-field {
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: nb-theme(label-text-font-weight);
+    }
+    .caption {
+      display: block;
+      margin-top: 0.25rem;
+    }
+    .caption.status-danger {
+      color: nb-theme(text-danger-color);
+    }
+    .caption:not(.status-danger) {
+      color: nb-theme(text-hint-color);
+    }
+  }
+
+  textarea[nbInput] {
+    min-height: 100px;
+  }
+
   .preferences-section {
-    background-color: var(--background-basic-color-1);
+    background-color: nb-theme(background-basic-color-2);
     padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin: 1.5rem 0;
+    border-radius: nb-theme(card-border-radius);
+    margin-top: 1.5rem;
 
     h3 {
       margin: 0 0 1.5rem;
-      color: var(--text-basic-color);
-      font-weight: 500;
+      font-size: 1.25rem;
+      font-weight: nb-theme(text-subtitle-font-weight);
+      border-bottom: 1px solid nb-theme(divider-color);
+      padding-bottom: 0.75rem;
     }
 
-    nb-toggle {
-      margin-bottom: 1.5rem;
+    nb-checkbox {
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    nb-form-field {
+      margin-bottom: 1rem;
     }
   }
 
@@ -87,26 +120,15 @@
     gap: 1rem;
     margin-top: 2rem;
 
-    button {
-      min-width: 120px;
+    button[nbButton] {
+      nb-spinner {
+        margin-left: 0.5rem;
+      }
     }
-  }
-
-  nb-form-field {
-    width: 100%;
-  }
-
-  .error-icon nb-icon {
-    color: var(--color-danger-default);
   }
 
   nb-alert {
     margin-bottom: 1.5rem;
-  }
-
-  textarea {
-    min-height: 100px;
-    resize: vertical;
   }
 }
 

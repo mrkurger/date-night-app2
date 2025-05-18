@@ -8,14 +8,100 @@
      Related to: other_file.scss:OTHER_SETTING
    =================================================== */
 
+@use '@nebular/theme/styles/theming' as *;
 @use '../../../core/design/typography-mixins' as typography;
 
-.chat-settings {
+.chat-settings-card {
   /* Dark theme adjustments */
   background-color: var(--background-basic-color-1);
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .chat-settings-title {
+    font-size: nb-theme(text-heading-5-font-size);
+    font-weight: nb-theme(text-heading-5-font-weight);
+    margin: 0;
+  }
+
+  .chat-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .settings-group {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid nb-theme(divider-color);
+    &:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .settings-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      .settings-group-title {
+        font-size: nb-theme(text-subtitle-font-size);
+        font-weight: nb-theme(text-subtitle-font-weight);
+        margin: 0;
+      }
+    }
+
+    .settings-group-description {
+      font-size: nb-theme(text-paragraph-2-font-size);
+      color: nb-theme(text-hint-color);
+      margin-bottom: 1rem;
+    }
+
+    nb-form-field {
+      margin-top: 0.5rem;
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: nb-theme(label-text-font-weight);
+      }
+    }
+
+    .encryption-info-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: nb-theme(card-padding-medium);
+      background-color: nb-theme(background-basic-color-2);
+      border-radius: nb-theme(card-border-radius);
+      margin-top: 0.5rem;
+
+      nb-icon {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: nb-theme(text-paragraph-2-font-size);
+        color: nb-theme(text-basic-color);
+        margin: 0;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button[nbButton] {
+      nb-spinner {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  nb-alert {
+    margin-top: 1.5rem;
+  }
 }
 
 .chat-settings__title {

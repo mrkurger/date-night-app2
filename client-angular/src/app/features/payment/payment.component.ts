@@ -16,6 +16,7 @@ import {
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -64,7 +65,7 @@ interface StripeCardElement {
   styleUrls: ['./payment.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [NebularModule, CommonModule, ReactiveFormsModule],
 })
 export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;

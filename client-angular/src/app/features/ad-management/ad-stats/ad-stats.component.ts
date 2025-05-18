@@ -7,13 +7,13 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, _Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
-import { NebularModule } from '../../shared/nebular.module';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
-  NbTableModule,
+  _NbTableModule,
   NbTreeGridDataSourceBuilder,
   NbSortDirection,
   NbSortRequest,

@@ -136,7 +136,7 @@ favoriteSchema.statics.toggleFavorite = async function (userId, adId) {
   const favorite = await this.findOne({ user: userId, ad: adId });
 
   if (favorite) {
-    await favorite.remove();
+    await Favorite.deleteOne({ _id: favorite._id });
     return { isFavorite: false };
   } else {
     await this.create({ user: userId, ad: adId });

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
+import { _NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -18,11 +18,7 @@ import {
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbUserModule,
+  imports: [CommonModule,
     RouterModule
   ],
 })

@@ -11,6 +11,8 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
+import { Ad } from '../../core/models/ad.model';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -25,8 +27,7 @@ import {
   styleUrls: ['./ad-browser.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     NbCardModule,
     NbButtonModule,
     NbIconModule,
@@ -35,11 +36,11 @@ import {
   ],
 })
 export class AdBrowserComponent implements OnInit {
-  ads: any[] = [];
+  ads: Ad[] = [];
   currentIndex = 0;
   loading = false;
   error: string | null = null;
-  favorites: any[] = [];
+  favorites: string[] = []; // Array of ad IDs
 
   constructor(
     private adService: AdService,
@@ -61,7 +62,7 @@ export class AdBrowserComponent implements OnInit {
         this.ads = response.ads;
         this.loading = false;
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
       },
@@ -81,22 +82,22 @@ export class AdBrowserComponent implements OnInit {
     }
   }
 
-  getCurrentAd(): any {
+  getCurrentAd(): Ad | undefined {
     return this.ads[this.currentIndex];
   }
 
-  toggleFavorite(ad: any): void {
-    const index = this.favorites.findIndex((fav) => fav._id === ad._id);
+  toggleFavorite(ad: Ad): void {
+    const index = this.favorites.findIndex((favId) => favId === ad._id);
     if (index === -1) {
-      this.favorites.push(ad);
+      this.favorites.push(ad._id);
     } else {
       this.favorites.splice(index, 1);
     }
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 
-  isFavorite(ad: any): boolean {
-    return this.favorites.some((fav) => fav._id === ad._id);
+  isFavorite(ad: Ad): boolean {
+    return this.favorites.includes(ad._id);
   }
 
   searchNearby(): void {
@@ -114,13 +115,13 @@ export class AdBrowserComponent implements OnInit {
             this.ads = data;
             this.loading = false;
           },
-          error: (err) => {
+          error: (_err) => {
             this.error = 'Failed to find nearby ads';
             this.loading = false;
           },
         });
       },
-      (error) => {
+      (_error) => {
         this.error = 'Unable to retrieve your location';
       },
     );

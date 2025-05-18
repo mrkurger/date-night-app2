@@ -18,7 +18,7 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { CoreModule } from './core/core.module';
-import { NebularModule } from './shared/nebular.module';
+import { _NebularModule } from './shared/nebular.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './core/config/socket.config';
 

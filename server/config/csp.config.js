@@ -42,12 +42,7 @@ const baseDirectives = {
 const developmentDirectives = {
   ...baseDirectives,
   'script-src': ["'self'", 'https://cdn.jsdelivr.net', ''],
-  'connect-src': [
-    ...baseDirectives['connect-src'],
-    'http://localhost:*',
-    'ws://localhost:*',
-    '',
-  ],
+  'connect-src': [...baseDirectives['connect-src'], 'http://localhost:*', 'ws://localhost:*', ''],
 };
 
 // Production-specific CSP directives

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -27,7 +28,7 @@ import {
 
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { ThemeService } from '../../core/services/theme.service';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
 import {
   UserPreferencesService,
   ContentDensity,
@@ -39,8 +40,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-user-settings',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
@@ -70,15 +70,60 @@ import { Subscription } from 'rxjs';
             </nb-card-header>
 
             <nb-card-body>
-              <nb-tabset fullWidth>
-                <!-- Profile Tab -->
-                <nb-tab tabTitle="Profile" tabIcon="person-outline">
+              <nb-tabset
+                fullWidth
+                (changeTab)="setActiveTab($event.tabTitle.toLowerCase())"
+                class="settings-tabset"
+              >
+                <nb-tab tabTitle="profile" [active]="activeTab === 'profile'">
+                  <ng-template nbTabIcon>
+                    <nb-icon icon="person-outline"></nb-icon>
+                  </ng-template>
+                  <!-- Content will be moved into nb-tab blocks or handled by activeTab in a single content area -->
+                </nb-tab>
+                <nb-tab tabTitle="security" [active]="activeTab === 'security'">
+                  <ng-template nbTabIcon>
+                    <nb-icon icon="lock-outline"></nb-icon>
+                  </ng-template>
+                </nb-tab>
+                <nb-tab tabTitle="notifications" [active]="activeTab === 'notifications'">
+                  <ng-template nbTabIcon>
+                    <nb-icon icon="bell-outline"></nb-icon>
+                  </ng-template>
+                </nb-tab>
+                <nb-tab tabTitle="privacy" [active]="activeTab === 'privacy'">
+                  <ng-template nbTabIcon>
+                    <nb-icon icon="shield-outline"></nb-icon>
+                  </ng-template>
+                </nb-tab>
+                <nb-tab tabTitle="display" [active]="activeTab === 'display'">
+                  <ng-template nbTabIcon>
+                    <nb-icon icon="monitor-outline"></nb-icon>
+                  </ng-template>
+                </nb-tab>
+              </nb-tabset>
+
+              <!-- Settings Content Area -->
+              <div class="settings-body">
+                <!-- Loading State -->
+                <div class="settings-loading" *ngIf="loading">
+                  <nb-spinner status="primary" size="large"></nb-spinner>
+                  <p>Loading your settings...</p>
+                </div>
+
+                <!-- Profile Settings Panel -->
+                <div class="settings-panel" *ngIf="activeTab === 'profile' && !loading">
+                  <h2 class="panel-title">Profile Information</h2>
+                  <p class="panel-description">
+                    Update your personal information and profile details
+                  </p>
                   <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
                     <nb-form-field>
                       <label for="name">Full Name</label>
                       <input
                         nbInput
                         fullWidth
+                        type="text"
                         id="name"
                         formControlName="name"
                         [status]="
@@ -88,13 +133,29 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="person-outline"></nb-icon>
+                      <div
+                        *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="profileForm.get('name')?.errors?.['required']"
+                        >
+                          Name is required
+                        </p>
+                        <p
+                          class="caption status-danger"
+                          *ngIf="profileForm.get('name')?.errors?.['minlength']"
+                        >
+                          Name must be at least 2 characters
+                        </p>
+                      </div>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="email">Email</label>
                       <input
                         nbInput
                         fullWidth
+                        type="email"
                         id="email"
                         formControlName="email"
                         [status]="
@@ -104,13 +165,31 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="email-outline"></nb-icon>
+                      <div
+                        *ngIf="
+                          profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+                        "
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="profileForm.get('email')?.errors?.['required']"
+                        >
+                          Email is required
+                        </p>
+                        <p
+                          class="caption status-danger"
+                          *ngIf="profileForm.get('email')?.errors?.['email']"
+                        >
+                          Please enter a valid email address
+                        </p>
+                      </div>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="phone">Phone</label>
                       <input
                         nbInput
                         fullWidth
+                        type="tel"
                         id="phone"
                         formControlName="phone"
                         [status]="
@@ -120,8 +199,20 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="phone-outline"></nb-icon>
+                      <div
+                        *ngIf="
+                          profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched
+                        "
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="profileForm.get('phone')?.errors?.['pattern']"
+                        >
+                          Please enter a valid phone number
+                        </p>
+                      </div>
+                      <p class="caption hint-text">Format: +47 12345678</p>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="bio">Bio</label>
                       <textarea
@@ -131,8 +222,8 @@ import { Subscription } from 'rxjs';
                         formControlName="bio"
                         rows="4"
                       ></textarea>
+                      <p class="caption hint-text">Tell others a bit about yourself</p>
                     </nb-form-field>
-
                     <div class="form-actions">
                       <button
                         nbButton
@@ -140,15 +231,16 @@ import { Subscription } from 'rxjs';
                         type="submit"
                         [disabled]="profileForm.invalid || loading"
                       >
-                        <nb-icon icon="save-outline"></nb-icon>
-                        Save Profile
+                        <nb-icon icon="save-outline"></nb-icon> Save Profile
                       </button>
                     </div>
                   </form>
-                </nb-tab>
+                </div>
 
-                <!-- Security Tab -->
-                <nb-tab tabTitle="Security" tabIcon="lock-outline">
+                <!-- Security Settings Panel -->
+                <div class="settings-panel" *ngIf="activeTab === 'security' && !loading">
+                  <h2 class="panel-title">Security Settings</h2>
+                  <p class="panel-description">Manage your password and account security</p>
                   <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
                     <nb-form-field>
                       <label for="currentPassword">Current Password</label>
@@ -166,8 +258,20 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                      <div
+                        *ngIf="
+                          passwordForm.get('currentPassword')?.invalid &&
+                          passwordForm.get('currentPassword')?.touched
+                        "
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="passwordForm.get('currentPassword')?.errors?.['required']"
+                        >
+                          Current password is required
+                        </p>
+                      </div>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="newPassword">New Password</label>
                       <input
@@ -184,8 +288,26 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                      <div
+                        *ngIf="
+                          passwordForm.get('newPassword')?.invalid &&
+                          passwordForm.get('newPassword')?.touched
+                        "
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="passwordForm.get('newPassword')?.errors?.['required']"
+                        >
+                          New password is required
+                        </p>
+                        <p
+                          class="caption status-danger"
+                          *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']"
+                        >
+                          Password must be at least 6 characters
+                        </p>
+                      </div>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="confirmPassword">Confirm Password</label>
                       <input
@@ -202,8 +324,26 @@ import { Subscription } from 'rxjs';
                         "
                       />
                       <nb-icon nbSuffix icon="lock-outline"></nb-icon>
+                      <div
+                        *ngIf="
+                          passwordForm.get('confirmPassword')?.invalid &&
+                          passwordForm.get('confirmPassword')?.touched
+                        "
+                      >
+                        <p
+                          class="caption status-danger"
+                          *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']"
+                        >
+                          Please confirm your new password
+                        </p>
+                        <p
+                          class="caption status-danger"
+                          *ngIf="passwordForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+                        >
+                          Passwords do not match
+                        </p>
+                      </div>
                     </nb-form-field>
-
                     <div class="form-actions">
                       <button
                         nbButton
@@ -211,52 +351,67 @@ import { Subscription } from 'rxjs';
                         type="submit"
                         [disabled]="passwordForm.invalid || loading"
                       >
-                        <nb-icon icon="save-outline"></nb-icon>
-                        Update Password
+                        <nb-icon icon="save-outline"></nb-icon> Update Password
                       </button>
                     </div>
                   </form>
-                </nb-tab>
+                  <div class="danger-zone">
+                    <h3 class="danger-title">Danger Zone</h3>
+                    <div class="danger-action">
+                      <div class="danger-info">
+                        <h4>Delete Account</h4>
+                        <p>
+                          Permanently delete your account and all associated data. This action
+                          cannot be undone.
+                        </p>
+                      </div>
+                      <button nbButton status="danger" (click)="deleteAccount()">
+                        <nb-icon icon="trash-2-outline"></nb-icon> Delete Account
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-                <!-- Notifications Tab -->
-                <nb-tab tabTitle="Notifications" tabIcon="bell-outline">
+                <!-- Notification Settings Panel -->
+                <div class="settings-panel" *ngIf="activeTab === 'notifications' && !loading">
+                  <h2 class="panel-title">Notification Preferences</h2>
+                  <p class="panel-description">Control how and when you receive notifications</p>
                   <form [formGroup]="notificationForm" (ngSubmit)="saveNotificationSettings()">
-                    <nb-toggle
-                      formControlName="emailNotifications"
-                      status="primary"
-                      labelPosition="start"
-                    >
-                      Email Notifications
-                    </nb-toggle>
-                    <p class="hint-text">Receive notifications via email</p>
+                    <div class="form-toggle-group">
+                      <nb-toggle
+                        formControlName="emailNotifications"
+                        status="primary"
+                        labelPosition="start"
+                        >Email Notifications</nb-toggle
+                      >
+                      <p class="caption hint-text">Receive notifications via email</p>
 
-                    <nb-toggle
-                      formControlName="chatNotifications"
-                      status="primary"
-                      labelPosition="start"
-                    >
-                      Chat Notifications
-                    </nb-toggle>
-                    <p class="hint-text">Receive notifications for new chat messages</p>
+                      <nb-toggle
+                        formControlName="chatNotifications"
+                        status="primary"
+                        labelPosition="start"
+                        >Chat Notifications</nb-toggle
+                      >
+                      <p class="caption hint-text">Receive notifications for new chat messages</p>
 
-                    <nb-toggle
-                      formControlName="marketingEmails"
-                      status="primary"
-                      labelPosition="start"
-                    >
-                      Marketing Emails
-                    </nb-toggle>
-                    <p class="hint-text">Receive promotional emails and updates</p>
+                      <nb-toggle
+                        formControlName="newMatchNotifications"
+                        status="primary"
+                        labelPosition="start"
+                        >New Match Notifications</nb-toggle
+                      >
+                      <p class="caption hint-text">
+                        Receive notifications when someone likes your profile
+                      </p>
 
-                    <nb-toggle
-                      formControlName="newMatchNotifications"
-                      status="primary"
-                      labelPosition="start"
-                    >
-                      New Match Notifications
-                    </nb-toggle>
-                    <p class="hint-text">Receive notifications when someone likes your profile</p>
-
+                      <nb-toggle
+                        formControlName="marketingEmails"
+                        status="primary"
+                        labelPosition="start"
+                        >Marketing Emails</nb-toggle
+                      >
+                      <p class="caption hint-text">Receive promotional emails and updates</p>
+                    </div>
                     <div class="form-actions">
                       <button
                         nbButton
@@ -264,15 +419,16 @@ import { Subscription } from 'rxjs';
                         type="submit"
                         [disabled]="notificationForm.invalid || loading"
                       >
-                        <nb-icon icon="save-outline"></nb-icon>
-                        Save Notification Settings
+                        <nb-icon icon="save-outline"></nb-icon> Save Notification Settings
                       </button>
                     </div>
                   </form>
-                </nb-tab>
+                </div>
 
-                <!-- Privacy Tab -->
-                <nb-tab tabTitle="Privacy" tabIcon="shield-outline">
+                <!-- Privacy Settings Panel -->
+                <div class="settings-panel" *ngIf="activeTab === 'privacy' && !loading">
+                  <h2 class="panel-title">Privacy Settings</h2>
+                  <p class="panel-description">Control your privacy and data sharing preferences</p>
                   <form [formGroup]="privacyForm" (ngSubmit)="savePrivacySettings()">
                     <nb-form-field>
                       <label for="profileVisibility">Profile Visibility</label>
@@ -282,12 +438,12 @@ import { Subscription } from 'rxjs';
                         formControlName="profileVisibility"
                       >
                         <nb-option value="public">Public - Visible to everyone</nb-option>
-                        <nb-option value="registered">
-                          Registered Users - Only visible to registered users
-                        </nb-option>
-                        <nb-option value="private">
-                          Private - Only visible to users you've matched with
-                        </nb-option>
+                        <nb-option value="registered"
+                          >Registered Users - Only visible to registered users</nb-option
+                        >
+                        <nb-option value="private"
+                          >Private - Only visible to users you've matched with</nb-option
+                        >
                       </nb-select>
                     </nb-form-field>
 
@@ -295,10 +451,9 @@ import { Subscription } from 'rxjs';
                       formControlName="showOnlineStatus"
                       status="primary"
                       labelPosition="start"
+                      >Show Online Status</nb-toggle
                     >
-                      Show Online Status
-                    </nb-toggle>
-                    <p class="hint-text">Allow others to see when you're online</p>
+                    <p class="caption hint-text">Allow others to see when you're online</p>
 
                     <nb-form-field>
                       <label for="allowMessaging">Who Can Message You</label>
@@ -309,10 +464,10 @@ import { Subscription } from 'rxjs';
                       </nb-select>
                     </nb-form-field>
 
-                    <nb-toggle formControlName="dataSharing" status="primary" labelPosition="start">
-                      Data Sharing for Service Improvement
-                    </nb-toggle>
-                    <p class="hint-text">
+                    <nb-toggle formControlName="dataSharing" status="primary" labelPosition="start"
+                      >Data Sharing for Service Improvement</nb-toggle
+                    >
+                    <p class="caption hint-text">
                       Allow anonymous usage data to be collected to improve our services
                     </p>
 
@@ -323,63 +478,93 @@ import { Subscription } from 'rxjs';
                         type="submit"
                         [disabled]="privacyForm.invalid || loading"
                       >
-                        <nb-icon icon="save-outline"></nb-icon>
-                        Save Privacy Settings
+                        <nb-icon icon="save-outline"></nb-icon> Save Privacy Settings
                       </button>
                     </div>
                   </form>
-                </nb-tab>
+                </div>
 
-                <!-- Display Tab -->
-                <nb-tab tabTitle="Display" tabIcon="monitor-outline">
+                <!-- Display Settings Panel -->
+                <div class="settings-panel" *ngIf="activeTab === 'display' && !loading">
+                  <h2 class="panel-title">Display Settings</h2>
+                  <p class="panel-description">Customize your viewing experience</p>
                   <form [formGroup]="displayForm" (ngSubmit)="saveDisplaySettings()">
                     <div class="theme-section">
                       <h3>Theme</h3>
                       <nb-radio-group
                         [(ngModel)]="currentTheme"
+                        name="themeSelection"
                         [ngModelOptions]="{ standalone: true }"
                       >
-                        <nb-radio value="light">Light</nb-radio>
-                        <nb-radio value="dark">Dark</nb-radio>
-                        <nb-radio value="system">System</nb-radio>
+                        <nb-radio value="light" (click)="setTheme('light')">Light</nb-radio>
+                        <nb-radio value="dark" (click)="setTheme('dark')">Dark</nb-radio>
+                        <nb-radio value="system" (click)="setTheme('system')">System</nb-radio>
                       </nb-radio-group>
+                      <!-- TODO: Re-add theme preview boxes if desired, styled appropriately -->
                     </div>
-
                     <nb-form-field>
                       <label for="defaultViewType">Default View Type</label>
                       <nb-select fullWidth id="defaultViewType" formControlName="defaultViewType">
                         <nb-option value="netflix">Netflix Style</nb-option>
                         <nb-option value="grid">Grid View</nb-option>
+                        <!-- Assuming grid is a valid type -->
                         <nb-option value="list">List View</nb-option>
                         <nb-option value="tinder">Tinder Style</nb-option>
                       </nb-select>
+                      <p class="caption hint-text">
+                        Choose your preferred view when browsing profiles
+                      </p>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="contentDensity">Content Density</label>
                       <nb-select fullWidth id="contentDensity" formControlName="contentDensity">
                         <nb-option
                           *ngFor="let option of contentDensityOptions"
                           [value]="option.value"
+                          >{{ option.label }}</nb-option
                         >
-                          {{ option.label }}
-                        </nb-option>
                       </nb-select>
+                      <p class="caption hint-text">Adjust how compact content appears</p>
                     </nb-form-field>
-
                     <nb-form-field>
                       <label for="cardSize">Card Size</label>
                       <nb-select fullWidth id="cardSize" formControlName="cardSize">
-                        <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">
-                          {{ option.label }}
-                        </nb-option>
+                        <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">{{
+                          option.label
+                        }}</nb-option>
                       </nb-select>
+                      <p class="caption hint-text">Choose the size of profile cards</p>
                     </nb-form-field>
+
+                    <!-- Preview section can remain as is if it's custom HTML for display only -->
+                    <div class="display-preview" *ngIf="false">
+                      <!-- Temporarily hide preview -->
+                      <h4>Preview</h4>
+                      <div
+                        class="preview-container"
+                        [attr.data-density]="displayForm.get('contentDensity')?.value"
+                        [attr.data-size]="displayForm.get('cardSize')?.value"
+                      >
+                        <div class="preview-card">
+                          <div class="preview-card-image"></div>
+                          <div class="preview-card-content">
+                            <div class="preview-card-title"></div>
+                            <div class="preview-card-text"></div>
+                          </div>
+                        </div>
+                        <div class="preview-card">
+                          <div class="preview-card-image"></div>
+                          <div class="preview-card-content">
+                            <div class="preview-card-title"></div>
+                            <div class="preview-card-text"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <div class="form-actions">
                       <button nbButton ghost status="basic" (click)="resetDisplaySettings()">
-                        <nb-icon icon="refresh-outline"></nb-icon>
-                        Reset to Defaults
+                        <nb-icon icon="refresh-outline"></nb-icon> Reset to Defaults
                       </button>
                       <button
                         nbButton
@@ -387,13 +572,13 @@ import { Subscription } from 'rxjs';
                         type="submit"
                         [disabled]="displayForm.pristine || loading"
                       >
-                        <nb-icon icon="save-outline"></nb-icon>
-                        Save Display Settings
+                        <nb-icon icon="save-outline"></nb-icon> Save Display Settings
                       </button>
                     </div>
                   </form>
-                </nb-tab>
-              </nb-tabset>
+                </div>
+              </div>
+              <!-- End .settings-body -->
             </nb-card-body>
           </nb-card>
         </div>
@@ -402,33 +587,90 @@ import { Subscription } from 'rxjs';
   `,
   styles: [
     `
+      :host nb-layout-column {
+        padding: 0; // Remove padding if settings-container handles it
+      }
       .settings-container {
-        max-width: 800px;
+        max-width: 900px; // Adjusted max-width
         margin: 2rem auto;
-        padding: 0 1rem;
+        padding: 1rem; // Padding for the overall container
       }
 
       nb-card-header {
+        padding-bottom: 1rem; // Add some space below header before tabs
         h1 {
           margin: 0;
           font-size: 2rem;
           font-weight: 600;
         }
-
         .subtitle {
           margin: 0.5rem 0 0;
           color: nb-theme(text-hint-color);
         }
       }
 
-      nb-form-field {
-        margin-bottom: 1.5rem;
+      nb-card-body {
+        padding: 0; // Remove card body padding if tab content handles it
       }
 
-      .hint-text {
-        margin: 0.25rem 0 1rem;
+      .settings-tabset {
+        // Styles for the tabset itself if needed
+      }
+
+      // Styles for the content within each tab panel
+      .settings-body {
+        padding: 1.5rem; // Padding for the actual content area of each tab
+      }
+
+      .settings-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        p {
+          margin-top: 1rem;
+        }
+      }
+
+      .settings-panel {
+        margin-bottom: 2rem; // Space between panels if they were ever to stack (not with tabs)
+        .panel-title {
+          font-size: 1.5rem;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          border-bottom: 1px solid nb-theme(border-basic-color-3);
+          padding-bottom: 0.5rem;
+        }
+        .panel-description {
+          color: nb-theme(text-hint-color);
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      nb-form-field {
+        margin-bottom: 1.5rem;
+        label {
+          margin-bottom: 0.5rem; // Ensure label has space
+          display: block; // Make label take full width
+        }
+      }
+
+      // Styling for error messages and hints
+      .caption.status-danger {
+        margin-top: 0.25rem;
+      }
+      .caption.hint-text,
+      p.caption {
         color: nb-theme(text-hint-color);
-        font-size: 0.875rem;
+        font-size: nb-theme(text-caption-font-size);
+        line-height: nb-theme(text-caption-line-height);
+        display: block; // Make it behave like a block for margin
+        margin-top: 0.25rem;
+      }
+
+      textarea[nbInput] {
+        min-height: 80px;
       }
 
       .form-actions {
@@ -438,30 +680,160 @@ import { Subscription } from 'rxjs';
         justify-content: flex-end;
       }
 
+      .form-toggle-group {
+        nb-toggle {
+          display: block; // Make each toggle take full width for better layout
+          margin-bottom: 0.5rem;
+        }
+        nb-toggle + p.caption.hint-text {
+          margin-bottom: 1rem; // Space after hint for next toggle
+        }
+      }
+
+      // Specific to privacy toggles if they need different spacing
+      .settings-panel nb-toggle + p.caption.hint-text {
+        margin-bottom: 1rem; // Ensure space after hints for toggles too
+      }
+
+      .danger-zone {
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid nb-theme(color-danger-default);
+        .danger-title {
+          color: nb-theme(color-danger-default);
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .danger-action {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: nb-theme(background-basic-color-2); // Slight emphasis
+          padding: 1rem;
+          border-radius: nb-theme(card-border-radius);
+          .danger-info {
+            h4 {
+              margin-top: 0;
+              margin-bottom: 0.25rem;
+            }
+            p {
+              margin-bottom: 0;
+              color: nb-theme(text-hint-color);
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+
       .theme-section {
         margin-bottom: 2rem;
-
         h3 {
           margin: 0 0 1rem;
           font-size: 1.25rem;
           font-weight: 600;
         }
-
         nb-radio-group {
           display: flex;
+          flex-wrap: wrap; // Allow wrapping for smaller screens
           gap: 1rem;
+          .theme-preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+          }
+          .theme-preview {
+            width: 80px;
+            height: 60px;
+            border: 1px solid nb-theme(border-basic-color-4);
+            border-radius: nb-theme(radio-border-radius);
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            .theme-preview-header {
+              height: 20px;
+            }
+            .theme-preview-content {
+              flex-grow: 1;
+            }
+          }
+          .theme-preview-light {
+            .theme-preview-header {
+              background-color: #edf1f7;
+            }
+            .theme-preview-content {
+              background-color: #ffffff;
+            }
+          }
+          .theme-preview-dark {
+            .theme-preview-header {
+              background-color: #1a2138;
+            }
+            .theme-preview-content {
+              background-color: #222b45;
+            }
+          }
+          .theme-preview-system {
+            // Represent system with a split or gradient maybe
+            .theme-preview-header {
+              background: linear-gradient(to right, #edf1f7 50%, #1a2138 50%);
+            }
+            .theme-preview-content {
+              background: linear-gradient(to right, #ffffff 50%, #222b45 50%);
+            }
+          }
         }
       }
 
-      nb-toggle {
-        margin-bottom: 0.5rem;
+      .display-preview {
+        margin-top: 2rem;
+        padding: 1rem;
+        border: 1px dashed nb-theme(border-basic-color-3);
+        border-radius: nb-theme(card-border-radius);
+        h4 {
+          margin-top: 0;
+          margin-bottom: 1rem;
+        }
+        .preview-container {
+          display: flex;
+          gap: 1rem;
+          // Basic styling for preview cards
+          .preview-card {
+            border: 1px solid nb-theme(border-basic-color-4);
+            border-radius: nb-theme(card-border-radius);
+            width: 120px; // Example size
+            .preview-card-image {
+              height: 60px;
+              background-color: nb-theme(background-basic-color-3);
+            }
+            .preview-card-content {
+              padding: 0.5rem;
+            }
+            .preview-card-title {
+              height: 1em;
+              background-color: nb-theme(background-basic-color-2);
+              margin-bottom: 0.5rem;
+            }
+            .preview-card-text {
+              height: 2em;
+              background-color: nb-theme(background-basic-color-2);
+            }
+          }
+          // TODO: Add dynamic styling based on [attr.data-density] and [attr.data-size]
+        }
       }
 
-      /* Dark theme adjustments */
-      :host-context([data-theme='dark']) {
-        .hint-text {
-          color: nb-theme(text-hint-color);
-        }
+      // Ensure hints and error messages are correctly styled within nb-form-field
+      nb-form-field .caption {
+        display: block;
+        margin-top: 0.25rem;
+      }
+      nb-form-field .caption.status-danger {
+        color: nb-theme(text-danger-color);
+      }
+      nb-form-field .caption:not(.status-danger) {
+        color: nb-theme(text-hint-color);
       }
     `,
   ],
@@ -474,9 +846,10 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   displayForm: FormGroup;
   loading = false;
   user: any = null;
-  currentTheme: 'light' | 'dark' | 'system' = 'system';
+  currentTheme: ThemeName = 'system';
   contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
   cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
+  activeTab: string = 'profile';
 
   private subscriptions: Subscription[] = [];
 
@@ -605,11 +978,30 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private loadThemeSettings(): void {
     this.currentTheme = this.themeService.getCurrentTheme();
+    this.displayForm.patchValue({ theme: this.currentTheme }, { emitEvent: false });
     this.subscriptions.push(
-      this.themeService.theme$.subscribe((theme) => {
-        this.currentTheme = theme;
+      this.themeService.theme$.subscribe((themeName) => {
+        this.currentTheme = themeName;
+        this.displayForm.get('theme')?.setValue(themeName, { emitEvent: false });
+      }),
+      this.displayForm.get('theme')!.valueChanges.subscribe((themeValue) => {
+        if (this.isValidThemeName(themeValue)) {
+          this.themeService.setTheme(themeValue);
+        }
       }),
     );
+  }
+
+  private isValidThemeName(theme: string): theme is ThemeName {
+    return ['light', 'dark', 'system', 'default', 'cosmic'].includes(theme);
+  }
+
+  setTheme(theme: ThemeName): void {
+    if (this.isValidThemeName(theme)) {
+      this.themeService.setTheme(theme);
+    } else {
+      console.warn('Attempted to set invalid theme:', theme);
+    }
   }
 
   private loadDisplaySettings(): void {
@@ -704,7 +1096,17 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   saveDisplaySettings(): void {
     this.loading = true;
     try {
-      this.userPreferencesService.updatePreferences(this.displayForm.value);
+      const displaySettings = this.displayForm.value;
+      if (this.isValidThemeName(displaySettings.theme)) {
+        // this.themeService.setTheme(displaySettings.theme); // Already handled by valueChanges or direct setTheme call
+      }
+      this.userPreferencesService.updatePreferences({
+        defaultViewType: displaySettings.defaultViewType,
+        contentDensity: displaySettings.contentDensity,
+        cardSize: displaySettings.cardSize,
+        // Persist theme via userPreferencesService if it's responsible for that
+        // theme: displaySettings.theme
+      });
       this.notificationService.success('Display settings saved successfully');
       this.displayForm.markAsPristine();
     } catch (error) {
@@ -735,5 +1137,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     return newPassword.value === confirmPassword.value ? null : { passwordMismatch: true };
+  }
+
+  setActiveTab(tabTitle: string): void {
+    this.activeTab = tabTitle.toLowerCase();
   }
 }

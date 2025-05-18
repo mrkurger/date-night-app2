@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Component - Changelog</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #2a3b4c;
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #0366d6;
+      margin-top: 24px;
+    }
+    .version {
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .version-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .version-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0;
+    }
+    .version-date {
+      color: #666;
+      font-size: 0.9em;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .tag-added {
+      background-color: #e6ffed;
+      color: #22863a;
+    }
+    .tag-changed {
+      background-color: #fff5b1;
+      color: #735c0f;
+    }
+    .tag-fixed {
+      background-color: #f1f8ff;
+      color: #0366d6;
+    }
+    .tag-removed {
+      background-color: #ffeef0;
+      color: #d73a49;
+    }
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #0366d6;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="../../../_docs_index.html">Documentation Index</a>
+    <a href="./AILESSONS.html">AI Lessons</a>
+    <a href="./GLOSSARY.html">Glossary</a>
+  </div>
+
+  <h1>Navigation Component - Changelog</h1>
+  
+  <div class="version">
+    <div class="version-header">
+      <h3 class="version-title">Version 1.0.0</h3>
+      <span class="version-date">2023-10-15</span>
+    </div>
+    <ul>
+      <li>
+        <span class="tag tag-added">Added</span>
+        Initial implementation of the Navigation component using Nebular UI framework
+      </li>
+      <li>
+        <span class="tag tag-added">Added</span>
+        Responsive sidebar navigation with menu items
+      </li>
+      <li>
+        <span class="tag tag-added">Added</span>
+        User profile menu with context actions
+      </li>
+      <li>
+        <span class="tag tag-added">Added</span>
+        Dynamic menu items based on user role (admin vs regular user)
+      </li>
+      <li>
+        <span class="tag tag-added">Added</span>
+        Footer with links to documentation and utility pages
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

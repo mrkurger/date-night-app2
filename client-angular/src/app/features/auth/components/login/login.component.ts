@@ -1,4 +1,5 @@
-import { Input } from '@angular/core';
+import { _Input } from '@angular/core';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -29,8 +30,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    ReactiveFormsModule,
+  imports: [NebularModule, ReactiveFormsModule,
     CommonModule,
     RouterLink,
     NbCardModule,

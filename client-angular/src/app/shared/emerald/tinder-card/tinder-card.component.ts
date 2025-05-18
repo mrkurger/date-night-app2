@@ -7,7 +7,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 

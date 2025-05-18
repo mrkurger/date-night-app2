@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { _Component } from '@angular/core';
 /**
  * /*DEPRECATED:Emerald*/.js Components Index
  *

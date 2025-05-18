@@ -1,0 +1,50 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <div class="header-container">
+      <div class="logo-container">
+        <a class="logo" routerLink="/">DateNight.io</a>
+      </div>
+
+      <nb-actions size="medium" class="header-actions">
+        <nb-action icon="search-outline" title="Search"></nb-action>
+        <nb-action *ngIf="isLoggedIn" icon="bell-outline" title="Notifications"></nb-action>
+
+        <nb-action *ngIf="isLoggedIn">
+          <nb-user
+            [nbContextMenu]="userItems"
+            [name]="userProfile?.username || 'User'"
+            [picture]="userProfile?.profileImage || 'assets/images/default-avatar.png'"
+            nbContextMenuTag="user-menu"
+            (nbContextMenuItemClick)="onUserMenuSelect($event)"
+          >
+          </nb-user>
+        </nb-action>
+
+        <nb-action *ngIf="!isLoggedIn">
+          <a nbButton status="primary" routerLink="/auth/login">Login</a>
+        </nb-action>
+      </nb-actions>
+    </div>
+  </nb-layout-header>
+
+  <nb-sidebar tag="menu" responsive>
+    <nb-menu [items]="items"></nb-menu>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <ng-content></ng-content>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a routerLink="/accessibility">Accessibility</a>
+        <a routerLink="/design-system">Design System</a>
+        <a routerLink="/style-guide">Style Guide</a>
+        <a routerLink="/micro-interactions">Micro-interactions</a>
+        <a routerLink="/preferences-demo">Preferences</a>
+      </div>
+      <div class="copyright">&copy; 2023 DateNight.io. All rights reserved.</div>
+    </div>
+  </nb-layout-footer>
+</nb-layout>

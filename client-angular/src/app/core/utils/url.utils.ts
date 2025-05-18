@@ -21,7 +21,7 @@ export function isValidUrl(url: string): boolean {
 
     const urlObj = new URL(url);
     return !!urlObj.hostname;
-  } catch (error) {
+  } catch (_error) {
     return false;
   }
 }
@@ -53,7 +53,7 @@ export function addQueryParams(
     });
 
     return urlObj.toString();
-  } catch (error) {
+  } catch (_error) {
     return url;
   }
 }
@@ -82,7 +82,7 @@ export function getQueryParams(url: string): Record<string, string> {
     });
 
     return params;
-  } catch (error) {
+  } catch (_error) {
     return {};
   }
 }

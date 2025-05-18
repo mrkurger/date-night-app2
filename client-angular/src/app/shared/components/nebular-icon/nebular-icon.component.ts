@@ -1,14 +1,13 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { IconService } from '../../../core/services/icon.service';
+// NbIconModule is included in NebularModule, so we don't need to import it separately
 
 @Component({
   selector: 'app-nebular-icon',
   standalone: true,
-  imports: [CommonModule, NbIconModule],
+  imports: [CommonModule, NebularModule],
   template: `
     <nb-icon
       [icon]="getIconName()"

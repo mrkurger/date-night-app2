@@ -8,6 +8,7 @@ import {
   ChangeDetectorRef,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -50,8 +51,7 @@ interface ChatUser {
   selector: 'app-chat-room',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,

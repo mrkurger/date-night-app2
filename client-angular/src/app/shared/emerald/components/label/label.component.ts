@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
+import { _NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import {
@@ -17,11 +17,8 @@ import {
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    NbTagComponent,
-    NbTagModule,
-    NbIconModule
+  imports: [CommonModule,
+    NbTagComponent
   ],
 })
 export class LabelComponent {

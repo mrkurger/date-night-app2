@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+// Component decorator is used in the documentation example
 /**
  * BEM Utility
  *

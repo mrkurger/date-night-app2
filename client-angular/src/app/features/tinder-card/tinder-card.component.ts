@@ -18,6 +18,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -52,8 +53,7 @@ interface HammerManager {
   styleUrls: ['./tinder-card.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     NbCardModule,
     NbButtonModule,

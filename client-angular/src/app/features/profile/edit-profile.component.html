@@ -1,80 +1,109 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-          <h2>Edit Profile</h2>
+<nb-card class="edit-profile-card">
+  <nb-card-header>
+    <h2>Edit Profile</h2>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <nb-form-field>
+        <label for="username">Username</label>
+        <input
+          nbInput
+          fullWidth
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="Username"
+          [status]="submitted && f.username.errors ? 'danger' : 'basic'"
+        />
+        <div *ngIf="submitted && f.username.errors">
+          <p class="caption status-danger" *ngIf="f.username.errors.required">
+            Username is required
+          </p>
         </div>
-        <div class="card-body">
-          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-            <div class="form-group mb-3">
-              <label for="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                formControlName="username"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
-              />
-              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">Username is required</div>
-              </div>
-            </div>
+      </nb-form-field>
 
-            <div class="form-group mb-3">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                formControlName="email"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-              />
-              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">Email is required</div>
-                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-              </div>
-            </div>
-
-            <div class="form-group mb-3">
-              <label for="bio">Bio</label>
-              <textarea id="bio" formControlName="bio" class="form-control" rows="4"></textarea>
-            </div>
-
-            <div class="form-group mb-3">
-              <label for="location">Location</label>
-              <input type="text" id="location" formControlName="location" class="form-control" />
-            </div>
-
-            <div class="form-group mb-3">
-              <label for="website">Website</label>
-              <input
-                type="url"
-                id="website"
-                formControlName="website"
-                class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.website.errors }"
-              />
-              <div *ngIf="submitted && f.website.errors" class="invalid-feedback">
-                <div *ngIf="f.website.errors.pattern">Please enter a valid URL</div>
-              </div>
-            </div>
-
-            <div class="form-group mb-3">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" formControlName="phone" class="form-control" />
-            </div>
-
-            <div class="form-group d-flex justify-content-between">
-              <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-              <button type="submit" class="btn btn-primary" [disabled]="loading">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Save Changes
-              </button>
-            </div>
-          </form>
+      <nb-form-field>
+        <label for="email">Email</label>
+        <input
+          nbInput
+          fullWidth
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Email"
+          [status]="submitted && f.email.errors ? 'danger' : 'basic'"
+        />
+        <div *ngIf="submitted && f.email.errors">
+          <p class="caption status-danger" *ngIf="f.email.errors.required">Email is required</p>
+          <p class="caption status-danger" *ngIf="f.email.errors.email">
+            Email must be a valid email address
+          </p>
         </div>
+      </nb-form-field>
+
+      <nb-form-field>
+        <label for="bio">Bio</label>
+        <textarea
+          nbInput
+          fullWidth
+          id="bio"
+          formControlName="bio"
+          placeholder="Bio"
+          rows="4"
+        ></textarea>
+      </nb-form-field>
+
+      <nb-form-field>
+        <label for="location">Location</label>
+        <input
+          nbInput
+          fullWidth
+          type="text"
+          id="location"
+          formControlName="location"
+          placeholder="Location"
+        />
+      </nb-form-field>
+
+      <nb-form-field>
+        <label for="website">Website</label>
+        <input
+          nbInput
+          fullWidth
+          type="url"
+          id="website"
+          formControlName="website"
+          placeholder="https://example.com"
+          [status]="submitted && f.website.errors ? 'danger' : 'basic'"
+        />
+        <div *ngIf="submitted && f.website.errors">
+          <p class="caption status-danger" *ngIf="f.website.errors.pattern">
+            Please enter a valid URL
+          </p>
+        </div>
+      </nb-form-field>
+
+      <nb-form-field>
+        <label for="phone">Phone</label>
+        <input
+          nbInput
+          fullWidth
+          type="tel"
+          id="phone"
+          formControlName="phone"
+          placeholder="Phone"
+        />
+      </nb-form-field>
+
+      <div class="form-actions">
+        <button nbButton status="basic" type="button" (click)="cancel()">
+          <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
+        </button>
+        <button nbButton status="primary" type="submit" [disabled]="loading || profileForm.invalid">
+          <nb-spinner *ngIf="loading" size="tiny" status="control"></nb-spinner>
+          <nb-icon icon="save-outline" *ngIf="!loading"></nb-icon> Save Changes
+        </button>
       </div>
-    </div>
-  </div>
-</div>
+    </form>
+  </nb-card-body>
+</nb-card>

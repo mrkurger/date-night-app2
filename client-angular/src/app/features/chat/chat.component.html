@@ -4,16 +4,37 @@
     <div class="chat-header">
       <h2>Messages</h2>
       <div class="chat-header-actions">
-        <button>New Message</button>
-        <button>Settings</button>
+        <button nbButton outline status="primary" size="small" (click)="openNewMessageDialog()">
+          New Message
+        </button>
+        <button nbButton ghost size="small" (click)="openChatSettings()">
+          <nb-icon icon="settings-2-outline"></nb-icon>
+        </button>
       </div>
     </div>
 
     <div class="chat-search">
-      <div>
-        <input type="text" placeholder="Search conversations..." />
-        <button>Clear</button>
-      </div>
+      <nb-form-field>
+        <nb-icon nbPrefix icon="search-outline"></nb-icon>
+        <input
+          nbInput
+          fullWidth
+          type="text"
+          placeholder="Search conversations..."
+          [(ngModel)]="conversationSearchQuery"
+          (ngModelChange)="filterContacts()"
+        />
+        <button
+          nbSuffix
+          *ngIf="conversationSearchQuery"
+          nbButton
+          ghost
+          size="tiny"
+          (click)="clearConversationSearch()"
+        >
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+      </nb-form-field>
     </div>
 
     <div class="conversation-list" #conversationList>
@@ -40,19 +61,32 @@
             <p class="last-message">
               {{ contact.lastMessage?.content || 'No messages yet' }}
             </p>
-            <span *ngIf="contact.unreadCount" class="badge">
-              {{ contact.unreadCount }}
-            </span>
+            <nb-badge
+              *ngIf="contact.unreadCount > 0"
+              [text]="contact.unreadCount"
+              status="primary"
+              position="center-right"
+              class="unread-badge"
+            >
+            </nb-badge>
           </div>
         </div>
       </div>
 
       <div *ngIf="loading" class="loading-conversations">
-        <div *ngFor="let i of [1, 2, 3, 4, 5]" class="skeleton-loader"></div>
+        <div *ngFor="let i of [1, 2, 3, 4, 5]" class="skeleton-conversation-item">
+          <nb-card class="skeleton-card">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-text-lines">
+              <nb-skeleton-text animated width="60%"></nb-skeleton-text>
+              <nb-skeleton-text animated width="90%"></nb-skeleton-text>
+            </div>
+          </nb-card>
+        </div>
       </div>
 
       <div *ngIf="!loading && filteredContacts.length === 0" class="no-conversations">
-        <span class="icon">💬</span>
+        <span class="icon">��</span>
         <p>No conversations found</p>
       </div>
     </div>
@@ -163,7 +197,7 @@
     <nb-form-field appearance="outline" class="full-width">
       <nb-form-field-label>Search contacts</nb-form-field-label>
       <input nbInput fullWidth [(ngModel)]="newMessageSearch" placeholder="Type a name..." />
-      <nb-icon matPrefix>search"></nb-icon>
+      <nb-icon nbPrefix icon="search-outline"></nb-icon>
     </nb-form-field>
 
     <div class="contact-list">
@@ -219,7 +253,7 @@
     <nb-form-field appearance="outline" class="full-width">
       <nb-form-field-label>Search messages</nb-form-field-label>
       <input nbInput fullWidth [(ngModel)]="chatSearchQuery" placeholder="Type to search..." />
-      <nb-icon matPrefix>search"></nb-icon>
+      <nb-icon nbPrefix icon="search-outline"></nb-icon>
     </nb-form-field>
 
     <div class="search-results">
@@ -249,73 +283,75 @@
 <ng-template #mediaGalleryDialog>
   <h2 nb-dialog-title>Media Gallery</h2>
   <nb-dialog-content>
-    <div class="gallery-tabs">
-      <button nbButton [class.active]="galleryTab === 'images'" (click)="galleryTab = 'images'">
-        Images
-      </button>
-      <button nbButton [class.active]="galleryTab === 'files'" (click)="galleryTab = 'files'">
-        Files
-      </button>
-      <button nbButton [class.active]="galleryTab === 'links'" (click)="galleryTab = 'links'">
-        Links
-      </button>
-    </div>
-
-    <!-- Images Tab -->
-    <div *ngIf="galleryTab === 'images'" class="gallery-images">
-      <div
-        *ngFor="let image of galleryImages"
-        class="gallery-image"
-        (click)="openImagePreview(image)"
-      >
-        <img [src]="image.url" [alt]="image.type || 'Image'" />
-      </div>
-
-      <div *ngIf="galleryImages.length === 0" class="no-media">
-        <p>No images shared in this conversation</p>
-      </div>
-    </div>
-
-    <!-- Files Tab -->
-    <div *ngIf="galleryTab === 'files'" class="gallery-files">
-      <div
-        *ngFor="let file of galleryFiles"
-        class="gallery-file"
-        (click)="downloadAttachment(file)"
-      >
-        <nb-icon icon="{{ getFileIcon(file) }}"></nb-icon>
-        <div class="file-info">
-          <div class="file-name">{{ file.type || 'File' }}</div>
-          <div class="file-meta">
-            <span class="file-size">1.0 KB</span>
-            <span class="file-date">Unknown date</span>
+    <nb-tabset
+      fullWidth
+      class="gallery-tabset"
+      (changeTab)="galleryTab = $event.tabTitle.toLowerCase()"
+    >
+      <nb-tab tabTitle="images" [active]="galleryTab === 'images'">
+        <ng-template nbTabContent>
+          <div class="gallery-images">
+            <div
+              *ngFor="let image of galleryImages"
+              class="gallery-image"
+              (click)="openImagePreview(image)"
+            >
+              <img [src]="image.url" [alt]="image.type || 'Image'" />
+            </div>
+            <div *ngIf="galleryImages.length === 0" class="no-media">
+              <p>No images shared in this conversation</p>
+            </div>
           </div>
-        </div>
-        <button nbButton ghost>
-          <nb-icon icon="download"></nb-icon>
-        </button>
-      </div>
-
-      <div *ngIf="galleryFiles.length === 0" class="no-media">
-        <p>No files shared in this conversation</p>
-      </div>
-    </div>
-
-    <!-- Links Tab -->
-    <div *ngIf="galleryTab === 'links'" class="gallery-links">
-      <div *ngFor="let link of galleryLinks" class="gallery-link" (click)="openLink(link.url)">
-        <nb-icon icon="link"></nb-icon>
-        <div class="link-info">
-          <div class="link-title">{{ link.title || link.url }}</div>
-          <div class="link-url">{{ link.url }}</div>
-        </div>
-        <div class="link-date">{{ link.timestamp | date: 'shortDate' }}</div>
-      </div>
-
-      <div *ngIf="galleryLinks.length === 0" class="no-media">
-        <p>No links shared in this conversation</p>
-      </div>
-    </div>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="files" [active]="galleryTab === 'files'">
+        <ng-template nbTabContent>
+          <div class="gallery-files">
+            <div
+              *ngFor="let file of galleryFiles"
+              class="gallery-file"
+              (click)="downloadAttachment(file)"
+            >
+              <nb-icon [icon]="getFileIcon(file)"></nb-icon>
+              <div class="file-info">
+                <div class="file-name">{{ file.type || 'File' }}</div>
+                <div class="file-meta">
+                  <span class="file-size">1.0 KB</span>
+                  <span class="file-date">Unknown date</span>
+                </div>
+              </div>
+              <button nbButton ghost size="tiny">
+                <nb-icon icon="download-outline"></nb-icon>
+              </button>
+            </div>
+            <div *ngIf="galleryFiles.length === 0" class="no-media">
+              <p>No files shared in this conversation</p>
+            </div>
+          </div>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="links" [active]="galleryTab === 'links'">
+        <ng-template nbTabContent>
+          <div class="gallery-links">
+            <div
+              *ngFor="let link of galleryLinks"
+              class="gallery-link"
+              (click)="openLink(link.url)"
+            >
+              <nb-icon icon="link-2-outline"></nb-icon>
+              <div class="link-info">
+                <div class="link-title">{{ link.title || link.url }}</div>
+                <div class="link-url">{{ link.url }}</div>
+              </div>
+              <div class="link-date">{{ link.timestamp | date: 'shortDate' }}</div>
+            </div>
+            <div *ngIf="galleryLinks.length === 0" class="no-media">
+              <p>No links shared in this conversation</p>
+            </div>
+          </div>
+        </ng-template>
+      </nb-tab>
+    </nb-tabset>
   </nb-dialog-content>
   <nb-dialog-actions align="end">
     <button nbButton nb-dialog-close>Close</button>

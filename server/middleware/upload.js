@@ -16,8 +16,17 @@ import Logger from '../utils/logger.js'; // Corrected path
 import createError from 'http-errors';
 
 // Get _currentFilePath and _currentDirPath equivalent in ESM
-const _currentFilePath = fileURLToPath(import.meta.url);
-const _currentDirPath = path.dirname(_currentFilePath);
+let _currentFilePath;
+let _currentDirPath;
+
+try {
+  _currentFilePath = fileURLToPath(import.meta.url);
+  _currentDirPath = path.dirname(_currentFilePath);
+} catch (_error) {
+  // Fallback for Jest environment where import.meta.url might not be available
+  _currentFilePath = '';
+  _currentDirPath = '';
+}
 
 const uploadDir = path.join(_currentDirPath, '..', 'public', 'uploads');
 const adsUploadsDir = path.join(uploadDir, 'ads');
@@ -50,40 +59,41 @@ ensureUploadDirExists().catch(err => {
 });
 
 // Use memory storage first for file type validation
-const memoryStorage = multer.memoryStorage();
+// No need to store memoryStorage in a variable as we use it directly
 
 // Disk storage configuration - kept as reference for future use
 // Currently using memory storage with manual file writing instead
-const diskStorage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    // The ensureUploadDirExists function needs to be adapted if we switch to diskStorage
-    // For now, this assumes adsUploadsDir is the base and a user-specific subdir is created
-    const userDir = path.join(adsUploadsDir, req.user ? req.user.id.toString() : 'anonymous');
-    try {
-      await fs.access(userDir);
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        try {
-          await fs.mkdir(userDir, { recursive: true });
-          Logger.info(`User-specific upload directory created: ${userDir}`);
-        } catch (mkdirError) {
-          Logger.error(`Error creating user-specific upload directory: ${mkdirError.message}`);
-          return cb(createError(500, 'Failed to create user-specific upload directory'));
+const _diskStorage = () =>
+  multer.diskStorage({
+    destination: async (req, file, cb) => {
+      // The ensureUploadDirExists function needs to be adapted if we switch to diskStorage
+      // For now, this assumes adsUploadsDir is the base and a user-specific subdir is created
+      const userDir = path.join(adsUploadsDir, req.user ? req.user.id.toString() : 'anonymous');
+      try {
+        await fs.access(userDir);
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          try {
+            await fs.mkdir(userDir, { recursive: true });
+            Logger.info(`User-specific upload directory created: ${userDir}`);
+          } catch (mkdirError) {
+            Logger.error(`Error creating user-specific upload directory: ${mkdirError.message}`);
+            return cb(createError(500, 'Failed to create user-specific upload directory'));
+          }
+        } else {
+          Logger.error(`Error accessing user-specific upload directory: ${error.message}`);
+          return cb(createError(500, 'Failed to access user-specific upload directory'));
         }
-      } else {
-        Logger.error(`Error accessing user-specific upload directory: ${error.message}`);
-        return cb(createError(500, 'Failed to access user-specific upload directory'));
       }
-    }
-    cb(null, userDir);
-  },
-  filename: (req, file, cb) => {
-    // Generate a unique filename to prevent overwrites and ensure compatibility
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const extension = path.extname(file.originalname) || '.' + allowedTypes[file.mimetype][0];
-    cb(null, file.fieldname + '-' + uniqueSuffix + extension);
-  },
-});
+      cb(null, userDir);
+    },
+    filename: (req, file, cb) => {
+      // Generate a unique filename to prevent overwrites and ensure compatibility
+      const uniqueSuffix = crypto.randomBytes(16).toString('hex');
+      const extension = path.extname(file.originalname) || '.' + allowedTypes[file.mimetype][0];
+      cb(null, file.fieldname + '-' + uniqueSuffix + extension);
+    },
+  });
 
 // Allowed file types for validation
 const allowedTypes = {
@@ -109,7 +119,7 @@ const fileFilter = async (req, file, cb) => {
 
 // Create multer instance with memory storage for initial upload
 const memoryUpload = multer({
-  storage: memoryStorage,
+  storage: multer.memoryStorage(),
   fileFilter: fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB

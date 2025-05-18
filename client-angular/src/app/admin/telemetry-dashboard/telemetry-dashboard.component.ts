@@ -8,11 +8,25 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angular/forms';
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
+import { NebularModule } from '../../../app/shared/nebular.module';
+import {
+  NbCardModule,
+  NbTabsetModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSelectModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbDatepickerModule,
+  NbSpinnerModule,
+  NbTableModule,
+  NbListModule,
+  NbTreeGridModule,
+} from '@nebular/theme';
 
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
 import {
@@ -64,8 +78,7 @@ type ErrorColumnKey =
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     FormsModule,
     NbCardModule,

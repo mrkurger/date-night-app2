@@ -110,10 +110,16 @@ class AuthService {
     }
 
     // Update known device fingerprints
+    // Initialize knownDeviceFingerprints if it doesn't exist
+    if (!user.knownDeviceFingerprints) {
+      user.knownDeviceFingerprints = [];
+    }
+
     const fingerprintExists = user.knownDeviceFingerprints.some(
       fp => JSON.stringify(fp) === JSON.stringify(deviceFingerprint)
     );
-    if (Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
+
+    if (deviceFingerprint && Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
       user.knownDeviceFingerprints.push(deviceFingerprint);
     }
 
@@ -372,10 +378,10 @@ class AuthService {
       if (ipAddress && !user.knownIpAddresses.includes(ipAddress)) {
         user.knownIpAddresses.push(ipAddress);
       }
-      const fingerprintExists = user.knownDeviceFingerprints.some(
+      const fingerprintExists = user.knownDeviceFingerprints?.some(
         fp => JSON.stringify(fp) === JSON.stringify(deviceFingerprint)
       );
-      if (Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
+      if (deviceFingerprint && Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
         user.knownDeviceFingerprints.push(deviceFingerprint);
       }
       await user.save();

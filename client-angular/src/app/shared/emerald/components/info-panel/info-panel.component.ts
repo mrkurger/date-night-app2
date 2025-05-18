@@ -1,11 +1,7 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NebularModule } from '../../../shared/nebular.module';
+import { _NebularModule } from '../../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
-import {
-  NbProgressBarModule,
-  
-} from '@nebular/theme';
 
 /**
  * InfoPanel Component
@@ -19,14 +15,7 @@ import {
   templateUrl: './info-panel.component.html',
   styleUrls: ['./info-panel.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbProgressBarModule,
-    NbAccordionModule,
-  ],
+  imports: [CommonModule],
 })
 export class InfoPanelComponent implements OnInit {
   @Input() title = '';

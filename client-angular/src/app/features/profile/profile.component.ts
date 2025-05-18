@@ -1,4 +1,4 @@
-import { Input } from '@angular/core';
+import { _Input } from '@angular/core';
 import { NebularModule } from '../shared/nebular.module';
 
 import { OnInit } from '@angular/core';

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Component - Glossary</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #2a3b4c;
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #0366d6;
+      margin-top: 24px;
+    }
+    .entry {
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .entry-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0;
+      color: #0366d6;
+    }
+    .entry-type {
+      color: #666;
+      font-size: 0.9em;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #f1f1f1;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .entry-description {
+      margin-bottom: 12px;
+    }
+    .entry-code {
+      background-color: #f1f1f1;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    .params {
+      margin-top: 12px;
+    }
+    .param {
+      margin-bottom: 8px;
+    }
+    .param-name {
+      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .param-type {
+      color: #6f42c1;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .param-description {
+      margin-top: 4px;
+    }
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #0366d6;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="../../../_docs_index.html">Documentation Index</a>
+    <a href="./CHANGELOG.html">Changelog</a>
+    <a href="./AILESSONS.html">AI Lessons</a>
+  </div>
+
+  <h1>Navigation Component - Glossary</h1>
+  
+  <div class="entry" id="NavigationComponent">
+    <div class="entry-header">
+      <h3 class="entry-name">NavigationComponent</h3>
+      <span class="entry-type">Component</span>
+    </div>
+    <div class="entry-description">
+      A standalone Angular component that provides the main navigation structure for the application using Nebular UI components.
+      It includes a responsive sidebar, header with user menu, and footer.
+    </div>
+    <div class="entry-code">
+      @Component({
+        selector: 'app-navigation',
+        standalone: true,
+        imports: [
+          CommonModule,
+          RouterModule,
+          NbMenuModule,
+          NbSidebarModule,
+          NbLayoutModule,
+          NbButtonModule,
+          NbIconModule,
+          NbContextMenuModule,
+          NbUserModule
+        ],
+        templateUrl: './navigation.component.html',
+        styleUrls: ['./navigation.component.scss']
+      })
+      export class NavigationComponent implements OnInit { ... }
+    </div>
+  </div>
+  
+  <div class="entry" id="items">
+    <div class="entry-header">
+      <h3 class="entry-name">items</h3>
+      <span class="entry-type">Property</span>
+    </div>
+    <div class="entry-description">
+      An array of menu items for the main navigation sidebar. Each item includes a title, icon, and link.
+    </div>
+    <div class="entry-code">
+      items = [
+        {
+          title: 'Home',
+          icon: 'home-outline',
+          link: '/',
+          home: true
+        },
+        {
+          title: 'Browse',
+          icon: 'search-outline',
+          link: '/browse'
+        },
+        // ...more items
+      ];
+    </div>
+  </div>
+  
+  <div class="entry" id="userItems">
+    <div class="entry-header">
+      <h3 class="entry-name">userItems</h3>
+      <span class="entry-type">Property</span>
+    </div>
+    <div class="entry-description">
+      An array of menu items for the user profile dropdown menu.
+    </div>
+    <div class="entry-code">
+      userItems = [
+        { title: 'Profile', icon: 'person-outline', link: '/profile' },
+        { title: 'Settings', icon: 'settings-outline', link: '/settings' },
+        { title: 'Logout', icon: 'log-out-outline' }
+      ];
+    </div>
+  </div>
+  
+  <div class="entry" id="adminItems">
+    <div class="entry-header">
+      <h3 class="entry-name">adminItems</h3>
+      <span class="entry-type">Property</span>
+    </div>
+    <div class="entry-description">
+      An array of menu items that are only shown to users with admin role.
+    </div>
+    <div class="entry-code">
+      adminItems = [
+        { title: 'Admin Dashboard', icon: 'shield-outline', link: '/admin' },
+        { title: 'Telemetry', icon: 'activity-outline', link: '/telemetry' }
+      ];
+    </div>
+  </div>
+  
+  <div class="entry" id="ngOnInit">
+    <div class="entry-header">
+      <h3 class="entry-name">ngOnInit</h3>
+      <span class="entry-type">Method</span>
+    </div>
+    <div class="entry-description">
+      Lifecycle hook that initializes the component. It subscribes to the authentication state and sets up the navigation items based on the user's role.
+    </div>
+    <div class="entry-code">
+      ngOnInit(): void {
+        this.authService.isAuthenticated().subscribe(isLoggedIn => {
+          this.isLoggedIn = isLoggedIn;
+          
+          if (isLoggedIn) {
+            this.authService.getCurrentUser().subscribe(user => {
+              this.userProfile = user;
+              this.isAdmin = user?.roles?.includes('admin') || false;
+              
+              // Add admin items if user is admin
+              if (this.isAdmin) {
+                this.items = [...this.items, ...this.adminItems];
+              }
+            });
+          }
+        });
+      }
+    </div>
+  </div>
+  
+  <div class="entry" id="onUserMenuSelect">
+    <div class="entry-header">
+      <h3 class="entry-name">onUserMenuSelect</h3>
+      <span class="entry-type">Method</span>
+    </div>
+    <div class="entry-description">
+      Handles selection events from the user profile dropdown menu. Specifically handles the logout action.
+    </div>
+    <div class="entry-code">
+      onUserMenuSelect(event: any): void {
+        if (event.title === 'Logout') {
+          this.authService.logout();
+        }
+      }
+    </div>
+    <div class="params">
+      <div class="param">
+        <span class="param-name">event</span>: <span class="param-type">any</span>
+        <div class="param-description">
+          The selected menu item object containing at least a title property.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

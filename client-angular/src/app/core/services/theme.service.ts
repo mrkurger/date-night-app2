@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export type ThemeName = 'default' | 'dark' | 'cosmic' | 'corporate';
+export type ThemeName = 'default' | 'dark' | 'cosmic' | 'corporate' | 'system';
 
 /**
  * Service for managing application theme
@@ -53,8 +53,8 @@ export class ThemeService {
    * Get the current theme
    * @returns The current theme
    */
-  public getCurrentTheme(): Observable<ThemeName> {
-    return this.currentTheme.asObservable();
+  public getCurrentTheme(): ThemeName {
+    return this.currentTheme.getValue();
   }
 
   /**

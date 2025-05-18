@@ -48,18 +48,18 @@ export function cspInterceptorFactory() {
 }
 
 export function authInterceptorFactory(
-  authService: AuthService,
+  _authService: AuthService,
 
-  userService: UserService,
+  _userService: UserService,
 
-  router: Router,
+  _router: Router,
 ) {
   // These services are injected but not directly used in the factory
   // They are needed for the interceptor to work properly
   return authInterceptor;
 }
 
-export function csrfInterceptorFactory(csrfService: CsrfService) {
+export function csrfInterceptorFactory(_csrfService: CsrfService) {
   // The csrfService is injected but not directly used in the factory
   // It is needed for the interceptor to work properly
   return CsrfInterceptor;

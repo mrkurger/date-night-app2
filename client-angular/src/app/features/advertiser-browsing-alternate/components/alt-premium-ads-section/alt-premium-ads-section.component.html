@@ -1,0 +1,40 @@
+<div class="premium-ads-section" *ngIf="premiumAds.length > 0">
+  <div class="section-header">
+    <h2 class="section-title">⭐ Premium Advertisers ⭐</h2>
+    <a routerLink="/advertiser-browsing-alt/premium" class="view-all-link">
+      View all premium advertisers <nb-icon icon="arrow-ios-forward-outline" pack="eva"></nb-icon>
+    </a>
+  </div>
+
+  <div class="scroll-wrapper">
+    <button
+      nbButton
+      ghost
+      shape="round"
+      class="scroll-button prev"
+      (click)="scroll('left')"
+      aria-label="Scroll left"
+    >
+      <nb-icon icon="chevron-left-outline"></nb-icon>
+    </button>
+
+    <div class="premium-ads-grid-scrollable" #scrollContainer>
+      <app-alt-premium-ad-card
+        *ngFor="let ad of premiumAds"
+        [ad]="ad"
+        class="premium-ad-item"
+      ></app-alt-premium-ad-card>
+    </div>
+
+    <button
+      nbButton
+      ghost
+      shape="round"
+      class="scroll-button next"
+      (click)="scroll('right')"
+      aria-label="Scroll right"
+    >
+      <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </div>
+</div>

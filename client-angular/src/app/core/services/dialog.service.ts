@@ -5,9 +5,9 @@ import {
   NbCardModule,
   NbButtonModule,
 } from '@nebular/theme';
-import { NebularModule } from '../../shared/nebular.module';
+import { _NebularModule } from '../../shared/nebular.module';
 
-import { Injectable, Component } from '@angular/core';
+import { Injectable, Component, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Observable } from 'rxjs';
@@ -36,6 +36,45 @@ import {
   TagsDialogComponent,
   TagsDialogData,
 } from '../../shared/components/tags-dialog/tags-dialog.component';
+import { ConfirmDialogComponent } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from '../../shared/components/dialogs/alert-dialog/alert-dialog.component';
+import { PromptDialogComponent } from '../../shared/components/dialogs/prompt-dialog/prompt-dialog.component';
+
+export type DialogSize = 'sm' | 'md' | 'lg' | 'xl';
+
+export interface DialogConfig<T = any> extends Omit<NbDialogConfig<T>, 'context'> {
+  data?: T;
+  title?: string;
+  message?: string;
+  confirmText?: string;
+  cancelText?: string;
+  size?: DialogSize;
+  context?: T;
+}
+
+interface ConfirmDialogContext {
+  title: string;
+  message: string;
+  confirmText: string;
+  cancelText: string;
+  status: 'primary' | 'success' | 'warning' | 'danger';
+}
+
+interface AlertDialogContext {
+  title: string;
+  message: string;
+  buttonText: string;
+}
+
+interface PromptDialogContext {
+  title: string;
+  message: string;
+  defaultValue: string;
+  confirmText: string;
+  cancelText: string;
+  placeholder?: string;
+  required?: boolean;
+}
 
 /**
  * Service for managing dialog interactions throughout the application
@@ -44,13 +83,23 @@ import {
   providedIn: 'root',
 })
 export class DialogService {
-  constructor(private dialogService: NbDialogService) {}
+  private defaultConfig: Partial<NbDialogConfig> = {
+    closeOnBackdropClick: true,
+    closeOnEsc: true,
+    hasBackdrop: true,
+    hasScroll: false,
+    autoFocus: true,
+    backdropClass: 'dialog-backdrop',
+    dialogClass: 'dialog-container',
+  };
+
+  constructor(private nbDialogService: NbDialogService) {}
 
   /**
    * Opens a dialog for writing or editing a review
    */
   openReviewDialog(data: ReviewDialogData): Observable<unknown> {
-    return this.dialogService.open(ReviewDialogComponent, {
+    return this.nbDialogService.open(ReviewDialogComponent, {
       context: { data },
       closeOnBackdropClick: false,
       hasBackdrop: true,
@@ -64,7 +113,7 @@ export class DialogService {
   reportReview(reviewId: string): Observable<string | undefined> {
     const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' };
 
-    return this.dialogService.open(ReportDialogComponent, {
+    return this.nbDialogService.open(ReportDialogComponent, {
       context: { data: dialogData },
       closeOnBackdropClick: true,
       hasBackdrop: true,
@@ -78,7 +127,7 @@ export class DialogService {
    * @returns Observable that resolves with the response text or undefined if canceled
    */
   openResponseDialog(data: ResponseDialogData): Observable<string | undefined> {
-    return this.dialogService.open(ResponseDialogComponent, {
+    return this.nbDialogService.open(ResponseDialogComponent, {
       context: { data },
       closeOnBackdropClick: true,
       hasBackdrop: true,
@@ -90,7 +139,7 @@ export class DialogService {
    * Opens a dialog for adding or editing a favorite
    */
   openFavoriteDialog(data: FavoriteDialogData): Observable<FavoriteDialogResult | undefined> {
-    return this.dialogService.open(FavoriteDialogComponent, {
+    return this.nbDialogService.open(FavoriteDialogComponent, {
       context: { data },
       closeOnBackdropClick: true,
       hasBackdrop: true,
@@ -102,7 +151,7 @@ export class DialogService {
    * Opens a dialog for editing notes
    */
   openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
-    return this.dialogService.open(NotesDialogComponent, {
+    return this.nbDialogService.open(NotesDialogComponent, {
       context: { data },
       closeOnBackdropClick: true,
       hasBackdrop: true,
@@ -123,7 +172,7 @@ export class DialogService {
       },
     };
 
-    return this.dialogService.open(TagsDialogComponent, {
+    return this.nbDialogService.open(TagsDialogComponent, {
       context,
       closeOnBackdropClick: true,
       hasBackdrop: true,
@@ -177,24 +226,110 @@ export class DialogService {
     });
   }
 
-  open<T, D = any>(component: any, config?: Partial<NbDialogConfig<D>>): Observable<T> {
-    return this.dialogService.open(component, config).onClose;
+  /**
+   * Open a custom dialog component
+   * @param component Component to render in the dialog
+   * @param config Dialog configuration
+   * @returns Dialog reference
+   */
+  open<T, D = any>(component: Type<T>, config?: DialogConfig<D>): NbDialogRef<T> {
+    const dialogConfig: Partial<NbDialogConfig<D>> = {
+      ...this.defaultConfig,
+      ...config,
+      context: config?.data || config?.context,
+    };
+
+    return this.nbDialogService.open<T>(component, dialogConfig);
   }
 
+  /**
+   * Show a confirmation dialog
+   * @param title Dialog title
+   * @param message Dialog message
+   * @param confirmText Custom confirm button text
+   * @param cancelText Custom cancel button text
+   * @param status Dialog status
+   * @returns Observable that resolves to true if confirmed, false if cancelled
+   */
   confirm(
     title: string,
     message: string,
-    confirmText: string = 'Yes',
-    cancelText: string = 'No',
+    confirmText: string = 'Confirm',
+    cancelText: string = 'Cancel',
+    status: 'primary' | 'success' | 'warning' | 'danger' = 'primary',
   ): Observable<boolean> {
-    return this.dialogService.open(ConfirmDialogComponent, {
-      context: {
-        title,
-        message,
-        confirmText,
-        cancelText,
-      },
-    }).onClose;
+    const context: ConfirmDialogContext = {
+      title,
+      message,
+      confirmText,
+      cancelText,
+      status,
+    };
+
+    const dialogConfig: Partial<NbDialogConfig<ConfirmDialogContext>> = {
+      ...this.defaultConfig,
+      context,
+    };
+
+    return this.nbDialogService.open<ConfirmDialogComponent>(ConfirmDialogComponent, dialogConfig)
+      .onClose;
+  }
+
+  /**
+   * Show an alert dialog
+   * @param title Dialog title
+   * @param message Dialog message
+   * @param buttonText Custom button text (default: 'OK')
+   * @returns Observable that resolves when the dialog is closed
+   */
+  alert(title: string, message: string, buttonText: string = 'OK'): Observable<void> {
+    const context: AlertDialogContext = {
+      title,
+      message,
+      buttonText,
+    };
+
+    const dialogConfig: Partial<NbDialogConfig<AlertDialogContext>> = {
+      ...this.defaultConfig,
+      context,
+    };
+
+    return this.nbDialogService.open<AlertDialogComponent>(AlertDialogComponent, dialogConfig)
+      .onClose;
+  }
+
+  /**
+   * Show a prompt dialog
+   * @param title Dialog title
+   * @param message Dialog message
+   * @param defaultValue Default input value
+   * @param config Additional configuration
+   * @returns Observable that resolves to the input value or null if cancelled
+   */
+  prompt(
+    title: string,
+    message: string,
+    defaultValue: string = '',
+    config?: DialogConfig,
+  ): Observable<string | null> {
+    const context: PromptDialogContext = {
+      title,
+      message,
+      defaultValue,
+      confirmText: config?.confirmText || 'OK',
+      cancelText: config?.cancelText || 'Cancel',
+      placeholder: config?.data?.placeholder,
+      required: config?.data?.required,
+    };
+
+    const dialogConfig: Partial<NbDialogConfig<PromptDialogContext>> = {
+      ...this.defaultConfig,
+      ...config,
+      context,
+    };
+
+    return this.nbDialogService.open<PromptDialogComponent>(PromptDialogComponent, dialogConfig)
+      .onClose;
   }
 }
 

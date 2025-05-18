@@ -1,4 +1,4 @@
-import { Injectable, NgZone, Component } from '@angular/core';
+import { Injectable, NgZone,  } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PerformanceUtil } from '../utils/performance.util';
 

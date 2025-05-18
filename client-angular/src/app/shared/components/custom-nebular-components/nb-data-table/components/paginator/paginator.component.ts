@@ -84,7 +84,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         align-items: center;
         gap: 0.5rem;
 
-        &-label {
+        :is(-label) {
           color: nb-theme(text-hint-color);
           font-size: nb-theme(text-caption-font-size);
         }

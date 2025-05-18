@@ -14,12 +14,12 @@ import Location from '../models/location.model.js'; // Added .js
 import { AppError } from '../middleware/errorHandler.js'; // Added .js
 import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
-import LRU from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import fetch from 'node-fetch';
 
 // Initialize cache with 1 day TTL and check period of 1 hour
 const cache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 });
-const lruCache = new LRU({ max: 500, ttl: 1000 * 60 * 5 }); // 5m
+const lruCache = new LRUCache({ max: 500, ttl: 1000 * 60 * 5 }); // 5m
 
 export async function geocode(addr) {
   const key = addr.toLowerCase();

@@ -18,6 +18,7 @@ import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
 jest.mock('fs', () => ({
   existsSync: jest.fn(),
   unlinkSync: jest.fn(),
+  statSync: jest.fn(), // Add statSync mock
 }));
 
 describe('ChatAttachment Schema', () => {

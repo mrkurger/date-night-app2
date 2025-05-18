@@ -1,5 +1,5 @@
-import { NbDialogRef, NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
+import { NbDialogRef, , ,  } from '@nebular/theme';
+import { _NebularModule } from '../../nebular.module';
 
 import { Component, Inject } from '@angular/core';
 // ===================================================
@@ -40,7 +40,7 @@ export interface ReviewDialogData {
 @Component({
   selector: 'app-review-dialog',
   standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
+  imports: [CommonModule, ReviewFormComponent],
   template: `
     <nb-card class="review-dialog-container">
       <nb-card-header class="dialog-header">

@@ -57,19 +57,27 @@ jest.mock('../../../models/user.model.js', () => ({
 }));
 
 jest.mock('../../../models/chat-message.model.js', () => {
-  return function () {
-    return {
-      save: jest.fn().mockResolvedValue({
-        _id: 'mock-message-id',
-        sender: 'mock-user-id',
-        recipient: 'mock-recipient-id',
-        roomId: 'mock-room-id',
-        message: 'Hello world',
-        read: false,
-        createdAt: new Date(),
-      }),
-    };
+  const mockChatMessageInstance = {
+    save: jest.fn().mockResolvedValue({
+      _id: 'mock-message-id',
+      sender: 'mock-user-id',
+      recipient: 'mock-recipient-id',
+      roomId: 'mock-room-id',
+      message: 'Hello world',
+      read: false,
+      createdAt: new Date(),
+    }),
   };
+
+  const MockChatMessage = jest.fn().mockImplementation(() => mockChatMessageInstance);
+
+  // Add static methods
+  MockChatMessage.find = jest.fn();
+  MockChatMessage.findOne = jest.fn();
+  MockChatMessage.findById = jest.fn();
+  MockChatMessage.findByIdAndUpdate = jest.fn();
+
+  return MockChatMessage;
 });
 
 jest.mock('../../../middleware/errorHandler.js', () => ({

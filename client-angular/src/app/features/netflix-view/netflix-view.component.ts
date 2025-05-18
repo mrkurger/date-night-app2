@@ -21,6 +21,7 @@ import {
   Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -60,8 +61,7 @@ interface GetAdsResponse {
   styleUrls: ['./netflix-view.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,

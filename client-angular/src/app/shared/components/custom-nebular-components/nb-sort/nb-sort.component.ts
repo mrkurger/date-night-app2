@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NebularModule } from '../../../nebular.module';
+import { _NebularModule } from '../../../nebular.module';
 import { CommonModule } from '@angular/common';
-import { NbIconModule } from '@nebular/theme';
 
 import { AppSortEvent } from './nb-sort.module';
 
@@ -27,7 +26,7 @@ export class AppSortComponent {
 @Component({
   selector: 'app-sort-header',
   standalone: true,
-  imports: [CommonModule, NbIconModule],
+  imports: [CommonModule],
   template: `
     <div class="app-sort-header" (click)="toggleSort()" [class.app-sort-header-sorted]="active">
       <ng-content></ng-content>

@@ -6,162 +6,297 @@
  */
 
 import { jest } from '@jest/globals';
-import mongoose from 'mongoose';
 
-// Mock dependencies first
-jest.mock('crypto', () => {
+// Mock mongoose and ObjectId
+const mockObjectId = jest.fn(id => id || 'mockObjectId');
+mockObjectId.isValid = jest.fn(id => !!id); // Simple isValid mock
+
+jest.mock('mongoose', () => {
+  const originalMongoose = jest.requireActual('mongoose');
   return {
-    randomBytes: jest.fn().mockReturnValue({
-      toString: jest.fn().mockReturnValue('random-hex-string'),
+    ...originalMongoose, // Spread original mongoose to keep other exports like Schema, model etc.
+    Types: {
+      ...originalMongoose.Types,
+      ObjectId: mockObjectId, // Mock ObjectId
+    },
+    connect: jest.fn().mockResolvedValue(undefined),
+    disconnect: jest.fn().mockResolvedValue(undefined),
+    model: jest.fn().mockImplementation((name, schema) => {
+      // Return a basic mock for any model requested
+      // This helps if the service indirectly causes model registration/lookup
+      if (name === 'User') return User; // Use the existing User mock
+      if (name === 'Session') return Session; // Use the existing Session mock
+      return jest.fn();
     }),
+    Schema: originalMongoose.Schema, // Use actual Schema
   };
 });
-jest.mock('jsonwebtoken');
-jest.mock('bcrypt');
 
-// Improved User Mock
-jest.mock('../../../models/user.model.js', () => {
-  const mongoose = require('mongoose'); // Use require inside mock for CJS context
-  // Mock the save method for instances
-  const mockSave = jest.fn();
-  // Mock the toObject method for instances
-  const mockToObject = jest.fn(function () {
-    // Return a plain object representation, excluding password and mock methods
-    const obj = { ...this };
-    delete obj.password;
-    delete obj.save;
-    delete obj.toObject;
-    // Simulate mongoose behavior of converting ObjectId to string if needed
-    if (obj._id && typeof obj._id !== 'string') {
-      obj._id = obj._id.toString();
+// Define mock functions used by jest.mock factories with var or ensure they are in scope.
+// These need to be `var` or function declarations due to hoisting of jest.mock
+var mockCryptoRandomBytes = jest.fn().mockReturnValue({ toString: mockCryptoToString });
+var mockCryptoToString = jest.fn().mockReturnValue('random-hex-string'); // mockCryptoRandomBytes depends on this
+
+var mockJwtSign = jest.fn().mockReturnValue('mock-token');
+var mockJwtVerify = jest.fn();
+var mockJwtDecode = jest.fn();
+
+var mockBcryptCompare = jest.fn().mockResolvedValue(true);
+
+// Mock dependencies first
+// IMPORTANT: jest.mock calls are hoisted. Ensure variables used inside them are declared above or are otherwise in scope.
+jest.mock('crypto', () => ({
+  randomBytes: mockCryptoRandomBytes,
+}));
+
+jest.mock('jsonwebtoken', () => ({
+  sign: mockJwtSign,
+  verify: mockJwtVerify,
+  decode: mockJwtDecode,
+  JsonWebTokenError: class JsonWebTokenError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'JsonWebTokenError';
     }
-    return obj;
-  });
+  },
+  TokenExpiredError: class TokenExpiredError extends Error {
+    constructor(message, expiredAt) {
+      super(message);
+      this.name = 'TokenExpiredError';
+      this.expiredAt = expiredAt;
+    }
+  },
+  NotBeforeError: class NotBeforeError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'NotBeforeError';
+    }
+  },
+}));
 
-  // Mock the User class constructor
+jest.mock('bcrypt', () => ({
+  compare: mockBcryptCompare,
+}));
+
+// These can remain `let` as they are assigned within the jest.mock factory scope for models
+let mockUserInstanceSave;
+let mockUserInstanceToObject;
+let mockUserFindById;
+let mockUserFindOne;
+let mockUserCreate;
+
+let mockSessionInstanceSave;
+let mockSessionFindById;
+let mockSessionFindOne; // If needed by service
+
+let mockTokenBlacklistCreate;
+
+jest.mock('../../../models/user.model.js', () => {
+  mockUserInstanceSave = jest.fn();
+  mockUserInstanceToObject = jest.fn();
+  mockUserFindById = jest.fn();
+  mockUserFindOne = jest.fn();
+  mockUserCreate = jest.fn();
+
   const MockUser = jest.fn().mockImplementation(userData => {
-    const newUser = {
-      ...userData,
-      _id: userData._id || new mongoose.Types.ObjectId(), // Use ObjectId
+    const userInstance = {
+      _id: userData._id || mockObjectId(), // Use mocked ObjectId
+      username: userData.username,
+      email: userData.email,
+      password: userData.password,
       role: userData.role || 'user',
       socialProfiles: userData.socialProfiles || {},
       lastActive: userData.lastActive || new Date(),
-      save: mockSave,
-      toObject: mockToObject,
+      knownIpAddresses: userData.knownIpAddresses || [],
+      knownDeviceFingerprints: userData.knownDeviceFingerprints || [],
+      save: mockUserInstanceSave,
+      toObject: mockUserInstanceToObject,
+      ...userData,
     };
-    // Make save resolve with the created user object itself
-    // Important: Clone the object to avoid issues if it's modified later
-    mockSave.mockResolvedValue({ ...newUser });
-    return newUser;
+    mockUserInstanceSave.mockImplementation(function () {
+      return Promise.resolve({ ...this });
+    });
+    mockUserInstanceToObject.mockImplementation(function () {
+      const obj = { ...this };
+      delete obj.password;
+      delete obj.save;
+      delete obj.toObject;
+      return obj;
+    });
+    return userInstance;
   });
 
-  // Mock static methods
-  MockUser.findById = jest.fn();
-  MockUser.findOne = jest.fn();
-  MockUser.create = jest.fn().mockImplementation(userData => {
-    // Simulate create returning a saved instance
+  MockUser.findById = mockUserFindById;
+  MockUser.findOne = mockUserFindOne;
+  MockUser.create = mockUserCreate.mockImplementation(userData => {
     const instance = MockUser(userData);
     return Promise.resolve(instance);
   });
 
-  return MockUser; // Return the mocked constructor
+  return MockUser;
+});
+
+jest.mock('../../../models/session.model.js', () => {
+  mockSessionInstanceSave = jest.fn();
+  mockSessionFindById = jest.fn();
+  mockSessionFindOne = jest.fn();
+
+  const MockSession = jest.fn().mockImplementation(sessionData => {
+    const sessionInstance = {
+      _id: mockObjectId(), // Use mocked ObjectId
+      userId: sessionData.userId,
+      ipAddress: sessionData.ipAddress,
+      userAgent: sessionData.userAgent,
+      deviceFingerprint: sessionData.deviceFingerprint,
+      lastActiveAt: new Date(),
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      isActive: true,
+      ...sessionData,
+      save: mockSessionInstanceSave,
+    };
+    mockSessionInstanceSave.mockImplementation(function () {
+      return Promise.resolve({ ...this });
+    });
+    return sessionInstance;
+  });
+
+  MockSession.findById = mockSessionFindById;
+  MockSession.findOne = mockSessionFindOne;
+
+  return MockSession;
+});
+
+jest.mock('../../../models/token-blacklist.model.js', () => {
+  mockTokenBlacklistCreate = jest.fn();
+  return {
+    __esModule: true,
+    default: {
+      create: mockTokenBlacklistCreate,
+    },
+  };
 });
 
 // Import the modules after mocking
 import authService from '../../../services/auth.service.js';
-import User from '../../../models/user.model.js'; // This will be the mocked User
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import crypto from 'crypto';
+import User from '../../../models/user.model.js';
+import Session from '../../../models/session.model.js';
+import mongoose from 'mongoose';
 
 const { ObjectId } = mongoose.Types;
 
-// crypto mock is set up in the jest.mock call above
-
-// User mock static methods are accessed via User.findById, User.findOne etc.
-// User instance methods (save, toObject) are part of the object returned by `new User()`
-
-// Setup JWT mock
-jwt.sign = jest.fn().mockReturnValue('mock-token');
-jwt.verify = jest.fn().mockImplementation((token, secret) => {
-  if (token === 'valid-refresh-token') return { id: 'user1', type: 'refresh' };
-  if (token === 'valid-access-token') return { id: 'user1', type: 'access' };
-  throw new Error('Invalid token');
-});
-
-// Setup bcrypt mock
-bcrypt.compare = jest.fn().mockResolvedValue(true);
-
-// Re-define mockSave based on the instance returned by the mock constructor
-// We need a reference to the mock function created inside jest.mock
-const mockSave = User({}).save; // Pass empty object to avoid undefined userData
-
-// Create mock user for tests (ensure it has the mocked methods)
-const mockUser = {
-  _id: new ObjectId('605fe1718709576a042a1e84'), // Use ObjectId for consistency
+const getMockUser = (overrides = {}) => ({
+  _id: ObjectId('605fe1718709576a042a1e84'), // Use mocked ObjectId
   username: 'testuser',
   email: 'test@example.com',
-  password: 'hashedpassword', // Will be removed by sanitizeUser/toObject mock
+  password: 'hashedpassword',
   role: 'user',
   socialProfiles: {},
   lastActive: new Date(),
-  toObject: jest.fn(function () {
-    // Ensure mockUser also has a working toObject
-    return {
-      _id: this._id.toString(),
-      username: this.username,
-      email: this.email,
-      role: this.role,
-      socialProfiles: this.socialProfiles,
-      lastActive: this.lastActive,
-    };
-  }),
-  save: mockSave, // Assign the mock save function
-};
+  knownIpAddresses: [],
+  knownDeviceFingerprints: [],
+  ...overrides,
+  toObject: mockUserInstanceToObject,
+  save: mockUserInstanceSave,
+});
 
 describe('Auth Service', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockObjectId.mockClear().mockImplementation(id => id || 'mockObjectId' + Math.random());
 
-    // Set environment variables for tests
+    mockCryptoRandomBytes.mockReset().mockReturnValue({ toString: mockCryptoToString });
+    mockCryptoToString.mockReset().mockReturnValue('random-hex-string');
+    mockJwtSign.mockReset().mockReturnValue('mock-token');
+    mockJwtVerify.mockReset();
+    mockJwtDecode.mockReset();
+    mockBcryptCompare.mockReset().mockResolvedValue(true);
+
+    if (mockUserInstanceSave)
+      mockUserInstanceSave.mockReset().mockImplementation(function () {
+        return Promise.resolve({ ...this });
+      });
+    if (mockUserInstanceToObject)
+      mockUserInstanceToObject.mockReset().mockImplementation(function () {
+        const obj = { ...this };
+        delete obj.password;
+        delete obj.save;
+        delete obj.toObject;
+        return obj;
+      });
+    if (mockUserFindById) mockUserFindById.mockReset();
+    if (mockUserFindOne) mockUserFindOne.mockReset();
+    if (mockUserCreate)
+      mockUserCreate.mockReset().mockImplementation(userData => Promise.resolve(User(userData)));
+
+    if (mockSessionInstanceSave)
+      mockSessionInstanceSave.mockReset().mockImplementation(function () {
+        return Promise.resolve({ ...this });
+      });
+    if (mockSessionFindById) mockSessionFindById.mockReset();
+    if (mockSessionFindOne) mockSessionFindOne.mockReset();
+
+    if (mockTokenBlacklistCreate) mockTokenBlacklistCreate.mockReset().mockResolvedValue({});
+
     process.env.JWT_SECRET = 'test-jwt-secret';
     process.env.JWT_REFRESH_SECRET = 'test-jwt-refresh-secret';
   });
 
   describe('generateTokens', () => {
-    it('should generate access and refresh tokens', () => {
-      const result = authService.generateTokens(mockUser);
+    it('should generate access and refresh tokens with session ID', () => {
+      const user = getMockUser();
+      const sessionId = ObjectId(); // Use mocked ObjectId
+      const result = authService.generateTokens(user, sessionId);
 
-      expect(jwt.sign).toHaveBeenCalledTimes(2);
+      expect(mockJwtSign).toHaveBeenCalledTimes(2);
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: user._id,
+          role: user.role,
+          username: user.username,
+          sessionId: sessionId,
+        }),
+        'test-jwt-secret',
+        { expiresIn: `${15 * 60}s` }
+      );
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({ id: user._id, sessionId: sessionId }),
+        'test-jwt-refresh-secret',
+        { expiresIn: '7d' }
+      );
       expect(result).toHaveProperty('token', 'mock-token');
       expect(result).toHaveProperty('refreshToken', 'mock-token');
-      expect(result).toHaveProperty('expiresIn');
-    });
-
-    it('should sanitize the user object', () => {
-      const result = authService.generateTokens(mockUser);
+      expect(result).toHaveProperty('expiresIn', 15 * 60);
       expect(result.user).not.toHaveProperty('password');
+      expect(mockUserInstanceToObject).toHaveBeenCalled();
     });
   });
 
   describe('validateRefreshToken', () => {
     it('should validate a refresh token and return the user', async () => {
-      User.findById.mockResolvedValue(mockUser);
+      const userId = ObjectId().toString(); // Mock ObjectId will return a string
+      const user = getMockUser({ _id: userId });
+      mockJwtVerify.mockReturnValue({ id: userId });
+      mockUserFindById.mockResolvedValue(user);
 
       const result = await authService.validateRefreshToken('valid-refresh-token');
-      expect(result).toEqual(mockUser);
-      expect(jwt.verify).toHaveBeenCalledWith('valid-refresh-token', expect.any(String));
+
+      expect(mockJwtVerify).toHaveBeenCalledWith('valid-refresh-token', 'test-jwt-refresh-secret');
+      expect(mockUserFindById).toHaveBeenCalledWith(userId);
+      expect(result).toEqual(user);
     });
 
-    it('should throw an error if user is not found', async () => {
-      User.findById.mockResolvedValue(null);
-
+    it('should throw an error if user is not found for refresh token', async () => {
+      mockJwtVerify.mockReturnValue({ id: 'nonexistent-user-id' });
+      mockUserFindById.mockResolvedValue(null);
       await expect(authService.validateRefreshToken('valid-refresh-token')).rejects.toThrow(
         'User not found'
       );
     });
 
-    it('should throw an error if token is invalid', async () => {
+    it('should throw an error if refresh token is invalid', async () => {
+      mockJwtVerify.mockImplementation(() => {
+        throw new Error('jwt error');
+      });
       await expect(authService.validateRefreshToken('invalid-refresh-token')).rejects.toThrow(
         'Invalid refresh token'
       );
@@ -169,275 +304,436 @@ describe('Auth Service', () => {
   });
 
   describe('authenticate', () => {
-    it('should authenticate a user with email and password', async () => {
-      User.findOne.mockResolvedValue(mockUser);
-      bcrypt.compare.mockResolvedValue(true);
+    it('should authenticate a user, create a session, and return tokens', async () => {
+      const userEmail = 'test@example.com';
+      const rawPassword = 'password123';
+      const mockUserInstance = getMockUser({
+        email: userEmail,
+        password: 'hashedTestPassword',
+      });
+      const newSessionId = ObjectId(); // Use mocked ObjectId
 
-      const result = await authService.authenticate('test@example.com', 'password');
+      mockUserFindOne.mockResolvedValue(mockUserInstance);
+      mockBcryptCompare.mockResolvedValue(true);
 
-      expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
-      expect(bcrypt.compare).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
+      // Mock the Session constructor and its save method
+      Session.mockImplementation(sessionData => {
+        const sessionInstance = {
+          _id: newSessionId, // Use the same newSessionId for consistency
+          userId: mockUserInstance._id,
+          ipAddress: sessionData.ipAddress,
+          userAgent: sessionData.userAgent,
+          deviceFingerprint: sessionData.deviceFingerprint,
+          lastActiveAt: expect.any(Date),
+          expiresAt: expect.any(Date),
+          isActive: true,
+          save: mockSessionInstanceSave.mockResolvedValue({
+            _id: newSessionId,
+            userId: mockUserInstance._id,
+            ...sessionData,
+          }),
+        };
+        return sessionInstance;
+      });
+
+      mockUserInstanceSave.mockResolvedValue(mockUserInstance); // For user.save()
+
+      const result = await authService.authenticate(
+        userEmail,
+        rawPassword,
+        '1.1.1.1',
+        'test-agent',
+        { data: 'fp' }
+      );
+
+      expect(mockUserFindOne).toHaveBeenCalledWith({ email: userEmail });
+      expect(mockBcryptCompare).toHaveBeenCalledWith(rawPassword, mockUserInstance.password);
+      expect(Session).toHaveBeenCalledTimes(1);
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1);
+      expect(mockUserInstanceSave).toHaveBeenCalledTimes(1); // user.save() for lastActive update
+
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({ sessionId: newSessionId }),
+        'test-jwt-secret',
+        expect.any(Object)
+      );
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({ sessionId: newSessionId }),
+        'test-jwt-refresh-secret',
+        expect.any(Object)
+      );
+      expect(result).toHaveProperty('token', 'mock-token');
+      expect(result.user.email).toBe(userEmail);
+      expect(result.user).not.toHaveProperty('password');
     });
 
-    it('should authenticate a user with username and password', async () => {
-      User.findOne.mockResolvedValue(mockUser);
-      bcrypt.compare.mockResolvedValue(true);
-
-      const result = await authService.authenticate('testuser', 'password');
-
-      expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.compare).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
-    });
-
-    it('should throw an error if user is not found', async () => {
-      User.findOne.mockResolvedValue(null);
-
-      await expect(authService.authenticate('nonexistent@example.com', 'password')).rejects.toThrow(
+    it('should throw error if user not found during authenticate', async () => {
+      mockUserFindOne.mockResolvedValue(null);
+      await expect(authService.authenticate('unknown@example.com', 'password')).rejects.toThrow(
         'User not found'
       );
     });
 
-    it('should throw an error if password is invalid', async () => {
-      User.findOne.mockResolvedValue(mockUser);
-      bcrypt.compare.mockResolvedValue(false);
-
-      await expect(authService.authenticate('test@example.com', 'wrongpassword')).rejects.toThrow(
+    it('should throw error if password invalid during authenticate', async () => {
+      const user = getMockUser();
+      mockUserFindOne.mockResolvedValue(user);
+      mockBcryptCompare.mockResolvedValue(false);
+      await expect(authService.authenticate(user.email, 'wrongpassword')).rejects.toThrow(
         'Invalid credentials'
       );
     });
   });
 
   describe('register', () => {
-    it('should register a new user successfully', async () => {
-      // Setup mocks
-      User.findOne.mockResolvedValueOnce(null).mockResolvedValueOnce(null); // No existing username or email
-
+    it('should register a new user, create session, and return tokens', async () => {
       const userData = {
-        username: 'newuser',
-        email: 'newuser@example.com',
-        password: 'password123',
+        username: 'newbie',
+        email: 'newbie@example.com',
+        password: 'pass123',
       };
+      const registeredUserId = ObjectId(); // Use mocked ObjectId
+      const newSessionId = ObjectId(); // Use mocked ObjectId
 
-      // Mock the save function for this specific instance if needed,
-      // but the default mock inside jest.mock should handle it.
-      // const newUserInstance = new User(userData); // Instance created inside service now
+      mockUserFindOne.mockResolvedValue(null); // No existing user
 
-      // Execute
-      const result = await authService.register(userData);
+      mockUserCreate.mockImplementation(data => {
+        const userInstance = User({
+          // User is the mocked constructor
+          ...data,
+          _id: registeredUserId, // Assign the predetermined mock ID
+        });
+        // No need to mock save on userInstance here as authService.register doesn't call user.save()
+        return Promise.resolve(userInstance);
+      });
 
-      // Verify
-      expect(User.findOne).toHaveBeenCalledWith({ username: userData.username });
-      expect(User.findOne).toHaveBeenCalledWith({ email: userData.email });
-      // Check that the save mock was called (indirectly via service)
-      expect(mockSave).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
-      expect(result).toHaveProperty('user');
-      expect(result.user).not.toHaveProperty('password'); // Check sanitization worked
-      expect(result.user).toHaveProperty('username', userData.username);
+      Session.mockImplementation(sessionData => {
+        const sessionInstance = {
+          _id: newSessionId,
+          userId: registeredUserId,
+          ipAddress: sessionData.ipAddress,
+          userAgent: sessionData.userAgent,
+          deviceFingerprint: sessionData.deviceFingerprint,
+          lastActiveAt: expect.any(Date),
+          expiresAt: expect.any(Date),
+          isActive: true,
+          save: mockSessionInstanceSave.mockResolvedValue({
+            _id: newSessionId,
+            userId: registeredUserId,
+            ...sessionData,
+          }),
+        };
+        return sessionInstance;
+      });
+
+      const result = await authService.register(userData, '2.2.2.2', 'reg-agent', { data: 'fp2' });
+
+      expect(mockUserFindOne).toHaveBeenCalledWith({ username: userData.username });
+      expect(mockUserFindOne).toHaveBeenCalledWith({ email: userData.email });
+      expect(mockUserCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          username: userData.username,
+          email: userData.email,
+          password: expect.any(String), // Password will be hashed by the service
+        })
+      );
+
+      expect(Session).toHaveBeenCalledTimes(1);
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1);
+
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: registeredUserId,
+          sessionId: newSessionId,
+        }),
+        'test-jwt-secret',
+        expect.any(Object)
+      );
+      expect(result).toHaveProperty('token', 'mock-token');
+      expect(result.user.username).toBe(userData.username);
+      expect(result.user).not.toHaveProperty('password');
     });
 
-    it('should throw an error if username is already taken', async () => {
-      // Setup mocks
-      User.findOne.mockResolvedValueOnce(mockUser); // Username exists
-
-      const userData = {
-        username: 'testuser',
-        email: 'newuser@example.com',
-        password: 'password123',
-      };
-
-      // Execute & Verify
-      await expect(authService.register(userData)).rejects.toThrow('Username already taken');
+    it('should throw error if username taken during registration', async () => {
+      mockUserFindOne.mockResolvedValueOnce(getMockUser()); // Simulate username found
+      await expect(
+        authService.register({
+          username: 'testuser',
+          email: 'new@example.com',
+          password: 'p',
+        })
+      ).rejects.toThrow('Username already taken');
     });
 
-    it('should throw an error if email is already in use', async () => {
-      // Setup mocks
-      User.findOne.mockResolvedValueOnce(null).mockResolvedValueOnce(mockUser); // Email exists
-
-      const userData = {
-        username: 'newuser',
-        email: 'test@example.com',
-        password: 'password123',
-      };
-
-      // Execute & Verify
-      await expect(authService.register(userData)).rejects.toThrow('Email already in use');
+    it('should throw error if email taken during registration', async () => {
+      mockUserFindOne.mockResolvedValueOnce(null); // Username not found
+      mockUserFindOne.mockResolvedValueOnce(getMockUser()); // Email found
+      await expect(
+        authService.register({
+          username: 'new',
+          email: 'test@example.com',
+          password: 'p',
+        })
+      ).rejects.toThrow('Email already in use');
     });
   });
 
   describe('refreshAccessToken', () => {
     it('should refresh access token successfully', async () => {
-      // Setup
-      User.findById.mockResolvedValue(mockUser);
+      const userId = ObjectId().toString();
+      const user = getMockUser({ _id: userId });
+      const sessionId = ObjectId(); // Use mocked ObjectId
+      const mockExistingSession = {
+        _id: sessionId,
+        userId: userId,
+        isActive: true,
+        save: mockSessionInstanceSave.mockResolvedValueThis(), // Simulates session.save()
+        lastActiveAt: new Date(), // ensure this field exists
+      };
 
-      // Execute
+      mockJwtVerify.mockReturnValue({
+        id: userId,
+        sessionId: sessionId.toString(),
+      });
+      mockUserFindById.mockResolvedValue(user);
+      mockSessionFindById.mockResolvedValue(mockExistingSession);
+
       const result = await authService.refreshAccessToken('valid-refresh-token');
 
-      // Verify
-      expect(jwt.verify).toHaveBeenCalledWith('valid-refresh-token', expect.any(String));
-      expect(User.findById).toHaveBeenCalledWith('user1');
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
+      expect(mockJwtVerify).toHaveBeenCalledWith('valid-refresh-token', 'test-jwt-refresh-secret');
+      expect(mockUserFindById).toHaveBeenCalledWith(userId);
+      expect(mockSessionFindById).toHaveBeenCalledWith(sessionId.toString());
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1); // session.save() to update lastActiveAt
+      expect(mockJwtSign).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: userId,
+          sessionId: sessionId,
+          username: user.username,
+          role: user.role,
+        }),
+        'test-jwt-secret',
+        { expiresIn: `${15 * 60}s` }
+      );
+      expect(result).toHaveProperty('token', 'mock-token');
+      expect(result).toHaveProperty('expiresIn', 15 * 60);
     });
 
-    it('should throw an error if refresh token is invalid', async () => {
-      // Execute & Verify
-      await expect(authService.refreshAccessToken('invalid-refresh-token')).rejects.toThrow(
-        'Invalid refresh token'
+    it('should throw error if session not found for refresh token', async () => {
+      const user = getMockUser();
+      mockJwtVerify.mockReturnValue({
+        id: user._id.toString(),
+        sessionId: 'non-existent-session',
+      });
+      mockUserFindById.mockResolvedValue(user);
+      mockSessionFindById.mockResolvedValue(null);
+      await expect(authService.refreshAccessToken('valid-refresh-token')).rejects.toThrow(
+        'Active session not found for refresh token.'
+      );
+    });
+
+    it('should throw error if session is inactive for refresh token', async () => {
+      const user = getMockUser();
+      const sessionId = ObjectId();
+      const mockInactiveSession = {
+        _id: sessionId,
+        userId: user._id,
+        isActive: false,
+        save: mockSessionInstanceSave,
+      };
+      mockJwtVerify.mockReturnValue({
+        id: user._id.toString(),
+        sessionId: sessionId.toString(),
+      });
+      mockUserFindById.mockResolvedValue(user);
+      mockSessionFindById.mockResolvedValue(mockInactiveSession);
+      await expect(authService.refreshAccessToken('valid-refresh-token')).rejects.toThrow(
+        'Active session not found for refresh token.'
       );
     });
   });
 
   describe('validateAccessToken', () => {
-    it('should validate an access token and return the user', async () => {
-      // Setup
-      User.findById.mockResolvedValue(mockUser);
+    it('should validate access token, update session, and return sanitized user', async () => {
+      const userId = ObjectId().toString();
+      const user = getMockUser({ _id: userId });
+      const sessionId = ObjectId();
+      const mockActiveSession = {
+        _id: sessionId,
+        userId: userId,
+        isActive: true,
+        save: mockSessionInstanceSave.mockResolvedValueThis(),
+        lastActiveAt: new Date(),
+      };
 
-      // Execute
+      mockJwtVerify.mockReturnValue({
+        id: userId,
+        sessionId: sessionId.toString(),
+      });
+      mockUserFindById.mockResolvedValue(user); // User.findById
+      mockSessionFindById.mockResolvedValue(mockActiveSession); // Session.findById
+
       const result = await authService.validateAccessToken('valid-access-token');
 
-      // Verify
-      expect(jwt.verify).toHaveBeenCalledWith('valid-access-token', expect.any(String));
-      expect(User.findById).toHaveBeenCalledWith('user1');
+      expect(mockJwtVerify).toHaveBeenCalledWith('valid-access-token', 'test-jwt-secret');
+      expect(mockUserFindById).toHaveBeenCalledWith(userId);
+      expect(mockSessionFindById).toHaveBeenCalledWith(sessionId.toString());
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1);
       expect(result).not.toHaveProperty('password');
+      expect(result.username).toBe(user.username);
+      expect(mockUserInstanceToObject).toHaveBeenCalled();
     });
 
-    it('should throw an error if user is not found', async () => {
-      // Setup
-      User.findById.mockResolvedValue(null);
-
-      // Execute & Verify
+    it('should throw error if session is invalid or expired during access token validation', async () => {
+      const user = getMockUser();
+      mockJwtVerify.mockReturnValue({
+        id: user._id.toString(),
+        sessionId: 'invalid-session',
+      });
+      mockUserFindById.mockResolvedValue(user);
+      mockSessionFindById.mockResolvedValue(null); // Session not found
       await expect(authService.validateAccessToken('valid-access-token')).rejects.toThrow(
-        'User not found'
+        'Session is invalid or expired'
       );
     });
 
-    it('should throw an error if token is invalid', async () => {
-      // Execute & Verify
-      await expect(authService.validateAccessToken('invalid-access-token')).rejects.toThrow(
-        'Invalid access token'
+    it('should throw specific JWT errors if token verification fails', async () => {
+      const { JsonWebTokenError, TokenExpiredError } = jest.requireActual('jsonwebtoken');
+
+      mockJwtVerify.mockImplementation(() => {
+        throw new TokenExpiredError('jwt expired', new Date());
+      });
+      await expect(authService.validateAccessToken('expired-token')).rejects.toThrow(
+        TokenExpiredError
+      );
+
+      mockJwtVerify.mockImplementation(() => {
+        throw new JsonWebTokenError('jwt malformed');
+      });
+      await expect(authService.validateAccessToken('malformed-token')).rejects.toThrow(
+        JsonWebTokenError
       );
     });
   });
 
-  describe('handleOAuth', () => {
-    it('should find an existing user by OAuth provider ID', async () => {
-      // Setup
-      const mockOAuthUser = {
-        ...mockUser,
-        socialProfiles: {
-          google: { id: 'google-id-123' },
-        },
+  describe('logout', () => {
+    it('should invalidate session and blacklist token if session ID provided', async () => {
+      const sessionId = ObjectId().toString();
+      const accessToken = 'some-access-token';
+      const decodedUserId = ObjectId().toString();
+      const decodedUser = {
+        id: decodedUserId,
+        exp: Date.now() / 1000 + 3600,
+      }; // exp is in seconds
+      const mockSession = {
+        _id: sessionId,
+        isActive: true,
+        save: mockSessionInstanceSave.mockResolvedValueThis(),
       };
 
-      User.findOne.mockResolvedValue(mockOAuthUser);
+      mockSessionFindById.mockResolvedValue(mockSession);
+      mockJwtDecode.mockReturnValue(decodedUser); // For blacklisting if sessionID is present
+      mockTokenBlacklistCreate.mockResolvedValue({});
 
-      const profile = {
-        id: 'google-id-123',
-        email: 'test@example.com',
-      };
+      await authService.logout(accessToken, sessionId);
 
-      // Execute
-      const result = await authService.handleOAuth('google', profile);
-
-      // Verify
-      expect(User.findOne).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
+      expect(mockSessionFindById).toHaveBeenCalledWith(sessionId);
+      expect(mockSession.isActive).toBe(false); // Check property on the mock object
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1);
+      expect(mockTokenBlacklistCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: accessToken,
+          userId: decodedUserId, // from jwtDecode
+          expiresAt: new Date(decodedUser.exp * 1000), // Convert exp to Date
+        })
+      );
+      expect(mockJwtVerify).not.toHaveBeenCalled(); // Should not verify if sessionId is present
     });
 
-    it('should link OAuth account to existing user by email', async () => {
-      // Setup
-      User.findOne.mockResolvedValueOnce(null); // No user with this OAuth ID
-      User.findOne.mockResolvedValueOnce(mockUser); // User exists with this email
-
-      const profile = {
-        id: 'google-id-123',
-        email: 'test@example.com',
+    it('should derive session ID from token, invalidate session, and blacklist token if no session ID provided', async () => {
+      const accessToken = 'token-with-session';
+      const userId = ObjectId().toString();
+      const sessionId = ObjectId().toString();
+      const decodedPayload = {
+        id: userId,
+        sessionId: sessionId,
+        exp: Date.now() / 1000 + 3600,
+      };
+      const mockSession = {
+        _id: sessionId,
+        isActive: true,
+        save: mockSessionInstanceSave.mockResolvedValueThis(),
       };
 
-      // Execute
-      const result = await authService.handleOAuth('google', profile);
+      mockJwtVerify.mockReturnValue(decodedPayload); // Used to get sessionID and userID
+      mockSessionFindById.mockResolvedValue(mockSession);
+      mockTokenBlacklistCreate.mockResolvedValue({});
 
-      // Verify
-      expect(User.findOne).toHaveBeenCalledTimes(2);
-      expect(mockUser.save).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
+      await authService.logout(accessToken, null);
+
+      expect(mockJwtVerify).toHaveBeenCalledWith(accessToken, 'test-jwt-secret');
+      expect(mockSessionFindById).toHaveBeenCalledWith(sessionId);
+      expect(mockSession.isActive).toBe(false);
+      expect(mockSessionInstanceSave).toHaveBeenCalledTimes(1);
+      expect(mockTokenBlacklistCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: accessToken,
+          userId: userId, // from jwtVerify
+          expiresAt: new Date(decodedPayload.exp * 1000),
+        })
+      );
     });
 
-    it('should create a new user if no existing user is found', async () => {
-      // Setup
-      User.findOne.mockResolvedValueOnce(null); // No user with this OAuth ID
-      User.findOne.mockResolvedValueOnce(null); // No user with this email
-
-      const profile = {
-        id: 'google-id-123',
-        email: 'newuser@example.com',
-        username: 'newuser',
+    it('should blacklist token using decode if token verification fails during logout (no session ID) and session not found', async () => {
+      const accessToken = 'bad-verify-token';
+      const fallbackUserId = ObjectId().toString();
+      const decodedFallback = {
+        id: fallbackUserId,
+        exp: Math.floor(Date.now() / 1000) + 100,
       };
 
-      // Mock the save function for this specific instance if needed
-      // const newUserInstance = new User(profile); // Instance created inside service
+      mockJwtVerify.mockImplementation(() => {
+        throw new Error('Verification failed');
+      });
+      mockJwtDecode.mockReturnValue(decodedFallback); // Fallback for blacklisting
+      mockSessionFindById.mockResolvedValue(null); // Assume session not found
+      mockTokenBlacklistCreate.mockResolvedValue({});
 
-      // Execute
-      const result = await authService.handleOAuth('google', profile);
+      await authService.logout(accessToken, null);
 
-      // Verify
-      expect(User.findOne).toHaveBeenCalledTimes(2);
-      // Check that the save mock was called (indirectly via service)
-      // It might be called twice: once for creation, once for lastActive update
-      expect(mockSave).toHaveBeenCalled();
-      expect(result).toHaveProperty('token');
-      expect(result).toHaveProperty('refreshToken');
-      expect(result.user).not.toHaveProperty('password'); // Check sanitization worked
-      expect(result.user).toHaveProperty('username', profile.username);
-    });
-  });
-
-  describe('sanitizeUser', () => {
-    it('should remove sensitive information from user object', () => {
-      // Setup
-      const userWithPassword = {
-        _id: 'user-id',
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'secret-password',
-        toObject: function () {
-          return { ...this };
-        },
-      };
-
-      // Execute
-      const result = authService.sanitizeUser(userWithPassword);
-
-      // Verify
-      expect(result).not.toHaveProperty('password');
-      expect(result).toHaveProperty('username', 'testuser');
-      expect(result).toHaveProperty('email', 'test@example.com');
+      expect(mockJwtVerify).toHaveBeenCalledWith(accessToken, 'test-jwt-secret');
+      expect(mockTokenBlacklistCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: accessToken,
+          userId: fallbackUserId,
+          expiresAt: new Date(decodedFallback.exp * 1000), // Convert exp to Date
+        })
+      );
+      expect(mockSessionInstanceSave).not.toHaveBeenCalled(); // No session to save
     });
 
-    it('should handle user objects without toObject method', () => {
-      // Setup
-      const userWithoutToObject = {
-        _id: 'user-id',
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'secret-password',
+    it('should still blacklist token if session not found (with session ID provided)', async () => {
+      const sessionId = ObjectId().toString();
+      const accessToken = 'token-for-no-session';
+      const decodedUserId = ObjectId().toString();
+      const decodedUser = {
+        id: decodedUserId,
+        exp: Math.floor(Date.now() / 1000) + 3600,
       };
 
-      // Execute
-      const result = authService.sanitizeUser(userWithoutToObject);
+      mockSessionFindById.mockResolvedValue(null); // Session not found
+      mockJwtDecode.mockReturnValue(decodedUser); // For blacklisting
+      mockTokenBlacklistCreate.mockResolvedValue({});
 
-      // Verify
-      expect(result).not.toHaveProperty('password');
-      expect(result).toHaveProperty('username', 'testuser');
-      expect(result).toHaveProperty('email', 'test@example.com');
+      await authService.logout(accessToken, sessionId);
+
+      expect(mockSessionFindById).toHaveBeenCalledWith(sessionId);
+      expect(mockSessionInstanceSave).not.toHaveBeenCalled(); // No session to save
+      expect(mockTokenBlacklistCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: accessToken,
+          userId: decodedUserId,
+          expiresAt: new Date(decodedUser.exp * 1000), // Convert exp to Date
+        })
+      );
     });
   });
 });

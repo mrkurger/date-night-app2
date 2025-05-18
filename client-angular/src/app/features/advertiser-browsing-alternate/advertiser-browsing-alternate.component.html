@@ -1,0 +1,271 @@
+<!-- Converted React/Tailwind code will go here -->
+<nb-layout>
+  <nb-layout-header fixed class="alt-header">
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="logo-container">
+        <a routerLink="/" class="logo"> Sensual<span class="text-pink">Meet</span> </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-navigation">
+        <nb-actions size="medium">
+          <nb-action>
+            <button
+              nbButton
+              ghost
+              routerLink="/advertiser-browsing-alt/browse"
+              routerLinkActive="active-link"
+            >
+              Browse
+            </button>
+          </nb-action>
+          <nb-action>
+            <button
+              nbButton
+              ghost
+              routerLink="/advertiser-browsing-alt/favorites"
+              routerLinkActive="active-link"
+            >
+              Favorites
+            </button>
+          </nb-action>
+          <nb-action class="rankings-menu-item">
+            <button nbButton ghost [nbContextMenu]="rankingsMenu" nbContextMenuTrigger="hover">
+              Rankings
+              <nb-icon icon="chevron-down-outline" pack="eva" class="menu- বোঝার-icon"></nb-icon>
+            </button>
+          </nb-action>
+          <nb-action *ngIf="isAdvertiser">
+            <button
+              nbButton
+              ghost
+              routerLink="/advertiser-browsing-alt/advertiser-dashboard"
+              routerLinkActive="active-link"
+            >
+              Dashboard
+            </button>
+          </nb-action>
+        </nb-actions>
+      </nav>
+
+      <!-- Search and User Actions -->
+      <div class="search-user-actions">
+        <nb-actions size="medium">
+          <nb-action class="search-action" [class.search-visible]="isSearchVisible">
+            <ng-container *ngIf="!isSearchVisible">
+              <button nbButton ghost (click)="toggleSearch()" class="search-toggle-btn">
+                <nb-icon icon="search-outline"></nb-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isSearchVisible">
+              <input
+                type="search"
+                nbInput
+                autoFocus
+                (blur)="toggleSearch()"
+                placeholder="Search..."
+                class="search-input"
+                #searchInput
+              />
+              <button nbButton ghost (click)="toggleSearch()" class="search-close-btn">
+                <nb-icon icon="close-outline"></nb-icon>
+              </button>
+            </ng-container>
+          </nb-action>
+
+          <ng-container *ngIf="isLoggedIn; else loggedOutUserActions">
+            <nb-action>
+              <button nbButton ghost routerLink="/advertiser-browsing-alt/favorites">
+                <nb-icon icon="heart-outline"></nb-icon>
+                <!-- Lucide: Heart -->
+              </button>
+            </nb-action>
+            <nb-action>
+              <button nbButton ghost class="notification-btn">
+                <nb-icon icon="bell-outline"></nb-icon>
+                <!-- Lucide: Bell -->
+                <nb-badge text="3" status="danger" position="top right"></nb-badge>
+                <!-- Mock badge -->
+              </button>
+            </nb-action>
+            <nb-action>
+              <button nbButton ghost routerLink="/advertiser-browsing-alt/wallet">
+                <nb-icon icon="credit-card-outline"></nb-icon>
+                <!-- Lucide: Wallet -> Eva: credit-card-outline -->
+              </button>
+            </nb-action>
+            <nb-action>
+              <nb-user
+                [name]="userName"
+                [picture]="userPicture"
+                [nbContextMenu]="userMenuAccount"
+                nbContextMenuTag="user-account-menu"
+                size="medium"
+              >
+              </nb-user>
+            </nb-action>
+          </ng-container>
+
+          <ng-template #loggedOutUserActions>
+            <nb-action>
+              <button nbButton ghost routerLink="/auth/login">Log In</button>
+            </nb-action>
+            <nb-action>
+              <button
+                nbButton
+                status="primary"
+                class="pink-button signup-button"
+                routerLink="/auth/signup"
+              >
+                Sign Up
+              </button>
+            </nb-action>
+          </ng-template>
+
+          <!-- Mobile Menu Toggle (Handled by Nebular sidebar for main app, but if this is a distinct header) -->
+          <nb-action class="mobile-menu-toggle d-md-none">
+            <button nbButton ghost (click)="toggleMobileSidebar()">
+              <nb-icon [icon]="isMobileMenuOpen ? 'close-outline' : 'menu-outline'"></nb-icon>
+            </button>
+          </nb-action>
+        </nb-actions>
+      </div>
+    </div>
+  </nb-layout-header>
+
+  <nb-sidebar
+    class="mobile-sidebar"
+    tag="alt-mobile-menu"
+    responsive
+    [compacted]="!isMobileMenuOpen"
+  >
+    <nb-menu [items]="mobileMenuItems"></nb-menu>
+    <!-- Add login/signup for mobile if not logged in and user menu for logged in -->
+  </nb-sidebar>
+
+  <nb-layout-column class="alt-content-column">
+    <!-- Main content for the advertiser-browsing-alt feature will be projected here or routed -->
+    <div class="alt-browse-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <form (ngSubmit)="handleSearch($event)" class="search-form">
+          <nb-form-field class="search-input-field">
+            <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+            <input
+              nbInput
+              fullWidth
+              type="search"
+              placeholder="Search by name, location, services..."
+              [(ngModel)]="searchQuery"
+              name="searchQuery"
+              (input)="onSearchInput()"
+            />
+          </nb-form-field>
+          <button nbButton status="primary" type="submit" class="search-button">
+            <nb-icon icon="search-outline" pack="eva" *ngIf="!isSearching"></nb-icon>
+            <nb-spinner *ngIf="isSearching" size="tiny" status="control"></nb-spinner>
+            {{ isSearching ? 'Searching...' : 'Search' }}
+          </button>
+          <button
+            nbButton
+            status="basic"
+            type="button"
+            *ngIf="searchQuery && isSearchingResult"
+            (click)="clearSearch()"
+            class="clear-button"
+          >
+            <nb-icon icon="close-outline" pack="eva"></nb-icon> Clear
+          </button>
+        </form>
+      </div>
+
+      <!-- Tab Navigation -->
+      <nb-tabset fullWidth (changeTab)="onViewChange($event)" class="view-tabset">
+        <nb-tab tabTitle="Grid" [active]="activeView === 'grid'">
+          <ng-template nbTabIcon><nb-icon icon="grid-outline"></nb-icon></ng-template>
+          <!-- Content for Grid View (e.g., <app-alt-netflix-view>) -->
+        </nb-tab>
+        <nb-tab tabTitle="Cards" [active]="activeView === 'cards'">
+          <ng-template nbTabIcon><nb-icon icon="layout-outline"></nb-icon></ng-template>
+          <!-- Or heart-outline for Tinder-like -->
+          <!-- Content for Cards View (e.g., <app-alt-tinder-view>) -->
+        </nb-tab>
+        <nb-tab tabTitle="Map" [active]="activeView === 'map'" disabled>
+          <ng-template nbTabIcon><nb-icon icon="map-outline"></nb-icon></ng-template>
+          <p class="placeholder-text">Map view is coming soon!</p>
+        </nb-tab>
+        <nb-tab tabTitle="Nearby" [active]="activeView === 'nearby'" disabled>
+          <ng-template nbTabIcon><nb-icon icon="pin-outline"></nb-icon></ng-template>
+          <p class="placeholder-text">Nearby view is coming soon!</p>
+        </nb-tab>
+        <nb-tab tabTitle="Featured" [active]="activeView === 'featured'" disabled>
+          <ng-template nbTabIcon><nb-icon icon="star-outline"></nb-icon></ng-template>
+          <p class="placeholder-text">Featured view is coming soon!</p>
+        </nb-tab>
+      </nb-tabset>
+
+      <!-- Main Content Area (Flex Layout) -->
+      <div class="content-area-wrapper">
+        <div class="main-content-pane">
+          <!-- Title for search/location -->
+          <div *ngIf="pageTitle" class="page-context-title">
+            <h2>{{ pageTitle }}</h2>
+            <p *ngIf="searchResultCount !== null" class="text-hint">
+              Found {{ searchResultCount }} advertisers
+            </p>
+          </div>
+
+          <!-- Premium Ads Section -->
+          <app-alt-premium-ads-section
+            [premiumAds]="premiumAds"
+            *ngIf="
+              premiumAds.length > 0 &&
+              (!isSearchingResult || (isSearchingResult && premiumAds.length > 0))
+            "
+          ></app-alt-premium-ads-section>
+          <!-- <div *ngIf="premiumAds.length > 0" class="premium-placeholder">TODO: Premium Ads Section</div> -->
+
+          <!-- Dynamic View Content -->
+          <div [ngSwitch]="activeView">
+            <div *ngSwitchCase="'grid'">
+              <app-alt-netflix-view [advertisers]="displayedAdvertisers"></app-alt-netflix-view>
+              <!-- <p class="placeholder-text">Grid View (Content from AltNetflixViewComponent will go here)</p>
+                 <div *ngFor="let ad of displayedAdvertisers">{{ad.name}} - Regular</div> -->
+            </div>
+            <div *ngSwitchCase="'cards'">
+              <app-alt-tinder-view [advertisers]="displayedAdvertisers"></app-alt-tinder-view>
+              <!-- <p class="placeholder-text">Cards View (Content from AltTinderViewComponent will go here)</p> -->
+            </div>
+            <!-- Other cases for map, nearby, featured will show their placeholder text from nb-tab -->
+            <p *ngSwitchDefault class="placeholder-text">
+              {{ activeView | titlecase }} view is coming soon!
+            </p>
+          </div>
+        </div>
+        <div class="sidebar-pane">
+          <app-alt-paid-placement-sidebar [ads]="paidPlacementAds"></app-alt-paid-placement-sidebar>
+          <!-- <div class="paid-placement-placeholder">TODO: Paid Placement Sidebar</div> -->
+        </div>
+      </div>
+
+      <app-alt-chat-widget></app-alt-chat-widget>
+      <!-- <div class="chat-widget-placeholder">TODO: Chat Widget</div> -->
+    </div>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed class="alt-footer">
+    <div class="footer-container">
+      <p class="footer-copyright-text">
+        © 2023 HT Services. All rights reserved.
+        <!-- TODO: Update year dynamically or make it configurable -->
+      </p>
+      <div class="footer-links">
+        <a routerLink="/terms-alt" class="footer-link">Terms</a>
+        <a routerLink="/privacy-alt" class="footer-link">Privacy</a>
+        <a routerLink="/contact-alt" class="footer-link">Contact</a>
+        <!-- TODO: Ensure these routes exist or are planned for the alt section -->
+      </div>
+    </div>
+  </nb-layout-footer>
+</nb-layout>

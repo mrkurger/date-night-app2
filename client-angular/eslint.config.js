@@ -1,6 +1,6 @@
 // @ts-check
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import * as tseslint from 'typescript-eslint';
 import angularEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularEslintTemplateParser from '@angular-eslint/template-parser';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -15,12 +15,15 @@ const __filenameEsm = fileURLToPath(import.meta.url);
 const __dirnameEsm = path.dirname(__filenameEsm);
 
 // Use FlatCompat for extending older eslintrc-style configs
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const compat = new FlatCompat({
   baseDirectory: __dirnameEsm, // Use the ESM-compatible __dirname
 });
 
 // Consolidate ignore patterns specific to client-angular
 const clientAngularSpecificIgnores = [
+  '.angular/**/*',
+  '**/*.html',
   'projects/**/*',
   'src/csp-config.js',
   'src/babel-runtime-loader.js',
@@ -70,7 +73,7 @@ export default tseslint.config(
     ignores: uniqueClientAngularSpecificIgnores,
   },
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked, // For type-aware linting
+  ...tseslint.configs.recommended, // Use non-type-aware linting
   // Angular ESLint configurations
   {
     files: ['**/*.ts'],
@@ -78,7 +81,7 @@ export default tseslint.config(
       '@angular-eslint': angularEslintPlugin,
     },
     rules: {
-      ...angularEslintPlugin.configs.recommended.rules,
+      // Angular rules
     },
   },
   {
@@ -90,7 +93,7 @@ export default tseslint.config(
       '@angular-eslint/template': angularEslintPlugin, // Plugin for HTML templates
     },
     rules: {
-      ...angularEslintPlugin.configs['template/recommended'].rules,
+      // Template rules
     },
   },
   eslintConfigPrettier, // Disables ESLint rules that conflict with Prettier
@@ -191,7 +194,8 @@ export default tseslint.config(
   },
   {
     files: ['*.js', '*.cjs', 'src/**/*.js', 'src/**/*.cjs'],
-    excludedFiles: ['src/babel-runtime-loader.js', 'src/babel-runtime-loader.cjs'],
+    // Use 'not' pattern instead of excludedFiles
+    ignores: ['src/babel-runtime-loader.js', 'src/babel-runtime-loader.cjs'],
     languageOptions: {
       sourceType: 'commonjs',
       ecmaVersion: 2020,

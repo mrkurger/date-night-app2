@@ -7,7 +7,7 @@
 // - NOTIFICATION_DURATION: Duration for notifications in milliseconds (default: 3000)
 //   Related to: client-angular/src/app/core/services/notification.service.ts
 // ===================================================
-import { NgModule, Component } from '@angular/core';
+import { NgModule,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

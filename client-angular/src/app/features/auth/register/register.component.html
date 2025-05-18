@@ -10,15 +10,15 @@
             <nb-form-field>
               <label for="firstname">First Name</label>
               <input nbInput formControlName="firstname" placeholder="Enter first name" />
-              <div
+              <p
+                class="caption status-danger"
                 *ngIf="
                   registerForm.get('firstname')?.hasError('required') &&
                   registerForm.get('firstname')?.touched
                 "
-                class="error-message"
               >
                 First name is required
-              </div>
+              </p>
             </nb-form-field>
           </div>
 
@@ -26,15 +26,15 @@
             <nb-form-field>
               <label for="lastname">Last Name</label>
               <input nbInput formControlName="lastname" placeholder="Enter last name" />
-              <div
+              <p
+                class="caption status-danger"
                 *ngIf="
                   registerForm.get('lastname')?.hasError('required') &&
                   registerForm.get('lastname')?.touched
                 "
-                class="error-message"
               >
                 Last name is required
-              </div>
+              </p>
             </nb-form-field>
           </div>
         </div>
@@ -43,23 +43,23 @@
           <nb-form-field>
             <label for="email">Email</label>
             <input nbInput formControlName="email" placeholder="Enter email" />
-            <div
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.get('email')?.hasError('required') &&
                 registerForm.get('email')?.touched
               "
-              class="error-message"
             >
               Email is required
-            </div>
-            <div
+            </p>
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched
               "
-              class="error-message"
             >
               Please enter a valid email
-            </div>
+            </p>
           </nb-form-field>
         </div>
 
@@ -72,24 +72,24 @@
               formControlName="password"
               placeholder="Enter password"
             />
-            <div
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.get('password')?.hasError('required') &&
                 registerForm.get('password')?.touched
               "
-              class="error-message"
             >
               Password is required
-            </div>
-            <div
+            </p>
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.get('password')?.hasError('minlength') &&
                 registerForm.get('password')?.touched
               "
-              class="error-message"
             >
               Password must be at least 8 characters
-            </div>
+            </p>
           </nb-form-field>
         </div>
 
@@ -102,24 +102,24 @@
               formControlName="confirmPassword"
               placeholder="Confirm password"
             />
-            <div
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.get('confirmPassword')?.hasError('required') &&
                 registerForm.get('confirmPassword')?.touched
               "
-              class="error-message"
             >
               Please confirm your password
-            </div>
-            <div
+            </p>
+            <p
+              class="caption status-danger"
               *ngIf="
                 registerForm.hasError('passwordMismatch') &&
                 registerForm.get('confirmPassword')?.touched
               "
-              class="error-message"
             >
               Passwords do not match
-            </div>
+            </p>
           </nb-form-field>
         </div>
 
@@ -127,15 +127,15 @@
           <nb-checkbox formControlName="termsAccepted"
             >I accept the Terms and Conditions</nb-checkbox
           >
-          <div
+          <p
+            class="caption status-danger"
             *ngIf="
               registerForm.get('termsAccepted')?.hasError('required') &&
               registerForm.get('termsAccepted')?.touched
             "
-            class="error-message"
           >
             You must accept the Terms and Conditions
-          </div>
+          </p>
         </div>
 
         <div class="form-actions">
@@ -158,7 +158,7 @@
             </button>
 
             <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
-              <nb-icon icon="apple-outline"></nb-icon> Apple
+              <nb-icon pack="custom" icon="apple"></nb-icon> Apple
             </button>
 
             <button
@@ -168,7 +168,7 @@
               type="button"
               (click)="socialLogin('microsoft')"
             >
-              <nb-icon icon="microsoft-outline"></nb-icon> Microsoft
+              <nb-icon pack="custom" icon="microsoft"></nb-icon> Microsoft
             </button>
           </div>
         </div>

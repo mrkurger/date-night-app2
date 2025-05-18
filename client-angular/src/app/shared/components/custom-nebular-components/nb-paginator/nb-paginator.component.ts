@@ -2,14 +2,14 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import { NbButtonModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 import { NbPaginationChangeEvent } from './nb-paginator.module';
 
 @Component({
   selector: 'nb-paginator',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     NbButtonModule,
     NbIconModule,
     NbSelectModule

@@ -19,16 +19,16 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbBadgeModule,
-  NbUserModule,
-  NbTagModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
 } from '@nebular/theme';
 
 export interface TinderCardMedia {
@@ -49,15 +49,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 @Component({
   selector: 'nb-tinder-card',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbUserModule,
-    NbTagModule,
-  ],
+  imports: [CommonModule],
   template: `
     <nb-card
       #card

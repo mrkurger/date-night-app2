@@ -6,7 +6,7 @@
 // COMMON CUSTOMIZATIONS:
 // - None currently
 // ===================================================
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // Import QRCodeComponent directly for Angular v19+
 import { QRCodeComponent } from 'angularx-qrcode';

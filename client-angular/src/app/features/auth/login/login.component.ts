@@ -1,4 +1,5 @@
 import { OnInit } from '@angular/core';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -36,8 +37,7 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
   styleUrls: ['./login.component.scss', './social-login.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     ReactiveFormsModule,
     RouterLink,
     NbCardModule,

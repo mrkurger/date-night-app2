@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+// Component type is not used in this file
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
@@ -200,6 +200,14 @@ export const routes: Routes = [
       import('./features/telemetry/telemetry.routes').then((m) => m.TELEMETRY_ROUTES),
     canActivate: [AuthGuard],
     data: { roles: ['admin'], title: 'Telemetry Dashboard' },
+  },
+  {
+    path: 'advertiser-browsing-alt',
+    loadChildren: () =>
+      import('./features/advertiser-browsing-alternate/advertiser-browsing-alternate.module').then(
+        (m) => m.AdvertiserBrowsingAlternateModule,
+      ),
+    data: { title: 'Advertiser Browsing (Alt)' },
   },
 
   // Fallback route

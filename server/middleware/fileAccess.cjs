@@ -63,7 +63,7 @@ async function fileAccess(req, res, next) {
       // Store the validated file path for the next middleware
       req.validatedFilePath = fullPath;
       next();
-    } catch (err) {
+    } catch (_err) {
       return next({
         message: 'File not found',
         statusCode: 404,

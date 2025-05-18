@@ -18,7 +18,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Import NebularModule which contains all Nebular components
-import { NebularModule } from '../shared/nebular.module';
+import { NebularModule } from '../../../app/shared/nebular.module';
 import { NbDialogService } from '@nebular/theme';
 
 import { AdService } from '../../core/services/ad.service';

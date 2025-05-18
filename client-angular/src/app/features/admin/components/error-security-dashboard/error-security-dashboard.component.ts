@@ -1,5 +1,5 @@
-import {} from '../../../../shared/nebular.module';
-import { NbProgressBarModule, NbToastrService } from '@nebular/theme';
+import { NebularModule } from '../../../../../app/shared/nebular.module';
+import { NbProgressBarModule, _NbToastrService } from '@nebular/theme';
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -59,7 +59,7 @@ interface SecurityMetrics {
   selector: 'app-error-security-dashboard',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule, NgxChartsModule, NbProgressBarModule],
+  imports: [NebularModule, CommonModule, FormsModule, NgxChartsModule, NbProgressBarModule],
   template: `
     <div class="error-security-dashboard">
       <!-- Security Metrics Overview -->
@@ -386,7 +386,7 @@ export class ErrorSecurityDashboardComponent implements OnInit {
   vulnerabilities: Vulnerability[] = [];
   filteredVulnerabilities: Vulnerability[] = [];
 
-  constructor(/* private toastrService: NbToastrService */) {}
+  constructor(/* private toastrService: _NbToastrService */) {}
 
   ngOnInit() {
     this.loadData();

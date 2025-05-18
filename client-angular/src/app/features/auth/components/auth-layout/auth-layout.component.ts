@@ -1,5 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // Using direct imports from @nebular/theme instead of the shared module
+import { NebularModule } from '../../../../../app/shared/nebular.module';
 import {
   NbLayoutModule,
   NbCardModule,
@@ -19,8 +20,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./auth-layout.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
+  imports: [NebularModule, CommonModule,
     RouterOutlet,
     NbLayoutModule,
     NbCardModule,

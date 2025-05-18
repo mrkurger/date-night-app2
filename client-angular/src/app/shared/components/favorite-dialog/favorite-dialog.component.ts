@@ -1,20 +1,20 @@
 import { Component, Inject } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
+import { _NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
 import {
   NbDialogRef,
   NB_DIALOG_CONFIG,
   NbTagInputAddEvent,
-  NbDialogModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbTagModule,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
   NbToggleModule,
-  NbCardModule,
+  ,
 } from '@nebular/theme';
 
 import {
@@ -22,7 +22,7 @@ import {
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
-  FormControl,
+  _FormControl,
   Validators,
 } from '@angular/forms';
 
@@ -49,20 +49,10 @@ export interface FavoriteDialogResult {
 @Component({
   selector: 'app-favorite-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbDialogModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbTagModule,
+  imports: [CommonModule,
     NbToggleModule,
     FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-  ],
+    ReactiveFormsModule],
   template: `
     <nb-card class="favorite-dialog-container">
       <nb-card-header class="dialog-header">

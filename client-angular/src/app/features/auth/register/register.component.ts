@@ -1,4 +1,5 @@
 import { OnInit } from '@angular/core';
+import { NebularModule } from '../../../../app/shared/nebular.module';
 import {
   NbCardModule,
   NbButtonModule,
@@ -50,8 +51,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   styleUrls: ['./register.component.scss', './social-login.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    ReactiveFormsModule,
+  imports: [NebularModule, ReactiveFormsModule,
     CommonModule,
     NbCardModule,
     NbFormFieldModule,

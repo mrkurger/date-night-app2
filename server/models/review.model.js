@@ -185,7 +185,7 @@ reviewSchema.statics.getAdvertiserRatings = async function (advertiserId) {
   const result = await this.aggregate([
     {
       $match: {
-        advertiser: mongoose.Types.ObjectId(advertiserId),
+        advertiser: new mongoose.Types.ObjectId(advertiserId),
         status: 'approved',
       },
     },

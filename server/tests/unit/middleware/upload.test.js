@@ -17,13 +17,14 @@ import multer from 'multer';
 
 // Mock multer
 jest.mock('multer', () => {
+  const mockStorage = {};
   const multerMock = {
-    diskStorage: jest.fn(() => 'diskStorage'),
-    memoryStorage: jest.fn(() => 'memoryStorage'),
-    single: jest.fn(() => jest.fn()),
-    array: jest.fn(() => jest.fn()),
+    diskStorage: jest.fn(() => mockStorage),
+    memoryStorage: jest.fn(() => mockStorage), // Ensure memoryStorage is a function that returns a mock storage object
+    single: jest.fn(() => jest.fn((req, res, next) => next())),
+    array: jest.fn(() => jest.fn((req, res, next) => next())),
     limits: {},
-    fileFilter: {},
+    fileFilter: jest.fn(),
   };
   return jest.fn(() => multerMock);
 });

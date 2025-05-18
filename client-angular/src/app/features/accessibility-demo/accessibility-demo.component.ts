@@ -1,7 +1,16 @@
-import { Input } from '@angular/core';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
+import { NebularModule } from '../../../app/shared/nebular.module';
+import {
+  NbCardModule,
+  NbAccordionModule,
+  NbTabsetModule,
+  NbButtonModule,
+  NbIconModule,
+  NbListModule,
+  NbBadgeModule,
+} from '@nebular/theme';
 
 /**
  * Accessibility Demo Component
@@ -12,7 +21,15 @@ import { BemUtil } from '../../core/utils/bem.util';
 @Component({
   selector: 'app-accessibility-demo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NebularModule, CommonModule,
+    NbCardModule,
+    NbAccordionModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbListModule,
+    NbBadgeModule,
+  ],
   templateUrl: './accessibility-demo.component.html',
   styleUrls: ['./accessibility-demo.component.scss'],
 })

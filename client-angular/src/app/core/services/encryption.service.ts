@@ -13,7 +13,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map,  } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface EncryptedData {

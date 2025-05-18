@@ -197,16 +197,18 @@ export class AuthService implements NbRoleProvider {
 
   /**
    * Check if user is authenticated
+   * @returns Observable<boolean> that emits true if user is authenticated, false otherwise
    */
-  isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value;
+  isAuthenticated(): Observable<boolean> {
+    return this.currentUserSubject.pipe(map((user) => !!user));
   }
 
   /**
    * Get current user
+   * @returns Observable<User | null> that emits the current user or null
    */
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  getCurrentUser(): Observable<User | null> {
+    return this.currentUserSubject.asObservable();
   }
 
   /**

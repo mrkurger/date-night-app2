@@ -20,6 +20,7 @@ import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
 // Mock fs, fs/promises, and sharp
 jest.mock('fs', () => ({
   existsSync: jest.fn(),
+  statSync: jest.fn(), // Add statSync mock
 }));
 
 jest.mock('fs/promises', () => ({
