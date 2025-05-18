@@ -1,50 +1,78 @@
 <nb-layout>
+  <!-- Sidebar -->
+  <nb-sidebar
+    [state]="sidebarState"
+    [responsive]="true"
+    [compacted]="sidebarState === 'compacted'"
+    class="menu-sidebar"
+  >
+    <nb-menu [items]="items" (itemClick)="onMenuItemClick($event)"></nb-menu>
+  </nb-sidebar>
+
+  <!-- Header -->
   <nb-layout-header fixed>
     <div class="header-container">
-      <div class="logo-container">
-        <a class="logo" routerLink="/">DateNight.io</a>
+      <!-- Sidebar Toggle -->
+      <button nbButton ghost (click)="toggleSidebar()" class="sidebar-toggle">
+        <nb-icon
+          [icon]="sidebarState === 'collapsed' ? 'menu-2-outline' : 'menu-arrow-outline'"
+        ></nb-icon>
+      </button>
+
+      <!-- Breadcrumbs -->
+      <app-breadcrumbs></app-breadcrumbs>
+
+      <!-- Right Actions -->
+      <div class="header-actions">
+        <!-- Search -->
+        <button nbButton ghost class="search-button" (click)="openSearch()">
+          <nb-icon icon="search-outline"></nb-icon>
+          <span class="search-shortcut">⌘K</span>
+        </button>
+
+        <!-- Keyboard Shortcuts -->
+        <button
+          nbButton
+          ghost
+          class="shortcuts-button"
+          (click)="showKeyboardShortcuts()"
+          nbTooltip="Show keyboard shortcuts"
+          nbTooltipPlacement="bottom"
+        >
+          <nb-icon icon="keyboard-outline"></nb-icon>
+          <span class="shortcuts-shortcut">?</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <app-theme-toggle></app-theme-toggle>
+
+        <!-- User Menu -->
+        <nb-user
+          *ngIf="isLoggedIn"
+          [nbContextMenu]="userItems"
+          [name]="userProfile?.username || 'User'"
+          [picture]="userProfile?.profileImage || 'assets/images/default-avatar.png'"
+          nbContextMenuTag="user-menu"
+          (nbContextMenuItemClick)="onUserMenuSelect($event)"
+        >
+        </nb-user>
+
+        <!-- Auth Actions -->
+        <ng-container *ngIf="!isLoggedIn">
+          <button nbButton ghost routerLink="/auth/login">Log In</button>
+          <button nbButton status="primary" routerLink="/auth/register">Sign Up</button>
+        </ng-container>
       </div>
-
-      <nb-actions size="medium" class="header-actions">
-        <nb-action icon="search-outline" title="Search"></nb-action>
-        <nb-action *ngIf="isLoggedIn" icon="bell-outline" title="Notifications"></nb-action>
-
-        <nb-action *ngIf="isLoggedIn">
-          <nb-user
-            [nbContextMenu]="userItems"
-            [name]="userProfile?.username || 'User'"
-            [picture]="userProfile?.profileImage || 'assets/images/default-avatar.png'"
-            nbContextMenuTag="user-menu"
-            (nbContextMenuItemClick)="onUserMenuSelect($event)"
-          >
-          </nb-user>
-        </nb-action>
-
-        <nb-action *ngIf="!isLoggedIn">
-          <a nbButton status="primary" routerLink="/auth/login">Login</a>
-        </nb-action>
-      </nb-actions>
     </div>
   </nb-layout-header>
 
-  <nb-sidebar tag="menu" responsive>
-    <nb-menu [items]="items"></nb-menu>
-  </nb-sidebar>
-
-  <nb-layout-column>
+  <!-- Main Content -->
+  <nb-layout-column class="main-content">
     <ng-content></ng-content>
   </nb-layout-column>
 
+  <!-- Footer -->
   <nb-layout-footer fixed>
-    <div class="footer-container">
-      <div class="footer-links">
-        <a routerLink="/accessibility">Accessibility</a>
-        <a routerLink="/design-system">Design System</a>
-        <a routerLink="/style-guide">Style Guide</a>
-        <a routerLink="/micro-interactions">Micro-interactions</a>
-        <a routerLink="/preferences-demo">Preferences</a>
-      </div>
-      <div class="copyright">&copy; 2023 DateNight.io. All rights reserved.</div>
-    </div>
+    <span>&copy; 2025 Date Night App. All rights reserved.</span>
   </nb-layout-footer>
 </nb-layout>

@@ -54,7 +54,9 @@ export const clearDatabase = async () => {
     const collection = collections[key];
     await collection.deleteMany({});
   }
-  console.log('Database cleared');
+  if (process.env.NODE_ENV !== 'test') {
+    console.log('Database cleared');
+  }
 };
 
 /**

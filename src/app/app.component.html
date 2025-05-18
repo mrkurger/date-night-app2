@@ -1,0 +1,82 @@
+<div class="min-h-screen bg-gray-900 text-white">
+  <!-- Navigation -->
+  <nav class="bg-gray-900 border-b border-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a routerLink="/" class="text-2xl font-bold">
+          Sensual<span class="text-pink-500">Meet</span>
+        </a>
+
+        <!-- Main Navigation -->
+        <div class="hidden md:flex items-center space-x-4">
+          <a
+            routerLink="/advertiser-browsing/browse"
+            routerLinkActive="text-pink-500"
+            class="px-3 py-2 rounded-md text-sm font-medium hover:text-pink-500 transition-colors"
+          >
+            Browse
+          </a>
+          <a
+            routerLink="/advertiser-browsing/favorites"
+            routerLinkActive="text-pink-500"
+            class="px-3 py-2 rounded-md text-sm font-medium hover:text-pink-500 transition-colors"
+          >
+            Favorites
+          </a>
+          <a
+            routerLink="/advertiser-browsing/rankings"
+            routerLinkActive="text-pink-500"
+            class="px-3 py-2 rounded-md text-sm font-medium hover:text-pink-500 transition-colors"
+          >
+            Rankings
+          </a>
+        </div>
+
+        <!-- User Menu -->
+        <div class="flex items-center space-x-4">
+          <button class="text-gray-300 hover:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              />
+            </svg>
+          </button>
+          <button
+            class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 mt-8">
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">© 2024 SensualMeet. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

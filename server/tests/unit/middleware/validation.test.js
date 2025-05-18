@@ -10,7 +10,24 @@
 
 import { jest } from '@jest/globals';
 import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
-import { validateBody, validateQuery, validateParams } from '../../../middleware/validation.js';
+// Import the actual 'validate' function and express-validator functions
+import { validate } from '../../../middleware/validation.js';
+import { body, query, param, validationResult } from 'express-validator';
+
+// Mock express-validator's validationResult
+jest.mock('express-validator', () => ({
+  ...jest.requireActual('express-validator'), // Import and retain default behavior
+  validationResult: jest.fn(),
+}));
+
+// Mock the response utility
+jest.mock('../../../utils/response.js', () => ({
+  validationErrorResponse: jest.fn(errors => ({
+    success: false,
+    message: 'Validation failed',
+    errors,
+  })),
+}));
 
 describe('Validation Middleware', () => {
   let req;
@@ -25,237 +42,111 @@ describe('Validation Middleware', () => {
   });
 
   describe('validateBody', () => {
-    it('should pass validation for valid request body', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.body = {
-        name: 'Test User',
-        email: 'test@example.com',
-      };
-
-      validateBody(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.body);
+    it('should pass validation for valid request body', async () => {
+      const validations = [
+        body('name').notEmpty().withMessage('Name is required'),
+        body('email').isEmail().withMessage('Valid email is required'),
+      ];
+      req.body = { name: 'Test User', email: 'test@example.com' };
+      validationResult.mockReturnValue({ isEmpty: () => true, array: () => [] });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should reject invalid request body', () => {
-      const validationError = {
-        details: [{ message: 'Name is required' }],
-      };
-
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: validationError }),
-      };
-
-      req.body = {
-        // Missing required name field
-        email: 'test@example.com',
-      };
-
-      validateBody(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.body);
-      expect(next).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: expect.stringContaining('Name is required'),
-          statusCode: 400,
-        })
-      );
-    });
-
-    it('should handle empty request body', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.body = {};
-
-      validateBody(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith({});
-      expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
-    });
-
-    it('should handle undefined request body', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.body = undefined;
-
-      validateBody(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith({});
-      expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
+    it('should reject invalid request body', async () => {
+      const validations = [
+        body('name').notEmpty().withMessage('Name is required'),
+        body('email').isEmail().withMessage('Valid email is required'),
+      ];
+      req.body = { email: 'test@example.com' }; // Missing name
+      const mockErrors = [{ path: 'name', msg: 'Name is required', value: undefined }];
+      validationResult.mockReturnValue({ isEmpty: () => false, array: () => mockErrors });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: 'Validation failed',
+        errors: mockErrors,
+      });
+      expect(next).not.toHaveBeenCalled();
     });
   });
 
   describe('validateQuery', () => {
-    it('should pass validation for valid query parameters', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.query = {
-        page: '1',
-        limit: '10',
-      };
-
-      validateQuery(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.query);
+    it('should pass validation for valid request query', async () => {
+      const validations = [
+        query('page').isInt().withMessage('Page must be an integer'),
+        query('limit').isInt({ min: 1, max: 100 }).withMessage('Limit must be between 1 and 100'),
+      ];
+      req.query = { page: '1', limit: '10' };
+      validationResult.mockReturnValue({ isEmpty: () => true, array: () => [] });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
       expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should reject invalid query parameters', () => {
-      const validationError = {
-        details: [{ message: 'Page must be a number' }],
-      };
-
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: validationError }),
-      };
-
-      req.query = {
-        page: 'invalid',
-        limit: '10',
-      };
-
-      validateQuery(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.query);
-      expect(next).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: expect.stringContaining('Page must be a number'),
-          statusCode: 400,
-        })
-      );
-    });
-
-    it('should handle empty query parameters', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.query = {};
-
-      validateQuery(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith({});
-      expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
+    it('should reject invalid request query', async () => {
+      const validations = [query('page').isInt().withMessage('Page must be an integer')];
+      req.query = { page: 'abc' }; // Invalid
+      const mockErrors = [{ path: 'page', msg: 'Page must be an integer', value: 'abc' }];
+      validationResult.mockReturnValue({ isEmpty: () => false, array: () => mockErrors });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: 'Validation failed',
+        errors: mockErrors,
+      });
+      expect(next).not.toHaveBeenCalled();
     });
   });
 
   describe('validateParams', () => {
-    it('should pass validation for valid route parameters', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.params = {
-        id: '507f1f77bcf86cd799439011',
-      };
-
-      validateParams(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.params);
+    it('should pass validation for valid request params', async () => {
+      const validations = [param('id').isUUID().withMessage('ID must be a valid UUID')];
+      req.params = { id: 'a1b2c3d4-e5f6-7890-1234-567890abcdef' };
+      validationResult.mockReturnValue({ isEmpty: () => true, array: () => [] });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
       expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should reject invalid route parameters', () => {
-      const validationError = {
-        details: [{ message: 'ID must be a valid MongoDB ObjectId' }],
-      };
-
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: validationError }),
-      };
-
-      req.params = {
-        id: 'invalid-id',
-      };
-
-      validateParams(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith(req.params);
-      expect(next).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: expect.stringContaining('ID must be a valid MongoDB ObjectId'),
-          statusCode: 400,
-        })
-      );
-    });
-
-    it('should handle empty route parameters', () => {
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: null }),
-      };
-
-      req.params = {};
-
-      validateParams(schema)(req, res, next);
-
-      expect(schema.validate).toHaveBeenCalledWith({});
-      expect(next).toHaveBeenCalled();
-      expect(next).not.toHaveBeenCalledWith(expect.any(Error));
+    it('should reject invalid request params', async () => {
+      const validations = [param('id').isUUID().withMessage('ID must be a valid UUID')];
+      req.params = { id: 'invalid-uuid' };
+      const mockErrors = [{ path: 'id', msg: 'ID must be a valid UUID', value: 'invalid-uuid' }];
+      validationResult.mockReturnValue({ isEmpty: () => false, array: () => mockErrors });
+      await validate(validations)(req, res, next);
+      expect(validationResult).toHaveBeenCalledWith(req);
+      expect(res.status).toHaveBeenCalledWith(422);
+      expect(res.json).toHaveBeenCalledWith({
+        success: false,
+        message: 'Validation failed',
+        errors: mockErrors,
+      });
+      expect(next).not.toHaveBeenCalled();
     });
   });
 
   describe('Error Handling', () => {
-    it('should format validation error messages correctly', () => {
-      const validationError = {
-        details: [{ message: 'Name is required' }, { message: 'Email must be valid' }],
-      };
-
-      const schema = {
-        validate: jest.fn().mockReturnValue({ error: validationError }),
-      };
-
-      req.body = {
-        // Invalid data
-      };
-
-      validateBody(schema)(req, res, next);
-
-      expect(next).toHaveBeenCalledWith(
-        expect.objectContaining({
-          messages: [
-            expect.stringContaining('Name is required'),
-            expect.stringContaining('Email must be valid'),
-          ],
-          statusCode: 400,
-        })
-      );
-    });
-
-    it('should handle unexpected validation errors gracefully', () => {
-      const schema = {
-        validate: jest.fn().mockImplementation(() => {
-          throw new Error('Unexpected validation error');
-        }),
-      };
+    it('should handle unexpected errors gracefully', async () => {
+      const validations = [body('name').notEmpty().withMessage('Name is required')];
 
       req.body = {
         name: 'Test User',
       };
 
-      validateBody(schema)(req, res, next);
+      validationResult.mockImplementation(() => {
+        throw new Error('Unexpected error');
+      });
 
-      expect(next).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: expect.stringContaining('validation'),
-          statusCode: 500,
-        })
-      );
+      await validate(validations)(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
     });
   });
 });

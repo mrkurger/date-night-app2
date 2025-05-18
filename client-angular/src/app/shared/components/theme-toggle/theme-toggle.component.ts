@@ -1,10 +1,7 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from '../../../core/services/theme.service';
-import { Subscription } from 'rxjs';
-import { , , NbToggleModule } from '@nebular/theme';
+import { NbIconModule, NbButtonModule, NbTooltipModule } from '@nebular/theme';
+import { MenuStateService } from '../../../core/services/menu-state.service';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -23,137 +20,63 @@ import { , , NbToggleModule } from '@nebular/theme';
  */
 @Component({
   selector: 'app-theme-toggle',
+  standalone: true,
+  imports: [CommonModule, NbIconModule, NbButtonModule, NbTooltipModule],
   template: `
-    <ng-container [ngSwitch]="mode">
-      <!-- Icon only mode -->
-      <button
-        *ngSwitchCase="'icon-only'"
-        nbButton
-        ghost
-        size="medium"
-        [attr.aria-label]="themeAriaLabel"
-        (click)="toggleTheme()"
-      >
-        <nb-icon [icon]="themeIcon"></nb-icon>
-      </button>
-
-      <!-- With label mode -->
-      <button
-        *ngSwitchCase="'with-label'"
-        nbButton
-        ghost
-        size="medium"
-        [attr.aria-label]="themeAriaLabel"
-        (click)="toggleTheme()"
-      >
-        <nb-icon [icon]="themeIcon"></nb-icon>
-        <span class="label" [class.label-left]="labelPosition === 'left'">{{ label }}</span>
-      </button>
-
-      <!-- Toggle switch mode -->
-      <nb-toggle
-        *ngSwitchCase="'toggle'"
-        [checked]="isDarkMode"
-        (checkedChange)="toggleTheme()"
-        [status]="'primary'"
-      >
-        <span class="label" [class.label-left]="labelPosition === 'left'">{{ label }}</span>
-      </nb-toggle>
-    </ng-container>
+    <button
+      nbButton
+      ghost
+      size="small"
+      [nbTooltip]="'Switch to ' + (isDarkTheme ? 'light' : 'dark') + ' theme'"
+      nbTooltipPlacement="bottom"
+      (click)="toggleTheme()"
+    >
+      <nb-icon [icon]="isDarkTheme ? 'sun-outline' : 'moon-outline'"></nb-icon>
+    </button>
   `,
   styles: [
     `
       :host {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .label {
-        margin-left: 0.5rem;
-      }
-
-      .label-left {
-        margin-left: 0;
-        margin-right: 0.5rem;
-        order: -1;
+        display: block;
       }
 
       button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: nb-theme(background-basic-hover-color);
+          transform: rotate(15deg);
+        }
+
+        nb-icon {
+          font-size: 1.25rem;
+          color: nb-theme(text-hint-color);
+          transition: color 0.3s;
+        }
+
+        &:hover nb-icon {
+          color: nb-theme(text-basic-color);
+        }
       }
     `,
   ],
-  standalone: true,
-  imports: [CommonModule, NbToggleModule],
 })
-export class ThemeToggleComponent implements OnInit, OnDestroy {
-  /**
-   * Display mode for the toggle
-   * - 'icon-only': Just shows a sun/moon icon
-   * - 'with-label': Shows icon with a text label
-   * - 'toggle': Shows a toggle switch with label
-   */
-  @Input() mode: 'icon-only' | 'with-label' | 'toggle' = 'icon-only';
+export class ThemeToggleComponent implements OnInit {
+  isDarkTheme = false;
 
-  /**
-   * Label to display when mode is 'with-label' or 'toggle'
-   */
-  @Input() label = 'Dark Mode';
+  constructor(private menuStateService: MenuStateService) {}
 
-  /**
-   * Position of the label relative to the toggle
-   */
-  @Input() labelPosition: 'left' | 'right' = 'left';
-
-  /**
-   * ARIA label for accessibility
-   */
-  @Input() ariaLabel = 'Toggle dark mode';
-
-  /**
-   * Whether dark mode is currently active
-   */
-  isDarkMode = false;
-
-  private subscription: Subscription | null = null;
-
-  constructor(private themeService: ThemeService) {}
-
-  ngOnInit(): void {
+  ngOnInit() {
     // Subscribe to theme changes
-    this.subscription = this.themeService.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkMode = isDarkMode;
+    this.menuStateService.state$.subscribe((state) => {
+      this.isDarkTheme = state.theme === 'dark' || state.theme === 'cosmic';
     });
   }
 
-  ngOnDestroy(): void {
-    // Clean up subscription
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  /**
-   * Toggle the theme
-   */
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-  }
-
-  /**
-   * Get the appropriate icon based on the current theme
-   */
-  get themeIcon(): string {
-    return this.isDarkMode ? 'sun-outline' : 'moon-outline';
-  }
-
-  /**
-   * Get the appropriate ARIA label based on the current theme
-   */
-  get themeAriaLabel(): string {
-    return this.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode';
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    this.menuStateService.updateTheme(this.isDarkTheme ? 'dark' : 'default');
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import {
   NbMenuModule,
   NbSidebarModule,
@@ -11,11 +11,18 @@ import {
   NbUserModule,
   NbActionsModule,
   NbMenuItem,
+  NbDialogService,
 } from '@nebular/theme';
 import { AuthService } from '../../services/auth.service';
 import { MenuStateService } from '../../services/menu-state.service';
+import { SearchService } from '../../services/search.service';
+import { KeyboardShortcutsService } from '../../services/keyboard-shortcuts.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AppMenuItem } from '../../models/menu.model';
+import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
+import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
+import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keyboard-shortcuts-help/keyboard-shortcuts-help.component';
 
 @Component({
   selector: 'app-navigation',
@@ -31,6 +38,8 @@ import { takeUntil } from 'rxjs/operators';
     NbContextMenuModule,
     NbUserModule,
     NbActionsModule,
+    BreadcrumbsComponent,
+    ThemeToggleComponent,
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
@@ -38,7 +47,7 @@ import { takeUntil } from 'rxjs/operators';
 export class NavigationComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  items: NbMenuItem[] = [
+  items: AppMenuItem[] = [
     {
       title: 'Home',
       icon: 'home-outline',
@@ -113,13 +122,27 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   userItems = [
     { title: 'Profile', icon: 'person-outline', link: '/profile' },
-    { title: 'Settings', icon: 'settings-outline', link: '/settings' },
-    { title: 'Logout', icon: 'log-out-outline' },
+    { title: 'Settings', icon: 'settings-2-outline', link: '/settings' },
+    { title: 'Notifications', icon: 'bell-outline', link: '/notifications' },
+    { title: 'Help', icon: 'question-mark-circle-outline', link: '/help' },
+    { title: 'Logout', icon: 'log-out-outline', data: { action: 'logout' } },
   ];
 
   adminItems = [
-    { title: 'Admin Dashboard', icon: 'shield-outline', link: '/admin' },
-    { title: 'Telemetry', icon: 'activity-outline', link: '/telemetry' },
+    { title: 'Admin Dashboard', icon: 'shield-outline', link: '/admin', id: 'admin' },
+    { title: 'Telemetry', icon: 'activity-outline', link: '/telemetry', id: 'telemetry' },
+    {
+      title: 'User Management',
+      icon: 'people-outline',
+      link: '/admin/users',
+      id: 'user-management',
+    },
+    {
+      title: 'Content Moderation',
+      icon: 'edit-2-outline',
+      link: '/admin/moderation',
+      id: 'moderation',
+    },
   ];
 
   isLoggedIn = false;
@@ -133,6 +156,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private menuStateService: MenuStateService,
+    private searchService: SearchService,
+    private router: Router,
+    private dialogService: NbDialogService,
+    private keyboardShortcuts: KeyboardShortcutsService,
   ) {}
 
   ngOnInit() {
@@ -161,6 +188,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.sidebarState = state.sidebarState;
     });
 
+    // Subscribe to auth state
     this.authService.isAuthenticated().subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
 
@@ -176,11 +204,50 @@ export class NavigationComponent implements OnInit, OnDestroy {
         });
       }
     });
+
+    // Register keyboard shortcuts
+    this.registerKeyboardShortcuts();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.keyboardShortcuts.destroy();
+  }
+
+  /**
+   * Register keyboard shortcuts
+   */
+  private registerKeyboardShortcuts() {
+    // Show keyboard shortcuts help
+    this.keyboardShortcuts.register({ key: '?' }, () => {
+      this.dialogService.open(KeyboardShortcutsHelpComponent);
+    });
+
+    // Navigation shortcuts
+    this.keyboardShortcuts.register({ key: 'g', shift: true, ctrl: true }, () => {
+      this.router.navigate(['/']);
+    });
+
+    this.keyboardShortcuts.register({ key: 'p', shift: true, ctrl: true }, () => {
+      this.router.navigate(['/profile']);
+    });
+
+    this.keyboardShortcuts.register({ key: 's', shift: true, ctrl: true }, () => {
+      this.router.navigate(['/settings']);
+    });
+
+    // View shortcuts
+    this.keyboardShortcuts.register({ key: '\\' }, () => {
+      this.toggleSidebar();
+    });
+
+    this.keyboardShortcuts.register({ key: 't' }, () => {
+      const currentState = this.menuStateService.getCurrentState();
+      this.menuStateService.updateTheme(currentState.theme === 'dark' ? 'default' : 'dark');
+    });
+
+    // Search shortcut is handled by the search dialog component
   }
 
   /**
@@ -200,7 +267,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   /**
    * Handle menu item click
    */
-  onMenuItemClick(item: NbMenuItem) {
+  onMenuItemClick(item: AppMenuItem) {
     if (item.id) {
       // Update selected item
       this.menuStateService.setSelectedItem(item.id);
@@ -213,9 +280,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Open search dialog
+   */
+  openSearch() {
+    this.searchService.openSearch().subscribe((result) => {
+      if (result) {
+        this.router.navigateByUrl(result.link);
+      }
+    });
+  }
+
+  /**
    * Find menu item by ID (recursive)
    */
-  private findMenuItem(items: NbMenuItem[], id: string): NbMenuItem | null {
+  private findMenuItem(items: AppMenuItem[], id: string): AppMenuItem | null {
     for (const item of items) {
       if (item.id === id) {
         return item;
@@ -230,8 +308,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  onUserMenuSelect(event: any): void {
-    if (event && event.title === 'Logout') {
+  /**
+   * Handle user menu item selection
+   */
+  onUserMenuSelect(event: { item: AppMenuItem }): void {
+    if (event.item.data?.action === 'logout') {
       this.authService.logout();
     }
   }
