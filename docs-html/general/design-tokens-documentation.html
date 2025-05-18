@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DateNight.io Design Tokens Documentation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>DateNight.io Design Tokens Documentation</h1>
+
+      <h1>DateNight.io Design Tokens Documentation</h1>
+<p>This document provides a comprehensive reference for all design tokens used in the DateNight.io application. Design tokens are the visual design atoms of the design system — specifically, they are named entities that store visual design attributes such as colors, typography, spacing, etc.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#color-palette">Color Palette</a></li>
+<li><a href="#typography">Typography</a></li>
+<li><a href="#spacing">Spacing</a></li>
+<li><a href="#border-radius">Border Radius</a></li>
+<li><a href="#shadows">Shadows</a></li>
+<li><a href="#transitions">Transitions</a></li>
+<li><a href="#breakpoints">Breakpoints</a></li>
+<li><a href="#z-index">Z-Index</a></li>
+<li><a href="#usage-guidelines">Usage Guidelines</a></li>
+</ol>
+<h2>Color Palette</h2>
+<h3>Primary Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$color-primary</code></td>
+<td>#ff3366</td>
+<td>Primary brand color (Pink/Red)</td>
+</tr>
+<tr>
+<td><code>$color-primary-light</code></td>
+<td>#ff6b99</td>
+<td>Lighter version for hover states, backgrounds</td>
+</tr>
+<tr>
+<td><code>$color-primary-dark</code></td>
+<td>#cc295a</td>
+<td>Darker version for active states, text on light backgrounds</td>
+</tr>
+</tbody></table>
+<h3>Secondary Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$color-secondary</code></td>
+<td>#6c63ff</td>
+<td>Secondary brand color (Purple)</td>
+</tr>
+<tr>
+<td><code>$color-secondary-light</code></td>
+<td>#9e97ff</td>
+<td>Lighter version for hover states, backgrounds</td>
+</tr>
+<tr>
+<td><code>$color-secondary-dark</code></td>
+<td>#4a43cc</td>
+<td>Darker version for active states, text on light backgrounds</td>
+</tr>
+</tbody></table>
+<h3>Neutral Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$color-white</code></td>
+<td>#ffffff</td>
+<td>White</td>
+</tr>
+<tr>
+<td><code>$color-light-gray-1</code></td>
+<td>#f8f9fc</td>
+<td>Background, cards</td>
+</tr>
+<tr>
+<td><code>$color-light-gray-2</code></td>
+<td>#eef1f8</td>
+<td>Borders, dividers</td>
+</tr>
+<tr>
+<td><code>$color-medium-gray-1</code></td>
+<td>#d1d5e0</td>
+<td>Disabled states</td>
+</tr>
+<tr>
+<td><code>$color-medium-gray-2</code></td>
+<td>#a0a8c0</td>
+<td>Placeholder text</td>
+</tr>
+<tr>
+<td><code>$color-dark-gray-1</code></td>
+<td>#6e7a94</td>
+<td>Secondary text</td>
+</tr>
+<tr>
+<td><code>$color-dark-gray-2</code></td>
+<td>#4a5568</td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>$color-dark-gray-3</code></td>
+<td>#2d3748</td>
+<td>Headings</td>
+</tr>
+<tr>
+<td><code>$color-black</code></td>
+<td>#1a202c</td>
+<td>Emphasis text</td>
+</tr>
+</tbody></table>
+<h3>Semantic Colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$color-success</code></td>
+<td>#38d9a9</td>
+<td>Success states (Green)</td>
+</tr>
+<tr>
+<td><code>$color-warning</code></td>
+<td>#ffab2e</td>
+<td>Warning states (Orange)</td>
+</tr>
+<tr>
+<td><code>$color-error</code></td>
+<td>#ff4757</td>
+<td>Error states (Red)</td>
+</tr>
+<tr>
+<td><code>$color-info</code></td>
+<td>#54a0ff</td>
+<td>Information states (Blue)</td>
+</tr>
+</tbody></table>
+<h2>Typography</h2>
+<h3>Font Families</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$font-family-base</code></td>
+<td>&#39;Inter&#39;, sans-serif</td>
+<td>Body text, UI elements</td>
+</tr>
+<tr>
+<td><code>$font-family-heading</code></td>
+<td>&#39;Poppins&#39;, sans-serif</td>
+<td>Headings, titles</td>
+</tr>
+</tbody></table>
+<h3>Font Weights</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$font-weight-light</code></td>
+<td>300</td>
+<td>Large headings only</td>
+</tr>
+<tr>
+<td><code>$font-weight-regular</code></td>
+<td>400</td>
+<td>Default for body text</td>
+</tr>
+<tr>
+<td><code>$font-weight-medium</code></td>
+<td>500</td>
+<td>Emphasis and subheadings</td>
+</tr>
+<tr>
+<td><code>$font-weight-semibold</code></td>
+<td>600</td>
+<td>Buttons and important UI elements</td>
+</tr>
+<tr>
+<td><code>$font-weight-bold</code></td>
+<td>700</td>
+<td>Main headings and strong emphasis</td>
+</tr>
+</tbody></table>
+<h3>Font Sizes</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$font-size-xs</code></td>
+<td>0.75rem (12px)</td>
+<td>Small labels, footnotes</td>
+</tr>
+<tr>
+<td><code>$font-size-sm</code></td>
+<td>0.875rem (14px)</td>
+<td>Secondary text, captions</td>
+</tr>
+<tr>
+<td><code>$font-size-base</code></td>
+<td>1rem (16px)</td>
+<td>Body text, default size</td>
+</tr>
+<tr>
+<td><code>$font-size-lg</code></td>
+<td>1.125rem (18px)</td>
+<td>Large body text</td>
+</tr>
+<tr>
+<td><code>$font-size-xl</code></td>
+<td>1.25rem (20px)</td>
+<td>Subheadings</td>
+</tr>
+<tr>
+<td><code>$font-size-2xl</code></td>
+<td>1.5rem (24px)</td>
+<td>H3, section headings</td>
+</tr>
+<tr>
+<td><code>$font-size-3xl</code></td>
+<td>1.875rem (30px)</td>
+<td>H2, page subheadings</td>
+</tr>
+<tr>
+<td><code>$font-size-4xl</code></td>
+<td>2.25rem (36px)</td>
+<td>H1, page titles</td>
+</tr>
+<tr>
+<td><code>$font-size-5xl</code></td>
+<td>3rem (48px)</td>
+<td>Hero headings</td>
+</tr>
+</tbody></table>
+<h3>Line Heights</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$line-height-tight</code></td>
+<td>1.25</td>
+<td>For headings</td>
+</tr>
+<tr>
+<td><code>$line-height-snug</code></td>
+<td>1.375</td>
+<td>For subheadings</td>
+</tr>
+<tr>
+<td><code>$line-height-normal</code></td>
+<td>1.5</td>
+<td>For body text</td>
+</tr>
+<tr>
+<td><code>$line-height-relaxed</code></td>
+<td>1.625</td>
+<td>For large body text</td>
+</tr>
+<tr>
+<td><code>$line-height-loose</code></td>
+<td>2</td>
+<td>For emphasized paragraphs</td>
+</tr>
+</tbody></table>
+<h2>Spacing</h2>
+<p>The spacing system is based on 4px increments to ensure consistent spacing throughout the application.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$spacing-0</code></td>
+<td>0</td>
+<td>No spacing</td>
+</tr>
+<tr>
+<td><code>$spacing-1</code></td>
+<td>0.25rem (4px)</td>
+<td>Extra small - tight spacing</td>
+</tr>
+<tr>
+<td><code>$spacing-2</code></td>
+<td>0.5rem (8px)</td>
+<td>Small - between related items</td>
+</tr>
+<tr>
+<td><code>$spacing-3</code></td>
+<td>0.75rem (12px)</td>
+<td>Medium small - internal padding</td>
+</tr>
+<tr>
+<td><code>$spacing-4</code></td>
+<td>1rem (16px)</td>
+<td>Medium - standard spacing</td>
+</tr>
+<tr>
+<td><code>$spacing-5</code></td>
+<td>1.25rem (20px)</td>
+<td>Medium large - between groups</td>
+</tr>
+<tr>
+<td><code>$spacing-6</code></td>
+<td>1.5rem (24px)</td>
+<td>Large - section spacing</td>
+</tr>
+<tr>
+<td><code>$spacing-8</code></td>
+<td>2rem (32px)</td>
+<td>Extra large - between major sections</td>
+</tr>
+<tr>
+<td><code>$spacing-10</code></td>
+<td>2.5rem (40px)</td>
+<td>2x Large - top/bottom section padding</td>
+</tr>
+<tr>
+<td><code>$spacing-12</code></td>
+<td>3rem (48px)</td>
+<td>3x Large - major section breaks</td>
+</tr>
+<tr>
+<td><code>$spacing-16</code></td>
+<td>4rem (64px)</td>
+<td>4x Large - page sections</td>
+</tr>
+<tr>
+<td><code>$spacing-20</code></td>
+<td>5rem (80px)</td>
+<td>5x Large - major page breaks</td>
+</tr>
+<tr>
+<td><code>$spacing-24</code></td>
+<td>6rem (96px)</td>
+<td>6x Large - hero sections</td>
+</tr>
+</tbody></table>
+<h2>Border Radius</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$border-radius-none</code></td>
+<td>0</td>
+<td>No border radius</td>
+</tr>
+<tr>
+<td><code>$border-radius-sm</code></td>
+<td>0.25rem (4px)</td>
+<td>Small elements</td>
+</tr>
+<tr>
+<td><code>$border-radius-md</code></td>
+<td>0.5rem (8px)</td>
+<td>Buttons, inputs</td>
+</tr>
+<tr>
+<td><code>$border-radius-lg</code></td>
+<td>0.75rem (12px)</td>
+<td>Cards, modals</td>
+</tr>
+<tr>
+<td><code>$border-radius-xl</code></td>
+<td>1rem (16px)</td>
+<td>Large cards</td>
+</tr>
+<tr>
+<td><code>$border-radius-2xl</code></td>
+<td>1.5rem (24px)</td>
+<td>Extra large elements</td>
+</tr>
+<tr>
+<td><code>$border-radius-full</code></td>
+<td>9999px</td>
+<td>Pills, badges, circular elements</td>
+</tr>
+</tbody></table>
+<h2>Shadows</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$shadow-none</code></td>
+<td>none</td>
+<td>No shadow</td>
+</tr>
+<tr>
+<td><code>$shadow-xs</code></td>
+<td>0 1px 2px rgba(0, 0, 0, 0.05)</td>
+<td>Subtle shadow</td>
+</tr>
+<tr>
+<td><code>$shadow-sm</code></td>
+<td>0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)</td>
+<td>Small elements</td>
+</tr>
+<tr>
+<td><code>$shadow-md</code></td>
+<td>0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)</td>
+<td>Cards, buttons</td>
+</tr>
+<tr>
+<td><code>$shadow-lg</code></td>
+<td>0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)</td>
+<td>Elevated cards, dropdowns</td>
+</tr>
+<tr>
+<td><code>$shadow-xl</code></td>
+<td>0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)</td>
+<td>Modals, popovers</td>
+</tr>
+<tr>
+<td><code>$shadow-2xl</code></td>
+<td>0 25px 50px -12px rgba(0, 0, 0, 0.25)</td>
+<td>Large modals, hero elements</td>
+</tr>
+<tr>
+<td><code>$shadow-inner</code></td>
+<td>inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)</td>
+<td>Inset shadow for pressed states</td>
+</tr>
+<tr>
+<td><code>$shadow-focus</code></td>
+<td>0 0 0 3px rgba($color-primary, 0.2)</td>
+<td>Focus state for interactive elements</td>
+</tr>
+</tbody></table>
+<h2>Transitions</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$transition-fast</code></td>
+<td>150ms</td>
+<td>Extra fast - micro-interactions</td>
+</tr>
+<tr>
+<td><code>$transition-normal</code></td>
+<td>300ms</td>
+<td>Normal - hover states, button clicks</td>
+</tr>
+<tr>
+<td><code>$transition-slow</code></td>
+<td>500ms</td>
+<td>Slow - complex animations, emphasis</td>
+</tr>
+<tr>
+<td><code>$transition-timing-default</code></td>
+<td>cubic-bezier(0.4, 0, 0.2, 1)</td>
+<td>Default - smooth acceleration and deceleration</td>
+</tr>
+<tr>
+<td><code>$transition-timing-in</code></td>
+<td>cubic-bezier(0.4, 0, 1, 1)</td>
+<td>Ease In - gradual acceleration</td>
+</tr>
+<tr>
+<td><code>$transition-timing-out</code></td>
+<td>cubic-bezier(0, 0, 0.2, 1)</td>
+<td>Ease Out - gradual deceleration</td>
+</tr>
+<tr>
+<td><code>$transition-timing-linear</code></td>
+<td>linear</td>
+<td>Linear - constant speed (use for continuous animations)</td>
+</tr>
+</tbody></table>
+<h2>Breakpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$breakpoint-mobile-small</code></td>
+<td>0</td>
+<td>0-359px</td>
+</tr>
+<tr>
+<td><code>$breakpoint-mobile</code></td>
+<td>360px</td>
+<td>360px-599px</td>
+</tr>
+<tr>
+<td><code>$breakpoint-tablet</code></td>
+<td>600px</td>
+<td>600px-959px</td>
+</tr>
+<tr>
+<td><code>$breakpoint-desktop</code></td>
+<td>960px</td>
+<td>960px-1279px</td>
+</tr>
+<tr>
+<td><code>$breakpoint-desktop-large</code></td>
+<td>1280px</td>
+<td>1280px-1919px</td>
+</tr>
+<tr>
+<td><code>$breakpoint-desktop-xl</code></td>
+<td>1920px</td>
+<td>1920px+</td>
+</tr>
+</tbody></table>
+<h2>Z-Index</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$z-index-dropdown</code></td>
+<td>1000</td>
+<td>Dropdown menus</td>
+</tr>
+<tr>
+<td><code>$z-index-sticky</code></td>
+<td>1020</td>
+<td>Sticky elements</td>
+</tr>
+<tr>
+<td><code>$z-index-fixed</code></td>
+<td>1030</td>
+<td>Fixed elements</td>
+</tr>
+<tr>
+<td><code>$z-index-modal-backdrop</code></td>
+<td>1040</td>
+<td>Modal backdrop</td>
+</tr>
+<tr>
+<td><code>$z-index-modal</code></td>
+<td>1050</td>
+<td>Modal dialog</td>
+</tr>
+<tr>
+<td><code>$z-index-popover</code></td>
+<td>1060</td>
+<td>Popovers</td>
+</tr>
+<tr>
+<td><code>$z-index-tooltip</code></td>
+<td>1070</td>
+<td>Tooltips</td>
+</tr>
+</tbody></table>
+<h2>Usage Guidelines</h2>
+<h3>Using Design Tokens in SCSS</h3>
+<pre><code class="language-scss">// Import the design system
+@use &#39;src/styles/design-system&#39; as ds;
+
+.my-component {
+  // Using color tokens
+  color: ds.$color-primary;
+  background-color: ds.$color-light-gray-1;
+
+  // Using spacing tokens
+  padding: ds.$spacing-4;
+  margin-bottom: ds.$spacing-6;
+
+  // Using typography tokens
+  font-family: ds.$font-family-base;
+  font-size: ds.$font-size-base;
+  font-weight: ds.$font-weight-medium;
+  line-height: ds.$line-height-normal;
+
+  // Using shadow tokens
+  box-shadow: ds.$shadow-md;
+
+  // Using border radius tokens
+  border-radius: ds.$border-radius-md;
+
+  // Using transitions
+  transition: all ds.$transition-normal ds.$transition-timing-default;
+
+  // Using breakpoints
+  @media (min-width: ds.$breakpoint-tablet) {
+    font-size: ds.$font-size-lg;
+  }
+}
+</code></pre>
+<h3>Using Typography Mixins</h3>
+<pre><code class="language-scss">// Import the design system
+@use &#39;src/styles/design-system&#39; as ds;
+
+.page-title {
+  @include ds.heading-1;
+}
+
+.section-title {
+  @include ds.heading-2;
+}
+
+.card-title {
+  @include ds.heading-3;
+}
+
+.body-text {
+  @include ds.body-default;
+}
+
+.caption {
+  @include ds.caption;
+}
+
+.button {
+  @include ds.button-text;
+}
+</code></pre>
+<h3>Using Spacing Utilities</h3>
+<p>The design system provides utility classes for margin and padding:</p>
+<ul>
+<li>Margin: <code>.m-{size}</code>, <code>.mt-{size}</code>, <code>.mr-{size}</code>, <code>.mb-{size}</code>, <code>.ml-{size}</code>, <code>.mx-{size}</code>, <code>.my-{size}</code></li>
+<li>Padding: <code>.p-{size}</code>, <code>.pt-{size}</code>, <code>.pr-{size}</code>, <code>.pb-{size}</code>, <code>.pl-{size}</code>, <code>.px-{size}</code>, <code>.py-{size}</code></li>
+</ul>
+<p>Where <code>{size}</code> is one of: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24</p>
+<p>Example:</p>
+<pre><code class="language-html">&lt;div class=&quot;mt-4 mb-6 px-4&quot;&gt;
+  This element has margin-top: 1rem, margin-bottom: 1.5rem, and padding-left/right: 1rem
+&lt;/div&gt;
+</code></pre>
+<hr>
+<p>This documentation is part of the DateNight.io UI/UX implementation plan. It serves as a reference for designers and developers to ensure consistent application of design tokens throughout the application.</p>
+<p>Last Updated: 2025-05-15</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

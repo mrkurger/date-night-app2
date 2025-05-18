@@ -1,74 +1,35 @@
 name: 'Setup Node.js and Install Dependencies'
-description: 'Sets up Node.js and installs dependencies with robust error handling for lockfile mismatches and monorepo support.'
+description: 'Sets up Node.js and installs dependencies with robust error handling for lockfile mismatches.'
 
-inputs:
-  node-version:
-    description: 'Node.js version to use'
-    required: false
-    default: '22.x'
-  cache-strategy:
-    description: 'Caching strategy to use (npm, yarn, pnpm)'
-    required: false
-    default: 'npm'
-  safe-install:
-    description: 'Use npm install instead of npm ci for safer dependency resolution'
-    required: false
-    default: 'false'
-  update-lockfile:
-    description: 'Update the lockfile if dependencies are mismatched'
-    required: false
-    default: 'false'
-  check-missing:
-    description: 'Check for and attempt to install missing dependencies'
-    required: false
-    default: 'false'
-  working-directory:
-    description: 'Directory to run npm commands in'
-    required: false
-    default: '.'
-
-outputs:
-  lockfile-valid:
-    description: 'Whether the lockfile is valid JSON'
-    value: ${{ env.LOCKFILE_VALID }}
-
+# Composite run steps for this action
 runs:
   using: 'composite'
   steps:
-    - name: Ensure jq is installed
-      shell: bash
-      run: |
-        if ! command -v jq >/dev/null 2>&1; then
-          echo "jq is required but not installed!"
-          exit 1
-        fi
-
+    # Step 1: Set up Node.js using the specified version and caching strategy
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
-        cache: ${{ inputs.cache-strategy }}
+        node-version: ${{ inputs.node-version || '22.x' }}
+        cache: ${{ inputs.cache-strategy || 'npm' }}
+      # End Node.js setup
 
-    - name: Move to project directory
-      shell: bash
-      run: cd "${{ inputs.working-directory }}"
-      working-directory: ${{ inputs.working-directory }}
-
-    - name: Check npm and node version
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
+    # Step 2: Output the versions of Node and npm for debugging
+    - name: Check npm version
       run: |
         echo "Using npm version: $(npm --version)"
         echo "Using node version: $(node --version)"
-
-    - name: Verify package.json and lockfile
-      working-directory: ${{ inputs.working-directory }}
       shell: bash
+
+    # Step 3: Validate the presence and correctness of package.json and package-lock.json
+    - name: Verify package.json and lockfile
       run: |
+        # Check if package.json exists
         if [ -f package.json ]; then
           echo "Found package.json"
+          # Check if package-lock.json exists
           if [ -f package-lock.json ]; then
             echo "Found package-lock.json"
+            # Validate that package-lock.json is correct JSON using jq
             if ! jq empty package-lock.json 2>/dev/null; then
               echo "Warning: package-lock.json is not valid JSON. Will use npm install instead of npm ci."
               echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
@@ -84,51 +45,101 @@ runs:
           echo "Error: package.json not found!"
           exit 1
         fi
+      shell: bash
 
+    # Step 4: Fallback-safe dependency installation (uses npm install)
     - name: Install dependencies (safe mode)
       if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
-      working-directory: ${{ inputs.working-directory }}
-      shell: bash
       run: |
-        echo "Using npm install for safe dependency resolution..."
+        echo "Using npm install for safer dependency resolution..."
+        # Use --no-audit for faster installs when possible
         if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+          echo "Installing dependencies and updating lockfile..."
           npm install --no-audit --package-lock-only || npm install --package-lock-only
         else
+          echo "Installing dependencies..."
           npm install --no-audit || npm install
         fi
+      shell: bash
 
+    # Step 5: Strict dependency installation (uses npm ci, falls back to npm install)
     - name: Install dependencies (strict mode)
       if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
-      working-directory: ${{ inputs.working-directory }}
-      shell: bash
       run: |
         echo "Using npm ci for clean installation..."
+        # Try npm ci first for a clean slate; fallback to npm install if it fails
         npm ci || {
           echo "npm ci failed, falling back to npm install..."
           npm install
+          # Optionally update the lockfile if requested
           if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+            echo "Updating lockfile..."
             npm install
           fi
         }
+      shell: bash
 
+    # Step 6: Check for missing dependencies, and attempt to install them if needed
     - name: Check for missing dependencies
       if: ${{ inputs.check-missing == 'true' }}
-      working-directory: ${{ inputs.working-directory }}
-      shell: bash
       run: |
         echo "Checking for missing dependencies..."
-        DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null)
+
+        # Extract all dependencies and devDependencies from package.json using jq
+        DEPS=$(jq -r '.dependencies, .devDependencies | to_entries[] | .key' package.json 2>/dev/null || echo "")
+
+        if [ -z "$DEPS" ]; then
+          echo "Error: Unable to extract dependencies from package.json."
+          exit 1
+        fi
+
         MISSING=""
         for DEP in $DEPS; do
+          # Check if dependency is installed at the top level (depth=0)
           if ! npm list $DEP --depth=0 --silent 2>/dev/null; then
             MISSING="$MISSING $DEP"
           fi
         done
+
         if [ -n "$MISSING" ]; then
           echo "Warning: The following dependencies might be missing:$MISSING"
+          echo "Attempting to install missing dependencies..."
           for DEP in $MISSING; do
-            npm install $DEP || echo "Failed to install $DEP"
+            if npm install $DEP; then
+              echo "Successfully installed $DEP."
+            else
+              echo "Failed to install $DEP."
+            fi
           done
         else
           echo "All dependencies appear to be installed."
         fi
+      shell: bash
+
+# Action inputs with detailed descriptions and defaults.
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: false
+    default: '22.x'
+    # TODO! Add input validation in a wrapper script for allowed Node.js versions (e.g., using regex or explicit checks)
+  cache-strategy:
+    description: 'Caching strategy to use (npm, yarn, pnpm)'
+    required: false
+    default: 'npm'
+    # TODO! Add input validation for allowed cache strategies
+  safe-install:
+    description: 'Use npm install instead of npm ci for safer dependency resolution'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  update-lockfile:
+    description: 'Update the lockfile if dependencies are mismatched'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  check-missing:
+    description: 'Check for and attempt to install missing dependencies'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed

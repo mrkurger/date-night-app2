@@ -84,7 +84,558 @@
         </div>
         
         <div class="glossary-entries">
-    </div> <div class="form-actions"> <button nbButton type="button" (click)="resetForm()">Reset</button> <button nbButton status="primary" color="primary" type="submit" [disabled]="alertForm.invalid || isSubmitting" > <span *ngIf="!isSubmitting">Create Alert</span> <nb-spinner diameter="24" *ngIf="isSubmitting"></nb-spinner> </button> </div> </form> </nb-card-body> </nb-card> `, styles: [ ` .create-alert-card { max-width: 800px; margin: 20px auto; } .full-width { width: 100%; margin-bottom: 16px; } .form-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; } .form-row nb-form-field { flex: 1 1 200px; } .form-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 24px; } button[type='submit'] { min-width: 120px; } `, ], }) export class CreateErrorAlertComponent implements OnInit { alertForm: FormGroup; isSubmitting = false; // Error categories for dropdown errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '), value, })); // Time windows for dropdown timeWindows = [ { label: '5 minutes', value: AlertTimeWindow.MINUTES_5 }, { label: '15 minutes', value: AlertTimeWindow.MINUTES_15 }, { label: '30 minutes', value: AlertTimeWindow.MINUTES_30 }, { label: '1 hour', value: AlertTimeWindow.HOURS_1 }, { label: '6 hours', value: AlertTimeWindow.HOURS_6 }, { label: '12 hours', value: AlertTimeWindow.HOURS_12 }, { label: '24 hours', value: AlertTimeWindow.HOURS_24 }, ]; constructor( private fb: FormBuilder, private alertService: AlertService, private snackBar: MatSnackBar ) { this.alertForm = this.fb.group({ name: ['', Validators.required], description: ['', Validators.required], category: [ErrorCategory.SERVER, Validators.required], threshold: [5, [Validators.required, Validators.min(1)]], timeWindow: [AlertTimeWindow.HOURS_1, Validators.required], }); } ngOnInit(): void { // Initialize form with default values } /** Handle form submission</p>
+
+<div class="glossary-entry" id="loadErrors">
+  <h3>loadErrors</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Error Dashboard Component Displays a dashboard for analyzing and monitoring application errors. Features include: - Filtering by error category, status code, date range - Sorting by various columns - Pagination for large datasets - Detailed error information / @Component({ selector: 'app-error-dashboard', standalone: true, imports: [ CommonModule, ReactiveFormsModule, NebularModule, AppSortComponent, AppSortHeaderComponent, ], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: ` <div class="dashboard-container"> <h1>Error Monitoring Dashboard</h1> <nb-card class="filter-card"> <nb-card-header> <h5>Filters</h5> </nb-card-header> <nb-card-body> <form [formGroup]="filterForm" class="filter-form"> <nb-form-field> <nb-select fullWidth formControlName="category" placeholder="Error Category"> <nb-option value="">All Categories</nb-option> <nb-option *ngFor="let category of errorCategories" [value]="category.value"> {{ category.label }} </nb-option> </nb-select> </nb-form-field> <nb-form-field> <input nbInput type="number" formControlName="statusCode" placeholder="Status Code (e.g., 500)" /> </nb-form-field> <nb-form-field> <input nbInput [nbDatepicker]="fromPicker" formControlName="fromDate" placeholder="From Date" /> <nb-datepicker #fromPicker></nb-datepicker> </nb-form-field> <nb-form-field> <input nbInput [nbDatepicker]="toPicker" formControlName="toDate" placeholder="To Date" /> <nb-datepicker #toPicker></nb-datepicker> </nb-form-field> <div class="filter-actions"> <button nbButton status="primary" (click)="applyFilters()"> <nb-icon icon="funnel-outline"></nb-icon> Apply Filters </button> <button nbButton status="basic" (click)="resetFilters()"> <nb-icon icon="close-outline"></nb-icon> Reset </button> </div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="error-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div> <div class="stat-label">Total Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div> <div class="stat-label">Unique Error Codes</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div> <div class="stat-label">Server Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div> <div class="stat-label">Client Errors</div> </nb-card-body> </nb-card> </div> <nb-card class="error-list-card"> <nb-card-header> <h5>Recent Errors</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="sortData($event)"> <table class="table" *ngIf="!loading"> <thead> <tr> <th *ngFor="let column of displayedColumns"> <app-sort-header [active]="sortField === column.toLowerCase()" [direction]="sortDirection" > {{ column }} </app-sort-header> </th> </tr> </thead> <tbody> <tr *ngFor="let error of errors"> <td>{{ error.timestamp | date: 'medium' }}</td> <td>{{ error.statusCode || 'N/A' }}</td> <td>{{ error.category }}</td> <td>{{ error.type }}</td> <td>{{ error.message }}</td> <td>{{ error.count }}</td> <td> <button nbButton ghost size="small" (click)="viewErrorDetails(error)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="no-data-message" *ngIf="!loading && errors.length === 0"> No errors found matching the current filters. </div> <div class="pagination" *ngIf="!loading && errors.length > 0"> <button nbButton ghost [disabled]="currentPage === 1" (click)="pageChanged({ page: currentPage - 1, pageSize: pageSize })" > Previous </button> <span>Page {{ currentPage }}</span> <button nbButton ghost [disabled]="currentPage * pageSize >= totalErrors" (click)="pageChanged({ page: currentPage + 1, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 20px; } h1 { margin-bottom: 20px; color: var(--text-basic-color); } .filter-card { margin-bottom: 20px; } .filter-form { display: flex; flex-wrap: wrap; gap: 16px; } .filter-form nb-form-field { flex: 1 1 200px; } .filter-actions { display: flex; gap: 10px; margin-top: 10px; } .dashboard-content { display: flex; flex-direction: column; gap: 20px; } .error-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; } .stat-card { flex: 1 1 200px; text-align: center; } .stat-value { font-size: 2.5rem; font-weight: bold; color: var(--text-primary-color); } .stat-label { font-size: 1rem; color: var(--text-hint-color); } .error-list-card { width: 100%; } .error-table { width: 100%; } .loading-container { display: flex; justify-content: center; padding: 20px; } .no-data-message { text-align: center; padding: 20px; color: var(--text-hint-color); } `, ], }) export class ErrorDashboardComponent implements OnInit { // Error data errors: ErrorTelemetry[] = []; totalErrors = 0; loading = true; // Pagination currentPage = 1; pageSize = 10; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; // Table columns displayedColumns = [ 'timestamp', 'errorCode', 'category', 'statusCode', 'userMessage', 'url', 'actions', ]; // Filter form filterForm: FormGroup; // Error categories for filter dropdown errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '), value, })); // Error statistics errorStats$: Observable<any>; // Sort state @ViewChild(AppSortComponent) sort!: AppSortComponent; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ category: [''], statusCode: [''], fromDate: [null], toDate: [null], }); // Initialize error statistics this.errorStats$ = this.getErrorStatistics(); } ngOnInit(): void { this.loadErrors(); } /** Load errors with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getErrorStatistics">
+  <h3>getErrorStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get error statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="pageChanged">
+  <h3>pageChanged</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="sortData">
+  <h3>sortData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle sort change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewErrorDetails">
+  <h3>viewErrorDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for an error</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadDashboardData">
+  <h3>loadDashboardData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Performance Dashboard Component Displays a dashboard for analyzing and monitoring application performance. Features include: - Filtering by URL, method, duration, date range - Sorting by various columns - Pagination for large datasets - Performance metrics visualization / @Component({ selector: 'app-performance-dashboard', standalone: true, imports: [ CommonModule, NebularModule, ReactiveFormsModule, AppSortComponent, AppSortHeaderComponent, ], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: ` <div class="dashboard-container"> <h1>Performance Monitoring Dashboard</h1> <nb-card class="filter-card"> <nb-card-header> <h5>Filters</h5> </nb-card-header> <nb-card-body> <form [formGroup]="filterForm" class="filter-form"> <nb-form-field> <label>URL Contains</label> <input nbInput formControlName="url" placeholder="e.g., /api/users" /> </nb-form-field> <nb-form-field> <label>HTTP Method</label> <nb-select formControlName="method" placeholder="Select method"> <nb-option value="">All Methods</nb-option> <nb-option value="GET">GET</nb-option> <nb-option value="POST">POST</nb-option> <nb-option value="PUT">PUT</nb-option> <nb-option value="DELETE">DELETE</nb-option> <nb-option value="PATCH">PATCH</nb-option> </nb-select> </nb-form-field> <nb-form-field> <label>Min Duration (ms)</label> <input nbInput type="number" formControlName="minDuration" placeholder="e.g., 1000" /> </nb-form-field> <nb-form-field> <label>From Date</label> <input nbInput [nbDatepicker]="fromPicker" formControlName="fromDate" /> <nb-datepicker #fromPicker></nb-datepicker> </nb-form-field> <nb-form-field> <label>To Date</label> <input nbInput [nbDatepicker]="toPicker" formControlName="toDate" /> <nb-datepicker #toPicker></nb-datepicker> </nb-form-field> <div class="filter-actions"> <button nbButton status="primary" (click)="applyFilters()"> <nb-icon icon="filter"></nb-icon> Apply Filters </button> <button nbButton status="basic" (click)="resetFilters()"> <nb-icon icon="close"></nb-icon> Reset </button> </div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="performance-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (performanceStats$ | async)?.totalRequests || 0 }}</div> <div class="stat-label">Total Requests</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.avgDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Average Duration</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.p95Duration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">95th Percentile</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.maxDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Max Duration</div> </nb-card-body> </nb-card> </div> <nb-card class="endpoints-list-card"> <nb-card-header> <h5>Endpoint Performance</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="onSortChange($event)"> <table nbTable *ngIf="!loading"> <thead> <tr> <th> <app-sort-header [active]="sortField === 'timestamp'" [direction]="sortDirection" > Timestamp </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'method'" [direction]="sortDirection" > Method </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'url'" [direction]="sortDirection"> URL </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'duration'" [direction]="sortDirection" > Duration (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'ttfb'" [direction]="sortDirection"> TTFB (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'responseSize'" [direction]="sortDirection" > Response Size </app-sort-header> </th> <th>Actions</th> </tr> </thead> <tbody> <tr *ngFor="let item of performanceData"> <td>{{ item.timestamp | date: 'medium' }}</td> <td>{{ item.method }}</td> <td>{{ item.url }}</td> <td [ngClass]="getDurationClass(item.duration)"> {{ item.duration | number: '1.0-0' }} </td> <td>{{ item.ttfb | number: '1.0-0' }}</td> <td>{{ formatBytes(item.responseSize) }}</td> <td> <button nbButton ghost (click)="viewPerformanceDetails(item)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="pagination"> <button nbButton ghost [disabled]="pageIndex === 0" (click)="onPageChange({ page: pageIndex, pageSize: pageSize })" > Previous </button> <span>Page {{ pageIndex + 1 }}</span> <button nbButton ghost [disabled]="(pageIndex + 1) * pageSize >= totalItems" (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 1rem; } .filter-card { margin-bottom: 1.5rem; } .filter-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem; } .filter-actions { display: flex; gap: 1rem; margin-top: 1rem; } .performance-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; } .stat-card { text-align: center; } .stat-value { font-size: 2rem; font-weight: 600; color: var(--text-primary-color); } .stat-label { color: var(--text-hint-color); margin-top: 0.5rem; } .loading-container { display: flex; justify-content: center; padding: 2rem; } .duration-normal { color: var(--color-success-600); } .duration-warning { color: var(--color-warning-600); } .duration-critical { color: var(--color-danger-600); } table { width: 100%; } th { font-weight: 600; } td { padding: 0.75rem; } `, ], }) export class PerformanceDashboardComponent implements OnInit { // Performance data performanceData: PerformanceTelemetry[] = []; totalItems = 0; loading = true; // Pagination pageIndex = 0; pageSize = 10; // Table columns displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions']; // Filter form filterForm: FormGroup; // Performance statistics performanceStats$: Observable<any>; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ url: [''], method: [''], minDuration: [''], fromDate: [null], toDate: [null], }); this.performanceStats$ = this.getPerformanceStatistics(); } ngOnInit(): void { this.loadDashboardData(); } /** Load performance data with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPerformanceStatistics">
+  <h3>getPerformanceStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get performance statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onPageChange">
+  <h3>onPageChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event from paginator</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="formatBytes">
+  <h3>formatBytes</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Format bytes to human-readable format</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getDurationClass">
+  <h3>getDurationClass</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get CSS class based on duration</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewPerformanceDetails">
+  <h3>viewPerformanceDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for a performance record</p>
+  </div>
+  
+  
+  
+</div>
+</div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="error-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div> <div class="stat-label">Total Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div> <div class="stat-label">Unique Error Codes</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div> <div class="stat-label">Server Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div> <div class="stat-label">Client Errors</div> </nb-card-body> </nb-card> </div> <nb-card class="error-list-card"> <nb-card-header> <h5>Recent Errors</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="sortData($event)"> <table class="table" *ngIf="!loading"> <thead> <tr> <th *ngFor="let column of displayedColumns"> <app-sort-header [active]="sortField === column.toLowerCase()" [direction]="sortDirection" > {{ column }} </app-sort-header> </th> </tr> </thead> <tbody> <tr *ngFor="let error of errors"> <td>{{ error.timestamp | date: 'medium' }}</td> <td>{{ error.statusCode || 'N/A' }}</td> <td>{{ error.category }}</td> <td>{{ error.type }}</td> <td>{{ error.message }}</td> <td>{{ error.count }}</td> <td> <button nbButton ghost size="small" (click)="viewErrorDetails(error)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="no-data-message" *ngIf="!loading && errors.length === 0"> No errors found matching the current filters. </div> <div class="pagination" *ngIf="!loading && errors.length > 0"> <button nbButton ghost [disabled]="currentPage === 1" (click)="pageChanged({ page: currentPage - 1, pageSize: pageSize })" > Previous </button> <span>Page {{ currentPage }}</span> <button nbButton ghost [disabled]="currentPage * pageSize >= totalErrors" (click)="pageChanged({ page: currentPage + 1, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 20px; } h1 { margin-bottom: 20px; color: var(--text-basic-color); } .filter-card { margin-bottom: 20px; } .filter-form { display: flex; flex-wrap: wrap; gap: 16px; } .filter-form nb-form-field { flex: 1 1 200px; } .filter-actions { display: flex; gap: 10px; margin-top: 10px; } .dashboard-content { display: flex; flex-direction: column; gap: 20px; } .error-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; } .stat-card { flex: 1 1 200px; text-align: center; } .stat-value { font-size: 2.5rem; font-weight: bold; color: var(--text-primary-color); } .stat-label { font-size: 1rem; color: var(--text-hint-color); } .error-list-card { width: 100%; } .error-table { width: 100%; } .loading-container { display: flex; justify-content: center; padding: 20px; } .no-data-message { text-align: center; padding: 20px; color: var(--text-hint-color); } `, ], }) export class ErrorDashboardComponent implements OnInit { // Error data errors: ErrorTelemetry[] = []; totalErrors = 0; loading = true; // Pagination currentPage = 1; pageSize = 10; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; // Table columns displayedColumns = [ 'timestamp', 'errorCode', 'category', 'statusCode', 'userMessage', 'url', 'actions', ]; // Filter form filterForm: FormGroup; // Error categories for filter dropdown errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '), value, })); // Error statistics errorStats$: Observable<any>; // Sort state @ViewChild(AppSortComponent) sort!: AppSortComponent; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ category: [''], statusCode: [''], fromDate: [null], toDate: [null], }); // Initialize error statistics this.errorStats$ = this.getErrorStatistics(); } ngOnInit(): void { this.loadErrors(); } /** Load errors with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getErrorStatistics">
+  <h3>getErrorStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get error statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="pageChanged">
+  <h3>pageChanged</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="sortData">
+  <h3>sortData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle sort change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewErrorDetails">
+  <h3>viewErrorDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for an error</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadDashboardData">
+  <h3>loadDashboardData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Performance Dashboard Component Displays a dashboard for analyzing and monitoring application performance. Features include: - Filtering by URL, method, duration, date range - Sorting by various columns - Pagination for large datasets - Performance metrics visualization / @Component({ selector: 'app-performance-dashboard', standalone: true, imports: [ CommonModule, NebularModule, ReactiveFormsModule, AppSortComponent, AppSortHeaderComponent, ], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: ` <div class="dashboard-container"> <h1>Performance Monitoring Dashboard</h1> <nb-card class="filter-card"> <nb-card-header> <h5>Filters</h5> </nb-card-header> <nb-card-body> <form [formGroup]="filterForm" class="filter-form"> <nb-form-field> <label>URL Contains</label> <input nbInput formControlName="url" placeholder="e.g., /api/users" /> </nb-form-field> <nb-form-field> <label>HTTP Method</label> <nb-select formControlName="method" placeholder="Select method"> <nb-option value="">All Methods</nb-option> <nb-option value="GET">GET</nb-option> <nb-option value="POST">POST</nb-option> <nb-option value="PUT">PUT</nb-option> <nb-option value="DELETE">DELETE</nb-option> <nb-option value="PATCH">PATCH</nb-option> </nb-select> </nb-form-field> <nb-form-field> <label>Min Duration (ms)</label> <input nbInput type="number" formControlName="minDuration" placeholder="e.g., 1000" /> </nb-form-field> <nb-form-field> <label>From Date</label> <input nbInput [nbDatepicker]="fromPicker" formControlName="fromDate" /> <nb-datepicker #fromPicker></nb-datepicker> </nb-form-field> <nb-form-field> <label>To Date</label> <input nbInput [nbDatepicker]="toPicker" formControlName="toDate" /> <nb-datepicker #toPicker></nb-datepicker> </nb-form-field> <div class="filter-actions"> <button nbButton status="primary" (click)="applyFilters()"> <nb-icon icon="filter"></nb-icon> Apply Filters </button> <button nbButton status="basic" (click)="resetFilters()"> <nb-icon icon="close"></nb-icon> Reset </button> </div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="performance-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (performanceStats$ | async)?.totalRequests || 0 }}</div> <div class="stat-label">Total Requests</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.avgDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Average Duration</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.p95Duration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">95th Percentile</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.maxDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Max Duration</div> </nb-card-body> </nb-card> </div> <nb-card class="endpoints-list-card"> <nb-card-header> <h5>Endpoint Performance</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="onSortChange($event)"> <table nbTable *ngIf="!loading"> <thead> <tr> <th> <app-sort-header [active]="sortField === 'timestamp'" [direction]="sortDirection" > Timestamp </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'method'" [direction]="sortDirection" > Method </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'url'" [direction]="sortDirection"> URL </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'duration'" [direction]="sortDirection" > Duration (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'ttfb'" [direction]="sortDirection"> TTFB (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'responseSize'" [direction]="sortDirection" > Response Size </app-sort-header> </th> <th>Actions</th> </tr> </thead> <tbody> <tr *ngFor="let item of performanceData"> <td>{{ item.timestamp | date: 'medium' }}</td> <td>{{ item.method }}</td> <td>{{ item.url }}</td> <td [ngClass]="getDurationClass(item.duration)"> {{ item.duration | number: '1.0-0' }} </td> <td>{{ item.ttfb | number: '1.0-0' }}</td> <td>{{ formatBytes(item.responseSize) }}</td> <td> <button nbButton ghost (click)="viewPerformanceDetails(item)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="pagination"> <button nbButton ghost [disabled]="pageIndex === 0" (click)="onPageChange({ page: pageIndex, pageSize: pageSize })" > Previous </button> <span>Page {{ pageIndex + 1 }}</span> <button nbButton ghost [disabled]="(pageIndex + 1) * pageSize >= totalItems" (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 1rem; } .filter-card { margin-bottom: 1.5rem; } .filter-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem; } .filter-actions { display: flex; gap: 1rem; margin-top: 1rem; } .performance-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; } .stat-card { text-align: center; } .stat-value { font-size: 2rem; font-weight: 600; color: var(--text-primary-color); } .stat-label { color: var(--text-hint-color); margin-top: 0.5rem; } .loading-container { display: flex; justify-content: center; padding: 2rem; } .duration-normal { color: var(--color-success-600); } .duration-warning { color: var(--color-warning-600); } .duration-critical { color: var(--color-danger-600); } table { width: 100%; } th { font-weight: 600; } td { padding: 0.75rem; } `, ], }) export class PerformanceDashboardComponent implements OnInit { // Performance data performanceData: PerformanceTelemetry[] = []; totalItems = 0; loading = true; // Pagination pageIndex = 0; pageSize = 10; // Table columns displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions']; // Filter form filterForm: FormGroup; // Performance statistics performanceStats$: Observable<any>; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ url: [''], method: [''], minDuration: [''], fromDate: [null], toDate: [null], }); this.performanceStats$ = this.getPerformanceStatistics(); } ngOnInit(): void { this.loadDashboardData(); } /** Load performance data with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPerformanceStatistics">
+  <h3>getPerformanceStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get performance statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onPageChange">
+  <h3>onPageChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event from paginator</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="formatBytes">
+  <h3>formatBytes</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Format bytes to human-readable format</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getDurationClass">
+  <h3>getDurationClass</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get CSS class based on duration</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewPerformanceDetails">
+  <h3>viewPerformanceDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for a performance record</p>
+  </div>
+  
+  
+  
+</div>
+</div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="error-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div> <div class="stat-label">Total Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div> <div class="stat-label">Unique Error Codes</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div> <div class="stat-label">Server Errors</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div> <div class="stat-label">Client Errors</div> </nb-card-body> </nb-card> </div> <nb-card class="error-list-card"> <nb-card-header> <h5>Recent Errors</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="sortData($event)"> <table class="table" *ngIf="!loading"> <thead> <tr> <th *ngFor="let column of displayedColumns"> <app-sort-header [active]="sortField === column.toLowerCase()" [direction]="sortDirection" > {{ column }} </app-sort-header> </th> </tr> </thead> <tbody> <tr *ngFor="let error of errors"> <td>{{ error.timestamp | date: 'medium' }}</td> <td>{{ error.statusCode || 'N/A' }}</td> <td>{{ error.category }}</td> <td>{{ error.type }}</td> <td>{{ error.message }}</td> <td>{{ error.count }}</td> <td> <button nbButton ghost size="small" (click)="viewErrorDetails(error)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="no-data-message" *ngIf="!loading && errors.length === 0"> No errors found matching the current filters. </div> <div class="pagination" *ngIf="!loading && errors.length > 0"> <button nbButton ghost [disabled]="currentPage === 1" (click)="pageChanged({ page: currentPage - 1, pageSize: pageSize })" > Previous </button> <span>Page {{ currentPage }}</span> <button nbButton ghost [disabled]="currentPage * pageSize >= totalErrors" (click)="pageChanged({ page: currentPage + 1, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 20px; } h1 { margin-bottom: 20px; color: var(--text-basic-color); } .filter-card { margin-bottom: 20px; } .filter-form { display: flex; flex-wrap: wrap; gap: 16px; } .filter-form nb-form-field { flex: 1 1 200px; } .filter-actions { display: flex; gap: 10px; margin-top: 10px; } .dashboard-content { display: flex; flex-direction: column; gap: 20px; } .error-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; } .stat-card { flex: 1 1 200px; text-align: center; } .stat-value { font-size: 2.5rem; font-weight: bold; color: var(--text-primary-color); } .stat-label { font-size: 1rem; color: var(--text-hint-color); } .error-list-card { width: 100%; } .error-table { width: 100%; } .loading-container { display: flex; justify-content: center; padding: 20px; } .no-data-message { text-align: center; padding: 20px; color: var(--text-hint-color); } `, ], }) export class ErrorDashboardComponent implements OnInit { // Error data errors: ErrorTelemetry[] = []; totalErrors = 0; loading = true; // Pagination currentPage = 1; pageSize = 10; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; // Table columns displayedColumns = [ 'timestamp', 'errorCode', 'category', 'statusCode', 'userMessage', 'url', 'actions', ]; // Filter form filterForm: FormGroup; // Error categories for filter dropdown errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '), value, })); // Error statistics errorStats$: Observable<any>; // Sort state @ViewChild(AppSortComponent) sort!: AppSortComponent; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ category: [''], statusCode: [''], fromDate: [null], toDate: [null], }); // Initialize error statistics this.errorStats$ = this.getErrorStatistics(); } ngOnInit(): void { this.loadErrors(); } /** Load errors with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getErrorStatistics">
+  <h3>getErrorStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get error statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="pageChanged">
+  <h3>pageChanged</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="sortData">
+  <h3>sortData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle sort change event</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewErrorDetails">
+  <h3>viewErrorDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/error-dashboard/error-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for an error</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="loadDashboardData">
+  <h3>loadDashboardData</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Performance Dashboard Component Displays a dashboard for analyzing and monitoring application performance. Features include: - Filtering by URL, method, duration, date range - Sorting by various columns - Pagination for large datasets - Performance metrics visualization / @Component({ selector: 'app-performance-dashboard', standalone: true, imports: [ CommonModule, NebularModule, ReactiveFormsModule, AppSortComponent, AppSortHeaderComponent, ], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: ` <div class="dashboard-container"> <h1>Performance Monitoring Dashboard</h1> <nb-card class="filter-card"> <nb-card-header> <h5>Filters</h5> </nb-card-header> <nb-card-body> <form [formGroup]="filterForm" class="filter-form"> <nb-form-field> <label>URL Contains</label> <input nbInput formControlName="url" placeholder="e.g., /api/users" /> </nb-form-field> <nb-form-field> <label>HTTP Method</label> <nb-select formControlName="method" placeholder="Select method"> <nb-option value="">All Methods</nb-option> <nb-option value="GET">GET</nb-option> <nb-option value="POST">POST</nb-option> <nb-option value="PUT">PUT</nb-option> <nb-option value="DELETE">DELETE</nb-option> <nb-option value="PATCH">PATCH</nb-option> </nb-select> </nb-form-field> <nb-form-field> <label>Min Duration (ms)</label> <input nbInput type="number" formControlName="minDuration" placeholder="e.g., 1000" /> </nb-form-field> <nb-form-field> <label>From Date</label> <input nbInput [nbDatepicker]="fromPicker" formControlName="fromDate" /> <nb-datepicker #fromPicker></nb-datepicker> </nb-form-field> <nb-form-field> <label>To Date</label> <input nbInput [nbDatepicker]="toPicker" formControlName="toDate" /> <nb-datepicker #toPicker></nb-datepicker> </nb-form-field> <div class="filter-actions"> <button nbButton status="primary" (click)="applyFilters()"> <nb-icon icon="filter"></nb-icon> Apply Filters </button> <button nbButton status="basic" (click)="resetFilters()"> <nb-icon icon="close"></nb-icon> Reset </button> </div> </form> </nb-card-body> </nb-card> <div class="dashboard-content"> <div class="performance-stats"> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value">{{ (performanceStats$ | async)?.totalRequests || 0 }}</div> <div class="stat-label">Total Requests</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.avgDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Average Duration</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.p95Duration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">95th Percentile</div> </nb-card-body> </nb-card> <nb-card class="stat-card"> <nb-card-body> <div class="stat-value"> {{ ((performanceStats$ | async)?.maxDuration | number: '1.0-0') || '0' }} ms </div> <div class="stat-label">Max Duration</div> </nb-card-body> </nb-card> </div> <nb-card class="endpoints-list-card"> <nb-card-header> <h5>Endpoint Performance</h5> </nb-card-header> <nb-card-body> <div class="loading-container" *ngIf="loading"> <nb-spinner></nb-spinner> </div> <app-sort (sortChange)="onSortChange($event)"> <table nbTable *ngIf="!loading"> <thead> <tr> <th> <app-sort-header [active]="sortField === 'timestamp'" [direction]="sortDirection" > Timestamp </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'method'" [direction]="sortDirection" > Method </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'url'" [direction]="sortDirection"> URL </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'duration'" [direction]="sortDirection" > Duration (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'ttfb'" [direction]="sortDirection"> TTFB (ms) </app-sort-header> </th> <th> <app-sort-header [active]="sortField === 'responseSize'" [direction]="sortDirection" > Response Size </app-sort-header> </th> <th>Actions</th> </tr> </thead> <tbody> <tr *ngFor="let item of performanceData"> <td>{{ item.timestamp | date: 'medium' }}</td> <td>{{ item.method }}</td> <td>{{ item.url }}</td> <td [ngClass]="getDurationClass(item.duration)"> {{ item.duration | number: '1.0-0' }} </td> <td>{{ item.ttfb | number: '1.0-0' }}</td> <td>{{ formatBytes(item.responseSize) }}</td> <td> <button nbButton ghost (click)="viewPerformanceDetails(item)"> <nb-icon icon="eye-outline"></nb-icon> </button> </td> </tr> </tbody> </table> </app-sort> <div class="pagination"> <button nbButton ghost [disabled]="pageIndex === 0" (click)="onPageChange({ page: pageIndex, pageSize: pageSize })" > Previous </button> <span>Page {{ pageIndex + 1 }}</span> <button nbButton ghost [disabled]="(pageIndex + 1) * pageSize >= totalItems" (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })" > Next </button> </div> </nb-card-body> </nb-card> </div> </div> `, styles: [ ` .dashboard-container { padding: 1rem; } .filter-card { margin-bottom: 1.5rem; } .filter-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem; } .filter-actions { display: flex; gap: 1rem; margin-top: 1rem; } .performance-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; } .stat-card { text-align: center; } .stat-value { font-size: 2rem; font-weight: 600; color: var(--text-primary-color); } .stat-label { color: var(--text-hint-color); margin-top: 0.5rem; } .loading-container { display: flex; justify-content: center; padding: 2rem; } .duration-normal { color: var(--color-success-600); } .duration-warning { color: var(--color-warning-600); } .duration-critical { color: var(--color-danger-600); } table { width: 100%; } th { font-weight: 600; } td { padding: 0.75rem; } `, ], }) export class PerformanceDashboardComponent implements OnInit { // Performance data performanceData: PerformanceTelemetry[] = []; totalItems = 0; loading = true; // Pagination pageIndex = 0; pageSize = 10; // Table columns displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions']; // Filter form filterForm: FormGroup; // Performance statistics performanceStats$: Observable<any>; // Sorting sortField = 'timestamp'; sortDirection: 'asc' | 'desc' | '' = 'desc'; constructor( private telemetryService: TelemetryService, private fb: FormBuilder, ) { this.filterForm = this.fb.group({ url: [''], method: [''], minDuration: [''], fromDate: [null], toDate: [null], }); this.performanceStats$ = this.getPerformanceStatistics(); } ngOnInit(): void { this.loadDashboardData(); } /** Load performance data with current pagination, sorting, and filtering</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getPerformanceStatistics">
+  <h3>getPerformanceStatistics</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get performance statistics for the dashboard</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onPageChange">
+  <h3>onPageChange</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Handle page change event from paginator</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="applyFilters">
+  <h3>applyFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Apply filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="resetFilters">
+  <h3>resetFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Reset all filters</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getFilters">
+  <h3>getFilters</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get current filters from the form</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="formatBytes">
+  <h3>formatBytes</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Format bytes to human-readable format</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="getDurationClass">
+  <h3>getDurationClass</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Get CSS class based on duration</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="viewPerformanceDetails">
+  <h3>viewPerformanceDetails</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/features/telemetry/components/performance-dashboard/performance-dashboard.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>View detailed information for a performance record</p>
+  </div>
+  
+  
+  
+</div>
+</div> <div class="form-actions"> <button nbButton type="button" (click)="resetForm()">Reset</button> <button nbButton status="primary" color="primary" type="submit" [disabled]="alertForm.invalid || isSubmitting" > <span *ngIf="!isSubmitting">Create Alert</span> <nb-spinner diameter="24" *ngIf="isSubmitting"></nb-spinner> </button> </div> </form> </nb-card-body> </nb-card> `, styles: [ ` .create-alert-card { max-width: 800px; margin: 20px auto; } .full-width { width: 100%; margin-bottom: 16px; } .form-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; } .form-row nb-form-field { flex: 1 1 200px; } .form-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 24px; } button[type='submit'] { min-width: 120px; } `, ], }) export class CreateErrorAlertComponent implements OnInit { alertForm: FormGroup; isSubmitting = false; // Error categories for dropdown errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({ label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '), value, })); // Time windows for dropdown timeWindows = [ { label: '5 minutes', value: AlertTimeWindow.MINUTES_5 }, { label: '15 minutes', value: AlertTimeWindow.MINUTES_15 }, { label: '30 minutes', value: AlertTimeWindow.MINUTES_30 }, { label: '1 hour', value: AlertTimeWindow.HOURS_1 }, { label: '6 hours', value: AlertTimeWindow.HOURS_6 }, { label: '12 hours', value: AlertTimeWindow.HOURS_12 }, { label: '24 hours', value: AlertTimeWindow.HOURS_24 }, ]; constructor( private fb: FormBuilder, private alertService: AlertService, private snackBar: MatSnackBar ) { this.alertForm = this.fb.group({ name: ['', Validators.required], description: ['', Validators.required], category: [ErrorCategory.SERVER, Validators.required], threshold: [5, [Validators.required, Validators.min(1)]], timeWindow: [AlertTimeWindow.HOURS_1, Validators.required], }); } ngOnInit(): void { // Initialize form with default values } /** Handle form submission</p>
   </div>
   
   

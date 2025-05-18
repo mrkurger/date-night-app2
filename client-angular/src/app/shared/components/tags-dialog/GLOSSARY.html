@@ -85,11 +85,161 @@
         
         <div class="glossary-entries">
 
-<div class="glossary-entry" id="addTag">
-  <h3>addTag</h3>
+<div class="glossary-entry" id="onTagAdd">
+  <h3>onTagAdd</h3>
   <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
   <div class="entry-description">
-    <p>Dialog component for managing tags Allows users to add, edit, and remove tags / @Component({ selector: 'app-tags-dialog', standalone: true, imports: [ CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatChipsModule, FormsModule, ReactiveFormsModule, ], template: ` <div class="tags-dialog-container"> <div class="dialog-header"> <h2 nb-dialog-title>{{ data.title }}</h2> <button nbButton ghost (click)="onClose()"> <nb-icon icon="close"></nb-icon> </button> </div> <nb-dialog-content> <nb-form-field appearance="outline" class="full-width"> <nb-form-field-label>Tags</nb-form-field-label> <nb-tag-grid #chipGrid> <nb-tag-row ngFor="let tag of tags" (removed)="removeTag(tag)" [editable]="true" (edited)="editTag(tag, $event)" > {{ tag }} <button matChipRemove> <nb-icon icon="cancel"></nb-icon> </button> </mat-chip-row> <input placeholder="Add tags..." [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTag($event)" /> </mat-chip-grid> <mat-hint> Press Enter to add a tag. {{ maxTagsMessage }} </mat-hint> </nb-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <button mat-chip ngFor="let tag of data.suggestedTags" (click)="addSuggestedTag(tag)" [disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" > {{ tag }} </button> </div> </div> <div class="form-actions"> <button nbButton type="button" (click)="onClose()">Cancel</button> <button nbButton status="primary" color="primary" (click)="onSave()">Save</button> </div> </nb-dialog-content> </div> `, styles: [ ` .tags-dialog-container { min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #eee; } h2 { margin: 0; font-size: 20px; font-weight: 500; } nb-dialog-content { padding: 24px; } .full-width { width: 100%; margin-bottom: 20px; } .suggested-tags { margin-bottom: 24px; } .suggested-tags h3 { font-size: 16px; margin-bottom: 8px; color: #555; } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 8px; } .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; } `, ], }) export class TagsDialogComponent { tags: string[] = []; readonly separatorKeysCodes = [ENTER, COMMA] as const; constructor( public dialogRef: MatDialogRef<TagsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TagsDialogData ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
+    <p>Dialog component for managing tags Allows users to add, edit, and remove tags / @Component({ selector: 'app-tags-dialog', standalone: true, imports: [ CommonModule, FormsModule, ReactiveFormsModule, NbCardModule, NbButtonModule, NbIconModule, NbFormFieldModule, NbInputModule, NbTagModule, ], template: ` <nb-card> <nb-card-header class="dialog-header"> <h2>{{ data.title }}</h2> <button nbButton ghost size="small" (click)="onClose()"> <nb-icon icon="close-outline"></nb-icon> </button> </nb-card-header> <nb-card-body> <nb-form-field> <div class="tags-container"> <nb-tag ngFor="let tag of tags" [text]="tag" removable (remove)="removeTag(tag)" ></nb-tag> <input nbInput placeholder="Add tags..." (keydown)="onTagAdd($event)" /> </div> <span class="hint-text">Press Enter or Space to add a tag. {{ maxTagsMessage }}</span> </nb-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <nb-tag ngFor="let tag of data.suggestedTags" [text]="tag" [status]="tags.includes(tag) ? 'basic' : 'primary'" (click)="addSuggestedTag(tag)" [class.disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" ></nb-tag> </div> </div> </nb-card-body> <nb-card-footer> <div class="form-actions"> <button nbButton status="basic" (click)="onClose()">Cancel</button> <button nbButton status="primary" (click)="onSave()">Save</button> </div> </nb-card-footer> </nb-card> `, styles: [ ` :host { display: block; min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; } h2 { margin: 0; font-size: 1.25rem; font-weight: 500; } nb-form-field { width: 100%; margin-bottom: 1.5rem; } .tags-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; } .hint-text { display: block; font-size: 0.875rem; color: var(--text-hint-color); margin-top: 0.5rem; } .suggested-tags { margin-bottom: 1.5rem; } .suggested-tags h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-hint-color); } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 0.5rem; nb-tag { cursor: pointer; &.disabled { opacity: 0.5; cursor: not-allowed; } } } .form-actions { display: flex; justify-content: flex-end; gap: 0.625rem; } `, ], }) export class TagsDialogComponent { tags: string[] = []; inputValue = ''; constructor( public dialogRef: NbDialogRef<TagsDialogComponent>, @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData, ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeTag">
+  <h3>removeTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="addSuggestedTag">
+  <h3>addSuggestedTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Add a suggested tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onSave">
+  <h3>onSave</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Save changes and close dialog</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onClose">
+  <h3>onClose</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Close dialog without saving</p>
+  </div>
+  
+  
+  
+</div>
+</div> <span class="hint-text">Press Enter or Space to add a tag. {{ maxTagsMessage }}</span> </nb-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <nb-tag ngFor="let tag of data.suggestedTags" [text]="tag" [status]="tags.includes(tag) ? 'basic' : 'primary'" (click)="addSuggestedTag(tag)" [class.disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" ></nb-tag> </div> </div> </nb-card-body> <nb-card-footer> <div class="form-actions"> <button nbButton status="basic" (click)="onClose()">Cancel</button> <button nbButton status="primary" (click)="onSave()">Save</button> </div> </nb-card-footer> </nb-card> `, styles: [ ` :host { display: block; min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; } h2 { margin: 0; font-size: 1.25rem; font-weight: 500; } nb-form-field { width: 100%; margin-bottom: 1.5rem; } .tags-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; } .hint-text { display: block; font-size: 0.875rem; color: var(--text-hint-color); margin-top: 0.5rem; } .suggested-tags { margin-bottom: 1.5rem; } .suggested-tags h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-hint-color); } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 0.5rem; nb-tag { cursor: pointer; &.disabled { opacity: 0.5; cursor: not-allowed; } } } .form-actions { display: flex; justify-content: flex-end; gap: 0.625rem; } `, ], }) export class TagsDialogComponent { tags: string[] = []; inputValue = ''; constructor( public dialogRef: NbDialogRef<TagsDialogComponent>, @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData, ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeTag">
+  <h3>removeTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="addSuggestedTag">
+  <h3>addSuggestedTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Add a suggested tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onSave">
+  <h3>onSave</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Save changes and close dialog</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onClose">
+  <h3>onClose</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Close dialog without saving</p>
+  </div>
+  
+  
+  
+</div>
+</div> <span class="hint-text">Press Enter or Space to add a tag. {{ maxTagsMessage }}</span> </nb-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <nb-tag ngFor="let tag of data.suggestedTags" [text]="tag" [status]="tags.includes(tag) ? 'basic' : 'primary'" (click)="addSuggestedTag(tag)" [class.disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" ></nb-tag> </div> </div> </nb-card-body> <nb-card-footer> <div class="form-actions"> <button nbButton status="basic" (click)="onClose()">Cancel</button> <button nbButton status="primary" (click)="onSave()">Save</button> </div> </nb-card-footer> </nb-card> `, styles: [ ` :host { display: block; min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; } h2 { margin: 0; font-size: 1.25rem; font-weight: 500; } nb-form-field { width: 100%; margin-bottom: 1.5rem; } .tags-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; } .hint-text { display: block; font-size: 0.875rem; color: var(--text-hint-color); margin-top: 0.5rem; } .suggested-tags { margin-bottom: 1.5rem; } .suggested-tags h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-hint-color); } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 0.5rem; nb-tag { cursor: pointer; &.disabled { opacity: 0.5; cursor: not-allowed; } } } .form-actions { display: flex; justify-content: flex-end; gap: 0.625rem; } `, ], }) export class TagsDialogComponent { tags: string[] = []; inputValue = ''; constructor( public dialogRef: NbDialogRef<TagsDialogComponent>, @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData, ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="removeTag">
+  <h3>removeTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Remove a tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="addSuggestedTag">
+  <h3>addSuggestedTag</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Add a suggested tag</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onSave">
+  <h3>onSave</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Save changes and close dialog</p>
+  </div>
+  
+  
+  
+</div>
+
+<div class="glossary-entry" id="onClose">
+  <h3>onClose</h3>
+  <p class="entry-meta">method | <a href="/client-angular/src/app/shared/components/tags-dialog/tags-dialog.component.ts">Source</a></p>
+  <div class="entry-description">
+    <p>Close dialog without saving</p>
+  </div>
+  
+  
+  
+</div>
+</div> <nb-dialog-content> <nb-form-field appearance="outline" class="full-width"> <nb-form-field-label>Tags</nb-form-field-label> <nb-tag-grid #chipGrid> <nb-tag-row ngFor="let tag of tags" (removed)="removeTag(tag)" [editable]="true" (edited)="editTag(tag, $event)" > {{ tag }} <button matChipRemove> <nb-icon icon="cancel"></nb-icon> </button> </mat-chip-row> <input placeholder="Add tags..." [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTag($event)" /> </mat-chip-grid> <mat-hint> Press Enter to add a tag. {{ maxTagsMessage }} </mat-hint> </nb-form-field> <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0"> <h3>Suggested Tags</h3> <div class="suggested-tags-list"> <button mat-chip ngFor="let tag of data.suggestedTags" (click)="addSuggestedTag(tag)" [disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)" > {{ tag }} </button> </div> </div> <div class="form-actions"> <button nbButton type="button" (click)="onClose()">Cancel</button> <button nbButton status="primary" color="primary" (click)="onSave()">Save</button> </div> </nb-dialog-content> </div> `, styles: [ ` .tags-dialog-container { min-width: 400px; max-width: 600px; } .dialog-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #eee; } h2 { margin: 0; font-size: 20px; font-weight: 500; } nb-dialog-content { padding: 24px; } .full-width { width: 100%; margin-bottom: 20px; } .suggested-tags { margin-bottom: 24px; } .suggested-tags h3 { font-size: 16px; margin-bottom: 8px; color: #555; } .suggested-tags-list { display: flex; flex-wrap: wrap; gap: 8px; } .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; } `, ], }) export class TagsDialogComponent { tags: string[] = []; readonly separatorKeysCodes = [ENTER, COMMA] as const; constructor( public dialogRef: MatDialogRef<TagsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TagsDialogData ) { this.tags = [...data.tags]; } /** Get message about maximum tags limit / get maxTagsMessage(): string { if (this.data.maxTags) { return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`; } return ''; } /** Add a new tag</p>
   </div>
   
 <h4>Parameters</h4>

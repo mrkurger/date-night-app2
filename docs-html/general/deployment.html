@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deployment Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Deployment Guide</h1>
+
+      <h1>Deployment Guide</h1>
+<p>This guide provides detailed instructions for deploying the Date Night App to various environments.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#environment-configuration">Environment Configuration</a></li>
+<li><a href="#development-environment">Development Environment</a></li>
+<li><a href="#staging-environment">Staging Environment</a></li>
+<li><a href="#production-environment">Production Environment</a></li>
+<li><a href="#deployment-platforms">Deployment Platforms</a><ul>
+<li><a href="#aws-deployment">AWS Deployment</a></li>
+<li><a href="#google-cloud-platform">Google Cloud Platform</a></li>
+<li><a href="#azure-deployment">Azure Deployment</a></li>
+<li><a href="#heroku-deployment">Heroku Deployment</a></li>
+<li><a href="#digital-ocean-deployment">Digital Ocean Deployment</a></li>
+</ul>
+</li>
+<li><a href="#continuous-integrationcontinuous-deployment">Continuous Integration/Continuous Deployment</a></li>
+<li><a href="#monitoring-and-logging">Monitoring and Logging</a></li>
+<li><a href="#backup-and-recovery">Backup and Recovery</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+<h2>Prerequisites</h2>
+<p>Before deploying the Date Night App, ensure you have the following:</p>
+<ul>
+<li>Node.js v22.14.0 or later</li>
+<li>npm v10.9.2 or later</li>
+<li>MongoDB v6.0 or later</li>
+<li>Git</li>
+<li>Docker and Docker Compose (for containerized deployments)</li>
+<li>Kubernetes CLI (for production deployments)</li>
+<li>Access to the deployment platform of your choice</li>
+</ul>
+<h2>Environment Configuration</h2>
+<p>The Date Night App uses environment variables for configuration. Create appropriate <code>.env</code> files for each environment:</p>
+<h3>Server Environment Variables</h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Required</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NODE_ENV</code></td>
+<td>Environment (development, staging, production)</td>
+<td>Yes</td>
+<td><code>production</code></td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td>Port for the server to listen on</td>
+<td>Yes</td>
+<td><code>3000</code></td>
+</tr>
+<tr>
+<td><code>MONGODB_URI</code></td>
+<td>MongoDB connection string</td>
+<td>Yes</td>
+<td><code>mongodb+srv://user:pass@cluster.mongodb.net/datenight</code></td>
+</tr>
+<tr>
+<td><code>JWT_SECRET</code></td>
+<td>Secret for JWT token generation</td>
+<td>Yes</td>
+<td><code>your-secret-key</code></td>
+</tr>
+<tr>
+<td><code>JWT_REFRESH_SECRET</code></td>
+<td>Secret for JWT refresh token</td>
+<td>Yes</td>
+<td><code>your-refresh-secret</code></td>
+</tr>
+<tr>
+<td><code>JWT_EXPIRATION</code></td>
+<td>JWT token expiration time</td>
+<td>Yes</td>
+<td><code>1h</code></td>
+</tr>
+<tr>
+<td><code>JWT_REFRESH_EXPIRATION</code></td>
+<td>JWT refresh token expiration</td>
+<td>Yes</td>
+<td><code>7d</code></td>
+</tr>
+<tr>
+<td><code>CORS_ORIGIN</code></td>
+<td>Allowed CORS origins</td>
+<td>Yes</td>
+<td><code>https://datenight.io</code></td>
+</tr>
+<tr>
+<td><code>STRIPE_SECRET_KEY</code></td>
+<td>Stripe API secret key</td>
+<td>For payments</td>
+<td><code>sk_live_...</code></td>
+</tr>
+<tr>
+<td><code>STRIPE_WEBHOOK_SECRET</code></td>
+<td>Stripe webhook secret</td>
+<td>For payments</td>
+<td><code>whsec_...</code></td>
+</tr>
+<tr>
+<td><code>AWS_ACCESS_KEY_ID</code></td>
+<td>AWS access key for S3</td>
+<td>For S3 storage</td>
+<td><code>AKIA...</code></td>
+</tr>
+<tr>
+<td><code>AWS_SECRET_ACCESS_KEY</code></td>
+<td>AWS secret key for S3</td>
+<td>For S3 storage</td>
+<td><code>your-secret</code></td>
+</tr>
+<tr>
+<td><code>AWS_REGION</code></td>
+<td>AWS region for S3</td>
+<td>For S3 storage</td>
+<td><code>us-east-1</code></td>
+</tr>
+<tr>
+<td><code>AWS_S3_BUCKET</code></td>
+<td>AWS S3 bucket name</td>
+<td>For S3 storage</td>
+<td><code>datenight-media</code></td>
+</tr>
+<tr>
+<td><code>SMTP_HOST</code></td>
+<td>SMTP server host</td>
+<td>For emails</td>
+<td><code>smtp.example.com</code></td>
+</tr>
+<tr>
+<td><code>SMTP_PORT</code></td>
+<td>SMTP server port</td>
+<td>For emails</td>
+<td><code>587</code></td>
+</tr>
+<tr>
+<td><code>SMTP_USER</code></td>
+<td>SMTP server username</td>
+<td>For emails</td>
+<td><code>user@example.com</code></td>
+</tr>
+<tr>
+<td><code>SMTP_PASS</code></td>
+<td>SMTP server password</td>
+<td>For emails</td>
+<td><code>password</code></td>
+</tr>
+<tr>
+<td><code>EMAIL_FROM</code></td>
+<td>Email sender address</td>
+<td>For emails</td>
+<td><code>noreply@datenight.io</code></td>
+</tr>
+<tr>
+<td><code>GOOGLE_MAPS_API_KEY</code></td>
+<td>Google Maps API key</td>
+<td>For maps</td>
+<td><code>your-api-key</code></td>
+</tr>
+<tr>
+<td><code>LOG_LEVEL</code></td>
+<td>Logging level</td>
+<td>No</td>
+<td><code>info</code></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_WINDOW_MS</code></td>
+<td>Rate limiting window in ms</td>
+<td>No</td>
+<td><code>900000</code></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_MAX</code></td>
+<td>Max requests per window</td>
+<td>No</td>
+<td><code>100</code></td>
+</tr>
+</tbody></table>
+<h3>Client Environment Variables</h3>
+<p>Create environment files in <code>client-angular/src/environments/</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Required</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>production</code></td>
+<td>Production mode flag</td>
+<td>Yes</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>apiUrl</code></td>
+<td>API server URL</td>
+<td>Yes</td>
+<td><code>https://api.datenight.io/api/v1</code></td>
+</tr>
+<tr>
+<td><code>socketUrl</code></td>
+<td>Socket.IO server URL</td>
+<td>Yes</td>
+<td><code>https://api.datenight.io</code></td>
+</tr>
+<tr>
+<td><code>googleMapsApiKey</code></td>
+<td>Google Maps API key</td>
+<td>For maps</td>
+<td><code>your-api-key</code></td>
+</tr>
+<tr>
+<td><code>encryptionKey</code></td>
+<td>Client-side encryption key</td>
+<td>For E2E chat</td>
+<td><code>your-encryption-key</code></td>
+</tr>
+<tr>
+<td><code>logLevel</code></td>
+<td>Client logging level</td>
+<td>No</td>
+<td><code>error</code></td>
+</tr>
+</tbody></table>
+<h2>Development Environment</h2>
+<h3>Local Development Setup</h3>
+<ol>
+<li><p>Clone the repository:</p>
+<pre><code class="language-bash">git clone https://github.com/yourusername/date-night-app.git
+cd date-night-app
+</code></pre>
+</li>
+<li><p>Install dependencies:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+</li>
+<li><p>Create <code>.env</code> file in the server directory:</p>
+<pre><code class="language-bash">cp server/.env.example server/.env
+</code></pre>
+</li>
+<li><p>Create environment files for the client:</p>
+<pre><code class="language-bash">cp client-angular/src/environments/environment.example.ts client-angular/src/environments/environment.ts
+</code></pre>
+</li>
+<li><p>Start MongoDB:</p>
+<pre><code class="language-bash">npm run mongodb
+</code></pre>
+</li>
+<li><p>Start the development server:</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+</li>
+</ol>
+<h2>Staging Environment</h2>
+<h3>Docker Compose Deployment</h3>
+<ol>
+<li><p>Build the Docker images:</p>
+<pre><code class="language-bash">docker-compose build
+</code></pre>
+</li>
+<li><p>Create a <code>.env.staging</code> file with appropriate values.</p>
+</li>
+<li><p>Start the services:</p>
+<pre><code class="language-bash">docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d
+</code></pre>
+</li>
+<li><p>Verify the deployment:</p>
+<pre><code class="language-bash">docker-compose ps
+</code></pre>
+</li>
+</ol>
+<h2>Production Environment</h2>
+<h3>Kubernetes Deployment</h3>
+<ol>
+<li><p>Build and push Docker images:</p>
+<pre><code class="language-bash">docker build -t your-registry/datenight-client:latest ./client-angular
+docker build -t your-registry/datenight-server:latest ./server
+docker push your-registry/datenight-client:latest
+docker push your-registry/datenight-server:latest
+</code></pre>
+</li>
+<li><p>Apply Kubernetes configurations:</p>
+<pre><code class="language-bash">kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/secrets.yaml
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/mongodb.yaml
+kubectl apply -f k8s/server.yaml
+kubectl apply -f k8s/client.yaml
+kubectl apply -f k8s/ingress.yaml
+</code></pre>
+</li>
+<li><p>Verify the deployment:</p>
+<pre><code class="language-bash">kubectl get pods -n datenight
+kubectl get services -n datenight
+kubectl get ingress -n datenight
+</code></pre>
+</li>
+</ol>
+<h2>Deployment Platforms</h2>
+<h3>AWS Deployment</h3>
+<h4>EC2 Deployment</h4>
+<ol>
+<li>Launch an EC2 instance with Amazon Linux 2.</li>
+<li>Install Node.js, npm, and MongoDB.</li>
+<li>Clone the repository and install dependencies.</li>
+<li>Set up environment variables.</li>
+<li>Build the client:<pre><code class="language-bash">cd client-angular
+npm run build:prod
+</code></pre>
+</li>
+<li>Use PM2 to run the server:<pre><code class="language-bash">npm install -g pm2
+cd server
+pm2 start server.js --name datenight
+</code></pre>
+</li>
+<li>Set up Nginx as a reverse proxy.</li>
+</ol>
+<h4>ECS Deployment</h4>
+<ol>
+<li>Create an ECS cluster.</li>
+<li>Create task definitions for the client and server.</li>
+<li>Create ECS services for the client and server.</li>
+<li>Set up an Application Load Balancer.</li>
+<li>Configure security groups and IAM roles.</li>
+</ol>
+<h3>Google Cloud Platform</h3>
+<h4>Google Kubernetes Engine (GKE)</h4>
+<ol>
+<li>Create a GKE cluster:<pre><code class="language-bash">gcloud container clusters create datenight-cluster --num-nodes=3
+</code></pre>
+</li>
+<li>Configure kubectl:<pre><code class="language-bash">gcloud container clusters get-credentials datenight-cluster
+</code></pre>
+</li>
+<li>Apply Kubernetes configurations as described in the Kubernetes deployment section.</li>
+</ol>
+<h4>App Engine</h4>
+<ol>
+<li>Create <code>app.yaml</code> files for the client and server.</li>
+<li>Deploy the server:<pre><code class="language-bash">cd server
+gcloud app deploy
+</code></pre>
+</li>
+<li>Deploy the client:<pre><code class="language-bash">cd client-angular
+npm run build:prod
+gcloud app deploy
+</code></pre>
+</li>
+</ol>
+<h3>Azure Deployment</h3>
+<h4>Azure Kubernetes Service (AKS)</h4>
+<ol>
+<li>Create an AKS cluster:<pre><code class="language-bash">az aks create --resource-group myResourceGroup --name datenight-cluster --node-count 3
+</code></pre>
+</li>
+<li>Configure kubectl:<pre><code class="language-bash">az aks get-credentials --resource-group myResourceGroup --name datenight-cluster
+</code></pre>
+</li>
+<li>Apply Kubernetes configurations as described in the Kubernetes deployment section.</li>
+</ol>
+<h4>Azure App Service</h4>
+<ol>
+<li>Create App Service plans for the client and server.</li>
+<li>Create App Services for the client and server.</li>
+<li>Configure environment variables.</li>
+<li>Deploy the applications using Azure DevOps or GitHub Actions.</li>
+</ol>
+<h3>Heroku Deployment</h3>
+<ol>
+<li>Create Heroku apps for the client and server:<pre><code class="language-bash">heroku create datenight-client
+heroku create datenight-server
+</code></pre>
+</li>
+<li>Add MongoDB add-on:<pre><code class="language-bash">heroku addons:create mongodb:hobby-dev --app datenight-server
+</code></pre>
+</li>
+<li>Configure environment variables:<pre><code class="language-bash">heroku config:set NODE_ENV=production --app datenight-server
+# Set other environment variables
+</code></pre>
+</li>
+<li>Deploy the server:<pre><code class="language-bash">git subtree push --prefix server heroku-server master
+</code></pre>
+</li>
+<li>Deploy the client:<pre><code class="language-bash">cd client-angular
+npm run build:prod
+cd ..
+git subtree push --prefix client-angular/dist heroku-client master
+</code></pre>
+</li>
+</ol>
+<h3>Digital Ocean Deployment</h3>
+<h4>App Platform</h4>
+<ol>
+<li>Create a new app on Digital Ocean App Platform.</li>
+<li>Connect your GitHub repository.</li>
+<li>Configure the build and run commands.</li>
+<li>Set environment variables.</li>
+<li>Deploy the application.</li>
+</ol>
+<h4>Droplets</h4>
+<ol>
+<li>Create a Droplet with Node.js.</li>
+<li>Install MongoDB.</li>
+<li>Clone the repository and install dependencies.</li>
+<li>Build the client.</li>
+<li>Set up PM2 to run the server.</li>
+<li>Configure Nginx as a reverse proxy.</li>
+</ol>
+<h2>Continuous Integration/Continuous Deployment</h2>
+<h3>GitHub Actions</h3>
+<p>The repository includes GitHub Actions workflows for CI/CD:</p>
+<ol>
+<li><code>.github/workflows/ci.yml</code> - Runs tests and linting on pull requests.</li>
+<li><code>.github/workflows/cd-staging.yml</code> - Deploys to staging on merges to the develop branch.</li>
+<li><code>.github/workflows/cd-production.yml</code> - Deploys to production on merges to the main branch.</li>
+</ol>
+<p>To use these workflows:</p>
+<ol>
+<li><p>Set up secrets in your GitHub repository:</p>
+<ul>
+<li><code>DOCKER_USERNAME</code> and <code>DOCKER_PASSWORD</code> for Docker Hub access.</li>
+<li><code>KUBE_CONFIG</code> for Kubernetes access.</li>
+<li>Environment-specific secrets for each deployment environment.</li>
+</ul>
+</li>
+<li><p>Configure the workflows as needed for your deployment platforms.</p>
+</li>
+</ol>
+<h2>Monitoring and Logging</h2>
+<h3>Monitoring</h3>
+<ol>
+<li><p>Set up Prometheus for metrics collection:</p>
+<pre><code class="language-bash">kubectl apply -f k8s/prometheus.yaml
+</code></pre>
+</li>
+<li><p>Set up Grafana for visualization:</p>
+<pre><code class="language-bash">kubectl apply -f k8s/grafana.yaml
+</code></pre>
+</li>
+<li><p>Import the provided dashboards in Grafana.</p>
+</li>
+</ol>
+<h3>Logging</h3>
+<ol>
+<li><p>Set up Elasticsearch, Fluentd, and Kibana (EFK stack):</p>
+<pre><code class="language-bash">kubectl apply -f k8s/efk.yaml
+</code></pre>
+</li>
+<li><p>Configure log retention policies.</p>
+</li>
+<li><p>Set up alerts for critical log events.</p>
+</li>
+</ol>
+<h2>Backup and Recovery</h2>
+<h3>Database Backups</h3>
+<ol>
+<li><p>Set up automated MongoDB backups:</p>
+<pre><code class="language-bash">kubectl apply -f k8s/mongodb-backup.yaml
+</code></pre>
+</li>
+<li><p>Configure backup retention policies.</p>
+</li>
+<li><p>Test backup restoration regularly.</p>
+</li>
+</ol>
+<h3>Disaster Recovery</h3>
+<ol>
+<li><p>Document disaster recovery procedures.</p>
+</li>
+<li><p>Set up cross-region replication for critical data.</p>
+</li>
+<li><p>Implement regular disaster recovery drills.</p>
+</li>
+</ol>
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<ol>
+<li><p><strong>Connection refused to MongoDB</strong>:</p>
+<ul>
+<li>Check MongoDB service status.</li>
+<li>Verify network connectivity.</li>
+<li>Check MongoDB credentials.</li>
+</ul>
+</li>
+<li><p><strong>JWT token issues</strong>:</p>
+<ul>
+<li>Verify JWT secrets are correctly set.</li>
+<li>Check token expiration times.</li>
+<li>Ensure clocks are synchronized.</li>
+</ul>
+</li>
+<li><p><strong>CORS errors</strong>:</p>
+<ul>
+<li>Verify CORS_ORIGIN environment variable.</li>
+<li>Check for missing headers in requests.</li>
+</ul>
+</li>
+<li><p><strong>Image upload failures</strong>:</p>
+<ul>
+<li>Check S3 credentials and permissions.</li>
+<li>Verify bucket exists and is accessible.</li>
+<li>Check file size limits.</li>
+</ul>
+</li>
+</ol>
+<h3>Logs and Diagnostics</h3>
+<ol>
+<li><p>View server logs:</p>
+<pre><code class="language-bash">kubectl logs -f deployment/datenight-server -n datenight
+</code></pre>
+</li>
+<li><p>View client logs:</p>
+<pre><code class="language-bash">kubectl logs -f deployment/datenight-client -n datenight
+</code></pre>
+</li>
+<li><p>Check MongoDB logs:</p>
+<pre><code class="language-bash">kubectl logs -f statefulset/mongodb-0 -n datenight
+</code></pre>
+</li>
+<li><p>Check application health:</p>
+<pre><code class="language-bash">kubectl exec -it deployment/datenight-server -n datenight -- curl localhost:3000/health
+</code></pre>
+</li>
+</ol>
+<p>For more detailed troubleshooting, refer to the application logs and monitoring dashboards.</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dependency Management - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Dependency Management</h1>
+
+      <h1>Dependency Management</h1>
+<p>This document provides comprehensive guidance on managing dependencies in the Date Night App project, including identifying unused dependencies, updating deprecated packages, and maintaining a clean dependency tree.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#dependency-analysis">Dependency Analysis</a></li>
+<li><a href="#dependency-cleanup">Dependency Cleanup</a><ul>
+<li><a href="#dependencies-kept-despite-being-flagged-as-unused">Dependencies Kept Despite Being Flagged as Unused</a></li>
+<li><a href="#dependencies-removed">Dependencies Removed</a></li>
+<li><a href="#missing-dependencies">Missing Dependencies</a></li>
+<li><a href="#how-to-run-the-cleanup">How to Run the Cleanup</a></li>
+<li><a href="#benefits-of-dependency-cleanup">Benefits of Dependency Cleanup</a></li>
+</ul>
+</li>
+<li><a href="#dependency-updates">Dependency Updates</a><ul>
+<li><a href="#recent-updates">Recent Updates</a></li>
+<li><a href="#security-vulnerabilities-addressed">Security Vulnerabilities Addressed</a></li>
+<li><a href="#deprecation-warnings-resolved">Deprecation Warnings Resolved</a></li>
+</ul>
+</li>
+<li><a href="#best-practices">Best Practices</a><ul>
+<li><a href="#adding-new-dependencies">Adding New Dependencies</a></li>
+<li><a href="#updating-dependencies">Updating Dependencies</a></li>
+<li><a href="#handling-deprecated-dependencies">Handling Deprecated Dependencies</a></li>
+<li><a href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li><a href="#automated-dependency-management">Automated Dependency Management</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+<h2>Overview</h2>
+<p>Effective dependency management is crucial for maintaining a healthy, secure, and performant application. This document outlines our approach to managing dependencies in the Date Night App project, including:</p>
+<ul>
+<li>Identifying and removing unused dependencies</li>
+<li>Updating deprecated dependencies</li>
+<li>Addressing security vulnerabilities</li>
+<li>Maintaining a clean dependency tree</li>
+</ul>
+<h2>Dependency Analysis</h2>
+<p>We use <code>depcheck</code> to identify potentially unused dependencies in the project. The analysis is performed on:</p>
+<ol>
+<li>Root project</li>
+<li>Client Angular project</li>
+<li>Server project</li>
+</ol>
+<p>To run a dependency analysis:</p>
+<pre><code class="language-bash"># For the root project
+npx depcheck
+
+# For the client Angular project
+cd client-angular &amp;&amp; npx depcheck
+
+# For the server project
+cd server &amp;&amp; npx depcheck
+</code></pre>
+<h2>Dependency Cleanup</h2>
+<h3>Dependencies Kept Despite Being Flagged as Unused</h3>
+<p>Some dependencies are flagged as unused by <code>depcheck</code> but are kept because they are used indirectly:</p>
+<h4>Root Project</h4>
+<ul>
+<li><strong>helmet</strong>: Security package used for setting HTTP headers in Express</li>
+<li><strong>path</strong>: Node.js built-in module used in various scripts</li>
+<li><strong>child_process</strong>: Node.js built-in module used in scripts for executing commands</li>
+<li><strong>@testing-library/jest-dom</strong>: Testing library that extends Jest with DOM-specific matchers</li>
+<li><strong>lint-staged</strong>: Used with husky for pre-commit hooks to run linters on staged files</li>
+</ul>
+<h4>Client Angular Project</h4>
+<ul>
+<li><strong>@angular/compiler</strong>: Required for Angular AOT compilation</li>
+<li><strong>bootstrap</strong>: CSS framework used in styles (imported in SCSS files)</li>
+<li><strong>tslib</strong>: Required for TypeScript helpers and runtime functions</li>
+<li><strong>@angular-eslint/template-parser</strong>: Used for linting Angular templates</li>
+</ul>
+<h4>Server Project</h4>
+<ul>
+<li><strong>express-session</strong>: Used for session management in Express</li>
+<li><strong>jest-extended</strong>: Extends Jest with additional matchers for testing</li>
+<li><strong>jest-junit</strong>: Generates JUnit XML reports for CI integration</li>
+</ul>
+<h3>Dependencies Removed</h3>
+<p>The following dependencies were identified as truly unused and were safely removed:</p>
+<h4>Root Project</h4>
+<ul>
+<li><strong>@popperjs/core</strong>: Not used directly in the project</li>
+<li><strong>npm-check</strong> (dev): Replaced by more modern tools</li>
+<li><strong>xml2js</strong> (dev): Not used in any scripts or configurations</li>
+</ul>
+<h4>Client Angular Project</h4>
+<ul>
+<li><strong>@fortawesome/fontawesome-free</strong>: Not used in the project</li>
+<li><strong>eslint-plugin-import</strong> (dev): Not used in ESLint configuration</li>
+<li><strong>typescript-eslint</strong> (dev): Redundant with @typescript-eslint packages</li>
+</ul>
+<h4>Server Project</h4>
+<ul>
+<li><strong>@eslint/js</strong> (dev): Not used in ESLint configuration</li>
+</ul>
+<h3>Missing Dependencies</h3>
+<p>The following dependencies were identified as missing and should be installed:</p>
+<ul>
+<li><strong>socket.io-client</strong>: Used in chat service but not listed in dependencies</li>
+<li><strong>argon2</strong> and <strong>bcrypt</strong>: Used in scripts but not listed in dependencies</li>
+</ul>
+<h3>How to Run the Cleanup</h3>
+<p>To clean up unused dependencies, run:</p>
+<pre><code class="language-bash">node scripts/cleanup-dependencies.js
+</code></pre>
+<p>This script will:</p>
+<ol>
+<li>Remove identified unused dependencies</li>
+<li>Preserve dependencies that might be used indirectly</li>
+<li>Run npm install to update node_modules</li>
+<li>Provide a summary of changes</li>
+</ol>
+<h3>Benefits of Dependency Cleanup</h3>
+<ul>
+<li><strong>Reduced package size</strong>: Smaller node_modules folder</li>
+<li><strong>Faster installation</strong>: Fewer packages to download and install</li>
+<li><strong>Reduced security risks</strong>: Fewer dependencies means fewer potential vulnerabilities</li>
+<li><strong>Cleaner project</strong>: Better understanding of what&#39;s actually being used</li>
+</ul>
+<h2>Dependency Updates</h2>
+<h3>Recent Updates</h3>
+<h4>2025-04-18: Fixed Deprecated Dependencies</h4>
+<p>Updated several deprecated dependencies to their latest versions to address security vulnerabilities and deprecation warnings.</p>
+<h5>Root Package (package.json)</h5>
+<ul>
+<li><p>Removed deprecated dependencies from overrides:</p>
+<ul>
+<li><code>inflight</code>: Removed as it&#39;s not supported and leaks memory</li>
+<li><code>abab</code>: Removed as native <code>atob()</code> and <code>btoa()</code> methods should be used instead</li>
+<li><code>domexception</code>: Removed as native <code>DOMException</code> should be used instead</li>
+<li><code>@humanwhocodes/config-array</code>: Replaced with <code>@eslint/config-array</code></li>
+<li><code>@humanwhocodes/object-schema</code>: Replaced with <code>@eslint/object-schema</code></li>
+</ul>
+</li>
+<li><p>Updated dependency versions:</p>
+<ul>
+<li><code>@eslint/object-schema</code>: Updated to <code>^2.1.6</code> (from <code>^0.1.1</code>)</li>
+</ul>
+</li>
+</ul>
+<h5>Server Package (server/package.json)</h5>
+<ul>
+<li>Updated dependency versions:<ul>
+<li><code>eslint</code>: Updated to <code>9.24.0</code> (from <code>8.56.0</code>)</li>
+</ul>
+</li>
+</ul>
+<h5>Client Angular Package (client-angular/package.json)</h5>
+<ul>
+<li>Updated dependency versions:<ul>
+<li><code>eslint</code>: Updated to <code>9.24.0</code> (from <code>8.56.0</code>)</li>
+</ul>
+</li>
+</ul>
+<h3>Security Vulnerabilities Addressed</h3>
+<ul>
+<li><code>http-proxy-middleware</code>: Updated to version <code>^3.0.5</code> to address CVE-2024-21536 (Denial of Service vulnerability)</li>
+</ul>
+<h3>Deprecation Warnings Resolved</h3>
+<ol>
+<li><code>inflight@1.0.6</code>: Removed from overrides as it&#39;s not supported and leaks memory</li>
+<li><code>rimraf@3.0.2</code>: Updated to <code>^5.0.5</code> in overrides</li>
+<li><code>abab@2.0.6</code>: Removed from overrides as native methods should be used</li>
+<li><code>glob@7.2.3</code>: Updated to <code>^10.3.10</code> in overrides</li>
+<li><code>domexception@4.0.0</code>: Removed from overrides as native DOMException should be used</li>
+<li><code>@humanwhocodes/object-schema@2.0.3</code>: Replaced with <code>@eslint/object-schema@^2.1.6</code></li>
+<li><code>@humanwhocodes/config-array@0.11.14</code>: Replaced with <code>@eslint/config-array@^0.20.0</code></li>
+<li><code>eslint@8.56.0</code>: Updated to <code>9.24.0</code> in all packages</li>
+</ol>
+<h2>Best Practices</h2>
+<h3>Adding New Dependencies</h3>
+<p>When adding new dependencies to the project, follow these guidelines:</p>
+<ol>
+<li><strong>Evaluate necessity</strong>: Consider whether the dependency is truly needed or if the functionality can be implemented with existing code</li>
+<li><strong>Check popularity and maintenance</strong>: Choose dependencies that are well-maintained, have a large user base, and are actively developed</li>
+<li><strong>Consider size and performance</strong>: Be mindful of the size of the dependency and its impact on bundle size and performance</li>
+<li><strong>Check license compatibility</strong>: Ensure the license is compatible with the project&#39;s license</li>
+<li><strong>Review security</strong>: Check for known security vulnerabilities using tools like npm audit or Snyk</li>
+<li><strong>Document usage</strong>: Add a comment explaining why the dependency is needed and how it&#39;s used</li>
+</ol>
+<h3>Updating Dependencies</h3>
+<p>To keep dependencies up to date:</p>
+<ol>
+<li><strong>Regular audits</strong>: Run <code>npm audit</code> regularly to identify security vulnerabilities</li>
+<li><strong>Scheduled updates</strong>: Schedule regular dependency updates (e.g., monthly)</li>
+<li><strong>Incremental updates</strong>: Update dependencies incrementally rather than all at once</li>
+<li><strong>Test thoroughly</strong>: Test the application thoroughly after updating dependencies</li>
+<li><strong>Document changes</strong>: Document all dependency updates in the changelog</li>
+</ol>
+<h3>Handling Deprecated Dependencies</h3>
+<p>When a dependency is deprecated:</p>
+<ol>
+<li><strong>Identify alternatives</strong>: Research and identify suitable alternatives</li>
+<li><strong>Plan migration</strong>: Create a plan for migrating to the alternative</li>
+<li><strong>Test thoroughly</strong>: Test the application thoroughly after migrating</li>
+<li><strong>Document changes</strong>: Document the migration in the changelog and update any relevant documentation</li>
+<li><strong>Update DEPRECATED.MD</strong>: Add the deprecated dependency to the <a href="/docs/DEPRECATED.MD">DEPRECATED.MD</a> file</li>
+</ol>
+<h3>Security Considerations</h3>
+<p>To maintain security:</p>
+<ol>
+<li><strong>Regular audits</strong>: Run <code>npm audit</code> regularly to identify security vulnerabilities</li>
+<li><strong>Fix vulnerabilities promptly</strong>: Address security vulnerabilities as soon as they&#39;re identified</li>
+<li><strong>Use lockfiles</strong>: Use package-lock.json or yarn.lock to ensure consistent dependency versions</li>
+<li><strong>Pin versions</strong>: Consider pinning dependency versions to avoid unexpected updates</li>
+<li><strong>Monitor security advisories</strong>: Stay informed about security advisories for dependencies</li>
+</ol>
+<h2>Automated Dependency Management</h2>
+<p>Consider implementing automated dependency management tools:</p>
+<ol>
+<li><strong>Dependabot</strong>: GitHub&#39;s automated dependency management tool</li>
+<li><strong>Renovate</strong>: Automated dependency management tool with extensive configuration options</li>
+<li><strong>npm-check-updates</strong>: Command-line tool for updating package.json dependencies</li>
+</ol>
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<ol>
+<li><strong>Dependency conflicts</strong>: Use <code>npm ls &lt;package-name&gt;</code> to identify conflicting versions</li>
+<li><strong>Peer dependency warnings</strong>: Install peer dependencies manually if needed</li>
+<li><strong>Broken builds after updates</strong>: Revert to previous versions and update incrementally</li>
+<li><strong>Missing dependencies</strong>: Use <code>depcheck</code> to identify missing dependencies</li>
+</ol>
+<h3>Resolving Dependency Conflicts</h3>
+<p>To resolve dependency conflicts:</p>
+<ol>
+<li><strong>Identify the conflict</strong>: Use <code>npm ls &lt;package-name&gt;</code> to identify conflicting versions</li>
+<li><strong>Update package.json</strong>: Add resolutions or overrides to force specific versions</li>
+<li><strong>Update dependencies</strong>: Update dependencies to versions that don&#39;t conflict</li>
+<li><strong>Consider alternatives</strong>: Consider alternative dependencies if conflicts can&#39;t be resolved</li>
+</ol>
+<h2>Future Maintenance</h2>
+<p>To keep dependencies clean:</p>
+<ol>
+<li>Run <code>npx depcheck</code> periodically to identify new unused dependencies</li>
+<li>Update the <code>keepDependencies</code> list in <code>scripts/cleanup-dependencies.js</code> as needed</li>
+<li>Document why certain dependencies are kept despite being flagged as unused</li>
+<li>Install missing dependencies that are actually used in the project</li>
+<li>Monitor for new deprecations and security vulnerabilities</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
