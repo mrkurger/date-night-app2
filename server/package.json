@@ -19,9 +19,9 @@
     "format:check": "prettier --check \"**/*.{js,json}\""
   },
   "dependencies": {
-    "argon2": "0.43.0",
+    "argon2": "^0.43.0",
     "axios": "1.9.0",
-    "bcrypt": "6.0.0",
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "compression": "1.8.0",
     "cookie-parser": "1.4.7",
