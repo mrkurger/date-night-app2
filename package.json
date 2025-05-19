@@ -15,7 +15,8 @@
     "docs:ensure": "node .github/scripts/ensure-docs.js",
     "docs:update": "npm run docs:ensure",
     "install-missing": "node scripts/install-missing-deps.js",
-    "fix-tests": "node scripts/combine-test-reports.js"
+    "fix-tests": "node scripts/combine-test-reports.js",
+    "analyze:security": "npm audit"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.12",

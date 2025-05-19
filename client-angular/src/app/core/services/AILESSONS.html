@@ -333,7 +333,64 @@ export class WebSocketFallbackService {
     </div>
   </div>
   
-  <!-- Add more service sections as needed -->
+  <div class="service-section">
+    <h2>Test Maintenance and Implementation Synchronization</h2>
+    <p>
+      Maintaining synchronization between tests and implementation is crucial for ensuring test reliability and preventing false positives/negatives.
+    </p>
+    
+    <h3>Problem</h3>
+    <p>
+      In the <code>chat.service.spec.ts</code> file, tests were calling methods with parameter signatures that didn't match the actual implementation:
+    </p>
+    <ul>
+      <li>Tests were calling <code>sendMessage(roomId, content, replyToId, ttl)</code> but the implementation expected a single ChatMessage object</li>
+      <li>Tests were calling <code>sendMessageWithAttachments</code> with 5 parameters, but the implementation only accepted 3</li>
+      <li>Tests were using <code>.subscribe()</code> on a method that returned a Promise, not an Observable</li>
+    </ul>
+    
+    <h3>Solution</h3>
+    <pre><code>
+// Before: Incorrect parameter signature
+service.sendMessage(roomId, content, replyToId, ttl).subscribe((response) => {
+  expect(response).toBeTruthy();
+});
+
+// After: Correct parameter signature
+const mockMessage = {
+  roomId,
+  content,
+  replyToId,
+  ttl
+};
+const resultPromise = service.sendMessage(mockMessage);
+// ...
+const response = await resultPromise;
+expect(response).toBeTruthy();
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li><strong>Check method signatures:</strong> Always verify that test calls match the actual method signatures in the implementation</li>
+      <li><strong>Review return types:</strong> Ensure tests handle Promises and Observables correctly based on what the method returns</li>
+      <li><strong>Update tests when implementation changes:</strong> When refactoring services, update all tests to match the new implementation</li>
+      <li><strong>Use TypeScript to catch errors:</strong> TypeScript should catch these errors at compile time, but sometimes tests might still pass if the types are too loose</li>
+      <li><strong>Document API changes:</strong> When changing method signatures, document the changes in CHANGELOG.html and update GLOSSARY.html</li>
+    </ul>
+    
+    <h3>Prevention Strategies</h3>
+    <ul>
+      <li>Implement stricter TypeScript configurations to catch parameter mismatches</li>
+      <li>Use interfaces to define method signatures and enforce them in both implementation and tests</li>
+      <li>Consider using test fixtures that are automatically generated from the implementation</li>
+      <li>Add comments in test files that explicitly document the expected method signatures</li>
+      <li>Regularly review and update tests when implementation changes</li>
+    </ul>
+    
+    <div class="note">
+      <strong>Note:</strong> Tests that pass despite calling methods incorrectly are particularly dangerous because they create a false sense of security. These tests might not actually be testing what you think they are.
+    </div>
+  </div>
   
 </body>
 </html>

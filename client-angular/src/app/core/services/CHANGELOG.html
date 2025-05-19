@@ -154,6 +154,35 @@
 
     <div class="version">
       <div class="version-header">
+        <span class="version-number">Version 1.5.0</span>
+        <span class="version-date">May 25, 2025</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type fix">Fixes</span></h3>
+        <ul class="change-list">
+          <li>
+            Fixed test cases in <code>chat.service.spec.ts</code> to match the actual implementation of 
+            <a href="./GLOSSARY.html#ChatService" class="tooltip"
+              >ChatService<span class="tooltip-text"
+                >Service for handling real-time messaging</span
+              ></a>
+          </li>
+          <li>
+            Updated <code>sendMessage</code> test to use the correct parameter signature (ChatMessage object instead of individual parameters)
+          </li>
+          <li>
+            Fixed <code>sendMessageWithAttachments</code> test to use only the 3 required parameters (roomId, content, files) and handle Promise return type correctly
+          </li>
+          <li>
+            Removed TTL parameter from <code>sendMessageWithAttachments</code> test as it's not supported in the current implementation
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
         <span class="version-number">Version 1.4.0</span>
         <span class="version-date">May 16, 2025</span>
       </div>

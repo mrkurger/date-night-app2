@@ -5,7 +5,6 @@ on:
     workflows: ["*"]
     types: [completed]
     branches: [main, develop]
-    conclusions: [failure, cancelled, timed_out]
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
   workflow_dispatch:  # Allow manual triggers
@@ -26,12 +25,12 @@ concurrency:
 
 jobs:
   sync-errors:
+    if: contains(fromJSON('["failure", "cancelled", "timed_out"]'), github.event.workflow_run.conclusion)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       actions: read
       contents: write
-    
     steps:
       - uses: actions/checkout@v4
         with:

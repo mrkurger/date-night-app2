@@ -217,4 +217,13 @@ export class ChatService {
   updateRoomSettings(roomId: string, settings: RoomSettings): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/settings`, settings);
   }
+
+  /**
+   * Convert hours to milliseconds
+   * @param hours Number of hours to convert
+   * @returns Number of milliseconds
+   */
+  convertHoursToMilliseconds(hours: number): number {
+    return hours * 60 * 60 * 1000;
+  }
 }

@@ -5,7 +5,6 @@ on:
     workflows: ["*"]
     types: [completed]
     branches: [main, develop]
-    conclusions: [failure, cancelled, timed_out]
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -19,6 +18,7 @@ concurrency:
 
 jobs:
   monitor:
+    if: ${{ contains(fromJson('["failure","cancelled","timed_out"]'), github.event.workflow_run.conclusion) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
