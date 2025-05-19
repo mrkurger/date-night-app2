@@ -1,9 +1,9 @@
 # Workflow name: Appears in the Actions tab of the GitHub repository.
 name: Server Tests
 
-# Defines the triggers for the workflow.
+# Triggers for the workflow.
 on:
-  # Trigger on push events to the 'main' or 'develop' branches.
+  # Trigger on push events to the 'main', 'develop', or 'Nebular-UI-Refactor' branches.
   push:
     branches: [main, develop, Nebular-UI-Refactor]
     # Only run if files in 'server/**' or the workflow file itself change.
@@ -13,27 +13,20 @@ on:
   # Trigger on pull request events targeting the 'main' or 'develop' branches.
   pull_request:
     branches: [main, develop]
-    # Only run if files in 'server/**' change.
     paths:
       - 'server/**'
-  workflow_dispatch:  # Allow manual triggering
+  # Allow manual triggering
+  workflow_dispatch:
 
+# Set job-level permissions (least privilege).
 permissions:
   contents: read
-  checks: write       # For reporting test results
-  pull-requests: write # For updating PR with test results
-  issues: write      # For creating issues on test failures
+  checks: write         # For reporting test results
+  pull-requests: write  # For updating PRs with test results
+  issues: write         # For creating issues on test failures
 
-# Add concurrency settings to cancel in-progress runs
+# Add concurrency settings to cancel in-progress runs from the same workflow/branch.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-  checks: write       # For reporting test results
-  pull-requests: write # For updating PR with test results
-  issues: write      # For creating issues on test failures
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -45,84 +38,111 @@ jobs:
     # Sets a maximum execution time for the job.
     timeout-minutes: 15
 
-    # Defines services to be run as part of the job. Useful for databases, etc.
+    # Defines services, like databases, to be run as part of the job.
     services:
-      # Service name: 'mongodb'
+      # MongoDB service for integration tests.
       mongodb:
-        # Docker image for the service.
         image: mongo:6
-        # Maps ports from the service container to the runner.
         ports:
           - 27017:27017 # MongoDB default port
 
-    # Defines the sequence of steps for the 'test' job.
     steps:
       # Step 1: Check out the repository code.
-      # 'uses' specifies an action to run. 'actions/checkout@v4' is a standard GitHub action.
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js and install dependencies.
-      - name: Setup Node.js and Install Dependencies
-        # 'uses' specifies a custom local action.
-        uses: ./.github/actions/setup-nodejs
-        # 'with' provides inputs to the action.
+      # Step 2: Cache Node.js dependencies to speed up workflow runs.
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
         with:
-          node-version: '22.x' # Specifies the Node.js version to set up.
-        # 'working-directory' specifies the directory where the action (.github/actions/setup-nodejs)
-        # and its internal commands (like npm install) will be executed.
-        # This was previously incorrectly indented under 'with'.
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 3: Setup Node.js and install dependencies using a custom local action.
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
+        with:
+          node-version: '22.x' # You may add more versions to your setup-nodejs action if supported.
         working-directory: server
 
-      # Step 3: Run the tests.
+      # Step 4: Wait for MongoDB to be ready before running tests.
+      - name: Wait for MongoDB
+        run: |
+          for i in {1..10}; do
+            if nc -z localhost 27017; then
+              echo "MongoDB is up!"
+              exit 0
+            fi
+            echo "Waiting for MongoDB to start..."
+            sleep 5
+          done
+          echo "MongoDB failed to start."
+          exit 1
+
+      # Step 5: Run the tests.
       - name: Run tests
-        # 'run' executes shell commands.
         run: npm test
-        # 'working-directory' specifies the directory for this 'run' command.
         working-directory: server
-        # 'env' sets environment variables for this step.
         env:
           NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/test # Connection string for the MongoDB service
+          MONGODB_URI: mongodb://localhost:27017/test
 
-  # 'lint' job: Runs linting checks on the server-side code.
+      # Step 6: Run NPM Audit to check for security vulnerabilities.
+      - name: Run NPM Audit
+        run: npm audit --audit-level=high
+        working-directory: server
+
+      # Step 7: (Optional) Create a GitHub Issue if the workflow fails.
+      # Uncomment and configure the following step if you want automated issue creation on failure.
+      # - name: Create Issue on Failure
+      #   if: failure()
+      #   uses: peter-evans/create-issue-from-file@v4
+      #   with:
+      #     title: "Workflow Failure - ${{ github.workflow }}"
+      #     content-filepath: failure.log
+      #     labels: bug
+
+  # 'lint' job: Runs linting and type checking on the server-side code.
   lint:
-    # Specifies the runner environment.
     runs-on: ubuntu-latest
-    # Sets environment variables for all steps in this job.
     env:
-      CI: true # Common environment variable indicating a CI environment.
-    # Sets a maximum execution time for the job.
-    timeout-minutes: 10 # Add timeout to prevent runaway jobs
+      CI: true # Standard CI environment variable.
+    timeout-minutes: 10
 
-    # 'strategy' defines a build matrix for running the job multiple times with different configurations.
+    # Strategy matrix allows testing against multiple Node.js versions.
     strategy:
       matrix:
-        # Defines a matrix variable 'node-version'. The job will run once for each version in the list.
-        node-version: [22.x] # Currently, only one version is specified.
+        node-version: [18.x, 20.x, 22.x]
 
-    # Defines the sequence of steps for the 'lint' job.
     steps:
       # Step 1: Check out the repository code.
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js and install dependencies.
-      - name: Setup Node.js and Install Dependencies
-        # Uses the same custom local action.
-        uses: ./.github/actions/setup-nodejs
-        # Inputs for the action.
+      # Step 2: Cache Node.js dependencies.
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
         with:
-          # Uses the 'node-version' from the build matrix.
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 3: Setup Node.js and install dependencies.
+      - name: Setup Node.js and Install Dependencies
+        uses: ./.github/actions/setup-nodejs
+        with:
           node-version: ${{ matrix.node-version }}
-        # 'working-directory' for the action's execution.
-        # This was previously incorrectly indented under 'with'.
         working-directory: ./server
 
-      # Step 3: Run ESLint.
+      # Step 4: Run ESLint for linting checks.
       - name: Run ESLint
-        # 'working-directory' for this 'run' command.
-        working-directory: ./server
-        # Executes the ESLint command.
         run: npx eslint .
-        # Example of how to handle errors (commented out):
-        # continue-on-error: true # If true, workflow continues even if this step fails.
-                                 # REMOVED: Lint errors will now fail the workflow by default.
+        working-directory: ./server
+
+      # Step 5: Run TypeScript compiler for type checking.
+      - name: Run TypeScript Compiler Check
+        run: npx tsc --noEmit
+        working-directory: ./server
+
+# END OF WORKFLOW
