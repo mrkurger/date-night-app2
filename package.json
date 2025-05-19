@@ -16,8 +16,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.12",
-    "eslint": "^9.0.0",
     "concurrently": "^8.2.2",
+    "eslint": "^9.0.0",
+    "husky": "9.1.7",
     "jasmine-core": "5.7.1",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
