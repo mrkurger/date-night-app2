@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location Data in DateNight.io - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Location Data in DateNight.io</h1>
+
+      <h1>Location Data in DateNight.io</h1>
+<h2>Overview</h2>
+<p>DateNight.io uses a comprehensive database of Norwegian counties and cities to support location-based features, particularly for the travel itinerary system. This document explains how location data is structured and used throughout the application.</p>
+<h2>Data Structure</h2>
+<p>The location data is organized hierarchically:</p>
+<ul>
+<li><strong>Counties</strong>: Norway is divided into 11 counties (fylker)</li>
+<li><strong>Cities</strong>: Each county contains multiple cities and towns</li>
+<li><strong>Coordinates</strong>: Each city has geographic coordinates (longitude, latitude)</li>
+</ul>
+<h2>Implementation</h2>
+<h3>Frontend</h3>
+<p>Location data is available through the <code>LocationService</code> which provides methods for:</p>
+<ul>
+<li>Getting all counties</li>
+<li>Getting cities for a specific county</li>
+<li>Getting coordinates for a specific city</li>
+<li>Finding the nearest city to a set of coordinates</li>
+<li>Getting the user&#39;s current location</li>
+</ul>
+<p>The service first attempts to fetch data from the backend API, and falls back to local constants if the API is unavailable.</p>
+<h3>Backend</h3>
+<p>The backend provides a set of RESTful endpoints for accessing location data:</p>
+<ul>
+<li><code>GET /api/v1/locations/counties</code> - Get all Norwegian counties</li>
+<li><code>GET /api/v1/locations/counties/:countyName/cities</code> - Get all cities for a specific county</li>
+<li><code>GET /api/v1/locations/cities</code> - Get all Norwegian cities</li>
+<li><code>GET /api/v1/locations/cities/:cityName/coordinates</code> - Get coordinates for a specific city</li>
+<li><code>GET /api/v1/locations/nearest-city</code> - Find the nearest city to given coordinates</li>
+</ul>
+<h2>Norwegian Counties and Major Cities</h2>
+<p>Here&#39;s a list of all Norwegian counties and some of their major cities:</p>
+<ol>
+<li><p><strong>Oslo</strong></p>
+<ul>
+<li>Oslo</li>
+</ul>
+</li>
+<li><p><strong>Viken</strong></p>
+<ul>
+<li>Drammen</li>
+<li>Fredrikstad</li>
+<li>Sarpsborg</li>
+<li>Moss</li>
+<li>Lillestrøm</li>
+<li>Asker</li>
+<li>Bærum</li>
+</ul>
+</li>
+<li><p><strong>Innlandet</strong></p>
+<ul>
+<li>Hamar</li>
+<li>Lillehammer</li>
+<li>Gjøvik</li>
+<li>Elverum</li>
+<li>Kongsvinger</li>
+</ul>
+</li>
+<li><p><strong>Vestfold og Telemark</strong></p>
+<ul>
+<li>Tønsberg</li>
+<li>Sandefjord</li>
+<li>Larvik</li>
+<li>Skien</li>
+<li>Porsgrunn</li>
+</ul>
+</li>
+<li><p><strong>Agder</strong></p>
+<ul>
+<li>Kristiansand</li>
+<li>Arendal</li>
+<li>Grimstad</li>
+<li>Mandal</li>
+<li>Flekkefjord</li>
+</ul>
+</li>
+<li><p><strong>Rogaland</strong></p>
+<ul>
+<li>Stavanger</li>
+<li>Sandnes</li>
+<li>Haugesund</li>
+<li>Egersund</li>
+<li>Bryne</li>
+</ul>
+</li>
+<li><p><strong>Vestland</strong></p>
+<ul>
+<li>Bergen</li>
+<li>Førde</li>
+<li>Florø</li>
+<li>Sogndal</li>
+<li>Voss</li>
+</ul>
+</li>
+<li><p><strong>Møre og Romsdal</strong></p>
+<ul>
+<li>Ålesund</li>
+<li>Molde</li>
+<li>Kristiansund</li>
+<li>Ulsteinvik</li>
+<li>Volda</li>
+</ul>
+</li>
+<li><p><strong>Trøndelag</strong></p>
+<ul>
+<li>Trondheim</li>
+<li>Steinkjer</li>
+<li>Stjørdalshalsen</li>
+<li>Levanger</li>
+<li>Namsos</li>
+</ul>
+</li>
+<li><p><strong>Nordland</strong></p>
+<ul>
+<li>Bodø</li>
+<li>Narvik</li>
+<li>Mo i Rana</li>
+<li>Mosjøen</li>
+<li>Fauske</li>
+</ul>
+</li>
+<li><p><strong>Troms og Finnmark</strong></p>
+<ul>
+<li>Tromsø</li>
+<li>Alta</li>
+<li>Harstad</li>
+<li>Hammerfest</li>
+<li>Kirkenes</li>
+</ul>
+</li>
+</ol>
+<h2>Usage in the Application</h2>
+<h3>Ad Creation</h3>
+<p>When creating or editing an advertisement, users select:</p>
+<ol>
+<li>The county from a dropdown list</li>
+<li>The city from a dropdown list (filtered based on the selected county)</li>
+</ol>
+<p>The system automatically associates geographic coordinates with the selected city.</p>
+<h3>Travel Itinerary</h3>
+<p>The travel itinerary feature uses location data to:</p>
+<ol>
+<li>Allow advertisers to select destinations by county and city</li>
+<li>Display travel plans on a map using the coordinates</li>
+<li>Enable location-based searching for users</li>
+<li>Implement proximity alerts when advertisers are near users</li>
+</ol>
+<h3>Location-Based Matching</h3>
+<p>The application uses location data to:</p>
+<ol>
+<li>Find ads near the user&#39;s current location</li>
+<li>Filter ads by county or city</li>
+<li>Show distance information between users and advertisers</li>
+<li>Sort results by proximity</li>
+</ol>
+<h2>Extending the Location Data</h2>
+<p>To add more cities or update coordinates:</p>
+<ol>
+<li>Edit the <code>norway-locations.ts</code> file in the frontend</li>
+<li>Edit the <code>norway-locations.js</code> file in the backend</li>
+<li>Ensure both files remain synchronized</li>
+</ol>
+<h2>Future Enhancements</h2>
+<p>Planned improvements to the location system include:</p>
+<ol>
+<li>Integration with external mapping APIs for more accurate geocoding</li>
+<li>Support for more detailed location information (neighborhoods, postal codes)</li>
+<li>Expansion to other Scandinavian countries</li>
+<li>Heat maps showing concentration of advertisers by region</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

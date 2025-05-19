@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>End-to-End Encryption in Date Night App - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>End-to-End Encryption in Date Night App</h1>
+
+      <h1>End-to-End Encryption in Date Night App</h1>
+<p>This document describes the end-to-end encryption (E2EE) implementation in the Date Night App chat system.</p>
+<h2>Overview</h2>
+<p>The Date Night App implements end-to-end encryption for chat messages to ensure that only the intended participants can read the messages. The encryption is implemented using a hybrid approach:</p>
+<ol>
+<li><strong>Asymmetric Encryption (RSA)</strong>: Used for key exchange</li>
+<li><strong>Symmetric Encryption (AES-GCM)</strong>: Used for message encryption</li>
+</ol>
+<h2>Key Components</h2>
+<h3>Client-Side Components</h3>
+<ul>
+<li><strong>EncryptionService</strong>: Angular service that handles encryption/decryption operations</li>
+<li><strong>ChatService</strong>: Integrates with EncryptionService to send/receive encrypted messages</li>
+<li><strong>ChatMessageComponent</strong>: Displays messages and handles decryption for rendering</li>
+</ul>
+<h3>Server-Side Components</h3>
+<ul>
+<li><strong>CryptoHelpers</strong>: Node.js utility for cryptographic operations</li>
+<li><strong>ChatRoom Model</strong>: Stores encryption settings and public keys</li>
+<li><strong>ChatMessage Model</strong>: Stores encrypted messages and encryption metadata</li>
+</ul>
+<h2>Encryption Flow</h2>
+<h3>Key Generation and Registration</h3>
+<ol>
+<li>When a user first uses the chat feature, the client generates an RSA key pair</li>
+<li>The public key is sent to the server and stored with the user&#39;s profile</li>
+<li>The private key is stored securely in the browser&#39;s localStorage</li>
+</ol>
+<h3>Room Key Setup</h3>
+<ol>
+<li>When a chat room is created, a symmetric AES key is generated for that room</li>
+<li>The symmetric key is encrypted with each participant&#39;s public key</li>
+<li>Each participant receives their own encrypted version of the room key</li>
+</ol>
+<h3>Message Encryption</h3>
+<ol>
+<li>When sending a message, the client encrypts it using the room&#39;s symmetric key</li>
+<li>The encrypted message, along with the IV (Initialization Vector) and authentication tag, is sent to the server</li>
+<li>The server stores the encrypted message without being able to decrypt it</li>
+</ol>
+<h3>Message Decryption</h3>
+<ol>
+<li>When receiving a message, the client retrieves the room&#39;s symmetric key</li>
+<li>The client uses the symmetric key to decrypt the message</li>
+<li>The decrypted message is displayed to the user</li>
+</ol>
+<h2>Security Considerations</h2>
+<h3>Key Storage</h3>
+<ul>
+<li>Private keys are stored in the browser&#39;s localStorage</li>
+<li>This provides persistence across sessions but is vulnerable to XSS attacks</li>
+<li>In a production environment, consider using more secure storage options like the Web Crypto API&#39;s key storage</li>
+</ul>
+<h3>Forward Secrecy</h3>
+<ul>
+<li>The current implementation does not provide perfect forward secrecy</li>
+<li>Consider implementing key rotation or using protocols like Signal for enhanced security</li>
+</ul>
+<h3>Metadata Protection</h3>
+<ul>
+<li>While message content is encrypted, metadata (sender, recipient, timestamp) is not</li>
+<li>This is a limitation of the current implementation</li>
+</ul>
+<h2>Implementation Details</h2>
+<h3>Encryption Algorithms</h3>
+<ul>
+<li><strong>Asymmetric Encryption</strong>: RSA-OAEP with 2048-bit keys and SHA-256 hash</li>
+<li><strong>Symmetric Encryption</strong>: AES-GCM with 256-bit keys and 128-bit authentication tags</li>
+</ul>
+<h3>Key Exchange</h3>
+<p>The key exchange process follows these steps:</p>
+<ol>
+<li>User A generates a symmetric key for the chat room</li>
+<li>User A encrypts this key with User B&#39;s public key</li>
+<li>User A sends the encrypted key to the server</li>
+<li>User B retrieves the encrypted key and decrypts it with their private key</li>
+<li>Both users now have the same symmetric key for message encryption/decryption</li>
+</ol>
+<h3>Message Format</h3>
+<p>Encrypted messages have the following format:</p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;[encrypted message content]&quot;,
+  &quot;isEncrypted&quot;: true,
+  &quot;encryptionData&quot;: {
+    &quot;iv&quot;: &quot;[base64-encoded initialization vector]&quot;,
+    &quot;authTag&quot;: &quot;[base64-encoded authentication tag]&quot;
+  }
+}
+</code></pre>
+<h2>Testing and Verification</h2>
+<p>To verify that encryption is working correctly:</p>
+<ol>
+<li>Open the chat in two different browsers or incognito windows</li>
+<li>Send messages between the two users</li>
+<li>Check the network traffic to confirm that messages are encrypted</li>
+<li>Verify that messages can be decrypted and displayed correctly</li>
+</ol>
+<h2>Future Improvements</h2>
+<ul>
+<li>Implement perfect forward secrecy with key rotation</li>
+<li>Add support for encrypted file attachments</li>
+<li>Implement secure key backup and recovery</li>
+<li>Add verification of encryption (similar to Signal&#39;s safety numbers)</li>
+<li>Support multi-device usage with key synchronization</li>
+</ul>
+<h2>References</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#aes-gcm">AES-GCM Encryption</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#rsa-oaep">RSA-OAEP Encryption</a></li>
+<li><a href="https://signal.org/docs/">Signal Protocol</a></li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

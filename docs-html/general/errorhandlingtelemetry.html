@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error Handling and Telemetry Implementation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Error Handling and Telemetry Implementation</h1>
+
+      <h1>Error Handling and Telemetry Implementation</h1>
+<p>This document provides an overview of the error handling and telemetry implementation in the Date Night App.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#architecture-overview">Architecture Overview</a></li>
+<li><a href="#http-error-interceptor">HTTP Error Interceptor</a></li>
+<li><a href="#telemetry-service">Telemetry Service</a></li>
+<li><a href="#error-dashboard">Error Dashboard</a></li>
+<li><a href="#performance-dashboard">Performance Dashboard</a></li>
+<li><a href="#alert-system">Alert System</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#future-improvements">Future Improvements</a></li>
+</ul>
+<h2>Architecture Overview</h2>
+<p>The error handling and telemetry system consists of the following components:</p>
+<ol>
+<li><strong>HTTP Error Interceptor</strong>: Centralized error handling for all HTTP requests</li>
+<li><strong>Telemetry Service</strong>: Tracks errors and performance metrics</li>
+<li><strong>Alert Service</strong>: Creates and manages alerts based on telemetry data</li>
+<li><strong>Error Dashboard</strong>: Visualizes error statistics</li>
+<li><strong>Performance Dashboard</strong>: Visualizes performance metrics</li>
+</ol>
+<p>The system is designed to:</p>
+<ul>
+<li>Provide consistent error handling across the application</li>
+<li>Track errors and performance metrics for analysis</li>
+<li>Support offline operation with local storage</li>
+<li>Sanitize sensitive information</li>
+<li>Categorize errors for better handling</li>
+<li>Retry failed requests with exponential backoff and jitter</li>
+<li>Show user-friendly error notifications</li>
+<li>Redirect to login page on authentication errors</li>
+</ul>
+<h2>HTTP Error Interceptor</h2>
+<p>The HTTP Error Interceptor (<code>HttpErrorInterceptor</code>) is responsible for:</p>
+<ul>
+<li>Intercepting all HTTP requests and responses</li>
+<li>Handling errors in a consistent way</li>
+<li>Tracking performance metrics for successful requests</li>
+<li>Retrying failed requests with exponential backoff and jitter</li>
+<li>Showing user-friendly error notifications</li>
+<li>Redirecting to login page on authentication errors</li>
+<li>Tracking errors with telemetry</li>
+</ul>
+<h3>Error Categories</h3>
+<p>Errors are categorized into the following types:</p>
+<pre><code class="language-typescript">export enum ErrorCategory {
+  NETWORK = &#39;network&#39;,
+  AUTHENTICATION = &#39;authentication&#39;,
+  AUTHORIZATION = &#39;authorization&#39;,
+  VALIDATION = &#39;validation&#39;,
+  SERVER = &#39;server&#39;,
+  CLIENT = &#39;client&#39;,
+  TIMEOUT = &#39;timeout&#39;,
+  RATE_LIMIT = &#39;rate_limit&#39;,
+  NOT_FOUND = &#39;not_found&#39;,
+  CONFLICT = &#39;conflict&#39;,
+  UNKNOWN = &#39;unknown&#39;,
+}
+</code></pre>
+<h3>Configuration</h3>
+<p>The interceptor can be configured with the following options:</p>
+<pre><code class="language-typescript">export interface HttpErrorInterceptorConfig {
+  showNotifications: boolean; // Show user-friendly error notifications
+  retryFailedRequests: boolean; // Automatically retry failed requests
+  maxRetryAttempts: number; // Maximum number of retry attempts
+  retryDelay: number; // Base delay between retries in milliseconds
+  redirectToLogin: boolean; // Redirect to login page on 401 errors
+  logErrors: boolean; // Log errors to console
+  includeRequestDetails: boolean; // Include request details in error logs
+  trackErrors: boolean; // Track errors with telemetry service
+  trackPerformance: boolean; // Track performance metrics
+  groupSimilarErrors: boolean; // Group similar errors in reports
+  retryJitter: number; // Random jitter added to retry delay to prevent thundering herd
+  sanitizeSensitiveData: boolean; // Redact sensitive data in logs and telemetry
+  skipUrls: string[]; // URLs to skip processing (e.g., static assets)
+}
+</code></pre>
+<h4>Configuration Example</h4>
+<p>You can configure the interceptor in your application module:</p>
+<pre><code class="language-typescript">// In your app.module.ts or core.module.ts
+export function httpErrorInterceptorFactory(
+  router: Router,
+  notificationService: NotificationService,
+  telemetryService: TelemetryService,
+  authService: AuthService
+) {
+  const interceptor = new HttpErrorInterceptor();
+
+  // Configure the interceptor with custom settings
+  interceptor.configure({
+    showNotifications: true,
+    retryFailedRequests: true,
+    maxRetryAttempts: 3,
+    retryDelay: 1000,
+    redirectToLogin: true,
+    logErrors: true,
+    includeRequestDetails: false,
+    trackErrors: true,
+    trackPerformance: false,
+    groupSimilarErrors: true,
+    retryJitter: 200,
+    sanitizeSensitiveData: true,
+    skipUrls: [&#39;/assets/&#39;, &#39;/api/health&#39;],
+  });
+
+  return interceptor;
+}
+
+@NgModule({
+  // ...
+  providers: [
+    // ...
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: httpErrorInterceptorFactory,
+      deps: [Router, NotificationService, TelemetryService, AuthService],
+      multi: true,
+    },
+  ],
+})
+export class AppModule {}
+</code></pre>
+<h4>Dynamic Configuration</h4>
+<p>You can also update the configuration at runtime:</p>
+<pre><code class="language-typescript">// In a service or component
+export class ErrorConfigService {
+  constructor(private httpErrorInterceptor: HttpErrorInterceptor) {
+    // Configure based on environment or user preferences
+    this.updateErrorHandlingConfig();
+  }
+
+  updateErrorHandlingConfig(userPreferences?: UserPreferences): void {
+    const config: Partial&lt;HttpErrorInterceptorConfig&gt; = {
+      showNotifications: userPreferences?.showErrorNotifications ?? true,
+      retryFailedRequests: navigator.onLine, // Only retry if online
+      trackErrors: !environment.production || userPreferences?.participateInTelemetry,
+      sanitizeSensitiveData: true,
+    };
+
+    this.httpErrorInterceptor.configure(config);
+  }
+}
+</code></pre>
+<h3>Retry Logic</h3>
+<p>The interceptor implements retry logic with exponential backoff and jitter:</p>
+<pre><code class="language-typescript">private retryWithBackoff(request: HttpRequest&lt;unknown&gt;) {
+  return (source: Observable&lt;HttpEvent&lt;unknown&gt;&gt;) =&gt;
+    this.config.retryFailedRequests
+      ? source.pipe(
+          retryWhen(errors =&gt;
+            errors.pipe(
+              concatMap((error, index) =&gt; {
+                const attemptNumber = index + 1;
+
+                // Check if we should retry this error
+                if (!this.isRetryable(error) || attemptNumber &gt; this.config.maxRetryAttempts) {
+                  return throwError(() =&gt; error);
+                }
+
+                // Calculate delay with exponential backoff and jitter
+                const backoffDelay = this.getRetryDelay(attemptNumber);
+                const jitter = Math.floor(Math.random() * this.config.retryJitter);
+                const totalDelay = backoffDelay + jitter;
+
+                // ... logging and telemetry ...
+
+                return timer(totalDelay);
+              })
+            )
+          )
+        )
+      : source;
+}
+</code></pre>
+<h2>Telemetry Service</h2>
+<p>The Telemetry Service (<code>TelemetryService</code>) is responsible for:</p>
+<ul>
+<li>Tracking errors and performance metrics</li>
+<li>Storing telemetry data locally when offline</li>
+<li>Sending telemetry data to the server when online</li>
+<li>Providing statistics for dashboards</li>
+</ul>
+<h3>Error Telemetry</h3>
+<p>Error telemetry includes:</p>
+<pre><code class="language-typescript">export interface ErrorTelemetry {
+  id: string;
+  errorCode: string;
+  statusCode: number;
+  userMessage: string;
+  technicalMessage: string;
+  url: string;
+  method: string;
+  timestamp: string;
+  userId?: string;
+  sessionId?: string;
+  appVersion: string;
+  userAgent: string;
+  context?: Record&lt;string, any&gt;;
+}
+</code></pre>
+<h3>Performance Telemetry</h3>
+<p>Performance telemetry includes:</p>
+<pre><code class="language-typescript">export interface PerformanceTelemetry {
+  id: string;
+  url: string;
+  method: string;
+  duration: number;
+  ttfb?: number;
+  requestSize?: number;
+  responseSize?: number;
+  timestamp: string;
+  userId?: string;
+  sessionId?: string;
+  appVersion: string;
+  context?: Record&lt;string, any&gt;;
+}
+</code></pre>
+<h3>Offline Support</h3>
+<p>The telemetry service supports offline operation by:</p>
+<ul>
+<li>Storing telemetry data in local storage when offline</li>
+<li>Sending stored data when the connection is restored</li>
+<li>Batching requests to avoid overwhelming the server</li>
+</ul>
+<pre><code class="language-typescript">private flushOfflineQueues(): void {
+  // Load any queues from local storage
+  this.loadOfflineQueues();
+
+  // Process error queue
+  if (this.offlineErrorQueue.length &gt; 0) {
+    const errorQueue = [...this.offlineErrorQueue];
+    this.offlineErrorQueue = [];
+    this.persistOfflineQueue(&#39;errors&#39;, this.offlineErrorQueue);
+
+    // Send in batches to avoid overwhelming the server
+    this.sendBatch(`${this.apiUrl}/errors/batch`, errorQueue);
+  }
+
+  // Process performance queue
+  // ...
+}
+</code></pre>
+<h2>Error Dashboard</h2>
+<p>The Error Dashboard (<code>ErrorDashboardComponent</code>) visualizes error statistics:</p>
+<ul>
+<li>Errors by category (pie chart)</li>
+<li>Errors by status code (bar chart)</li>
+<li>Errors over time (line chart)</li>
+<li>Recent errors (table)</li>
+</ul>
+<p>The dashboard supports:</p>
+<ul>
+<li>Filtering by category, status code, and date range</li>
+<li>Pagination of recent errors</li>
+<li>Sorting of recent errors</li>
+<li>Viewing detailed error information</li>
+<li>Real-time updates via WebSockets</li>
+</ul>
+<h3>Real-time Updates</h3>
+<p>The dashboard can be switched to real-time mode, which uses WebSockets to receive live updates:</p>
+<ul>
+<li>New errors appear immediately in the table</li>
+<li>Charts update automatically when new statistics are available</li>
+<li>Connection status is displayed to show WebSocket connectivity</li>
+<li>Exponential backoff reconnection attempts if the connection is lost</li>
+</ul>
+<p>The real-time functionality is implemented using the <code>TelemetrySocketService</code>, which:</p>
+<ul>
+<li>Manages WebSocket connections</li>
+<li>Provides Observable streams for different types of telemetry data</li>
+<li>Handles reconnection with exponential backoff</li>
+<li>Supports subscribing to specific telemetry channels</li>
+</ul>
+<h2>Performance Dashboard</h2>
+<p>The Performance Dashboard (<code>PerformanceDashboardComponent</code>) visualizes performance metrics:</p>
+<ul>
+<li>Response time by endpoint (bar chart)</li>
+<li>Response time distribution (pie chart)</li>
+<li>Response time over time (line chart)</li>
+<li>Slowest endpoints (table)</li>
+</ul>
+<p>The dashboard supports:</p>
+<ul>
+<li>Filtering by URL, method, minimum duration, and date range</li>
+<li>Pagination of slowest endpoints</li>
+<li>Sorting of slowest endpoints</li>
+</ul>
+<h2>Configuration</h2>
+<p>The error handling and telemetry system can be configured in the following ways:</p>
+<ol>
+<li><strong>HTTP Error Interceptor Configuration</strong>:</li>
+</ol>
+<pre><code class="language-typescript">const config: Partial&lt;HttpErrorInterceptorConfig&gt; = {
+  showNotifications: true,
+  retryFailedRequests: true,
+  maxRetryAttempts: 3,
+  // ...
+};
+
+// In a component or service
+constructor(private httpErrorInterceptor: HttpErrorInterceptor) {
+  this.httpErrorInterceptor.configure(config);
+}
+</code></pre>
+<ol start="2">
+<li><strong>Environment Configuration</strong>:</li>
+</ol>
+<pre><code class="language-typescript">// environment.ts
+export const environment = {
+  // ...
+  apiUrl: &#39;http://localhost:3000/api/v1&#39;,
+  // ...
+};
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li><p><strong>Centralized Error Handling</strong>: Use the HTTP Error Interceptor for all HTTP requests to ensure consistent error handling.</p>
+</li>
+<li><p><strong>User-Friendly Error Messages</strong>: Provide clear, user-friendly error messages that help users understand what went wrong and how to fix it.</p>
+</li>
+<li><p><strong>Technical Error Details</strong>: Include technical error details for developers to help with debugging.</p>
+</li>
+<li><p><strong>Error Categorization</strong>: Categorize errors to enable better handling and reporting.</p>
+</li>
+<li><p><strong>Retry Logic</strong>: Implement retry logic with exponential backoff and jitter for transient errors.</p>
+</li>
+<li><p><strong>Offline Support</strong>: Store telemetry data locally when offline and send it when the connection is restored.</p>
+</li>
+<li><p><strong>Batched Sending</strong>: Send telemetry data in batches to reduce network overhead.</p>
+</li>
+<li><p><strong>Data Sanitization</strong>: Ensure sensitive information is not included in telemetry data.</p>
+</li>
+<li><p><strong>Performance Monitoring</strong>: Track performance metrics to identify bottlenecks and optimize the application.</p>
+</li>
+<li><p><strong>Dashboard Visualization</strong>: Visualize error and performance statistics to help identify trends and issues.</p>
+</li>
+</ol>
+<h2>Alert System</h2>
+<p>The Alert System (<code>AlertService</code>) is responsible for:</p>
+<ul>
+<li>Creating and managing alerts based on telemetry data</li>
+<li>Triggering notifications when alert conditions are met</li>
+<li>Tracking alert acknowledgments and resolutions</li>
+<li>Providing alert statistics for the dashboard</li>
+</ul>
+<h3>Alert Types</h3>
+<p>The system supports different types of alerts:</p>
+<ol>
+<li><strong>Error Category Alerts</strong>: Trigger when a specific error category occurs multiple times within a time window.</li>
+</ol>
+<pre><code class="language-typescript">createErrorCategoryAlert(
+  ErrorCategory.SERVER,
+  &#39;Critical Server Errors&#39;,
+  &#39;Alert when multiple server errors occur&#39;,
+  5, // Threshold
+  &#39;1h&#39; // Time window
+);
+</code></pre>
+<ol start="2">
+<li><strong>Error Rate Alerts</strong>: Trigger when the error rate exceeds a threshold within a time window.</li>
+</ol>
+<pre><code class="language-typescript">createErrorRateAlert(
+  10, // 10% error rate threshold
+  &#39;High Error Rate Alert&#39;,
+  &#39;Alert when error rate exceeds 10%&#39;,
+  &#39;15m&#39; // Time window
+);
+</code></pre>
+<ol start="3">
+<li><strong>Performance Alerts</strong>: Trigger when API response times exceed a threshold.</li>
+</ol>
+<pre><code class="language-typescript">createPerformanceAlert(
+  1000, // 1000ms threshold
+  &#39;Slow API Response&#39;,
+  &#39;Alert when API responses exceed 1 second&#39;,
+  &#39;/api/users&#39;, // Specific endpoint
+  &#39;30m&#39; // Time window
+);
+</code></pre>
+<ol start="4">
+<li><strong>Error Pattern Alerts</strong>: Trigger when error messages match a specific pattern.</li>
+</ol>
+<pre><code class="language-typescript">createErrorPatternAlert(
+  &#39;database connection&#39;,
+  &#39;Database Connection Issues&#39;,
+  &#39;Alert when database connection errors occur&#39;,
+  1, // Threshold
+  &#39;24h&#39; // Time window
+);
+</code></pre>
+<h3>Alert Severity</h3>
+<p>Alerts have different severity levels based on the error category:</p>
+<pre><code class="language-typescript">private getSeverityForCategory(category: ErrorCategory): AlertSeverity {
+  switch (category) {
+    case ErrorCategory.SERVER:
+    case ErrorCategory.AUTHENTICATION:
+    case ErrorCategory.AUTHORIZATION:
+      return AlertSeverity.CRITICAL;
+
+    case ErrorCategory.NETWORK:
+    case ErrorCategory.TIMEOUT:
+    case ErrorCategory.RATE_LIMIT:
+      return AlertSeverity.ERROR;
+
+    case ErrorCategory.VALIDATION:
+    case ErrorCategory.NOT_FOUND:
+    case ErrorCategory.CONFLICT:
+      return AlertSeverity.WARNING;
+
+    case ErrorCategory.CLIENT:
+    case ErrorCategory.UNKNOWN:
+    default:
+      return AlertSeverity.INFO;
+  }
+}
+</code></pre>
+<h3>Alert Notification Channels</h3>
+<p>Alerts can be sent through multiple notification channels:</p>
+<pre><code class="language-typescript">const alert: Alert = {
+  // Alert definition
+  notifications: [
+    {
+      channel: &#39;ui&#39;, // In-app notifications
+    },
+    {
+      channel: &#39;email&#39;,
+      email: &#39;admin@example.com&#39;,
+    },
+    {
+      channel: &#39;slack&#39;,
+      slackWebhook: &#39;https://hooks.slack.com/services/your-webhook-url&#39;,
+    },
+    {
+      channel: &#39;sms&#39;,
+      phoneNumber: &#39;+1234567890&#39;,
+    },
+  ],
+};
+</code></pre>
+<h3>Alert Lifecycle</h3>
+<p>The alert lifecycle includes:</p>
+<ol>
+<li><strong>Creation</strong>: Define alert conditions and notifications</li>
+<li><strong>Triggering</strong>: Evaluate conditions and send notifications</li>
+<li><strong>Acknowledgment</strong>: Track who acknowledged the alert</li>
+<li><strong>Resolution</strong>: Record how the issue was resolved</li>
+<li><strong>Analysis</strong>: Review alert history for patterns</li>
+</ol>
+<h2>Future Improvements</h2>
+<ol>
+<li><p>✅ <strong>Real-time Updates</strong>: Implement real-time updates for dashboards using WebSockets.</p>
+</li>
+<li><p>✅ <strong>Advanced Filtering</strong>: Add more advanced filtering options for dashboards, such as:</p>
+<ul>
+<li>Full-text search for error messages</li>
+<li>Filtering by user ID or session ID</li>
+<li>Filtering by browser or device type</li>
+<li>Custom date ranges with presets (last 24 hours, last 7 days, etc.)</li>
+</ul>
+</li>
+<li><p>✅ <strong>Custom Alerts</strong>: Allow users to configure custom alerts for specific error conditions:</p>
+<ul>
+<li>Threshold-based alerts (e.g., more than X errors of a specific type)</li>
+<li>Rate-based alerts (e.g., error rate increased by X% in Y minutes)</li>
+<li>Pattern-based alerts (e.g., specific error patterns in sequence)</li>
+<li>Integration with notification channels (email, Slack, SMS)</li>
+</ul>
+</li>
+<li><p><strong>Integration with External Services</strong>: Integrate with external error tracking and performance monitoring services:</p>
+<ul>
+<li>Sentry</li>
+<li>New Relic</li>
+<li>Datadog</li>
+<li>Google Analytics</li>
+<li>Azure Application Insights</li>
+</ul>
+</li>
+<li><p><strong>User Journey Tracking</strong>: Track user journeys to identify where users encounter errors:</p>
+<ul>
+<li>Funnel analysis to identify drop-off points</li>
+<li>Session replay for error reconstruction</li>
+<li>User flow visualization with error hotspots</li>
+<li>Correlation between user actions and errors</li>
+</ul>
+</li>
+<li><p><strong>A/B Testing Integration</strong>: Integrate with A/B testing to track the impact of changes on error rates and performance:</p>
+<ul>
+<li>Compare error rates between variants</li>
+<li>Measure performance impact of changes</li>
+<li>Automatic experiment termination for variants with high error rates</li>
+<li>Statistical significance calculations for error rate differences</li>
+</ul>
+</li>
+<li><p><strong>Machine Learning</strong>: Use machine learning to identify patterns in errors and predict potential issues:</p>
+<ul>
+<li>Anomaly detection for unusual error patterns</li>
+<li>Clustering of similar errors</li>
+<li>Predictive maintenance based on error trends</li>
+<li>Root cause analysis suggestions</li>
+</ul>
+</li>
+<li><p><strong>Automated Remediation</strong>: Implement automated remediation for common errors:</p>
+<ul>
+<li>Automatic retry strategies for transient errors</li>
+<li>Self-healing mechanisms for known issues</li>
+<li>Circuit breakers for failing dependencies</li>
+<li>Graceful degradation paths for critical services</li>
+</ul>
+</li>
+<li><p><strong>Enhanced Visualization</strong>: Add more advanced visualization options for dashboards:</p>
+<ul>
+<li>Heatmaps for error distribution</li>
+<li>Correlation matrices between different error types</li>
+<li>Geographic distribution of errors</li>
+<li>Custom dashboard layouts and saved views</li>
+</ul>
+</li>
+<li><p><strong>Mobile App Support</strong>: Extend telemetry to support mobile apps:</p>
+<ul>
+<li>Native SDK for iOS and Android</li>
+<li>Offline error collection and batched sending</li>
+<li>Battery and bandwidth optimizations</li>
+<li>Mobile-specific metrics (app version, OS version, etc.)</li>
+</ul>
+</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

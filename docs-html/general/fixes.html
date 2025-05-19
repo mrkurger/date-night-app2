@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Night App Fixes - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Date Night App Fixes</h1>
+
+      <h1>Date Night App Fixes</h1>
+<p>This document outlines the fixes applied to the Date Night App project to resolve common issues.</p>
+<h2>Issues Fixed</h2>
+<h3>1. Husky Git Hooks Issues</h3>
+<p><strong>Problem:</strong> Husky Git hooks were causing errors in CI environments and failing with &quot;husky: not found&quot; errors.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Created a <code>.huskyrc</code> file to disable Husky in CI environments</li>
+<li>Updated the <code>prepare</code> script in package.json to skip Husky in CI environments</li>
+<li>Created a <code>fix-husky.sh</code> script for the client-angular project</li>
+<li>Updated the <code>disable-husky-in-ci.js</code> script to properly disable Husky</li>
+</ul>
+<h3>2. Missing SASS Variables</h3>
+<p><strong>Problem:</strong> The build was failing due to missing SASS variables like <code>$error-100</code>.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Added semantic color variations to the design system variables file</li>
+<li>Created a comprehensive set of color variations for error, success, warning, and info colors</li>
+<li>Ensured proper color inheritance and consistency across the application</li>
+</ul>
+<h3>3. QR Code Module Issues</h3>
+<p><strong>Problem:</strong> The application was failing to build due to issues with the <code>angularx-qrcode</code> module.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Updated the QR code module to use the correct import syntax</li>
+<li>Changed from importing the component directly to importing the module</li>
+<li>Added the module to the package.json dependencies</li>
+<li>Ensured proper installation with <code>--legacy-peer-deps</code> flag</li>
+</ul>
+<h3>4. ESLint Dependency Conflicts</h3>
+<p><strong>Problem:</strong> There were dependency conflicts between ESLint versions, with @typescript-eslint/utils requiring ESLint 8.57.0 or 9.0.0, but the project using ESLint 8.56.0.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Created a <code>fix-eslint-dependencies.js</code> script to update ESLint-related packages in package.json files</li>
+<li>Updated ESLint to version ^9.0.0 in dependencies and devDependencies</li>
+<li>Updated @typescript-eslint/parser and @typescript-eslint/eslint-plugin to ^8.0.0</li>
+<li>Added overrides for ESLint and TypeScript ESLint packages to ensure consistent versions</li>
+<li>Used --legacy-peer-deps flag to install dependencies with the updated versions</li>
+<li>Ensured all packages use compatible versions to resolve dependency conflicts</li>
+</ul>
+<h3>5. Package Version Conflicts</h3>
+<p><strong>Problem:</strong> There were version conflicts with packages like <code>helmet</code>.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Updated package.json files to use compatible versions</li>
+<li>Fixed version conflicts using sed replacements</li>
+<li>Ensured consistent versions across root, server, and client projects</li>
+</ul>
+<h3>5. Missing Scripts</h3>
+<p><strong>Problem:</strong> Some required scripts were missing or not executable.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Created missing scripts in the server/scripts directory</li>
+<li>Made all scripts executable with chmod</li>
+<li>Added a start-client.js script to properly start the Angular client</li>
+</ul>
+<h2>How to Apply Fixes</h2>
+<p>Run the <code>fix-project.sh</code> script from the project root:</p>
+<pre><code class="language-bash">./fix-project.sh
+</code></pre>
+<p>This script will:</p>
+<ol>
+<li>Make scripts executable</li>
+<li>Update package.json files</li>
+<li>Fix husky issues</li>
+<li>Install missing dependencies</li>
+<li>Fix npm audit issues</li>
+<li>Fix CSP issues</li>
+<li>Check MongoDB setup</li>
+<li>Fix ESLint dependency conflicts</li>
+<li>Update packages</li>
+<li>Verify server/scripts directory</li>
+</ol>
+<h2>Manual Fixes (if needed)</h2>
+<p>If you encounter specific issues not addressed by the script, you can apply these fixes manually:</p>
+<h3>Fix Husky Issues</h3>
+<pre><code class="language-bash">echo &#39;export HUSKY=0&#39; &gt; .huskyrc
+chmod +x .huskyrc
+node scripts/disable-husky-in-ci.js
+</code></pre>
+<h3>Install Missing Dependencies</h3>
+<pre><code class="language-bash">cd client-angular
+npm install angularx-qrcode --save --legacy-peer-deps
+</code></pre>
+<h3>Fix ESLint Dependency Conflicts</h3>
+<p>Run the ESLint dependency fix script:</p>
+<pre><code class="language-bash">node scripts/fix-eslint-dependencies.js
+</code></pre>
+<p>Or manually update ESLint in package.json:</p>
+<ol>
+<li>Update ESLint and TypeScript ESLint packages in dependencies and devDependencies:</li>
+</ol>
+<pre><code class="language-json">&quot;dependencies&quot;: {
+  &quot;eslint&quot;: &quot;^9.0.0&quot;
+},
+&quot;devDependencies&quot;: {
+  &quot;eslint&quot;: &quot;^9.0.0&quot;,
+  &quot;@typescript-eslint/parser&quot;: &quot;^8.0.0&quot;,
+  &quot;@typescript-eslint/eslint-plugin&quot;: &quot;^8.0.0&quot;
+}
+</code></pre>
+<ol start="2">
+<li>Add overrides for ESLint and TypeScript ESLint packages:</li>
+</ol>
+<pre><code class="language-json">&quot;overrides&quot;: {
+  &quot;eslint&quot;: &quot;^9.0.0&quot;,
+  &quot;@typescript-eslint/parser&quot;: &quot;^8.0.0&quot;,
+  &quot;@typescript-eslint/eslint-plugin&quot;: &quot;^8.0.0&quot;
+}
+</code></pre>
+<ol start="3">
+<li>Install dependencies with the --legacy-peer-deps flag:</li>
+</ol>
+<pre><code class="language-bash">npm install --legacy-peer-deps
+</code></pre>
+<h3>Fix SASS Variables</h3>
+<p>Add the missing variables to <code>client-angular/src/styles/design-system/_variables.scss</code>:</p>
+<pre><code class="language-scss">// Semantic Color Variations
+$error-100: rgba($color-error, 0.1);
+$error-200: rgba($color-error, 0.2);
+// ... and so on
+</code></pre>
+<h3>Clean Up Unused Dependencies</h3>
+<p>Run the dependency cleanup script:</p>
+<pre><code class="language-bash">node scripts/cleanup-dependencies.js
+</code></pre>
+<p>Install missing dependencies:</p>
+<pre><code class="language-bash">node scripts/install-missing-dependencies.js
+</code></pre>
+<h2>Troubleshooting</h2>
+<p>If you still encounter issues after running the fix script:</p>
+<ol>
+<li><p>Try running the components separately:</p>
+<pre><code class="language-bash">npm run start:server
+npm run start:client
+</code></pre>
+</li>
+<li><p>Check for error logs in:</p>
+<pre><code>downloaded-reports/workflow-errors/
+</code></pre>
+</li>
+<li><p>Run npm audit to identify security issues:</p>
+<pre><code class="language-bash">npm audit
+</code></pre>
+</li>
+<li><p>Clear node_modules and reinstall:</p>
+<pre><code class="language-bash">rm -rf node_modules client-angular/node_modules server/node_modules
+npm install --legacy-peer-deps
+</code></pre>
+</li>
+</ol>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
