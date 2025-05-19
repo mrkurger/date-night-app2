@@ -6,21 +6,32 @@ on:
   pull_request:
     branches: [main]
 
+# Set the minimum permissions needed for this workflow
 permissions:
-  contents: read       # For checking out code
-  checks: write       # For creating check runs
-  pull-requests: write # For commenting on PRs
-  statuses: write    # For setting commit status
+  contents: read          # Required for checking out code
+  checks: write           # Required for creating check runs
+  pull-requests: write    # Required for commenting on PRs
+  statuses: write         # Required for setting commit status
 
 env:
-  CI: true
-  HUSKY: 0  # Disable Husky git hooks in CI
+  CI: true                # Standard CI environment variable
+  HUSKY: 0                # Disable Husky git hooks in CI for reliability
 
 jobs:
+  # Lint client code (Angular)
   lint-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Cache Node modules for faster builds
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ./client-angular/node_modules
+          key: ${{ runner.os }}-client-angular-${{ hashFiles('client-angular/package-lock.json') }}
+
+      # Setup Node and install dependencies using reusable composite action
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
@@ -28,14 +39,24 @@ jobs:
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
+
+      # Run linter with pretty output
       - name: Run lint
         working-directory: client
-        run: npm run lint
+        run: npm run lint -- --format stylish
 
+  # Lint server code
   lint-server:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ./server/node_modules
+          key: ${{ runner.os }}-server-${{ hashFiles('server/package-lock.json') }}
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
@@ -43,22 +64,55 @@ jobs:
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
+
       - name: Run lint
         working-directory: server
-        run: npm run lint
+        run: npm run lint -- --format stylish
 
-  # ...repeat for other subprojects and jobs as needed
+  # Example: Add more lint/test jobs for other subprojects as needed!
+  # TODO!: Add jobs for other subprojects if required
 
+  # Run root-level tests
   test-root:
     runs-on: ubuntu-latest
+    strategy:
+      # Example: Test on multiple Node.js versions for broader compatibility
+      matrix:
+        node-version: [20.x, 22.x]
+
     steps:
       - uses: actions/checkout@v4
+
+      # Cache node_modules for faster installs
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-root-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
           working-directory: .
-          node-version: 22.x
+          node-version: ${{ matrix.node-version }}
           safe-install: 'false'
           check-missing: 'true'
+
+      # Run test suite and output coverage
       - name: Run tests
-        run: npm test
+        run: npm test -- --coverage
+
+      # Upload coverage to Codecov (or another service)
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/*.lcov
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+
+      # Ensure no untracked files are left after the test run
+      - name: Check for untracked files
+        run: git diff --exit-code
+
+# TODO!: Add notification steps (e.g., Slack, email) for job failures if your team uses them
