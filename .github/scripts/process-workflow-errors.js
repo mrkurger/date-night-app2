@@ -2,7 +2,7 @@
 // Use @octokit/rest for interacting with the GitHub API
 // Use built-in modules like 'fs' for file system operations
 import { Octokit } from "@octokit/rest"; // GitHub API client
-import fs from "fs"; // File system module
+import fs from "fs/promises"; // File system module (non-blocking operations)
 import path from "path"; // Path module for handling file paths
 
 // Initialize Octokit with the provided GitHub token
@@ -35,7 +35,7 @@ async function processWorkflowErrors() {
     });
 
     // Log the workflow run details
-    console.log("Workflow run details fetched successfully.");
+    console.log("Workflow run details fetched successfully:", workflowRun);
 
     // Fetch logs for the workflow run
     const { data: logs } = await octokit.actions.downloadWorkflowRunLogs({
@@ -44,20 +44,30 @@ async function processWorkflowErrors() {
       run_id: workflowRunId,
     });
 
-    // Create a directory for storing error logs
-    const logsDir = path.resolve("workflow-error-logs"); // Directory path
-    if (!fs.existsSync(logsDir)) {
-      fs.mkdirSync(logsDir); // Create directory if it doesn't exist
+    if (!logs || logs.trim().length === 0) {
+      throw new Error("Fetched logs are empty or invalid.");
+    }
+
+    // Define the directory for storing error logs
+    const logsDir = path.resolve("workflow-error-logs");
+
+    try {
+      // Ensure the directory exists
+      await fs.mkdir(logsDir, { recursive: true });
+    } catch (error) {
+      throw new Error(`Failed to create logs directory: ${error.message}`);
     }
 
     // Define the path for the log file
     const logFilePath = path.join(logsDir, `workflow-run-${workflowRunId}.log`);
 
-    // Write logs to the file
-    fs.writeFileSync(logFilePath, logs);
-
-    // Log the success of the operation
-    console.log(`Workflow logs saved to: ${logFilePath}`);
+    try {
+      // Write logs to the file
+      await fs.writeFile(logFilePath, logs);
+      console.log(`Workflow logs saved to: ${logFilePath}`);
+    } catch (error) {
+      throw new Error(`Failed to write logs to file: ${error.message}`);
+    }
   } catch (error) {
     // Log any errors encountered during execution
     console.error("An error occurred while processing workflow errors:", error);
