@@ -24,12 +24,13 @@ on:
 permissions:
   contents: read
   checks: write
-  pull-requests: write  # For reporting lint status on PRs
+  pull-requests: write # Allows reporting lint status on PRs
 
 jobs:
   lint-angular-client:
     runs-on: ubuntu-latest
-    name: Lint Angular Client (Node ${{ matrix.node-version }})
+
+    # Set all run steps to execute inside the client-angular directory
     defaults:
       run:
         working-directory: ./client-angular
@@ -39,36 +40,50 @@ jobs:
         node-version: ['22.14.0']
 
     steps:
+      # Step 1: Checkout the repository at the correct commit
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Output the current working directory, for debugging purposes
+      - name: Show current directory
+        run: pwd # Shows the current path (should end with /client-angular)
+
+      # Step 3: List the contents of the current directory to verify client-angular is present
+      - name: List current directory contents
+        run: ls -la # Should display package.json, angular.json, etc.
+
+      # Step 4: Output the Node.js version to confirm the runtime
       - name: Check Node.js Version
         run: node --version
 
+      # Step 5: Set up Node.js and enable dependency caching
       - name: Setup Node.js with Caching
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          # Cache lock files to speed up installs and maintain consistency
           cache-dependency-path: |
-            client-angular/package-lock.json
-            client-angular/yarn.lock
+            package-lock.json
+            yarn.lock
 
-      - name: Debug Directory Structure
-        run: ls -la client-angular
-
+      # Step 6: Check for the presence of the lock file, warn if missing
       - name: Check for Cache Paths
         run: |
-          if [ ! -f client-angular/package-lock.json ]; then
+          # If package-lock.json does not exist, print a warning and exit cleanly
+          if [ ! -f package-lock.json ]; then
             echo "Warning: package-lock.json not found. Skipping cache."
             exit 0
           fi
 
+      # Step 7: Install all dependencies listed in package-lock.json
       - name: Install Dependencies
         run: npm ci
 
+      # Step 8: Check for ESLint configuration, add if missing
       - name: Check for ESLint Configuration
         run: |
+          # If .eslintrc.json is missing, set up Angular ESLint
           if [ ! -f .eslintrc.json ]; then
             echo "ESLint configuration not found, running ng add."
             npx ng add @angular-eslint/schematics --skip-confirmation
@@ -76,5 +91,7 @@ jobs:
             echo "ESLint configuration found, skipping ng add."
           fi
 
+      # Step 9: Run the linter on the Angular project
       - name: Run ESLint
         run: npx ng lint client-angular
+        # TODO: If you want to lint the entire workspace instead, change the command above as needed
