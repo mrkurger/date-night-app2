@@ -12,6 +12,10 @@ permissions:
   pull-requests: write # For commenting on PRs
   statuses: write    # For setting commit status
 
+env:
+  CI: true
+  HUSKY: 0  # Disable Husky git hooks in CI
+
 jobs:
   lint-client:
     runs-on: ubuntu-latest

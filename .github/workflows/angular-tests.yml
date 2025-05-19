@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
+      HUSKY: 0  # Disable Husky git hooks in CI
     timeout-minutes: 20
 
     strategy:

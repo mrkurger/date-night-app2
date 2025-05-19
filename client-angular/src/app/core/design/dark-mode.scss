@@ -20,13 +20,29 @@
 
 @use 'sass:color';
 @use 'sass:map';
-
-// Dark mode utilities using Nebular theme variables
 @use '@nebular/theme/styles/theming' as *;
 
+// Dark mode utilities using Nebular theme variables
+$color-map: (
+  // Background colors
+  '--color-white': var(--color-dark-gray-3),
+  '--color-light-gray-1': var(--color-dark-gray-2),
+  '--color-light-gray-2': var(--color-dark-gray-1),
+  // Text colors
+  '--color-dark-gray-3': var(--color-light-gray-1),
+  '--color-dark-gray-2': var(--color-light-gray-2),
+  '--color-dark-gray-1': var(--color-medium-gray-1),
+  // Border colors
+  '--color-light-gray-2': var(--color-dark-gray-1),
+  '--color-medium-gray-1': var(--color-dark-gray-2),
+  // Shadows
+  '--shadow-sm': var(--shadow-dark-sm),
+  '--shadow-md': var(--shadow-dark-md),
+  '--shadow-lg': var(--shadow-dark-lg)
+);
+
 // Dark mode mixin
-// Applies styles when dark mode is active
-@mixin mode {
+@mixin dark-mode {
   .dark-mode & {
     @content;
   }
@@ -53,17 +69,6 @@
   }
 }
 
-// Dark mode color map
-// Maps light mode colors to dark mode colors
-$color-map: (
-  // Background colors
-  '--color-white': var(--color-dark-gray-3),
-  '--color-light-gray-1': var(--color-dark-gray-2),
-  // Text colors
-  // Primary colors
-   // Secondary colors
-);
-
 // Get dark mode color
 // Returns the dark mode equivalent of a light mode color
 @function color($light-color) {
@@ -81,7 +86,7 @@ $color-map: (
     #{$property}: $light-color;
   }
 
-  @include mode {
+  @include dark-mode {
     #{$property}: color($light-color);
   }
 }
@@ -111,7 +116,7 @@ $color-map: (
     box-shadow: $shadow;
   }
 
-  @include mode {
+  @include dark-mode {
     box-shadow: 0 0 0 1px rgba(var(--color-white), 0.1);
   }
 }
@@ -246,9 +251,6 @@ $color-map: (
 
 // Theme transition
 .nb-theme-transition {
-  transition:
-    background-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    border-color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
