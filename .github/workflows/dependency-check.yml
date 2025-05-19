@@ -24,7 +24,6 @@ permissions:
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest
-      pull-requests: write
     timeout-minutes: 30 # Add timeout to prevent runaway jobs
     
     steps:
