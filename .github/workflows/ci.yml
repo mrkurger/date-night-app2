@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: client
+          working-directory: ./client-angular
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
