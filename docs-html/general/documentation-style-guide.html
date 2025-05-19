@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Style Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Style Guide</h1>
+
+      <h1>Documentation Style Guide</h1>
+<p>This document provides guidelines for writing and formatting documentation in the Date Night App project. Following these guidelines ensures consistency across all documentation and makes it easier for developers to find and understand information.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#general-guidelines">General Guidelines</a></li>
+<li><a href="#document-structure">Document Structure</a></li>
+<li><a href="#formatting">Formatting</a><ul>
+<li><a href="#headings">Headings</a></li>
+<li><a href="#lists">Lists</a></li>
+<li><a href="#code-blocks">Code Blocks</a></li>
+<li><a href="#tables">Tables</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#images">Images</a></li>
+<li><a href="#blockquotes">Blockquotes</a></li>
+</ul>
+</li>
+<li><a href="#language-and-style">Language and Style</a></li>
+<li><a href="#file-organization">File Organization</a></li>
+<li><a href="#versioning">Versioning</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul>
+<h2>General Guidelines</h2>
+<ol>
+<li><strong>Clarity</strong>: Write clear, concise documentation that&#39;s easy to understand.</li>
+<li><strong>Audience</strong>: Consider the audience when writing documentation. Technical documentation should be written for developers, while user documentation should be written for end users.</li>
+<li><strong>Completeness</strong>: Include all necessary information, but avoid unnecessary details.</li>
+<li><strong>Consistency</strong>: Use consistent terminology, formatting, and structure across all documentation.</li>
+<li><strong>Accuracy</strong>: Ensure all information is accurate and up to date.</li>
+<li><strong>Examples</strong>: Include examples to illustrate concepts.</li>
+<li><strong>Accessibility</strong>: Write documentation that&#39;s accessible to all users, including those with disabilities.</li>
+</ol>
+<h2>Document Structure</h2>
+<p>All documentation files should include the following sections:</p>
+<ol>
+<li><p><strong>Title</strong>: Use a descriptive title that clearly indicates the content of the document.</p>
+<pre><code class="language-markdown"># Document Title
+</code></pre>
+</li>
+<li><p><strong>Brief Description</strong>: Provide a brief description of the document&#39;s purpose and content.</p>
+<pre><code class="language-markdown">This document provides guidelines for writing and formatting documentation in the Date Night App project.
+</code></pre>
+</li>
+<li><p><strong>Table of Contents</strong>: Include a table of contents for documents with multiple sections.</p>
+<pre><code class="language-markdown">## Table of Contents
+
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+</code></pre>
+</li>
+<li><p><strong>Main Content</strong>: Organize the main content into logical sections with clear headings.</p>
+<pre><code class="language-markdown">## Section 1
+
+Content for section 1.
+
+## Section 2
+
+Content for section 2.
+</code></pre>
+</li>
+<li><p><strong>Conclusion or Summary</strong>: Summarize the key points of the document (if applicable).</p>
+<pre><code class="language-markdown">## Conclusion
+
+This document provides guidelines for writing and formatting documentation in the Date Night App project.
+</code></pre>
+</li>
+</ol>
+<h2>Formatting</h2>
+<h3>Headings</h3>
+<p>Use Markdown headings to structure your document:</p>
+<pre><code class="language-markdown"># Level 1 Heading (Document Title)
+
+## Level 2 Heading (Main Sections)
+
+### Level 3 Heading (Subsections)
+
+#### Level 4 Heading (Sub-subsections)
+</code></pre>
+<ul>
+<li>Use sentence case for headings (capitalize only the first word and proper nouns).</li>
+<li>Do not skip heading levels (e.g., don&#39;t go from Level 2 to Level 4).</li>
+<li>Keep headings concise and descriptive.</li>
+</ul>
+<h3>Lists</h3>
+<p>Use unordered lists for items that don&#39;t have a specific order:</p>
+<pre><code class="language-markdown">- Item 1
+- Item 2
+- Item 3
+</code></pre>
+<p>Use ordered lists for sequential steps or prioritized items:</p>
+<pre><code class="language-markdown">1. First step
+2. Second step
+3. Third step
+</code></pre>
+<p>Use nested lists for hierarchical information:</p>
+<pre><code class="language-markdown">- Parent item 1
+  - Child item 1
+  - Child item 2
+- Parent item 2
+  - Child item 1
+  - Child item 2
+</code></pre>
+<h3>Code Blocks</h3>
+<p>Use code blocks for code examples:</p>
+<pre><code class="language-markdown">```javascript
+function example() {
+  console.log(&#39;This is an example&#39;);
+}
+```
+</code></pre>
+<p>Specify the language for syntax highlighting:</p>
+<pre><code class="language-markdown">```typescript
+function example(): void {
+  console.log(&#39;This is an example&#39;);
+}
+```
+</code></pre>
+<p>For inline code, use backticks:</p>
+<pre><code class="language-markdown">Use the `example()` function to display an example.
+</code></pre>
+<h3>Tables</h3>
+<p>Use tables for structured data:</p>
+<pre><code class="language-markdown">| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Row 1    | Data     | Data     |
+| Row 2    | Data     | Data     |
+</code></pre>
+<p>Align columns for better readability:</p>
+<pre><code class="language-markdown">| Left-aligned | Center-aligned | Right-aligned |
+| :----------- | :------------: | ------------: |
+| Left         |     Center     |         Right |
+| Left         |     Center     |         Right |
+</code></pre>
+<h3>Links</h3>
+<p>Use descriptive link text:</p>
+<pre><code class="language-markdown">[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)
+</code></pre>
+<p>Use relative links for files in the same directory:</p>
+<pre><code class="language-markdown">[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)
+</code></pre>
+<p>Use absolute links for files in different directories:</p>
+<pre><code class="language-markdown">[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)
+</code></pre>
+<p>Use absolute links for external resources:</p>
+<pre><code class="language-markdown">[Angular Documentation](https://angular.io/docs)
+</code></pre>
+<h3>Images</h3>
+<p>Include images with descriptive alt text:</p>
+<pre><code class="language-markdown">![Alt text describing the image](/docs/images/example.png)
+</code></pre>
+<p>Specify image dimensions if necessary:</p>
+<pre><code class="language-markdown">&lt;img src=&quot;images/example.png&quot; alt=&quot;Alt text describing the image&quot; width=&quot;300&quot; height=&quot;200&quot;&gt;
+</code></pre>
+<h3>Blockquotes</h3>
+<p>Use blockquotes for important notes, warnings, or quotes:</p>
+<pre><code class="language-markdown">&gt; **Note**: This is an important note.
+
+&gt; **Warning**: This is a warning.
+
+&gt; This is a quote from a source.
+</code></pre>
+<h2>Language and Style</h2>
+<ol>
+<li><p><strong>Voice</strong>: Use active voice instead of passive voice.</p>
+<ul>
+<li>Active: &quot;Click the button to save your changes.&quot;</li>
+<li>Passive: &quot;The button should be clicked to save your changes.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Tense</strong>: Use present tense.</p>
+<ul>
+<li>Present: &quot;The function returns a value.&quot;</li>
+<li>Past: &quot;The function returned a value.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Person</strong>: Use second person (&quot;you&quot;) for instructions.</p>
+<ul>
+<li>&quot;You can configure the settings in the config file.&quot;</li>
+<li>&quot;The developer can configure the settings in the config file.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Tone</strong>: Use a professional, friendly tone.</p>
+<ul>
+<li>Professional: &quot;Configure the settings according to your requirements.&quot;</li>
+<li>Too casual: &quot;Just play around with the settings until it works.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Terminology</strong>: Use consistent terminology throughout the documentation.</p>
+<ul>
+<li>Define technical terms when they&#39;re first used.</li>
+<li>Use the same term for the same concept throughout the documentation.</li>
+</ul>
+</li>
+<li><p><strong>Abbreviations</strong>: Define abbreviations when they&#39;re first used.</p>
+<ul>
+<li>&quot;Content Security Policy (CSP) is a security feature that helps prevent cross-site scripting (XSS) attacks.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Numbers</strong>: Spell out numbers less than 10, use numerals for 10 and above.</p>
+<ul>
+<li>&quot;There are five steps in the process.&quot;</li>
+<li>&quot;There are 15 configuration options.&quot;</li>
+</ul>
+</li>
+</ol>
+<h2>File Organization</h2>
+<ol>
+<li><p><strong>File Names</strong>: Use descriptive file names that clearly indicate the content of the file.</p>
+<ul>
+<li>Use <code>.md</code> extension for all documentation files.</li>
+<li>Use UPPERCASE with underscores for all documentation files (e.g., README.MD, SETUP.MD, UI_UX_ROADMAP.MD).</li>
+<li>This ensures consistency and makes documentation files easily identifiable.</li>
+</ul>
+</li>
+<li><p><strong>Directory Structure</strong>: Organize documentation files in a logical directory structure.</p>
+<ul>
+<li>Store general documentation in the root directory (e.g., README.md, SETUP.md).</li>
+<li>Store detailed documentation in the <code>/docs</code> directory.</li>
+<li>Store component-specific documentation in the component&#39;s directory.</li>
+</ul>
+</li>
+<li><p><strong>Documentation Index</strong>: Maintain a documentation index that lists all documentation files with descriptions and links.</p>
+<ul>
+<li><a href="DOCUMENTATION_INDEX.md">DOCUMENTATION_INDEX.MD</a></li>
+</ul>
+</li>
+</ol>
+<h2>Versioning</h2>
+<ol>
+<li><p><strong>Version Numbers</strong>: Include version numbers in documentation when applicable.</p>
+<ul>
+<li>&quot;This guide applies to version 1.0.0 of the application.&quot;</li>
+</ul>
+</li>
+<li><p><strong>Change Log</strong>: Maintain a change log that documents changes to the application.</p>
+<ul>
+<li><a href="ChangeLog.md">CHANGELOG.MD</a></li>
+</ul>
+</li>
+<li><p><strong>Documentation Updates</strong>: Update documentation when the application changes.</p>
+<ul>
+<li>Add a note indicating when the documentation was last updated.</li>
+<li>&quot;Last updated: 2025-04-19&quot;</li>
+</ul>
+</li>
+</ol>
+<h2>Examples</h2>
+<h3>Example Document Structure</h3>
+<pre><code class="language-markdown"># Document Title
+
+This document provides guidelines for writing and formatting documentation in the Date Night App project.
+
+## Table of Contents
+
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+
+## Section 1
+
+Content for section 1.
+
+### Subsection 1.1
+
+Content for subsection 1.1.
+
+## Section 2
+
+Content for section 2.
+
+### Subsection 2.1
+
+Content for subsection 2.1.
+
+## Conclusion
+
+This document provides guidelines for writing and formatting documentation in the Date Night App project.
+</code></pre>
+<h3>Example Code Block</h3>
+<pre><code class="language-markdown">```typescript
+/**
+ * Example function that demonstrates documentation style.
+ * @param param1 - Description of param1
+ * @param param2 - Description of param2
+ * @returns Description of return value
+ */
+function example(param1: string, param2: number): boolean {
+  console.log(`Param1: ${param1}, Param2: ${param2}`);
+  return true;
+}
+```
+</code></pre>
+<h3>Example Table</h3>
+<pre><code class="language-markdown">| Setting   | Description               | Default Value                           | Environment |
+| --------- | ------------------------- | --------------------------------------- | ----------- |
+| port      | Server port number        | 3000                                    | Development |
+| mongoUri  | MongoDB connection string | mongodb://localhost:27017/datenight_dev | Development |
+| jwtSecret | Secret key for JWT        | random string                           | All         |
+</code></pre>
+<h3>Example Note</h3>
+<pre><code class="language-markdown">&gt; **Note**: This is an important note that provides additional information.
+</code></pre>
+<h3>Example Warning</h3>
+<pre><code class="language-markdown">&gt; **Warning**: This is a warning that alerts the reader to potential issues.
+</code></pre>
+<h2>Conclusion</h2>
+<p>Following these guidelines ensures consistency across all documentation in the Date Night App project. Consistent documentation is easier to read, understand, and maintain, which benefits both developers and users of the application.</p>
+<h2>Recent Updates</h2>
+<ul>
+<li><strong>2025-05-20</strong>: Updated file naming convention to use UPPERCASE with underscores for all documentation files.</li>
+<li><strong>2025-05-15</strong>: Added additional examples for code blocks and tables.</li>
+<li><strong>2025-05-10</strong>: Initial version of the documentation style guide.</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

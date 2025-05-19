@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emerald UI Integration Guide - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Emerald UI Integration Guide</h1>
+
+      <h1>Emerald UI Integration Guide</h1>
+<p>This guide explains how to integrate and use the emerald-ui library with the DateNight.io design system.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#styling-integration">Styling Integration</a></li>
+<li><a href="#using-emerald-ui-components">Using Emerald UI Components</a></li>
+<li><a href="#component-examples">Component Examples</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<h2>Introduction</h2>
+<p>Emerald UI is a React-based UI component library that has been adapted for use with Angular in the DateNight.io application. The library provides a set of reusable UI components that follow modern design principles and are highly customizable.</p>
+<p>The DateNight.io design system has been integrated with emerald-ui to ensure consistent styling and behavior across the application.</p>
+<h2>Installation</h2>
+<p>The emerald-ui library is already installed in the DateNight.io application. If you need to install it in a new project, you can do so using npm:</p>
+<pre><code class="language-bash">npm install emerald-ui
+</code></pre>
+<h2>Styling Integration</h2>
+<p>The DateNight.io design system integrates with emerald-ui through a custom stylesheet that overrides the default emerald-ui styles to match our design tokens.</p>
+<h3>Integration Files</h3>
+<ul>
+<li><code>src/app/core/design/emerald-ui-integration.scss</code> - Contains the emerald-ui style overrides</li>
+<li><code>src/app/core/design/main.scss</code> - Imports the emerald-ui integration</li>
+</ul>
+<h3>Using the Integrated Styles</h3>
+<p>To use the integrated styles in your Angular components, import the design system as usual:</p>
+<pre><code class="language-scss">// Component SCSS file
+@use &#39;src/app/core/design/main&#39; as ds;
+
+.my-component {
+  // Your component styles
+}
+</code></pre>
+<p>The emerald-ui styles will be automatically included through the design system.</p>
+<h2>Using Emerald UI Components</h2>
+<h3>In Angular Templates</h3>
+<p>You can use emerald-ui components directly in your Angular templates:</p>
+<pre><code class="language-html">&lt;!-- Button example --&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary&quot;&gt;Primary Button&lt;/button&gt;
+
+&lt;!-- Card example --&gt;
+&lt;div class=&quot;eui-card&quot;&gt;
+  &lt;div class=&quot;eui-card-header&quot;&gt;Card Title&lt;/div&gt;
+  &lt;div class=&quot;eui-card-body&quot;&gt;Card content goes here.&lt;/div&gt;
+  &lt;div class=&quot;eui-card-footer&quot;&gt;
+    &lt;button class=&quot;eui-btn eui-btn-primary&quot;&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>With Angular Components</h3>
+<p>For more complex components that require JavaScript functionality, you&#39;ll need to include the emerald-ui JavaScript file in your Angular component:</p>
+<pre><code class="language-typescript">// In your component
+import &#39;emerald-ui/lib/js/emerald-ui.min.js&#39;;
+</code></pre>
+<h2>Component Examples</h2>
+<h3>Buttons</h3>
+<pre><code class="language-html">&lt;!-- Primary button --&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary&quot;&gt;Primary&lt;/button&gt;
+
+&lt;!-- Secondary button --&gt;
+&lt;button class=&quot;eui-btn eui-btn-secondary&quot;&gt;Secondary&lt;/button&gt;
+
+&lt;!-- Outline button --&gt;
+&lt;button class=&quot;eui-btn eui-btn-outline-primary&quot;&gt;Outline&lt;/button&gt;
+
+&lt;!-- Button sizes --&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary eui-btn-sm&quot;&gt;Small&lt;/button&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary&quot;&gt;Medium&lt;/button&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary eui-btn-lg&quot;&gt;Large&lt;/button&gt;
+
+&lt;!-- Button with icon --&gt;
+&lt;button class=&quot;eui-btn eui-btn-primary&quot;&gt;&lt;i class=&quot;fas fa-plus&quot;&gt;&lt;/i&gt; Add Item&lt;/button&gt;
+</code></pre>
+<h3>Cards</h3>
+<pre><code class="language-html">&lt;!-- Basic card --&gt;
+&lt;div class=&quot;eui-card&quot;&gt;
+  &lt;div class=&quot;eui-card-body&quot;&gt;
+    &lt;h5 class=&quot;eui-card-title&quot;&gt;Card Title&lt;/h5&gt;
+    &lt;p class=&quot;eui-card-text&quot;&gt;Card content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with header and footer --&gt;
+&lt;div class=&quot;eui-card&quot;&gt;
+  &lt;div class=&quot;eui-card-header&quot;&gt;Card Header&lt;/div&gt;
+  &lt;div class=&quot;eui-card-body&quot;&gt;
+    &lt;h5 class=&quot;eui-card-title&quot;&gt;Card Title&lt;/h5&gt;
+    &lt;p class=&quot;eui-card-text&quot;&gt;Card content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;eui-card-footer&quot;&gt;Card Footer&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with image --&gt;
+&lt;div class=&quot;eui-card&quot;&gt;
+  &lt;img src=&quot;image.jpg&quot; class=&quot;eui-card-img-top&quot; alt=&quot;Card image&quot; /&gt;
+  &lt;div class=&quot;eui-card-body&quot;&gt;
+    &lt;h5 class=&quot;eui-card-title&quot;&gt;Card Title&lt;/h5&gt;
+    &lt;p class=&quot;eui-card-text&quot;&gt;Card content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Forms</h3>
+<pre><code class="language-html">&lt;!-- Input --&gt;
+&lt;div class=&quot;eui-form-group&quot;&gt;
+  &lt;label for=&quot;exampleInput&quot;&gt;Email address&lt;/label&gt;
+  &lt;input type=&quot;email&quot; class=&quot;eui-form-control&quot; id=&quot;exampleInput&quot; placeholder=&quot;Enter email&quot; /&gt;
+  &lt;small class=&quot;eui-form-text eui-text-muted&quot;&gt;We&#39;ll never share your email with anyone else.&lt;/small&gt;
+&lt;/div&gt;
+
+&lt;!-- Input group --&gt;
+&lt;div class=&quot;eui-input-group&quot;&gt;
+  &lt;div class=&quot;eui-input-group-prepend&quot;&gt;
+    &lt;span class=&quot;eui-input-group-text&quot;&gt;@&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;eui-form-control&quot; placeholder=&quot;Username&quot; /&gt;
+&lt;/div&gt;
+
+&lt;!-- Select --&gt;
+&lt;div class=&quot;eui-form-group&quot;&gt;
+  &lt;label for=&quot;exampleSelect&quot;&gt;Example select&lt;/label&gt;
+  &lt;select class=&quot;eui-form-control&quot; id=&quot;exampleSelect&quot;&gt;
+    &lt;option&gt;1&lt;/option&gt;
+    &lt;option&gt;2&lt;/option&gt;
+    &lt;option&gt;3&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;!-- Checkbox --&gt;
+&lt;div class=&quot;eui-form-check&quot;&gt;
+  &lt;input class=&quot;eui-form-check-input&quot; type=&quot;checkbox&quot; id=&quot;exampleCheck&quot; /&gt;
+  &lt;label class=&quot;eui-form-check-label&quot; for=&quot;exampleCheck&quot;&gt;Check me out&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Alerts</h3>
+<pre><code class="language-html">&lt;!-- Basic alert --&gt;
+&lt;div class=&quot;eui-alert eui-alert-primary&quot;&gt;This is a primary alert.&lt;/div&gt;
+
+&lt;!-- Alert with icon --&gt;
+&lt;div class=&quot;eui-alert eui-alert-success&quot;&gt;
+  &lt;i class=&quot;fas fa-check-circle&quot;&gt;&lt;/i&gt; This is a success alert with an icon.
+&lt;/div&gt;
+
+&lt;!-- Alert with dismiss button --&gt;
+&lt;div class=&quot;eui-alert eui-alert-warning eui-alert-dismissible&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;eui-close&quot; data-dismiss=&quot;alert&quot;&gt;&amp;times;&lt;/button&gt;
+  This is a dismissible warning alert.
+&lt;/div&gt;
+</code></pre>
+<h3>Badges</h3>
+<pre><code class="language-html">&lt;!-- Basic badge --&gt;
+&lt;span class=&quot;eui-badge eui-badge-primary&quot;&gt;Primary&lt;/span&gt;
+
+&lt;!-- Badge in heading --&gt;
+&lt;h5&gt;Example heading &lt;span class=&quot;eui-badge eui-badge-secondary&quot;&gt;New&lt;/span&gt;&lt;/h5&gt;
+
+&lt;!-- Pill badge --&gt;
+&lt;span class=&quot;eui-badge eui-badge-pill eui-badge-success&quot;&gt;Success&lt;/span&gt;
+</code></pre>
+<h3>Tables</h3>
+<pre><code class="language-html">&lt;!-- Basic table --&gt;
+&lt;table class=&quot;eui-table&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;#&lt;/th&gt;
+      &lt;th&gt;First Name&lt;/th&gt;
+      &lt;th&gt;Last Name&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;John&lt;/td&gt;
+      &lt;td&gt;Doe&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;Jane&lt;/td&gt;
+      &lt;td&gt;Smith&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!-- Striped table --&gt;
+&lt;table class=&quot;eui-table eui-table-striped&quot;&gt;
+  &lt;!-- Table content --&gt;
+&lt;/table&gt;
+
+&lt;!-- Hover table --&gt;
+&lt;table class=&quot;eui-table eui-table-hover&quot;&gt;
+  &lt;!-- Table content --&gt;
+&lt;/table&gt;
+
+&lt;!-- Bordered table --&gt;
+&lt;table class=&quot;eui-table eui-table-bordered&quot;&gt;
+  &lt;!-- Table content --&gt;
+&lt;/table&gt;
+</code></pre>
+<h3>Pagination</h3>
+<pre><code class="language-html">&lt;!-- Basic pagination --&gt;
+&lt;ul class=&quot;eui-pagination&quot;&gt;
+  &lt;li class=&quot;eui-page-item disabled&quot;&gt;
+    &lt;a class=&quot;eui-page-link&quot; href=&quot;#&quot; tabindex=&quot;-1&quot;&gt;Previous&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;eui-page-item&quot;&gt;&lt;a class=&quot;eui-page-link&quot; href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;eui-page-item active&quot;&gt;
+    &lt;a class=&quot;eui-page-link&quot; href=&quot;#&quot;&gt;2 &lt;span class=&quot;eui-sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;eui-page-item&quot;&gt;&lt;a class=&quot;eui-page-link&quot; href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;eui-page-item&quot;&gt;
+    &lt;a class=&quot;eui-page-link&quot; href=&quot;#&quot;&gt;Next&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Best Practices</h2>
+<h3>Do&#39;s</h3>
+<ul>
+<li>✅ Use the design system tokens for custom styling</li>
+<li>✅ Follow the BEM naming convention for custom CSS classes</li>
+<li>✅ Use the emerald-ui components for consistent UI</li>
+<li>✅ Override emerald-ui styles using the provided integration file</li>
+<li>✅ Test components across different screen sizes</li>
+</ul>
+<h3>Don&#39;ts</h3>
+<ul>
+<li>❌ Don&#39;t modify the emerald-ui source files directly</li>
+<li>❌ Don&#39;t use inline styles for components (use SCSS files instead)</li>
+<li>❌ Don&#39;t create custom components that duplicate emerald-ui functionality</li>
+<li>❌ Don&#39;t mix different UI libraries in the same component</li>
+</ul>
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<h4>Styles Not Applied</h4>
+<p>If emerald-ui styles are not being applied:</p>
+<ol>
+<li>Make sure the emerald-ui CSS is imported in your application</li>
+<li>Check that the emerald-ui integration file is imported in the design system</li>
+<li>Verify that you&#39;re using the correct class names for emerald-ui components</li>
+</ol>
+<h4>JavaScript Functionality Not Working</h4>
+<p>If emerald-ui JavaScript functionality is not working:</p>
+<ol>
+<li>Make sure the emerald-ui JavaScript file is imported in your application</li>
+<li>Check the browser console for errors</li>
+<li>Verify that you&#39;re using the correct data attributes for emerald-ui components</li>
+</ol>
+<h4>Conflicts with Angular Material</h4>
+<p>If you&#39;re experiencing conflicts with Angular Material:</p>
+<ol>
+<li>Use namespaced classes to avoid conflicts</li>
+<li>Consider using only one UI library per component</li>
+<li>Use the emerald-ui integration file to override conflicting styles</li>
+</ol>
+<hr>
+<p>For more information on using emerald-ui components, refer to the <a href="https://emeraldui.com/docs">Emerald UI documentation</a> or the <a href="/docs/EMERALD_COMPONENTS.MD">Emerald Components Documentation</a>.</p>
+<p>Last Updated: 2025-05-20</p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

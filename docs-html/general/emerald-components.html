@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emerald.js Components Documentation - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Emerald.js Components Documentation</h1>
+
+      <h1>Emerald.js Components Documentation</h1>
+<p>This document provides detailed information about the Emerald.js UI components implemented in the DateNight.io application. These components are Angular wrappers for the Emerald.js UI library.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#components">Components</a><ul>
+<li><a href="#appcard">AppCard</a></li>
+<li><a href="#avatar">Avatar</a></li>
+<li><a href="#label">Label</a></li>
+<li><a href="#carousel">Carousel</a></li>
+<li><a href="#infopanel">InfoPanel</a></li>
+<li><a href="#pageheader">PageHeader</a></li>
+<li><a href="#skeletonloader">SkeletonLoader</a></li>
+<li><a href="#toggle">Toggle</a></li>
+<li><a href="#cardgrid">CardGrid</a></li>
+<li><a href="#pager">Pager</a></li>
+<li><a href="#floatingactionbutton">FloatingActionButton</a></li>
+</ul>
+</li>
+<li><a href="#usage-examples">Usage Examples</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#accessibility">Accessibility</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<h2>Overview</h2>
+<p>Emerald.js is a UI component library that provides a set of reusable UI components for building modern web applications. The DateNight.io application uses Angular wrappers for these components to ensure a consistent and responsive user interface.</p>
+<p>All components are implemented as standalone Angular components, which means they can be imported and used individually without the need for a module. However, they are also available through the EmeraldModule for backward compatibility.</p>
+<h2>Installation</h2>
+<p>The Emerald.js components are already installed in the DateNight.io application. To use them in your components, you have two options:</p>
+<h3>Option 1: Import Standalone Components</h3>
+<pre><code class="language-typescript">import { AppCardComponent } from &#39;../../shared/emerald/components/app-card/app-card.component&#39;;
+// or
+import { AppCardComponent } from &#39;../../shared/emerald&#39;; // Using the index.ts barrel file
+</code></pre>
+<p>Then add them to your component&#39;s imports:</p>
+<pre><code class="language-typescript">@Component({
+  // ...
+  imports: [CommonModule, AppCardComponent]
+})
+</code></pre>
+<h3>Option 2: Import EmeraldModule</h3>
+<pre><code class="language-typescript">import { EmeraldModule } from &#39;../../shared/emerald/emerald.module&#39;;
+</code></pre>
+<p>Then add it to your module&#39;s imports:</p>
+<pre><code class="language-typescript">@NgModule({
+  // ...
+  imports: [CommonModule, EmeraldModule]
+})
+</code></pre>
+<h2>Components</h2>
+<h3>AppCard</h3>
+<p>The AppCard component displays an advertiser card with various layouts and features.</p>
+<p><strong>Selector:</strong> <code>emerald-app-card</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>ad: Ad</code> - The advertiser data to display</li>
+<li><code>layout: &#39;tinder&#39; | &#39;netflix&#39; | &#39;list&#39;</code> - The layout style (default: &#39;netflix&#39;)</li>
+<li><code>showActions: boolean</code> - Whether to show action buttons (default: true)</li>
+<li><code>showDescription: boolean</code> - Whether to show the description (default: true)</li>
+<li><code>isOnline: boolean</code> - Whether the advertiser is online or offline (default: false)</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>viewDetails: EventEmitter&lt;string&gt;</code> - Emitted when the user clicks to view details</li>
+<li><code>like: EventEmitter&lt;string&gt;</code> - Emitted when the user likes the ad</li>
+<li><code>chat: EventEmitter&lt;string&gt;</code> - Emitted when the user wants to chat</li>
+<li><code>share: EventEmitter&lt;string&gt;</code> - Emitted when the user shares the ad</li>
+<li><code>swiped: EventEmitter&lt;{ direction: &#39;left&#39; | &#39;right&#39;, adId: string }&gt;</code> - Emitted when the user swipes the card</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-app-card
+  [ad]=&quot;adItem&quot;
+  layout=&quot;netflix&quot;
+  [isOnline]=&quot;adItem.isOnline&quot;
+  (viewDetails)=&quot;onViewDetails($event)&quot;
+  (like)=&quot;onLike($event)&quot;
+  (chat)=&quot;onChat($event)&quot;
+  (share)=&quot;onShare($event)&quot;
+&gt;
+&lt;/emerald-app-card&gt;
+</code></pre>
+<h3>Avatar</h3>
+<p>The Avatar component displays a user avatar with optional dropdown menu.</p>
+<p><strong>Selector:</strong> <code>emerald-avatar</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>imageUrl: string</code> - The URL of the avatar image (default: &#39;/assets/img/default-profile.jpg&#39;)</li>
+<li><code>name: string</code> - The user&#39;s name, used for initials fallback (default: &#39;&#39;)</li>
+<li><code>size: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</code> - The size of the avatar (default: &#39;medium&#39;)</li>
+<li><code>isOnline: boolean</code> - Whether the user is online or offline (default: false)</li>
+<li><code>showDropdown: boolean</code> - Whether to show a dropdown menu (default: false)</li>
+<li><code>dropdownItems: DropdownItem[]</code> - The items to display in the dropdown menu (default: [])</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>avatarClick: EventEmitter&lt;void&gt;</code> - Emitted when the avatar is clicked</li>
+<li><code>itemClick: EventEmitter&lt;DropdownItem&gt;</code> - Emitted when a dropdown item is clicked</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-avatar
+  [imageUrl]=&quot;user.profileImage&quot;
+  [name]=&quot;user.name&quot;
+  [isOnline]=&quot;user.isOnline&quot;
+  [showDropdown]=&quot;true&quot;
+  [dropdownItems]=&quot;userMenuItems&quot;
+  (itemClick)=&quot;onMenuItemClick($event)&quot;
+&gt;
+&lt;/emerald-avatar&gt;
+</code></pre>
+<h3>Label</h3>
+<p>The Label component displays a label with various styles and variants.</p>
+<p><strong>Selector:</strong> <code>emerald-label</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>text: string</code> - The text to display (default: &#39;&#39;)</li>
+<li><code>variant: &#39;primary&#39; | &#39;success&#39; | &#39;warning&#39; | &#39;danger&#39; | &#39;info&#39; | &#39;neutral&#39;</code> - The color variant (default: &#39;primary&#39;)</li>
+<li><code>size: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</code> - The size of the label (default: &#39;medium&#39;)</li>
+<li><code>icon?: string</code> - An optional icon class (e.g., &#39;fas fa-circle&#39;)</li>
+<li><code>rounded: boolean</code> - Whether to use rounded corners (default: false)</li>
+<li><code>outlined: boolean</code> - Whether to use an outlined style (default: false)</li>
+<li><code>pill: boolean</code> - Whether to use a pill shape (default: false)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-label text=&quot;Online&quot; variant=&quot;success&quot; [pill]=&quot;true&quot; icon=&quot;fas fa-circle&quot;&gt; &lt;/emerald-label&gt;
+</code></pre>
+<h3>Carousel</h3>
+<p>The Carousel component displays a carousel of images or other content.</p>
+<p><strong>Selector:</strong> <code>emerald-carousel</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>items: CarouselItem[]</code> - The items to display in the carousel (default: [])</li>
+<li><code>showDots: boolean</code> - Whether to show navigation dots (default: true)</li>
+<li><code>showArrows: boolean</code> - Whether to show navigation arrows (default: true)</li>
+<li><code>autoPlay: boolean</code> - Whether to auto-play the carousel (default: false)</li>
+<li><code>autoPlayInterval: number</code> - The interval for auto-play in milliseconds (default: 5000)</li>
+<li><code>aspectRatio: &#39;1:1&#39; | &#39;4:3&#39; | &#39;16:9&#39; | &#39;21:9&#39;</code> - The aspect ratio of the carousel (default: &#39;16:9&#39;)</li>
+<li><code>thumbnails: boolean</code> - Whether to show thumbnails (default: false)</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>itemChange: EventEmitter&lt;number&gt;</code> - Emitted when the current item changes</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-carousel
+  [items]=&quot;adImages&quot;
+  [showDots]=&quot;true&quot;
+  [showArrows]=&quot;true&quot;
+  [aspectRatio]=&quot;&#39;16:9&#39;&quot;
+  [thumbnails]=&quot;true&quot;
+  (itemChange)=&quot;onImageChange($event)&quot;
+&gt;
+&lt;/emerald-carousel&gt;
+</code></pre>
+<h3>InfoPanel</h3>
+<p>The InfoPanel component displays information in a structured panel format.</p>
+<p><strong>Selector:</strong> <code>emerald-info-panel</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>title: string</code> - The panel title (default: &#39;&#39;)</li>
+<li><code>subtitle?: string</code> - An optional subtitle</li>
+<li><code>items: InfoPanelItem[]</code> - The items to display in the panel (default: [])</li>
+<li><code>variant: &#39;default&#39; | &#39;bordered&#39; | &#39;shadowed&#39;</code> - The panel style variant (default: &#39;default&#39;)</li>
+<li><code>collapsible: boolean</code> - Whether the panel can be collapsed (default: false)</li>
+<li><code>initiallyCollapsed: boolean</code> - Whether the panel is initially collapsed (default: false)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-info-panel
+  title=&quot;Advertiser Details&quot;
+  subtitle=&quot;Personal information&quot;
+  [items]=&quot;advertiserDetails&quot;
+  variant=&quot;bordered&quot;
+  [collapsible]=&quot;true&quot;
+&gt;
+&lt;/emerald-info-panel&gt;
+</code></pre>
+<h3>PageHeader</h3>
+<p>The PageHeader component displays a page header with title, breadcrumbs, and actions.</p>
+<p><strong>Selector:</strong> <code>emerald-page-header</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>title: string</code> - The page title (default: &#39;&#39;)</li>
+<li><code>subtitle?: string</code> - An optional subtitle</li>
+<li><code>breadcrumbs: Breadcrumb[]</code> - The breadcrumb navigation items (default: [])</li>
+<li><code>actions: HeaderAction[]</code> - The action buttons to display (default: [])</li>
+<li><code>backLink?: string</code> - An optional back navigation link</li>
+<li><code>backgroundImage?: string</code> - An optional background image URL</li>
+<li><code>avatarUrl?: string</code> - An optional avatar image URL</li>
+<li><code>avatarName?: string</code> - An optional avatar name (for initials fallback)</li>
+<li><code>avatarIsOnline?: boolean</code> - Whether the avatar user is online</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>actionClick: EventEmitter&lt;HeaderAction&gt;</code> - Emitted when an action button is clicked</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-page-header
+  title=&quot;Advertiser Profile&quot;
+  [subtitle]=&quot;ad.title&quot;
+  [breadcrumbs]=&quot;breadcrumbs&quot;
+  [actions]=&quot;profileActions&quot;
+  [backgroundImage]=&quot;ad.images[0]&quot;
+  [avatarUrl]=&quot;ad.advertiserImage&quot;
+  [avatarName]=&quot;ad.advertiserName&quot;
+  [avatarIsOnline]=&quot;ad.isAdvertiserOnline&quot;
+  (actionClick)=&quot;onActionClick($event)&quot;
+&gt;
+&lt;/emerald-page-header&gt;
+</code></pre>
+<h3>SkeletonLoader</h3>
+<p>The SkeletonLoader component displays a loading skeleton for content.</p>
+<p><strong>Selector:</strong> <code>emerald-skeleton-loader</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>type: &#39;text&#39; | &#39;circle&#39; | &#39;rectangle&#39; | &#39;card&#39; | &#39;profile&#39; | &#39;list&#39;</code> - The type of skeleton (default: &#39;text&#39;)</li>
+<li><code>width?: string</code> - An optional width (e.g., &#39;100%&#39;, &#39;200px&#39;)</li>
+<li><code>height?: string</code> - An optional height (e.g., &#39;20px&#39;, &#39;100px&#39;)</li>
+<li><code>borderRadius?: string</code> - An optional border radius (e.g., &#39;4px&#39;, &#39;50%&#39;)</li>
+<li><code>count: number</code> - The number of skeleton items to display (default: 1)</li>
+<li><code>animated: boolean</code> - Whether to animate the skeleton (default: true)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-skeleton-loader type=&quot;card&quot; [count]=&quot;3&quot; [animated]=&quot;true&quot;&gt; &lt;/emerald-skeleton-loader&gt;
+</code></pre>
+<h3>Toggle</h3>
+<p>The Toggle component displays a toggle switch for boolean values.</p>
+<p><strong>Selector:</strong> <code>emerald-toggle</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>label?: string</code> - An optional label</li>
+<li><code>labelPosition: &#39;left&#39; | &#39;right&#39;</code> - The position of the label (default: &#39;right&#39;)</li>
+<li><code>size: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</code> - The size of the toggle (default: &#39;medium&#39;)</li>
+<li><code>color: &#39;primary&#39; | &#39;success&#39; | &#39;warning&#39; | &#39;danger&#39; | &#39;info&#39;</code> - The color of the toggle (default: &#39;primary&#39;)</li>
+<li><code>disabled: boolean</code> - Whether the toggle is disabled (default: false)</li>
+<li><code>name?: string</code> - An optional name for the input</li>
+<li><code>id?: string</code> - An optional ID for the input</li>
+<li><code>required: boolean</code> - Whether the toggle is required (default: false)</li>
+<li><code>ariaLabel?: string</code> - An optional ARIA label</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>change: EventEmitter&lt;boolean&gt;</code> - Emitted when the toggle value changes</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-toggle
+  label=&quot;Dark Mode&quot;
+  labelPosition=&quot;right&quot;
+  color=&quot;primary&quot;
+  [value]=&quot;isDarkMode&quot;
+  (change)=&quot;onThemeChange($event)&quot;
+&gt;
+&lt;/emerald-toggle&gt;
+</code></pre>
+<h3>CardGrid</h3>
+<p>The CardGrid component displays a grid of cards with various layouts and features.</p>
+<p><strong>Selector:</strong> <code>emerald-card-grid</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>items: any[]</code> - The items to display in the grid (default: [])</li>
+<li><code>columns: number | null</code> - The number of columns in the grid (default: null - responsive)</li>
+<li><code>gap: number</code> - The gap between grid items in pixels (default: 16)</li>
+<li><code>minItemWidth: number</code> - The minimum width of each grid item in pixels (default: 280)</li>
+<li><code>loading: boolean</code> - Whether to show a loading skeleton (default: false)</li>
+<li><code>skeletonCount: number</code> - The number of skeleton items to show when loading (default: 6)</li>
+<li><code>animated: boolean</code> - Whether to animate the grid items when they appear (default: true)</li>
+<li><code>layout: &#39;grid&#39; | &#39;masonry&#39; | &#39;netflix&#39;</code> - The layout style for the grid (default: &#39;grid&#39;)</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>itemClick: EventEmitter&lt;any&gt;</code> - Emitted when an item is clicked</li>
+</ul>
+<p><strong>Content Projection:</strong></p>
+<ul>
+<li><code>itemTemplate</code> - A custom template for rendering grid items</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-card-grid
+  [items]=&quot;ads&quot;
+  [columns]=&quot;3&quot;
+  [gap]=&quot;16&quot;
+  [loading]=&quot;isLoading&quot;
+  layout=&quot;grid&quot;
+  (itemClick)=&quot;onAdClick($event)&quot;
+&gt;
+  &lt;ng-template #itemTemplate let-ad&gt;
+    &lt;emerald-app-card [ad]=&quot;ad&quot; layout=&quot;netflix&quot;&gt;&lt;/emerald-app-card&gt;
+  &lt;/ng-template&gt;
+&lt;/emerald-card-grid&gt;
+</code></pre>
+<h3>Pager</h3>
+<p>The Pager component displays pagination controls for navigating through pages of results.</p>
+<p><strong>Selector:</strong> <code>emerald-pager</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>currentPage: number</code> - The current page number (1-based) (default: 1)</li>
+<li><code>totalPages: number</code> - The total number of pages (default: 1)</li>
+<li><code>maxVisiblePages: number</code> - The maximum number of page buttons to show (default: 5)</li>
+<li><code>showFirstLast: boolean</code> - Whether to show first/last page buttons (default: true)</li>
+<li><code>showPrevNext: boolean</code> - Whether to show previous/next page buttons (default: true)</li>
+<li><code>showPageSize: boolean</code> - Whether to show the page size selector (default: false)</li>
+<li><code>pageSizes: number[]</code> - The available page sizes (default: [10, 25, 50, 100])</li>
+<li><code>pageSize: number</code> - The current page size (default: 10)</li>
+<li><code>style: &#39;default&#39; | &#39;simple&#39; | &#39;compact&#39;</code> - The style of the pager (default: &#39;default&#39;)</li>
+<li><code>size: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</code> - The size of the pager (default: &#39;medium&#39;)</li>
+<li><code>align: &#39;left&#39; | &#39;center&#39; | &#39;right&#39;</code> - The alignment of the pager (default: &#39;center&#39;)</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>pageChange: EventEmitter&lt;number&gt;</code> - Emitted when the page changes</li>
+<li><code>pageSizeChange: EventEmitter&lt;number&gt;</code> - Emitted when the page size changes</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-pager
+  [currentPage]=&quot;currentPage&quot;
+  [totalPages]=&quot;totalPages&quot;
+  [showPageSize]=&quot;true&quot;
+  [pageSize]=&quot;pageSize&quot;
+  style=&quot;default&quot;
+  size=&quot;medium&quot;
+  align=&quot;center&quot;
+  (pageChange)=&quot;onPageChange($event)&quot;
+  (pageSizeChange)=&quot;onPageSizeChange($event)&quot;
+&gt;
+&lt;/emerald-pager&gt;
+</code></pre>
+<h3>FloatingActionButton</h3>
+<p>The FloatingActionButton component displays a floating action button for primary actions.</p>
+<p><strong>Selector:</strong> <code>emerald-floating-action-button</code></p>
+<p><strong>Inputs:</strong></p>
+<ul>
+<li><code>icon: string</code> - The icon to display in the button (default: &#39;fa-plus&#39;)</li>
+<li><code>label: string</code> - The label for the button (for accessibility) (default: &#39;Action&#39;)</li>
+<li><code>color: &#39;primary&#39; | &#39;secondary&#39; | &#39;success&#39; | &#39;danger&#39; | &#39;warning&#39; | &#39;info&#39;</code> - The color variant (default: &#39;primary&#39;)</li>
+<li><code>size: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</code> - The size of the button (default: &#39;medium&#39;)</li>
+<li><code>position: &#39;bottom-right&#39; | &#39;bottom-left&#39; | &#39;top-right&#39; | &#39;top-left&#39; | &#39;center&#39;</code> - The position of the button (default: &#39;bottom-right&#39;)</li>
+<li><code>showTooltip: boolean</code> - Whether to show a tooltip on hover (default: false)</li>
+<li><code>tooltipText: string</code> - The text to display in the tooltip (default: &#39;&#39;)</li>
+<li><code>disabled: boolean</code> - Whether the button is disabled (default: false)</li>
+<li><code>hasMenu: boolean</code> - Whether to show a menu of actions when clicked (default: false)</li>
+<li><code>menuItems: { icon: string; label: string; action?: string }[]</code> - The menu items to display (default: [])</li>
+<li><code>menuOpen: boolean</code> - Whether the menu is currently open (default: false)</li>
+</ul>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li><code>buttonClick: EventEmitter&lt;void&gt;</code> - Emitted when the button is clicked</li>
+<li><code>menuItemClick: EventEmitter&lt;{ icon: string; label: string; action?: string }&gt;</code> - Emitted when a menu item is clicked</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-html">&lt;emerald-floating-action-button
+  icon=&quot;fa-plus&quot;
+  label=&quot;Add New Ad&quot;
+  color=&quot;primary&quot;
+  size=&quot;large&quot;
+  position=&quot;bottom-right&quot;
+  [showTooltip]=&quot;true&quot;
+  tooltipText=&quot;Create a new advertisement&quot;
+  [hasMenu]=&quot;true&quot;
+  [menuItems]=&quot;fabMenuItems&quot;
+  (buttonClick)=&quot;onFabClick()&quot;
+  (menuItemClick)=&quot;onFabMenuItemClick($event)&quot;
+&gt;
+&lt;/emerald-floating-action-button&gt;
+</code></pre>
+<h2>Usage Examples</h2>
+<h3>Netflix View with CardGrid and AppCard</h3>
+<pre><code class="language-html">&lt;emerald-card-grid
+  [items]=&quot;featuredAds&quot;
+  layout=&quot;netflix&quot;
+  [gap]=&quot;16&quot;
+  (itemClick)=&quot;viewAdDetails($event._id)&quot;
+&gt;
+  &lt;ng-template #itemTemplate let-ad&gt;
+    &lt;emerald-app-card
+      [ad]=&quot;ad&quot;
+      layout=&quot;netflix&quot;
+      [isOnline]=&quot;ad.isAdvertiserOnline&quot;
+      (viewDetails)=&quot;viewAdDetails($event)&quot;
+      (like)=&quot;likeAd($event)&quot;
+      (chat)=&quot;startChat($event)&quot;
+    &gt;
+    &lt;/emerald-app-card&gt;
+  &lt;/ng-template&gt;
+&lt;/emerald-card-grid&gt;
+</code></pre>
+<h3>Tinder View with AppCard</h3>
+<pre><code class="language-html">&lt;div class=&quot;tinder-container&quot;&gt;
+  &lt;emerald-app-card
+    [ad]=&quot;currentAd&quot;
+    layout=&quot;tinder&quot;
+    [isOnline]=&quot;currentAd.isAdvertiserOnline&quot;
+    (swiped)=&quot;onCardSwiped($event)&quot;
+    (viewDetails)=&quot;viewAdDetails($event)&quot;
+    (chat)=&quot;startChat($event)&quot;
+  &gt;
+  &lt;/emerald-app-card&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>List View with CardGrid and Pager</h3>
+<pre><code class="language-html">&lt;emerald-card-grid
+  [items]=&quot;ads&quot;
+  layout=&quot;grid&quot;
+  [columns]=&quot;1&quot;
+  [gap]=&quot;16&quot;
+  [loading]=&quot;isLoading&quot;
+  (itemClick)=&quot;viewAdDetails($event._id)&quot;
+&gt;
+  &lt;ng-template #itemTemplate let-ad&gt;
+    &lt;emerald-app-card
+      [ad]=&quot;ad&quot;
+      layout=&quot;list&quot;
+      [isOnline]=&quot;ad.isAdvertiserOnline&quot;
+      (viewDetails)=&quot;viewAdDetails($event)&quot;
+      (like)=&quot;likeAd($event)&quot;
+      (chat)=&quot;startChat($event)&quot;
+    &gt;
+    &lt;/emerald-app-card&gt;
+  &lt;/ng-template&gt;
+&lt;/emerald-card-grid&gt;
+
+&lt;emerald-pager
+  [currentPage]=&quot;currentPage&quot;
+  [totalPages]=&quot;totalPages&quot;
+  [showPageSize]=&quot;true&quot;
+  [pageSize]=&quot;pageSize&quot;
+  (pageChange)=&quot;onPageChange($event)&quot;
+  (pageSizeChange)=&quot;onPageSizeChange($event)&quot;
+&gt;
+&lt;/emerald-pager&gt;
+</code></pre>
+<h3>Profile Page with Emerald Components</h3>
+<pre><code class="language-html">&lt;emerald-page-header
+  [title]=&quot;ad.title&quot;
+  [breadcrumbs]=&quot;breadcrumbs&quot;
+  [actions]=&quot;profileActions&quot;
+  [backgroundImage]=&quot;ad.images[0]&quot;
+  (actionClick)=&quot;onActionClick($event)&quot;
+&gt;
+&lt;/emerald-page-header&gt;
+
+&lt;div class=&quot;profile-container&quot;&gt;
+  &lt;div class=&quot;profile-media&quot;&gt;
+    &lt;emerald-carousel
+      [items]=&quot;carouselItems&quot;
+      [showDots]=&quot;true&quot;
+      [showArrows]=&quot;true&quot;
+      [aspectRatio]=&quot;&#39;16:9&#39;&quot;
+      [thumbnails]=&quot;true&quot;
+    &gt;
+    &lt;/emerald-carousel&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;profile-info&quot;&gt;
+    &lt;emerald-info-panel title=&quot;Advertiser Details&quot; [items]=&quot;advertiserDetails&quot; variant=&quot;bordered&quot;&gt;
+    &lt;/emerald-info-panel&gt;
+
+    &lt;emerald-info-panel
+      title=&quot;Services&quot;
+      [items]=&quot;serviceItems&quot;
+      variant=&quot;bordered&quot;
+      [collapsible]=&quot;true&quot;
+    &gt;
+    &lt;/emerald-info-panel&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;emerald-floating-action-button
+  icon=&quot;fa-comment&quot;
+  label=&quot;Chat with Advertiser&quot;
+  color=&quot;primary&quot;
+  (buttonClick)=&quot;startChat(ad._id)&quot;
+&gt;
+&lt;/emerald-floating-action-button&gt;
+</code></pre>
+<h2>Customization</h2>
+<p>The Emerald.js components can be customized using CSS variables. These variables are defined in the design tokens file at <code>/client-angular/src/app/core/design/design-tokens.scss</code>.</p>
+<p>To customize a component, you can override these variables in your component&#39;s SCSS file:</p>
+<pre><code class="language-scss">:host {
+  --primary: #ff6b93;
+  --primary-light: #ff8fab;
+  --primary-dark: #e6365f;
+}
+</code></pre>
+<p>You can also customize the components by adding custom CSS classes:</p>
+<pre><code class="language-html">&lt;emerald-app-card class=&quot;custom-card&quot; [ad]=&quot;ad&quot;&gt;&lt;/emerald-app-card&gt;
+</code></pre>
+<pre><code class="language-scss">.custom-card {
+  ::ng-deep {
+    .emerald-app-card {
+      border-radius: 16px;
+
+      &amp;__title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+</code></pre>
+<h2>Accessibility</h2>
+<p>All Emerald.js components are designed with accessibility in mind. They include:</p>
+<ul>
+<li>Proper ARIA attributes</li>
+<li>Keyboard navigation support</li>
+<li>Focus management</li>
+<li>Screen reader compatibility</li>
+<li>Color contrast compliance</li>
+</ul>
+<p>To ensure your implementation is accessible:</p>
+<ol>
+<li>Always provide meaningful labels for interactive elements</li>
+<li>Ensure sufficient color contrast</li>
+<li>Test with keyboard navigation</li>
+<li>Use semantic HTML elements</li>
+<li>Provide alternative text for images</li>
+</ol>
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<ol>
+<li><p><strong>Component not displaying correctly</strong></p>
+<ul>
+<li>Make sure you&#39;ve imported the component in your module or component imports array</li>
+<li>Check the console for any errors</li>
+<li>Verify that the inputs are correctly bound</li>
+</ul>
+</li>
+<li><p><strong>Styles not applying</strong></p>
+<ul>
+<li>Make sure the component&#39;s SCSS file is being included in the build</li>
+<li>Check for any CSS conflicts in your application</li>
+<li>Verify that the design tokens are correctly imported</li>
+</ul>
+</li>
+<li><p><strong>Events not firing</strong></p>
+<ul>
+<li>Make sure you&#39;ve correctly bound the output event</li>
+<li>Check that the event handler function exists and is correctly implemented</li>
+<li>Verify that the event is being emitted by the component</li>
+</ul>
+</li>
+<li><p><strong>Performance issues</strong></p>
+<ul>
+<li>Use the <code>trackBy</code> function with <code>*ngFor</code> directives</li>
+<li>Implement OnPush change detection for better performance</li>
+<li>Avoid deep nesting of components</li>
+<li>Use lazy loading for large lists</li>
+</ul>
+</li>
+</ol>
+<p>For more help, refer to the Emerald.js documentation at <a href="https://docs-emerald.condorlabs.io/">https://docs-emerald.condorlabs.io/</a></p>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation Status Report - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Documentation Status Report</h1>
+
+      <h1>Documentation Status Report</h1>
+<p>Generated on: 2025-04-18T21:38:16.710Z</p>
+<h2>Files to Rename to UPPERCASE.md Format</h2>
+<p>133 files need to be renamed:</p>
+<ul>
+<li><code>docs/AILESSONS.md</code> → <code>docs/AILESSONS.MD</code></li>
+<li><code>docs/ANGULAR_BUILD_OPTIMIZATION.md</code> → <code>docs/ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>docs/ANGULAR_TESTING_LESSONS.md</code> → <code>docs/ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>docs/API_DOCUMENTATION.md</code> → <code>docs/API_DOCUMENTATION.MD</code></li>
+<li><code>docs/ARCHITECTURE.md</code> → <code>docs/ARCHITECTURE.MD</code></li>
+<li><code>docs/AUTHENTICATION_FLOW.md</code> → <code>docs/AUTHENTICATION_FLOW.MD</code></li>
+<li><code>docs/BEM_NAMING_CONVENTION.md</code> → <code>docs/BEM_NAMING_CONVENTION.MD</code></li>
+<li><code>docs/CHANGELOG.md</code> → <code>docs/CHANGELOG.MD</code></li>
+<li><code>docs/CI_CD_GUIDE.md</code> → <code>docs/CI_CD_GUIDE.MD</code></li>
+<li><code>docs/CODEBASE_ANALYSIS.md</code> → <code>docs/CODEBASE_ANALYSIS.MD</code></li>
+<li><code>docs/CODE_FORMATTING.md</code> → <code>docs/CODE_FORMATTING.MD</code></li>
+<li><code>docs/COMPLETION_PLAN_2024.md</code> → <code>docs/COMPLETION_PLAN_2024.MD</code></li>
+<li><code>docs/COMPONENT_DOCUMENTATION_TEMPLATE.md</code> → <code>docs/COMPONENT_DOCUMENTATION_TEMPLATE.MD</code></li>
+<li><code>docs/COMPONENT_LIBRARY.md</code> → <code>docs/COMPONENT_LIBRARY.MD</code></li>
+<li><code>docs/CONFIG_INDEX.md</code> → <code>docs/CONFIG_INDEX.MD</code></li>
+<li><code>docs/CSP_CONFIGURATION.md</code> → <code>docs/CSP_CONFIGURATION.MD</code></li>
+<li><code>docs/CUSTOMIZATION_GUIDE.md</code> → <code>docs/CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>docs/DATABASE_SCHEMA_DETAIL.md</code> → <code>docs/DATABASE_SCHEMA_DETAIL.MD</code></li>
+<li><code>docs/DATA_PROTECTION.md</code> → <code>docs/DATA_PROTECTION.MD</code></li>
+<li><code>docs/DEPENDENCY_MANAGEMENT.md</code> → <code>docs/DEPENDENCY_MANAGEMENT.MD</code></li>
+<li><code>docs/DEPLOYMENT.md</code> → <code>docs/DEPLOYMENT.MD</code></li>
+<li><code>docs/DEPRECATED.md</code> → <code>docs/DEPRECATED.MD</code></li>
+<li><code>docs/DESIGN_SYSTEM_IMPLEMENTATION_SUMMARY.md</code> → <code>docs/DESIGN_SYSTEM_IMPLEMENTATION_SUMMARY.MD</code></li>
+<li><code>docs/DESIGN_SYSTEM_USAGE_GUIDE.md</code> → <code>docs/DESIGN_SYSTEM_USAGE_GUIDE.MD</code></li>
+<li><code>docs/DESIGN_TOKENS_DOCUMENTATION.md</code> → <code>docs/DESIGN_TOKENS_DOCUMENTATION.MD</code></li>
+<li><code>docs/DOCS_IMPROVEMENT_PLAN.md</code> → <code>docs/DOCS_IMPROVEMENT_PLAN.MD</code></li>
+<li><code>docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.md</code> → <code>docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD</code></li>
+<li><code>docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.md</code> → <code>docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.MD</code></li>
+<li><code>docs/DOCUMENTATION_IMPROVEMENT_REVIEW.md</code> → <code>docs/DOCUMENTATION_IMPROVEMENT_REVIEW.MD</code></li>
+<li><code>docs/DOCUMENTATION_IMPROVEMENT_SUMMARY.md</code> → <code>docs/DOCUMENTATION_IMPROVEMENT_SUMMARY.MD</code></li>
+<li><code>docs/DOCUMENTATION_INDEX.md</code> → <code>docs/DOCUMENTATION_INDEX.MD</code></li>
+<li><code>docs/DOCUMENTATION_LINK_CHECK_REPORT.md</code> → <code>docs/DOCUMENTATION_LINK_CHECK_REPORT.MD</code></li>
+<li><code>docs/DOCUMENTATION_STATUS_REPORT.md</code> → <code>docs/DOCUMENTATION_STATUS_REPORT.MD</code></li>
+<li><code>docs/DOCUMENTATION_STYLE_GUIDE.md</code> → <code>docs/DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>docs/DUPLICATES.md</code> → <code>docs/DUPLICATES.MD</code></li>
+<li><code>docs/EMERALD_COMPONENTS.md</code> → <code>docs/EMERALD_COMPONENTS.MD</code></li>
+<li><code>docs/EMERALD_COMPONENTS_CHANGELOG.md</code> → <code>docs/EMERALD_COMPONENTS_CHANGELOG.MD</code></li>
+<li><code>docs/EMERALD_IMPLEMENTATION_PLAN.md</code> → <code>docs/EMERALD_IMPLEMENTATION_PLAN.MD</code></li>
+<li><code>docs/EMERALD_IMPLEMENTATION_SUMMARY.md</code> → <code>docs/EMERALD_IMPLEMENTATION_SUMMARY.MD</code></li>
+<li><code>docs/END_TO_END_ENCRYPTION.md</code> → <code>docs/END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>docs/ERRORHANDLINGTELEMETRY.md</code> → <code>docs/ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>docs/FEATURE_DOCUMENTATION_TEMPLATE.md</code> → <code>docs/FEATURE_DOCUMENTATION_TEMPLATE.MD</code></li>
+<li><code>docs/FIXES.md</code> → <code>docs/FIXES.MD</code></li>
+<li><code>docs/IMPLEMENTATION_PLAN.md</code> → <code>docs/IMPLEMENTATION_PLAN.MD</code></li>
+<li><code>docs/IMPLEMENTATION_STATUS.md</code> → <code>docs/IMPLEMENTATION_STATUS.MD</code></li>
+<li><code>docs/IMPLEMENTATION_SUMMARY.md</code> → <code>docs/IMPLEMENTATION_SUMMARY.MD</code></li>
+<li><code>docs/LOCATION_DATA.md</code> → <code>docs/LOCATION_DATA.MD</code></li>
+<li><code>docs/MIGRATION.md</code> → <code>docs/MIGRATION.MD</code></li>
+<li><code>docs/MIGRATION_COMPLETION_PLAN.md</code> → <code>docs/MIGRATION_COMPLETION_PLAN.MD</code></li>
+<li><code>docs/REPORTS_MIGRATION_GUIDE.md</code> → <code>docs/REPORTS_MIGRATION_GUIDE.MD</code></li>
+<li><code>docs/REQUIREMENTS.md</code> → <code>docs/REQUIREMENTS.MD</code></li>
+<li><code>docs/REVIEW_COMPONENTS.md</code> → <code>docs/REVIEW_COMPONENTS.MD</code></li>
+<li><code>docs/SCRIPT_IMPROVEMENTS.md</code> → <code>docs/SCRIPT_IMPROVEMENTS.MD</code></li>
+<li><code>docs/SECURITY_ALERTS_WORKFLOW.md</code> → <code>docs/SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>docs/SECURITY_BEST_PRACTICES.md</code> → <code>docs/SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>docs/SECURITY_FIXES_SUMMARY.md</code> → <code>docs/SECURITY_FIXES_SUMMARY.MD</code></li>
+<li><code>docs/SNYK_TOKEN_SETUP.md</code> → <code>docs/SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>docs/SNYK_WORKFLOW_IMPROVEMENTS.md</code> → <code>docs/SNYK_WORKFLOW_IMPROVEMENTS.MD</code></li>
+<li><code>docs/STYLING_GUIDE.md</code> → <code>docs/STYLING_GUIDE.MD</code></li>
+<li><code>docs/TASK_LIST.md</code> → <code>docs/TASK_LIST.MD</code></li>
+<li><code>docs/TESTING_GUIDE.md</code> → <code>docs/TESTING_GUIDE.MD</code></li>
+<li><code>docs/THEME_SYSTEM.md</code> → <code>docs/THEME_SYSTEM.MD</code></li>
+<li><code>docs/THEME_TOGGLE_IMPLEMENTATION.md</code> → <code>docs/THEME_TOGGLE_IMPLEMENTATION.MD</code></li>
+<li><code>docs/THEMING_GUIDE.md</code> → <code>docs/THEMING_GUIDE.MD</code></li>
+<li><code>docs/UI_COMPONENTS_TECHNICAL.md</code> → <code>docs/UI_COMPONENTS_TECHNICAL.MD</code></li>
+<li><code>docs/UI_UX_IMPLEMENTATION.md</code> → <code>docs/UI_UX_IMPLEMENTATION.MD</code></li>
+<li><code>docs/UI_UX_IMPLEMENTATION_PLAN.md</code> → <code>docs/UI_UX_IMPLEMENTATION_PLAN.MD</code></li>
+<li><code>docs/UI_UX_IMPROVEMENT_SUMMARY.md</code> → <code>docs/UI_UX_IMPROVEMENT_SUMMARY.MD</code></li>
+<li><code>docs/UI_UX_ROADMAP.md</code> → <code>docs/UI_UX_ROADMAP.MD</code></li>
+<li><code>docs/UNITTESTINGLESSONS.md</code> → <code>docs/UNITTESTINGLESSONS.MD</code></li>
+<li><code>docs/USER_PREFERENCES.md</code> → <code>docs/USER_PREFERENCES.MD</code></li>
+<li><code>docs/USER_PREFERENCES_IMPLEMENTATION_SUMMARY.md</code> → <code>docs/USER_PREFERENCES_IMPLEMENTATION_SUMMARY.MD</code></li>
+<li><code>docs/WORKFLOW_ERROR_MONITORING.md</code> → <code>docs/WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>docs/WORKFLOW_FIXES.md</code> → <code>docs/WORKFLOW_FIXES.MD</code></li>
+<li><code>docs/WORKFLOW_LOGS_CHANGES.md</code> → <code>docs/WORKFLOW_LOGS_CHANGES.MD</code></li>
+<li><code>docs/analysis/CHATANALYSIS.md</code> → <code>docs/analysis/CHATANALYSIS.MD</code></li>
+<li><code>docs/analysis/STYLINGCODEREVIEW.md</code> → <code>docs/analysis/STYLINGCODEREVIEW.MD</code></li>
+<li><code>docs/analysis/TB9PROJECTAUDIT.md</code> → <code>docs/analysis/TB9PROJECTAUDIT.MD</code></li>
+<li><code>docs/analysis/UIUX.md</code> → <code>docs/analysis/UIUX.MD</code></li>
+<li><code>docs/design_system/FORM_COMPONENTS.md</code> → <code>docs/design_system/FORM_COMPONENTS.MD</code></li>
+<li><code>docs/design_system/FORM_COMPONENTS_USAGE.md</code> → <code>docs/design_system/FORM_COMPONENTS_USAGE.MD</code></li>
+<li><code>docs/design_system/FORM_LAYOUT_PATTERNS.md</code> → <code>docs/design_system/FORM_LAYOUT_PATTERNS.MD</code></li>
+<li><code>docs/design_system/FORM_VALIDATION_PATTERNS.md</code> → <code>docs/design_system/FORM_VALIDATION_PATTERNS.MD</code></li>
+<li><code>docs/features/AD-BROWSER.md</code> → <code>docs/features/AD-BROWSER.MD</code></li>
+<li><code>docs/features/AD-DETAILS.md</code> → <code>docs/features/AD-DETAILS.MD</code></li>
+<li><code>docs/features/AD-MANAGEMENT.md</code> → <code>docs/features/AD-MANAGEMENT.MD</code></li>
+<li><code>docs/features/ADMIN.md</code> → <code>docs/features/ADMIN.MD</code></li>
+<li><code>docs/features/ADS.md</code> → <code>docs/features/ADS.MD</code></li>
+<li><code>docs/features/ADVERTISER-PROFILE.md</code> → <code>docs/features/ADVERTISER-PROFILE.MD</code></li>
+<li><code>docs/features/AUTH.md</code> → <code>docs/features/AUTH.MD</code></li>
+<li><code>docs/features/BROWSE.md</code> → <code>docs/features/BROWSE.MD</code></li>
+<li><code>docs/features/CHAT.md</code> → <code>docs/features/CHAT.MD</code></li>
+<li><code>docs/features/DESIGN-SYSTEM-DEMO.md</code> → <code>docs/features/DESIGN-SYSTEM-DEMO.MD</code></li>
+<li><code>docs/features/FAVORITES.md</code> → <code>docs/features/FAVORITES.MD</code></li>
+<li><code>docs/features/GALLERY.md</code> → <code>docs/features/GALLERY.MD</code></li>
+<li><code>docs/features/LIST-VIEW.md</code> → <code>docs/features/LIST-VIEW.MD</code></li>
+<li><code>docs/features/LOCATION-MATCHING.md</code> → <code>docs/features/LOCATION-MATCHING.MD</code></li>
+<li><code>docs/features/NETFLIX-VIEW.md</code> → <code>docs/features/NETFLIX-VIEW.MD</code></li>
+<li><code>docs/features/PAYMENT.md</code> → <code>docs/features/PAYMENT.MD</code></li>
+<li><code>docs/features/PREFERENCES-DEMO.md</code> → <code>docs/features/PREFERENCES-DEMO.MD</code></li>
+<li><code>docs/features/PROFILE.md</code> → <code>docs/features/PROFILE.MD</code></li>
+<li><code>docs/features/REVIEWS.md</code> → <code>docs/features/REVIEWS.MD</code></li>
+<li><code>docs/features/TELEMETRY.md</code> → <code>docs/features/TELEMETRY.MD</code></li>
+<li><code>docs/features/TEMPORARY_MESSAGES.md</code> → <code>docs/features/TEMPORARY_MESSAGES.MD</code></li>
+<li><code>docs/features/TINDER-CARD.md</code> → <code>docs/features/TINDER-CARD.MD</code></li>
+<li><code>docs/features/TINDER.md</code> → <code>docs/features/TINDER.MD</code></li>
+<li><code>docs/features/TOURING.md</code> → <code>docs/features/TOURING.MD</code></li>
+<li><code>docs/features/USER-SETTINGS.md</code> → <code>docs/features/USER-SETTINGS.MD</code></li>
+<li><code>docs/features/USERS.md</code> → <code>docs/features/USERS.MD</code></li>
+<li><code>docs/features/USER_PREFS.md</code> → <code>docs/features/USER_PREFS.MD</code></li>
+<li><code>docs/features/WALLET.md</code> → <code>docs/features/WALLET.MD</code></li>
+<li><code>docs/images/API_ENDPOINTS.md</code> → <code>docs/images/API_ENDPOINTS.MD</code></li>
+<li><code>docs/images/ARCHITECTURE.md</code> → <code>docs/images/ARCHITECTURE.MD</code></li>
+<li><code>docs/images/COMPONENT_HIERARCHY.md</code> → <code>docs/images/COMPONENT_HIERARCHY.MD</code></li>
+<li><code>docs/images/DATABASE_SCHEMA.md</code> → <code>docs/images/DATABASE_SCHEMA.MD</code></li>
+<li><code>docs/images/DATA_FLOW.md</code> → <code>docs/images/DATA_FLOW.MD</code></li>
+<li><code>docs/outdated/AILESSONS-SECURITY-FIXES.md</code> → <code>docs/outdated/AILESSONS-SECURITY-FIXES.MD</code></li>
+<li><code>docs/outdated/AILESSONS-THEME-TOGGLE.md</code> → <code>docs/outdated/AILESSONS-THEME-TOGGLE.MD</code></li>
+<li><code>docs/outdated/CHANGELOG_REPORTS_MIGRATION.md</code> → <code>docs/outdated/CHANGELOG_REPORTS_MIGRATION.MD</code></li>
+<li><code>docs/outdated/DEPENDENCY_UPDATE_SUMMARY.md</code> → <code>docs/outdated/DEPENDENCY_UPDATE_SUMMARY.MD</code></li>
+<li><code>docs/outdated/DOCUMENTATION-IMPROVEMENTS.md</code> → <code>docs/outdated/DOCUMENTATION-IMPROVEMENTS.MD</code></li>
+<li><code>docs/outdated/EMERALD-IMPLEMENTATION-REPORT.md</code> → <code>docs/outdated/EMERALD-IMPLEMENTATION-REPORT.MD</code></li>
+<li><code>docs/outdated/EXAMPLE_UNITSTRAT.md</code> → <code>docs/outdated/EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>docs/outdated/HTTP_ERROR_HANDLING.md</code> → <code>docs/outdated/HTTP_ERROR_HANDLING.MD</code></li>
+<li><code>docs/outdated/UI-UX-COMPLETION-REPORT.md</code> → <code>docs/outdated/UI-UX-COMPLETION-REPORT.MD</code></li>
+<li><code>docs/outdated/UNITTESTLESSONS.md</code> → <code>docs/outdated/UNITTESTLESSONS.MD</code></li>
+<li><code>docs/plans/CYPRESS_GITHUB_WORKFLOWS.md</code> → <code>docs/plans/CYPRESS_GITHUB_WORKFLOWS.MD</code></li>
+<li><code>docs/plans/CYPRESS_TESTING.md</code> → <code>docs/plans/CYPRESS_TESTING.MD</code></li>
+<li><code>docs/plans/CYPRESS_UI_SCREENSHOTS.md</code> → <code>docs/plans/CYPRESS_UI_SCREENSHOTS.MD</code></li>
+<li><code>docs/temp_docs/DOCS_tmp.md</code> → <code>docs/temp_docs/DOCS_TMP.MD</code></li>
+<li><code>docs/temp_docs/WFLOW_tmp.md</code> → <code>docs/temp_docs/WFLOW_TMP.MD</code></li>
+<li><code>docs/temp_docs/WFLOW_tmp1.md</code> → <code>docs/temp_docs/WFLOW_TMP1.MD</code></li>
+<li><code>docs/temp_docs/WFLOW_tmp2.md</code> → <code>docs/temp_docs/WFLOW_TMP2.MD</code></li>
+</ul>
+<h2>Internal Links to Update</h2>
+<p>648 internal links need to be updated:</p>
+<h3>README.md</h3>
+<ul>
+<li><code>[docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[docs/COMPLETION-PLAN-2024.MD](/docs/completion-plan-2024.md)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Requirements.md](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Task List](/docs/TASK-LIST.MD)</code> → Replace with link using <code>TASK-LIST.MD</code></li>
+<li><code>[Completion Plan 2024](/docs/COMPLETION-PLAN-2024.MD)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[Migration Completion Plan](/docs/MIGRATION-COMPLETION-PLAN.MD)</code> → Replace with link using <code>MIGRATION-COMPLETION-PLAN.MD</code></li>
+<li><code>[Implementation Plan](/docs/IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Architecture](docs/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Deprecated Code](/docs/DEPRECATED.MD)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[Code Duplication](/docs/DUPLICATES.MD)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD)</code> → Replace with link using <code>DOCUMENTATION-IMPROVEMENTS.MD</code></li>
+<li><code>[Documentation Index](/docs/DOCUMENTATION_INDEX.MD)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.MD)</code> → Replace with link using <code>GITHUB_INTEGRATION.MD</code></li>
+<li><code>[GitHub Setup Guide](/docs/GITHUB_SETUP.MD)</code> → Replace with link using <code>GITHUB_SETUP.MD</code></li>
+<li><code>[GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.MD)</code> → Replace with link using <code>GITHUB_WORKFLOW_PERMISSIONS.MD</code></li>
+<li><code>[Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.MD)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.MD)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.MD)</code> → Replace with link using <code>AI_GITHUB_ACTIONS.MD</code></li>
+<li><code>[Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.MD)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[Setup Guide](SETUP.MD)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[Node.js Installation Guide](NODEJS-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[Specific Version Installation Guide](SPECIFIC-VERSION-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.MD)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[Testing Guide](/docs/TESTING_GUIDE.MD)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.MD)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[Unit Testing Lessons](/docs/UNITTESTLESSONS.MD)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[Unit Testing Strategy](/docs/UNITSTRAT.MD)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[Example Unit Strategy](/docs/EXAMPLE_UNITSTRAT.MD)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[Frontend Testing Review](FRONTEND_TESTING_REVIEW.MD)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[Testing Improvements](TESTING_IMPROVEMENTS.MD)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD)</code> → Replace with link using <code>UI-UX-ROADMAP.MD</code></li>
+<li><code>[UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION.MD</code></li>
+<li><code>[UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD)</code> → Replace with link using <code>UI-UX-IMPROVEMENT-SUMMARY.MD</code></li>
+<li><code>[UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD)</code> → Replace with link using <code>UI-UX-COMPLETION-REPORT.MD</code></li>
+<li><code>[UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD)</code> → Replace with link using <code>UI-COMPONENTS-TECHNICAL.MD</code></li>
+<li><code>[Customization Guide](/docs/CUSTOMIZATION_GUIDE.MD)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[Configuration Index](/docs/CONFIG_INDEX.MD)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[CSP Configuration](/docs/CSP-CONFIGURATION.MD)</code> → Replace with link using <code>CSP-CONFIGURATION.MD</code></li>
+<li><code>[End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.MD)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[Security Best Practices](/docs/SECURITY_BEST_PRACTICES.MD)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[Authentication Flow](/docs/AUTHENTICATION_FLOW.MD)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[Data Protection](/docs/DATA_PROTECTION.MD)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[Snyk Workflow](/docs/SNYK_WORKFLOW.MD)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.MD)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.MD)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[Emerald Components](/docs/EMERALD-COMPONENTS.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS-CHANGELOG.MD</code></li>
+<li><code>[Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-REPORT.MD</code></li>
+<li><code>[Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+</ul>
+<h3>SETUP.md</h3>
+<ul>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+</ul>
+<h3>client-angular/src/app/shared/emerald/README.md</h3>
+<ul>
+<li><code>[COMPONENTS.MD](./COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+</ul>
+<h3>docs/AILESSONS.md</h3>
+<ul>
+<li><code>[THEME_SYSTEM.MD](./THEME_SYSTEM.md)</code> → Replace with link using <code>THEME_SYSTEM.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](../ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[AILESSONS-THEME-TOGGLE.MD](./AILessons-theme-toggle.md)</code> → Replace with link using <code>AILESSONS-THEME-TOGGLE.MD</code></li>
+</ul>
+<h3>docs/ANGULAR_TESTING_LESSONS.md</h3>
+<ul>
+<li><code>[TESTING_GUIDE.MD](./TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[CUSTOMIZATION_GUIDE.MD](./CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[EMERALD-TESTING-GUIDE.MD](./emerald-testing-guide.md)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+</ul>
+<h3>docs/ARCHITECTURE.md</h3>
+<ul>
+<li><code>[System Architecture](/docs/images/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Component Hierarchy](/docs/images/COMPONENT_HIERARCHY.MD)</code> → Replace with link using <code>COMPONENT_HIERARCHY.MD</code></li>
+<li><code>[Data Flow](/docs/images/DATA_FLOW.MD)</code> → Replace with link using <code>DATA_FLOW.MD</code></li>
+<li><code>[Database Schema](/docs/images/DATABASE_SCHEMA.MD)</code> → Replace with link using <code>DATABASE_SCHEMA.MD</code></li>
+<li><code>[API Endpoints](/docs/images/API_ENDPOINTS.MD)</code> → Replace with link using <code>API_ENDPOINTS.MD</code></li>
+</ul>
+<h3>docs/CI_CD_GUIDE.md</h3>
+<ul>
+<li><code>[View Full Report](./TEST-RESULTS.MD)</code> → Replace with link using <code>TEST-RESULTS.MD</code></li>
+</ul>
+<h3>docs/CUSTOMIZATION_GUIDE.md</h3>
+<ul>
+<li><code>[EMERALD-COMPONENTS.MD](/docs/emerald-components.md)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[ANGULAR_TESTING_LESSONS.MD](./ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+</ul>
+<h3>docs/DATA_PROTECTION.md</h3>
+<ul>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+</ul>
+<h3>docs/DESIGN_SYSTEM_USAGE_GUIDE.md</h3>
+<ul>
+<li><code>[BEM Naming Convention Guide](./BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Component Documentation Template](./COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+</ul>
+<h3>docs/DOCUMENTATION_INDEX.md</h3>
+<ul>
+<li><code>[/docs/CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[/docs/REQUIREMENTS.MD](/docs/requirements.md)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[/docs/ARCHITECTURE.MD](/docs/ARCHITECTURE.md)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[/docs/DEPRECATED.MD](/docs/DEPRECATED.md)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[/docs/DUPLICATES.MD](/docs/DUPLICATES.md)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[/SETUP.MD](/SETUP.md)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[/NODEJS-INSTALLATION-GUIDE.MD](/nodejs-installation-guide.md)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD](/specific-version-installation-guide.md)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/MONGODB_TROUBLESHOOTING.MD](/MONGODB_TROUBLESHOOTING.md)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[/docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[/client-angular/MIGRATION_GUIDE.MD](/client-angular/MIGRATION_GUIDE.md)</code> → Replace with link using <code>MIGRATION_GUIDE.MD</code></li>
+<li><code>[/client-angular/src/app/CLEANUP_INSTRUCTIONS.MD](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md)</code> → Replace with link using <code>CLEANUP_INSTRUCTIONS.MD</code></li>
+<li><code>[/docs/TESTING_GUIDE.MD](/docs/TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[/docs/ANGULAR_TESTING_LESSONS.MD](/docs/ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTLESSONS.MD](/docs/UnitTestLessons.md)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[/docs/UNITSTRAT.MD](/docs/UnitStrat.md)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[/docs/EXAMPLE_UNITSTRAT.MD](/docs/Example_UnitStrat.md)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[/FRONTEND_TESTING_REVIEW.MD](/FRONTEND_TESTING_REVIEW.md)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[/TESTING_IMPROVEMENTS.MD](/TESTING_IMPROVEMENTS.md)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[/client-angular/TEST_FIXES.MD](/client-angular/TEST_FIXES.md)</code> → Replace with link using <code>TEST_FIXES.MD</code></li>
+<li><code>[/UI-UX-COMPLETION-README.MD](/UI-UX-COMPLETION-README.md)</code> → Replace with link using <code>UI-UX-COMPLETION-README.MD</code></li>
+<li><code>[/docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[/docs/CONFIG_INDEX.MD](/docs/CONFIG_INDEX.md)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[/client-angular/src/app/shared/emerald/COMPONENTS.MD](/client-angular/src/app/shared/emerald/COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[/docs/AILESSONS.MD](/docs/AILessons.md)</code> → Replace with link using <code>AILESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTINGLESSONS.MD](/docs/UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[/docs/END_TO_END_ENCRYPTION.MD](/docs/END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[/docs/SECURITY_BEST_PRACTICES.MD](/docs/SECURITY_BEST_PRACTICES.md)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[/docs/AUTHENTICATION_FLOW.MD](/docs/AUTHENTICATION_FLOW.md)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[/docs/DATA_PROTECTION.MD](/docs/DATA_PROTECTION.md)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/SNYK_TOKEN_SETUP.MD](/docs/SNYK_TOKEN_SETUP.md)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[/docs/SECURITY_REMEDIATION_GUIDE.MD](/docs/SECURITY_REMEDIATION_GUIDE.md)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[/docs/DOCUMENTATION_INDEX.MD](/docs/DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/GITHUB_INSIGHTS_WORKFLOW.MD](/docs/GITHUB_INSIGHTS_WORKFLOW.md)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/SECURITY_ALERTS_WORKFLOW.MD](/docs/SECURITY_ALERTS_WORKFLOW.md)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/WORKFLOW_ERROR_MONITORING.MD](/docs/WORKFLOW_ERROR_MONITORING.md)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[link](EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[link](/docs/EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+</ul>
+<h3>docs/DOCUMENTATION_STATUS_REPORT.md</h3>
+<ul>
+<li><code>[docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[docs/COMPLETION-PLAN-2024.MD](/docs/completion-plan-2024.md)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Requirements.md](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Task List](/docs/TASK-LIST.MD)</code> → Replace with link using <code>TASK-LIST.MD</code></li>
+<li><code>[Completion Plan 2024](/docs/COMPLETION-PLAN-2024.MD)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[Migration Completion Plan](/docs/MIGRATION-COMPLETION-PLAN.MD)</code> → Replace with link using <code>MIGRATION-COMPLETION-PLAN.MD</code></li>
+<li><code>[Implementation Plan](/docs/IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Architecture](docs/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Deprecated Code](/docs/DEPRECATED.MD)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[Code Duplication](/docs/DUPLICATES.MD)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD)</code> → Replace with link using <code>DOCUMENTATION-IMPROVEMENTS.MD</code></li>
+<li><code>[Documentation Index](/docs/DOCUMENTATION_INDEX.MD)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.MD)</code> → Replace with link using <code>GITHUB_INTEGRATION.MD</code></li>
+<li><code>[GitHub Setup Guide](/docs/GITHUB_SETUP.MD)</code> → Replace with link using <code>GITHUB_SETUP.MD</code></li>
+<li><code>[GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.MD)</code> → Replace with link using <code>GITHUB_WORKFLOW_PERMISSIONS.MD</code></li>
+<li><code>[Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.MD)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.MD)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.MD)</code> → Replace with link using <code>AI_GITHUB_ACTIONS.MD</code></li>
+<li><code>[Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.MD)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[Setup Guide](SETUP.MD)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[Node.js Installation Guide](NODEJS-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[Specific Version Installation Guide](SPECIFIC-VERSION-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.MD)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[Testing Guide](/docs/TESTING_GUIDE.MD)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.MD)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[Unit Testing Lessons](/docs/UNITTESTLESSONS.MD)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[Unit Testing Strategy](/docs/UNITSTRAT.MD)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[Example Unit Strategy](/docs/EXAMPLE_UNITSTRAT.MD)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[Frontend Testing Review](FRONTEND_TESTING_REVIEW.MD)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[Testing Improvements](TESTING_IMPROVEMENTS.MD)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD)</code> → Replace with link using <code>UI-UX-ROADMAP.MD</code></li>
+<li><code>[UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION.MD</code></li>
+<li><code>[UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD)</code> → Replace with link using <code>UI-UX-IMPROVEMENT-SUMMARY.MD</code></li>
+<li><code>[UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD)</code> → Replace with link using <code>UI-UX-COMPLETION-REPORT.MD</code></li>
+<li><code>[UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD)</code> → Replace with link using <code>UI-COMPONENTS-TECHNICAL.MD</code></li>
+<li><code>[Customization Guide](/docs/CUSTOMIZATION_GUIDE.MD)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[Configuration Index](/docs/CONFIG_INDEX.MD)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[CSP Configuration](/docs/CSP-CONFIGURATION.MD)</code> → Replace with link using <code>CSP-CONFIGURATION.MD</code></li>
+<li><code>[End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.MD)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[Security Best Practices](/docs/SECURITY_BEST_PRACTICES.MD)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[Authentication Flow](/docs/AUTHENTICATION_FLOW.MD)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[Data Protection](/docs/DATA_PROTECTION.MD)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[Snyk Workflow](/docs/SNYK_WORKFLOW.MD)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.MD)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.MD)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[Emerald Components](/docs/EMERALD-COMPONENTS.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS-CHANGELOG.MD</code></li>
+<li><code>[Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-REPORT.MD</code></li>
+<li><code>[Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[COMPONENTS.MD](./COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[THEME_SYSTEM.MD](./THEME_SYSTEM.md)</code> → Replace with link using <code>THEME_SYSTEM.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](../ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[AILESSONS-THEME-TOGGLE.MD](./AILessons-theme-toggle.md)</code> → Replace with link using <code>AILESSONS-THEME-TOGGLE.MD</code></li>
+<li><code>[TESTING_GUIDE.MD](./TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[CUSTOMIZATION_GUIDE.MD](./CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[EMERALD-TESTING-GUIDE.MD](./emerald-testing-guide.md)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[System Architecture](/docs/images/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Component Hierarchy](/docs/images/COMPONENT_HIERARCHY.MD)</code> → Replace with link using <code>COMPONENT_HIERARCHY.MD</code></li>
+<li><code>[Data Flow](/docs/images/DATA_FLOW.MD)</code> → Replace with link using <code>DATA_FLOW.MD</code></li>
+<li><code>[Database Schema](/docs/images/DATABASE_SCHEMA.MD)</code> → Replace with link using <code>DATABASE_SCHEMA.MD</code></li>
+<li><code>[API Endpoints](/docs/images/API_ENDPOINTS.MD)</code> → Replace with link using <code>API_ENDPOINTS.MD</code></li>
+<li><code>[View Full Report](./TEST-RESULTS.MD)</code> → Replace with link using <code>TEST-RESULTS.MD</code></li>
+<li><code>[EMERALD-COMPONENTS.MD](/docs/emerald-components.md)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[ANGULAR_TESTING_LESSONS.MD](./ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[BEM Naming Convention Guide](./BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Component Documentation Template](./COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[/docs/REQUIREMENTS.MD](/docs/requirements.md)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[/docs/ARCHITECTURE.MD](/docs/ARCHITECTURE.md)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[/docs/DEPRECATED.MD](/docs/DEPRECATED.md)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[/docs/DUPLICATES.MD](/docs/DUPLICATES.md)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[/SETUP.MD](/SETUP.md)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[/NODEJS-INSTALLATION-GUIDE.MD](/nodejs-installation-guide.md)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD](/specific-version-installation-guide.md)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/MONGODB_TROUBLESHOOTING.MD](/MONGODB_TROUBLESHOOTING.md)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[/docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[/client-angular/MIGRATION_GUIDE.MD](/client-angular/MIGRATION_GUIDE.md)</code> → Replace with link using <code>MIGRATION_GUIDE.MD</code></li>
+<li><code>[/client-angular/src/app/CLEANUP_INSTRUCTIONS.MD](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md)</code> → Replace with link using <code>CLEANUP_INSTRUCTIONS.MD</code></li>
+<li><code>[/docs/TESTING_GUIDE.MD](/docs/TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[/docs/ANGULAR_TESTING_LESSONS.MD](/docs/ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTLESSONS.MD](/docs/UnitTestLessons.md)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[/docs/UNITSTRAT.MD](/docs/UnitStrat.md)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[/docs/EXAMPLE_UNITSTRAT.MD](/docs/Example_UnitStrat.md)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[/FRONTEND_TESTING_REVIEW.MD](/FRONTEND_TESTING_REVIEW.md)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[/TESTING_IMPROVEMENTS.MD](/TESTING_IMPROVEMENTS.md)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[/client-angular/TEST_FIXES.MD](/client-angular/TEST_FIXES.md)</code> → Replace with link using <code>TEST_FIXES.MD</code></li>
+<li><code>[/UI-UX-COMPLETION-README.MD](/UI-UX-COMPLETION-README.md)</code> → Replace with link using <code>UI-UX-COMPLETION-README.MD</code></li>
+<li><code>[/docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[/docs/CONFIG_INDEX.MD](/docs/CONFIG_INDEX.md)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[/client-angular/src/app/shared/emerald/COMPONENTS.MD](/client-angular/src/app/shared/emerald/COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[/docs/AILESSONS.MD](/docs/AILessons.md)</code> → Replace with link using <code>AILESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTINGLESSONS.MD](/docs/UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[/docs/END_TO_END_ENCRYPTION.MD](/docs/END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[/docs/SECURITY_BEST_PRACTICES.MD](/docs/SECURITY_BEST_PRACTICES.md)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[/docs/AUTHENTICATION_FLOW.MD](/docs/AUTHENTICATION_FLOW.md)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[/docs/DATA_PROTECTION.MD](/docs/DATA_PROTECTION.md)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/SNYK_TOKEN_SETUP.MD](/docs/SNYK_TOKEN_SETUP.md)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[/docs/SECURITY_REMEDIATION_GUIDE.MD](/docs/SECURITY_REMEDIATION_GUIDE.md)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[/docs/DOCUMENTATION_INDEX.MD](/docs/DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/GITHUB_INSIGHTS_WORKFLOW.MD](/docs/GITHUB_INSIGHTS_WORKFLOW.md)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/SECURITY_ALERTS_WORKFLOW.MD](/docs/SECURITY_ALERTS_WORKFLOW.md)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/WORKFLOW_ERROR_MONITORING.MD](/docs/WORKFLOW_ERROR_MONITORING.md)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[link](EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[link](/docs/EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[docs/COMPLETION-PLAN-2024.MD](/docs/completion-plan-2024.md)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Requirements.md](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Task List](/docs/TASK-LIST.MD)</code> → Replace with link using <code>TASK-LIST.MD</code></li>
+<li><code>[Completion Plan 2024](/docs/COMPLETION-PLAN-2024.MD)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[Migration Completion Plan](/docs/MIGRATION-COMPLETION-PLAN.MD)</code> → Replace with link using <code>MIGRATION-COMPLETION-PLAN.MD</code></li>
+<li><code>[Implementation Plan](/docs/IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Architecture](docs/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Deprecated Code](/docs/DEPRECATED.MD)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[Code Duplication](/docs/DUPLICATES.MD)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD)</code> → Replace with link using <code>DOCUMENTATION-IMPROVEMENTS.MD</code></li>
+<li><code>[Documentation Index](/docs/DOCUMENTATION_INDEX.MD)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.MD)</code> → Replace with link using <code>GITHUB_INTEGRATION.MD</code></li>
+<li><code>[GitHub Setup Guide](/docs/GITHUB_SETUP.MD)</code> → Replace with link using <code>GITHUB_SETUP.MD</code></li>
+<li><code>[GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.MD)</code> → Replace with link using <code>GITHUB_WORKFLOW_PERMISSIONS.MD</code></li>
+<li><code>[Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.MD)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.MD)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.MD)</code> → Replace with link using <code>AI_GITHUB_ACTIONS.MD</code></li>
+<li><code>[Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.MD)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[Setup Guide](SETUP.MD)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[Node.js Installation Guide](NODEJS-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[Specific Version Installation Guide](SPECIFIC-VERSION-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.MD)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[Testing Guide](/docs/TESTING_GUIDE.MD)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.MD)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[Unit Testing Lessons](/docs/UNITTESTLESSONS.MD)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[Unit Testing Strategy](/docs/UNITSTRAT.MD)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[Example Unit Strategy](/docs/EXAMPLE_UNITSTRAT.MD)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[Frontend Testing Review](FRONTEND_TESTING_REVIEW.MD)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[Testing Improvements](TESTING_IMPROVEMENTS.MD)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD)</code> → Replace with link using <code>UI-UX-ROADMAP.MD</code></li>
+<li><code>[UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION.MD</code></li>
+<li><code>[UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD)</code> → Replace with link using <code>UI-UX-IMPROVEMENT-SUMMARY.MD</code></li>
+<li><code>[UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD)</code> → Replace with link using <code>UI-UX-COMPLETION-REPORT.MD</code></li>
+<li><code>[UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD)</code> → Replace with link using <code>UI-COMPONENTS-TECHNICAL.MD</code></li>
+<li><code>[Customization Guide](/docs/CUSTOMIZATION_GUIDE.MD)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[Configuration Index](/docs/CONFIG_INDEX.MD)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[CSP Configuration](/docs/CSP-CONFIGURATION.MD)</code> → Replace with link using <code>CSP-CONFIGURATION.MD</code></li>
+<li><code>[End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.MD)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[Security Best Practices](/docs/SECURITY_BEST_PRACTICES.MD)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[Authentication Flow](/docs/AUTHENTICATION_FLOW.MD)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[Data Protection](/docs/DATA_PROTECTION.MD)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[Snyk Workflow](/docs/SNYK_WORKFLOW.MD)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.MD)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.MD)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[Emerald Components](/docs/EMERALD-COMPONENTS.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS-CHANGELOG.MD</code></li>
+<li><code>[Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-REPORT.MD</code></li>
+<li><code>[Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[COMPONENTS.MD](./COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[THEME_SYSTEM.MD](./THEME_SYSTEM.md)</code> → Replace with link using <code>THEME_SYSTEM.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](../ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[AILESSONS-THEME-TOGGLE.MD](./AILessons-theme-toggle.md)</code> → Replace with link using <code>AILESSONS-THEME-TOGGLE.MD</code></li>
+<li><code>[TESTING_GUIDE.MD](./TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[CUSTOMIZATION_GUIDE.MD](./CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[EMERALD-TESTING-GUIDE.MD](./emerald-testing-guide.md)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[System Architecture](/docs/images/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Component Hierarchy](/docs/images/COMPONENT_HIERARCHY.MD)</code> → Replace with link using <code>COMPONENT_HIERARCHY.MD</code></li>
+<li><code>[Data Flow](/docs/images/DATA_FLOW.MD)</code> → Replace with link using <code>DATA_FLOW.MD</code></li>
+<li><code>[Database Schema](/docs/images/DATABASE_SCHEMA.MD)</code> → Replace with link using <code>DATABASE_SCHEMA.MD</code></li>
+<li><code>[API Endpoints](/docs/images/API_ENDPOINTS.MD)</code> → Replace with link using <code>API_ENDPOINTS.MD</code></li>
+<li><code>[View Full Report](./TEST-RESULTS.MD)</code> → Replace with link using <code>TEST-RESULTS.MD</code></li>
+<li><code>[EMERALD-COMPONENTS.MD](/docs/emerald-components.md)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[ANGULAR_TESTING_LESSONS.MD](./ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[BEM Naming Convention Guide](./BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Component Documentation Template](./COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[/docs/REQUIREMENTS.MD](/docs/requirements.md)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[/docs/ARCHITECTURE.MD](/docs/ARCHITECTURE.md)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[/docs/DEPRECATED.MD](/docs/DEPRECATED.md)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[/docs/DUPLICATES.MD](/docs/DUPLICATES.md)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[/SETUP.MD](/SETUP.md)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[/NODEJS-INSTALLATION-GUIDE.MD](/nodejs-installation-guide.md)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD](/specific-version-installation-guide.md)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/MONGODB_TROUBLESHOOTING.MD](/MONGODB_TROUBLESHOOTING.md)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[/docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[/client-angular/MIGRATION_GUIDE.MD](/client-angular/MIGRATION_GUIDE.md)</code> → Replace with link using <code>MIGRATION_GUIDE.MD</code></li>
+<li><code>[/client-angular/src/app/CLEANUP_INSTRUCTIONS.MD](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md)</code> → Replace with link using <code>CLEANUP_INSTRUCTIONS.MD</code></li>
+<li><code>[/docs/TESTING_GUIDE.MD](/docs/TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[/docs/ANGULAR_TESTING_LESSONS.MD](/docs/ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTLESSONS.MD](/docs/UnitTestLessons.md)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[/docs/UNITSTRAT.MD](/docs/UnitStrat.md)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[/docs/EXAMPLE_UNITSTRAT.MD](/docs/Example_UnitStrat.md)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[/FRONTEND_TESTING_REVIEW.MD](/FRONTEND_TESTING_REVIEW.md)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[/TESTING_IMPROVEMENTS.MD](/TESTING_IMPROVEMENTS.md)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[/client-angular/TEST_FIXES.MD](/client-angular/TEST_FIXES.md)</code> → Replace with link using <code>TEST_FIXES.MD</code></li>
+<li><code>[/UI-UX-COMPLETION-README.MD](/UI-UX-COMPLETION-README.md)</code> → Replace with link using <code>UI-UX-COMPLETION-README.MD</code></li>
+<li><code>[/docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[/docs/CONFIG_INDEX.MD](/docs/CONFIG_INDEX.md)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[/client-angular/src/app/shared/emerald/COMPONENTS.MD](/client-angular/src/app/shared/emerald/COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[/docs/AILESSONS.MD](/docs/AILessons.md)</code> → Replace with link using <code>AILESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTINGLESSONS.MD](/docs/UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[/docs/END_TO_END_ENCRYPTION.MD](/docs/END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[/docs/SECURITY_BEST_PRACTICES.MD](/docs/SECURITY_BEST_PRACTICES.md)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[/docs/AUTHENTICATION_FLOW.MD](/docs/AUTHENTICATION_FLOW.md)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[/docs/DATA_PROTECTION.MD](/docs/DATA_PROTECTION.md)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/SNYK_TOKEN_SETUP.MD](/docs/SNYK_TOKEN_SETUP.md)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[/docs/SECURITY_REMEDIATION_GUIDE.MD](/docs/SECURITY_REMEDIATION_GUIDE.md)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[/docs/DOCUMENTATION_INDEX.MD](/docs/DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/GITHUB_INSIGHTS_WORKFLOW.MD](/docs/GITHUB_INSIGHTS_WORKFLOW.md)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/SECURITY_ALERTS_WORKFLOW.MD](/docs/SECURITY_ALERTS_WORKFLOW.md)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/WORKFLOW_ERROR_MONITORING.MD](/docs/WORKFLOW_ERROR_MONITORING.md)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[link](EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[link](/docs/EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[docs/COMPLETION-PLAN-2024.MD](/docs/completion-plan-2024.md)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Requirements.md](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Task List](/docs/TASK-LIST.MD)</code> → Replace with link using <code>TASK-LIST.MD</code></li>
+<li><code>[Completion Plan 2024](/docs/COMPLETION-PLAN-2024.MD)</code> → Replace with link using <code>COMPLETION-PLAN-2024.MD</code></li>
+<li><code>[Migration Completion Plan](/docs/MIGRATION-COMPLETION-PLAN.MD)</code> → Replace with link using <code>MIGRATION-COMPLETION-PLAN.MD</code></li>
+<li><code>[Implementation Plan](/docs/IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Architecture](docs/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Deprecated Code](/docs/DEPRECATED.MD)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[Code Duplication](/docs/DUPLICATES.MD)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[Documentation Improvements](/docs/DOCUMENTATION-IMPROVEMENTS.MD)</code> → Replace with link using <code>DOCUMENTATION-IMPROVEMENTS.MD</code></li>
+<li><code>[Documentation Index](/docs/DOCUMENTATION_INDEX.MD)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[GitHub Integration Strategy](/docs/GITHUB_INTEGRATION.MD)</code> → Replace with link using <code>GITHUB_INTEGRATION.MD</code></li>
+<li><code>[GitHub Setup Guide](/docs/GITHUB_SETUP.MD)</code> → Replace with link using <code>GITHUB_SETUP.MD</code></li>
+<li><code>[GitHub Workflow Permissions](/docs/GITHUB_WORKFLOW_PERMISSIONS.MD)</code> → Replace with link using <code>GITHUB_WORKFLOW_PERMISSIONS.MD</code></li>
+<li><code>[Security Alerts Workflow](/docs/SECURITY_ALERTS_WORKFLOW.MD)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[GitHub Insights Workflow](/docs/GITHUB_INSIGHTS_WORKFLOW.MD)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[AI-Powered GitHub Actions](/docs/AI_GITHUB_ACTIONS.MD)</code> → Replace with link using <code>AI_GITHUB_ACTIONS.MD</code></li>
+<li><code>[Workflow Error Monitoring System](/docs/WORKFLOW_ERROR_MONITORING.MD)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[Setup Guide](SETUP.MD)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[Node.js Installation Guide](NODEJS-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[Specific Version Installation Guide](SPECIFIC-VERSION-INSTALLATION-GUIDE.MD)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[MongoDB Troubleshooting](MONGODB_TROUBLESHOOTING.MD)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[Testing Guide](/docs/TESTING_GUIDE.MD)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[Angular Testing Lessons](/docs/ANGULAR_TESTING_LESSONS.MD)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[Unit Testing Lessons](/docs/UNITTESTLESSONS.MD)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[Unit Testing Strategy](/docs/UNITSTRAT.MD)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[Example Unit Strategy](/docs/EXAMPLE_UNITSTRAT.MD)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[Frontend Testing Review](FRONTEND_TESTING_REVIEW.MD)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[Testing Improvements](TESTING_IMPROVEMENTS.MD)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[UI/UX Roadmap](/docs/UI-UX-ROADMAP.MD)</code> → Replace with link using <code>UI-UX-ROADMAP.MD</code></li>
+<li><code>[UI/UX Implementation](/docs/UI-UX-IMPLEMENTATION.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION.MD</code></li>
+<li><code>[UI/UX Improvement Summary](/docs/UI-UX-IMPROVEMENT-SUMMARY.MD)</code> → Replace with link using <code>UI-UX-IMPROVEMENT-SUMMARY.MD</code></li>
+<li><code>[UI/UX Completion Report](/docs/UI-UX-COMPLETION-REPORT.MD)</code> → Replace with link using <code>UI-UX-COMPLETION-REPORT.MD</code></li>
+<li><code>[UI Components Technical](/docs/UI-COMPONENTS-TECHNICAL.MD)</code> → Replace with link using <code>UI-COMPONENTS-TECHNICAL.MD</code></li>
+<li><code>[Customization Guide](/docs/CUSTOMIZATION_GUIDE.MD)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[Configuration Index](/docs/CONFIG_INDEX.MD)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[CSP Configuration](/docs/CSP-CONFIGURATION.MD)</code> → Replace with link using <code>CSP-CONFIGURATION.MD</code></li>
+<li><code>[End-to-End Encryption](/docs/END_TO_END_ENCRYPTION.MD)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[Security Best Practices](/docs/SECURITY_BEST_PRACTICES.MD)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[Authentication Flow](/docs/AUTHENTICATION_FLOW.MD)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[Data Protection](/docs/DATA_PROTECTION.MD)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[Snyk Workflow](/docs/SNYK_WORKFLOW.MD)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Snyk Token Setup](/docs/SNYK_TOKEN_SETUP.MD)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[Security Remediation Guide](/docs/SECURITY_REMEDIATION_GUIDE.MD)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[Emerald Components](/docs/EMERALD-COMPONENTS.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[Emerald Components Changelog](/docs/EMERALD-COMPONENTS-CHANGELOG.MD)</code> → Replace with link using <code>EMERALD-COMPONENTS-CHANGELOG.MD</code></li>
+<li><code>[Emerald Implementation Plan](/docs/EMERALD-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Emerald Implementation Report](/docs/EMERALD-IMPLEMENTATION-REPORT.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-REPORT.MD</code></li>
+<li><code>[Emerald Implementation Summary](/docs/EMERALD-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>EMERALD-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Emerald Testing Guide](/docs/EMERALD-TESTING-GUIDE.MD)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[Travel Module Documentation](/server/docs/TRAVEL-MODULE.MD)</code> → Replace with link using <code>TRAVEL-MODULE.MD</code></li>
+<li><code>[API Documentation](/server/docs/API.MD)</code> → Replace with link using <code>API.MD</code></li>
+<li><code>[Requirements Specification](/docs/REQUIREMENTS.MD)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[COMPONENTS.MD](./COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[THEME_SYSTEM.MD](./THEME_SYSTEM.md)</code> → Replace with link using <code>THEME_SYSTEM.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](../ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[ANGULAR_BUILD_OPTIMIZATION.MD](./ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[AILESSONS-THEME-TOGGLE.MD](./AILessons-theme-toggle.md)</code> → Replace with link using <code>AILESSONS-THEME-TOGGLE.MD</code></li>
+<li><code>[TESTING_GUIDE.MD](./TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[CUSTOMIZATION_GUIDE.MD](./CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[EMERALD-TESTING-GUIDE.MD](./emerald-testing-guide.md)</code> → Replace with link using <code>EMERALD-TESTING-GUIDE.MD</code></li>
+<li><code>[System Architecture](/docs/images/ARCHITECTURE.MD)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[Component Hierarchy](/docs/images/COMPONENT_HIERARCHY.MD)</code> → Replace with link using <code>COMPONENT_HIERARCHY.MD</code></li>
+<li><code>[Data Flow](/docs/images/DATA_FLOW.MD)</code> → Replace with link using <code>DATA_FLOW.MD</code></li>
+<li><code>[Database Schema](/docs/images/DATABASE_SCHEMA.MD)</code> → Replace with link using <code>DATABASE_SCHEMA.MD</code></li>
+<li><code>[API Endpoints](/docs/images/API_ENDPOINTS.MD)</code> → Replace with link using <code>API_ENDPOINTS.MD</code></li>
+<li><code>[View Full Report](./TEST-RESULTS.MD)</code> → Replace with link using <code>TEST-RESULTS.MD</code></li>
+<li><code>[EMERALD-COMPONENTS.MD](/docs/emerald-components.md)</code> → Replace with link using <code>EMERALD-COMPONENTS.MD</code></li>
+<li><code>[ANGULAR_TESTING_LESSONS.MD](./ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[BEM Naming Convention Guide](./BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Component Documentation Template](./COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/CHANGELOG.MD](/docs/ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[/docs/REQUIREMENTS.MD](/docs/requirements.md)</code> → Replace with link using <code>REQUIREMENTS.MD</code></li>
+<li><code>[/docs/ARCHITECTURE.MD](/docs/ARCHITECTURE.md)</code> → Replace with link using <code>ARCHITECTURE.MD</code></li>
+<li><code>[/docs/DEPRECATED.MD](/docs/DEPRECATED.md)</code> → Replace with link using <code>DEPRECATED.MD</code></li>
+<li><code>[/docs/DUPLICATES.MD](/docs/DUPLICATES.md)</code> → Replace with link using <code>DUPLICATES.MD</code></li>
+<li><code>[/SETUP.MD](/SETUP.md)</code> → Replace with link using <code>SETUP.MD</code></li>
+<li><code>[/NODEJS-INSTALLATION-GUIDE.MD](/nodejs-installation-guide.md)</code> → Replace with link using <code>NODEJS-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/SPECIFIC-VERSION-INSTALLATION-GUIDE.MD](/specific-version-installation-guide.md)</code> → Replace with link using <code>SPECIFIC-VERSION-INSTALLATION-GUIDE.MD</code></li>
+<li><code>[/MONGODB_TROUBLESHOOTING.MD](/MONGODB_TROUBLESHOOTING.md)</code> → Replace with link using <code>MONGODB_TROUBLESHOOTING.MD</code></li>
+<li><code>[/docs/ANGULAR_BUILD_OPTIMIZATION.MD](/docs/ANGULAR_BUILD_OPTIMIZATION.md)</code> → Replace with link using <code>ANGULAR_BUILD_OPTIMIZATION.MD</code></li>
+<li><code>[/client-angular/MIGRATION_GUIDE.MD](/client-angular/MIGRATION_GUIDE.md)</code> → Replace with link using <code>MIGRATION_GUIDE.MD</code></li>
+<li><code>[/client-angular/src/app/CLEANUP_INSTRUCTIONS.MD](/client-angular/src/app/CLEANUP_INSTRUCTIONS.md)</code> → Replace with link using <code>CLEANUP_INSTRUCTIONS.MD</code></li>
+<li><code>[/docs/TESTING_GUIDE.MD](/docs/TESTING_GUIDE.md)</code> → Replace with link using <code>TESTING_GUIDE.MD</code></li>
+<li><code>[/docs/ANGULAR_TESTING_LESSONS.MD](/docs/ANGULAR_TESTING_LESSONS.md)</code> → Replace with link using <code>ANGULAR_TESTING_LESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTLESSONS.MD](/docs/UnitTestLessons.md)</code> → Replace with link using <code>UNITTESTLESSONS.MD</code></li>
+<li><code>[/docs/UNITSTRAT.MD](/docs/UnitStrat.md)</code> → Replace with link using <code>UNITSTRAT.MD</code></li>
+<li><code>[/docs/EXAMPLE_UNITSTRAT.MD](/docs/Example_UnitStrat.md)</code> → Replace with link using <code>EXAMPLE_UNITSTRAT.MD</code></li>
+<li><code>[/FRONTEND_TESTING_REVIEW.MD](/FRONTEND_TESTING_REVIEW.md)</code> → Replace with link using <code>FRONTEND_TESTING_REVIEW.MD</code></li>
+<li><code>[/TESTING_IMPROVEMENTS.MD](/TESTING_IMPROVEMENTS.md)</code> → Replace with link using <code>TESTING_IMPROVEMENTS.MD</code></li>
+<li><code>[/client-angular/TEST_FIXES.MD](/client-angular/TEST_FIXES.md)</code> → Replace with link using <code>TEST_FIXES.MD</code></li>
+<li><code>[/UI-UX-COMPLETION-README.MD](/UI-UX-COMPLETION-README.md)</code> → Replace with link using <code>UI-UX-COMPLETION-README.MD</code></li>
+<li><code>[/docs/CUSTOMIZATION_GUIDE.MD](/docs/CUSTOMIZATION_GUIDE.md)</code> → Replace with link using <code>CUSTOMIZATION_GUIDE.MD</code></li>
+<li><code>[/docs/CONFIG_INDEX.MD](/docs/CONFIG_INDEX.md)</code> → Replace with link using <code>CONFIG_INDEX.MD</code></li>
+<li><code>[/client-angular/src/app/shared/emerald/COMPONENTS.MD](/client-angular/src/app/shared/emerald/COMPONENTS.md)</code> → Replace with link using <code>COMPONENTS.MD</code></li>
+<li><code>[/docs/AILESSONS.MD](/docs/AILessons.md)</code> → Replace with link using <code>AILESSONS.MD</code></li>
+<li><code>[/docs/UNITTESTINGLESSONS.MD](/docs/UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[/docs/END_TO_END_ENCRYPTION.MD](/docs/END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[/docs/SECURITY_BEST_PRACTICES.MD](/docs/SECURITY_BEST_PRACTICES.md)</code> → Replace with link using <code>SECURITY_BEST_PRACTICES.MD</code></li>
+<li><code>[/docs/AUTHENTICATION_FLOW.MD](/docs/AUTHENTICATION_FLOW.md)</code> → Replace with link using <code>AUTHENTICATION_FLOW.MD</code></li>
+<li><code>[/docs/DATA_PROTECTION.MD](/docs/DATA_PROTECTION.md)</code> → Replace with link using <code>DATA_PROTECTION.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/SNYK_TOKEN_SETUP.MD](/docs/SNYK_TOKEN_SETUP.md)</code> → Replace with link using <code>SNYK_TOKEN_SETUP.MD</code></li>
+<li><code>[/docs/SECURITY_REMEDIATION_GUIDE.MD](/docs/SECURITY_REMEDIATION_GUIDE.md)</code> → Replace with link using <code>SECURITY_REMEDIATION_GUIDE.MD</code></li>
+<li><code>[/docs/DOCUMENTATION_INDEX.MD](/docs/DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[/docs/GITHUB_INSIGHTS_WORKFLOW.MD](/docs/GITHUB_INSIGHTS_WORKFLOW.md)</code> → Replace with link using <code>GITHUB_INSIGHTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/SECURITY_ALERTS_WORKFLOW.MD](/docs/SECURITY_ALERTS_WORKFLOW.md)</code> → Replace with link using <code>SECURITY_ALERTS_WORKFLOW.MD</code></li>
+<li><code>[/docs/WORKFLOW_ERROR_MONITORING.MD](/docs/WORKFLOW_ERROR_MONITORING.md)</code> → Replace with link using <code>WORKFLOW_ERROR_MONITORING.MD</code></li>
+<li><code>[link](EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[link](/docs/EXAMPLE.MD)</code> → Replace with link using <code>EXAMPLE.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[DOCUMENTATION_INDEX.MD](DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[CHANGELOG.MD](ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](./ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Security Alerts](../docs/SECURITY-ALERTS.MD)</code> → Replace with link using <code>SECURITY-ALERTS.MD</code></li>
+<li><code>[Security Alerts](../downloaded-reports/security/DEPENDABOT-ALERTS.MD)</code> → Replace with link using <code>DEPENDABOT-ALERTS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[UNITTESTINGLESSONS.MD](./UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Design System Implementation Summary](../DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Design System Usage Guide](../DESIGN-SYSTEM-USAGE-GUIDE.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-USAGE-GUIDE.MD</code></li>
+<li><code>[BEM Naming Convention Guide](../BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Colors](./COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Typography](./TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Spacing](./SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Borders &amp; Shadows](./BORDERS-SHADOWS.MD)</code> → Replace with link using <code>BORDERS-SHADOWS.MD</code></li>
+<li><code>[Button](./components/BUTTON.MD)</code> → Replace with link using <code>BUTTON.MD</code></li>
+<li><code>[Card](./components/CARD.MD)</code> → Replace with link using <code>CARD.MD</code></li>
+<li><code>[Icon](./components/ICON.MD)</code> → Replace with link using <code>ICON.MD</code></li>
+<li><code>[Input](./FORM-COMPONENTS.MD#input-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Checkbox](./FORM-COMPONENTS.MD#checkbox-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Select](./FORM-COMPONENTS.MD#select-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Form Components Usage Guide](./FORM-COMPONENTS-USAGE.MD)</code> → Replace with link using <code>FORM-COMPONENTS-USAGE.MD</code></li>
+<li><code>[Form Validation Patterns](./FORM-VALIDATION-PATTERNS.MD)</code> → Replace with link using <code>FORM-VALIDATION-PATTERNS.MD</code></li>
+<li><code>[Form Layout Patterns](./FORM-LAYOUT-PATTERNS.MD)</code> → Replace with link using <code>FORM-LAYOUT-PATTERNS.MD</code></li>
+<li><code>[Spacing Utilities](./utilities/SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Typography Utilities](./utilities/TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Color Utilities](./utilities/COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Layout Utilities](./utilities/LAYOUT.MD)</code> → Replace with link using <code>LAYOUT.MD</code></li>
+<li><code>[Accessibility](./guidelines/ACCESSIBILITY.MD)</code> → Replace with link using <code>ACCESSIBILITY.MD</code></li>
+<li><code>[Responsive Design](./guidelines/RESPONSIVE-DESIGN.MD)</code> → Replace with link using <code>RESPONSIVE-DESIGN.MD</code></li>
+<li><code>[Dark Mode](./guidelines/DARK-MODE.MD)</code> → Replace with link using <code>DARK-MODE.MD</code></li>
+<li><code>[Component Documentation Template](../COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Detailed Issues Report](./PRIORITIZED-ISSUES.MD)</code> → Replace with link using <code>PRIORITIZED-ISSUES.MD</code></li>
+<li><code>[Vulnerable Dependencies Report](./VULNERABLE-DEPENDENCIES.MD)</code> → Replace with link using <code>VULNERABLE-DEPENDENCIES.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[DOCUMENTATION_INDEX.MD](DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[CHANGELOG.MD](ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](./ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Security Alerts](../docs/SECURITY-ALERTS.MD)</code> → Replace with link using <code>SECURITY-ALERTS.MD</code></li>
+<li><code>[Security Alerts](../downloaded-reports/security/DEPENDABOT-ALERTS.MD)</code> → Replace with link using <code>DEPENDABOT-ALERTS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[UNITTESTINGLESSONS.MD](./UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Design System Implementation Summary](../DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Design System Usage Guide](../DESIGN-SYSTEM-USAGE-GUIDE.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-USAGE-GUIDE.MD</code></li>
+<li><code>[BEM Naming Convention Guide](../BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Colors](./COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Typography](./TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Spacing](./SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Borders &amp; Shadows](./BORDERS-SHADOWS.MD)</code> → Replace with link using <code>BORDERS-SHADOWS.MD</code></li>
+<li><code>[Button](./components/BUTTON.MD)</code> → Replace with link using <code>BUTTON.MD</code></li>
+<li><code>[Card](./components/CARD.MD)</code> → Replace with link using <code>CARD.MD</code></li>
+<li><code>[Icon](./components/ICON.MD)</code> → Replace with link using <code>ICON.MD</code></li>
+<li><code>[Input](./FORM-COMPONENTS.MD#input-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Checkbox](./FORM-COMPONENTS.MD#checkbox-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Select](./FORM-COMPONENTS.MD#select-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Form Components Usage Guide](./FORM-COMPONENTS-USAGE.MD)</code> → Replace with link using <code>FORM-COMPONENTS-USAGE.MD</code></li>
+<li><code>[Form Validation Patterns](./FORM-VALIDATION-PATTERNS.MD)</code> → Replace with link using <code>FORM-VALIDATION-PATTERNS.MD</code></li>
+<li><code>[Form Layout Patterns](./FORM-LAYOUT-PATTERNS.MD)</code> → Replace with link using <code>FORM-LAYOUT-PATTERNS.MD</code></li>
+<li><code>[Spacing Utilities](./utilities/SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Typography Utilities](./utilities/TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Color Utilities](./utilities/COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Layout Utilities](./utilities/LAYOUT.MD)</code> → Replace with link using <code>LAYOUT.MD</code></li>
+<li><code>[Accessibility](./guidelines/ACCESSIBILITY.MD)</code> → Replace with link using <code>ACCESSIBILITY.MD</code></li>
+<li><code>[Responsive Design](./guidelines/RESPONSIVE-DESIGN.MD)</code> → Replace with link using <code>RESPONSIVE-DESIGN.MD</code></li>
+<li><code>[Dark Mode](./guidelines/DARK-MODE.MD)</code> → Replace with link using <code>DARK-MODE.MD</code></li>
+<li><code>[Component Documentation Template](../COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Detailed Issues Report](./PRIORITIZED-ISSUES.MD)</code> → Replace with link using <code>PRIORITIZED-ISSUES.MD</code></li>
+<li><code>[Vulnerable Dependencies Report](./VULNERABLE-DEPENDENCIES.MD)</code> → Replace with link using <code>VULNERABLE-DEPENDENCIES.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[DOCUMENTATION_INDEX.MD](DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[CHANGELOG.MD](ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+<li><code>[Error Handling and Telemetry Documentation](./ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Security Alerts](../docs/SECURITY-ALERTS.MD)</code> → Replace with link using <code>SECURITY-ALERTS.MD</code></li>
+<li><code>[Security Alerts](../downloaded-reports/security/DEPENDABOT-ALERTS.MD)</code> → Replace with link using <code>DEPENDABOT-ALERTS.MD</code></li>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+<li><code>[UNITTESTINGLESSONS.MD](./UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[Design System Implementation Summary](../DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Design System Usage Guide](../DESIGN-SYSTEM-USAGE-GUIDE.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-USAGE-GUIDE.MD</code></li>
+<li><code>[BEM Naming Convention Guide](../BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Colors](./COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Typography](./TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Spacing](./SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Borders &amp; Shadows](./BORDERS-SHADOWS.MD)</code> → Replace with link using <code>BORDERS-SHADOWS.MD</code></li>
+<li><code>[Button](./components/BUTTON.MD)</code> → Replace with link using <code>BUTTON.MD</code></li>
+<li><code>[Card](./components/CARD.MD)</code> → Replace with link using <code>CARD.MD</code></li>
+<li><code>[Icon](./components/ICON.MD)</code> → Replace with link using <code>ICON.MD</code></li>
+<li><code>[Input](./FORM-COMPONENTS.MD#input-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Checkbox](./FORM-COMPONENTS.MD#checkbox-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Select](./FORM-COMPONENTS.MD#select-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Form Components Usage Guide](./FORM-COMPONENTS-USAGE.MD)</code> → Replace with link using <code>FORM-COMPONENTS-USAGE.MD</code></li>
+<li><code>[Form Validation Patterns](./FORM-VALIDATION-PATTERNS.MD)</code> → Replace with link using <code>FORM-VALIDATION-PATTERNS.MD</code></li>
+<li><code>[Form Layout Patterns](./FORM-LAYOUT-PATTERNS.MD)</code> → Replace with link using <code>FORM-LAYOUT-PATTERNS.MD</code></li>
+<li><code>[Spacing Utilities](./utilities/SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Typography Utilities](./utilities/TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Color Utilities](./utilities/COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Layout Utilities](./utilities/LAYOUT.MD)</code> → Replace with link using <code>LAYOUT.MD</code></li>
+<li><code>[Accessibility](./guidelines/ACCESSIBILITY.MD)</code> → Replace with link using <code>ACCESSIBILITY.MD</code></li>
+<li><code>[Responsive Design](./guidelines/RESPONSIVE-DESIGN.MD)</code> → Replace with link using <code>RESPONSIVE-DESIGN.MD</code></li>
+<li><code>[Dark Mode](./guidelines/DARK-MODE.MD)</code> → Replace with link using <code>DARK-MODE.MD</code></li>
+<li><code>[Component Documentation Template](../COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+<li><code>[Detailed Issues Report](./PRIORITIZED-ISSUES.MD)</code> → Replace with link using <code>PRIORITIZED-ISSUES.MD</code></li>
+<li><code>[Vulnerable Dependencies Report](./VULNERABLE-DEPENDENCIES.MD)</code> → Replace with link using <code>VULNERABLE-DEPENDENCIES.MD</code></li>
+</ul>
+<h3>docs/DOCUMENTATION_STYLE_GUIDE.md</h3>
+<ul>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[Documentation Style Guide](/docs/DOCUMENTATION_STYLE_GUIDE.MD)</code> → Replace with link using <code>DOCUMENTATION_STYLE_GUIDE.MD</code></li>
+<li><code>[DOCUMENTATION_INDEX.MD](DOCUMENTATION_INDEX.md)</code> → Replace with link using <code>DOCUMENTATION_INDEX.MD</code></li>
+<li><code>[CHANGELOG.MD](ChangeLog.md)</code> → Replace with link using <code>CHANGELOG.MD</code></li>
+</ul>
+<h3>docs/DUPLICATES.md</h3>
+<ul>
+<li><code>[Error Handling and Telemetry Documentation](./ERRORHANDLINGTELEMETRY.MD)</code> → Replace with link using <code>ERRORHANDLINGTELEMETRY.MD</code></li>
+</ul>
+<h3>docs/EMERALD_IMPLEMENTATION_PLAN.md</h3>
+<ul>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+</ul>
+<h3>docs/REPORTS_MIGRATION_GUIDE.md</h3>
+<ul>
+<li><code>[Security Alerts](../docs/SECURITY-ALERTS.MD)</code> → Replace with link using <code>SECURITY-ALERTS.MD</code></li>
+<li><code>[Security Alerts](../downloaded-reports/security/DEPENDABOT-ALERTS.MD)</code> → Replace with link using <code>DEPENDABOT-ALERTS.MD</code></li>
+</ul>
+<h3>docs/SECURITY_BEST_PRACTICES.md</h3>
+<ul>
+<li><code>[END_TO_END_ENCRYPTION.MD](END_TO_END_ENCRYPTION.md)</code> → Replace with link using <code>END_TO_END_ENCRYPTION.MD</code></li>
+</ul>
+<h3>docs/TESTING_GUIDE.md</h3>
+<ul>
+<li><code>[UNITTESTINGLESSONS.MD](./UnitTestingLessons.md)</code> → Replace with link using <code>UNITTESTINGLESSONS.MD</code></li>
+</ul>
+<h3>docs/UI_UX_ROADMAP.md</h3>
+<ul>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+<li><code>[UI/UX Implementation Plan](/Users/oivindlund/date-night-app/docs/UI-UX-IMPLEMENTATION-PLAN.MD)</code> → Replace with link using <code>UI-UX-IMPLEMENTATION-PLAN.MD</code></li>
+</ul>
+<h3>docs/design_system/README.md</h3>
+<ul>
+<li><code>[Design System Implementation Summary](../DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-IMPLEMENTATION-SUMMARY.MD</code></li>
+<li><code>[Design System Usage Guide](../DESIGN-SYSTEM-USAGE-GUIDE.MD)</code> → Replace with link using <code>DESIGN-SYSTEM-USAGE-GUIDE.MD</code></li>
+<li><code>[BEM Naming Convention Guide](../BEM-NAMING-CONVENTION.MD)</code> → Replace with link using <code>BEM-NAMING-CONVENTION.MD</code></li>
+<li><code>[Colors](./COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Typography](./TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Spacing](./SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Borders &amp; Shadows](./BORDERS-SHADOWS.MD)</code> → Replace with link using <code>BORDERS-SHADOWS.MD</code></li>
+<li><code>[Button](./components/BUTTON.MD)</code> → Replace with link using <code>BUTTON.MD</code></li>
+<li><code>[Card](./components/CARD.MD)</code> → Replace with link using <code>CARD.MD</code></li>
+<li><code>[Icon](./components/ICON.MD)</code> → Replace with link using <code>ICON.MD</code></li>
+<li><code>[Input](./FORM-COMPONENTS.MD#input-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Checkbox](./FORM-COMPONENTS.MD#checkbox-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Select](./FORM-COMPONENTS.MD#select-component)</code> → Replace with link using <code>FORM-COMPONENTS.MD</code></li>
+<li><code>[Form Components Usage Guide](./FORM-COMPONENTS-USAGE.MD)</code> → Replace with link using <code>FORM-COMPONENTS-USAGE.MD</code></li>
+<li><code>[Form Validation Patterns](./FORM-VALIDATION-PATTERNS.MD)</code> → Replace with link using <code>FORM-VALIDATION-PATTERNS.MD</code></li>
+<li><code>[Form Layout Patterns](./FORM-LAYOUT-PATTERNS.MD)</code> → Replace with link using <code>FORM-LAYOUT-PATTERNS.MD</code></li>
+<li><code>[Spacing Utilities](./utilities/SPACING.MD)</code> → Replace with link using <code>SPACING.MD</code></li>
+<li><code>[Typography Utilities](./utilities/TYPOGRAPHY.MD)</code> → Replace with link using <code>TYPOGRAPHY.MD</code></li>
+<li><code>[Color Utilities](./utilities/COLORS.MD)</code> → Replace with link using <code>COLORS.MD</code></li>
+<li><code>[Layout Utilities](./utilities/LAYOUT.MD)</code> → Replace with link using <code>LAYOUT.MD</code></li>
+<li><code>[Accessibility](./guidelines/ACCESSIBILITY.MD)</code> → Replace with link using <code>ACCESSIBILITY.MD</code></li>
+<li><code>[Responsive Design](./guidelines/RESPONSIVE-DESIGN.MD)</code> → Replace with link using <code>RESPONSIVE-DESIGN.MD</code></li>
+<li><code>[Dark Mode](./guidelines/DARK-MODE.MD)</code> → Replace with link using <code>DARK-MODE.MD</code></li>
+<li><code>[Component Documentation Template](../COMPONENT-DOCUMENTATION-TEMPLATE.MD)</code> → Replace with link using <code>COMPONENT-DOCUMENTATION-TEMPLATE.MD</code></li>
+</ul>
+<h3>downloaded-reports/snyk/snyk-reports/initial-setup.md</h3>
+<ul>
+<li><code>[/docs/SNYK_WORKFLOW.MD](/docs/SNYK_WORKFLOW.md)</code> → Replace with link using <code>SNYK_WORKFLOW.MD</code></li>
+</ul>
+<h3>downloaded-reports/snyk/snyk-reports/issues-summary.md</h3>
+<ul>
+<li><code>[Detailed Issues Report](./PRIORITIZED-ISSUES.MD)</code> → Replace with link using <code>PRIORITIZED-ISSUES.MD</code></li>
+<li><code>[Vulnerable Dependencies Report](./VULNERABLE-DEPENDENCIES.MD)</code> → Replace with link using <code>VULNERABLE-DEPENDENCIES.MD</code></li>
+</ul>
+<h2>TODO Comments to Address</h2>
+<p>212 TODO comments need to be addressed:</p>
+<h3>CONTRIBUTING.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually add details: code style, branch strategy, commits, PR process, testing. Link CODE_FORMATTING.md, TESTING_GUIDE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>TEMP_ducs_upgrade.md</h3>
+<ul>
+<li>Line 12: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 20: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 28: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 37: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 46: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 58: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 63: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 66: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 75: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 117: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 122: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 127: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 132: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 137: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 164: <code>&lt;!-- TODO: ... --&gt;</code></li>
+</ul>
+<h3>docs/ANGULAR_TESTING_LESSONS.md</h3>
+<ul>
+<li>Line 672: <code>&lt;!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. --&gt;</code></li>
+</ul>
+<h3>docs/API_DOCUMENTATION.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Implement Swagger/OpenAPI generation and link the specification or UI here. Add access instructions to server/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/CI_CD_GUIDE.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+</ul>
+<h3>docs/CODE_FORMATTING.md</h3>
+<ul>
+<li>Line 127: <code>&lt;!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/COMPONENT_LIBRARY.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Implement Storybook/Compodoc and link it here. Add run/view instructions to client-angular/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/DATABASE_SCHEMA_DETAIL.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Generate schema documentation from Mongoose models and add content here. Link from ARCHITECTURE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/DEPENDENCY_MANAGEMENT.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+</ul>
+<h3>docs/DEPLOYMENT.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually add details: environments, steps, env vars, build commands, platform specifics. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/DOCUMENTATION_STATUS_REPORT.md</h3>
+<ul>
+<li>Line 705: <code>&lt;!-- TODO: Manually add details: code style, branch strategy, commits, PR process, testing. Link CODE_FORMATTING.md, TESTING_GUIDE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 709: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 710: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 711: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 712: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 713: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 714: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 715: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 716: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 717: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 718: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 719: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 720: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 721: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 722: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 723: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 727: <code>&lt;!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. --&gt;</code></li>
+<li>Line 731: <code>&lt;!-- TODO: Implement Swagger/OpenAPI generation and link the specification or UI here. Add access instructions to server/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 735: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 739: <code>&lt;!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 743: <code>&lt;!-- TODO: Implement Storybook/Compodoc and link it here. Add run/view instructions to client-angular/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 747: <code>&lt;!-- TODO: Generate schema documentation from Mongoose models and add content here. Link from ARCHITECTURE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 751: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 755: <code>&lt;!-- TODO: Manually add details: environments, steps, env vars, build commands, platform specifics. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 759: <code>&lt;!-- TODO: Manually add details: code style, branch strategy, commits, PR process, testing. Link CODE_FORMATTING.md, TESTING_GUIDE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 760: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 761: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 762: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 763: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 764: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 765: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 766: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 767: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 768: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 769: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 770: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 771: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 772: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 773: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 774: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 775: <code>&lt;!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. --&gt;</code></li>
+<li>Line 776: <code>&lt;!-- TODO: Implement Swagger/OpenAPI generation and link the specification or UI here. Add access instructions to server/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 777: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 778: <code>&lt;!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 779: <code>&lt;!-- TODO: Implement Storybook/Compodoc and link it here. Add run/view instructions to client-angular/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 780: <code>&lt;!-- TODO: Generate schema documentation from Mongoose models and add content here. Link from ARCHITECTURE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 781: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 782: <code>&lt;!-- TODO: Manually add details: environments, steps, env vars, build commands, platform specifics. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 783: <code>&lt;!-- TODO: Manually add details: code style, branch strategy, commits, PR process, testing. Link CODE_FORMATTING.md, TESTING_GUIDE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 784: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 785: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 786: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 787: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 788: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 789: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 790: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 791: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 792: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 793: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 794: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 795: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 796: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 797: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 798: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 799: <code>&lt;!-- TODO: Manually merge relevant content from deleted emerald-testing-guide.md into this file. --&gt;</code></li>
+<li>Line 800: <code>&lt;!-- TODO: Implement Swagger/OpenAPI generation and link the specification or UI here. Add access instructions to server/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 801: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 802: <code>&lt;!-- TODO: Manually review and update content for current state, tech stack (Angular ~19, Node ~22) (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 803: <code>&lt;!-- TODO: Implement Storybook/Compodoc and link it here. Add run/view instructions to client-angular/README.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 804: <code>&lt;!-- TODO: Generate schema documentation from Mongoose models and add content here. Link from ARCHITECTURE.md. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 805: <code>&lt;!-- TODO: Manually merge content from the following source files into this document, then remove this comment. --&gt;</code></li>
+<li>Line 806: <code>&lt;!-- TODO: Manually add details: environments, steps, env vars, build commands, platform specifics. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 807: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 808: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 809: <code>&lt;!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. --&gt;</code></li>
+<li>Line 810: <code>&lt;!-- TODO: Manually merge relevant content from deleted SNYK_WORKFLOW.md, SECURITY_REMEDIATION_GUIDE.md into this file. --&gt;</code></li>
+<li>Line 811: <code>&lt;!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. --&gt;</code></li>
+<li>Line 812: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 813: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 814: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 815: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 816: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 817: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 818: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 819: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 820: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 821: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 822: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 823: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 824: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 825: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 826: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 827: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 828: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 829: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 830: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 831: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 832: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 833: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 834: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 835: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 836: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 837: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 838: <code>&lt;!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. --&gt;</code></li>
+<li>Line 839: <code>&lt;!-- TODO: Manually merge relevant content from deleted SNYK_WORKFLOW.md, SECURITY_REMEDIATION_GUIDE.md into this file. --&gt;</code></li>
+<li>Line 840: <code>&lt;!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. --&gt;</code></li>
+<li>Line 841: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 842: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 843: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 844: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 845: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 846: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 847: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 848: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 849: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 850: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 851: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 852: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 853: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 854: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 855: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 856: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 857: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 858: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 859: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 860: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 861: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 862: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 863: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 864: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 868: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 872: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 876: <code>&lt;!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. --&gt;</code></li>
+<li>Line 880: <code>&lt;!-- TODO: Manually merge relevant content from deleted SNYK_WORKFLOW.md, SECURITY_REMEDIATION_GUIDE.md into this file. --&gt;</code></li>
+<li>Line 884: <code>&lt;!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. --&gt;</code></li>
+<li>Line 888: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 892: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 896: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 900: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 904: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 908: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 912: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 916: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 920: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+<li>Line 924: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 925: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 926: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 927: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 928: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 929: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 930: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 931: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 932: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 933: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 934: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 935: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 936: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 937: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 938: <code>&lt;!-- TODO: ... --&gt;</code></li>
+</ul>
+<h3>docs/EMERALD_COMPONENTS.md</h3>
+<ul>
+<li>Line 612: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/EMERALD_COMPONENTS_CHANGELOG.md</h3>
+<ul>
+<li>Line 40: <code>&lt;!-- TODO: Manually review/update content against current code. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/ERRORHANDLINGTELEMETRY.md</h3>
+<ul>
+<li>Line 503: <code>&lt;!-- TODO: Manually merge content from deleted HTTP_ERROR_HANDLING_IMPLEMENTATION.md into this file. --&gt;</code></li>
+</ul>
+<h3>docs/SECURITY_BEST_PRACTICES.md</h3>
+<ul>
+<li>Line 190: <code>&lt;!-- TODO: Manually merge relevant content from deleted SNYK_WORKFLOW.md, SECURITY_REMEDIATION_GUIDE.md into this file. --&gt;</code></li>
+</ul>
+<h3>docs/TESTING_GUIDE.md</h3>
+<ul>
+<li>Line 209: <code>&lt;!-- TODO: Manually merge relevant content from deleted UnitStrat.md, FRONTEND_TESTING_REVIEW.md, TESTING_IMPROVEMENTS.md into this file. --&gt;</code></li>
+</ul>
+<h3>docs/features/ADS.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/AUTH.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/CHAT.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/FAVORITES.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/PROFILE.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/REVIEWS.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/TOURING.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/USER_PREFS.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/features/WALLET.md</h3>
+<ul>
+<li>Line 3: <code>&lt;!-- TODO: Manually document client/server components, services, models, API, data flow. (as per DOCS_IMPROVEMENT_PLAN.md) --&gt;</code></li>
+</ul>
+<h3>docs/temp_docs/DOCS_tmp.md</h3>
+<ul>
+<li>Line 12: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 20: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 28: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 37: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 46: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 58: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 63: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 66: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 75: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 117: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 122: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 127: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 132: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 137: <code>&lt;!-- TODO: ... --&gt;</code></li>
+<li>Line 164: <code>&lt;!-- TODO: ... --&gt;</code></li>
+</ul>
+<h2>Documentation Statistics</h2>
+<ul>
+<li>Total Markdown files in project: 188</li>
+<li>Markdown files in docs/ directory: 135</li>
+<li>Files to rename: 133</li>
+<li>Internal links to update: 648</li>
+<li>TODO comments to address: 212</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

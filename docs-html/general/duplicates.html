@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Duplication - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+            <li><a href="index.html">general Index</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Code Duplication</h1>
+
+      <h1>Code Duplication</h1>
+<p>This document tracks code duplication in the Date Night App project. Duplicated code should be refactored into shared components or utilities to improve maintainability.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#client-side-duplications">Client-side Duplications</a><ul>
+<li><a href="#component-duplications">Component Duplications</a></li>
+<li><a href="#service-duplications">Service Duplications</a></li>
+<li><a href="#utility-duplications">Utility Duplications</a></li>
+</ul>
+</li>
+<li><a href="#server-side-duplications">Server-side Duplications</a><ul>
+<li><a href="#controller-duplications">Controller Duplications</a></li>
+<li><a href="#middleware-duplications">Middleware Duplications</a></li>
+<li><a href="#model-duplications">Model Duplications</a></li>
+</ul>
+</li>
+<li><a href="#shared-duplications">Shared Duplications</a></li>
+<li><a href="#refactoring-strategies">Refactoring Strategies</a></li>
+</ul>
+<h2>Client-side Duplications</h2>
+<h3>Component Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ad Card Rendering</td>
+<td><code>client-angular/src/app/features/ads/components/ad-list/ad-list.component.ts</code> and <code>client-angular/src/app/features/ads/components/ad-detail/ad-detail.component.ts</code></td>
+<td>Extract to shared component</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Form Validation Logic</td>
+<td>Multiple form components</td>
+<td>Extract to shared form validation service</td>
+<td>In Progress</td>
+</tr>
+<tr>
+<td>Image Gallery</td>
+<td>Multiple components</td>
+<td>Use shared image gallery component</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Review Display</td>
+<td>Multiple components</td>
+<td>Extract to shared review components</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>getActiveItineraries</td>
+<td><code>client-angular/src/app/features/ad-management/travel-itinerary/travel-itinerary.component.ts</code></td>
+<td>Remove duplicate method</td>
+<td>Completed</td>
+</tr>
+</tbody></table>
+<h3>Service Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP Error Handling</td>
+<td>Multiple services</td>
+<td>Extract to HTTP interceptor</td>
+<td>Completed - See <a href="./ERRORHANDLINGTELEMETRY.MD">Error Handling and Telemetry Documentation</a></td>
+</tr>
+<tr>
+<td>Safety Controller Methods</td>
+<td><code>server/controllers/safety.controller.js</code></td>
+<td>Extract to shared utility functions</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Verification Controller Methods</td>
+<td><code>server/controllers/verification.controller.js</code></td>
+<td>Extract to shared utility functions</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Local Storage Access</td>
+<td>Multiple services</td>
+<td>Create shared storage service</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Date Formatting</td>
+<td>Multiple components and services</td>
+<td>Create shared date utility</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Batch Operation Patterns</td>
+<td><code>server/controllers/favorite.controller.js</code> and <code>client-angular/src/app/features/favorites/favorites-page/favorites-page.component.ts</code></td>
+<td>Extract to shared utility functions</td>
+<td>In Progress - Identified additional duplication in client-side batch operations</td>
+</tr>
+</tbody></table>
+<h3>Utility Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String Formatting</td>
+<td>Multiple files</td>
+<td>Create shared string utility</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Validation Functions</td>
+<td>Multiple files</td>
+<td>Create shared validation utility</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>URL Manipulation</td>
+<td>Multiple files</td>
+<td>Create shared URL utility</td>
+<td>In Progress</td>
+</tr>
+</tbody></table>
+<h2>Server-side Duplications</h2>
+<h3>Controller Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Error Response Formatting</td>
+<td>Multiple controllers</td>
+<td>Extract to utility function</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Pagination Logic</td>
+<td>Multiple controllers</td>
+<td>Extract to middleware or utility</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Query Building</td>
+<td>Multiple controllers</td>
+<td>Extract to utility function</td>
+<td>In Progress</td>
+</tr>
+</tbody></table>
+<h3>Middleware Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Request Validation</td>
+<td>Multiple middleware files</td>
+<td>Create shared validation middleware</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Response Formatting</td>
+<td>Multiple middleware files</td>
+<td>Create shared response formatter</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Error Handling</td>
+<td>Multiple middleware files</td>
+<td>Create shared error handler</td>
+<td>Completed</td>
+</tr>
+</tbody></table>
+<h3>Model Duplications</h3>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Timestamp Fields</td>
+<td>Multiple models</td>
+<td>Create shared schema plugin</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Validation Logic</td>
+<td>Multiple models</td>
+<td>Create shared validation functions</td>
+<td>Completed</td>
+</tr>
+<tr>
+<td>Index Definitions</td>
+<td>Multiple models</td>
+<td>Standardize index creation</td>
+<td>In Progress</td>
+</tr>
+</tbody></table>
+<h2>Shared Duplications</h2>
+<table>
+<thead>
+<tr>
+<th>Duplicated Code</th>
+<th>Locations</th>
+<th>Refactoring Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Configuration Loading</td>
+<td>Client and server</td>
+<td>Create shared configuration module</td>
+<td>Completed</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Example: Extract wallet transaction logic to a <code>TransactionService</code></li>
+</ul>
+<ol start="3">
+<li><p><strong>Extract to Utility</strong>: For duplicated helper functions, extract to a utility class or function.</p>
+<ul>
+<li>Example: Create a <code>ValidationUtils</code> class for shared validation functions</li>
+</ul>
+</li>
+<li><p><strong>Extract to Middleware</strong>: For duplicated request/response handling, extract to middleware.</p>
+<ul>
+<li>Example: Create a unified rate limiter middleware with configuration options</li>
+</ul>
+</li>
+<li><p><strong>Extract to Model Plugin</strong>: For duplicated model logic, extract to a model plugin or mixin.</p>
+<ul>
+<li>Example: Create a shared schema plugin for payment methods</li>
+</ul>
+</li>
+<li><p><strong>Extract to Shared Schema</strong>: For duplicated database schemas, extract to a shared schema definition.</p>
+<ul>
+<li>Example: Create a shared location schema used by both ads and location data</li>
+</ul>
+</li>
+<li><p><strong>Extract to Test Helpers</strong>: For duplicated test code, extract to test helper functions.</p>
+<ul>
+<li>Example: Create test fixtures and assertion helpers for model tests</li>
+</ul>
+</li>
+<li><p><strong>Use Parameterization</strong>: For similar code with minor variations, parameterize the differences.</p>
+<ul>
+<li>Example: Refactor skeleton loader templates to use loops with configuration parameters</li>
+</ul>
+</li>
+<li><p><strong>Use CSS Variables and Mixins</strong>: For duplicated styles, use CSS variables and mixins.</p>
+<ul>
+<li>Example: Consolidate design tokens into a single source of truth with variables</li>
+</ul>
+</li>
+<li><p><strong>Template Partials</strong>: For duplicated HTML/template code, extract to partial templates.</p>
+<ul>
+<li>Example: Extract common dialog templates to reusable partial templates</li>
+</ul>
+</li>
+</ol>
+<h2>Reporting Duplicated Code</h2>
+<p>If you find duplicated code that is not listed in this document, please report it by:</p>
+<ol>
+<li>Adding an entry to this document</li>
+<li>Creating an issue in the project&#39;s issue tracker</li>
+</ol>
+<h2>Duplication Detection</h2>
+<p>We use the following tools to detect code duplication:</p>
+<ul>
+<li>jscpd (JavaScript Copy-Paste Detector) for detailed duplication analysis</li>
+<li>Manual code reviews</li>
+<li>SonarQube for comprehensive code analysis (if available)</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> While ESLint with <code>eslint-plugin-sonarjs</code> is mentioned in some documentation, our testing has shown that jscpd is more effective for detecting code duplications in this project. The SonarJS plugin is better suited for detecting other code quality issues rather than comprehensive duplication detection.</p>
+</blockquote>
+<h3>Running jscpd</h3>
+<p>To detect duplications in the client-side code:</p>
+<pre><code class="language-bash"># For client-side code
+find /Users/oivindlund/date-night-app/client-angular/src -type f \( -name &quot;*.ts&quot; -o -name &quot;*.html&quot; -o -name &quot;*.scss&quot; -o -name &quot;*.css&quot; \) -not -path &quot;*/node_modules/*&quot; | xargs jscpd --min-lines 10 --min-tokens 100 --output /Users/oivindlund/date-night-app/duplication-report
+</code></pre>
+<p>To detect duplications in the server-side code:</p>
+<pre><code class="language-bash"># For server-side code
+find /Users/oivindlund/date-night-app/server -type f -name &quot;*.js&quot; -not -path &quot;*/node_modules/*&quot; | xargs jscpd --min-lines 10 --min-tokens 100 --output /Users/oivindlund/date-night-app/duplication-report
+</code></pre>
+<p>Run duplication detection regularly to keep this document up to date. Update the paths in the commands above to match your local environment.</p>
+<h2>Duplication Cleanup Plan</h2>
+<p>To systematically clean up the duplicated code identified in this document, we have developed a comprehensive phased approach based on detailed analysis of the codebase.</p>
+<h3>Phase 1: Assessment and Prioritization (Week 1) - COMPLETED</h3>
+<p>We have completed a thorough assessment of code duplication in the codebase, with the following key findings:</p>
+<ol>
+<li><strong>Verified Duplications</strong>: We manually reviewed and confirmed all duplications listed in this document.</li>
+<li><strong>Impact Analysis</strong>: We assessed each duplication based on its impact on maintainability, performance, and developer productivity.</li>
+<li><strong>Prioritization Matrix</strong>: We created a prioritization matrix ranking duplications based on:<ul>
+<li>Frequency of duplication</li>
+<li>Complexity of the duplicated code</li>
+<li>Risk level of refactoring</li>
+<li>Potential maintenance benefits</li>
+</ul>
+</li>
+</ol>
+<p>The detailed findings from Phase 1 are available in the <code>/phase1-assessment</code> directory, including:</p>
+<ul>
+<li>Detailed analysis of specific duplications</li>
+<li>Prioritization matrix with scores for each duplication</li>
+<li>Risk assessment for each refactoring</li>
+<li>Implementation plans for subsequent phases</li>
+</ul>
+<h3>Phase 2: Low-Risk Refactorings (Weeks 2-3)</h3>
+<ol>
+<li><p><strong>Utility Functions</strong>: Extract duplicated utility functions</p>
+<ul>
+<li>String formatting utilities</li>
+<li>Date formatting utilities</li>
+<li>Validation functions</li>
+<li>URL manipulation utilities</li>
+</ul>
+</li>
+<li><p><strong>CSS/SCSS Refactoring</strong>: Consolidate duplicated styles</p>
+<ul>
+<li>Extract shared mixins</li>
+<li>Consolidate design tokens</li>
+<li>Create reusable animation definitions</li>
+<li>Fix SCSS import paths (absolute vs. relative)</li>
+</ul>
+</li>
+<li><p><strong>Test Helpers</strong>: Create shared test utilities</p>
+<ul>
+<li>Test fixtures</li>
+<li>Common assertions</li>
+<li>Mock data generators</li>
+</ul>
+</li>
+<li><p><strong>Shared HTTP Error Handling</strong>: Implement centralized error handling</p>
+<ul>
+<li>Create HTTP interceptor for client-side error handling</li>
+<li>Standardize error response format</li>
+<li>Implement consistent logging</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 3: Medium-Risk Refactorings (Weeks 4-5)</h3>
+<ol>
+<li><p><strong>Shared Media Browsing Component</strong>: Extract duplicated Netflix/Tinder logic</p>
+<ul>
+<li>Create base component for common functionality</li>
+<li>Extract shared templates</li>
+<li>Maintain view-specific customizations</li>
+</ul>
+</li>
+<li><p><strong>Shared Form Components</strong>: Create reusable form elements</p>
+<ul>
+<li>Extract common form controls</li>
+<li>Implement shared validation service</li>
+<li>Create consistent form templates</li>
+</ul>
+</li>
+<li><p><strong>Shared Storage Service</strong>: Unify local storage access</p>
+<ul>
+<li>Create service for storage operations</li>
+<li>Support different storage types</li>
+<li>Implement serialization/deserialization</li>
+</ul>
+</li>
+<li><p><strong>Shared Schema Plugins</strong>: Extract common Mongoose schema logic</p>
+<ul>
+<li>Create timestamp plugin</li>
+<li>Implement validation plugin</li>
+<li>Create index plugin</li>
+</ul>
+</li>
+<li><p><strong>Payment Method Schema</strong>: Extract duplicated schema</p>
+<ul>
+<li>Create shared schema definition</li>
+<li>Update models to use shared schema</li>
+<li>Ensure backward compatibility</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 4: High-Risk Refactorings (Weeks 6-7)</h3>
+<ol>
+<li><p><strong>Base Controller Class</strong>: Unify controller logic</p>
+<ul>
+<li>Create base controller with common CRUD operations</li>
+<li>Implement standard error handling</li>
+<li>Extract pagination and query building</li>
+</ul>
+</li>
+<li><p><strong>Unified Middleware</strong>: Consolidate middleware</p>
+<ul>
+<li>Create configurable rate limiter</li>
+<li>Implement shared validation middleware</li>
+<li>Create unified error handler</li>
+</ul>
+</li>
+<li><p><strong>Shared Location Schema</strong>: Extract location data structure</p>
+<ul>
+<li>Create shared schema definition</li>
+<li>Update models to use shared schema</li>
+<li>Ensure data consistency</li>
+</ul>
+</li>
+<li><p><strong>User Schema Consolidation</strong>: Unify user data model</p>
+<ul>
+<li>Analyze existing schemas</li>
+<li>Create consolidated schema</li>
+<li>Implement migration strategy</li>
+</ul>
+</li>
+<li><p><strong>Complex Component Refactoring</strong>: Address advanced UI duplications</p>
+<ul>
+<li>Create shared media browsing component</li>
+<li>Implement shared payment dialog</li>
+<li>Extract card component hierarchy</li>
+</ul>
+</li>
+</ol>
+<h3>Phase 5: Testing and Validation (Week 8)</h3>
+<ol>
+<li><p><strong>Comprehensive Testing</strong>: Ensure all refactored code works correctly</p>
+<ul>
+<li>Unit tests for all new shared components/services</li>
+<li>Integration tests for refactored workflows</li>
+<li>End-to-end tests for critical user journeys</li>
+</ul>
+</li>
+<li><p><strong>Performance Testing</strong>: Verify refactoring hasn&#39;t impacted performance</p>
+<ul>
+<li>Load testing</li>
+<li>Memory profiling</li>
+<li>Rendering performance</li>
+</ul>
+</li>
+<li><p><strong>Documentation</strong>: Update documentation to reflect the new architecture</p>
+<ul>
+<li>Update component documentation</li>
+<li>Document shared utilities and services</li>
+<li>Create usage examples for shared components</li>
+</ul>
+</li>
+<li><p><strong>Code Quality Analysis</strong>: Verify improvement</p>
+<ul>
+<li>Run static code analysis</li>
+<li>Measure duplication reduction</li>
+<li>Analyze complexity metrics</li>
+</ul>
+</li>
+</ol>
+<h3>Risk Mitigation Strategies</h3>
+<ol>
+<li><strong>Feature Toggles</strong>: Use feature toggles to gradually roll out refactored code</li>
+<li><strong>Parallel Implementations</strong>: Keep old implementations alongside new ones initially</li>
+<li><strong>Incremental Refactoring</strong>: Refactor in small, testable increments</li>
+<li><strong>Comprehensive Testing</strong>: Write tests before refactoring</li>
+<li><strong>Code Reviews</strong>: Require thorough code reviews for all refactorings</li>
+<li><strong>Monitoring</strong>: Add monitoring to detect issues early</li>
+<li><strong>Database Backups</strong>: Create backups before schema migrations</li>
+<li><strong>Rollback Plan</strong>: Prepare detailed rollback procedures for each change</li>
+</ol>
+<p>By following this phased approach, we can systematically eliminate code duplication while minimizing the risk of introducing bugs or regressions. The detailed implementation plans for each phase are available in the <code>/phase1-assessment</code> directory.</p>
+<h2>Document History</h2>
+<ul>
+<li><strong>2025-05-20</strong>: Updated status of all duplications based on refactoring progress</li>
+<li><strong>2025-04-15</strong>: Added detailed duplication cleanup plan</li>
+<li><strong>2025-03-10</strong>: Initial version of the code duplication document</li>
+</ul>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
