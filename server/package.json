@@ -84,7 +84,7 @@
     "jest-circus": "29.7.0",
     "jest-cli": "29.7.0",
     "jest-environment-node": "29.7.0",
-    "jest-extended": "4.0.2",
+    "jest-extended": "5.0.0",
     "jest-junit": "16.0.0",
     "joi": "17.13.3",
     "mongodb-memory-server": "10.1.4",
