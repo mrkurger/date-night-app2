@@ -18,7 +18,7 @@ permissions:
   pages: write
 
 env:
-  ARTIFACTS_RETENTION: 14
+  ARTIFACTS_RETENTION: 14 # Number of days to retain documentation artifacts
 
 jobs:
   build-docs:
@@ -31,7 +31,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '>=20 <=21'
+          
+      - name: Cache Node.js Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
           
       - name: Install Dependencies
         run: |
@@ -41,9 +49,29 @@ jobs:
         run: |
           node .github/scripts/generate-docs.js
           
+      - name: Verify Folder Documentation
+        run: |
+          node .github/scripts/verify-folder-docs.js
+          
+      - name: Update Global Glossary and Index
+        run: |
+          node .github/scripts/update-global-docs.js
+          
+      - name: Test Documentation Generation
+        run: |
+          npm test .github/tests/documentation-tests.js
+          
       - name: Upload Documentation
         uses: actions/upload-artifact@v4
         with:
           name: documentation
           path: docs/
           retention-days: ${{ env.ARTIFACTS_RETENTION }}
+          
+      - name: Commit Updated Documentation
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/**/*.html
+          git commit -m "Update documentation [skip ci]" || echo "No changes to commit"
+          git push
