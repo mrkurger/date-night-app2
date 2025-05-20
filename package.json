@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "cd server && pnpm start",
-    "start:client": "cd client-angular && pnpm start",
+    "start:client": "cd client-angular && ./node_modules/.bin/ng serve --project=client-angular",
     "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && pnpm install",
     "build": "cd client-angular && pnpm build",
     "test": "cd client-angular && pnpm test",
@@ -19,7 +19,9 @@
     "analyze:security": "npm audit"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "19.2.12",
+    "@angular-devkit/build-angular": "^18.2.19",
+    "@angular/cli": "^18.2.19",
+    "@angular/compiler-cli": "^18.2.13",
     "@types/jest": "29.5.14",
     "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
@@ -33,11 +35,15 @@
     "karma-jasmine-html-reporter": "2.1.0"
   },
   "dependencies": {
-    "@angular/common": "19.2.11",
-    "@angular/core": "19.2.11",
-    "@angular/forms": "19.2.11",
-    "@angular/platform-browser": "19.2.11",
-    "@angular/router": "19.2.11",
+    "@angular/animations": "^18.2.13",
+    "@angular/common": "^18.2.13",
+    "@angular/compiler": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
+    "@angular/platform-browser": "^18.2.13",
+    "@angular/platform-browser-dynamic": "^18.2.13",
+    "@angular/router": "^18.2.13",
+    "@angular/service-worker": "^18.2.13",
     "@fontsource/inter": "5.2.5",
     "@fontsource/poppins": "5.2.6",
     "@nebular/eva-icons": "11.0.1",

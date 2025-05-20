@@ -11,6 +11,8 @@ import express from 'express';
 const router = express.Router();
 import favoriteController from '../controllers/favorite.controller.js';
 import { protect as authenticate } from '../middleware/auth.js';
+import { ValidationUtils, zodSchemas } from '../utils/validation-utils.ts';
+import FavoriteSchemas from '../middleware/validators/favorite.validator.js';
 
 /**
  * Favorites routes
@@ -30,7 +32,12 @@ import { protect as authenticate } from '../middleware/auth.js';
 // - dateFrom: filter by date added (from)
 // - dateTo: filter by date added (to)
 // - tags: filter by tags (can be specified multiple times for AND filtering)
-router.get('/', authenticate, favoriteController.getFavorites);
+router.get(
+  '/',
+  authenticate,
+  ValidationUtils.validateWithZod(FavoriteSchemas.getFavorites, 'query'),
+  favoriteController.getFavorites
+);
 
 // Get favorite ad IDs for the current user (for efficient checking on the client)
 router.get('/ids', authenticate, favoriteController.getFavoriteIds);
@@ -39,30 +46,78 @@ router.get('/ids', authenticate, favoriteController.getFavoriteIds);
 router.get('/tags', authenticate, favoriteController.getUserTags);
 
 // Check if an ad is favorited by the current user
-router.get('/check/:adId', authenticate, favoriteController.checkFavorite);
+router.get(
+  '/check/:adId',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  favoriteController.checkFavorite
+);
 
 // Add an ad to favorites
-router.post('/:adId', authenticate, favoriteController.addFavorite);
+router.post(
+  '/:adId',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  favoriteController.addFavorite
+);
 
 // Add multiple ads to favorites in a batch operation
-router.post('/batch', authenticate, favoriteController.addFavoritesBatch);
+router.post(
+  '/batch',
+  authenticate,
+  ValidationUtils.validateWithZod(FavoriteSchemas.addBatchFavorites),
+  favoriteController.addFavoritesBatch
+);
 
 // Remove an ad from favorites
-router.delete('/:adId', authenticate, favoriteController.removeFavorite);
+router.delete(
+  '/:adId',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  favoriteController.removeFavorite
+);
 
 // Remove multiple ads from favorites in a batch operation
-router.delete('/batch', authenticate, favoriteController.removeFavoritesBatch);
+router.delete(
+  '/batch',
+  authenticate,
+  ValidationUtils.validateWithZod(FavoriteSchemas.removeBatchFavorites),
+  favoriteController.removeFavoritesBatch
+);
 
 // Update favorite notes
-router.patch('/:adId/notes', authenticate, favoriteController.updateFavoriteNotes);
+router.patch(
+  '/:adId/notes',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  ValidationUtils.validateWithZod(FavoriteSchemas.updateNotes),
+  favoriteController.updateFavoriteNotes
+);
 
 // Update favorite tags
-router.patch('/:adId/tags', authenticate, favoriteController.updateFavoriteTags);
+router.patch(
+  '/:adId/tags',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  ValidationUtils.validateWithZod(FavoriteSchemas.updateTags),
+  favoriteController.updateFavoriteTags
+);
 
 // Update favorite priority
-router.patch('/:adId/priority', authenticate, favoriteController.updateFavoritePriority);
+router.patch(
+  '/:adId/priority',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  ValidationUtils.validateWithZod(FavoriteSchemas.updatePriority),
+  favoriteController.updateFavoritePriority
+);
 
 // Toggle notifications for a favorite
-router.patch('/:adId/notifications', authenticate, favoriteController.toggleNotifications);
+router.patch(
+  '/:adId/notifications',
+  authenticate,
+  ValidationUtils.validateWithZod(zodSchemas.objectId, 'params'),
+  favoriteController.toggleNotifications
+);
 
 export default router;

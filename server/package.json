@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config server.js",
+    "start": "tsx -r dotenv/config server.js",
     "dev": "npx nodemon -r dotenv/config server.js",
     "test": "NODE_ENV=test npx jest --config=jest.config.cjs",
     "test:esm": "NODE_ENV=test npx jest --config=jest.config.cjs",
@@ -36,7 +36,6 @@
     "express-mongo-sanitize": "2.2.0",
     "express-rate-limit": "7.5.0",
     "express-session": "^1.18.0",
-    "express-validator": "^7.2.1",
     "file-type": "20.5.0",
     "helmet": "8.1.0",
     "hpp": "0.2.3",
@@ -98,7 +97,8 @@
     "mongodb-memory-server": "10.1.4",
     "nodemon": "^3.1.9",
     "prettier": "3.5.3",
-    "supertest": "7.1.1"
+    "supertest": "7.1.1",
+    "tsx": "^4.19.4"
   },
   "engines": {
     "node": "22.14.0",

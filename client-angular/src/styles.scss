@@ -10,6 +10,7 @@
 @use './app/core/design/typography' as typography;
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
+@use '@primeng/themes/aura/light/blue/theme.css' as primeng-aura;
 
 // Import Nebular theme styles
 @use '@nebular/theme/styles/globals' as *;

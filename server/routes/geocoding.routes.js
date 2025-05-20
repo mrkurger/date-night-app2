@@ -13,20 +13,32 @@ import geocodingController from '../controllers/geocoding.controller.js';
 import { authenticateToken, optionalAuth } from '../middleware/authenticateToken.js';
 import { roles } from '../middleware/roles.js';
 import asyncHandler from '../middleware/asyncHandler.js';
+import { ValidationUtils } from '../utils/validation-utils.ts';
+import GeocodeSchemas from '../middleware/validators/geocoding.validator.js';
 
 /**
  * @route GET /api/geocoding/forward
  * @description Forward geocode an address to coordinates
  * @access Public
  */
-router.get('/forward', optionalAuth, asyncHandler(geocodingController.forwardGeocode));
+router.get(
+  '/forward',
+  optionalAuth,
+  ValidationUtils.validateWithZod(GeocodeSchemas.forwardGeocode, 'query'),
+  asyncHandler(geocodingController.forwardGeocode)
+);
 
 /**
  * @route GET /api/geocoding/reverse
  * @description Reverse geocode coordinates to an address
  * @access Public
  */
-router.get('/reverse', optionalAuth, asyncHandler(geocodingController.reverseGeocode));
+router.get(
+  '/reverse',
+  optionalAuth,
+  ValidationUtils.validateWithZod(GeocodeSchemas.reverseGeocode, 'query'),
+  asyncHandler(geocodingController.reverseGeocode)
+);
 
 /**
  * @route GET /api/geocoding/cache/stats

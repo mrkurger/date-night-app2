@@ -1,9 +1,10 @@
 import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { protect as authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
 import travelController from '../controllers/travel.controller.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
-import TravelSchemas from '../middleware/validators/travel.validator.js';
+import { ValidationUtils } from '../utils/validation-utils';
+import TravelSchemas from '../middleware/validators/travel.validator';
 
 const router = express.Router();
 

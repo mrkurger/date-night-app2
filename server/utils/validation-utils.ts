@@ -1,46 +1,38 @@
-import { Request, Response, NextFunction } from 'express';
-import { ValidationChain, ValidatorOptions, validationResult } from 'express-validator';
-import { ObjectSchema } from 'joi';
-import mongoose from 'mongoose';
 import { z } from 'zod';
-import validator from 'validator';
+import mongoose from 'mongoose';
 
 /**
- * Validation error response interface
+ * Validation error interface
  */
-interface ValidationError {
+export interface ValidationError {
   field: string;
   message: string;
-  value?: any;
+  value?: unknown;
 }
 
 /**
- * General validation response interface
- */
-interface ValidationResponse {
-  success: boolean;
-  message: string;
-  errors?: ValidationError[];
-}
-
-/**
- * Base validation options
- */
-interface BaseValidationOptions {
-  abortEarly?: boolean;
-  stripUnknown?: boolean;
-}
-
-/**
- * Common validation schemas using Zod
+ * Common Zod schemas for reuse across the application
  */
 export const zodSchemas = {
+  // Basic types
+  shortString: z.string().min(1).max(255),
+  longString: z.string().min(1).max(5000),
+  nonEmptyString: z.string().min(1),
+  boolean: z.boolean(),
+  number: z.number(),
+  date: z.string().datetime(),
+
+  // MongoDB ObjectId
   objectId: z.string().refine((val: string) => mongoose.Types.ObjectId.isValid(val), {
     message: 'Invalid ObjectId format',
   }),
 
-  email: z.string().email(),
+  // Norwegian specific
+  norwegianPhone: z.string().regex(/^(\+47)?[2-9]\d{7}$/, 'Invalid Norwegian phone number'),
+  norwegianPostalCode: z.string().regex(/^\d{4}$/, 'Invalid Norwegian postal code'),
 
+  // Common patterns
+  email: z.string().email('Invalid email address'),
   password: z
     .string()
     .min(8, 'Password must be at least 8 characters')
@@ -49,37 +41,30 @@ export const zodSchemas = {
     .regex(/[0-9]/, 'Password must contain at least one number')
     .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
 
-  url: z.string().url(),
+  // Coordinates as [longitude, latitude]
+  coordinates: z.tuple([
+    z.number().min(-180).max(180), // longitude
+    z.number().min(-90).max(90), // latitude
+  ]),
 
-  date: z.string().datetime(),
-
-  norwegianPhone: z.string().regex(/^(\+47)?[2-9]\d{7}$/, {
-    message: 'Must be a valid Norwegian phone number',
+  // Address
+  address: z.object({
+    street: z.string().min(1),
+    city: z.string().min(1),
+    county: z.string().min(1),
+    postalCode: z.string().min(1),
+    country: z.string().min(1),
   }),
 
-  norwegianPostalCode: z.string().regex(/^\d{4}$/, {
-    message: 'Must be a valid Norwegian postal code',
-  }),
-
-  coordinates: z.object({
-    type: z.literal('Point'),
-    coordinates: z.tuple([
-      z.number().min(-180).max(180), // longitude
-      z.number().min(-90).max(90), // latitude
-    ]),
-  }),
-
+  // Pagination
   pagination: z.object({
-    page: z.number().int().positive().optional().default(1),
-    limit: z.number().int().min(1).max(100).optional().default(10),
+    page: z.number().int().min(1).optional(),
+    limit: z.number().int().min(1).max(100).optional(),
+    sort: z.string().optional(),
+    order: z.enum(['asc', 'desc']).optional(),
   }),
 
-  // Common string validations
-  nonEmptyString: z.string().min(1, 'Field cannot be empty').max(1000, 'Field is too long'),
-  shortString: z.string().max(100, 'Text is too long'),
-  longString: z.string().max(2000, 'Text is too long'),
-
-  // Date range validation
+  // Date range
   dateRange: z
     .object({
       startDate: z.string().datetime(),
@@ -91,97 +76,45 @@ export const zodSchemas = {
 };
 
 /**
- * Utility functions for common validation tasks
+ * Utility functions for validation
  */
 export class ValidationUtils {
   /**
-   * Validate MongoDB ObjectId
+   * Validate a string as MongoDB ObjectId
    */
   static validateObjectId(value: string): boolean {
     return mongoose.Types.ObjectId.isValid(value);
   }
 
   /**
-   * Process validation errors from express-validator
+   * Validate a string as Norwegian phone number
    */
-  static processValidationErrors(errors: any[]): ValidationError[] {
-    return errors.map(error => ({
-      field: error.path || error.param,
-      message: error.msg,
-      value: error.value,
-    }));
+  static isValidNorwegianPhone(value: string): boolean {
+    return /^(\+47)?[2-9]\d{7}$/.test(value);
   }
 
   /**
-   * Validate request using Joi schema
+   * Validate a string as Norwegian postal code
    */
-  static validateWithJoi(
-    schema: ObjectSchema,
-    property: 'body' | 'query' | 'params' = 'body',
-    options: BaseValidationOptions = { abortEarly: false }
-  ) {
-    return (req: Request, res: Response, next: NextFunction) => {
-      const { error, value } = schema.validate(req[property], options);
-
-      if (error) {
-        const errors = error.details.map(detail => ({
-          field: detail.path.join('.'),
-          message: detail.message,
-          value: detail.context?.value,
-        }));
-
-        return res.status(400).json({
-          success: false,
-          message: 'Validation failed',
-          errors,
-        });
-      }
-
-      // Update validated value
-      req[property] = value;
-      return next();
-    };
+  static isValidNorwegianPostalCode(value: string): boolean {
+    return /^\d{4}$/.test(value);
   }
 
   /**
-   * Validate request using express-validator
+   * Validate with Zod schema
    */
-  static validate(validations: ValidationChain[]) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+  static validateWithZod = (
+    schema: z.ZodType<any>,
+    property: 'body' | 'query' | 'params' = 'body'
+  ) => {
+    return async (req: any, res: any, next: any) => {
       try {
-        // Execute all validations
-        await Promise.all(validations.map(validation => validation.run(req)));
-
-        // Check results
-        const errors = validationResult(req);
-        if (errors.isEmpty()) {
-          return next();
-        }
-
-        // Format errors
-        const formattedErrors = ValidationUtils.processValidationErrors(errors.array());
-        return res.status(422).json({
-          success: false,
-          message: 'Validation failed',
-          errors: formattedErrors,
-        });
-      } catch (error) {
-        next(error);
-      }
-    };
-  }
-
-  /**
-   * Validate request using Zod schema
-   */
-  static validateWithZod(schema: z.ZodSchema, property: 'body' | 'query' | 'params' = 'body') {
-    return async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        req[property] = await schema.parseAsync(req[property]);
+        const data = await schema.parseAsync(req[property]);
+        req[property] = data; // Replace with validated data
         next();
       } catch (error) {
         if (error instanceof z.ZodError) {
-          return res.status(400).json({
+          return res.status(422).json({
             success: false,
             message: 'Validation failed',
             errors: error.errors.map(err => ({
@@ -193,116 +126,5 @@ export class ValidationUtils {
         next(error);
       }
     };
-  }
-
-  /**
-   * Sanitize string input
-   */
-  static sanitizeString(value: string): string {
-    return value.trim().replace(/<[^>]*>/g, '');
-  }
-
-  /**
-   * Sanitize HTML content
-   */
-  static sanitizeHtml(value: string): string {
-    return validator.escape(value);
-  }
-
-  /**
-   * Sanitize URL
-   */
-  static sanitizeUrl(value: string): string {
-    return validator.trim(value);
-  }
-
-  /**
-   * Sanitize email
-   */
-  static sanitizeEmail(value: string): string {
-    const normalized = validator.normalizeEmail(validator.trim(value));
-    return typeof normalized === 'string' ? normalized : value;
-  }
-
-  /**
-   * Type guard for string
-   */
-  static isString(value: unknown): value is string {
-    return typeof value === 'string';
-  }
-
-  /**
-   * Type guard for number
-   */
-  static isNumber(value: unknown): value is number {
-    return typeof value === 'number' && !isNaN(value);
-  }
-
-  /**
-   * Type guard for Date
-   */
-  static isDate(value: unknown): value is Date {
-    return value instanceof Date && !isNaN(value.getTime());
-  }
-
-  /**
-   * Common data validators
-   */
-  static validators = {
-    isEmail: (value: string): boolean => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(value);
-    },
-
-    isStrongPassword: (value: string): boolean => {
-      const strongPasswordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      return strongPasswordRegex.test(value);
-    },
-
-    isValidDate: (value: string): boolean => {
-      const date = new Date(value);
-      return date instanceof Date && !isNaN(date.getTime());
-    },
-
-    isValidLatitude: (value: number): boolean => {
-      return value >= -90 && value <= 90;
-    },
-
-    isValidLongitude: (value: number): boolean => {
-      return value >= -180 && value <= 180;
-    },
-
-    isSecureUrl: (value: string): boolean => {
-      try {
-        const url = new URL(value);
-        return url.protocol === 'https:';
-      } catch {
-        return false;
-      }
-    },
   };
-
-  /**
-   * Check if a number is within a range
-   */
-  static isInRange(value: number, min: number, max: number): boolean {
-    return value >= min && value <= max;
-  }
-
-  /**
-   * Validate Norwegian phone number
-   */
-  static isValidNorwegianPhone(phone: string): boolean {
-    return /^(\+47)?[2-9]\d{7}$/.test(phone);
-  }
-
-  /**
-   * Validate Norwegian postal code
-   */
-  static isValidNorwegianPostalCode(code: string): boolean {
-    return /^\d{4}$/.test(code);
-  }
 }
-
-export default ValidationUtils;

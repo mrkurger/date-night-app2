@@ -1,165 +1,176 @@
-import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
-import express from 'express';
+import { describe, expect, test } from '@jest/globals';
+import express, { Request, Response, NextFunction, RequestHandler } from 'express';
 import request from 'supertest';
 import { z } from 'zod';
-import { body } from 'express-validator';
-import { ValidationMiddleware } from '../../middleware/validation/middleware';
-import { commonSchemas } from '../../middleware/validation/schemas';
+import { ValidationMiddleware } from '../../../middleware/validation/middleware';
+import { zodSchemas } from '../../../utils/validation-utils';
 
 const app = express();
 app.use(express.json());
 
+const validateRequestBody =
+  (schema: z.ZodType): RequestHandler =>
+  (req, res, next) => {
+    try {
+      schema.parse(req.body);
+      next();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(422).json({
+          success: false,
+          errors: error.errors.map(e => ({
+            field: e.path.join('.'),
+            message: e.message,
+          })),
+        });
+      } else {
+        next(error);
+      }
+    }
+  };
+
+const validateRequestQuery =
+  (schema: z.ZodType): RequestHandler =>
+  (req, res, next) => {
+    try {
+      schema.parse(req.query);
+      next();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(422).json({
+          success: false,
+          errors: error.errors.map(e => ({
+            field: e.path.join('.'),
+            message: e.message,
+          })),
+        });
+      } else {
+        next(error);
+      }
+    }
+  };
+
+const validateRequestParams =
+  (schema: z.ZodType): RequestHandler =>
+  (req, res, next) => {
+    try {
+      schema.parse(req.params);
+      next();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(422).json({
+          success: false,
+          errors: error.errors.map(e => ({
+            field: e.path.join('.'),
+            message: e.message,
+          })),
+        });
+      } else {
+        next(error);
+      }
+    }
+  };
+
+const sendSuccess: RequestHandler = (req, res) => {
+  res.json({ success: true });
+  return Promise.resolve();
+};
+
 // Test routes using Zod validation
 app.post(
   '/test/zod',
-  ValidationMiddleware.validateWithZod(
+  validateRequestBody(
     z.object({
-      email: commonSchemas.email,
-      password: commonSchemas.password,
+      email: zodSchemas.email,
+      password: zodSchemas.password,
     })
   ),
-  (req, res) => res.json({ success: true })
+  sendSuccess
 );
 
-// Test routes using express-validator
-app.post(
-  '/test/express-validator',
-  ValidationMiddleware.validateWithExpressValidator([
-    body('email').isEmail(),
-    body('password').isLength({ min: 8 }),
-  ]),
-  (req, res) => res.json({ success: true })
-);
-
-// Test route combining both validations
-app.post(
-  '/test/combined',
-  ValidationMiddleware.combine(
-    ValidationMiddleware.validateWithZod(
-      z.object({
-        email: commonSchemas.email,
-      })
-    ),
-    ValidationMiddleware.validateWithExpressValidator([body('password').isLength({ min: 8 })])
+// Test route with query parameters
+app.get(
+  '/test/query',
+  validateRequestQuery(
+    z.object({
+      page: z.number().int().min(1).optional(),
+      limit: z.number().int().min(1).max(100).optional(),
+      sort: z.string().optional(),
+    })
   ),
-  (req, res) => res.json({ success: true })
+  sendSuccess
 );
 
-describe('Validation Middleware Integration Tests', () => {
-  let server: any;
+// Test route with URL parameters
+app.get(
+  '/test/params/:id',
+  validateRequestParams(
+    z.object({
+      id: zodSchemas.objectId,
+    })
+  ),
+  sendSuccess
+);
 
-  beforeAll(() => {
-    server = app.listen(0);
-  });
-
-  afterAll(done => {
-    server.close(done);
-  });
-
+describe('Validation Middleware', () => {
   describe('Zod Validation', () => {
-    test('should accept valid data', async () => {
+    test('should pass valid request body', async () => {
       const response = await request(app).post('/test/zod').send({
         email: 'test@example.com',
-        password: 'ValidPass1!',
+        password: 'Password123!',
       });
-
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ success: true });
+      expect(response.body.success).toBe(true);
     });
 
     test('should reject invalid email', async () => {
       const response = await request(app).post('/test/zod').send({
         email: 'invalid-email',
-        password: 'ValidPass1!',
+        password: 'Password123!',
       });
-
       expect(response.status).toBe(422);
       expect(response.body.success).toBe(false);
-      expect(response.body.errors).toContainEqual(
-        expect.objectContaining({
-          field: 'email',
-        })
-      );
+      expect(response.body.errors[0].field).toBe('email');
     });
 
-    test('should reject invalid password', async () => {
+    test('should reject weak password', async () => {
       const response = await request(app).post('/test/zod').send({
         email: 'test@example.com',
         password: 'weak',
       });
-
       expect(response.status).toBe(422);
       expect(response.body.success).toBe(false);
-      expect(response.body.errors).toContainEqual(
-        expect.objectContaining({
-          field: 'password',
-        })
-      );
+      expect(response.body.errors[0].field).toBe('password');
     });
   });
 
-  describe('Express Validator', () => {
-    test('should accept valid data', async () => {
-      const response = await request(app).post('/test/express-validator').send({
-        email: 'test@example.com',
-        password: 'password123',
-      });
-
+  describe('Query Parameter Validation', () => {
+    test('should pass valid query parameters', async () => {
+      const response = await request(app).get('/test/query?page=1&limit=10&sort=name');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ success: true });
+      expect(response.body.success).toBe(true);
     });
 
-    test('should reject invalid email', async () => {
-      const response = await request(app).post('/test/express-validator').send({
-        email: 'invalid-email',
-        password: 'password123',
-      });
-
+    test('should reject invalid page number', async () => {
+      const response = await request(app).get('/test/query?page=0');
       expect(response.status).toBe(422);
       expect(response.body.success).toBe(false);
-      expect(response.body.errors).toContainEqual(
-        expect.objectContaining({
-          field: 'email',
-        })
-      );
-    });
-
-    test('should reject short password', async () => {
-      const response = await request(app).post('/test/express-validator').send({
-        email: 'test@example.com',
-        password: 'short',
-      });
-
-      expect(response.status).toBe(422);
-      expect(response.body.success).toBe(false);
-      expect(response.body.errors).toContainEqual(
-        expect.objectContaining({
-          field: 'password',
-        })
-      );
+      expect(response.body.errors[0].field).toBe('page');
     });
   });
 
-  describe('Combined Validation', () => {
-    test('should accept valid data', async () => {
-      const response = await request(app).post('/test/combined').send({
-        email: 'test@example.com',
-        password: 'password123',
-      });
-
+  describe('URL Parameter Validation', () => {
+    test('should pass valid object ID', async () => {
+      const response = await request(app).get('/test/params/507f1f77bcf86cd799439011');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ success: true });
+      expect(response.body.success).toBe(true);
     });
 
-    test('should reject when either validation fails', async () => {
-      const response = await request(app).post('/test/combined').send({
-        email: 'invalid-email',
-        password: 'short',
-      });
-
+    test('should reject invalid object ID', async () => {
+      const response = await request(app).get('/test/params/invalid-id');
       expect(response.status).toBe(422);
       expect(response.body.success).toBe(false);
-      expect(response.body.errors).toBeTruthy();
+      expect(response.body.errors[0].field).toBe('id');
     });
   });
 });

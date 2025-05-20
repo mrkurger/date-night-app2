@@ -9,10 +9,11 @@
 // ===================================================
 import express from 'express';
 const router = express.Router();
-import { body } from 'express-validator';
 import multer from 'multer';
 import mediaController from '../controllers/media.controller.js';
 import { protect } from '../middleware/auth.js';
+import { ValidationUtils } from '../utils/validation-utils.ts';
+import { MediaSchemas } from '../middleware/validators/media.validator.ts';
 
 // Configure multer for memory storage
 const storage = multer.memoryStorage();
@@ -32,31 +33,36 @@ const upload = multer({
 });
 
 // Upload media for an ad
-router.post('/:adId/upload', protect, upload.single('media'), mediaController.uploadMedia);
-
-// Delete media from an ad
-router.delete('/:adId/media/:mediaId', protect, mediaController.deleteMedia);
-
-// Moderate media (admin only)
-router.put(
-  '/:adId/media/:mediaId/moderate',
+router.post(
+  '/ad/:adId/upload',
   protect,
-  [
-    body('status')
-      .isIn(['approved', 'rejected'])
-      .withMessage('Status must be either approved or rejected'),
-    body('notes').optional().isString().withMessage('Notes must be a string'),
-  ],
-  mediaController.moderateMedia
+  ValidationUtils.validateWithZod(MediaSchemas.uploadParams, 'params'),
+  upload.single('media'),
+  mediaController.uploadMedia
 );
 
-// Set featured media for an ad
-router.put('/:adId/media/:mediaId/featured', protect, mediaController.setFeaturedMedia);
+// Get media by ID
+router.get(
+  '/:mediaId',
+  ValidationUtils.validateWithZod(MediaSchemas.mediaIdParam, 'params'),
+  mediaController.getMediaById
+);
 
-// Get all media for an ad
-router.get('/:adId/media', mediaController.getAdMedia);
+// Update media metadata
+router.put(
+  '/:mediaId',
+  protect,
+  ValidationUtils.validateWithZod(MediaSchemas.mediaIdParam, 'params'),
+  ValidationUtils.validateWithZod(MediaSchemas.mediaUpdate),
+  mediaController.updateMedia
+);
 
-// Get all media pending moderation (admin only)
-router.get('/moderation/pending', protect, mediaController.getPendingModerationMedia);
+// Delete media
+router.delete(
+  '/:mediaId',
+  protect,
+  ValidationUtils.validateWithZod(MediaSchemas.mediaIdParam, 'params'),
+  mediaController.deleteMedia
+);
 
 export default router;
