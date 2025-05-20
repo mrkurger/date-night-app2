@@ -13,7 +13,7 @@ import { NebularModule } from '../../../shared/nebular.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,7 @@ import { LoginComponent } from '../../features/auth/login/login.component';
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../core/models/user.interface';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -71,12 +72,12 @@ describe('LoginComponent', () => {
     const nbAuthServiceSpy = jasmine.createSpyObj<NbAuthService>('NbAuthService', ['authenticate']);
 
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule,
-    FormsModule,
-    RouterTestingModule.withRoutes([
-          { path: 'browse',
-    { path: 'dashboard']),
-        HttpClientTestingModule,
+    imports: [ReactiveFormsModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([
+            { path: 'browse', },
+            { path: 'dashboard' }
+        ]),
         BrowserAnimationsModule,
         NbThemeModule.forRoot(),
         NbCardModule,
@@ -87,15 +88,16 @@ describe('LoginComponent', () => {
         NbSpinnerModule,
         NbTooltipModule,
         NbEvaIconsModule,
-        CommonModule,
-      ],
-      providers: [
+        CommonModule],
+    providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: NbAuthService, useValue: nbAuthServiceSpy },
         LoginComponent,
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;

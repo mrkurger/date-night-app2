@@ -9,7 +9,7 @@
 // ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NbSecurityModule, NbRoleProvider, NbAclService } from '@nebular/security';
 
@@ -130,60 +130,54 @@ const securityConfig = {
  *
  * Note: Order matters for interceptors - they are applied in the order listed.
  */
-@NgModule({
-  imports: [CommonModule, HttpClientModule, NbSecurityModule.forRoot(securityConfig)],
-  providers: [
-    // Core Services
-    AuthService,
-    UserService,
-    CsrfService,
-    NotificationService,
-    TelemetryService,
-
-    // Feature Services
-    EncryptionService,
-    FavoriteService,
-    GeocodingService,
-    LocationService,
-    TravelService,
-    MapMonitoringService,
-
-    // Utility Services
-    CachingService,
-    ContentSanitizerService,
-    CryptoService,
-    MediaService,
-    ProfileService,
-    SafetyService,
-    VerificationService,
-
-    // HTTP Interceptors
-    { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useFactory: authInterceptorFactory,
-      deps: [AuthService, UserService, Router],
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useFactory: csrfInterceptorFactory,
-      deps: [CsrfService],
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useFactory: httpErrorInterceptorFactory,
-      deps: [Router, NotificationService, TelemetryService, AuthService],
-      multi: true,
-    },
-
-    // Security Providers
-    {
-      provide: NbRoleProvider,
-      useClass: AuthService,
-    },
-    NbAclService,
-  ],
-})
+@NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [
+        // Core Services
+        AuthService,
+        UserService,
+        CsrfService,
+        NotificationService,
+        TelemetryService,
+        // Feature Services
+        EncryptionService,
+        FavoriteService,
+        GeocodingService,
+        LocationService,
+        TravelService,
+        MapMonitoringService,
+        // Utility Services
+        CachingService,
+        ContentSanitizerService,
+        CryptoService,
+        MediaService,
+        ProfileService,
+        SafetyService,
+        VerificationService,
+        // HTTP Interceptors
+        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useFactory: authInterceptorFactory,
+            deps: [AuthService, UserService, Router],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useFactory: csrfInterceptorFactory,
+            deps: [CsrfService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useFactory: httpErrorInterceptorFactory,
+            deps: [Router, NotificationService, TelemetryService, AuthService],
+            multi: true,
+        },
+        // Security Providers
+        {
+            provide: NbRoleProvider,
+            useClass: AuthService,
+        },
+        NbAclService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class CoreModule {}

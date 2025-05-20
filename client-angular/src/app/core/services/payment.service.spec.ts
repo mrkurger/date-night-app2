@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   PaymentService,
   PaymentIntent,
@@ -9,6 +9,7 @@ import {
   FeatureAdResult,
 } from './payment.service';
 import { environment } from '../../// ...existing code...
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Remove duplicate newMessage as it's handled by the form
 // newMessage = '';  // <- Remove this line
@@ -69,9 +70,9 @@ describe('PaymentService', () => {
     (window as any).Stripe = jasmine.createSpy('Stripe').and.returnValue(mockStripe);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [PaymentService],
-    });
+    imports: [],
+    providers: [PaymentService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(PaymentService);
     httpMock = TestBed.inject(HttpTestingController);

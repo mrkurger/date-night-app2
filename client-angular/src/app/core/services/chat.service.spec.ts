@@ -8,11 +8,12 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ChatService } from './chat.service';
 import { environment } from '../../../environments/environment';
 import { ChatMessage, ChatMessageRequest } from './chat.service';
 import { firstValueFrom } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ChatService', () => {
   let service: ChatService;
@@ -20,9 +21,9 @@ describe('ChatService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ChatService],
-    });
+    imports: [],
+    providers: [ChatService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(ChatService);
     httpMock = TestBed.inject(HttpTestingController);

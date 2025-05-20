@@ -11,12 +11,13 @@
 // ===================================================
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { NbToastrService, NbToastrRef, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { of } from 'rxjs';
 
 import { NotificationService, NotificationType, ToastNotification } from './notification.service';
 import { environment } from '../../../environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('NotificationService', () => {
   let service: NotificationService;
@@ -36,13 +37,15 @@ describe('NotificationService', () => {
     toastrSpy = jasmine.createSpyObj('NbToastrService', ['show']);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         NotificationService,
         { provide: NbToastrService, useValue: snackBarSpy },
         { provide: NbToastrService, useValue: toastrSpy },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
     service = TestBed.inject(NotificationService);
     httpMock = TestBed.inject(HttpTestingController);

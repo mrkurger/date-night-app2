@@ -8,12 +8,12 @@
 //   Related to: client-angular/src/app/core/models/media.interface.ts
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { MediaService } from './media.service';
 import { environment } from '../../../environments/environment';
 import { CachingService } from './caching.service';
 import { of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MediaService', () => {
   let service: MediaService;
@@ -37,9 +37,9 @@ describe('MediaService', () => {
     spy.get.and.returnValue(of(null));
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [MediaService, { provide: CachingService, useValue: spy }],
-    });
+    imports: [],
+    providers: [MediaService, { provide: CachingService, useValue: spy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(MediaService);
     httpMock = TestBed.inject(HttpTestingController);

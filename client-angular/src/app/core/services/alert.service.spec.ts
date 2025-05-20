@@ -8,7 +8,7 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlertService } from './alert.service';
 import { TelemetrySocketService } from './telemetry-socket.service';
 import { environment } from '../../../environments/environment';
@@ -21,6 +21,7 @@ import {
   AlertEvent,
 } from '../models/alert.model';
 import { Subject } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // import { of } from 'rxjs'; // Unused import
 
 describe('AlertService', () => {
@@ -48,12 +49,14 @@ describe('AlertService', () => {
     );
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         AlertService,
         { provide: TelemetrySocketService, useValue: mockTelemetrySocketService },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
     service = TestBed.inject(AlertService);
     httpMock = TestBed.inject(HttpTestingController);

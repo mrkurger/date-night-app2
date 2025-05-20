@@ -10,7 +10,7 @@
 // ===================================================
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
@@ -23,6 +23,7 @@ import {
   PrivacySettings,
 } from '../models/user.interface';
 import { Router } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -51,9 +52,9 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [AuthService],
-    });
+    imports: [RouterTestingModule],
+    providers: [AuthService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -8,9 +8,10 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TravelService, TravelItinerary, TouringAd } from './travel.service';
 import { environment } from '../../../environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TravelService', () => {
   let service: TravelService;
@@ -19,9 +20,9 @@ describe('TravelService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [TravelService],
-    });
+    imports: [],
+    providers: [TravelService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(TravelService);
     httpMock = TestBed.inject(HttpTestingController);

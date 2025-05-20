@@ -8,8 +8,8 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptors, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
@@ -37,15 +37,17 @@ describe('HTTP Error Interceptor', () => {
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['logout']);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         provideHttpClient(withInterceptors([httpErrorInterceptor])),
         { provide: Router, useValue: routerSpy },
         { provide: NotificationService, useValue: notificationServiceSpy },
         { provide: TelemetryService, useValue: telemetryServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);

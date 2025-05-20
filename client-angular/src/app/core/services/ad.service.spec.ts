@@ -9,10 +9,11 @@
 // ===================================================
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AdService } from './ad.service';
 import { environment } from '../../../environments/environment';
 import { Ad } from '../models/ad.interface';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // import { of } from 'rxjs'; // Unused import
 
 describe('AdService', () => {
@@ -91,9 +92,9 @@ describe('AdService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AdService],
-    });
+    imports: [],
+    providers: [AdService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(AdService);
     httpMock = TestBed.inject(HttpTestingController);

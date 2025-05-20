@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 // ===================================================
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   GeocodingService,
   GeocodingResult,
@@ -21,6 +21,7 @@ import {
 import { LocationService } from './location.service';
 import { environment } from '../../../environments/environment';
 import { of, throwError } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('GeocodingService', () => {
   let service: GeocodingService;
@@ -106,9 +107,9 @@ describe('GeocodingService', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [GeocodingService, { provide: LocationService, useValue: locationSpy }],
-    });
+    imports: [],
+    providers: [GeocodingService, { provide: LocationService, useValue: locationSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(GeocodingService);
     httpMock = TestBed.inject(HttpTestingController);

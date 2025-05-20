@@ -8,8 +8,9 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { CachingService } from './caching.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CachingService', () => {
   let service: CachingService;
@@ -17,9 +18,9 @@ describe('CachingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [CachingService],
-    });
+    imports: [],
+    providers: [CachingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(CachingService);
     httpMock = TestBed.inject(HttpTestingController);
   });

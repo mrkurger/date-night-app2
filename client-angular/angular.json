@@ -15,11 +15,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/client-angular",
+            "outputPath": {
+              "base": "dist/client-angular"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -32,8 +33,14 @@
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
-            }
+              "includePaths": [
+                "node_modules",
+                "src/styles",
+                "src/app/core/design",
+                "."
+              ]
+            },
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptors, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { cspInterceptor } from './csp.interceptor';
 import { Injectable } from '@angular/core';
 
@@ -48,9 +48,9 @@ describe('CSP Interceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [provideHttpClient(withInterceptors([cspInterceptor])), MockLocationService],
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptors([cspInterceptor])), MockLocationService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
