@@ -1,34 +1,76 @@
-version: 2
+# .github/dependabot.yml
+# Dependabot configuration file for automated dependency updates.
+# For documentation, see: https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates
+
+version: 3
+
 updates:
-  # Client Angular dependencies
-  - package-ecosystem: 'npm'
-    directory: '/client-angular'
+  # ==================== Client Angular Dependencies ====================
+  - package-ecosystem: 'npm'               # Ecosystem: npm (Node.js) packages
+    directory: '/client-angular'           # Directory containing package.json for the Angular client
     schedule:
-      interval: 'weekly'
-    open-pull-requests-limit: 10
+      interval: 'weekly'                   # Check for updates once a week
+      day: 'monday'                        # (Optional) Prefer Monday for updates
+      time: '08:00'                        # (Optional) Run at 08:00 UTC
+    open-pull-requests-limit: 5            # Limit to 5 open PRs at a time for this scope
     groups:
-      angular-dependencies:
+      angular-dependencies:                 # Group all Angular-related dependencies into one PR
         patterns:
           - '@angular*'
+      testing-dependencies:                 # Example group for testing libs (expand as needed)
+        patterns:
+          - 'jest'
+          - 'karma*'
+          - '@types/jest'
     commit-message:
-      prefix: 'deps(client)'
+      prefix: 'deps(client)'                # Prefix for update PRs
       include: 'scope'
+    allow:
+      - dependency-type: 'direct'           # Only update direct dependencies
 
-  # Server dependencies
+    ignore:                                # Example: ignore major version bumps for large upgrades
+      - dependency-name: '@angular/core'
+        update-types: ['version-update:semver-major']
+
+    # Enable security updates to be auto-approved and merged (if desired)
+    # Uncomment and configure rules below if you use GitHub Actions for auto-merge
+    # automerged_updates:
+    #   - match:
+    #       dependency_type: 'all'
+    #       update_type: 'security'
+    #     auto_merge: true
+
+  # ==================== Server Node.js Dependencies ====================
   - package-ecosystem: 'npm'
     directory: '/server'
     schedule:
       interval: 'weekly'
-    open-pull-requests-limit: 10
+      day: 'monday'
+      time: '08:00'
+    open-pull-requests-limit: 5
     commit-message:
       prefix: 'deps(server)'
       include: 'scope'
+    allow:
+      - dependency-type: 'direct'
+    ignore:
+      - dependency-name: 'express'
+        update-types: ['version-update:semver-major']
 
-  # GitHub Actions
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  # ==================== GitHub Actions ====================
+  - package-ecosystem: 'github-actions'     # Update GitHub Actions workflows
+    directory: '/'                          # Root directory (where workflow files live)
     schedule:
-      interval: 'monthly'
+      interval: 'monthly'                   # Less frequent, as workflows change less often
+      day: 'wednesday'
+      time: '09:00'
+    open-pull-requests-limit: 2
     commit-message:
       prefix: 'ci'
       include: 'scope'
+
+# ==================== General Notes ====================
+# - Adjust 'open-pull-requests-limit' to control PR noise.
+# - Use 'allow' and 'ignore' to fine-tune which dependencies are updated and how.
+# - Add/modify groups to batch updates for related dependencies.
+# - See all options: https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates
