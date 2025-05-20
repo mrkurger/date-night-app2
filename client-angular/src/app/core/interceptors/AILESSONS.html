@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lessons - HTTP Interceptors</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0066cc;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #f6f8fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9em;
+            line-height: 1.45;
+        }
+        .warning {
+            background-color: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        .tip {
+            background-color: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Lessons - HTTP Interceptors</h1>
+    
+    <div class="section">
+        <h2>Security Vulnerabilities in HTTP Interceptors</h2>
+        
+        <h3>Server-Side Request Forgery (SSRF)</h3>
+        <p>SSRF vulnerabilities occur when an application can be induced to make HTTP requests to an attacker-controlled domain.</p>
+        
+        <div class="warning">
+            <strong>Vulnerable Pattern:</strong>
+            <pre><code>private shouldSkipErrorHandling(url: string): boolean {
+  return this.config.skipUrls.some((skipUrl) => url.includes(skipUrl));
+}</code></pre>
+            <p>This code is vulnerable because it uses <code>includes()</code> to check if a URL contains a substring, which can be exploited by crafting a malicious URL.</p>
+        </div>
+        
+        <div class="tip">
+            <strong>Secure Pattern:</strong>
+            <pre><code>private shouldSkipErrorHandling(url: string): boolean {
+  if (!url || typeof url !== 'string') {
+    return false;
+  }
+  
+  try {
+    // For relative URLs, use as is but validate format
+    if (url.startsWith('/')) {
+      // Normalize the path to prevent path traversal
+      const normalizedPath = this.normalizePath(url);
+      // Exact match only
+      return this.config.skipUrls.some((skipUrl) => normalizedPath === skipUrl);
+    }
+    
+    // For absolute URLs, validate and parse
+    const urlObj = new URL(url);
+    
+    // Only allow http and https protocols
+    if (!['http:', 'https:'].includes(urlObj.protocol.toLowerCase())) {
+      return false;
+    }
+    
+    // Compare the path only with exact matching
+    const path = this.normalizePath(urlObj.pathname);
+    return this.config.skipUrls.some((skipUrl) => path === skipUrl);
+  } catch (error) {
+    console.error('Error validating URL:', error);
+    return false;
+  }
+}
+
+private normalizePath(path: string): string {
+  // Remove duplicate slashes
+  let normalized = path.replace(/\/+/g, '/');
+  
+  // Remove trailing slash if present (except for root path)
+  if (normalized.length > 1 && normalized.endsWith('/')) {
+    normalized = normalized.slice(0, -1);
+  }
+  
+  return normalized;
+}</code></pre>
+            <p>This pattern properly validates URLs, restricts protocols, normalizes paths to prevent path traversal attacks, and uses exact matching instead of substring matching.</p>
+        </div>
+        
+        <h3>Prototype Pollution</h3>
+        <p>Prototype pollution occurs when an attacker is able to inject properties into JavaScript object prototypes.</p>
+        
+        <div class="warning">
+            <strong>Vulnerable Pattern:</strong>
+            <pre><code>Object.keys(obj).forEach((key) => {
+  // Process each property
+});</code></pre>
+            <p>This code is vulnerable because <code>Object.keys()</code> can include properties from the prototype chain in some cases.</p>
+        </div>
+        
+        <div class="tip">
+            <strong>Secure Pattern:</strong>
+            <pre><code>Object.getOwnPropertyNames(obj).forEach((key) => {
+  // Process each property
+});</code></pre>
+            <p>This pattern only processes properties that are directly on the object, not from the prototype chain.</p>
+        </div>
+        
+        <div class="tip">
+            <strong>Even More Secure Pattern:</strong>
+            <pre><code>// Create a new object with no prototype
+const safeObj = Object.create(null);
+
+// Copy only own properties
+Object.getOwnPropertyNames(sourceObj).forEach(key => {
+  safeObj[key] = sourceObj[key];
+});</code></pre>
+            <p>This pattern creates a new object with no prototype chain and only copies own properties, providing maximum protection against prototype pollution.</p>
+        </div>
+        
+        <h3>TypeScript Interface Compliance</h3>
+        <p>Ensuring your code complies with TypeScript interfaces helps prevent runtime errors and improves code quality.</p>
+        
+        <div class="warning">
+            <strong>Problematic Pattern:</strong>
+            <pre><code>this.telemetryService.trackError({
+  errorCode: 'retry_attempt',
+  // ...other properties
+  errorCode: 'retry_attempt', // Duplicate property
+});</code></pre>
+            <p>This code has a duplicate property and doesn't match the expected interface.</p>
+        </div>
+        
+        <div class="tip">
+            <strong>Correct Pattern:</strong>
+            <pre><code>this.telemetryService.trackError({
+  type: 'error',
+  message: errorDetails.userMessage || 'Unknown error',
+  name: errorDetails.errorCode || 'unknown_error',
+  category: errorDetails.category || ErrorCategory.UNKNOWN,
+  // ...other properties that match the interface
+});</code></pre>
+            <p>This pattern correctly follows the interface definition and avoids duplicate properties.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Best Practices for HTTP Interceptors</h2>
+        
+        <h3>Error Handling</h3>
+        <ul>
+            <li>Always catch and handle errors in interceptors to prevent unhandled promise rejections.</li>
+            <li>Provide user-friendly error messages while logging detailed technical information.</li>
+            <li>Categorize errors to enable consistent handling based on error type.</li>
+        </ul>
+        
+        <h3>Retry Strategies</h3>
+        <ul>
+            <li>Implement exponential backoff with jitter for retries to prevent thundering herd problems.</li>
+            <li>Only retry idempotent requests (GET, HEAD, OPTIONS, etc.) automatically.</li>
+            <li>Set reasonable limits on retry attempts to prevent infinite retry loops.</li>
+        </ul>
+        
+        <h3>Security Considerations</h3>
+        <ul>
+            <li>Sanitize sensitive information in logs and telemetry data.</li>
+            <li>Validate and sanitize URLs before processing them.</li>
+            <li>Use secure object traversal methods to prevent prototype pollution.</li>
+            <li>Implement proper authentication error handling.</li>
+        </ul>
+        
+        <h3>Performance Monitoring</h3>
+        <ul>
+            <li>Track request durations and response sizes for performance monitoring.</li>
+            <li>Use unique request IDs to correlate requests across the system.</li>
+            <li>Clean up monitoring data to prevent memory leaks.</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Dependencies</h2>
+        
+        <h3>Required Dependencies</h3>
+        <ul>
+            <li><code>@angular/common/http</code> - For HTTP interceptor functionality</li>
+            <li><code>@angular/core</code> - For Angular dependency injection</li>
+            <li><code>@angular/router</code> - For navigation after authentication errors</li>
+            <li><code>rxjs</code> - For reactive programming patterns</li>
+        </ul>
+        
+        <h3>Service Dependencies</h3>
+        <ul>
+            <li><code>NotificationService</code> - For displaying error notifications to users</li>
+            <li><code>TelemetryService</code> - For tracking errors and performance metrics</li>
+            <li><code>AuthService</code> - For handling authentication-related operations</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Testing</h2>
+        
+        <h3>Unit Testing Strategies</h3>
+        <ul>
+            <li>Test each error category handling separately.</li>
+            <li>Mock HTTP responses with different status codes.</li>
+            <li>Verify that sensitive information is properly sanitized.</li>
+            <li>Test retry logic with different error scenarios.</li>
+            <li>Ensure proper integration with notification and telemetry services.</li>
+        </ul>
+        
+        <h3>Security Testing</h3>
+        <ul>
+            <li>Test URL validation with malicious URLs.</li>
+            <li>Verify that prototype pollution is prevented.</li>
+            <li>Check that sensitive data is properly sanitized in logs and telemetry.</li>
+        </ul>
+    </div>
+</body>
+</html>

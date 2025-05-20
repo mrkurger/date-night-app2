@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Interceptors Glossary</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0066cc;
+        }
+        .entry {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .signature {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #f6f8fa;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        .description {
+            margin-top: 10px;
+        }
+        .params {
+            margin-left: 20px;
+        }
+        .param-name {
+            font-weight: bold;
+        }
+        .returns {
+            margin-top: 10px;
+        }
+        .returns-label {
+            font-weight: bold;
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .tag-class {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+        .tag-interface {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        .tag-enum {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        .tag-function {
+            background-color: #f3e5f5;
+            color: #4a148c;
+        }
+        .tag-method {
+            background-color: #e0f7fa;
+            color: #006064;
+        }
+        .tag-security {
+            background-color: #ffebee;
+            color: #b71c1c;
+        }
+        .tag-performance {
+            background-color: #e8eaf6;
+            color: #1a237e;
+        }
+        .tag-utility {
+            background-color: #f1f8e9;
+            color: #33691e;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTTP Interceptors Glossary</h1>
+    
+    <div class="entry" id="HttpErrorInterceptor">
+        <h2>HttpErrorInterceptor</h2>
+        <span class="tag tag-class">Class</span>
+        <span class="tag tag-security">Security</span>
+        
+        <div class="signature">@Injectable()<br>export class HttpErrorInterceptor implements HttpInterceptor</div>
+        
+        <div class="description">
+            <p>HTTP interceptor that handles error responses with the following features:</p>
+            <ul>
+                <li>Retries failed requests with exponential backoff and jitter</li>
+                <li>Shows user-friendly error notifications</li>
+                <li>Redirects to login page on authentication errors</li>
+                <li>Logs detailed error information</li>
+                <li>Tracks errors and performance metrics with telemetry</li>
+                <li>Sanitizes sensitive information</li>
+                <li>Categorizes errors for better handling</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="entry" id="HttpErrorInterceptorConfig">
+        <h2>HttpErrorInterceptorConfig</h2>
+        <span class="tag tag-interface">Interface</span>
+        
+        <div class="signature">export interface HttpErrorInterceptorConfig {<br>
+  showNotifications: boolean;<br>
+  retryFailedRequests: boolean;<br>
+  maxRetryAttempts: number;<br>
+  retryDelay: number;<br>
+  redirectToLogin: boolean;<br>
+  logErrors: boolean;<br>
+  includeRequestDetails: boolean;<br>
+  trackErrors: boolean;<br>
+  trackPerformance: boolean;<br>
+  groupSimilarErrors: boolean;<br>
+  retryJitter: number;<br>
+  sanitizeSensitiveData: boolean;<br>
+  skipUrls: string[];<br>
+}</div>
+        
+        <div class="description">
+            <p>Configuration options for the HTTP error interceptor.</p>
+        </div>
+    </div>
+    
+    <div class="entry" id="ErrorCategory">
+        <h2>ErrorCategory</h2>
+        <span class="tag tag-enum">Enum</span>
+        
+        <div class="signature">export enum ErrorCategory {<br>
+  NETWORK = 'network',<br>
+  AUTHENTICATION = 'authentication',<br>
+  AUTHORIZATION = 'authorization',<br>
+  VALIDATION = 'validation',<br>
+  SERVER = 'server',<br>
+  CLIENT = 'client',<br>
+  TIMEOUT = 'timeout',<br>
+  RATE_LIMIT = 'rate_limit',<br>
+  NOT_FOUND = 'not_found',<br>
+  CONFLICT = 'conflict',<br>
+  UNKNOWN = 'unknown'<br>
+}</div>
+        
+        <div class="description">
+            <p>Error categories for better error handling and classification.</p>
+        </div>
+    </div>
+    
+    <div class="entry" id="intercept">
+        <h2>intercept</h2>
+        <span class="tag tag-method">Method</span>
+        
+        <div class="signature">intercept(request: HttpRequest&lt;unknown&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;</div>
+        
+        <div class="description">
+            <p>Intercepts HTTP requests and handles errors.</p>
+            
+            <div class="params">
+                <p><span class="param-name">request</span>: The outgoing request</p>
+                <p><span class="param-name">next</span>: The next handler</p>
+            </div>
+            
+            <div class="returns">
+                <p><span class="returns-label">Returns:</span> An observable of the HTTP event</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="retryWithBackoff">
+        <h2>retryWithBackoff</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-utility">Utility</span>
+        
+        <div class="signature">private retryWithBackoff(request: HttpRequest&lt;never&gt;): &lt;T&gt;(source: Observable&lt;T&gt;) => Observable&lt;T&gt;</div>
+        
+        <div class="description">
+            <p>Creates a retry operator with exponential backoff and jitter.</p>
+            
+            <div class="params">
+                <p><span class="param-name">request</span>: The original HTTP request</p>
+            </div>
+            
+            <div class="returns">
+                <p><span class="returns-label">Returns:</span> A function that applies retry logic to an observable</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="sanitizeRequestBody">
+        <h2>sanitizeRequestBody</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-security">Security</span>
+        
+        <div class="signature">private sanitizeRequestBody(body: any): any</div>
+        
+        <div class="description">
+            <p>Sanitizes request body to remove sensitive information.</p>
+            
+            <div class="params">
+                <p><span class="param-name">body</span>: The request body</p>
+            </div>
+            
+            <div class="returns">
+                <p><span class="returns-label">Returns:</span> Sanitized body</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="sanitizeObject">
+        <h2>sanitizeObject</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-security">Security</span>
+        
+        <div class="signature">private sanitizeObject(obj: any, sensitiveFields: string[]): void</div>
+        
+        <div class="description">
+            <p>Recursively sanitizes an object to mask sensitive fields.</p>
+            
+            <div class="params">
+                <p><span class="param-name">obj</span>: The object to sanitize</p>
+                <p><span class="param-name">sensitiveFields</span>: Array of sensitive field names</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="shouldSkipErrorHandling">
+        <h2>shouldSkipErrorHandling</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-security">Security</span>
+        
+        <div class="signature">private shouldSkipErrorHandling(url: string): boolean</div>
+        
+        <div class="description">
+            <p>Safely checks if error handling should be skipped for a URL.</p>
+            
+            <div class="params">
+                <p><span class="param-name">url</span>: The request URL</p>
+            </div>
+            
+            <div class="returns">
+                <p><span class="returns-label">Returns:</span> Whether to skip error handling</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="normalizePath">
+        <h2>normalizePath</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-security">Security</span>
+        
+        <div class="signature">private normalizePath(path: string): string</div>
+        
+        <div class="description">
+            <p>Normalizes a URL path to prevent path traversal attacks.</p>
+            
+            <div class="params">
+                <p><span class="param-name">path</span>: The URL path to normalize</p>
+            </div>
+            
+            <div class="returns">
+                <p><span class="returns-label">Returns:</span> Normalized path</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="trackError">
+        <h2>trackError</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-utility">Utility</span>
+        
+        <div class="signature">private trackError(errorDetails: any, request: HttpRequest&lt;any&gt;): void</div>
+        
+        <div class="description">
+            <p>Tracks error with telemetry service.</p>
+            
+            <div class="params">
+                <p><span class="param-name">errorDetails</span>: The error details</p>
+                <p><span class="param-name">request</span>: The original request</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="entry" id="trackRequestPerformance">
+        <h2>trackRequestPerformance</h2>
+        <span class="tag tag-method">Method</span>
+        <span class="tag tag-performance">Performance</span>
+        
+        <div class="signature">private trackRequestPerformance(requestId: string, response: HttpResponse&lt;any&gt;): void</div>
+        
+        <div class="description">
+            <p>Tracks request performance metrics.</p>
+            
+            <div class="params">
+                <p><span class="param-name">requestId</span>: The unique request ID</p>
+                <p><span class="param-name">response</span>: The HTTP response</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

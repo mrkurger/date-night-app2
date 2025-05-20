@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Security Audit Report - May 2025</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Security Audit Report - May 2025</h1>
+
+      <section>
+        <h2>Content Security Policy (CSP) Improvements</h2>
+        <ul>
+          <li>Implemented strict CSP with nonce-based script execution</li>
+          <li>Added comprehensive violation reporting</li>
+          <li>Configured environment-specific directives</li>
+          <li>Enhanced trusted source configurations</li>
+        </ul>
+        <p>Location: <code>server/config/csp.config.js</code></p>
+      </section>
+
+      <section>
+        <h2>CSRF Protection Enhancements</h2>
+        <ul>
+          <li>Implemented double-submit cookie pattern</li>
+          <li>Added strict cookie security options</li>
+          <li>Enhanced error handling and reporting</li>
+          <li>Added token rotation and validation</li>
+        </ul>
+        <p>Location: <code>server/middleware/csrf.js</code></p>
+      </section>
+
+      <section>
+        <h2>Security Headers</h2>
+        <ul>
+          <li>Enhanced HSTS configuration</li>
+          <li>Expanded Permissions-Policy controls</li>
+          <li>Implemented strict Referrer-Policy</li>
+          <li>Added XSS reporting endpoint</li>
+        </ul>
+        <p>Location: <code>server/middleware/securityHeaders.js</code></p>
+      </section>
+
+      <section>
+        <h2>Next Steps</h2>
+        <ol>
+          <li>Monitor CSP violation reports for potential adjustments</li>
+          <li>Implement automated security header testing</li>
+          <li>Add rate limiting for security endpoints</li>
+          <li>Regular security configuration reviews</li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>

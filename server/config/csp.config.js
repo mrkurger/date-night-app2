@@ -26,16 +26,17 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // Base CSP directives used in both development and production
 const baseDirectives = {
   'default-src': ["'self'"],
-  'img-src': ["'self'", 'data:', 'blob:', ''],
-  'font-src': ["'self'", 'https://fonts.gstatic.com', ''],
-  'style-src': ["'self'", 'https://fonts.googleapis.com', ''],
-  'connect-src': ["'self'", 'ws:', 'wss:', ''],
-  'frame-src': ["'self'"],
+  'img-src': ["'self'", 'data:', 'blob:', 'https://*.cloudinary.com', 'https://*.unsplash.com'],
+  'font-src': ["'self'", 'https://fonts.gstatic.com'],
+  'style-src': ["'self'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net'],
+  'connect-src': ["'self'", 'ws:', 'wss:', 'https://api.stripe.com'],
+  'frame-src': ["'self'", 'https://js.stripe.com'],
   'object-src': ["'none'"],
   'base-uri': ["'self'"],
   'form-action': ["'self'"],
   'frame-ancestors': ["'self'"],
   'manifest-src': ["'self'"],
+  'upgrade-insecure-requests': [],
 };
 
 // Development-specific CSP directives (no unsafe-eval/inline)
@@ -51,11 +52,15 @@ const productionDirectives = {
   'script-src': [
     "'self'",
     'https://cdn.jsdelivr.net',
-    '',
-    // Allow Angular's inline scripts with nonces or hashes in production
-    "'sha256-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'",
+    'https://cdnjs.cloudflare.com',
+    (req, res) => `'nonce-${res.locals.cspNonce}'`,
+  ],
+  'style-src': [
+    ...baseDirectives['style-src'],
+    "'unsafe-inline'", // Required for Angular styling
   ],
   'report-uri': ['/api/v1/csp-report'],
+  'report-to': ['csp-endpoint'],
 };
 
 // Choose the appropriate directives based on environment

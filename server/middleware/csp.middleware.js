@@ -18,63 +18,77 @@
 // This middleware adds additional CSP functionality
 // eslint-disable-next-line no-unused-vars
 import helmet from 'helmet';
+import { randomBytes } from 'crypto';
 import cspConfig from '../config/csp.config.js';
 import { logger } from '../utils/logger.js';
 
 /**
- * CSP violation report handler
+ * Generate a secure nonce for CSP
+ */
+const generateNonce = () => {
+  return randomBytes(16).toString('base64');
+};
+
+/**
+ * CSP violation report handler with enhanced logging
  */
 const handleCspViolation = (req, res) => {
-  if (req.body) {
-    logger.warn('CSP Violation:', req.body);
-  } else {
-    logger.warn('CSP Violation: No data received');
-  }
+  const violation = req.body['csp-report'] || req.body;
+
+  logger.warn('CSP Violation:', {
+    ...violation,
+    userAgent: req.headers['user-agent'],
+    ip: req.ip,
+    timestamp: new Date().toISOString(),
+    url: req.headers['referer'] || 'Unknown',
+  });
+
   res.status(204).end();
 };
 
 /**
- * Configure and apply CSP middleware
- * @returns {Function} Express middleware function
+ * Enhanced CSP middleware with nonce support
  */
 const cspMiddleware = app => {
-  // Log configuration on first use
   logger.info(`CSP configured in ${cspConfig.reportOnly ? 'report-only' : 'enforce'} mode`);
 
-  // Create middleware function that can be used with app.use()
   const middleware = (req, res, next) => {
-    // Apply CSP headers based on configuration
+    // Generate nonce per request
+    res.locals.cspNonce = generateNonce();
+
     const headerName = cspConfig.reportOnly
       ? 'Content-Security-Policy-Report-Only'
       : 'Content-Security-Policy';
 
-    // Build CSP header value from directives
-    const headerValue = Object.entries(cspConfig.directives)
-      .map(([key, value]) => {
-        if (Array.isArray(value)) {
-          return `${key} ${value.join(' ')}`;
-        }
-        return `${key} ${value}`;
+    // Process directives, handling function values (for nonces)
+    const processedDirectives = Object.entries(cspConfig.directives)
+      .map(([key, values]) => {
+        const processedValues = values.map(value =>
+          typeof value === 'function' ? value(req, res) : value
+        );
+        return `${key} ${processedValues.join(' ')}`;
       })
       .join('; ');
 
-    // Set the header
-    res.setHeader(headerName, headerValue);
-
+    res.setHeader(headerName, processedDirectives);
     next();
   };
 
-  // If app is provided, use the middleware
   if (app && typeof app.use === 'function') {
     app.use(middleware);
+    setupCspReportEndpoint(app);
   }
 
   return middleware;
 };
 
-// Add endpoint handler for CSP violation reports
+/**
+ * Set up the CSP violation reporting endpoint
+ */
 const setupCspReportEndpoint = app => {
-  app.post('/api/v1/csp-report', handleCspViolation);
+  app.post('/api/v1/csp-report', (req, res) => {
+    handleCspViolation(req, res);
+  });
 };
 
 export { cspMiddleware, setupCspReportEndpoint };

@@ -12,19 +12,39 @@ import cookieParser from 'cookie-parser';
 
 // CSRF protection configuration
 const csrfProtectionConfig = {
-  getSecret: () => process.env.CSRF_SECRET || 'default-csrf-secret-change-in-production',
+  getSecret: () => {
+    const secret = process.env.CSRF_SECRET;
+    if (!secret && process.env.NODE_ENV === 'production') {
+      throw new Error('CSRF_SECRET must be set in production');
+    }
+    return secret || 'default-csrf-secret-change-in-production';
+  },
   cookieName: 'x-csrf-token',
   cookieOptions: {
     httpOnly: true,
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
     path: '/',
+    domain: process.env.COOKIE_DOMAIN || undefined,
+    maxAge: 7200000, // 2 hours
   },
-  size: 64, // Token size in bytes
+  size: 64,
   ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
   getTokenFromRequest: req => {
-    // Check for token in headers, then in request body
-    return req.headers['x-csrf-token'] || (req.body && req.body._csrf);
+    // Prioritize header, then form field, finally query param
+    return (
+      req.headers['x-csrf-token'] || (req.body && req.body._csrf) || (req.query && req.query._csrf)
+    );
+  },
+  errorHandler: (err, req, res, next) => {
+    if (err.code === 'EBADCSRFTOKEN') {
+      res.status(403).json({
+        error: 'Invalid or missing CSRF token',
+        code: 'CSRF_ERROR',
+      });
+    } else {
+      next(err);
+    }
   },
 };
 

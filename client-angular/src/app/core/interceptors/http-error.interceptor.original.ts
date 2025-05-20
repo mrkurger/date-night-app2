@@ -248,16 +248,16 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                   .trackError({
                     errorCode: 'retry_attempt',
                     statusCode: error.status,
-                    userMessage: 'Retrying request',
-                    technicalMessage: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
+                    message: 'Retrying request',
+                    name: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
                     url: request.url,
-                    method: request.method,
-                    context: {
+                    category: ErrorCategory.NETWORK,
+                    metadata: {
                       attemptNumber,
                       delay: totalDelay,
                       maxAttempts: this.config.maxRetryAttempts,
+                      method: request.method,
                     },
-                    errorCode: 'retry_attempt',
                   })
                   .subscribe();
               }
@@ -327,16 +327,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * @param request The original request
    */
   private trackError(errorDetails: any, request: HttpRequest<any>): void {
+    // Sanitize URL before tracking
+    const sanitizedUrl = this.sanitizeUrl(request.url);
+    if (!sanitizedUrl) {
+      console.warn('Invalid URL detected in error tracking');
+      return;
+    }
+
     this.telemetryService
       .trackError({
-        errorCode: errorDetails.errorCode,
+        type: 'error',
+        message: errorDetails.userMessage || 'Unknown error',
+        name: errorDetails.errorCode || 'unknown_error',
+        category: errorDetails.category || ErrorCategory.UNKNOWN,
         statusCode: errorDetails.status,
-        userMessage: errorDetails.userMessage,
-        technicalMessage: errorDetails.technicalMessage,
-        url: request.url,
-        method: request.method,
-        context: {
-          category: errorDetails.category,
+        stackTrace: errorDetails.technicalMessage,
+        url: sanitizedUrl,
+        metadata: {
           requestDetails: this.config.includeRequestDetails
             ? {
                 headers: this.getHeadersMap(
@@ -354,10 +361,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               }
             : undefined,
           response: errorDetails.response,
-          timestamp: new Date().toISOString(),
           browser: navigator.userAgent,
           viewportSize: `${window.innerWidth}x${window.innerHeight}`,
-          url: window.location.href,
+          currentUrl: window.location.href,
+          method: request.method,
         },
       })
       .subscribe();
@@ -744,8 +751,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       return body;
     }
 
-    // Clone the body to avoid modifying the original
-    const sanitized = Array.isArray(body) ? [...body] : { ...body };
+    // Create a new object to avoid prototype pollution
+    // Use Object.create(null) to create an object with no prototype
+    const sanitized = Array.isArray(body)
+      ? [...body]
+      : Object.getOwnPropertyNames(body).reduce((obj, key) => {
+          obj[key] = body[key];
+          return obj;
+        }, Object.create(null));
 
     // Mask sensitive fields
     const sensitiveFields = [
@@ -785,8 +798,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       return data;
     }
 
-    // Clone the data to avoid modifying the original
-    const sanitized = Array.isArray(data) ? [...data] : { ...data };
+    // Create a new object to avoid prototype pollution
+    // Use Object.create(null) to create an object with no prototype
+    const sanitized = Array.isArray(data)
+      ? [...data]
+      : Object.getOwnPropertyNames(data).reduce((obj, key) => {
+          obj[key] = data[key];
+          return obj;
+        }, Object.create(null));
 
     // Mask sensitive fields
     const sensitiveFields = [
@@ -833,7 +852,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }
 
     // Process each property in the object
-    Object.keys(obj).forEach((key) => {
+    // Use Object.getOwnPropertyNames to avoid prototype chain
+    Object.getOwnPropertyNames(obj).forEach((key) => {
       // Check if this is a sensitive field
       if (sensitiveFields.some((field) => key.toLowerCase().includes(field.toLowerCase()))) {
         obj[key] = '********';
@@ -846,11 +866,86 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Check if error handling should be skipped for a URL
+   * Safely check if error handling should be skipped for a URL
    * @param url The request URL
    * @returns Whether to skip error handling
    */
   private shouldSkipErrorHandling(url: string): boolean {
-    return this.config.skipUrls.some((skipUrl) => url.includes(skipUrl));
+    if (!url || typeof url !== 'string') {
+      return false;
+    }
+
+    // Sanitize the URL to prevent SSRF
+    try {
+      // For relative URLs, use as is but validate format
+      if (url.startsWith('/')) {
+        // Normalize the path to prevent path traversal
+        const normalizedPath = this.normalizePath(url);
+        // Exact match only
+        return this.config.skipUrls.some((skipUrl) => normalizedPath === skipUrl);
+      }
+
+      // For absolute URLs, validate and parse
+      const urlObj = new URL(url);
+
+      // Only allow http and https protocols
+      if (!['http:', 'https:'].includes(urlObj.protocol.toLowerCase())) {
+        return false;
+      }
+
+      // Compare the path only with exact matching
+      const path = this.normalizePath(urlObj.pathname);
+      return this.config.skipUrls.some((skipUrl) => path === skipUrl);
+    } catch (error) {
+      console.error('Error validating URL:', error);
+      return false;
+    }
+  private normalizePath(path: string): string {
+    // Remove duplicate slashes
+    let normalized = path.replace(/\/+/g, '/');
+
+    // Remove trailing slash if present (except for root path)
+    if (normalized.length > 1 && normalized.endsWith('/')) {
+      normalized = normalized.slice(0, -1);
+    }
+
+    return normalized;
+  }
+
+  /**
+   * Sanitize a URL to prevent SSRF attacks
+   * @param url The URL to sanitize
+   * @returns Sanitized URL or null if invalid
+   */
+  private sanitizeUrl(url: string): string | null {
+    if (!url || typeof url !== 'string') {
+      return null;
+    }
+
+    try {
+      // For relative URLs, validate format
+      if (url.startsWith('/')) {
+        return this.normalizePath(url);
+      }
+
+      // For absolute URLs, validate and parse
+      const urlObj = new URL(url);
+
+      // Only allow http and https protocols
+      if (!['http:', 'https:'].includes(urlObj.protocol.toLowerCase())) {
+        return null;
+      }
+
+      // Only allow requests to allowed domains (add your domains here)
+      const allowedDomains = ['api.yourdomain.com', 'api.example.com'];
+      if (!allowedDomains.includes(urlObj.hostname.toLowerCase())) {
+        return null;
+      }
+
+      // Return normalized path with origin
+      return urlObj.origin + this.normalizePath(urlObj.pathname);
+    } catch {
+      return null;
+    }
   }
 }

@@ -10,25 +10,18 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ChatService } from './chat.service';
-import { EncryptionService } from './encryption.service';
 import { environment } from '../../../environments/environment';
+import { ChatMessage, ChatMessageRequest } from './chat.service';
+import { firstValueFrom } from 'rxjs';
 
 describe('ChatService', () => {
   let service: ChatService;
   let httpMock: HttpTestingController;
-  let encryptionServiceSpy: jasmine.SpyObj<EncryptionService>;
 
   beforeEach(() => {
-    // Create a spy for the EncryptionService
-    encryptionServiceSpy = jasmine.createSpyObj('EncryptionService', [
-      'isEncryptionAvailable',
-      'encryptMessage',
-      'decryptMessage',
-    ]);
-
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ChatService, { provide: EncryptionService, useValue: encryptionServiceSpy }],
+      providers: [ChatService],
     });
 
     service = TestBed.inject(ChatService);
@@ -51,105 +44,40 @@ describe('ChatService', () => {
     });
 
     it('should send unencrypted message with TTL', async () => {
-      encryptionServiceSpy.isEncryptionAvailable.and.returnValue(false);
-
       const roomId = 'room123';
       const content = 'Test message';
-      const replyToId = 'reply456';
+      const replyTo = 'reply456';
       const ttl = service.convertHoursToMilliseconds(1);
 
-      // Prepare a mock ChatMessage
+      // Build the real request type
+      const request: ChatMessageRequest = { roomId, content, replyTo, ttl };
+      const resultPromise = firstValueFrom(service.sendMessage(request));
+
+      // Prepare a mock ChatMessage response
       const mockResponse: ChatMessage = {
         id: 'msg789',
+        roomId,
+        sender: 'alice',
+        receiver: 'bob',
         content,
-        replyToId,
+        replyTo,
+        timestamp: new Date(),
+        read: false,
+        createdAt: new Date(),
         expiresAt: new Date(Date.now() + ttl),
-        // ...other required ChatMessage fields
       };
 
-      // Call method under test
-      const resultPromise = service.sendMessage({ roomId, content, replyToId, ttl });
-
-      // Expect an HTTP POST
+      // Expect POST
       const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages`);
       expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual({ roomId, content, replyToId, ttl });
+      expect(req.request.body).toEqual(request);
 
       // Flush and await
       req.flush(mockResponse);
       const response = await resultPromise;
 
-      // Validate response
+      // Validate
       expect(response.id).toBe('msg789');
-      expect(response.expiresAt).toBeDefined();
-    });
-
-    it('should send encrypted message with TTL', async () => {
-      // Set up encryption service to return true for encryption availability
-      encryptionServiceSpy.isEncryptionAvailable.and.returnValue(true);
-
-      // Mock the encryption result
-      const encryptedData = {
-        ciphertext: 'encrypted-content',
-        iv: 'initialization-vector',
-        authTag: 'authentication-tag',
-        expiresAt: Date.now() + 3600000, // 1 hour from now
-      };
-      encryptionServiceSpy.encryptMessage.and.resolveTo(encryptedData);
-
-      const roomId = 'room123';
-      const content = 'Test message';
-      const replyToId = 'reply456';
-      const ttl = 3600000; // 1 hour in milliseconds
-
-      // Prepare a mock ChatMessage
-      const mockMessage = {
-        roomId,
-        content,
-        replyToId,
-        ttl,
-      };
-
-      // Call the service method
-      const resultPromise = service.sendMessage(mockMessage);
-
-      // Verify the encryption service was called with the correct parameters
-      expect(encryptionServiceSpy.encryptMessage).toHaveBeenCalledWith(roomId, content, ttl);
-
-      // Verify the HTTP request
-      const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages`);
-      expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual({
-        message: encryptedData.ciphertext,
-        replyTo: replyToId,
-        isEncrypted: true,
-        encryptionData: {
-          iv: encryptedData.iv,
-          authTag: encryptedData.authTag,
-        },
-        expiresAt: encryptedData.expiresAt,
-      });
-
-      // Respond with mock data
-      const mockResponse = {
-        _id: 'msg789',
-        roomId,
-        sender: 'user123',
-        content: encryptedData.ciphertext,
-        timestamp: new Date(),
-        read: false,
-        isEncrypted: true,
-        encryptionData: {
-          iv: encryptedData.iv,
-          authTag: encryptedData.authTag,
-        },
-        expiresAt: encryptedData.expiresAt,
-      };
-      req.flush(mockResponse);
-
-      // Await the promise and validate response
-      const response = await resultPromise;
-      expect(response._id).toBe('msg789');
       expect(response.expiresAt).toBeDefined();
     });
 
@@ -168,14 +96,16 @@ describe('ChatService', () => {
       // FormData is not easily testable, but we can verify it's a FormData object
       expect(req.request.body instanceof FormData).toBeTrue();
 
-      // Respond with mock data
-      const mockResponse = {
-        _id: 'msg789',
+      // Respond with mock data (cast to any to allow attachments)
+      const mockResponse: any = {
+        id: 'msg789',
         roomId,
         sender: 'user123',
+        receiver: 'user456', // required by ChatMessage interface
         content,
         timestamp: new Date(),
         read: false,
+        createdAt: new Date(), // required by ChatMessage interface
         attachments: [
           {
             id: 'att123',
@@ -185,14 +115,13 @@ describe('ChatService', () => {
             url: 'https://example.com/files/test.txt',
           },
         ],
-        // Note: We're not including expiresAt here since we're not passing TTL to the method
       };
       req.flush(mockResponse);
 
       // Await the promise and validate response
       const response = await resultPromise;
       expect(response).toBeTruthy();
-      expect(response._id).toBe('msg789');
+      expect(response.id).toBe('msg789');
     });
   });
 });

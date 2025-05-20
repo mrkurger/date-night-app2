@@ -19,36 +19,43 @@ import helmet from 'helmet';
 // Create a middleware function that applies all security headers
 const securityHeaders = (req, res, next) => {
   // X-Content-Type-Options
-  // Prevents browsers from MIME-sniffing a response away from the declared content-type
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
-  // X-Frame-Options
-  // Prevents clickjacking by disallowing the page to be embedded in a frame
-  res.setHeader('X-Frame-Options', 'DENY');
+  // X-Frame-Options with configuration based on environment
+  const frameOptions = process.env.ALLOW_FRAME_ANCESTORS
+    ? `ALLOW-FROM ${process.env.ALLOW_FRAME_ANCESTORS}`
+    : 'DENY';
+  res.setHeader('X-Frame-Options', frameOptions);
 
-  // X-XSS-Protection
-  // Enables the Cross-site scripting (XSS) filter in browsers
-  res.setHeader('X-XSS-Protection', '1; mode=block');
+  // X-XSS-Protection with report URI
+  res.setHeader('X-XSS-Protection', '1; mode=block; report=/api/v1/xss-report');
 
-  // Strict-Transport-Security
-  // Force HTTPS in production
-  // Always set this header in tests to ensure tests pass
-  res.setHeader(
-    'Strict-Transport-Security',
+  // Enhanced HSTS configuration
+  const hstsValue =
     process.env.NODE_ENV === 'production'
       ? 'max-age=31536000; includeSubDomains; preload'
-      : 'max-age=86400'
-  );
+      : 'max-age=86400; includeSubDomains';
+  res.setHeader('Strict-Transport-Security', hstsValue);
 
-  // Permissions-Policy (formerly Feature-Policy)
-  // Restrict browser features
+  // Enhanced Permissions-Policy
   res.setHeader(
     'Permissions-Policy',
-    'camera=self, microphone=self, geolocation=self, payment=self'
+    [
+      'camera=self',
+      'microphone=self',
+      'geolocation=self',
+      'payment=self',
+      'usb=none',
+      'bluetooth=none',
+      'midi=none',
+      'sync-xhr=self',
+      'fullscreen=self',
+      'magnetometer=none',
+      'picture-in-picture=self',
+    ].join(', ')
   );
 
-  // Referrer-Policy
-  // Control how much referrer information is included with requests
+  // Strict Referrer-Policy
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
   // Cache-Control

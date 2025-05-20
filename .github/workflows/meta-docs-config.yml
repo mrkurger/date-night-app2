@@ -1,0 +1,168 @@
+name: Meta Docs & Config
+
+on:
+  push:
+    branches: [main, develop, Nebular-UI-Refactor]
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+      - '**/*.html'
+      - '.github/scripts/**'
+      - '.github/workflows/meta-docs-config.yml'
+      - 'scripts/generate_docs.js'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '**/pnpm-lock.yaml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+      - '**/*.html'
+      - '.github/scripts/**'
+      - '.github/workflows/meta-docs-config.yml'
+      - 'scripts/generate_docs.js'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '**/pnpm-lock.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  pull-requests: write
+  actions: read
+  id-token: write
+
+env:
+  CI: true
+  REPORTS_DIR: reports
+  ARTIFACTS_RETENTION: 14
+  NODE_ENV: test
+  MONGODB_URI: mongodb://localhost:27017/test
+
+jobs:
+  base-config:
+    name: Base Config & Dependency Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      # Set up Node.js (default 20.x, override with input if needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      # Verify dependencies, prefer pnpm but fallback as needed
+      - name: Verify Dependencies
+        id: deps
+        run: |
+          if [ -f "pnpm-lock.yaml" ]; then
+            npm install -g pnpm
+            pnpm install --frozen-lockfile
+          else
+            npm ci
+          fi
+        continue-on-error: true
+
+      - name: Fallback Install
+        if: steps.deps.outcome == 'failure'
+        run: |
+          echo "Clean install failed, attempting regular install..."
+          rm -rf node_modules
+          npm install
+
+      # Cache dependencies for faster CI
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+  env-config:
+    name: Print & Check Environment Vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print environment variables
+        run: |
+          echo "NODE_ENV: ${{ env.NODE_ENV }}"
+          echo "CI: ${{ env.CI }}"
+          echo "MONGODB_URI: ${{ env.MONGODB_URI }}"
+
+  docs:
+    name: Documentation Build & Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [base-config]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # Generate documentation using your scripts (adjust as needed for ESM)
+      - name: Generate Documentation
+        run: node .github/scripts/generate-docs.js
+
+      - name: Verify Folder Documentation
+        run: node .github/scripts/verify-folder-docs.js
+
+      - name: Update Global Glossary and Index
+        run: node .github/scripts/update-global-docs.js
+
+      # Test documentation scripts if you have tests
+      - name: Test Documentation Generation
+        run: npm test .github/tests/documentation-tests.js
+
+      - name: Upload Documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: docs/
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
+
+      - name: Commit Updated Documentation
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/**/*.html
+          git commit -m "Update documentation [skip ci]" || echo "No changes to commit"
+          git push
+
+  deploy-to-pages:
+    name: Deploy Documentation to GitHub Pages
+    needs: docs
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Download documentation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation
+          path: docs-to-deploy
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: 'docs-to-deploy'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3

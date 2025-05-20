@@ -14,34 +14,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+export interface ChatMessageRequest {
+  roomId: string;
+  content: string;
+  replyTo?: string;
+  ttl?: number;
+}
+
 export interface ChatMessage {
   id: string;
   roomId: string;
-  sender: string | ChatParticipant;
-  senderId?: string;
+  sender: string;
   receiver: string;
   content: string;
-  message?: string; // Legacy support
+  replyTo?: string;
   timestamp: Date;
   read: boolean;
-  type?: 'text' | 'system' | 'image' | 'file' | 'notification';
-  attachments?: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: number;
-    url: string;
-    timestamp?: Date | string;
-  }>;
-  replyTo?: string;
-  metadata?: any;
-  isEncrypted?: boolean;
-  encryptionData?: {
-    iv: string;
-    authTag?: string;
-  };
   createdAt: Date;
-  expiresAt?: Date | number | string;
+  expiresAt?: Date;
 }
 
 export interface ChatParticipant {
@@ -157,8 +147,8 @@ export class ChatService {
     return this.http.get<ChatMessage[]>(url);
   }
 
-  sendMessage(message: ChatMessage): Observable<ChatMessage> {
-    return this.http.post<ChatMessage>(`${this.apiUrl}/messages`, message);
+  sendMessage(payload: ChatMessageRequest): Observable<ChatMessage> {
+    return this.http.post<ChatMessage>(`${this.apiUrl}/messages`, payload);
   }
 
   markMessagesAsRead(roomId: string): Observable<void> {

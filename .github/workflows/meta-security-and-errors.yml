@@ -1,0 +1,222 @@
+name: Meta Security & Workflow Error Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # Security and error reports weekly (Mon)
+    - cron: '0 0 * * *'   # Snyk/dep checks daily
+    - cron: '0 */6 * * *' # Workflow error sync every 6 hours
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["*"]
+    types: [completed]
+    branches: [main, develop]
+
+# Permissions for all jobs (restricted by step as needed)
+permissions:
+  contents: write
+  security-events: write
+  issues: write
+  pull-requests: write
+  actions: read
+  checks: write
+
+env:
+  ARTIFACTS_RETENTION: 14
+  CI: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  security-scan:
+    name: Security Scan & Dependency Reports
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: github.event_name != 'workflow_run'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Node setup and tools install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Security Tools
+        run: npm install --save-dev npm-audit-html npm-check snyk
+
+      # NPM Audit for client
+      - name: Check Client Dependencies
+        id: check-client
+        continue-on-error: true
+        run: |
+          if [ -d "client-angular" ]; then
+            cd client-angular
+            echo "## Client Dependencies" > ../client-deps-report.md
+            npx npm-check --production --markdown >> ../client-deps-report.md || echo "Error running npm-check for client"
+            npm audit --json | npx npm-audit-html --output ../client-audit.html || echo "Error running npm audit for client"
+            cd ..
+          fi
+
+      # NPM Audit for server
+      - name: Check Server Dependencies
+        id: check-server
+        continue-on-error: true
+        run: |
+          if [ -d "server" ]; then
+            cd server
+            echo "## Server Dependencies" > ../server-deps-report.md
+            npx npm-check --production --markdown >> ../server-deps-report.md || echo "Error running npm-check for server"
+            npm audit --json | npx npm-audit-html --output ../server-audit.html || echo "Error running npm audit for server"
+            cd ..
+          fi
+
+      - name: Authenticate with Snyk
+        if: secrets.SNYK_TOKEN != '' # ✅ Correct usage for step-level if
+        run: npx snyk auth ${{ secrets.SNYK_TOKEN }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan root project with Snyk
+        if: secrets.SNYK_TOKEN != '' # ✅
+        run: npx snyk test --json > snyk-root-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan server project with Snyk
+        if: secrets.SNYK_TOKEN != '' # ✅
+        run: cd server && npx snyk test --json > ../snyk-server-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Scan client project with Snyk
+        if: secrets.SNYK_TOKEN != '' # ✅
+        run: cd client-angular && npx snyk test --json > ../snyk-client-results.json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Generate dependency trees
+        run: |
+          npm ls --json --depth=2 > npm-root-deps-tree.json || true
+          cd server && npm ls --json --depth=2 > ../npm-server-deps-tree.json || true
+          cd ../client-angular && npm ls --json --depth=2 > ../npm-client-deps-tree.json || true
+
+      # Generate combined markdown/HTML report and Snyk task list
+      - name: Generate Combined Security Report
+        run: |
+          mkdir -p downloaded-reports/security downloaded-reports/security/html-reports downloaded-reports/snyk
+          # Build Markdown and HTML reports (reuse your scripts if required)
+          node .github/scripts/generate-snyk-task-list.js || echo "Snyk task list script not found"
+          # Build summary markdown
+          cat > downloaded-reports/security/security-report.md << EOL
+          # Security Alerts and Dependency Report
+
+          *Generated on: $(date +%Y-%m-%d)*
+
+          This report provides an overview of dependencies and potential security issues in the project.
+
+          ## Manual Security Checks
+
+          For a complete security assessment, please also check:
+          1. GitHub Security tab for Dependabot alerts
+          2. npm audit reports for each package
+          3. Known vulnerabilities in third-party libraries
+          EOL
+
+      - name: Upload JSON results as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-json-results-${{ github.run_id }}
+          path: |
+            snyk-*.json
+            npm-*.json
+          retention-days: 7
+          if-no-files-found: warn
+
+      - name: Remove JSON files
+        run: rm -f snyk-*.json npm-*.json
+
+      - name: Commit Reports
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git stash -u || true
+          git pull --rebase origin main || true
+          git stash list | grep -q "stash@{0}" && git stash pop || true
+          git add downloaded-reports/security/ downloaded-reports/snyk/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update security and snyk reports [skip ci]"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  sync-workflow-errors:
+    name: Sync Workflow Errors
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: >
+      github.event_name == 'workflow_run' &&
+      contains(fromJSON('["failure", "cancelled", "timed_out"]'), github.event.workflow_run.conclusion)
+    env:
+      ARTIFACTS_RETENTION: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm install @octokit/rest@20 adm-zip@0.5.10
+
+      - name: Disable Husky
+        run: node .github/scripts/disable-husky-in-ci.js
+
+      - name: Fetch Workflow Logs
+        id: fetch-logs
+        run: |
+          mkdir -p workflow-error-logs-temp
+          node .github/scripts/fetch-workflow-logs.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+
+      - name: Run Analyzer Tests
+        run: |
+          node .github/scripts/test-error-analyzer.js
+
+      - name: Generate Error Report
+        if: success()
+        run: |
+          node .github/scripts/analyze-workflow-errors.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Error Pattern Validation
+        run: |
+          node .github/scripts/validate-error-patterns.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Error Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: workflow-error-logs-${{ github.run_id }}
+          path: |
+            workflow-error-logs-temp/
+            workflow-error-report.md
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
