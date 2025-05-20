@@ -74,11 +74,10 @@ export interface MapMarker {
  * ></app-map>
  */
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.scss'],
+    imports: [CommonModule]
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('map') mapElement?: ElementRef;

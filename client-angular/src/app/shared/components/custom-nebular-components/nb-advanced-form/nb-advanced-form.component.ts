@@ -31,8 +31,8 @@ export interface FormField {
 }
 
 @Component({
-  selector: 'nb-advanced-form',
-  template: `
+    selector: 'nb-advanced-form',
+    template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="advanced-form">
       <nb-card>
         <nb-card-header *ngIf="title">
@@ -212,8 +212,8 @@ export interface FormField {
       </nb-card>
     </form>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .advanced-form {
         width: 100%;
       }
@@ -264,7 +264,8 @@ export interface FormField {
         font-size: nb-theme(text-caption-font-size);
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbAdvancedFormComponent implements OnInit {
   @Input() fields: FormField[] = [];

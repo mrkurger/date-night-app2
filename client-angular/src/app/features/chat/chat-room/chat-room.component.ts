@@ -48,24 +48,23 @@ interface ChatUser {
 }
 
 @Component({
-  selector: 'app-chat-room',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    NebularModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NbCardModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    ChatMessageComponent,
-  ],
-  templateUrl: './chat-room.component.html',
-  styleUrls: ['./chat-room.component.scss'],
+    selector: 'app-chat-room',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        NebularModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        NbCardModule,
+        NbIconModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        ChatMessageComponent,
+    ],
+    templateUrl: './chat-room.component.html',
+    styleUrls: ['./chat-room.component.scss']
 })
 export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;

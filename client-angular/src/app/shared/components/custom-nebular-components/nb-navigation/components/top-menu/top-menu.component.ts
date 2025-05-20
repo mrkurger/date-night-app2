@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
-  selector: 'nb-top-menu',
-  template: `
+    selector: 'nb-top-menu',
+    template: `
     <nav class="top-menu">
       <ul class="menu-items">
         <li
@@ -51,8 +51,8 @@ import { NbMenuItem } from '@nebular/theme';
       </ul>
     </nav>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .top-menu {
         display: flex;
         align-items: center;
@@ -144,7 +144,8 @@ import { NbMenuItem } from '@nebular/theme';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbTopMenuComponent {
   @Input() items: NbMenuItem[] = [];

@@ -21,17 +21,16 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-alt-premium-ads-section',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    AltPremiumAdCardComponent, // Add to imports
-  ],
-  templateUrl: './alt-premium-ads-section.component.html',
-  styleUrls: ['./alt-premium-ads-section.component.scss'],
+    selector: 'app-alt-premium-ads-section',
+    imports: [NebularModule, CommonModule,
+        RouterModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        AltPremiumAdCardComponent, // Add to imports
+    ],
+    templateUrl: './alt-premium-ads-section.component.html',
+    styleUrls: ['./alt-premium-ads-section.component.scss']
 })
 export class AltPremiumAdsSectionComponent {
   @Input() premiumAds: Advertiser[] = [];

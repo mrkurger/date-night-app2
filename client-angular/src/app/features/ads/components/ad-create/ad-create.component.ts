@@ -8,12 +8,11 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-ad-create',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],
-  templateUrl: './ad-create.component.html',
-  styles: [
-    `
+    selector: 'app-ad-create',
+    imports: [CommonModule, ReactiveFormsModule, NebularModule],
+    templateUrl: './ad-create.component.html',
+    styles: [
+        `
       .ad-form-container {
         max-width: 800px;
         margin: 0 auto;
@@ -30,7 +29,7 @@ import { CommonModule } from '@angular/common';
         margin-top: 30px;
       }
     `,
-  ],
+    ]
 })
 export class AdCreateComponent implements OnInit {
   adForm: FormGroup;

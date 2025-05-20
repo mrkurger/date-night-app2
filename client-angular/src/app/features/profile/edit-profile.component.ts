@@ -19,21 +19,20 @@ import {
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-edit-profile',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbLayoutModule,
-  ],
-  providers: [UserService, AuthService, NotificationService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
+    selector: 'app-edit-profile',
+    imports: [NebularModule, CommonModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbLayoutModule,
+    ],
+    providers: [UserService, AuthService, NotificationService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    template: `
     <nb-card class="edit-profile-card">
       <nb-card-header>
         <h2>Edit Profile</h2>
@@ -149,8 +148,8 @@ import { take } from 'rxjs/operators';
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       @use '@nebular/theme/styles/theming' as *;
 
       .edit-profile-card {
@@ -208,7 +207,7 @@ import { take } from 'rxjs/operators';
         }
       }
     `,
-  ],
+    ]
 })
 export class EditProfileComponent implements OnInit {
   profileForm: FormGroup;

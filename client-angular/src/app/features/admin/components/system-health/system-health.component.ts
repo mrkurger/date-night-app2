@@ -23,18 +23,16 @@ interface TimeSeriesData {
 }
 
 @Component({
-  selector: 'app-system-health',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    NgxChartsModule,
-
-    NbCardModule,
-    NbProgressBarModule,
-    NbBadgeModule,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
+    selector: 'app-system-health',
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        NgxChartsModule,
+        NbCardModule,
+        NbProgressBarModule,
+        NbBadgeModule,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    template: `
     <div class="system-health">
       <div class="row">
         <div class="col-md-6">
@@ -129,7 +127,7 @@ interface TimeSeriesData {
       </div>
     </div>
   `,
-  styleUrls: ['./system-health.component.scss'],
+    styleUrls: ['./system-health.component.scss']
 })
 export class SystemHealthComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

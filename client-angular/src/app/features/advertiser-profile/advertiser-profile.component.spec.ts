@@ -23,10 +23,9 @@ import { NotificationService } from '../../core/services/notification.service';
 
 // Mock MainLayoutComponent
 @Component({
-  selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',
-  standalone: true,
-  imports: [ReactiveFormsModule],
+    selector: 'app-main-layout',
+    template: '<ng-content></ng-content>',
+    imports: [ReactiveFormsModule]
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

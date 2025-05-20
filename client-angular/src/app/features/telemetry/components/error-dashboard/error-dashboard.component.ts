@@ -25,17 +25,16 @@ import { FormGroup, FormBuilder } from '@angular/forms';
  * - Detailed error information
  */
 @Component({
-  selector: 'app-error-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NebularModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
+    selector: 'app-error-dashboard',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NebularModule,
+        AppSortComponent,
+        AppSortHeaderComponent,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    template: `
     <div class="dashboard-container">
       <h1>Error Monitoring Dashboard</h1>
 
@@ -195,8 +194,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dashboard-container {
         padding: 20px;
       }
@@ -275,7 +274,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
         color: var(--text-hint-color);
       }
     `,
-  ],
+    ]
 })
 export class ErrorDashboardComponent implements OnInit {
   // Error data

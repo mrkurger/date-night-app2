@@ -1,14 +1,7 @@
-import {
-  NbDialogRef,
-  ,
-  ,
-  ,
-  ,
-  ,
-} from '@nebular/theme';
-import { _NebularModule } from '../../nebular.module';
+import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 // ===================================================
 // This file contains settings for component configuration (notes-dialog.component)
 //
@@ -17,34 +10,35 @@ import { Component, OnInit, Inject } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface NotesDialogData {
-  title: string;
-  notes: string;
+  title?: string;
+  notes?: string;
   maxLength?: number;
   placeholder?: string;
 }
 
 @Component({
   selector: 'app-notes-dialog',
-  standalone: true,
-  imports: [CommonModule,
-    FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NebularModule],
   template: `
     <nb-card>
-      <nb-card-header>{{ data.title }}</nb-card-header>
+      <nb-card-header>{{ data?.title || 'Edit Notes' }}</nb-card-header>
       <nb-card-body>
         <nb-form-field>
           <textarea
             nbInput
             fullWidth
             [(ngModel)]="notes"
-            [placeholder]="data.placeholder || 'Enter your notes here...'"
-            [maxlength]="data.maxLength || 500"
+            [placeholder]="data?.placeholder || 'Enter your notes here...'"
+            [maxlength]="data?.maxLength || 500"
             rows="5"
           ></textarea>
-          <div class="text-right">{{ notes.length }} / {{ data.maxLength || 500 }}</div>
+          <div class="text-right" *ngIf="notes">
+            {{ notes?.length || 0 }} / {{ data?.maxLength || 500 }}
+          </div>
         </nb-form-field>
       </nb-card-body>
       <nb-card-footer class="dialog-footer">
@@ -55,16 +49,15 @@ export interface NotesDialogData {
   `,
   styles: [
     `
-      :host {
-        nb-card {
-          max-width: 600px;
-        }
+      :host nb-card {
+        max-width: 600px;
+        min-width: 400px;
+      }
 
-        nb-card-footer {
-          display: flex;
-          justify-content: flex-end;
-          gap: 1rem;
-        }
+      :host nb-card-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
       }
     `,
   ],
@@ -75,13 +68,12 @@ export class NotesDialogComponent implements OnInit {
 
   constructor(
     protected dialogRef: NbDialogRef<NotesDialogComponent>,
-    @Inject('NOTES_DIALOG_DATA') public injectedData?: NotesDialogData,
-  ) {}
+    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: NotesDialogData,
+  ) {
+    this.data = this.injectedData || {};
+  }
 
   ngOnInit() {
-    // Use injected data if available, otherwise try to get it from the dialog ref
-    this.data = this.injectedData ||
-      this.dialogRef.componentRef?.instance['data'] || { title: 'Notes', notes: '' };
     this.notes = this.data?.notes || '';
   }
 

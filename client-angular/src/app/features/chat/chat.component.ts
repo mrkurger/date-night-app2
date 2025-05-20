@@ -57,30 +57,29 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const TYPING_INDICATOR_DELAY = 500; // ms
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbContextMenuModule,
-    NbMenuModule,
-    NbTagModule,
-    AvatarComponent,
-    // These components are imported but not used in the template
-    // Keeping them commented for future reference
-    // SkeletonLoaderComponent,
-    // AppSortComponent,
-    // AppSortHeaderComponent,
-  ],
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+    selector: 'app-chat',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbInputModule,
+        NbFormFieldModule,
+        NbIconModule,
+        NbTooltipModule,
+        NbBadgeModule,
+        NbContextMenuModule,
+        NbMenuModule,
+        NbTagModule,
+        AvatarComponent,
+        // These components are imported but not used in the template
+        // Keeping them commented for future reference
+        // SkeletonLoaderComponent,
+        // AppSortComponent,
+        // AppSortHeaderComponent,
+    ],
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references

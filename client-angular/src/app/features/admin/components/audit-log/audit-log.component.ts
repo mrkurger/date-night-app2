@@ -17,11 +17,10 @@ interface AuditLogEntry {
 }
 
 @Component({
-  selector: 'app-audit-log',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule, NebularModule],
-  template: `
+    selector: 'app-audit-log',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, FormsModule, NebularModule],
+    template: `
     <div class="audit-log">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between align-items-center">
@@ -82,8 +81,8 @@ interface AuditLogEntry {
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         max-width: 100%;
@@ -111,7 +110,7 @@ interface AuditLogEntry {
         text-transform: capitalize;
       }
     `,
-  ],
+    ]
 })
 export class AuditLogComponent implements OnInit {
   loading = false;

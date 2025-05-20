@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'nb-form-error',
-  template: `
+    selector: 'nb-form-error',
+    template: `
     <div class="form-error" *ngIf="visible">
       <nb-icon icon="alert-circle-outline" status="danger"></nb-icon>
       <span class="error-message">{{ message }}</span>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .form-error {
         display: flex;
         align-items: center;
@@ -27,7 +27,8 @@ import { Component, Input } from '@angular/core';
         line-height: 1.2;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbFormErrorComponent {
   @Input() message = '';

@@ -36,10 +36,9 @@ export interface ReviewDialogData {
 }
 
 @Component({
-  selector: 'app-review-dialog',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
-  template: `
+    selector: 'app-review-dialog',
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
+    template: `
     <nb-card class="review-dialog-container">
       <nb-card-header class="dialog-header">
         <h2>{{ data.existingReview ? 'Edit Review' : 'Write a Review' }}</h2>
@@ -60,8 +59,8 @@ export interface ReviewDialogData {
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .review-dialog-container {
         max-width: 800px;
         width: 100%;
@@ -73,7 +72,7 @@ export interface ReviewDialogData {
         align-items: center;
       }
     `,
-  ],
+    ]
 })
 export class ReviewDialogComponent {
   constructor(

@@ -11,8 +11,8 @@ export interface TableColumn<T = any> {
 }
 
 @Component({
-  selector: 'nb-data-table',
-  template: `
+    selector: 'nb-data-table',
+    template: `
     <nb-card>
       <nb-card-header *ngIf="showHeader">
         <div class="header-container">
@@ -114,8 +114,8 @@ export interface TableColumn<T = any> {
     >
     </nb-data-table-filter>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -217,7 +217,8 @@ export interface TableColumn<T = any> {
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbDataTableComponent<T = any> implements OnInit {
   @Input() data: T[] = [];

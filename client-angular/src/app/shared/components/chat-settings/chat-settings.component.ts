@@ -40,23 +40,22 @@ export interface ChatSettings {
 }
 
 @Component({
-  selector: 'app-chat-settings',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbSelectModule,
-    NbAlertModule,
-    NbToggleModule,
-    NbSpinnerModule,
-    NbOptionModule,
-  ],
-  template: `
+    selector: 'app-chat-settings',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbFormFieldModule,
+        NbSelectModule,
+        NbAlertModule,
+        NbToggleModule,
+        NbSpinnerModule,
+        NbOptionModule,
+    ],
+    template: `
     <nb-card>
       <nb-card-header>
         <h3>Chat Settings</h3>
@@ -123,8 +122,8 @@ export interface ChatSettings {
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .settings-group {
         margin-bottom: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
 
@@ -155,7 +154,7 @@ export interface ChatSettings {
         }
       }
     `,
-  ],
+    ]
 })
 export class ChatSettingsComponent implements OnInit {
   @Input() roomId!: string;

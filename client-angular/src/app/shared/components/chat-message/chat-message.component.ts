@@ -23,23 +23,22 @@ import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
-  selector: 'app-chat-message',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbIconModule,
-    NbButtonModule,
-    NbBadgeModule,
-    NbSpinnerModule,
-    NbUserModule,
-    TimeAgoPipe,
-    LinkifyPipe,
-    FileSizePipe,
-  ],
-  templateUrl: './chat-message.component.html',
-  styleUrls: ['./chat-message.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-chat-message',
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbIconModule,
+        NbButtonModule,
+        NbBadgeModule,
+        NbSpinnerModule,
+        NbUserModule,
+        TimeAgoPipe,
+        LinkifyPipe,
+        FileSizePipe,
+    ],
+    templateUrl: './chat-message.component.html',
+    styleUrls: ['./chat-message.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatMessageComponent implements OnInit {
   @Input() message!: ChatMessage;

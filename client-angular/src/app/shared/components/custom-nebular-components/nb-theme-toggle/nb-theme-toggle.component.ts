@@ -4,8 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 import { ThemeService } from '../../../../core/services/theme.service';
 
 @Component({
-  selector: 'nb-theme-toggle',
-  template: `
+    selector: 'nb-theme-toggle',
+    template: `
     <div class="theme-toggle">
       <button
         nbButton
@@ -22,8 +22,8 @@ import { ThemeService } from '../../../../core/services/theme.service';
       </button>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -55,7 +55,8 @@ import { ThemeService } from '../../../../core/services/theme.service';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbThemeToggleComponent implements OnInit, OnDestroy {
   isDarkMode = false;

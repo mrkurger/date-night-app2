@@ -300,8 +300,8 @@ export class DialogService {
 }
 
 @Component({
-  selector: 'app-confirm-dialog',
-  template: `
+    selector: 'app-confirm-dialog',
+    template: `
     <nb-card>
       <nb-card-header>{{ title }}</nb-card-header>
       <nb-card-body>
@@ -313,17 +313,16 @@ export class DialogService {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dialog-footer {
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
       }
     `,
-  ],
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule],
+    ],
+    imports: [CommonModule, NbCardModule, NbButtonModule]
 })
 export class ConfirmDialogComponent {
   constructor(private dialogRef: NbDialogRef<ConfirmDialogComponent>) {}

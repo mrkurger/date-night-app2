@@ -37,29 +37,28 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-user-settings',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbTagModule,
-    NbSelectModule,
-    NbCheckboxModule,
-    NbRadioModule,
-    NbTabsetModule,
-  ],
-  template: `
+    selector: 'app-user-settings',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbInputModule,
+        NbFormFieldModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbAlertModule,
+        NbTooltipModule,
+        NbBadgeModule,
+        NbTagModule,
+        NbSelectModule,
+        NbCheckboxModule,
+        NbRadioModule,
+        NbTabsetModule,
+    ],
+    template: `
     <nb-layout>
       <nb-layout-column>
         <div class="settings-container">
@@ -585,8 +584,8 @@ import { Subscription } from 'rxjs';
       </nb-layout-column>
     </nb-layout>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host nb-layout-column {
         padding: 0; // Remove padding if settings-container handles it
       }
@@ -836,7 +835,7 @@ import { Subscription } from 'rxjs';
         color: nb-theme(text-hint-color);
       }
     `,
-  ],
+    ]
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;

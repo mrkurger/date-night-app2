@@ -10,11 +10,10 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-alt-paid-placement-sidebar',
-  standalone: true,
-  imports: [NebularModule, CommonModule, NbCardModule],
-  templateUrl: './alt-paid-placement-sidebar.component.html',
-  styleUrls: ['./alt-paid-placement-sidebar.component.scss'],
+    selector: 'app-alt-paid-placement-sidebar',
+    imports: [NebularModule, CommonModule, NbCardModule],
+    templateUrl: './alt-paid-placement-sidebar.component.html',
+    styleUrls: ['./alt-paid-placement-sidebar.component.scss']
 })
 export class AltPaidPlacementSidebarComponent {
   @Input() ads: Advertiser[] = [];

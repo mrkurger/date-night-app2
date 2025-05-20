@@ -24,12 +24,11 @@ import { NotificationService } from '../../../core/services/notification.service
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 
 @Component({
-  selector: 'app-chat-list',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
-  templateUrl: './chat-list.component.html',
-  styleUrls: ['./chat-list.component.scss'],
+    selector: 'app-chat-list',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
+    templateUrl: './chat-list.component.html',
+    styleUrls: ['./chat-list.component.scss']
 })
 export class ChatListComponent implements OnInit, OnDestroy {
   rooms: ChatRoom[] = [];

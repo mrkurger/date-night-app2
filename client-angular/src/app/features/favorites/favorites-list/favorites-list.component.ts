@@ -21,19 +21,18 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({
-  selector: 'app-favorites-list',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NebularModule, // Ensure NebularModule is imported here
-    // FavoriteButtonComponent is imported but not used in the template
-    // FavoriteButtonComponent,
-  ],
-  template: `
+    selector: 'app-favorites-list',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NebularModule, // Ensure NebularModule is imported here
+        // FavoriteButtonComponent is imported but not used in the template
+        // FavoriteButtonComponent,
+    ],
+    template: `
     <div class="favorites-container">
       <div class="favorites-header">
         <h2 class="page-title">My Favorites</h2>
@@ -252,8 +251,8 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         padding: var(--padding);
@@ -408,7 +407,7 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         margin-left: auto;
       }
     `,
-  ],
+    ]
 })
 export class FavoritesListComponent implements OnInit {
   favorites: Favorite[] = [];

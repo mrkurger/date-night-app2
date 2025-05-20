@@ -1,28 +1,15 @@
-import { Component, Inject } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { NebularModule } from '../../nebular.module';
 
 import { CommonModule } from '@angular/common';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbTagInputAddEvent,
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
-  NbToggleModule,
-  ,
-} from '@nebular/theme';
+import { NbDialogRef, NB_DIALOG_CONFIG, NbTagInputAddEvent, NbToggleModule } from '@nebular/theme';
 
 import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
-  _FormControl,
+  FormControl,
   Validators,
 } from '@angular/forms';
 
@@ -48,11 +35,7 @@ export interface FavoriteDialogResult {
  */
 @Component({
   selector: 'app-favorite-dialog',
-  standalone: true,
-  imports: [CommonModule,
-    NbToggleModule,
-    FormsModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, NebularModule, NbToggleModule, FormsModule, ReactiveFormsModule],
   template: `
     <nb-card class="favorite-dialog-container">
       <nb-card-header class="dialog-header">
@@ -64,7 +47,7 @@ export interface FavoriteDialogResult {
 
       <nb-card-body>
         <form [formGroup]="favoriteForm" (ngSubmit)="onSubmit()">
-          <h3 class="ad-title">{{ data.adTitle }}</h3>
+          <h3 class="ad-title">{{ data?.adTitle }}</h3>
 
           <div class="form-group">
             <label class="label" for="notes">Notes</label>
@@ -135,7 +118,7 @@ export interface FavoriteDialogResult {
 
           <div class="form-actions">
             <button nbButton ghost type="button" (click)="onClose()">Cancel</button>
-            <button nbButton status="primary" type="submit">
+            <button nbButton status="primary" type="submit" [disabled]="favoriteForm.invalid">
               {{ isEdit ? 'Update' : 'Add to Favorites' }}
             </button>
           </div>
@@ -205,25 +188,29 @@ export interface FavoriteDialogResult {
     `,
   ],
 })
-export class FavoriteDialogComponent {
-  favoriteForm: FormGroup;
+export class FavoriteDialogComponent implements OnInit {
+  favoriteForm!: FormGroup;
   tags: string[] = [];
   isEdit = false;
-  readonly separatorKeysCodes: number[] = [13, 188]; // Enter and comma
+  readonly separatorKeysCodes: number[] = [13, 188];
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: NbDialogRef<FavoriteDialogComponent>,
-    @Inject(NB_DIALOG_CONFIG) public data: FavoriteDialogData,
+    @Optional() @Inject(NB_DIALOG_CONFIG) public data: FavoriteDialogData,
   ) {
-    this.isEdit = !!data.existingNotes || !!data.existingTags?.length;
-    this.tags = data.existingTags || [];
+    if (data) {
+      this.isEdit = !!data.existingNotes || !!data.existingTags?.length;
+      this.tags = data.existingTags || [];
+    }
+  }
 
+  ngOnInit(): void {
     this.favoriteForm = this.fb.group({
-      notes: [data.existingNotes || '', [Validators.maxLength(500)]],
+      notes: [this.data?.existingNotes || '', [Validators.maxLength(500)]],
       tags: [this.tags],
-      priority: [data.existingPriority || 'normal'],
-      notificationsEnabled: [data.existingNotificationsEnabled || false],
+      priority: [this.data?.existingPriority || 'normal'],
+      notificationsEnabled: [this.data?.existingNotificationsEnabled || false],
     });
   }
 
@@ -240,9 +227,8 @@ export class FavoriteDialogComponent {
     }
   }
 
-  removeTag(tag: any): void {
-    // Handle both string and NbTagComponent
-    const tagValue = typeof tag === 'string' ? tag : tag.text;
+  removeTag(tagToRemove: string | { text: string }): void {
+    const tagValue = typeof tagToRemove === 'string' ? tagToRemove : tagToRemove.text;
     const index = this.tags.indexOf(tagValue);
     if (index >= 0) {
       this.tags.splice(index, 1);

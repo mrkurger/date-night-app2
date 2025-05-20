@@ -32,8 +32,8 @@ import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 
 @Component({
-  selector: 'app-gallery',
-  template: `
+    selector: 'app-gallery',
+    template: `
     <div class="gallery-container">
       <nb-card>
         <nb-card-header>
@@ -70,8 +70,8 @@ import { UserPreferencesService } from '../../core/services/user-preferences.ser
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .gallery-container {
         padding: 20px;
         max-width: 1200px;
@@ -95,19 +95,18 @@ import { UserPreferencesService } from '../../core/services/user-preferences.ser
         gap: 8px;
       }
     `,
-  ],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbCardModule,
-    NbIconModule,
-    NbTooltipModule,
-    ReactiveFormsModule,
-    RouterModule,
-    SharedModule,
-  ],
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        NbButtonModule,
+        NbCardModule,
+        NbIconModule,
+        NbTooltipModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SharedModule,
+    ]
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';

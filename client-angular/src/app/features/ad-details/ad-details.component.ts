@@ -17,11 +17,10 @@ import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-ad-details',
-  templateUrl: './ad-details.component.html',
-  styleUrls: ['./ad-details.component.scss'],
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'app-ad-details',
+    templateUrl: './ad-details.component.html',
+    styleUrls: ['./ad-details.component.scss'],
+    imports: [CommonModule]
 })
 export class AdDetailsComponent implements OnInit {
   ad: Ad | null = null;

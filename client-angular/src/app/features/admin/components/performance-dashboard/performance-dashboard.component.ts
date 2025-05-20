@@ -28,19 +28,18 @@ interface PaginationChangeEvent {
 import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Component({
-  selector: 'app-performance-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NebularModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
-    ReactiveFormsModule,
-    NgxChartsModule,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './performance-dashboard.component.html',
-  styleUrls: ['./performance-dashboard.component.scss'],
+    selector: 'app-performance-dashboard',
+    imports: [
+        CommonModule,
+        NebularModule,
+        AppSortComponent,
+        AppSortHeaderComponent,
+        ReactiveFormsModule,
+        NgxChartsModule,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './performance-dashboard.component.html',
+    styleUrls: ['./performance-dashboard.component.scss']
 })
 export class PerformanceDashboardComponent implements OnInit {
   // Chart data

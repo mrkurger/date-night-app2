@@ -11,10 +11,9 @@ export interface ConfirmDialogData {
 }
 
 @Component({
-  selector: 'nb-confirm-dialog',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule],
-  template: `
+    selector: 'nb-confirm-dialog',
+    imports: [CommonModule, NbCardModule, NbButtonModule],
+    template: `
     <nb-card [status]="data.status" accent="true">
       <nb-card-header>
         <h4 class="dialog-title">{{ data.title }}</h4>
@@ -32,8 +31,8 @@ export interface ConfirmDialogData {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -53,7 +52,7 @@ export interface ConfirmDialogData {
         gap: 1rem;
       }
     `,
-  ],
+    ]
 })
 export class ConfirmDialogComponent {
   constructor(

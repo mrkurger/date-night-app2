@@ -12,17 +12,16 @@ import type { Ad } from '../../../../core/models/ad.interface';
  * It uses Nebular UI components for consistent styling.
  */
 @Component({
-  selector: 'nb-card',
-  templateUrl: './app-card.component.html',
-  styleUrls: ['./app-card.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule
-  ],
+    selector: 'nb-card',
+    templateUrl: './app-card.component.html',
+    styleUrls: ['./app-card.component.scss'],
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbBadgeModule
+    ]
 })
 export class AppCardComponent implements OnInit {
   @Input() ad!: Ad;

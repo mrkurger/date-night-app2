@@ -14,11 +14,10 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-reviews-page',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent],
-  template: `
+    selector: 'app-reviews-page',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent],
+    template: `
     <div class="reviews-page-container">
       <nb-card class="reviews-header-card">
         <nb-card-body>
@@ -75,8 +74,8 @@ import { of } from 'rxjs';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -143,7 +142,7 @@ import { of } from 'rxjs';
         margin-bottom: 2rem;
       }
     `,
-  ],
+    ]
 })
 export class ReviewsPageComponent implements OnInit {
   adId = '';

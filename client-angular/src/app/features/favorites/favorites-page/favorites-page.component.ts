@@ -48,23 +48,21 @@ interface FilterPreset {
  * Enhanced favorites page component with filtering, sorting, and batch operations
  */
 @Component({
-  selector: 'app-favorites-page',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NebularModule,
-
-    // These components are imported but not used in the template
-    // FavoriteButtonComponent,
-    // LoadingSpinnerComponent,
-    // AppSortComponent,
-    // AppSortHeaderComponent,
-  ],
-  template: `
+    selector: 'app-favorites-page',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        NebularModule,
+        // These components are imported but not used in the template
+        // FavoriteButtonComponent,
+        // LoadingSpinnerComponent,
+        // AppSortComponent,
+        // AppSortHeaderComponent,
+    ],
+    template: `
     <div class="favorites-page">
       <div class="favorites-header">
         <h1 class="page-title">My Favorites</h1>
@@ -477,8 +475,8 @@ interface FilterPreset {
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         padding: var(--padding);
@@ -646,7 +644,7 @@ interface FilterPreset {
         }
       }
     `,
-  ],
+    ]
 })
 export class FavoritesPageComponent implements OnInit {
   favorites: (Favorite & { selected?: boolean })[] = [];

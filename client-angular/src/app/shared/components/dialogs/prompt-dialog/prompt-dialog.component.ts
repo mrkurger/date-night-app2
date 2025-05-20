@@ -20,17 +20,16 @@ export interface PromptDialogData {
 }
 
 @Component({
-  selector: 'nb-prompt-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-  ],
-  template: `
+    selector: 'nb-prompt-dialog',
+    imports: [
+        CommonModule,
+        FormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbInputModule,
+        NbFormFieldModule,
+    ],
+    template: `
     <nb-card>
       <nb-card-header>
         <h4 class="dialog-title">{{ data.title }}</h4>
@@ -57,8 +56,8 @@ export interface PromptDialogData {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -78,7 +77,7 @@ export interface PromptDialogData {
         gap: 1rem;
       }
     `,
-  ],
+    ]
 })
 export class PromptDialogComponent {
   value: string;

@@ -19,10 +19,9 @@ import { MenuStateService } from '../../../core/services/menu-state.service';
  * Can be used in different modes: icon-only, with-label, or as a toggle switch
  */
 @Component({
-  selector: 'app-theme-toggle',
-  standalone: true,
-  imports: [CommonModule, NbIconModule, NbButtonModule, NbTooltipModule],
-  template: `
+    selector: 'app-theme-toggle',
+    imports: [CommonModule, NbIconModule, NbButtonModule, NbTooltipModule],
+    template: `
     <button
       nbButton
       ghost
@@ -34,8 +33,8 @@ import { MenuStateService } from '../../../core/services/menu-state.service';
       <nb-icon [icon]="isDarkTheme ? 'sun-outline' : 'moon-outline'"></nb-icon>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -61,7 +60,7 @@ import { MenuStateService } from '../../../core/services/menu-state.service';
         }
       }
     `,
-  ],
+    ]
 })
 export class ThemeToggleComponent implements OnInit {
   isDarkTheme = false;

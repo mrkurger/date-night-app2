@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableColumn } from '../../nb-data-table.component';
 
 @Component({
-  selector: 'nb-data-table-filter',
-  template: `
+    selector: 'nb-data-table-filter',
+    template: `
     <nb-card class="filter-card">
       <nb-card-header>
         <div class="filter-header">
@@ -94,8 +94,8 @@ import { TableColumn } from '../../nb-data-table.component';
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .filter-card {
         width: 300px;
       }
@@ -126,7 +126,8 @@ import { TableColumn } from '../../nb-data-table.component';
         gap: 0.5rem;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbDataTableFilterComponent<T = any> {
   @Input() column: TableColumn<T> | null = null;

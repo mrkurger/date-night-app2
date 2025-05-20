@@ -39,17 +39,16 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
  * - Performance metrics visualization
  */
 @Component({
-  selector: 'app-performance-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NebularModule,
-    ReactiveFormsModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
+    selector: 'app-performance-dashboard',
+    imports: [
+        CommonModule,
+        NebularModule,
+        ReactiveFormsModule,
+        AppSortComponent,
+        AppSortHeaderComponent,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    template: `
     <div class="dashboard-container">
       <h1>Performance Monitoring Dashboard</h1>
 
@@ -244,8 +243,8 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dashboard-container {
         padding: 1rem;
       }
@@ -319,7 +318,7 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
         padding: 0.75rem;
       }
     `,
-  ],
+    ]
 })
 export class PerformanceDashboardComponent implements OnInit {
   // Performance data

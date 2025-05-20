@@ -14,10 +14,9 @@ export interface FabMenuItem extends NbMenuItem {
  * Features icon, tooltip, and optional context menu.
  */
 @Component({
-  selector: 'app-fab',
-  standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
-  template: `
+    selector: 'app-fab',
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
+    template: `
     <button
       nbButton
       [status]="status"
@@ -33,8 +32,8 @@ export interface FabMenuItem extends NbMenuItem {
       <nb-icon [icon]="icon"></nb-icon>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         position: fixed;
         z-index: 1000;
@@ -120,7 +119,7 @@ export interface FabMenuItem extends NbMenuItem {
         }
       }
     `,
-  ],
+    ]
 })
 export class FloatingActionButtonComponent {
   @Input() icon = 'plus-outline';

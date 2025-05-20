@@ -21,10 +21,9 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
 
 // Mock component for nb-card
 @Component({
-  selector: 'nb-card',
-  template: '<div class="mock-card">{{ title }}</div>',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'nb-card',
+    template: '<div class="mock-card">{{ title }}</div>',
+    imports: [CommonModule]
 })
 class MockAppCardComponent {
   @Input() title = '';
@@ -42,7 +41,7 @@ class MockAppCardComponent {
 
 // Test host component with template reference
 @Component({
-  template: `
+    template: `
     <ng-template #customTemplate let-item>
       <div class="custom-template">{{ item.title }}</div>
     </ng-template>
@@ -61,8 +60,7 @@ class MockAppCardComponent {
     >
     </nb-card-grid>
   `,
-  standalone: true,
-  imports: [CommonModule, CardGridComponent],
+    imports: [CommonModule, CardGridComponent]
 })
 class TestHostComponent {
   @ViewChild('customTemplate') customTemplate!: TemplateRef<any>;

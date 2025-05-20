@@ -90,9 +90,10 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-advertiser-browsing-alternate',
-  templateUrl: './advertiser-browsing-alternate.component.html',
-  styleUrls: ['./advertiser-browsing-alternate.component.scss'],
+    selector: 'app-advertiser-browsing-alternate',
+    templateUrl: './advertiser-browsing-alternate.component.html',
+    styleUrls: ['./advertiser-browsing-alternate.component.scss'],
+    standalone: false
 })
 export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();

@@ -34,11 +34,10 @@ interface AppSettings {
 }
 
 @Component({
-  selector: 'app-admin-settings',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],
-  template: `
+    selector: 'app-admin-settings',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, ReactiveFormsModule, NebularModule],
+    template: `
     <div class="admin-settings">
       <nb-card>
         <nb-card-header>
@@ -218,8 +217,8 @@ interface AppSettings {
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         max-width: 100%;
@@ -250,7 +249,7 @@ interface AppSettings {
         margin-bottom: 1rem;
       }
     `,
-  ],
+    ]
 })
 export class AdminSettingsComponent implements OnInit {
   settingsForm: FormGroup;

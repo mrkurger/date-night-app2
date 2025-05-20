@@ -23,16 +23,15 @@ import { CommonModule } from '@angular/common';
  * with various styles and options.
  */
 @Component({
-  selector: 'nb-paginator',
-  templateUrl: './pager.component.html',
-  styleUrls: ['./pager.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbSelectModule,
-    NbIconModule,
-    NbButtonModule
-  ],
+    selector: 'nb-paginator',
+    templateUrl: './pager.component.html',
+    styleUrls: ['./pager.component.scss'],
+    imports: [
+        CommonModule,
+        NbSelectModule,
+        NbIconModule,
+        NbButtonModule
+    ]
 })
 export class PagerComponent implements OnChanges {
   /**

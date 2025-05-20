@@ -17,25 +17,24 @@ import {
 } from '@nebular/theme';
 
 @Component({
-  selector: 'app-wallet',
-  templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbBadgeModule,
-    NbTagModule,
-    NbSelectModule,
-    NbListModule,
-  ],
+    selector: 'app-wallet',
+    templateUrl: './wallet.component.html',
+    styleUrls: ['./wallet.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        RouterModule,
+        NbCardModule,
+        NbButtonModule,
+        NbInputModule,
+        NbFormFieldModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbAlertModule,
+        NbBadgeModule,
+        NbTagModule,
+        NbSelectModule,
+        NbListModule,
+    ]
 })
 export class WalletComponent {
   // Simplified component for demonstration

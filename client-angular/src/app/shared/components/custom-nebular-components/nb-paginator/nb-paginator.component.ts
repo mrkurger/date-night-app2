@@ -7,14 +7,13 @@ import { NbButtonModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 import { NbPaginationChangeEvent } from './nb-paginator.module';
 
 @Component({
-  selector: 'nb-paginator',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule
-  ],
-  template: `
+    selector: 'nb-paginator',
+    imports: [NebularModule, CommonModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSelectModule
+    ],
+    template: `
     <div class="paginator-container">
       <div class="paginator-range-actions">
         <div class="paginator-range-label">
@@ -79,8 +78,8 @@ import { NbPaginationChangeEvent } from './nb-paginator.module';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .paginator-container {
         display: flex;
         justify-content: space-between;
@@ -115,7 +114,7 @@ import { NbPaginationChangeEvent } from './nb-paginator.module';
         margin-right: 0.5rem;
       }
     `,
-  ],
+    ]
 })
 export class /*DEPRECATED:NbPaginatorComponent*/ implements OnInit {
   @Input() length: number = 0;

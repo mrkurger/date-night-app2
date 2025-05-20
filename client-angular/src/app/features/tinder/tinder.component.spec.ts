@@ -35,10 +35,9 @@ import { ToggleComponent } from '../../shared/components/toggle/toggle.component
 
 // Mock MainLayoutComponent
 @Component({
-  selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    selector: 'app-main-layout',
+    template: '<ng-content></ng-content>',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'tinder';

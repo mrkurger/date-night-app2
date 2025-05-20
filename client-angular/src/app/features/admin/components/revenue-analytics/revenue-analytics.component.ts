@@ -18,11 +18,10 @@ interface TimeSeriesData {
 }
 
 @Component({
-  selector: 'app-revenue-analytics',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
-  templateUrl: './revenue-analytics.component.html',
-  styleUrls: ['./revenue-analytics.component.scss'],
+    selector: 'app-revenue-analytics',
+    imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
+    templateUrl: './revenue-analytics.component.html',
+    styleUrls: ['./revenue-analytics.component.scss']
 })
 export class RevenueAnalyticsComponent implements OnInit {
   selectedPeriod = 'month';

@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { FormField } from '../../nb-advanced-form.component';
 
 @Component({
-  selector: 'nb-form-group',
-  template: `
+    selector: 'nb-form-group',
+    template: `
     <div class="form-group">
       <div class="form-group-header">
         <label>{{ field.label }}</label>
@@ -149,8 +149,8 @@ import { FormField } from '../../nb-advanced-form.component';
       <nb-hint *ngIf="field.hint">{{ field.hint }}</nb-hint>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .form-group {
         margin-bottom: 1.5rem;
       }
@@ -192,7 +192,8 @@ import { FormField } from '../../nb-advanced-form.component';
         font-weight: nb-theme(text-subtitle-font-weight);
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbFormGroupComponent {
   @Input() field!: FormField;

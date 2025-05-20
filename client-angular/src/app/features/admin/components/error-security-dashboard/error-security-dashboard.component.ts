@@ -62,20 +62,19 @@ interface SecurityMetrics {
 }
 
 @Component({
-  selector: 'app-error-security-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbProgressBarModule,
-    NbTabsetModule,
-    NbSelectModule,
-    NbListModule,
-    NbBadgeModule,
-    NbAlertModule,
-  ],
-  template: `
+    selector: 'app-error-security-dashboard',
+    imports: [
+        CommonModule,
+        FormsModule,
+        NbCardModule,
+        NbProgressBarModule,
+        NbTabsetModule,
+        NbSelectModule,
+        NbListModule,
+        NbBadgeModule,
+        NbAlertModule,
+    ],
+    template: `
     <div class="error-security-dashboard">
       <!-- Security Metrics Overview -->
       <div class="metrics-grid">
@@ -281,8 +280,8 @@ interface SecurityMetrics {
       </nb-tabset>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         max-width: 100%;
@@ -373,7 +372,7 @@ interface SecurityMetrics {
         border-radius: nb-theme(border-radius);
       }
     `,
-  ],
+    ]
 })
 export class ErrorSecurityDashboardComponent implements OnInit {
   // Filters

@@ -23,19 +23,18 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-alt-netflix-view',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbSpinnerModule,
-    NbTagModule,
-  ],
-  templateUrl: './alt-netflix-view.component.html',
-  styleUrls: ['./alt-netflix-view.component.scss'],
+    selector: 'app-alt-netflix-view',
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbBadgeModule,
+        NbSpinnerModule,
+        NbTagModule,
+    ],
+    templateUrl: './alt-netflix-view.component.html',
+    styleUrls: ['./alt-netflix-view.component.scss']
 })
 export class AltNetflixViewComponent {
   @Input() advertisers: Advertiser[] = [];

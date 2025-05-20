@@ -14,10 +14,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-ad-list',
-  templateUrl: './ad-list.component.html',
-  styles: [
-    `
+    selector: 'app-ad-list',
+    templateUrl: './ad-list.component.html',
+    styles: [
+        `
       .ad-list-container {
         padding: 20px;
       }
@@ -43,9 +43,8 @@ import { RouterLink } from '@angular/router';
         margin-bottom: 20px;
       }
     `,
-  ],
-  standalone: true,
-  imports: [CommonModule, RouterLink],
+    ],
+    imports: [CommonModule, RouterLink]
 })
 export class AdListComponent implements OnInit {
   ads: any[] = [];

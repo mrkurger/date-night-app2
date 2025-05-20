@@ -16,12 +16,11 @@ interface Ad {
 }
 
 @Component({
-  selector: 'app-ad-detail',
-  standalone: true,
-  imports: [CommonModule, NebularModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './ad-detail.component.html',
-  styleUrls: ['./ad-detail.component.scss'],
+    selector: 'app-ad-detail',
+    imports: [CommonModule, NebularModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './ad-detail.component.html',
+    styleUrls: ['./ad-detail.component.scss']
 })
 export class AdDetailComponent implements OnInit {
   ad: Ad | null = null;

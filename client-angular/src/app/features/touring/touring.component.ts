@@ -18,11 +18,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-touring',
-  templateUrl: './touring.component.html',
-  styleUrls: ['./touring.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    selector: 'app-touring',
+    templateUrl: './touring.component.html',
+    styleUrls: ['./touring.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class TouringComponent implements OnInit {
   touringAds: TouringAd[] = [];

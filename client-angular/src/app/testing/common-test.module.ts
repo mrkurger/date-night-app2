@@ -25,20 +25,18 @@ import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@neb
 
 // Mock components
 @Component({
-  selector: 'app-main-layout',
-  template: '<ng-content></ng-content>',
-  standalone: true,
-  imports: [CommonModule, NbCardModule],
+    selector: 'app-main-layout',
+    template: '<ng-content></ng-content>',
+    imports: [CommonModule, NbCardModule]
 })
 export class MockMainLayoutComponent {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
 
 @Component({
-  selector: 'nb-card',
-  template: '<div>Mock App Card</div>',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'nb-card',
+    template: '<div>Mock App Card</div>',
+    imports: [CommonModule]
 })
 export class MockAppCardComponent {
   @Input() title = '';
@@ -59,10 +57,9 @@ export class MockAppCardComponent {
 }
 
 @Component({
-  selector: 'nb-skeleton',
-  template: '<div>Loading...</div>',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'nb-skeleton',
+    template: '<div>Loading...</div>',
+    imports: [CommonModule]
 })
 export class MockSkeletonLoaderComponent {
   @Input() type: 'text' | 'card' | 'avatar' | 'button' = 'text';

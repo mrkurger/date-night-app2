@@ -52,19 +52,17 @@ interface ErrorData {
 }
 
 @Component({
-  selector: 'app-error-dashboard',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NgxChartsModule,
-
-    AppSortComponent,
-    AppSortHeaderComponent,
-  ],
-  templateUrl: './error-dashboard.component.html',
-  styleUrls: ['./error-dashboard.component.scss'],
+    selector: 'app-error-dashboard',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NgxChartsModule,
+        AppSortComponent,
+        AppSortHeaderComponent,
+    ],
+    templateUrl: './error-dashboard.component.html',
+    styleUrls: ['./error-dashboard.component.scss']
 })
 export class ErrorDashboardComponent implements OnInit, OnDestroy {
   @ViewChild(AppSortComponent)_sort): AppSortComponent;

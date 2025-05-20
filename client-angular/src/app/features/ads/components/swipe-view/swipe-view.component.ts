@@ -14,10 +14,9 @@ import { Ad } from '../../../../core/models/ad.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-swipe-view',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-swipe-view',
+    imports: [CommonModule],
+    template: `
     <div class="container mt-4">
       <div *ngIf="currentAd" class="swipe-card">
         <img [src]="currentAd.images[0]" alt="Ad Image" class="card-img-top" />
@@ -30,8 +29,8 @@ import { CommonModule } from '@angular/common';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .swipe-card {
         /* Add styling for the swipeable card */
         border: 1px solid #ccc;
@@ -45,7 +44,7 @@ import { CommonModule } from '@angular/common';
         object-fit: cover;
       }
     `,
-  ],
+    ]
 })
 export class SwipeViewComponent implements OnInit {
   ads: Ad[] = [];

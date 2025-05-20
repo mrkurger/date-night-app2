@@ -19,8 +19,8 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'nb-navigation',
-  template: `
+    selector: 'nb-navigation',
+    template: `
     <nb-layout>
       <!-- Sidebar -->
       <nb-sidebar
@@ -85,8 +85,8 @@ export interface UserData {
       </nb-layout-footer>
     </nb-layout>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -121,7 +121,8 @@ export interface UserData {
         border-top: 1px solid nb-theme(divider-color);
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbNavigationComponent {
   @Input() config: NavigationConfig = {

@@ -24,11 +24,10 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-alt-premium-ad-card',
-  standalone: true,
-  imports: [NebularModule, CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule, NbTagModule],
-  templateUrl: './alt-premium-ad-card.component.html',
-  styleUrls: ['./alt-premium-ad-card.component.scss'],
+    selector: 'app-alt-premium-ad-card',
+    imports: [NebularModule, CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbBadgeModule, NbTagModule],
+    templateUrl: './alt-premium-ad-card.component.html',
+    styleUrls: ['./alt-premium-ad-card.component.scss']
 })
 export class AltPremiumAdCardComponent {
   @Input() ad!: Advertiser;

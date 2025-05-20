@@ -22,8 +22,8 @@ import { LabelComponent } from '../components/label/label.component';
  * that requires methods not available in this component
  */
 @Component({
-  selector: 'nb-card-test',
-  template: `
+    selector: 'nb-card-test',
+    template: `
     <div class="nb-card" [ngClass]="'nb-card--' + layout">
       <div class="nb-card__content">
         <h3 class="nb-card__title">{{ title }}</h3>
@@ -35,9 +35,8 @@ import { LabelComponent } from '../components/label/label.component';
       </div>
     </div>
   `,
-  standalone: true,
-  imports: [CommonModule, LabelComponent
-    NbTagModule,],
+    imports: [CommonModule, LabelComponent,
+        NbTagModule,]
 })
 class TestAppCardComponent extends AppCardComponent {}
 

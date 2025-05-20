@@ -55,12 +55,11 @@ interface SavedFilter {
 }
 
 @Component({
-  selector: 'app-list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule],
+    selector: 'app-list-view',
+    templateUrl: './list-view.component.html',
+    styleUrls: ['./list-view.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule]
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
   // View template references

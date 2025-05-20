@@ -9,15 +9,14 @@ import { NbIconLibraries } from '@nebular/theme';
 import { NebularModule } from './shared/nebular.module';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterModule, NebularModule, NavigationComponent],
-  template: `
+    selector: 'app-root',
+    imports: [RouterModule, NebularModule, NavigationComponent],
+    template: `
     <app-navigation>
       <router-outlet></router-outlet>
     </app-navigation>
   `,
-  styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;

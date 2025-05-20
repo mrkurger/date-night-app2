@@ -13,13 +13,12 @@ import {
  * This component displays a tag/label with various styles and variants.
  */
 @Component({
-  selector: 'nb-tag',
-  templateUrl: './label.component.html',
-  styleUrls: ['./label.component.scss'],
-  standalone: true,
-  imports: [CommonModule,
-    NbTagComponent
-  ],
+    selector: 'nb-tag',
+    templateUrl: './label.component.html',
+    styleUrls: ['./label.component.scss'],
+    imports: [CommonModule,
+        NbTagComponent
+    ]
 })
 export class LabelComponent {
   @Input() text = '';

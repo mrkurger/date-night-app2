@@ -25,11 +25,10 @@ import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keybo
 import { NebularModule } from '../../../shared/nebular.module';
 
 @Component({
-  selector: 'app-navigation',
-  standalone: true,
-  imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+    selector: 'app-navigation',
+    imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
