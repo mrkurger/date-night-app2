@@ -1,57 +1,61 @@
 /**
- * Comprehensive validation middleware using express-validator and Zod
- * Implements validation rules for various API endpoints
+ * Common validation middleware using express-validator
  */
 
 import { body, query, param, validationResult } from 'express-validator';
-import { zodSchemas, ValidationUtils } from '../utils/validation-utils';
+import { ValidationUtils } from './utils';
+import { zodSchemas } from './schemas';
+import { ValidationError } from './validation.types';
 
-// Helper function to validate validation results
-const validate = (req, res, next) => {
+/**
+ * Process validation errors from express-validator
+ */
+const formatValidationError = (error: any): ValidationError => ({
+  field: error.param,
+  message: error.msg,
+  value: error.value,
+});
+
+/**
+ * Validate request data using express-validator
+ */
+const validate = (req: any, res: any, next: any) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
-      errors: errors.array().map(error => ({
-        field: error.param,
-        message: error.msg,
-      })),
+      message: 'Validation failed',
+      errors: errors.array().map(formatValidationError),
     });
   }
   next();
 };
 
-// Common validation chains reusable across routes
+/**
+ * Common validators that can be reused across routes
+ */
 const validators = {
   message: body('message').trim().notEmpty().isLength({ max: 2000 }),
-
   objectId: param('id').custom(ValidationUtils.validateObjectId).withMessage('Invalid ID format'),
-
   norwegianPhone: body('phone')
     .custom(ValidationUtils.isValidNorwegianPhone)
     .withMessage('Must be a valid Norwegian phone number'),
-
   norwegianPostalCode: body('postalCode')
     .custom(ValidationUtils.isValidNorwegianPostalCode)
     .withMessage('Must be a valid Norwegian postal code'),
-
   coordinates: [
     body('location.coordinates')
       .isArray({ min: 2, max: 2 })
       .withMessage('Location coordinates must be an array of [longitude, latitude]'),
-
     body('location.coordinates.0')
       .isFloat({ min: -180, max: 180 })
       .withMessage('Longitude must be between -180 and 180'),
-
     body('location.coordinates.1')
       .isFloat({ min: -90, max: 90 })
       .withMessage('Latitude must be between -90 and 90'),
   ],
-
   pagination: [
     query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
-
     query('limit')
       .optional()
       .isInt({ min: 1, max: 100 })
@@ -59,9 +63,10 @@ const validators = {
   ],
 };
 
-// Standard validation chains for common operations
+/**
+ * Standard validation chains for common operations
+ */
 const standardValidation = {
-  // User registration validation
   register: [
     body('username')
       .trim()
@@ -89,23 +94,16 @@ const standardValidation = {
     validate,
   ],
 
-  // Login validation
   login: [
     body('username').trim().notEmpty().withMessage('Username is required').escape(),
-
     body('password').notEmpty().withMessage('Password is required'),
-
     validate,
   ],
 
-  // Travel plan validation
   travelPlan: [
     body('destination.city').trim().notEmpty().withMessage('City is required').escape(),
-
     body('destination.county').trim().notEmpty().withMessage('County is required').escape(),
-
     ...validators.coordinates,
-
     body('arrivalDate')
       .isISO8601()
       .withMessage('Arrival date must be a valid date')
@@ -116,7 +114,6 @@ const standardValidation = {
         }
         return true;
       }),
-
     body('departureDate')
       .isISO8601()
       .withMessage('Departure date must be a valid date')
@@ -128,7 +125,6 @@ const standardValidation = {
         }
         return true;
       }),
-
     validate,
   ],
 };

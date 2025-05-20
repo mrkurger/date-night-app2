@@ -39,18 +39,59 @@
         
         <h3>Added</h3>
         <ul>
-          <li>Initial documentation structure</li>
+          <li>Added comprehensive Zod validation schemas for travel operations:
+            <ul>
+              <li>Itinerary validation with nested object support</li>
+              <li>Location update validation with coordinate bounds</li>
+              <li>Query parameter validation for search and filters</li>
+              <li>Parameter validation for route URLs</li>
+            </ul>
+          </li>
+          <li>Added type-safe validation middleware integration</li>
+          <li>Added runtime type checking for coordinates and dates</li>
+          <li>Added validation examples to documentation</li>
         </ul>
         
         <h3>Changed</h3>
         <ul>
-          <li>None</li>
+          <li>Migrated from express-validator to Zod for type-safe validation</li>
+          <li>Updated all route handlers to use new validation system</li>
+          <li>Improved error messages with more specific validation feedback</li>
+          <li>Enhanced date validation with custom logic for arrival/departure times</li>
         </ul>
         
-        <h3>Fixed</h3>
+        <h3>Security</h3>
         <ul>
-          <li>None</li>
+          <li>Enhanced input validation across all endpoints</li>
+          <li>Added strict type checking for geographical coordinates</li>
+          <li>Improved validation for dates and time ranges</li>
+          <li>Added parameter sanitization for MongoDB queries</li>
         </ul>
+        
+        <h3>Examples</h3>
+        <h4>Itinerary Validation Example</h4>
+        <pre><code>{
+  "destination": {
+    "city": "Oslo",
+    "county": "Oslo",
+    "location": {
+      "coordinates": [10.7522, 59.9139]
+    }
+  },
+  "arrivalDate": "2025-06-01T12:00:00Z",
+  "departureDate": "2025-06-05T12:00:00Z",
+  "notes": "Weekend trip",
+  "accommodation": {
+    "name": "Grand Hotel",
+    "address": "Karl Johans gate 31, 0159 Oslo"
+  }
+}</code></pre>
+        
+        <h4>Location Update Example</h4>
+        <pre><code>{
+  "longitude": 10.7522,
+  "latitude": 59.9139
+}</code></pre>
         
         <h2>How to use this file</h2>
         

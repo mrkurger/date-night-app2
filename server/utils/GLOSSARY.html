@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation System - Glossary</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Validation System - Glossary</h1>
+
+        <article>
+            <h2>Classes</h2>
+
+            <section class="glossary-item" id="ValidationUtils">
+                <h3>ValidationUtils</h3>
+                <p>Primary class containing validation utilities and schemas.</p>
+                <p>File: <code>server/utils/ValidationUtils.ts</code></p>
+            </section>
+        </article>
+
+        <article>
+            <h2>Methods</h2>
+
+            <section class="glossary-item" id="validateWithZod">
+                <h3>validateWithZod</h3>
+                <p>Validates request data using a Zod schema.</p>
+                <pre><code>static validateWithZod(schema: z.ZodType<any>, source: 'body' | 'query' | 'params' = 'body')</code></pre>
+            </section>
+
+            <section class="glossary-item" id="validate">
+                <h3>validate</h3>
+                <p>Validates request data using express-validator chains.</p>
+                <pre><code>static validate(validations: ValidationChain[])</code></pre>
+            </section>
+
+            <section class="glossary-item" id="sanitizeHtml">
+                <h3>sanitizeHtml</h3>
+                <p>Sanitizes HTML content to prevent XSS attacks.</p>
+                <pre><code>static sanitizeHtml(html: string): string</code></pre>
+            </section>
+
+            <section class="glossary-item" id="sanitizeEmail">
+                <h3>sanitizeEmail</h3>
+                <p>Validates and sanitizes email addresses.</p>
+                <pre><code>static sanitizeEmail(email: string): string</code></pre>
+            </section>
+        </article>
+
+        <article>
+            <h2>Schemas</h2>
+
+            <section class="glossary-item" id="zodSchemas">
+                <h3>zodSchemas</h3>
+                <p>Common Zod schemas for reuse across the application.</p>
+                <ul>
+                    <li><code>objectId</code>: Validates MongoDB ObjectId format</li>
+                    <li><code>email</code>: Validates email addresses</li>
+                    <li><code>password</code>: Validates password complexity</li>
+                    <li><code>coordinates</code>: Validates geographic coordinates</li>
+                    <li><code>pagination</code>: Validates pagination parameters</li>
+                    <li><code>phoneNumber</code>: Validates phone number format</li>
+                </ul>
+            </section>
+        </article>
+
+        <article>
+            <h2>Type Guards</h2>
+
+            <section class="glossary-item" id="isString">
+                <h3>isString</h3>
+                <p>Type guard for checking if a value is a string.</p>
+                <pre><code>static isString(value: unknown): value is string</code></pre>
+            </section>
+
+            <section class="glossary-item" id="isNumber">
+                <h3>isNumber</h3>
+                <p>Type guard for checking if a value is a number.</p>
+                <pre><code>static isNumber(value: unknown): value is number</code></pre>
+            </section>
+        </article>
+
+        <article>
+            <h2>Common Validations</h2>
+
+            <section class="glossary-item" id="commonValidations">
+                <h3>commonValidations</h3>
+                <p>Pre-configured validation chains for common use cases.</p>
+                <ul>
+                    <li><code>pagination</code>: Validates page and limit parameters</li>
+                    <li><code>objectId</code>: Validates MongoDB ObjectId parameters</li>
+                    <li><code>coordinates</code>: Validates geographic coordinate arrays</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+</body>
+</html>

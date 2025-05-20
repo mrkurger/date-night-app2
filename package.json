@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.12",
+    "@types/jest": "29.5.14",
     "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
     "husky": "9.1.7",
@@ -32,6 +33,11 @@
     "karma-jasmine-html-reporter": "2.1.0"
   },
   "dependencies": {
+    "@angular/common": "19.2.11",
+    "@angular/core": "19.2.11",
+    "@angular/forms": "19.2.11",
+    "@angular/platform-browser": "19.2.11",
+    "@angular/router": "19.2.11",
     "@fontsource/inter": "5.2.5",
     "@fontsource/poppins": "5.2.6",
     "@nebular/eva-icons": "11.0.1",

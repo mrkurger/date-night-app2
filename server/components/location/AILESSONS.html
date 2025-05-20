@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Location Component AI LESSONS</title>
+  <link rel="stylesheet" href="../../styles/docs.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="navigation">
+      <nav>
+        <ul>
+          <li><a href="../../_docs_index.html">Documentation Index</a></li>
+          <li><a href="./CHANGELOG.html">Changelog</a></li>
+          <li><a href="./GLOSSARY.html">Glossary</a></li>
+        </ul>
+      </nav>
+    </aside>
+    
+    <article class="content">
+      <h1>AI Lessons: Location Component</h1>
+      
+      <h2>Migration Patterns</h2>
+      
+      <h3>Express-Validator to Zod Migration</h3>
+      <p>Key lessons learned when migrating from express-validator to Zod validation:</p>
+      <ul>
+        <li>Create base schemas that can be reused and extended</li>
+        <li>Use Zod's type inference for better TypeScript integration</li>
+        <li>Leverage Zod's composability for complex validation logic</li>
+        <li>Implement proper error handling with descriptive messages</li>
+      </ul>
+      
+      <h3>Validation Organization</h3>
+      <p>Best practices for organizing validation code:</p>
+      <ul>
+        <li>Separate schemas from middleware implementation</li>
+        <li>Group related schemas together</li>
+        <li>Make schemas as reusable as possible</li>
+        <li>Add clear documentation for each schema</li>
+      </ul>
+      
+      <h2>Dependencies</h2>
+      
+      <h3>Required Packages</h3>
+      <ul>
+        <li>zod: ^3.0.0 - Schema validation library</li>
+        <li>zod-validation-error: ^1.0.0 - Better Zod error messages</li>
+      </ul>
+      
+      <h2>Testing Insights</h2>
+      
+      <h3>Validation Testing</h3>
+      <p>Important aspects to test in validation:</p>
+      <ul>
+        <li>Valid input passes validation</li>
+        <li>Invalid input fails with correct error messages</li>
+        <li>Default values are correctly applied</li>
+        <li>Edge cases are properly handled</li>
+      </ul>
+      
+      <h3>Error Cases</h3>
+      <p>Common validation error scenarios to handle:</p>
+      <ul>
+        <li>Missing required fields</li>
+        <li>Invalid coordinate values</li>
+        <li>Out of range values</li>
+        <li>Type mismatches</li>
+        <li>Malformed data structures</li>
+      </ul>
+      
+      <h2>Performance Considerations</h2>
+      
+      <h3>Validation Optimization</h3>
+      <ul>
+        <li>Cache compiled schemas when possible</li>
+        <li>Use appropriate error handling strategies</li>
+        <li>Consider validation order for better performance</li>
+      </ul>
+      
+      <h2>Security Considerations</h2>
+      
+      <h3>Input Sanitization</h3>
+      <ul>
+        <li>Always trim string inputs</li>
+        <li>Validate coordinate bounds</li>
+        <li>Prevent injection attacks</li>
+        <li>Implement proper access controls</li>
+      </ul>
+    </article>
+  </div>
+</body>
+</html>

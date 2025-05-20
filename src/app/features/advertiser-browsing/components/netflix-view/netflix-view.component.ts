@@ -9,36 +9,62 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
   standalone: true,
   imports: [CommonModule, RouterModule, FavoriteButtonComponent],
   template: `
-    <div *ngIf="advertisers.length === 0" class="text-center py-12">
-      <h3 class="text-xl mb-2">No advertisers found</h3>
-      <p class="text-gray-400">Try adjusting your search or filters</p>
-    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" role="grid">
+      <div *ngIf="advertisers.length === 0" class="text-center py-12" role="alert">
+        <h3 class="text-xl mb-2">No advertisers found</h3>
+        <p class="text-gray-400">Try adjusting your search or filters</p>
+      </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <div
         *ngFor="let advertiser of advertisers; let last = last; let i = index"
         [attr.ref]="last ? lastCardRef : null"
+        role="gridcell"
+        [attr.aria-rowindex]="i + 1"
+        class="focus-within:outline-none focus-within:ring-2 focus-within:ring-pink-500 rounded-lg"
       >
-        <a [routerLink]="['/advertiser', advertiser.id]">
+        <a
+          [routerLink]="['/advertiser', advertiser.id]"
+          class="block outline-none"
+          [attr.aria-label]="
+            'View profile of ' +
+            advertiser.name +
+            ', ' +
+            advertiser.age +
+            ' years old from ' +
+            advertiser.location
+          "
+          (keydown.enter)="$event.target.click()"
+          tabindex="0"
+        >
           <div
             class="overflow-hidden bg-gray-900 border-gray-800 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20 h-full rounded-lg border"
             (mouseenter)="hoveredCard = advertiser.id"
             (mouseleave)="hoveredCard = null"
+            [attr.aria-current]="hoveredCard === advertiser.id ? 'true' : null"
           >
             <div class="relative aspect-[3/4] overflow-hidden">
               <img
                 [src]="advertiser.image || '/placeholder.svg'"
-                [alt]="advertiser.name"
+                [alt]="advertiser.name + ' profile photo'"
                 class="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
+                loading="lazy"
               />
 
-              <div class="absolute top-2 right-2 flex flex-col gap-2">
-                <app-favorite-button [advertiserId]="advertiser.id"></app-favorite-button>
+              <div
+                class="absolute top-2 right-2 flex flex-col gap-2"
+                role="group"
+                aria-label="Profile actions"
+              >
+                <app-favorite-button
+                  [advertiserId]="advertiser.id"
+                  [attr.aria-label]="'Add ' + advertiser.name + ' to favorites'"
+                ></app-favorite-button>
               </div>
 
-              <div *ngIf="advertiser.isOnline" class="absolute bottom-2 left-2">
+              <div *ngIf="advertiser.isOnline" class="absolute bottom-2 left-2" role="status">
                 <span
                   class="inline-flex items-center rounded-full border border-green-500 bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400"
+                  aria-label="Online now"
                 >
                   Online Now
                 </span>
@@ -124,18 +150,19 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
             <div class="p-4">
               <div class="flex justify-between items-start mb-1">
                 <h3 class="text-lg font-semibold">{{ advertiser.name }}, {{ advertiser.age }}</h3>
-                <div class="flex items-center">
+                <div class="flex items-center" role="group" aria-label="Rating">
                   <svg
                     class="h-4 w-4 text-yellow-500 mr-1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
+                    aria-hidden="true"
                   >
                     <polygon
                       points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
                     ></polygon>
                   </svg>
-                  <span class="text-sm">{{ advertiser.rating }}</span>
+                  <span class="text-sm" aria-label="Rating score">{{ advertiser.rating }}</span>
                 </div>
               </div>
               <p class="text-sm text-gray-400 mb-2">{{ advertiser.location }}</p>
@@ -146,8 +173,30 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
       </div>
     </div>
 
-    <div *ngIf="loading" class="col-span-full text-center py-4">
-      <p>Loading more advertisers...</p>
+    <div *ngIf="loading" class="col-span-full text-center py-4" role="status" aria-live="polite">
+      <div class="inline-flex items-center">
+        <svg
+          class="animate-spin h-5 w-5 text-pink-500 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <span>Loading more advertisers...</span>
+      </div>
     </div>
   `,
   styles: [],

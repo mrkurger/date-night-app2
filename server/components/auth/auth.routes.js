@@ -14,22 +14,33 @@ import authController from './auth.controller.js';
 import { formatServerUrl } from '../../utils/urlHelpers.js';
 import { protect } from '../../middleware/auth.js';
 import { registrationLimiter, passwordResetLimiter } from '../../middleware/rateLimiter.js';
+import {
+  validateRegister,
+  validateLogin,
+  validateRefreshToken,
+  validateForgotPassword,
+  validateResetPassword,
+} from '../../middleware/validators/auth.validator.js';
 
-// Local authentication with rate limiting
-router.post('/register', registrationLimiter, authController.register);
-router.post('/login', authController.login); // Already has authLimiter from index.js
+// Local authentication with validation and rate limiting
+router.post('/register', registrationLimiter, validateRegister, authController.register);
+router.post('/login', validateLogin, authController.login); // Already has authLimiter from index.js
 router.post('/logout', protect, authController.logout);
-router.post('/refresh-token', authController.refreshToken);
+router.post('/refresh-token', validateRefreshToken, authController.refreshToken);
 
-// Password reset endpoints with rate limiting
-router.post('/forgot-password', passwordResetLimiter, (req, res) => {
-  // Placeholder for future implementation
-  res.status(501).json({ message: 'Not implemented yet' });
-});
-router.post('/reset-password', passwordResetLimiter, (req, res) => {
-  // Placeholder for future implementation
-  res.status(501).json({ message: 'Not implemented yet' });
-});
+// Password reset endpoints with validation and rate limiting
+router.post(
+  '/forgot-password',
+  passwordResetLimiter,
+  validateForgotPassword,
+  authController.forgotPassword
+);
+router.post(
+  '/reset-password',
+  passwordResetLimiter,
+  validateResetPassword,
+  authController.resetPassword
+);
 
 // Validate token endpoint
 router.get('/validate', protect, (req, res) => {

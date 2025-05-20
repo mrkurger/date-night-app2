@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth Validation Documentation</title>
+    <link rel="stylesheet" href="../../../docs/component-library/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Auth Validation Documentation</h1>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          This document describes the validation rules and middleware used for
+          authentication-related endpoints in the application. The validation system uses Zod for
+          schema validation combined with existing rate limiting middleware.
+        </p>
+      </section>
+
+      <section id="schemas">
+        <h2>Validation Schemas</h2>
+
+        <h3>Base Schemas</h3>
+        <div class="schema-details">
+          <h4>Username Schema</h4>
+          <ul>
+            <li>Minimum length: 3 characters</li>
+            <li>Maximum length: 30 characters</li>
+            <li>Allowed characters: letters, numbers, underscores, hyphens</li>
+            <li>Pattern: <code>/^[a-zA-Z0-9_-]+$/</code></li>
+          </ul>
+
+          <h4>Email Schema</h4>
+          <ul>
+            <li>Must be a valid email format</li>
+            <li>Automatically transformed to lowercase</li>
+          </ul>
+
+          <h4>Password Schema</h4>
+          <ul>
+            <li>Minimum length: 8 characters</li>
+            <li>Must contain at least one uppercase letter</li>
+            <li>Must contain at least one lowercase letter</li>
+            <li>Must contain at least one number</li>
+            <li>Must contain at least one special character</li>
+          </ul>
+
+          <h4>Token Schema</h4>
+          <ul>
+            <li>Must be a valid JWT format</li>
+            <li>Pattern: <code>/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/</code></li>
+          </ul>
+        </div>
+
+        <h3>Request Schemas</h3>
+        <div class="schema-details">
+          <h4>Registration Schema</h4>
+          <pre><code>{
+  body: {
+    username: string,
+    email: string,
+    password: string
+  }
+}</code></pre>
+
+          <h4>Login Schema</h4>
+          <pre><code>{
+  body: {
+    username: string,
+    password: string
+  }
+}</code></pre>
+
+          <h4>Refresh Token Schema</h4>
+          <pre><code>{
+  body: {
+    refreshToken: string
+  }
+}</code></pre>
+
+          <h4>Forgot Password Schema</h4>
+          <pre><code>{
+  body: {
+    email: string
+  }
+}</code></pre>
+
+          <h4>Reset Password Schema</h4>
+          <pre><code>{
+  body: {
+    token: string,
+    password: string
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <section id="middleware">
+        <h2>Validation Middleware</h2>
+        <p>
+          The validation middleware uses Zod to validate incoming requests against the defined
+          schemas. If validation fails, it returns a 422 Unprocessable Entity response with detailed
+          error messages.
+        </p>
+
+        <h3>Error Response Format</h3>
+        <pre><code>{
+  success: false,
+  errors: [
+    {
+      field: string,
+      message: string
+    }
+  ]
+}</code></pre>
+      </section>
+
+      <section id="endpoints">
+        <h2>Protected Endpoints</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>Method</th>
+              <th>Validation</th>
+              <th>Rate Limiting</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/register</td>
+              <td>POST</td>
+              <td>Registration Schema</td>
+              <td>Registration Limiter</td>
+            </tr>
+            <tr>
+              <td>/login</td>
+              <td>POST</td>
+              <td>Login Schema</td>
+              <td>Auth Limiter</td>
+            </tr>
+            <tr>
+              <td>/refresh-token</td>
+              <td>POST</td>
+              <td>Refresh Token Schema</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td>/forgot-password</td>
+              <td>POST</td>
+              <td>Forgot Password Schema</td>
+              <td>Password Reset Limiter</td>
+            </tr>
+            <tr>
+              <td>/reset-password</td>
+              <td>POST</td>
+              <td>Reset Password Schema</td>
+              <td>Password Reset Limiter</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </body>
+</html>

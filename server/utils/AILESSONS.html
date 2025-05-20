@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation System - AI Lessons Learned</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Validation System - AI Lessons Learned</h1>
+
+        <article>
+            <h2>Key Insights</h2>
+            <ol>
+                <li>
+                    <strong>Layered Validation Approach</strong>
+                    <p>Using multiple validation libraries provides different benefits:</p>
+                    <ul>
+                        <li>Zod: Type safety and runtime validation</li>
+                        <li>Express Validator: Request-specific validation</li>
+                        <li>Custom validators: Domain-specific rules</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Reusable Validation Patterns</strong>
+                    <p>Common validations like ObjectId, coordinates, and pagination are abstracted into reusable components.</p>
+                </li>
+                <li>
+                    <strong>Type Safety</strong>
+                    <p>TypeScript and Zod schemas provide compile-time and runtime type safety.</p>
+                </li>
+            </ol>
+        </article>
+
+        <article>
+            <h2>Best Practices</h2>
+            <ul>
+                <li>Validate early in the request pipeline</li>
+                <li>Sanitize after validation</li>
+                <li>Use consistent error response formats</li>
+                <li>Cache compiled validation schemas</li>
+                <li>Provide clear, actionable error messages</li>
+            </ul>
+        </article>
+
+        <article>
+            <h2>Security Considerations</h2>
+            <ul>
+                <li>Always sanitize user input</li>
+                <li>Validate on both client and server</li>
+                <li>Use strict type checking</li>
+                <li>Apply content security policies</li>
+                <li>Implement rate limiting for validation endpoints</li>
+            </ul>
+        </article>
+
+        <article>
+            <h2>Testing Strategies</h2>
+            <ul>
+                <li>Test edge cases extensively</li>
+                <li>Include validation bypass attempts</li>
+                <li>Verify error message clarity</li>
+                <li>Test performance with large payloads</li>
+                <li>Validate sanitization effectiveness</li>
+            </ul>
+        </article>
+
+        <article>
+            <h2>Common Pitfalls</h2>
+            <ul>
+                <li>Over-relying on client-side validation</li>
+                <li>Inconsistent error handling</li>
+                <li>Missing sanitization steps</li>
+                <li>Insufficient type checking</li>
+                <li>Poor error messages</li>
+            </ul>
+        </article>
+    </main>
+</body>
+</html>

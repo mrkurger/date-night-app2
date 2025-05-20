@@ -39,17 +39,27 @@
         
         <h3>Added</h3>
         <ul>
+          <li>Implemented comprehensive Zod-based validation for all auth endpoints</li>
+          <li>Created validation schemas for registration, login, and token operations</li>
+          <li>Added validation middleware with detailed error reporting</li>
+          <li>Created unit tests for all validation schemas</li>
+          <li>Added password strength validation with strict requirements</li>
           <li>Initial documentation structure</li>
         </ul>
         
         <h3>Changed</h3>
         <ul>
-          <li>None</li>
+          <li>Updated all routes to use new validation middleware</li>
+          <li>Enhanced password requirements with stricter validation rules</li>
+          <li>Improved error messages with more specific validation feedback</li>
         </ul>
         
-        <h3>Fixed</h3>
+        <h3>Security</h3>
         <ul>
-          <li>None</li>
+          <li>Enhanced input validation across all endpoints</li>
+          <li>Added strict type checking for tokens</li>
+          <li>Improved validation for user credentials</li>
+          <li>Maintained existing rate limiting while adding validation</li>
         </ul>
         
         <h2>How to use this file</h2>

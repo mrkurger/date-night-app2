@@ -9,27 +9,38 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
   standalone: true,
   imports: [CommonModule, RouterModule, FavoriteButtonComponent],
   template: `
-    <div class="relative h-[calc(100vh-200px)] flex items-center justify-center">
-      <div *ngIf="advertisers.length === 0" class="text-center">
+    <div
+      class="relative h-[calc(100vh-200px)] flex items-center justify-center"
+      role="region"
+      aria-label="Tinder-style card view"
+    >
+      <div *ngIf="advertisers.length === 0" class="text-center" role="alert">
         <h3 class="text-xl mb-2">No more profiles</h3>
         <p class="text-gray-400">Check back later for new profiles</p>
       </div>
 
       <div
         *ngFor="let advertiser of visibleAdvertisers; let i = index"
-        class="absolute w-full max-w-sm"
+        class="absolute w-full max-w-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-pink-500 rounded-xl"
         [style.transform]="getCardStyle(i)"
         [style.z-index]="advertisers.length - i"
         [style.transition]="getDragTransition(i)"
         #card
+        role="article"
+        [attr.aria-label]="advertiser.name + ''s profile card'"
+        tabindex="0"
+        (keydown.arrowleft)="handleSwipe('left', i)"
+        (keydown.arrowright)="handleSwipe('right', i)"
+        (keydown.enter)="$event.target.querySelector('a')?.click()"
       >
         <div
           class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 border border-gray-800"
         >
           <img
             [src]="advertiser.image || '/placeholder.svg'"
-            [alt]="advertiser.name"
+            [alt]="advertiser.name + ''s profile photo'"
             class="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
           />
 
           <!-- Overlay gradient -->
@@ -38,21 +49,30 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
           ></div>
 
           <!-- Top actions -->
-          <div class="absolute top-4 right-4">
-            <app-favorite-button [advertiserId]="advertiser.id"></app-favorite-button>
+          <div class="absolute top-4 right-4" role="group" aria-label="Profile actions">
+            <app-favorite-button
+              [advertiserId]="advertiser.id"
+              [attr.aria-label]="'Add ' + advertiser.name + ' to favorites'"
+            ></app-favorite-button>
           </div>
 
           <!-- Status badges -->
-          <div class="absolute top-4 left-4 flex flex-col gap-2">
+          <div
+            class="absolute top-4 left-4 flex flex-col gap-2"
+            role="group"
+            aria-label="Profile status"
+          >
             <span
               *ngIf="advertiser.isOnline"
               class="inline-flex items-center rounded-full border border-green-500 bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400"
+              role="status"
             >
               Online Now
             </span>
             <span
               *ngIf="advertiser.isVip"
               class="inline-flex items-center rounded-full border border-amber-500 bg-amber-500/20 px-2.5 py-0.5 text-xs font-medium text-amber-400"
+              role="status"
             >
               VIP
             </span>
@@ -63,26 +83,30 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
             <div class="flex items-baseline gap-2 mb-2">
               <h3 class="text-2xl font-bold text-white">{{ advertiser.name }}</h3>
               <span class="text-xl text-white/90">{{ advertiser.age }}</span>
-              <div class="flex items-center ml-auto">
+              <div class="flex items-center ml-auto" role="group" aria-label="Rating">
                 <svg
                   class="w-5 h-5 text-yellow-500"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <polygon
                     points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
                   ></polygon>
                 </svg>
-                <span class="ml-1 text-lg text-white/90">{{ advertiser.rating }}</span>
+                <span class="ml-1 text-lg text-white/90" aria-label="Rating score">{{
+                  advertiser.rating
+                }}</span>
               </div>
             </div>
             <p class="text-white/80 text-lg mb-3">{{ advertiser.location }}</p>
             <p class="text-white/70">{{ advertiser.description }}</p>
-            <div class="flex flex-wrap gap-2 mt-4">
+            <div class="flex flex-wrap gap-2 mt-4" role="list" aria-label="Tags">
               <span
                 *ngFor="let tag of advertiser.tags"
                 class="text-sm text-white/60 bg-white/10 px-3 py-1 rounded-full"
+                role="listitem"
               >
                 #{{ tag }}
               </span>
@@ -91,10 +115,15 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
         </div>
 
         <!-- Action buttons -->
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+        <div
+          class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4"
+          role="group"
+          aria-label="Card actions"
+        >
           <button
             (click)="handleSwipe('left', i)"
-            class="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white/80 hover:text-white transition-colors"
+            class="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+            aria-label="Swipe left to pass"
           >
             <svg
               class="w-8 h-8"
@@ -103,6 +132,7 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
               fill="none"
               stroke="currentColor"
               stroke-width="2"
+              aria-hidden="true"
             >
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -110,7 +140,8 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
           </button>
           <button
             (click)="handleSwipe('right', i)"
-            class="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-green-500/80 text-white/80 hover:text-white transition-colors"
+            class="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-green-500/80 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+            aria-label="Swipe right to like"
           >
             <svg
               class="w-8 h-8"
@@ -119,6 +150,7 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
               fill="none"
               stroke="currentColor"
               stroke-width="2"
+              aria-hidden="true"
             >
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>

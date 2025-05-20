@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Validation System Documentation</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Validation System Documentation</h1>
+
+      <article class="changelog-entry">
+        <h2>May 20, 2025</h2>
+        <h3>Enhanced Validation System Implementation</h3>
+
+        <h4>Added</h4>
+        <ul>
+          <li>Centralized validation utilities with TypeScript support</li>
+          <li>Standardized error handling with custom error classes</li>
+          <li>Request sanitization middleware with XSS protection</li>
+          <li>Support for both express-validator and Joi validation</li>
+        </ul>
+
+        <h4>Changed</h4>
+        <ul>
+          <li>Migrated validation code to TypeScript</li>
+          <li>Standardized error response format</li>
+          <li>Improved validation error handling and messaging</li>
+        </ul>
+
+        <h4>Security Impact</h4>
+        <ul>
+          <li>Enhanced input validation checks</li>
+          <li>Added XSS protection on all inputs</li>
+          <li>Standardized error handling to prevent information leakage</li>
+        </ul>
+
+        <h4>Usage Examples</h4>
+        <h5>1. Using Express Validator</h5>
+        <pre><code>
+import { ValidationUtils } from '../utils/validation-utils';
+import { body } from 'express-validator';
+
+const validateUser = [
+  body('email').isEmail(),
+  body('password').isLength({ min: 8 }),
+  ValidationUtils.validate
+];
+      </code></pre>
+
+        <h5>2. Using Joi Validation</h5>
+        <pre><code>
+import { ValidationUtils } from '../utils/validation-utils';
+import Joi from 'joi';
+
+const userSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).required()
+});
+
+router.post('/users', ValidationUtils.validateWithJoi(userSchema));
+      </code></pre>
+
+        <h5>3. Request Sanitization</h5>
+        <pre><code>
+import { sanitizeRequest } from '../middleware/request-sanitizer';
+
+router.use(sanitizeRequest);
+      </code></pre>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>May 20, 2025</h2>
+        <h3>New Zod-based Validation System</h3>
+
+        <h4>Added</h4>
+        <ul>
+          <li>Zod schema validation with TypeScript integration</li>
+          <li>Common validation schemas for reuse</li>
+          <li>Norwegian-specific validation rules</li>
+          <li>Combined validation support (Zod + Express-validator)</li>
+          <li>Unified error handling for all validation types</li>
+        </ul>
+
+        <h4>Changed</h4>
+        <ul>
+          <li>Migrated to Zod as primary validation tool</li>
+          <li>Standardized validation error format</li>
+          <li>Enhanced type safety with TypeScript</li>
+        </ul>
+
+        <h4>Usage Examples</h4>
+        <h5>1. Using Zod Schemas</h5>
+        <pre><code>
+import { commonSchemas } from '../middleware/validation/schemas';
+import { ValidationMiddleware } from '../middleware/validation/middleware';
+
+const userSchema = z.object({
+  email: commonSchemas.email,
+  password: commonSchemas.password,
+  phone: commonSchemas.norwegianPhone.optional()
+});
+
+router.post('/users', 
+  ValidationMiddleware.validateWithZod(userSchema),
+  userController.createUser
+);
+        </code></pre>
+
+        <h5>2. Using Common Schemas</h5>
+        <pre><code>
+// Pagination
+router.get('/items',
+  ValidationMiddleware.validateWithZod(commonSchemas.pagination, 'query'),
+  itemController.list
+);
+
+// Norwegian specific
+router.post('/address',
+  ValidationMiddleware.validateWithZod(z.object({
+    postalCode: commonSchemas.norwegianPostalCode,
+    phone: commonSchemas.norwegianPhone
+  })),
+  addressController.create
+);
+        </code></pre>
+
+        <h5>3. Combined Validation</h5>
+        <pre><code>
+router.post('/users',
+  ValidationMiddleware.combine(
+    ValidationMiddleware.validateWithZod(userSchema),
+    ValidationMiddleware.validateWithExpressValidator([
+      body('additionalField').custom(customValidator)
+    ])
+  ),
+  userController.createUser
+);
+        </code></pre>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>Error Handling</h2>
+        <p>The system provides standardized error handling for common scenarios:</p>
+        <ul>
+          <li>Validation errors (400 Bad Request)</li>
+          <li>Authentication errors (401 Unauthorized)</li>
+          <li>Authorization errors (403 Forbidden)</li>
+          <li>Not Found errors (404 Not Found)</li>
+          <li>Server errors (500 Internal Server Error)</li>
+        </ul>
+
+        <h3>Error Response Format</h3>
+        <pre><code>
+{
+  "success": false,
+  "status": "fail" | "error",
+  "message": "Error description",
+  "errors": [
+    {
+      "field": "fieldName",
+      "message": "Validation message",
+      "value": "Invalid value" // In development only
+    }
+  ]
+}
+      </code></pre>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>Common Validation Schemas</h2>
+        <p>The system provides pre-defined schemas for common validation needs:</p>
+
+        <h3>Basic Types</h3>
+        <ul>
+          <li><code>objectId</code>: MongoDB ObjectId validation</li>
+          <li><code>email</code>: Email format validation</li>
+          <li><code>password</code>: Strong password validation</li>
+          <li><code>url</code>: URL format validation</li>
+        </ul>
+
+        <h3>Norwegian Specific</h3>
+        <ul>
+          <li><code>norwegianPhone</code>: Norwegian phone number format</li>
+          <li><code>norwegianPostalCode</code>: Norwegian postal code format</li>
+        </ul>
+
+        <h3>Common Objects</h3>
+        <ul>
+          <li><code>pagination</code>: Page, limit, sort, and order</li>
+          <li><code>coordinates</code>: Geographic point coordinates</li>
+          <li><code>dateRange</code>: Start and end date validation</li>
+        </ul>
+
+        <h3>Error Response Format</h3>
+        <pre><code>
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": [
+    {
+      "field": "email",
+      "message": "Invalid email format",
+      "value": "invalid-email"
+    }
+  ]
+}
+        </code></pre>
+      </article>
+    </main>
+  </body>
+</html>

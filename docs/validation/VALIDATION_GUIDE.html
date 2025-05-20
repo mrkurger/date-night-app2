@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation System Guide</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Validation System Guide</h1>
+
+      <article>
+        <h2>Overview</h2>
+        <p>
+          The validation system provides a comprehensive set of tools and utilities for validating
+          input data across the application. It combines multiple validation approaches:
+        </p>
+        <ul>
+          <li>Zod schemas for type-safe validation</li>
+          <li>Express-validator for request validation</li>
+          <li>Joi schemas for complex object validation</li>
+          <li>Custom validation utilities for specific use cases</li>
+        </ul>
+      </article>
+
+      <article>
+        <h2>Using Zod Schemas</h2>
+        <p>Example using pre-defined Zod schemas:</p>
+        <pre><code>
+import { zodSchemas, ValidationUtils } from '../utils/validation-utils';
+
+// In your route definition:
+router.post('/users', 
+  ValidationUtils.validateWithZod(z.object({
+    email: zodSchemas.email,
+    password: zodSchemas.password,
+    profile: z.object({
+      name: z.string().min(2),
+      age: z.number().min(18)
+    })
+  })),
+  userController.createUser
+);
+            </code></pre>
+      </article>
+
+      <article>
+        <h2>Express Validator Integration</h2>
+        <p>Example using express-validator chains:</p>
+        <pre><code>
+import { ValidationUtils } from '../utils/validation-utils';
+import { body } from 'express-validator';
+
+// In your route definition:
+router.post('/login',
+  ValidationUtils.validate([
+    body('email').isEmail(),
+    body('password').isLength({ min: 8 })
+  ]),
+  authController.login
+);
+            </code></pre>
+      </article>
+
+      <article>
+        <h2>Custom Validation</h2>
+        <p>Example using custom validation:</p>
+        <pre><code>
+// Using type guards
+if (!ValidationUtils.isString(userInput)) {
+    throw new Error('Expected string input');
+}
+
+// Sanitizing input
+const cleanHtml = ValidationUtils.sanitizeHtml(userInput);
+const cleanEmail = ValidationUtils.sanitizeEmail(emailInput);
+            </code></pre>
+      </article>
+
+      <article>
+        <h2>Best Practices</h2>
+        <ul>
+          <li>Always validate input at the route level</li>
+          <li>
+            Use appropriate validation method based on complexity:
+            <ul>
+              <li>Zod: For type-safe validation with good IDE support</li>
+              <li>Express-validator: For simple request validation</li>
+              <li>Joi: For complex object validation with custom rules</li>
+            </ul>
+          </li>
+          <li>Sanitize user input before processing</li>
+          <li>Use type guards for runtime type checking</li>
+          <li>Keep validation logic separate from business logic</li>
+        </ul>
+      </article>
+
+      <article>
+        <h2>Common Validation Patterns</h2>
+        <h3>1. API Endpoints</h3>
+        <pre><code>
+// Example of complete endpoint validation
+router.post('/api/users',
+  // Validate body
+  ValidationUtils.validateWithZod(userSchema),
+  
+  // Validate query parameters
+  ValidationUtils.validateWithZod(zodSchemas.pagination, 'query'),
+  
+  // Controller
+  userController.getUsers
+);
+            </code></pre>
+
+        <h3>2. Database Operations</h3>
+        <pre><code>
+// Example of database input validation
+router.get('/api/users/:id',
+  ValidationUtils.validateWithZod(
+    z.object({
+      id: zodSchemas.objectId
+    }),
+    'params'
+  ),
+  userController.getUser
+);
+            </code></pre>
+
+        <h3>3. File Uploads</h3>
+        <pre><code>
+// Example of file upload validation
+router.post('/api/uploads',
+  ValidationUtils.validateWithZod(
+    z.object({
+      filename: z.string(),
+      type: z.enum(['image/jpeg', 'image/png']),
+      size: z.number().max(5 * 1024 * 1024) // 5MB
+    })
+  ),
+  uploadsController.handleUpload
+);
+            </code></pre>
+      </article>
+
+      <article>
+        <h2>Error Handling</h2>
+        <p>The validation system provides consistent error responses:</p>
+        <pre><code>
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": [
+    {
+      "field": "email",
+      "message": "Invalid email address"
+    },
+    {
+      "field": "password",
+      "message": "Password must be at least 8 characters"
+    }
+  ]
+}
+            </code></pre>
+      </article>
+
+      <footer>
+        <p>Last updated: May 20, 2025</p>
+        <p>
+          See also: <a href="../security/INPUT_VALIDATION.html">Input Validation Security Guide</a>,
+          <a href="../testing/VALIDATION_TESTING.html">Testing Validation Rules</a>
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
