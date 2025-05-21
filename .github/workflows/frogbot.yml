@@ -2,7 +2,7 @@ name: Frogbot Security Scan
 
 on:
   pull_request:
-    branches: [ main; Nebular-UI-Refactor ] # Change if your default branch is different
+    branches: [main, develop, 'Nebular-UI-Refactor', 'feature/*', 'bugfix/*', 'hotfix/*', 'release/*']
   workflow_dispatch:
 
 permissions:

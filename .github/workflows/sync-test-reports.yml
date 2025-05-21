@@ -10,6 +10,10 @@ on:
     branches:
       - main
       - develop
+      - 'feature/*'
+      - 'bugfix/*'
+      - 'hotfix/*'
+      - 'release/*'
   workflow_dispatch: # Allow manual triggering
 
 permissions:
