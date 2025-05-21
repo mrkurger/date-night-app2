@@ -30,6 +30,14 @@
       <h2>Best Practices</h2>
       <ul>
         <li>
+          <strong>Configure branch-specific workflows</strong>: Run CI/test workflows on all relevant
+          branches (main, develop, feature/*, bugfix/*, etc.) to catch issues early in the development
+          process. For example: 
+          <pre><code>on:
+  push:
+    branches: [main, develop, feature/*, bugfix/*, hotfix/*, release/*]</code></pre>
+        </li>
+        <li>
           <strong>Explicitly set outputs</strong>: When a job needs to output a value for use in
           other jobs, add an explicit step to set that output rather than relying on implicit
           outputs from actions. For example, use

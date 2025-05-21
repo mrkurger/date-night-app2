@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI Workflow Configuration</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0066cc;
+        }
+        code, pre {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            padding: 2px 4px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .note {
+            background-color: #fff8dc;
+            border-left: 4px solid #ffeb3b;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>CI Workflow Configuration</h1>
+    
+    <p>This document provides an overview of the GitHub Actions workflow configuration for the DateNight.io project.</p>
+    
+    <h2>CHANGELOG</h2>
+    <ul>
+        <li><strong>2023-06-20</strong>: Initial documentation created</li>
+        <li><strong>2023-07-05</strong>: Added information about branch triggers</li>
+    </ul>
+    
+    <h2>Branch Configuration</h2>
+    
+    <p>GitHub Actions workflows are configured to run on specific branches according to our branching strategy:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Workflow</th>
+                <th>Branches (push)</th>
+                <th>Branches (pull request)</th>
+                <th>Other Triggers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CI</td>
+                <td>main, develop, feature/*, bugfix/*, hotfix/*, release/*</td>
+                <td>main, develop</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Tests</td>
+                <td>main, develop, feature/*, bugfix/*, hotfix/*, release/*</td>
+                <td>main, develop</td>
+                <td>workflow_dispatch</td>
+            </tr>
+            <tr>
+                <td>CodeQL Analysis</td>
+                <td>main, develop</td>
+                <td>main, develop</td>
+                <td>schedule (weekly), workflow_dispatch</td>
+            </tr>
+            <tr>
+                <td>Angular Client Lint</td>
+                <td>main, develop</td>
+                <td>main</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Monorepo Tests</td>
+                <td>main, develop</td>
+                <td>main, develop</td>
+                <td>schedule (weekly)</td>
+            </tr>
+            <tr>
+                <td>Sync Test Reports</td>
+                <td>-</td>
+                <td>-</td>
+                <td>workflow_run (main, develop), workflow_dispatch</td>
+            </tr>
+            <tr>
+                <td>Error Monitoring</td>
+                <td>-</td>
+                <td>-</td>
+                <td>workflow_run (main, develop), schedule, workflow_dispatch</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Branching Strategy</h2>
+    
+    <p>Our branching strategy follows a Git Flow-inspired model:</p>
+    
+    <ul>
+        <li><strong>main</strong>: Production-ready code</li>
+        <li><strong>develop</strong>: Integration branch for features</li>
+        <li><strong>feature/*</strong>: For new features</li>
+        <li><strong>bugfix/*</strong>: For bug fixes</li>
+        <li><strong>hotfix/*</strong>: For urgent production fixes</li>
+        <li><strong>release/*</strong>: For release preparation</li>
+    </ul>
+    
+    <h2>Workflow Descriptions</h2>
+    
+    <h3>CI Workflow</h3>
+    <p>The CI workflow performs linting and basic testing of client and server code. It runs on all branches except for temporary or documentation-only branches.</p>
+    
+    <pre><code>on:
+  push:
+    branches: [main, develop, feature/*, bugfix/*, hotfix/*, release/*]
+  pull_request:
+    branches: [main, develop]</code></pre>
+    
+    <h3>Tests Workflow</h3>
+    <p>The Tests workflow runs comprehensive unit and integration tests for both client and server components.</p>
+    
+    <pre><code>on:
+  push:
+    branches: [main, develop, feature/*, bugfix/*, hotfix/*, release/*]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:</code></pre>
+    
+    <div class="note">
+        <p><strong>Note:</strong> Most workflows have concurrency controls to prevent multiple instances from running simultaneously on the same branch or reference.</p>
+    </div>
+    
+    <h2>AILESSONS</h2>
+    
+    <h3>Workflow Trigger Patterns</h3>
+    
+    <p>We've observed several effective patterns for GitHub Actions workflow triggers:</p>
+    
+    <ul>
+        <li><strong>Branch Wildcards</strong>: Using patterns like <code>feature/*</code> to match all feature branches</li>
+        <li><strong>Path Filtering</strong>: Only triggering workflows when relevant files change</li>
+        <li><strong>Workflow Runs</strong>: Triggering actions after other workflows complete</li>
+        <li><strong>Scheduled Runs</strong>: For maintenance tasks and periodic checks</li>
+    </ul>
+    
+    <p>Each trigger type has specific use cases:</p>
+    
+    <ul>
+        <li>Use branch patterns (<code>feature/*</code>) for capturing development work in progress</li>
+        <li>Use path filtering to avoid running unrelated workflows when only documentation changes</li>
+        <li>Use <code>workflow_run</code> triggers for sequence-dependent operations</li>
+    </ul>
+    
+    <h2>GLOSSARY</h2>
+    
+    <dl>
+        <dt>GitHub Actions</dt>
+        <dd>GitHub's built-in continuous integration and continuous delivery (CI/CD) platform.</dd>
+        
+        <dt>Workflow</dt>
+        <dd>A configurable automated process that runs one or more jobs, defined in YAML files in the <code>.github/workflows</code> directory.</dd>
+        
+        <dt>Job</dt>
+        <dd>A set of steps in a workflow that execute on the same runner.</dd>
+        
+        <dt>Runner</dt>
+        <dd>A server that runs GitHub Actions workflows.</dd>
+        
+        <dt>Concurrency</dt>
+        <dd>A feature that ensures only one workflow with the same concurrency group runs at a time.</dd>
+    </dl>
+</body>
+</html>

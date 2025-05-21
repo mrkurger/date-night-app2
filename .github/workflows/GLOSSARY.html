@@ -30,6 +30,21 @@
       <h2>Workflow Files</h2>
 
       <dl>
+        <dt id="branch-patterns">Branch Patterns</dt>
+        <dd>
+          <p>
+            In GitHub Actions workflow files, branch patterns define which branches trigger the workflow
+            when changes are pushed. Patterns can include exact branch names and wildcards.
+          </p>
+          <p>Examples:</p>
+          <ul>
+            <li><code>branches: [main]</code> - Only the main branch</li>
+            <li><code>branches: [main, develop]</code> - Main and develop branches</li>
+            <li><code>branches: [feature/*]</code> - All feature branches</li>
+            <li><code>branches: [main, develop, feature/*, bugfix/*, hotfix/*, release/*]</code> - Main, develop, and all feature, bugfix, hotfix, and release branches</li>
+          </ul>
+        </dd>
+
         <dt id="base-config-yml">base-config.yml</dt>
         <dd>
           <p>
@@ -124,6 +139,42 @@
             <li>Scans for vulnerabilities using npm audit and Snyk</li>
             <li>Generates comprehensive security reports</li>
             <li>Uploads reports as artifacts</li>
+          </ul>
+        </dd>
+
+        <dt id="ci-yml">ci.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that performs continuous integration checks including linting
+            and basic testing of client and server code.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes to main, develop, feature/*, bugfix/*, hotfix/*, and release/* branches</li>
+            <li>Runs on pull requests to main and develop branches</li>
+            <li>Includes separate jobs for client linting, server linting, and root-level tests</li>
+            <li>Supports multiple Node.js versions in a matrix strategy</li>
+            <li>Uploads test coverage to Codecov</li>
+          </ul>
+        </dd>
+
+        <dt id="tests-yml">tests.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that runs comprehensive tests for both client and server components.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes to main, develop, feature/*, bugfix/*, hotfix/*, and release/* branches</li>
+            <li>Runs on pull requests to main and develop branches</li>
+            <li>Can be triggered manually via workflow_dispatch</li>
+            <li>Sets up MongoDB for server tests</li>
+            <li>Runs server tests before client tests</li>
+            <li>Uses Chrome Headless for client tests</li>
           </ul>
         </dd>
       </dl>

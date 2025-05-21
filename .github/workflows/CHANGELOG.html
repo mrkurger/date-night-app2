@@ -22,6 +22,25 @@
     <main class="container">
       <h1>GitHub Actions Workflows Changelog</h1>
 
+      <h2>2025-07-05</h2>
+      <h3>Added</h3>
+      <ul>
+        <li>
+          Updated CI and Tests workflows to run on additional branches besides <code>main</code>:
+          <ul>
+            <li>Added <code>develop</code> branch</li>
+            <li>Added feature branches (<code>feature/*</code>)</li>
+            <li>Added bugfix branches (<code>bugfix/*</code>)</li>
+            <li>Added hotfix branches (<code>hotfix/*</code>)</li>
+            <li>Added release branches (<code>release/*</code>)</li>
+          </ul>
+        </li>
+        <li>
+          Created <code>/docs/CI_WORKFLOW_CONFIG.html</code> documentation with details about
+          workflow branch configuration
+        </li>
+      </ul>
+
       <h2>2025-05-02</h2>
       <h3>Fixed</h3>
       <ul>
