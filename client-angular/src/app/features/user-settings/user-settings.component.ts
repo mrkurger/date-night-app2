@@ -35,30 +35,35 @@ import {
   CardSize,
 } from '../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
+import { User } from '../../core/models/user.model';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-user-settings',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        FormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbInputModule,
-        NbFormFieldModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbAlertModule,
-        NbTooltipModule,
-        NbBadgeModule,
-        NbTagModule,
-        NbSelectModule,
-        NbCheckboxModule,
-        NbRadioModule,
-        NbTabsetModule,
-    ],
-    template: `
+  selector: 'app-user-settings',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    NebularModule,
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbTabsetModule,
+  ],
+  template: `
     <nb-layout>
       <nb-layout-column>
         <div class="settings-container">
@@ -584,8 +589,8 @@ import { Subscription } from 'rxjs';
       </nb-layout-column>
     </nb-layout>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host nb-layout-column {
         padding: 0; // Remove padding if settings-container handles it
       }
@@ -835,19 +840,22 @@ import { Subscription } from 'rxjs';
         color: nb-theme(text-hint-color);
       }
     `,
-    ]
+  ],
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
+  user: User | null = null;
   profileForm: FormGroup;
   passwordForm: FormGroup;
   notificationForm: FormGroup;
   privacyForm: FormGroup;
   displayForm: FormGroup;
-  loading = false;_user: any = null;
+  loading = false;
   currentTheme: ThemeName = 'system';
   contentDensityOptions: { value: ContentDensity['value']; label: string }[] = [];
   cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
   activeTab: string = 'profile';
+  error: string | null = null;
+  private destroy$ = new Subject<void>();
 
   private subscriptions: Subscription[] = [];
 
@@ -865,33 +873,26 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private initializeForms(): void {
     this.profileForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.pattern(/^\+?[0-9]{8,15}$/)],
-      bio: [''],
+      profileVisibility: ['public'],
+      allowFriendRequests: [true],
+      allowMessagesFromUnknown: [true],
     });
 
-    this.passwordForm = this.fb.group(
-      {
-        currentPassword: ['', [Validators.required, Validators.minLength(6)]],
-        newPassword: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required],
-      },
-      { validators: this.passwordMatchValidator },
-    );
-
     this.notificationForm = this.fb.group({
-      emailNotifications: [true],
-      chatNotifications: [true],
-      marketingEmails: [false],
-      newMatchNotifications: [true],
+      emailNotifications: [false],
+      pushNotifications: [false],
+      smsNotifications: [false],
     });
 
     this.privacyForm = this.fb.group({
-      profileVisibility: ['public'],
-      showOnlineStatus: [true],
-      allowMessaging: ['all'],
       dataSharing: [false],
+      activityVisibility: ['friends'],
+    });
+
+    this.passwordForm = this.fb.group({
+      currentPassword: [''],
+      newPassword: ['', [Validators.minLength(8)]],
+      confirmNewPassword: [''],
     });
 
     this.displayForm = this.fb.group({
@@ -927,8 +928,10 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private loadUserData(): void {
     this.loading = true;
-    this.subscriptions.push(
-      this.authService.currentUser$.subscribe({
+    this.authService
+      .getCurrentUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (user) => {
           if (user) {
             this.user = user;
@@ -940,38 +943,38 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
           this.notificationService.error('Failed to load user data');
           this.loading = false;
         },
-      }),
-    );
+      });
   }
 
-  private updateFormsWithUserData(user: any): void {
-    // Profile form
+  private updateFormsWithUserData(user: User): void {
     this.profileForm.patchValue({
-      name: user.name || '',
-      email: user.email || '',
-      phone: user.phone || '',
-      bio: user.bio || '',
+      profileVisibility: user.privacySettings?.profileVisibility || 'public',
+      allowFriendRequests: user.privacySettings?.allowFriendRequests !== false,
+      allowMessagesFromUnknown: user.privacySettings?.allowMessagesFromUnknown !== false,
     });
 
-    // Notification settings
-    if (user.notificationSettings) {
-      this.notificationForm.patchValue({
-        emailNotifications: user.notificationSettings.emailNotifications ?? true,
-        chatNotifications: user.notificationSettings.chatNotifications ?? true,
-        marketingEmails: user.notificationSettings.marketingEmails ?? false,
-        newMatchNotifications: user.notificationSettings.newMatchNotifications ?? true,
-      });
-    }
+    this.notificationForm.patchValue({
+      emailNotifications: user.notificationSettings?.emailNotifications ?? false,
+      pushNotifications: user.notificationSettings?.pushNotifications ?? false,
+      smsNotifications: user.notificationSettings?.sms ?? false,
+    });
 
-    // Privacy settings
-    if (user.privacySettings) {
-      this.privacyForm.patchValue({
-        profileVisibility: user.privacySettings.profileVisibility || 'public',
-        showOnlineStatus: user.privacySettings.showOnlineStatus ?? true,
-        allowMessaging: user.privacySettings.allowMessaging || 'all',
-        dataSharing: user.privacySettings.dataSharing ?? false,
-      });
-    }
+    this.privacyForm.patchValue({
+      dataSharing: user.privacySettings?.dataSharing ?? false,
+      activityVisibility: user.privacySettings?.activityVisibility || 'friends',
+    });
+
+    this.passwordForm.patchValue({
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    });
+
+    this.displayForm.patchValue({
+      defaultViewType: user.preferences?.defaultViewType || 'netflix',
+      contentDensity: user.preferences?.contentDensity || 'comfortable',
+      cardSize: user.preferences?.cardSize || 'medium',
+    });
   }
 
   private loadThemeSettings(): void {

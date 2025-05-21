@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import {
   NbMenuModule,
   NbSidebarModule,
@@ -22,13 +23,25 @@ import { AppMenuItem } from '../../models/menu.model';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
 import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keyboard-shortcuts-help/keyboard-shortcuts-help.component';
-import { NebularModule } from '../../../shared/nebular.module';
 
 @Component({
-    selector: 'app-navigation',
-    imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.scss']
+  selector: 'app-navigation',
+  imports: [
+    CommonModule,
+    RouterModule,
+    BreadcrumbsComponent,
+    ThemeToggleComponent,
+    NbMenuModule,
+    NbUserModule,
+    NbActionsModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
+    NbSidebarModule,
+  ],
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -207,7 +220,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   private registerKeyboardShortcuts() {
     // Show keyboard shortcuts help
     this.keyboardShortcuts.register({ key: '?' }, () => {
-      this.dialogService.open(KeyboardShortcutsHelpComponent);
+      this.showKeyboardShortcuts();
     });
 
     // Navigation shortcuts
@@ -253,7 +266,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   /**
    * Handle menu item click
    */
-  onMenuItemClick(item: AppMenuItem) {
+  onMenuItemClick($event: any) {
+    const item = $event as AppMenuItem;
     if (item.id) {
       // Update selected item
       this.menuStateService.setSelectedItem(item.id);
@@ -295,10 +309,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Placeholder for showing keyboard shortcuts.
+   * To be implemented or connected to the actual dialog.
+   */
+  showKeyboardShortcuts(): void {
+    // TODO: Implement opening the keyboard shortcuts dialog
+    // For now, it's called by this.keyboardShortcuts.register({ key: '?' }, ...)
+    // but the template also had (click)="showKeyboardShortcuts()" which caused an error.
+    // This method ensures the component class has the property.
+    console.log('showKeyboardShortcuts called');
+    this.dialogService.open(KeyboardShortcutsHelpComponent);
+  }
+
+  /**
    * Handle user menu item selection
    */
-  onUserMenuSelect(event: { item: AppMenuItem }): void {
-    if (event.item.data?.action === 'logout') {
+  onUserMenuSelect($event: any): void {
+    const eventData = $event as { item: NbMenuItem };
+    if (eventData.item.data?.action === 'logout') {
       this.authService.logout();
     }
   }

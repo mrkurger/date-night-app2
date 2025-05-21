@@ -1,8 +1,5 @@
 import { MongoClient } from 'mongodb';
-import {
-  MockDataService,
-  MockAdvertiser,
-} from '../client-angular/src/app/core/services/mock-data.service';
+import { MockDataService, MockAdvertiser } from './mock-data.js';
 
 async function populateAdvertisers() {
   const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';

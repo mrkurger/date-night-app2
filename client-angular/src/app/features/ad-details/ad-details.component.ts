@@ -17,14 +17,15 @@ import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-ad-details',
-    templateUrl: './ad-details.component.html',
-    styleUrls: ['./ad-details.component.scss'],
-    imports: [CommonModule]
+  selector: 'app-ad-details',
+  templateUrl: './ad-details.component.html',
+  styleUrls: ['./ad-details.component.scss'],
+  imports: [CommonModule],
 })
 export class AdDetailsComponent implements OnInit {
   ad: Ad | null = null;
-  loading = true;_error: string | null = null;
+  loading = true;
+  error: string | null = null;
   isOwner = false;
   currentImageIndex = 0;
   currentImage: { url: string; type?: string } | null = null;
@@ -59,16 +60,23 @@ export class AdDetailsComponent implements OnInit {
             this.currentImage = ad.media[0];
             this.currentImageUrl = ad.media[0].url;
           } else if (ad.images && ad.images.length > 0) {
-            this.currentImage = ad.images[0];
+            if (typeof ad.images[0] === 'string') {
+              this.currentImage = { url: ad.images[0] };
+            } else {
+              this.currentImage = ad.images[0];
+            }
             this.currentImageUrl =
               typeof ad.images[0] === 'string' ? ad.images[0] : ad.images[0].url;
           }
 
           // Check if the current user is the owner
-          const currentUser = this.authService.getCurrentUser();
-          if (currentUser && ad.advertiser === currentUser._id) {
-            this.isOwner = true;
-          }
+          this.authService.currentUser$.subscribe((currentUser) => {
+            if (currentUser && ad.advertiser === currentUser._id) {
+              this.isOwner = true;
+            } else {
+              this.isOwner = false; // Ensure isOwner is reset if user is not owner or not logged in
+            }
+          });
         },
         error: (err) => {
           console.error('Error fetching ad details:', err);
@@ -83,13 +91,16 @@ export class AdDetailsComponent implements OnInit {
   }
 
   loadFavorites(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser) {
-      this.userService.getFavorites().subscribe({
-        next: (favorites) => (this.favorites = favorites),
-        error: (err) => console.error('Error loading favorites:', err),
-      });
-    }
+    this.authService.currentUser$.subscribe((currentUser) => {
+      if (currentUser) {
+        this.userService.getFavorites().subscribe({
+          next: (favorites) => (this.favorites = favorites),
+          error: (err) => console.error('Error loading favorites:', err),
+        });
+      } else {
+        this.favorites = []; // Clear favorites if no user
+      }
+    });
   }
 
   nextImage(): void {
@@ -99,7 +110,14 @@ export class AdDetailsComponent implements OnInit {
       this.currentImageUrl = this.ad.media[this.currentImageIndex].url;
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.ad.images.length;
-      this.currentImage = this.ad.images[this.currentImageIndex];
+      if (typeof this.ad.images[this.currentImageIndex] === 'string') {
+        this.currentImage = { url: this.ad.images[this.currentImageIndex] as string };
+      } else {
+        this.currentImage = this.ad.images[this.currentImageIndex] as {
+          url: string;
+          type?: string;
+        };
+      }
       this.currentImageUrl =
         typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
@@ -114,7 +132,14 @@ export class AdDetailsComponent implements OnInit {
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
       this.currentImageIndex =
         (this.currentImageIndex - 1 + this.ad.images.length) % this.ad.images.length;
-      this.currentImage = this.ad.images[this.currentImageIndex];
+      if (typeof this.ad.images[this.currentImageIndex] === 'string') {
+        this.currentImage = { url: this.ad.images[this.currentImageIndex] as string };
+      } else {
+        this.currentImage = this.ad.images[this.currentImageIndex] as {
+          url: string;
+          type?: string;
+        };
+      }
       this.currentImageUrl =
         typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
@@ -156,38 +181,39 @@ export class AdDetailsComponent implements OnInit {
   toggleFavorite(): void {
     if (!this.ad) return;
 
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      this.router.navigate(['/auth/login']);
-      return;
-    }
+    this.authService.currentUser$.subscribe((currentUser) => {
+      if (!currentUser) {
+        this.router.navigate(['/auth/login']);
+        return;
+      }
 
-    // Convert complex ID to string for comparison if needed
-    const adIdStr = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
+      // Convert complex ID to string for comparison if needed
+      const adIdStr = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
 
-    if (this.isFavorite()) {
-      this.userService.removeFavorite(this.ad._id).subscribe({
-        next: () => {
-          this.favorites = this.favorites.filter((id) => id !== adIdStr);
-          this.notificationService.success('Removed from favorites');
-        },
-        error: (err) => {
-          console.error('Error removing from favorites:', err);
-          this.notificationService.error('Failed to remove from favorites');
-        },
-      });
-    } else {
-      this.userService.addFavorite(this.ad._id).subscribe({
-        next: () => {
-          this.favorites.push(adIdStr);
-          this.notificationService.success('Added to favorites');
-        },
-        error: (err) => {
-          console.error('Error adding to favorites:', err);
-          this.notificationService.error('Failed to add to favorites');
-        },
-      });
-    }
+      if (this.isFavorite()) {
+        this.userService.removeFavorite(this.ad._id).subscribe({
+          next: () => {
+            this.favorites = this.favorites.filter((id) => id !== adIdStr);
+            this.notificationService.success('Removed from favorites');
+          },
+          error: (err) => {
+            console.error('Error removing from favorites:', err);
+            this.notificationService.error('Failed to remove from favorites');
+          },
+        });
+      } else {
+        this.userService.addFavorite(this.ad._id).subscribe({
+          next: () => {
+            this.favorites.push(adIdStr);
+            this.notificationService.success('Added to favorites');
+          },
+          error: (err) => {
+            console.error('Error adding to favorites:', err);
+            this.notificationService.error('Failed to add to favorites');
+          },
+        });
+      }
+    });
   }
 
   isFavorite(): boolean {

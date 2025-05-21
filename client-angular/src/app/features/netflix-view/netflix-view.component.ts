@@ -56,25 +56,27 @@ interface GetAdsResponse {
 }
 
 @Component({
-    selector: 'app-netflix-view',
-    templateUrl: './netflix-view.component.html',
-    styleUrls: ['./netflix-view.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        MainLayoutComponent,
-        NbLayoutModule,
-        NbButtonModule,
-        NbIconModule,
-        NbBadgeModule,
-        NbSelectModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbTagModule,
-        NbSpinnerModule,
-        NbCardModule,
-    ]
+  selector: 'app-netflix-view',
+  templateUrl: './netflix-view.component.html',
+  styleUrls: ['./netflix-view.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    NebularModule,
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbLayoutModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbTagModule,
+    NbSpinnerModule,
+    NbCardModule,
+  ],
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
@@ -84,7 +86,8 @@ export class NetflixViewComponent implements OnInit {
   adsByCategory: { [key: string]: Ad[] } = {};
 
   // Component state
-  loading = true;_error: string | null = null;
+  loading = true;
+  error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
 

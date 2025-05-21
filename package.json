@@ -6,11 +6,11 @@
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "cd server && pnpm start",
-    "start:client": "cd client-angular && pnpm start",
-    "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && pnpm install",
-    "build": "cd client-angular && pnpm build",
-    "test": "cd client-angular && pnpm test",
-    "lint": "cd client-angular && pnpm lint",
+    "start:client": "cd client-angular && npm start",
+    "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && npm install",
+    "build": "cd client-angular && npm run build",
+    "test": "cd client-angular && npm test",
+    "lint": "cd client-angular && npm lint",
     "prepare": "[ -n \"$CI\" ] || husky install",
     "docs:ensure": "node .github/scripts/ensure-docs.js",
     "docs:update": "npm run docs:ensure",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.12",
+    "@angular/compiler-cli": "^19.2.11",
     "@types/jest": "29.5.14",
     "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
@@ -30,10 +31,12 @@
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
     "karma-jasmine": "5.1.0",
-    "karma-jasmine-html-reporter": "2.1.0"
+    "karma-jasmine-html-reporter": "2.1.0",
+    "typescript": "5.8.3"
   },
   "dependencies": {
     "@angular/common": "19.2.11",
+    "@angular/compiler": "^19.2.11",
     "@angular/core": "19.2.11",
     "@angular/forms": "19.2.11",
     "@angular/platform-browser": "19.2.11",
@@ -49,6 +52,8 @@
     "helmet": "8.1.0",
     "leaflet": "1.9.4",
     "mongoose": "8.15.0",
-    "semver": "7.7.2"
+    "rxjs": "~7.8.0",
+    "semver": "7.7.2",
+    "ts-node": "10.9.2"
   }
 }

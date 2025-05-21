@@ -22,11 +22,7 @@ export default {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: createCallbackUrl(serverUrl, 'google'),
   },
-  reddit: {
-    clientID: process.env.REDDIT_CLIENT_ID,
-    clientSecret: process.env.REDDIT_CLIENT_SECRET,
-    callbackURL: createCallbackUrl(serverUrl, 'reddit'),
-  },
+  // Reddit OAuth removed
   apple: {
     clientID: process.env.APPLE_CLIENT_ID,
     teamID: process.env.APPLE_TEAM_ID,

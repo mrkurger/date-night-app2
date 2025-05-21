@@ -7,6 +7,7 @@
 // - URL Preprocessing: Sanitizes and validates URLs
 // - Path Pattern Handling: Manages path-to-regexp compatibility
 // - Error Handling: Graceful handling of URL format issues
+// - OpenAPI Integration: API documentation with Zod schemas
 // ===================================================
 
 import 'dotenv/config';
@@ -17,7 +18,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
-// import xss from 'xss-clean'; // Temporarily disabled due to compatibility issues with Express 5
+import { xssProtection } from './middleware/xss-protection.js';
 import hpp from 'hpp';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -26,8 +27,8 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import config from './config/environment.js';
 import routes from './routes/index.js';
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpecs from './config/swagger.js';
+// Import OpenAPI setup instead of swagger-jsdoc
+import { setupOpenAPI } from './src/openapi/setup.js';
 // Import but not using urlValidatorMiddleware yet - will be enabled in future
 import { mongoSanitize } from './middleware/mongo-sanitize.js';
 import client from 'prom-client';
@@ -58,6 +59,9 @@ app.get('/metrics', async (req, res) => {
   res.end(await client.register.metrics());
 });
 
+// Import request sanitizer
+import { RequestSanitizer } from './middleware/request-sanitizer.js';
+
 // Custom URL preprocessing and validation disabled for startup
 app.use(helmet());
 app.use(cors());
@@ -66,8 +70,17 @@ app.use(cors());
 // Apply remaining middleware
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(xssProtection); // XSS protection using xss-filters
 app.use(mongoSanitize()); // Using our custom middleware
-// app.use(xss()); // Temporarily disabled due to compatibility issues with Express 5
+// Use our custom XSS protection middleware
+app.use((req, res, next) => {
+  if (req.body) {
+    const sanitizer = new RequestSanitizer();
+    sanitizer.sanitize(req, res, next);
+  } else {
+    next();
+  }
+});
 app.use(hpp());
 app.use(compression());
 app.use(cookieParser());
@@ -260,26 +273,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve Swagger documentation
-app.use(
-  '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpecs, {
-    explorer: true,
-    customCss: '.swagger-ui .topbar { display: none }',
-    swaggerOptions: {
-      docExpansion: 'none',
-      filter: true,
-      showRequestDuration: true,
-    },
-  })
-);
-
-// Serve Swagger JSON
-app.get('/swagger.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpecs);
-});
+// Serve OpenAPI documentation
+setupOpenAPI(app);
 
 // API routes with versioning
 // Apply CSRF protection to sensitive routes

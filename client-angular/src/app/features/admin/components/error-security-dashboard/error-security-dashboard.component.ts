@@ -12,7 +12,7 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 
-interface ErrorLog {
+export interface ErrorLog {
   id: string;
   timestamp: Date;
   level: 'error' | 'warning' | 'critical';
@@ -62,19 +62,19 @@ interface SecurityMetrics {
 }
 
 @Component({
-    selector: 'app-error-security-dashboard',
-    imports: [
-        CommonModule,
-        FormsModule,
-        NbCardModule,
-        NbProgressBarModule,
-        NbTabsetModule,
-        NbSelectModule,
-        NbListModule,
-        NbBadgeModule,
-        NbAlertModule,
-    ],
-    template: `
+  selector: 'app-error-security-dashboard',
+  imports: [
+    CommonModule,
+    FormsModule,
+    NbCardModule,
+    NbProgressBarModule,
+    NbTabsetModule,
+    NbSelectModule,
+    NbListModule,
+    NbBadgeModule,
+    NbAlertModule,
+  ],
+  template: `
     <div class="error-security-dashboard">
       <!-- Security Metrics Overview -->
       <div class="metrics-grid">
@@ -157,7 +157,7 @@ interface SecurityMetrics {
                     <div class="error-header">
                       <nb-badge [text]="error.level" [status]="getErrorStatus(error.level)">
                       </nb-badge>
-                      <span class="timestamp">{{ error.timestamp | date : 'medium' }}</span>
+                      <span class="timestamp">{{ error.timestamp | date: 'medium' }}</span>
                     </div>
                     <div class="error-message">{{ error.message }}</div>
                     <div class="error-details" *ngIf="error.component || error.url">
@@ -202,7 +202,7 @@ interface SecurityMetrics {
                       >
                       </nb-badge>
                       <span class="alert-type">{{ alert.type }}</span>
-                      <span class="timestamp">{{ alert.timestamp | date : 'medium' }}</span>
+                      <span class="timestamp">{{ alert.timestamp | date: 'medium' }}</span>
                     </div>
                     <div class="alert-description">{{ alert.description }}</div>
                     <div class="alert-details">
@@ -280,8 +280,8 @@ interface SecurityMetrics {
       </nb-tabset>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
         max-width: 100%;
@@ -372,7 +372,7 @@ interface SecurityMetrics {
         border-radius: nb-theme(border-radius);
       }
     `,
-    ]
+  ],
 })
 export class ErrorSecurityDashboardComponent implements OnInit {
   // Filters

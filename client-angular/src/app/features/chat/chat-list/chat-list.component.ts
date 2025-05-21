@@ -1,40 +1,53 @@
-import { Component, OnDestroy, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ChatService, ChatRoom, ChatParticipant } from '../../../core/services/chat.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { NotificationService } from '../../../core/services/notification.service';
-import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
+
+// PrimeNG Modules
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DataViewModule } from 'primeng/dataview';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
+import { RippleModule } from 'primeng/ripple';
+import { SkeletonModule } from 'primeng/skeleton';
+
+// Application-specific services and models
+import { ChatService, ChatRoom } from '@features/chat/services/chat.service';
+import { AuthService } from '@core/auth/services/auth.service';
+import { NotificationService } from '@core/services/notification.service';
+import { User } from '@core/auth/models/auth.model';
+
+// Shared Components and Pipes
+import { AvatarComponent } from '@shared/components/avatar/avatar.component';
+import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 
 @Component({
-    selector: 'app-chat-list',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule, TimeAgoPipe, NbButtonModule, NbIconModule, NbBadgeModule],
-    templateUrl: './chat-list.component.html',
-    styleUrls: ['./chat-list.component.scss']
+  selector: 'app-chat-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    DataViewModule,
+    BadgeModule,
+    TooltipModule,
+    RippleModule,
+    SkeletonModule,
+    AvatarComponent,
+    TimeAgoPipe,
+  ],
+  templateUrl: './chat-list.component.html',
+  styleUrls: ['./chat-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatListComponent implements OnInit, OnDestroy {
   rooms: ChatRoom[] = [];
   loading = true;
   error = false;
-  currentUserId = '';
+  currentUserId: string | undefined;
+  selectedRoomId: string | undefined;
 
   private subscriptions: Subscription[] = [];
 
@@ -46,23 +59,24 @@ export class ChatListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    this.currentUserId = currentUser?._id || '';
-    this.loadRooms();
-    this.setupSocketListeners();
+    this.subscriptions.push(
+      this.authService.currentUser$.subscribe((currentUser) => {
+        this.currentUserId = currentUser?._id;
+        if (this.currentUserId) {
+          this.loadRooms();
+          this.setupSocketListeners();
+        } else {
+          this.router.navigate(['/auth/login']);
+        }
+      }),
+    );
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-
-    // Disconnect socket
     this.chatService.disconnectSocket();
   }
 
-  /**
-   * Load chat rooms
-   */
   loadRooms(): void {
     this.loading = true;
     this.error = false;
@@ -81,57 +95,31 @@ export class ChatListComponent implements OnInit, OnDestroy {
     );
   }
 
-  /**
-   * Set up socket listeners for real-time updates
-   */
   setupSocketListeners(): void {
-    // Connect to socket
     this.chatService.connectSocket();
 
-    // Listen for new messages
-    const messageSub = this.chatService.newMessage$.subscribe((message) => {
-      // Find the room for this message
-      const roomId = message.roomId;
-      const room = this.rooms.find((r) => r.id === roomId);
-
-      if (room) {
-        // Update last message
-        room.lastMessage = message;
-
-        // Update unread count if message is not from current user
-        if (message.sender !== this.currentUserId) {
-          room.unreadCount = (room.unreadCount || 0) + 1;
+    this.subscriptions.push(
+      this.chatService.newMessage$.subscribe((message) => {
+        const roomIndex = this.rooms.findIndex((r) => r.id === message.roomId);
+        if (roomIndex > -1) {
+          this.rooms[roomIndex].lastMessage = message;
+          this.rooms = this.sortRooms(this.rooms);
         }
+      }),
+    );
 
-        // Re-sort rooms
-        this.rooms = this.sortRooms(this.rooms);
-      } else {
-        // If room doesn't exist, reload all rooms
-        this.loadRooms();
-      }
-    });
-
-    this.subscriptions.push(messageSub);
-
-    // Subscribe to online users updates
-    const onlineSub = this.chatService.onlineUsers$.subscribe((users) => {
-      // Update online status for users in rooms
-      // This would require mapping user IDs to rooms
-    });
-
-    this.subscriptions.push(onlineSub);
+    this.subscriptions.push(
+      this.chatService.onlineUsers$.subscribe((users) => {
+        // Logic to update online status of users/rooms
+      }),
+    );
   }
 
-  /**
-   * Sort rooms by last activity
-   */
   sortRooms(rooms: ChatRoom[]): ChatRoom[] {
     return [...rooms].sort((a, b) => {
-      // Pinned rooms first
       if (a.pinned && !b.pinned) return -1;
       if (!a.pinned && b.pinned) return 1;
 
-      // Then by last activity
       const aTime = a.lastMessage?.timestamp || a.updatedAt || a.createdAt;
       const bTime = b.lastMessage?.timestamp || b.updatedAt || b.createdAt;
 
@@ -139,83 +127,46 @@ export class ChatListComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Navigate to a chat room
-   */
   goToRoom(roomId: string): void {
     this.router.navigate(['/chat', roomId]);
   }
 
-  /**
-   * Create a new chat
-   */
   createNewChat(): void {
     this.router.navigate(['/chat/new']);
   }
 
-  /**
-   * Get the other user's name in a direct chat
-   */
   getOtherUserName(room: ChatRoom): string {
     if (room.name) {
       return room.name;
     }
 
-    const otherParticipant = room.participants.find(
-      (p: ChatParticipant) => p.id !== this.currentUserId,
-    );
-    return otherParticipant ? otherParticipant.username : 'Chat Room';
+    const otherParticipant = room.participants?.find((p) => p.id !== this.currentUserId);
+    return otherParticipant?.name || 'Unknown User';
   }
 
-  /**
-   * Get the last message preview
-   */
   getLastMessagePreview(room: ChatRoom): string {
-    if (!room.lastMessage) {
-      return 'No messages yet';
+    if (room.lastMessage) {
+      return room.lastMessage.content || '';
     }
-
-    const message = room.lastMessage.content || room.lastMessage.message || '';
-
-    // If message is encrypted, show a placeholder
-    if (room.lastMessage.isEncrypted) {
-      return '🔒 Encrypted message';
-    }
-
-    // If message has attachments
-    if (room.lastMessage.attachments && room.lastMessage.attachments.length > 0) {
-      const attachment = room.lastMessage.attachments[0];
-      if (attachment.type === 'image') {
-        return '📷 Photo';
-      } else if (attachment.type === 'video') {
-        return '🎥 Video';
-      } else {
-        return `📎 ${attachment.name}`;
-      }
-    }
-
-    return message.length > 50 ? `${message.substring(0, 47)}...` : message;
+    return 'No messages yet';
   }
 
-  /**
-   * Get the last message time
-   */
-  getLastMessageTime(room: ChatRoom): Date {
-    return (
-      room.lastMessage?.timestamp || room.lastMessage?.createdAt || room.updatedAt || room.createdAt
-    );
+  getLastMessageTime(room: ChatRoom): Date | undefined {
+    return room.lastMessage?.timestamp ? new Date(room.lastMessage.timestamp) : undefined;
   }
 
-  /**
-   * Check if room has unread messages
-   */
   hasUnreadMessages(room: ChatRoom): boolean {
-    return room.unreadCount > 0;
+    return room.unreadCount ? room.unreadCount > 0 : false;
   }
 
-  /**
-   * Archive a chat room
-   */
+  isRoomOnline(room: ChatRoom): boolean {
+    if (!room.isGroupChat) {
+      const otherParticipant = room.participants?.find((p) => p.id !== this.currentUserId);
+      return otherParticipant?.isOnline || false;
+    }
+    return false;
+  }
+
   archiveRoom(event: Event, room: ChatRoom): void {
     event.stopPropagation();
     this.chatService.archiveRoom(room.id).subscribe(
@@ -230,9 +181,6 @@ export class ChatListComponent implements OnInit, OnDestroy {
     );
   }
 
-  /**
-   * Toggle pin status of a room
-   */
   togglePin(event: Event, room: ChatRoom): void {
     event.stopPropagation();
     room.pinned = !room.pinned;

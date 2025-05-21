@@ -18,11 +18,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "strictPropertyInitialization": false,
-    "baseUrl": "./",
+    "baseUrl": "src",
     "paths": {
-      "rxjs": ["node_modules/rxjs"],
-      "rxjs/*": ["node_modules/rxjs/*"],
-      "@core/*": ["src/app/core/*"]
+      "@core/*": ["./app/core/*"],
+      "@features/*": ["./app/features/*"],
+      "@shared/*": ["./app/shared/*"],
+      "@env/*": ["./environments/*"]
     },
     "types": ["jasmine", "@types/jasmine"],
     "typeRoots": ["node_modules/@types", "src/typings.d.ts"]

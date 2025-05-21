@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -10,14 +10,16 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { AdService } from '../../../../core/services/ad.service';
+import { Ad } from '../../../../core/models/ad.interface';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-ad-list',
-    templateUrl: './ad-list.component.html',
-    styles: [
-        `
+  selector: 'app-ad-list',
+  templateUrl: './ad-list.component.html',
+  styles: [
+    `
       .ad-list-container {
         padding: 20px;
       }
@@ -43,17 +45,27 @@ import { RouterLink } from '@angular/router';
         margin-bottom: 20px;
       }
     `,
-    ],
-    imports: [CommonModule, RouterLink]
+  ],
+  imports: [CommonModule, RouterLink],
 })
-export class AdListComponent implements OnInit {
-  ads: any[] = [];
-  loading = false;_error: string | null = null;
+export class AdListComponent implements OnInit, OnDestroy {
+  ads: Ad[] = [];
+  filteredAds: Ad[] = [];
+  loading = false;
+  error: string | null = null;
+  searchQuery = '';
+  sortOption = 'dateDesc';
+  private destroy$ = new Subject<void>();
 
   constructor(private adService: AdService) {}
 
   ngOnInit(): void {
     this.loadAds();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadAds(): void {

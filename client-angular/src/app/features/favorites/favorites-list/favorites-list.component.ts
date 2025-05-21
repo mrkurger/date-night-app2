@@ -21,18 +21,18 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({
-    selector: 'app-favorites-list',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NebularModule, // Ensure NebularModule is imported here
-        // FavoriteButtonComponent is imported but not used in the template
-        // FavoriteButtonComponent,
-    ],
-    template: `
+  selector: 'app-favorites-list',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NebularModule, // Ensure NebularModule is imported here
+    // FavoriteButtonComponent is imported but not used in the template
+    // FavoriteButtonComponent,
+  ],
+  template: `
     <div class="favorites-container">
       <div class="favorites-header">
         <h2 class="page-title">My Favorites</h2>
@@ -251,8 +251,8 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
         padding: var(--padding);
@@ -407,7 +407,7 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         margin-left: auto;
       }
     `,
-    ]
+  ],
 })
 export class FavoritesListComponent implements OnInit {
   favorites: Favorite[] = [];
@@ -559,230 +559,219 @@ export class FavoritesListComponent implements OnInit {
   }
 
   openNotesDialog(favorite: Favorite): void {
-    const dialogRef = this.dialog.open(NotesDialogComponent, {
-      context: {
-        data: {
-          title: 'Edit Notes',
-          notes: favorite.notes || '',
-          maxLength: 500,
-          placeholder: 'Add personal notes about this ad...',
-        },
-      },
-    });
-
-    dialogRef.onClose.subscribe((result) => {
-      if (result !== undefined) {
-        this.updateNotes(favorite,_result));
-      }
-    });
+    // const dialogRef = this.dialog.open(NotesDialogComponent, {
+    //   context: {
+    //     title: `Notes for ${favorite.ad.title}`,
+    //     notes: favorite.notes,
+    //     maxLength: 500,
+    //     placeholder: 'Enter your notes here...',
+    //   },
+    //   hasBackdrop: true,
+    //   closeOnBackdropClick: true,
+    // });
+    // dialogRef, : .onClose.subscribe((result) => {
+    //   if (result) {
+    //     this.updateNotes(favorite,_result));
+    //   }
+    // });
   }
 
   openTagsDialogForSingle(favorite: Favorite): void {
-    const dialogRef = this.dialog.open(NotesDialogComponent, {
-      context: {
-        data: {
-          title: 'Edit Tags',
-          notes: favorite.tags ? favorite.tags.join(', ') : '',
-          maxLength: 200,
-          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
-        },
-      },
-    });
-
-    dialogRef.onClose.subscribe((result) => {
-      if (result !== undefined) {
-        const tags = result
-          .split(',')
-          .map((tag: string) => tag.trim())
-          .filter((tag: string) => tag.length > 0);
-
-        this.updateTags(favorite, tags);
-      }
-    });
+    // const dialogRef = this.dialog.open(NotesDialogComponent, {
+    //   context: {
+    //     title: `Tags for ${favorite.ad.title}`,
+    //     notes: favorite.tags ? favorite.tags.join(', ') : '',
+    //     maxLength: 200,
+    //     placeholder: 'Enter tags, comma-separated...',
+    //     isTagsInput: true,
+    //   },
+    //   hasBackdrop: true,
+    //   closeOnBackdropClick: true,
+    // });
+    // dialogRef.onClose.subscribe((result) => {
+    //   if (result && typeof result === 'string') {
+    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
+    //     this.updateTags(favorite, tags);
+    //   }
+    // });
   }
 
   openTagsDialog(): void {
-    if (this.selectedFavorites.length === 0) return;
-
-    const dialogRef = this.dialog.open(NotesDialogComponent, {
-      context: {
-        data: {
-          title: 'Add Tags to Selected Favorites',
-          notes: '',
-          maxLength: 200,
-          placeholder: 'Add tags separated by commas (e.g., vacation, summer, beach)',
-        },
-      },
-    });
-
-    dialogRef.onClose.subscribe((result) => {
-      if (result !== undefined) {
-        const tags = result
-          .split(',')
-          .map((tag: string) => tag.trim())
-          .filter((tag: string) => tag.length > 0);
-
-        this.updateTagsBatch(tags);
-      }
-    });
+    // if (this.selectedFavorites.length === 0) return;
+    // const initialTags = this.favorites
+    //   .filter((fav) => this.selectedFavorites.includes(this.getAdIdAsString(fav.ad)))
+    //   .reduce((acc, fav) => {
+    //     if (fav.tags) {
+    //       fav.tags.forEach((tag) => acc.add(tag));
+    //     }
+    //     return acc;
+    //   }, new Set<string>());
+    // const dialogRef = this.dialog.open(NotesDialogComponent, {
+    //   context: {
+    //     title: `Edit Tags for ${this.selectedFavorites.length} Favorites`,
+    //     notes: Array.from(initialTags).join(', '),
+    //     maxLength: 200,
+    //     placeholder: 'Enter tags, comma-separated...',
+    //     isTagsInput: true,
+    //   },
+    //   hasBackdrop: true,
+    //   closeOnBackdropClick: true,
+    // });
+    // dialogRef.onClose.subscribe((result) => {
+    //   if (result && typeof result === 'string') {
+    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
+    //     this.updateTagsBatch(tags);
+    //   }
+    // });
   }
 
   updateNotes(favorite: Favorite, notes: string): void {
-    this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe({
-      next: () => {
-        favorite.notes = notes;
-        this.notificationService.success('Notes updated');
-      },
-      error: (error: Error) => {
-        this.notificationService.error('Failed to update notes');
-      },
-    });
+    // this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe({
+    //   next: () => {
+    //     favorite.notes = notes;
+    //     this.notificationService.success('Notes updated');
+    //   },
+    //   error: () => {
+    //     this.notificationService.error('Failed to update notes');
+    //   },
+    // });
   }
 
   updateTags(favorite: Favorite, tags: string[]): void {
-    this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), tags).subscribe({
-      next: (response) => {
-        favorite.tags = tags;
-        this.notificationService.success('Tags updated');
-        this.loadUserTags(); // Refresh tag list
-      },
-      error: (error: Error) => {
-        this.notificationService.error('Failed to update tags');
-      },
-    });
+    // this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), tags).subscribe({
+    //   next: () => {
+    //     favorite.tags = tags;
+    //     this.notificationService.success('Tags updated');
+    //     this.loadUserTags(); // Refresh tag list
+    //   },
+    //   error: () => {
+    //     this.notificationService.error('Failed to update tags');
+    //   },
+    // });
   }
 
   updateTagsBatch(tags: string[]): void {
-    if (this.selectedFavorites.length === 0) return;
-
-    // Update each selected favorite one by one
-    let completed = 0;
-    let failed = 0;
-
-    this.selectedFavorites.forEach((adId) => {
-      this.favoriteService.updateTags(adId, tags).subscribe({
-        next: () => {
-          completed++;
-
-          // Find and update the favorite in the list
-          const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
-          if (favorite) {
-            favorite.tags = [...tags];
-          }
-
-          // When all operations are complete
-          if (completed + failed === this.selectedFavorites.length) {
-            this.notificationService.success(`Updated tags for ${completed} favorites`);
-            if (failed > 0) {
-              this.notificationService.error(`Failed to update tags for ${failed} favorites`);
-            }
-            this.loadUserTags(); // Refresh tag list
-          }
-        },
-        error: () => {
-          failed++;
-
-          // When all operations are complete
-          if (completed + failed === this.selectedFavorites.length) {
-            this.notificationService.success(`Updated tags for ${completed} favorites`);
-            if (failed > 0) {
-              this.notificationService.error(`Failed to update tags for ${failed} favorites`);
-            }
-          }
-        },
-      });
-    });
+    // if (this.selectedFavorites.length === 0) return;
+    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId));
+    // let completed = 0;
+    // let failed = 0;
+    // adIds.forEach((adId) => {
+    //   this.favoriteService.updateTags(adId, tags).subscribe({
+    //     next: () => {
+    //       completed++;
+    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
+    //       if (favorite) {
+    //         favorite.tags = [...tags];
+    //       }
+    //       if (completed + failed === adIds.length) {
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`);
+    //         if (failed > 0) {
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);
+    //         }
+    //         this.loadUserTags(); // Refresh tag list
+    //       }
+    //     },
+    //     error: () => {
+    //       failed++;
+    //       if (completed + failed === adIds.length) {
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`);
+    //         if (failed > 0) {
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);
+    //         }
+    //       }
+    //     },
+    //   });
+    // });
   }
 
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
-    this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
-      next: (response) => {
-        favorite.priority = priority;
-        this.notificationService.success(`Priority set to ${priority}`);
-      },
-      error: (error: Error) => {
-        this.notificationService.error('Failed to update priority');
-      },
-    });
+    // this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
+    //   next: () => {
+    //     favorite.priority = priority;
+    //     this.notificationService.success(`Priority set to ${priority}`);
+    //   },
+    //   error: () => {
+    //     this.notificationService.error('Failed to update priority');
+    //   },
+    // });
   }
 
   setPriorityBatch(priority: 'low' | 'normal' | 'high'): void {
-    if (this.selectedFavorites.length === 0) return;
-
-    // Update each selected favorite one by one
-    let completed = 0;
-    let failed = 0;
-
-    this.selectedFavorites.forEach((adId) => {
-      this.favoriteService.updatePriority(adId, priority).subscribe({
-        next: () => {
-          completed++;
-
-          // Find and update the favorite in the list
-          const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
-          if (favorite) {
-            favorite.priority = priority;
-          }
-
-          // When all operations are complete
-          if (completed + failed === this.selectedFavorites.length) {
-            this.notificationService.success(`Updated priority for ${completed} favorites`);
-            if (failed > 0) {
-              this.notificationService.error(`Failed to update priority for ${failed} favorites`);
-            }
-          }
-        },
-        error: () => {
-          failed++;
-
-          // When all operations are complete
-          if (completed + failed === this.selectedFavorites.length) {
-            this.notificationService.success(`Updated priority for ${completed} favorites`);
-            if (failed > 0) {
-              this.notificationService.error(`Failed to update priority for ${failed} favorites`);
-            }
-          }
-        },
-      });
-    });
+    // if (this.selectedFavorites.length === 0) return;
+    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId));
+    // let completed = 0;
+    // let failed = 0;
+    // adIds.forEach((adId) => {
+    //   this.favoriteService.updatePriority(adId, priority).subscribe({
+    //     next: () => {
+    //       completed++;
+    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
+    //       if (favorite) {
+    //         favorite.priority = priority;
+    //       }
+    //       if (completed + failed === adIds.length) {
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`);
+    //         if (failed > 0) {
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);
+    //         }
+    //       }
+    //     },
+    //     error: () => {
+    //       failed++;
+    //       if (completed + failed === adIds.length) {
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`);
+    //         if (failed > 0) {
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);
+    //         }
+    //       }
+    //     },
+    //   });
+    // });
   }
 
   onFavoriteRemoved(isFavorite: boolean, favorite: Favorite): void {
-    if (!isFavorite) {
-      this.favorites = this.favorites.filter((f) => f.ad._id !== favorite.ad._id);
-      this.updateSelectedFavorites();
-    }
+    // if (!isFavorite) {
+    //   this.favorites = this.favorites.filter((f) => f.ad._id !== favorite.ad._id);
+    //   this.selectedFavorites = this.selectedFavorites.filter(
+    //     (id) => id !== this.getAdIdAsString(favorite.ad)
+    //   );
+    // }
   }
 
   updateSelectedFavorites(): void {
-    this.selectedFavorites = this.favorites
-      .filter((favorite) => favorite.selected)
-      .map((favorite) =>
-        typeof favorite.ad === 'string' ? favorite.ad : this.getAdIdAsString(favorite.ad._id),
-      );
+    // this.selectedFavorites = this.favorites
+    //   .filter((fav) => fav.selected)
+    //   .map((fav) =>
+    //     typeof fav.ad === 'string' ? fav.ad : this.getAdIdAsString(fav.ad._id)
+    //   );
   }
 
   getPriorityClass(favorite: Favorite): string {
-    return `priority-${favorite.priority}`;
+    // switch (favorite.priority) {
+    //   case 'high': return 'priority-high';
+    //   case 'normal': return 'priority-normal';
+    //   case 'low': return 'priority-low';
+    //   default: return 'priority-normal';
+    // }
+    return ''; // Placeholder
   }
 
   getPriorityIcon(priority: string): string {
-    switch (priority) {
-      case 'high':
-        return 'arrow_upward';
-      case 'low':
-        return 'arrow_downward';
-      default:
-        return 'remove';
-    }
+    // switch (priority) {
+    //   case 'high': return 'arrow-up-outline';
+    //   case 'normal': return 'minus-outline';
+    //   case 'low': return 'arrow-down-outline';
+    //   default: return 'minus-outline';
+    // }
+    return ''; // Placeholder
   }
 
   toggleTagFilter(tag: string): void {
-    if (this.selectedTagFilters.includes(tag)) {
-      this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
-    } else {
-      this.selectedTagFilters.push(tag);
-    }
-    this.applyFilters();
+    // if (this.selectedTagFilters.includes(tag)) {
+    //   this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
+    // } else {
+    //   this.selectedTagFilters.push(tag);
+    // }
+    // this.applyFilters();
   }
 }

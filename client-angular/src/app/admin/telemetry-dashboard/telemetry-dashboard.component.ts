@@ -26,6 +26,7 @@ import {
   NbTableModule,
   NbListModule,
   NbTreeGridModule,
+  NbDatepickerModule,
 } from '@nebular/theme';
 
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
@@ -76,25 +77,27 @@ type ErrorColumnKey =
  * and displays data through interactive charts and tables.
  */
 @Component({
-    selector: 'app-telemetry-dashboard',
-    imports: [NebularModule, CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        NbCardModule,
-        NbTabsetModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSelectModule,
-        NbInputModule,
-        NbFormFieldModule,
-        NbDatepickerModule,
-        NbSpinnerModule,
-        NbTableModule,
-        NbListModule,
-        NbTreeGridModule,
-        ErrorDetailsDialogComponent,
-    ],
-    template: `
+  selector: 'app-telemetry-dashboard',
+  imports: [
+    NebularModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbListModule,
+    NbTreeGridModule,
+    ErrorDetailsDialogComponent,
+  ],
+  template: `
     <div class="dashboard-container">
       <h1>Telemetry Dashboard</h1>
 
@@ -291,8 +294,8 @@ type ErrorColumnKey =
       </nb-tabset>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
       }
@@ -367,7 +370,7 @@ type ErrorColumnKey =
         color: var(--text-basic-color);
       }
     `,
-    ]
+  ],
 })
 export class TelemetryDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('errorsByTypeChart')

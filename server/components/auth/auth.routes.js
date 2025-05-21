@@ -76,16 +76,7 @@ router.get(
   authController.googleCallback
 );
 
-// Reddit OAuth
-router.get('/reddit', passport.authenticate('reddit'));
-router.get(
-  '/reddit/callback',
-  passport.authenticate('reddit', {
-    failureRedirect: formatServerUrl(process.env.CLIENT_URL, 'http://localhost:4200') + '/login',
-    session: false,
-  }),
-  authController.redditCallback
-);
+// Reddit OAuth removed - deprecated passport-reddit package
 
 // Apple OAuth
 router.get('/apple', passport.authenticate('apple'));

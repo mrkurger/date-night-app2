@@ -7,21 +7,23 @@ import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 interface RevenueData {
-  name: string;_value: number;
+  name: string;
+  value: number;
 }
 
 interface TimeSeriesData {
   name: string;
   series: {
-    name: string;_value: number;
+    name: string;
+    value: number;
   }[];
 }
 
 @Component({
-    selector: 'app-revenue-analytics',
-    imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
-    templateUrl: './revenue-analytics.component.html',
-    styleUrls: ['./revenue-analytics.component.scss']
+  selector: 'app-revenue-analytics',
+  imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
+  templateUrl: './revenue-analytics.component.html',
+  styleUrls: ['./revenue-analytics.component.scss'],
 })
 export class RevenueAnalyticsComponent implements OnInit {
   selectedPeriod = 'month';
@@ -37,8 +39,27 @@ export class RevenueAnalyticsComponent implements OnInit {
 
   // Chart data
   revenueTrend: TimeSeriesData[] = [];
-  revenueByPlan: RevenueData[] = [];
-  churnRate: RevenueData[] = [];
+  revenueOverTime: RevenueData[] = [
+    { name: 'Jan', value: 85000 },
+    { name: 'Feb', value: 92000 },
+    { name: 'Mar', value: 98000 },
+    { name: 'Apr', value: 105000 },
+    { name: 'May', value: 115000 },
+    { name: 'Jun', value: 125000 },
+  ];
+  revenueByPlan: RevenueData[] = [
+    { name: 'Basic', value: 45000 },
+    { name: 'Premium', value: 55000 },
+    { name: 'Enterprise', value: 25000 },
+  ];
+  churnRate: RevenueData[] = [
+    { name: 'Jan', value: 2.1 },
+    { name: 'Feb', value: 1.9 },
+    { name: 'Mar', value: 1.7 },
+    { name: 'Apr', value: 1.5 },
+    { name: 'May', value: 1.3 },
+    { name: 'Jun', value: 1.2 },
+  ];
 
   constructor() {}
 
@@ -75,21 +96,6 @@ export class RevenueAnalyticsComponent implements OnInit {
             { name: 'Jun', value: 125000 },
           ],
         },
-      ];
-
-      this.revenueByPlan = [
-        { name: 'Basic', value: 45000 },
-        { name: 'Premium', value: 55000 },
-        { name: 'Enterprise', value: 25000 },
-      ];
-
-      this.churnRate = [
-        { name: 'Jan', value: 2.1 },
-        { name: 'Feb', value: 1.9 },
-        { name: 'Mar', value: 1.7 },
-        { name: 'Apr', value: 1.5 },
-        { name: 'May', value: 1.3 },
-        { name: 'Jun', value: 1.2 },
       ];
 
       this.loading = false;

@@ -90,13 +90,28 @@ The following configuration files have been replaced and should not be used:
 
 The following npm dependencies have been deprecated and should be replaced:
 
-| Dependency                            | Replacement                          | Status  | Notes                                         |
-| ------------------------------------- | ------------------------------------ | ------- | --------------------------------------------- |
-| `inflight@1.0.6`                      | `lru-cache`                          | Removed | This module is not supported and leaks memory |
-| `rimraf@3.0.2`                        | `rimraf@5.0.5`                       | Updated | Versions prior to v4 are no longer supported  |
-| `abab@2.0.6`                          | Native `atob()` and `btoa()` methods | Removed | Use platform's native methods instead         |
-| `glob@7.2.3`                          | `glob@10.3.10`                       | Updated | Versions prior to v9 are no longer supported  |
-| `domexception@4.0.0`                  | Native `DOMException`                | Removed | Use platform's native DOMException            |
+### Direct Dependencies (Already Addressed)
+
+| Dependency         | Replacement                       | Status  | Notes                                    |
+| ----------------- | --------------------------------- | ------- | ---------------------------------------- |
+| `passport-reddit` | Removed Reddit authentication     | Removed | OAuth provider no longer supported       |
+| `xss-clean`       | `xss-filters` custom middleware   | Updated | Package no longer supported             |
+| `node-fetch@3.x`  | `node-fetch@4.x`                 | Updated | Now uses native DOMException            |
+
+### Transitive Dependencies (Waiting for Updates)
+
+| Dependency         | Source Package   | Replacement                   | Status    | Timeline                        |
+| ----------------- | --------------- | ----------------------------- | --------- | ------------------------------- |
+| `inflight@1.0.6`  | Jest           | `lru-cache`                   | Pending   | Wait for Jest update           |
+| `glob@7.x`        | Jest           | `glob@10.x`                   | Pending   | Wait for Jest update           |
+| `lodash.get`      | swagger-jsdoc   | Optional chaining (`?.`)      | Pending   | Wait for swagger-jsdoc update  |
+| `lodash.isequal`  | swagger-jsdoc   | `util.isDeepStrictEqual`     | Pending   | Wait for swagger-jsdoc update  |
+
+Notes:
+- Transitive dependencies are included by other packages we depend on
+- They will be automatically resolved when those packages update their dependencies
+- We're tracking updates to Jest and swagger-jsdoc to resolve these
+| `xss-clean@0.1.4`                     | `xss-filters` and custom middleware             | Updated | Package no longer supported                                    |
 | `@humanwhocodes/object-schema@2.0.3`  | `@eslint/object-schema@2.1.6`        | Updated | Use @eslint/object-schema instead             |
 | `@humanwhocodes/config-array@0.11.14` | `@eslint/config-array@0.20.0`        | Updated | Use @eslint/config-array instead              |
 | `eslint@8.56.0`                       | `eslint@9.24.0`                      | Updated | Version 8.56.0 is no longer supported         |

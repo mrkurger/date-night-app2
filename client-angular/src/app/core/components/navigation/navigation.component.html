@@ -1,11 +1,6 @@
 <nb-layout>
   <!-- Sidebar -->
-  <nb-sidebar
-    [state]="sidebarState"
-    [responsive]="true"
-    [compacted]="sidebarState === 'compacted'"
-    class="menu-sidebar"
-  >
+  <nb-sidebar [state]="sidebarState" [responsive]="true" class="menu-sidebar">
     <nb-menu [items]="items" (itemClick)="onMenuItemClick($event)"></nb-menu>
   </nb-sidebar>
 

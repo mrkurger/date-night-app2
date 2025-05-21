@@ -1,4 +1,19 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import {
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule,
+  NbIconModule,
+  NbTopMenuModule,
+  NbBreadcrumbsModule,
+  NbSearchBarModule,
+  NbUserMenuModule,
+  NbButtonModule,
+  NbLayoutHeaderModule,
+  NbLayoutFooterModule,
+} from '@nebular/theme';
 import { NbMenuItem } from '@nebular/theme';
 
 export interface NavigationConfig {
@@ -9,6 +24,10 @@ export interface NavigationConfig {
   showBreadcrumbs?: boolean;
   sidebarState?: 'expanded' | 'collapsed' | 'compacted';
   theme?: 'default' | 'dark' | 'cosmic' | 'corporate';
+  sidebarTag?: string;
+  responsive?: boolean;
+  fixed?: boolean;
+  sidebarRight?: boolean;
 }
 
 export interface UserData {
@@ -25,9 +44,11 @@ export interface UserData {
       <!-- Sidebar -->
       <nb-sidebar
         *ngIf="config.showSidebar"
-        [state]="config.sidebarState || 'expanded'"
-        [responsive]="true"
-        [compacted]="config.sidebarState === 'compacted'"
+        [tag]="config.sidebarTag || 'menu-sidebar'"
+        [responsive]="config.responsive !== false"
+        [state]="config.sidebarState"
+        [fixed]="config.fixed !== false"
+        [class.right]="config.sidebarRight"
       >
         <nb-side-menu
           [items]="menuItems"
@@ -121,6 +142,20 @@ export interface UserData {
         border-top: 1px solid nb-theme(divider-color);
       }
     `,
+    imports: [
+      CommonModule,
+      RouterModule,
+      NbLayoutModule,
+      NbSidebarModule,
+      NbMenuModule,
+      NbIconModule,
+      NbTopMenuModule,
+      NbBreadcrumbsModule,
+      NbSearchBarModule,
+      NbUserMenuModule,
+      NbButtonModule,
+      NbLayoutHeaderModule,
+      NbLayoutFooterModule,
     ],
     standalone: false
 })

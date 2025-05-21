@@ -25,6 +25,10 @@ import { socketConfig } from './core/config/socket.config';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbThemeModule } from '@nebular/theme';
 
+// PrimeNG Theming
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
@@ -41,5 +45,12 @@ export const appConfig: ApplicationConfig = {
       NbThemeModule.forRoot({ name: 'default' }),
       NbEvaIconsModule,
     ),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        // You can add other options here, e.g.:
+        // ripple: true,
+      },
+    }),
   ],
 };

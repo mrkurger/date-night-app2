@@ -32,8 +32,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { UserService } from '../../core/services/user.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-import { Ad } from '../../core/models/ad.interface';
+import { User } from '../../core/models/user.interface';
 
 /**
  * Advertiser Profile Component
@@ -55,103 +56,103 @@ import { Ad } from '../../core/models/ad.interface';
  * - NbSpinner for loading states
  */
 @Component({
-    selector: 'app-advertiser-profile',
-    templateUrl: './advertiser-profile.component.html',
-    styleUrls: ['./advertiser-profile.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        MainLayoutComponent,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbSelectModule,
-        NbTagModule,
-        NbBadgeModule,
-        NbLayoutModule,
-    ]
+  selector: 'app-advertiser-profile',
+  templateUrl: './advertiser-profile.component.html',
+  styleUrls: ['./advertiser-profile.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    NebularModule,
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbLayoutModule,
+  ],
 })
 export class AdvertiserProfileComponent implements OnInit {
-  ad: Ad | null = null;
-  loading = true;_error: string | null = null;
+  advertiser: User | null = null;
+  loading = true;
+  error: string | null = null;
   isOwner = false;
   editMode = false;
-  adForm: FormGroup;
+  profileForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private adService: AdService,
+    private userService: UserService,
     private authService: AuthService,
     private notificationService: NotificationService,
     private fb: FormBuilder,
   ) {
-    this.adForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      location: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0)]],
-      category: ['', Validators.required],
-      isTouring: [false],
-      tags: [''],
+    this.profileForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      profile: this.fb.group({
+        firstName: [''],
+        lastName: [''],
+        bio: [''],
+      }),
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const adId = params.get('id');
-      if (adId) {
-        this.loadAd(adId);
+      const advertiserId = params.get('id');
+      if (advertiserId) {
+        this.loadAdvertiser(advertiserId);
       } else {
-        this.error = 'Ad ID not provided';
+        this.error = 'Advertiser ID not provided';
         this.loading = false;
       }
     });
   }
 
-  loadAd(adId?: string): void {
+  loadAdvertiser(advertiserId?: string): void {
     this.loading = true;
 
-    // If adId is not provided, use the one from the route
-    const id = adId || this.route.snapshot.paramMap.get('id');
+    const id = advertiserId || this.route.snapshot.paramMap.get('id');
 
     if (!id) {
-      this.error = 'Ad ID not provided';
+      this.error = 'Advertiser ID not provided';
       this.loading = false;
       return;
     }
 
-    this.adService.getAdById(id).subscribe({
-      next: (ad) => {
-        this.ad = ad;
+    this.userService.getUser(id).subscribe({
+      next: (advertiserData) => {
+        this.advertiser = advertiserData;
         this.loading = false;
 
-        // Check if current user is the owner
-        this.authService.currentUser$.subscribe((user) => {
-          if (user && ad.userId === user._id) {
+        this.authService.currentUser$.subscribe((currentUser) => {
+          if (currentUser && advertiserData._id === currentUser._id) {
             this.isOwner = true;
           }
         });
 
-        // Initialize form with ad data
-        this.adForm.patchValue({
-          title: ad.title,
-          description: ad.description,
-          location: ad.location,
-          price: ad.price || 0,
-          category: ad.category,
-          isTouring: ad.isTouring || false,
-          tags: ad.tags ? ad.tags.join(', ') : '',
+        this.profileForm.patchValue({
+          username: advertiserData.username,
+          email: advertiserData.email,
+          profile: {
+            firstName: advertiserData.profile?.firstName || '',
+            lastName: advertiserData.profile?.lastName || '',
+            bio: advertiserData.profile?.bio || '',
+          },
         });
       },
       error: (err) => {
-        this.error = 'Failed to load ad details';
+        this.error = 'Failed to load advertiser details';
         this.loading = false;
-        console.error('Error loading ad:', err);
+        console.error('Error loading advertiser:', err);
       },
     });
   }
@@ -161,35 +162,31 @@ export class AdvertiserProfileComponent implements OnInit {
   }
 
   saveChanges(): void {
-    if (this.adForm.invalid) {
+    if (this.profileForm.invalid) {
       this.notificationService.error('Please fix the form errors before submitting');
       return;
     }
 
-    if (!this.ad) return;
+    if (!this.advertiser) return;
 
-    const updatedAd = {
-      ...this.ad,
-      ...this.adForm.value,
-      tags: this.adForm.value.tags
-        .split(',')
-        .map((tag: string) => tag.trim())
-        .filter((tag: string) => tag),
+    const updatedAdvertiser = {
+      ...this.advertiser,
+      ...this.profileForm.value,
     };
 
     this.loading = true;
-    this.adService.updateAd(this.ad._id, updatedAd).subscribe({
-      next: (ad) => {
-        this.ad = ad;
+    this.userService.updateUser(this.advertiser._id, updatedAdvertiser).subscribe({
+      next: (updatedData) => {
+        this.advertiser = updatedData;
         this.loading = false;
         this.editMode = false;
-        this.notificationService.success('Ad updated successfully');
+        this.notificationService.success('Profile updated successfully');
       },
       error: (err) => {
-        this.error = 'Failed to update ad';
+        this.error = 'Failed to update profile';
         this.loading = false;
-        console.error('Error updating ad:', err);
-        this.notificationService.error('Failed to update ad');
+        console.error('Error updating profile:', err);
+        this.notificationService.error('Failed to update profile');
       },
     });
   }
@@ -197,71 +194,50 @@ export class AdvertiserProfileComponent implements OnInit {
   cancelEdit(): void {
     this.editMode = false;
 
-    // Reset form to original values
-    if (this.ad) {
-      this.adForm.patchValue({
-        title: this.ad.title,
-        description: this.ad.description,
-        location: this.ad.location,
-        price: this.ad.price || 0,
-        category: this.ad.category,
-        isTouring: this.ad.isTouring || false,
-        tags: this.ad.tags ? this.ad.tags.join(', ') : '',
+    if (this.advertiser) {
+      this.profileForm.patchValue({
+        username: this.advertiser.username,
+        email: this.advertiser.email,
+        profile: {
+          firstName: this.advertiser.profile?.firstName || '',
+          lastName: this.advertiser.profile?.lastName || '',
+          bio: this.advertiser.profile?.bio || '',
+        },
       });
     }
   }
 
   deleteAd(): void {
-    if (!this.ad) return;
+    if (!this.advertiser) return;
 
-    if (confirm('Are you sure you want to delete this ad? This action cannot be undone.')) {
+    if (confirm('Are you sure you want to delete this profile? This action cannot be undone.')) {
       this.loading = true;
-      this.adService.deleteAd(this.ad._id).subscribe({
+      this.userService.deleteUser(this.advertiser._id).subscribe({
         next: () => {
-          this.notificationService.success('Ad deleted successfully');
-          // Navigate to my ads page
-          this.router.navigateByUrl('/my-ads');
+          this.notificationService.success('Profile deleted successfully');
+          this.router.navigateByUrl('/browse');
         },
         error: (err) => {
-          this.error = 'Failed to delete ad';
+          this.error = 'Failed to delete profile';
           this.loading = false;
-          console.error('Error deleting ad:', err);
-          this.notificationService.error('Failed to delete ad');
+          console.error('Error deleting profile:', err);
+          this.notificationService.error('Failed to delete profile');
         },
       });
     }
   }
 
   upgradeToFeatured(): void {
-    if (!this.ad) return;
+    if (!this.advertiser) return;
 
-    // Navigate to upgrade page with ad ID
-    this.router.navigateByUrl(`/upgrade?adId=${this.ad._id}`);
+    this.notificationService.info('Feature not applicable for user profiles directly.');
   }
 
   getMediaUrl(index = 0): string {
-    if (!this.ad) return '/assets/images/default-profile.jpg';
-
-    if (this.ad.media && this.ad.media.length > index) {
-      return this.ad.media[index].url;
-    }
-
-    if (this.ad.images && this.ad.images.length > index) {
-      const image = this.ad.images[index];
-      // Handle both string and object types
-      return typeof image === 'string' ? image : image.url;
-    }
-
     return '/assets/images/default-profile.jpg';
   }
 
   getMediaIndices(): number[] {
-    if (!this.ad) return [];
-
-    const mediaLength = this.ad.media?.length || 0;
-    const imagesLength = this.ad.images?.length || 0;
-    const totalLength = Math.max(mediaLength, imagesLength);
-
-    return Array.from({ length: totalLength }, (_, i) => i);
+    return [];
   }
 }

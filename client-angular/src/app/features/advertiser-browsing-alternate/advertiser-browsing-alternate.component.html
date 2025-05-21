@@ -138,7 +138,7 @@
     class="mobile-sidebar"
     tag="alt-mobile-menu"
     responsive
-    [compacted]="!isMobileMenuOpen"
+    [state]="isMobileMenuOpen ? 'expanded' : 'compacted'"
   >
     <nb-menu [items]="mobileMenuItems"></nb-menu>
     <!-- Add login/signup for mobile if not logged in and user menu for logged in -->

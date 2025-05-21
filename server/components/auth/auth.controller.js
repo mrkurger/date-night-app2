@@ -223,7 +223,7 @@ const githubCallback = (req, res) => {
 };
 
 const googleCallback = githubCallback;
-const redditCallback = githubCallback;
+// Reddit callback removed
 const appleCallback = githubCallback;
 
 // Refresh token endpoint

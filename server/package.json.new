@@ -1,0 +1,24 @@
+{
+  "name": "date-night-server",
+  "version": "1.0.0",
+  "description": "Backend for Date Night App",
+  "type": "module",
+  "scripts": {
+    "start": "node -r dotenv/config dist/server.js",
+    "dev": "npm run build && concurrently \"npm run build:watch\" \"nodemon -r dotenv/config dist/server.js\"",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "predev": "node ../scripts/ensure-mongodb.js",
+    "test": "NODE_ENV=test jest --config=jest.config.cjs",
+    "test:esm": "NODE_ENV=test jest --config=jest.config.cjs",
+    "test:server": "NODE_ENV=test jest --config=jest.config.cjs",
+    "start-client": "node ./scripts/start-client.js",
+    "lint": "eslint . --ext .ts,.js --fix --max-warnings=50",
+    "lint:fix": "eslint . --ext .ts,.js --fix --max-warnings=9999",
+    "format": "prettier --write \"**/*.{js,ts,json}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,json}\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

@@ -1,8 +1,17 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import { NbToastrService } from '@nebular/theme';
+
+// PrimeNG Modules
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 interface AuditLogEntry {
   id: string;
@@ -17,72 +26,102 @@ interface AuditLogEntry {
 }
 
 @Component({
-    selector: 'app-audit-log',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, FormsModule, NebularModule],
-    template: `
+  selector: 'app-audit-log',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    CalendarModule,
+    TableModule,
+    CardModule,
+    BadgeModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
+  template: `
     <div class="audit-log">
-      <nb-card>
-        <nb-card-header class="d-flex justify-content-between align-items-center">
-          <h5>Audit Log</h5>
-          <div class="filters">
-            <nb-select [(ngModel)]="selectedType" (selectedChange)="filterLogs()">
-              <nb-option value="all">All Types</nb-option>
-              <nb-option value="user">User</nb-option>
-              <nb-option value="ad">Ad</nb-option>
-              <nb-option value="system">System</nb-option>
-              <nb-option value="payment">Payment</nb-option>
-            </nb-select>
-            <input
-              nbInput
-              [nbDatepicker]="datepicker"
-              placeholder="Select Date"
-              [(ngModel)]="selectedDate"
-              (ngModelChange)="filterLogs()"
-            />
-            <nb-datepicker #datepicker></nb-datepicker>
+      <p-toast></p-toast>
+      <p-card>
+        <ng-template pTemplate="title">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            <h5>Audit Log</h5>
+            <div class="filters p-d-flex p-ai-center">
+              <p-dropdown
+                [options]="targetTypesForDropdown"
+                [(ngModel)]="selectedType"
+                (onChange)="filterLogs()"
+                placeholder="All Types"
+                optionLabel="label"
+                optionValue="value"
+                [showClear]="true"
+                styleClass="p-mr-2"
+              ></p-dropdown>
+              <p-calendar
+                [(ngModel)]="selectedDate"
+                (onSelect)="filterLogs()"
+                placeholder="Select Date"
+                [showIcon]="true"
+              ></p-calendar>
+            </div>
           </div>
-        </nb-card-header>
+        </ng-template>
 
-        <nb-card-body>
-          <table nbTable>
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Action</th>
-                <th>Performed By</th>
-                <th>Target Type</th>
-                <th>Target ID</th>
-                <th>Status</th>
-                <th>Details</th>
-                <th>IP Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let entry of filteredLogs">
-                <td>{{ entry.timestamp | date: 'medium' }}</td>
-                <td>{{ entry.action }}</td>
-                <td>{{ entry.performedBy }}</td>
-                <td>
-                  <nb-badge [text]="entry.targetType" [status]="getTypeStatus(entry.targetType)">
-                  </nb-badge>
-                </td>
-                <td>{{ entry.targetId }}</td>
-                <td>
-                  <nb-badge [text]="entry.status" [status]="getStatusBadge(entry.status)">
-                  </nb-badge>
-                </td>
-                <td>{{ entry.details }}</td>
-                <td>{{ entry.ipAddress || 'N/A' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </nb-card-body>
-      </nb-card>
+        <p-table
+          [value]="filteredLogs"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[10, 25, 50]"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Timestamp</th>
+              <th>Action</th>
+              <th>Performed By</th>
+              <th>Target Type</th>
+              <th>Target ID</th>
+              <th>Status</th>
+              <th>Details</th>
+              <th>IP Address</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-entry>
+            <tr>
+              <td>{{ entry.timestamp | date: 'medium' }}</td>
+              <td>{{ entry.action }}</td>
+              <td>{{ entry.performedBy }}</td>
+              <td>
+                <p-badge
+                  [value]="entry.targetType"
+                  [severity]="getTypeSeverity(entry.targetType)"
+                ></p-badge>
+              </td>
+              <td>{{ entry.targetId }}</td>
+              <td>
+                <p-badge
+                  [value]="entry.status"
+                  [severity]="getStatusSeverity(entry.status)"
+                ></p-badge>
+              </td>
+              <td>{{ entry.details }}</td>
+              <td>{{ entry.ipAddress || 'N/A' }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="8">No audit logs found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
         max-width: 100%;
@@ -106,11 +145,11 @@ interface AuditLogEntry {
         vertical-align: middle;
       }
 
-      nb-badge {
+      p-badge {
         text-transform: capitalize;
       }
     `,
-    ]
+  ],
 })
 export class AuditLogComponent implements OnInit {
   loading = false;
@@ -119,7 +158,15 @@ export class AuditLogComponent implements OnInit {
   logs: AuditLogEntry[] = [];
   filteredLogs: AuditLogEntry[] = [];
 
-  constructor(private toastrService: NbToastrService) {}
+  targetTypesForDropdown = [
+    { label: 'All Types', value: 'all' },
+    { label: 'User', value: 'user' },
+    { label: 'Ad', value: 'ad' },
+    { label: 'System', value: 'system' },
+    { label: 'Payment', value: 'payment' },
+  ];
+
+  constructor(private messageService: MessageService) {}
 
   ngOnInit() {
     this.loadLogs();
@@ -175,22 +222,22 @@ export class AuditLogComponent implements OnInit {
     );
   }
 
-  getTypeStatus(type: string): string {
+  getTypeSeverity(type: string): string {
     switch (type) {
       case 'user':
         return 'info';
       case 'ad':
         return 'warning';
       case 'system':
-        return 'primary';
+        return 'info';
       case 'payment':
         return 'success';
       default:
-        return 'basic';
+        return 'secondary';
     }
   }
 
-  getStatusBadge(status: string): string {
+  getStatusSeverity(status: string): string {
     switch (status) {
       case 'success':
         return 'success';
@@ -199,7 +246,7 @@ export class AuditLogComponent implements OnInit {
       case 'pending':
         return 'warning';
       default:
-        return 'basic';
+        return 'info';
     }
   }
 }

@@ -1,0 +1,391 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+
+<div class="favorites-page-container">
+  <p-card class="mb-3">
+    <ng-template pTemplate="title">
+      <div class="flex justify-content-between align-items-center">
+        <span>My Favorites</span>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-plus"
+          label="Add New Favorite"
+          class="p-button-sm"
+          (click)="navigateToCreateFavorite()"
+        ></button>
+      </div>
+    </ng-template>
+
+    <div class="grid formgrid p-fluid mb-3">
+      <div class="field col-12 md:col-4">
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search favorites..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchTermChange($event)"
+            class="w-full"
+          />
+        </span>
+      </div>
+      <div class="field col-12 md:col-2">
+        <p-dropdown
+          [options]="priorityOptions"
+          [(ngModel)]="priorityFilter"
+          placeholder="Priority"
+          (onChange)="onFilterChange()"
+          [showClear]="true"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-2">
+        <p-dropdown
+          [options]="typeOptions"
+          [(ngModel)]="typeFilter"
+          placeholder="Type"
+          (onChange)="onFilterChange()"
+          [showClear]="true"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-2">
+        <button
+          pButton
+          type="button"
+          label="Advanced"
+          icon="pi pi-filter"
+          class="p-button-outlined w-full"
+          (click)="toggleAdvancedSearch()"
+        ></button>
+      </div>
+      <div class="field col-12 md:col-2">
+        <button
+          pButton
+          type="button"
+          label="Clear Filters"
+          icon="pi pi-times"
+          class="p-button-text w-full"
+          (click)="clearFilters()"
+        ></button>
+      </div>
+    </div>
+
+    <p-dialog
+      header="Advanced Search"
+      [(visible)]="displayAdvancedSearch"
+      [modal]="true"
+      [style]="{ width: '50vw' }"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advName">Name Contains</label>
+          <input pInputText id="advName" [(ngModel)]="advancedSearchQuery.nameContains" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advNotes">Notes Contains</label>
+          <input pInputText id="advNotes" [(ngModel)]="advancedSearchQuery.notesContains" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advUrl">URL Contains</label>
+          <input pInputText id="advUrl" [(ngModel)]="advancedSearchQuery.urlContains" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advTagsAny">Tags (any)</label>
+          <p-multiSelect
+            inputId="advTagsAny"
+            [options]="availableTags"
+            [(ngModel)]="advancedSearchQuery.tagsIncludeAny"
+            placeholder="Select Tags"
+            optionLabel="label"
+            optionValue="value"
+            display="chip"
+          ></p-multiSelect>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advTagsAll">Tags (all)</label>
+          <p-multiSelect
+            inputId="advTagsAll"
+            [options]="availableTags"
+            [(ngModel)]="advancedSearchQuery.tagsIncludeAll"
+            placeholder="Select Tags"
+            optionLabel="label"
+            optionValue="value"
+            display="chip"
+          ></p-multiSelect>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advDateAddedMin">Date Added (Min)</label>
+          <p-calendar
+            inputId="advDateAddedMin"
+            [(ngModel)]="advancedSearchQuery.minDateAdded"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+          ></p-calendar>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advDateAddedMax">Date Added (Max)</label>
+          <p-calendar
+            inputId="advDateAddedMax"
+            [(ngModel)]="advancedSearchQuery.maxDateAdded"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+          ></p-calendar>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advLastAccessedMin">Last Accessed (Min)</label>
+          <p-calendar
+            inputId="advLastAccessedMin"
+            [(ngModel)]="advancedSearchQuery.minLastAccessed"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+          ></p-calendar>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="advLastAccessedMax">Last Accessed (Max)</label>
+          <p-calendar
+            inputId="advLastAccessedMax"
+            [(ngModel)]="advancedSearchQuery.maxLastAccessed"
+            [showIcon]="true"
+            dateFormat="yy-mm-dd"
+          ></p-calendar>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          type="button"
+          label="Reset"
+          icon="pi pi-refresh"
+          class="p-button-text"
+          (click)="resetAdvancedSearch()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Search"
+          icon="pi pi-search"
+          (click)="performAdvancedSearch()"
+        ></button>
+      </ng-template>
+    </p-dialog>
+
+    <div *ngIf="selectedFavorites.length > 0" class="mb-3">
+      <p-menu #batchMenu [model]="batchActions" [popup]="true"></p-menu>
+      <button
+        pButton
+        type="button"
+        label="Batch Actions"
+        icon="pi pi-bolt"
+        (click)="batchMenu.toggle($event)"
+        class="p-button-secondary"
+      ></button>
+    </div>
+
+    <div *ngIf="isLoading" class="flex justify-content-center my-3">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+
+    <div *ngIf="error" class="p-message p-message-error my-3">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!isLoading && !error && favorites.length === 0" class="text-center my-3">
+      <p>
+        No favorites found. Try adjusting your search or filters, or
+        <a href="javascript:void(0)" (click)="navigateToCreateFavorite()">add a new one</a>!
+      </p>
+    </div>
+
+    <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+
+    <p-table
+      #dt
+      [value]="favorites"
+      dataKey="id"
+      [rows]="itemsPerPage"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="itemsPerPageOptions"
+      [loading]="isLoading"
+      [paginator]="true"
+      [totalRecords]="totalItems"
+      (onPage)="onPageChange($event)"
+      (onSort)="onPrimeTableSort($event)"
+      [customSort]="true"
+      sortMode="single"
+      [(selection)]="selectedFavorites"
+      selectionMode="multiple"
+      (onRowSelect)="onFavoriteSelectChange($event.data, true)"
+      (onRowUnselect)="onFavoriteSelectChange($event.data, false)"
+      (onHeaderCheckboxToggle)="toggleSelectAll()"
+      [globalFilterFields]="['name', 'type', 'notes', 'url']"
+      responsiveLayout="scroll"
+      [contextMenu]="cm"
+      [(contextMenuSelection)]="selectedFavoriteForContextMenu"
+      (onContextMenuSelect)="onContextMenu($event.originalEvent, $event.data)"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox
+              (onChange)="toggleSelectAll()"
+              [checked]="selectAll"
+            ></p-tableHeaderCheckbox>
+          </th>
+          <th *ngFor="let col of selectedColumns" [pSortableColumn]="col.field">
+            {{ col.header }} <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+          <th style="width: 8rem">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-favorite let-ri="rowIndex">
+        <tr [pContextMenuRow]="favorite">
+          <td>
+            <p-tableCheckbox
+              [value]="favorite"
+              [checked]="isFavoriteSelected(favorite)"
+              (onChange)="onFavoriteSelectChange(favorite, $event.checked)"
+            ></p-tableCheckbox>
+          </td>
+          <td *ngFor="let col of selectedColumns">
+            <ng-container [ngSwitch]="col.field">
+              <ng-container *ngSwitchCase="'name'">
+                <div class="flex align-items-center">
+                  <p-avatar
+                    [label]="favorite.name ? favorite.name[0].toUpperCase() : 'N'"
+                    styleClass="mr-2"
+                    size="large"
+                    shape="circle"
+                  ></p-avatar>
+                  <div>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="viewFavoriteDetails(favorite)"
+                      [pTooltip]="favorite.url || 'View details'"
+                      tooltipPosition="top"
+                      >{{ favorite.name }}</a
+                    >
+                    <div *ngIf="favorite.notes" class="text-sm text-gray-500">
+                      {{ favorite.notes | slice: 0 : 50
+                      }}{{ favorite.notes.length > 50 ? '...' : '' }}
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'type'">
+                <p-tag
+                  [value]="favorite.type"
+                  [severity]="
+                    favorite.type === FavoriteType.Article
+                      ? 'info'
+                      : favorite.type === FavoriteType.Website
+                        ? 'success'
+                        : 'warning'
+                  "
+                ></p-tag>
+              </ng-container>
+              <ng-container *ngSwitchCase="'priority'">
+                <i
+                  [class]="getPriorityIcon(favorite.priority)"
+                  [pTooltip]="favorite.priority || 'No Priority'"
+                  [ngClass]="getPriorityClass(favorite.priority)"
+                ></i>
+                <p-tag
+                  *ngIf="favorite.priority"
+                  [value]="favorite.priority"
+                  [severity]="getSeverityForPriority(favorite.priority)"
+                ></p-tag>
+                <span *ngIf="!favorite.priority">None</span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'dateAdded'">
+                {{ favorite.dateAdded | date: 'mediumDate' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'lastAccessed'">
+                {{ favorite.lastAccessed ? (favorite.lastAccessed | date: 'medium') : 'Never' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'tags'">
+                <div *ngIf="favorite.tags && favorite.tags.length > 0" class="flex flex-wrap gap-1">
+                  <p-chip
+                    *ngFor="let tag of favorite.tags"
+                    [label]="tag"
+                    styleClass="p-chip-sm"
+                  ></p-chip>
+                </div>
+                <span *ngIf="!favorite.tags || favorite.tags.length === 0">No tags</span>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                {{ favorite[col.field] }}
+              </ng-container>
+            </ng-container>
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editFavorite(favorite)"
+              pTooltip="Edit"
+              tooltipPosition="top"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-danger"
+              (click)="confirmDeleteFavorite(favorite)"
+              pTooltip="Delete"
+              tooltipPosition="top"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-ellipsis-v"
+              class="p-button-rounded p-button-text"
+              (click)="
+                cm.show($event);
+                selectedFavoriteForContextMenu = favorite;
+                contextMenuItems = generateContextMenuItems(favorite)
+              "
+              pTooltip="More Actions"
+              tooltipPosition="top"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="selectedColumns.length + 2" class="text-center">
+            No favorites found.
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <p-dropdown
+          [options]="itemsPerPageOptions.map(o => ({label: o + ' per page', value: o}))"
+          [(ngModel)]="itemsPerPage"
+          (onChange)="onPageChange({ rows: itemsPerPage, first: 0, page: 0, pageCount: 0 })"
+        ></p-dropdown>
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-multiSelect
+          [options]="cols"
+          [(ngModel)]="selectedColumns"
+          optionLabel="header"
+          selectedItemsLabel="{0} columns selected"
+          [style]="{ minWidth: '200px' }"
+          placeholder="Choose Columns"
+        ></p-multiSelect>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
