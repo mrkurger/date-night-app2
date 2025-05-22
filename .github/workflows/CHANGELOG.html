@@ -22,6 +22,31 @@
     <main class="container">
       <h1>GitHub Actions Workflows Changelog</h1>
 
+      <h2>2025-05-03</h2>
+      <h3>Changed</h3>
+      <ul>
+        <li>
+          Updated workflow triggers to run on all branches using <code>branches: ['**']</code> pattern
+          to catch issues earlier in development
+        </li>
+        <li>
+          Added concurrency controls to prevent multiple instances of the same workflow from running
+          simultaneously
+        </li>
+        <li>
+          Fixed invalid branch configuration in <code>frogbot.yml</code> that used incorrect syntax
+        </li>
+        <li>
+          Updated incomplete branch configuration in <code>monitoring.yml</code> to run on all branches
+        </li>
+        <li>
+          Updated the CI/CD section in documentation to reflect branch-specific steps pattern
+        </li>
+        <li>
+          Added example of conditional execution for branch-specific actions in documentation
+        </li>
+      </ul>
+
       <h2>2025-05-02</h2>
       <h3>Fixed</h3>
       <ul>

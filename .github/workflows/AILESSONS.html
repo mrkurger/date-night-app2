@@ -61,6 +61,11 @@
           balance freshness of data with resource usage.
         </li>
         <li>
+          <strong>Run workflows on all branches</strong>: Configure workflow triggers to run on all
+          branches using the <code>branches: ['**']</code> pattern to catch issues earlier in the
+          development process. Use branch-specific conditionals for deployment steps.
+        </li>
+        <li>
           <strong>Use artifact uploads</strong>: Upload large JSON files as artifacts instead of
           committing them to the repository.
         </li>

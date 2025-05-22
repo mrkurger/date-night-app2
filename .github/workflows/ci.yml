@@ -1,10 +1,13 @@
 name: CI
 
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
   pull_request:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
 
 # Set the minimum permissions needed for this workflow
 permissions:
@@ -12,6 +15,11 @@ permissions:
   checks: write           # Required for creating check runs
   pull-requests: write    # Required for commenting on PRs
   statuses: write         # Required for setting commit status
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   CI: true                # Standard CI environment variable
