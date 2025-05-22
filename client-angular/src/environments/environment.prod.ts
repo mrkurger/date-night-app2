@@ -6,6 +6,8 @@
 // COMMON CUSTOMIZATIONS:
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
+// - mongoDbUri: MongoDB connection URI
+//   Related to: server/config/environment.js:mongoUri
 // ===================================================
 export const environment = {
   production: true,
@@ -15,4 +17,5 @@ export const environment = {
   maxUploadSize: 5 * 1024 * 1024,
   supportedImageTypes: ['image/jpeg', 'image/png', 'image/webp'],
   mapboxToken: 'your_mapbox_token',
+  mongoDbUri: '/api/db/connection', // In production, the actual URI is stored server-side
 };

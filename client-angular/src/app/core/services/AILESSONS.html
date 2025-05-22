@@ -80,6 +80,134 @@
   <h1>AI Lessons - Core Services</h1>
   
   <div class="service-section">
+    <h2>MongoDB Connection Service</h2>
+    <p>The MongoDB Connection Service provides a robust way to manage MongoDB connections from an Angular application, with connection pooling, error handling, retry mechanisms, and connection status monitoring.</p>
+    
+    <h3>Implementation Pattern</h3>
+    <pre><code>
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError, timer } from 'rxjs';
+import { catchError, tap, timeout, retryWhen, concatMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { LoggingService } from './logging.service';
+import { ConnectionStatus, MongoDBConfig } from './models/mongodb-connection.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MongoDBConnectionService {
+  private connectionStatus = new BehaviorSubject&lt;ConnectionStatus&gt;(ConnectionStatus.DISCONNECTED);
+  public status$: Observable&lt;ConnectionStatus&gt; = this.connectionStatus.asObservable();
+  
+  constructor(
+    private http: HttpClient,
+    private loggingService: LoggingService
+  ) {}
+
+  public connect(): Observable&lt;boolean&gt; {
+    this.updateStatus(ConnectionStatus.CONNECTING);
+    
+    // Connect to MongoDB via API endpoint
+    return this.http.post&lt;boolean&gt;(`${environment.apiUrl}/db/connect`, { 
+      uri: this.config.uri,
+      options: connectionOptions
+    }).pipe(
+      timeout(this.config.connectionTimeout),
+      tap(connected => {
+        if (connected) {
+          this.connectionEstablished();
+        }
+      }),
+      retryWhen(errors => this.retryStrategy(errors)),
+      catchError(error => this.handleConnectionError(error))
+    );
+  }
+
+  private retryStrategy(errors: Observable&lt;any&gt;): Observable&lt;any&gt; {
+    return errors.pipe(
+      concatMap((error, index) => {
+        const retryAttempt = index + 1;
+        
+        if (retryAttempt > this.config.maxRetries) {
+          return throwError(() => new Error('Connection failed after maximum retry attempts'));
+        }
+        
+        // Calculate exponential backoff delay
+        const delay = Math.min(
+          this.config.retryDelay * Math.pow(2, retryAttempt - 1),
+          30000 // Max 30 seconds
+        );
+        
+        this.updateStatus(ConnectionStatus.RECONNECTING);
+        
+        return timer(delay);
+      })
+    );
+  }
+}
+    </code></pre>
+    
+    <h3>Key Learnings</h3>
+    <ul>
+      <li><strong>Client-Side Connection Management:</strong> In Angular applications, MongoDB connections should not be established directly from the client. Instead, create a service that communicates with a server-side API that manages the actual database connections.</li>
+      <li><strong>Connection Status Monitoring:</strong> Use RxJS BehaviorSubject to track and propagate connection status changes throughout the application.</li>
+      <li><strong>Retry Strategies:</strong> Implement exponential backoff for connection retries to prevent overwhelming the server with retry attempts.</li>
+      <li><strong>Error Categorization:</strong> Categorize different types of connection errors (network, authentication, timeout) for more targeted error handling and user feedback.</li>
+      <li><strong>Connection Pooling:</strong> Configure connection pooling on the server side through options sent from the client service.</li>
+      <li><strong>Health Checks:</strong> Implement periodic health checks to monitor connection status and automatically reconnect when needed.</li>
+    </ul>
+    
+    <h3>Testing MongoDB Connection Service</h3>
+    <pre><code>
+describe('MongoDBConnectionService', () => {
+  let service: MongoDBConnectionService;
+  let httpMock: HttpTestingController;
+  
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        MongoDBConnectionService,
+        { provide: LoggingService, useValue: loggingSpy }
+      ]
+    });
+
+    service = TestBed.inject(MongoDBConnectionService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  it('should connect successfully', () => {
+    service.connect().subscribe(result => {
+      expect(result).toBeTrue();
+      expect(service.getCurrentStatus()).toBe(ConnectionStatus.CONNECTED);
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/db/connect`);
+    expect(req.request.method).toBe('POST');
+    
+    req.flush(true);
+  });
+});
+    </code></pre>
+    
+    <h3>Best Practices for MongoDB Connection Management</h3>
+    <ul>
+      <li><strong>Environment-Based Configuration:</strong> Use different MongoDB connection configurations for development, testing, and production environments.</li>
+      <li><strong>Secure Connection Strings:</strong> Never expose MongoDB connection strings containing credentials in client-side code. Use server-side environment variables.</li>
+      <li><strong>Connection Event Logging:</strong> Log connection events (connected, disconnected, reconnecting) for diagnostics and monitoring.</li>
+      <li><strong>UI Feedback:</strong> Provide visual feedback to users about the database connection status.</li>
+      <li><strong>Graceful Degradation:</strong> Design the application to gracefully handle database connection failures.</li>
+      <li><strong>Connection Pooling:</strong> Configure an appropriate pool size based on expected application load.</li>
+      <li><strong>Monitoring:</strong> Implement comprehensive monitoring of connection status, pool utilization, and connection errors.</li>
+    </ul>
+    
+    <div class="note">
+      <strong>Note:</strong> The actual MongoDB connection and pooling happens on the server side. The Angular service presented here is a client-side wrapper that communicates with the server API to manage connections.
+    </div>
+  </div>
+  
+  <div class="service-section">
     <h2>File Encryption Service</h2>
     <p>The File Encryption Service provides methods for encrypting and decrypting files using the Web Crypto API.</p>
     
