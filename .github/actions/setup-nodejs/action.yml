@@ -23,17 +23,28 @@ runs:
     # Step 3: Verify package.json and lockfile
     - name: Verify package.json and lockfile
       run: |
+        echo "Current job: ${{ github.job }}"
+        
+        # Determine the working directory based on job name
+        WORKING_DIR="."
+        
         # For client-angular job
         if [[ "${{ github.job }}" == *"client"* ]]; then
-          cd ./client-angular || exit 1
-          echo "Checking package files in client-angular directory"
+          WORKING_DIR="./client-angular"
+          echo "Setting working directory to client-angular"
+        # For server job
+        elif [[ "${{ github.job }}" == *"server"* ]]; then
+          WORKING_DIR="./server"
+          echo "Setting working directory to server"
+        # For root/other jobs
+        else
+          WORKING_DIR="."
+          echo "Setting working directory to repository root"
         fi
         
-        # For server job
-        if [[ "${{ github.job }}" == *"server"* ]]; then
-          cd ./server || exit 1
-          echo "Checking package files in server directory"
-        fi
+        # Change to the identified directory
+        cd "$WORKING_DIR" || { echo "Failed to change to $WORKING_DIR directory"; exit 1; }
+        echo "Current directory: $(pwd)"
         
         # Check if package.json exists
         if [ -f package.json ]; then
@@ -54,26 +65,24 @@ runs:
             echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
           fi
         else
-          echo "Error: package.json not found!"
+          echo "Error: package.json not found in $(pwd)!"
+          # List directory contents for debugging
+          echo "Directory contents:"
+          ls -la
           exit 1
         fi
+        
+        # Set the working directory for use in subsequent steps
+        echo "SETUP_WORKING_DIR=$WORKING_DIR" >> $GITHUB_ENV
       shell: bash
 
     # Step 4: Fallback-safe dependency installation (uses npm install)
     - name: Install dependencies (safe mode)
       if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
       run: |
-        # For client-angular job
-        if [[ "${{ github.job }}" == *"client"* ]]; then
-          cd ./client-angular || exit 1
-          echo "Installing dependencies in client-angular directory..."
-        fi
-        
-        # For server job
-        if [[ "${{ github.job }}" == *"server"* ]]; then
-          cd ./server || exit 1
-          echo "Installing dependencies in server directory..."
-        fi
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Installing dependencies in $(pwd)..."
         
         echo "Using npm install for safer dependency resolution..."
         # Use --no-audit for faster installs when possible
@@ -90,17 +99,9 @@ runs:
     - name: Install dependencies (strict mode)
       if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
       run: |
-        # For client-angular job
-        if [[ "${{ github.job }}" == *"client"* ]]; then
-          cd ./client-angular || exit 1
-          echo "Installing dependencies in client-angular directory..."
-        fi
-        
-        # For server job
-        if [[ "${{ github.job }}" == *"server"* ]]; then
-          cd ./server || exit 1
-          echo "Installing dependencies in server directory..."
-        fi
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Installing dependencies in $(pwd)..."
         
         echo "Using npm ci for clean installation..."
         # Try npm ci first for a clean slate; fallback to npm install if it fails
@@ -119,17 +120,9 @@ runs:
     - name: Check for missing dependencies
       if: ${{ inputs.check-missing == 'true' }}
       run: |
-        # For client-angular job
-        if [[ "${{ github.job }}" == *"client"* ]]; then
-          cd ./client-angular || exit 1
-          echo "Checking for missing dependencies in client-angular directory..."
-        fi
-        
-        # For server job
-        if [[ "${{ github.job }}" == *"server"* ]]; then
-          cd ./server || exit 1
-          echo "Checking for missing dependencies in server directory..."
-        fi
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Checking for missing dependencies in $(pwd)..."
         
         echo "Checking for missing dependencies..."
 
