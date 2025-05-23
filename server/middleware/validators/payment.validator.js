@@ -2,7 +2,7 @@
  * Validation middleware for payment-related routes
  */
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils.ts';
+import { zodSchemas } from '../../utils/validation-utils.js';
 
 export const PaymentSchemas = {
   // Schema for payment intent creation
