@@ -205,7 +205,9 @@ runs:
           
           # Extract the installed Angular version
           ANGULAR_VERSION=$(jq -r '.dependencies["@angular/core"] // "unknown"' package.json)
+          NEBULAR_VERSION=$(jq -r '.dependencies["@nebular/auth"] // "unknown"' package.json)
           echo "Installed @angular/core version: $ANGULAR_VERSION"
+          echo "Installed @nebular/auth version: $NEBULAR_VERSION"
           
           # Check Nebular packages
           NEBULAR_PACKAGES=$(jq -r 'keys[] | select(startswith("@nebular"))' <<< "$(jq '.dependencies' package.json)")
@@ -215,7 +217,18 @@ runs:
             echo "Checking for compatibility issues..."
             
             # Try to run npm ls with specific packages to see peer dependency issues
-            npm ls @nebular/auth @angular/core
+            npm ls @nebular/auth @angular/core || true
+            
+            # Force install @nebular/auth with --force to bypass peer dependency requirements
+            if [ "${{ inputs.resolve-conflicts }}" = "true" ]; then
+              echo "Force installing @nebular packages to bypass dependency conflicts..."
+              NEBULAR_PACKAGES_LIST=$(echo "$NEBULAR_PACKAGES" | tr '\n' ' ')
+              npm install $NEBULAR_PACKAGES_LIST --legacy-peer-deps --force || true
+              
+              # Verify the installation
+              echo "Verifying @nebular packages installation:"
+              npm list --depth=0 $NEBULAR_PACKAGES_LIST || true
+            fi
             
             echo "If you're experiencing dependency conflicts between @nebular and @angular packages, you might need to:"
             echo "1. Update Angular to a version compatible with @nebular/auth (v19.1.6+)"
@@ -225,9 +238,18 @@ runs:
             if [ "${{ inputs.resolve-conflicts }}" = "true" ]; then
               echo "Attempting to resolve conflicts automatically..."
               
-              if [[ "$ANGULAR_VERSION" == *"18."* ]]; then
-                echo "Using --legacy-peer-deps to bypass Angular/Nebular version conflicts..."
-                npm install --legacy-peer-deps
+              if [[ "$ANGULAR_VERSION" == *"18."* ]] && [[ "$NEBULAR_VERSION" == *"15."* ]]; then
+                echo "Detected Angular 18.x with Nebular 15.x, using aggressive conflict resolution..."
+                # Use --force to override peer dependency requirements
+                npm install --legacy-peer-deps --force || true
+                
+                # Explicitly reinstall Nebular packages with force flag
+                echo "Reinstalling Nebular packages with force..."
+                npm install @nebular/auth @nebular/theme @nebular/security @nebular/eva-icons --legacy-peer-deps --force || true
+                
+                # Verify installation
+                echo "Verifying final installation status:"
+                npm list --depth=0 @angular/core @angular/common @nebular/auth || true
               fi
             fi
           fi

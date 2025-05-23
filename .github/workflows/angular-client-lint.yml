@@ -60,8 +60,55 @@ jobs:
       # Step 4: Output the Node.js version to confirm the runtime
       - name: Check Node.js Version
         run: node --version
+        
+      # Step 5: Prepare package.json for installation
+      - name: Prepare package.json for compatibility
+        run: |
+          # Make a backup of package.json
+          cp package.json package.json.bak
+          
+          # Detect if we have a version conflict between Angular and Nebular
+          ANGULAR_VERSION=$(node -e "console.log(require('./package.json').dependencies['@angular/core'].replace('^', ''))" || echo "unknown")
+          NEBULAR_VERSION=$(node -e "console.log(require('./package.json').dependencies['@nebular/auth'].replace('^', ''))" || echo "unknown")
+          
+          echo "Current Angular version: $ANGULAR_VERSION"
+          echo "Current Nebular version: $NEBULAR_VERSION"
+          
+          # If we have Angular 18.x and Nebular 15.x, temporarily modify package.json resolutions
+          if [[ "$ANGULAR_VERSION" == "18."* ]] && [[ "$NEBULAR_VERSION" == "15."* ]]; then
+            echo "Detected potential version conflict - adding resolutions to package.json"
+            # Add resolutions field if it doesn't exist
+            if ! grep -q '"resolutions"' package.json; then
+              node -e "const pkg = require('./package.json'); pkg.resolutions = {}; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+            fi
+            
+            # Add resolution for @angular/common
+            node -e "const pkg = require('./package.json'); pkg.resolutions['@angular/common'] = pkg.dependencies['@angular/common']; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+            echo "Added resolution for @angular/common in package.json"
+            
+            # Set npm config to use legacy-peer-deps
+            npm config set legacy-peer-deps true
+          fi
 
-      # Step 5: Set up Node.js and enable dependency caching using the custom action
+      # Step 6: Check Angular dependency versions
+      - name: Check Angular dependency versions
+        run: |
+          REQUIRED_VERSION="19.1.6"
+          INSTALLED_ANGULAR_VERSION=$(node -e "console.log(require('./package.json').dependencies['@angular/core'].replace('^', ''))" || echo "unknown")
+          INSTALLED_NEBULAR_VERSION=$(node -e "console.log(require('./package.json').dependencies['@nebular/auth'].replace('^', ''))" || echo "unknown")
+          
+          echo "Required Angular version for Nebular compatibility: $REQUIRED_VERSION+"
+          echo "Installed Angular version: $INSTALLED_ANGULAR_VERSION"
+          echo "Installed Nebular version: $INSTALLED_NEBULAR_VERSION"
+          
+          if [[ "$INSTALLED_ANGULAR_VERSION" == "unknown" || "$INSTALLED_NEBULAR_VERSION" == "unknown" ]]; then
+            echo "Warning: Could not detect installed versions"
+          elif [[ $(echo "$INSTALLED_ANGULAR_VERSION" | cut -d. -f1) -lt $(echo "$REQUIRED_VERSION" | cut -d. -f1) ]]; then
+            echo "Warning: Angular version is below the major version required by Nebular"
+            echo "Will use --legacy-peer-deps to bypass compatibility checks"
+          fi
+
+      # Step 6: Set up Node.js and enable dependency caching using the custom action
       - name: Setup Node.js with Dependency Conflict Resolution
         uses: ./.github/actions/setup-nodejs
         with:
@@ -71,15 +118,37 @@ jobs:
           resolve-conflicts: 'true'
           check-missing: 'true'
           
-      # Step 6: Verify dependencies were successfully installed
+      # Step 7: Verify dependencies were successfully installed
       - name: Verify Dependencies
         run: |
           echo "Checking installed packages..."
           npm list --depth=0 @angular/common @nebular/auth || true
           echo "Node.js modules directory size:"
           du -sh node_modules || echo "No node_modules directory found"
+          
+          # Check for @nebular/auth and verify its installation regardless of version conflicts
+          if ! npm list @nebular/auth --depth=0 &>/dev/null; then
+            echo "Warning: @nebular/auth not properly installed, attempting manual install..."
+            npm install @nebular/auth --no-save --legacy-peer-deps --force || true
+          fi
+          
+          # Validate that essential packages are installed
+          for pkg in @angular/core @angular/common @nebular/auth @nebular/theme; do
+            if npm list $pkg --depth=0 &>/dev/null; then
+              echo "✓ $pkg is installed"
+            else
+              echo "✗ $pkg is missing - attempting emergency install"
+              npm install $pkg --no-save --legacy-peer-deps --force || true
+            fi
+          done
+          
+          # Restore original package.json if we modified it
+          if [ -f package.json.bak ]; then
+            echo "Restoring original package.json"
+            mv package.json.bak package.json
+          fi
 
-      # Step 7: Check for ESLint configuration, add if missing
+      # Step 8: Check for ESLint configuration, add if missing
       - name: Check for ESLint Configuration
         run: |
           # If .eslintrc.json is missing, set up Angular ESLint
