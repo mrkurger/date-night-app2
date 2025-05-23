@@ -61,31 +61,25 @@ jobs:
       - name: Check Node.js Version
         run: node --version
 
-      # Step 5: Set up Node.js and enable dependency caching
-      - name: Setup Node.js with Caching
-        uses: actions/setup-node@v3
+      # Step 5: Set up Node.js and enable dependency caching using the custom action
+      - name: Setup Node.js with Dependency Conflict Resolution
+        uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          # Cache lock files to speed up installs and maintain consistency
-          cache-dependency-path: |
-            package-lock.json
-            yarn.lock
-
-      # Step 6: Check for the presence of the lock file, warn if missing
-      - name: Check for Cache Paths
+          cache-strategy: 'npm'
+          legacy-peer-deps: 'true'
+          resolve-conflicts: 'true'
+          check-missing: 'true'
+          
+      # Step 6: Verify dependencies were successfully installed
+      - name: Verify Dependencies
         run: |
-          # If package-lock.json does not exist, print a warning and exit cleanly
-          if [ ! -f package-lock.json ]; then
-            echo "Warning: package-lock.json not found. Skipping cache."
-            exit 0
-          fi
+          echo "Checking installed packages..."
+          npm list --depth=0 @angular/common @nebular/auth || true
+          echo "Node.js modules directory size:"
+          du -sh node_modules || echo "No node_modules directory found"
 
-      # Step 7: Install all dependencies listed in package-lock.json
-      - name: Install Dependencies
-        run: npm ci
-
-      # Step 8: Check for ESLint configuration, add if missing
+      # Step 7: Check for ESLint configuration, add if missing
       - name: Check for ESLint Configuration
         run: |
           # If .eslintrc.json is missing, set up Angular ESLint
@@ -96,7 +90,7 @@ jobs:
             echo "ESLint configuration found, skipping ng add."
           fi
 
-      # Step 9: Run the linter on the Angular project
+      # Step 8: Run the linter on the Angular project
       - name: Run ESLint
         run: npx ng lint client-angular
         # TODO: If you want to lint the entire workspace instead, change the command above as needed
