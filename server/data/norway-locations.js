@@ -73,11 +73,81 @@ export const getLocationByPostalCode = (postalCode) => {
   return postalCodeMap[postalCode] || null;
 };
 
-// Default export for all location data
+// Function to get all counties
+export const getAllCounties = () => {
+  return norwegianCounties;
+};
+
+// Function to get all cities
+export const getAllCities = () => {
+  return majorCities.map(city => ({
+    name: city.name,
+    county: city.county
+  }));
+};
+
+// Function to get cities by county
+export const getCitiesByCounty = (countyName) => {
+  return majorCities
+    .filter(city => city.county.toLowerCase() === countyName.toLowerCase())
+    .map(city => city.name);
+};
+
+// Function to get coordinates for a city
+export const getCityCoordinates = (cityName) => {
+  const city = majorCities.find(city => 
+    city.name.toLowerCase() === cityName.toLowerCase()
+  );
+  return city ? city.coordinates : null;
+};
+
+// Calculate distance between coordinates using Haversine formula
+export const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c; // Distance in kilometers
+};
+
+// Find nearest city to given coordinates
+export const findNearestCity = (lat, lon) => {
+  let nearestCity = null;
+  let minDistance = Infinity;
+
+  majorCities.forEach(city => {
+    const cityLat = city.coordinates[1];
+    const cityLon = city.coordinates[0];
+    const distance = calculateDistance(lat, lon, cityLat, cityLon);
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearestCity = {
+        city: city.name,
+        county: city.county,
+        distance: distance.toFixed(2)
+      };
+    }
+  });
+
+  return nearestCity;
+};
+
+// Default export for all location data and functions
 export default {
   norwegianCounties,
   majorCities,
   postalCodeMap,
   isValidNorwegianPostalCode,
-  getLocationByPostalCode
+  getLocationByPostalCode,
+  getAllCounties,
+  getAllCities,
+  getCitiesByCounty,
+  getCityCoordinates,
+  calculateDistance,
+  findNearestCity
 };

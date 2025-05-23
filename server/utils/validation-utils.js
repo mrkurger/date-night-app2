@@ -70,6 +70,9 @@ export const zodSchemas = {
  * Utility functions for validation
  */
 export class ValidationUtils {
+  // Make zodSchemas available as a static property
+  static zodSchemas = zodSchemas;
+  
   /**
    * Validate a string as MongoDB ObjectId
    */
@@ -90,32 +93,34 @@ export class ValidationUtils {
   static isValidNorwegianPostalCode(value) {
     return /^\d{4}$/.test(value);
   }
+  
+  /**
+   * Validate with Zod schema - static method to use as middleware
+   */
+  static validateWithZod(schema, property = 'body') {
+    return async (req, res, next) => {
+      try {
+        const data = await schema.parseAsync(req[property]);
+        req[property] = data; // Replace with validated data
+        next();
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          return res.status(422).json({
+            success: false,
+            message: 'Validation failed',
+            errors: error.errors.map(err => ({
+              field: err.path.join('.'),
+              message: err.message,
+            })),
+          });
+        }
+        next(error);
+      }
+    };
+  }
 }
 
 /**
- * Validate with Zod schema
+ * Validate with Zod schema (function version - backward compatibility)
  */
-export const validateWithZod = (
-  schema,
-  property = 'body'
-) => {
-  return async (req, res, next) => {
-    try {
-      const data = await schema.parseAsync(req[property]);
-      req[property] = data; // Replace with validated data
-      next();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(422).json({
-          success: false,
-          message: 'Validation failed',
-          errors: error.errors.map(err => ({
-            field: err.path.join('.'),
-            message: err.message,
-          })),
-        });
-      }
-      next(error);
-    }
-  };
-};
+export const validateWithZod = ValidationUtils.validateWithZod;
