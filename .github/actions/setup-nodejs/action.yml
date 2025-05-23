@@ -88,10 +88,20 @@ runs:
         # Use --no-audit for faster installs when possible
         if [ "${{ inputs.update-lockfile }}" = "true" ]; then
           echo "Installing dependencies and updating lockfile..."
-          npm install --no-audit --package-lock-only || npm install --package-lock-only
+          if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+            echo "Using --legacy-peer-deps to handle dependency conflicts..."
+            npm install --no-audit --legacy-peer-deps --package-lock-only || npm install --legacy-peer-deps --package-lock-only
+          else
+            npm install --no-audit --package-lock-only || npm install --package-lock-only
+          fi
         else
           echo "Installing dependencies..."
-          npm install --no-audit || npm install
+          if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+            echo "Using --legacy-peer-deps to handle dependency conflicts..."
+            npm install --no-audit --legacy-peer-deps || npm install --legacy-peer-deps
+          else
+            npm install --no-audit || npm install
+          fi
         fi
       shell: bash
 
@@ -105,15 +115,28 @@ runs:
         
         echo "Using npm ci for clean installation..."
         # Try npm ci first for a clean slate; fallback to npm install if it fails
-        npm ci || {
-          echo "npm ci failed, falling back to npm install..."
-          npm install
-          # Optionally update the lockfile if requested
-          if [ "${{ inputs.update-lockfile }}" = "true" ]; then
-            echo "Updating lockfile..."
+        if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+          echo "Using --legacy-peer-deps to handle dependency conflicts..."
+          npm ci --legacy-peer-deps || {
+            echo "npm ci failed, falling back to npm install with --legacy-peer-deps..."
+            npm install --legacy-peer-deps
+            # Optionally update the lockfile if requested
+            if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+              echo "Updating lockfile..."
+              npm install --legacy-peer-deps
+            fi
+          }
+        else
+          npm ci || {
+            echo "npm ci failed, falling back to npm install..."
             npm install
-          fi
-        }
+            # Optionally update the lockfile if requested
+            if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+              echo "Updating lockfile..."
+              npm install
+            fi
+          }
+        fi
       shell: bash
 
     # Step 6: Check for missing dependencies, and attempt to install them if needed
@@ -146,14 +169,81 @@ runs:
           echo "Warning: The following dependencies might be missing:$MISSING"
           echo "Attempting to install missing dependencies..."
           for DEP in $MISSING; do
-            if npm install $DEP; then
-              echo "Successfully installed $DEP."
+            if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+              if npm install $DEP --legacy-peer-deps; then
+                echo "Successfully installed $DEP using --legacy-peer-deps."
+              else
+                echo "Failed to install $DEP using --legacy-peer-deps."
+              fi
             else
-              echo "Failed to install $DEP."
+              if npm install $DEP; then
+                echo "Successfully installed $DEP."
+              else
+                echo "Failed to install $DEP. Try using --legacy-peer-deps if peer dependency issues exist."
+              fi
             fi
           done
         else
           echo "All dependencies appear to be installed."
+        fi
+      shell: bash
+
+    # Step 7: Check for dependency conflicts
+    - name: Check for dependency conflicts
+      run: |
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        
+        echo "Checking for dependency conflicts in $(pwd)..."
+        
+        # Run npm ls to check for conflicts
+        npm ls --json > npm_ls_output.json 2>/dev/null
+        
+        # Check specifically for @nebular packages with Angular core dependencies
+        if grep -q "nebular" package.json; then
+          echo "Found @nebular packages in dependencies, checking for version compatibility..."
+          
+          # Extract the installed Angular version
+          ANGULAR_VERSION=$(jq -r '.dependencies["@angular/core"] // "unknown"' package.json)
+          echo "Installed @angular/core version: $ANGULAR_VERSION"
+          
+          # Check Nebular packages
+          NEBULAR_PACKAGES=$(jq -r 'keys[] | select(startswith("@nebular"))' <<< "$(jq '.dependencies' package.json)")
+          
+          if [ -n "$NEBULAR_PACKAGES" ]; then
+            echo "Found the following @nebular packages: $NEBULAR_PACKAGES"
+            echo "Checking for compatibility issues..."
+            
+            # Try to run npm ls with specific packages to see peer dependency issues
+            npm ls @nebular/auth @angular/core
+            
+            echo "If you're experiencing dependency conflicts between @nebular and @angular packages, you might need to:"
+            echo "1. Update Angular to a version compatible with @nebular/auth (v19.1.6+)"
+            echo "2. Downgrade @nebular/auth to a version compatible with your Angular version"
+            echo "3. Use --legacy-peer-deps when installing dependencies"
+            
+            if [ "${{ inputs.resolve-conflicts }}" = "true" ]; then
+              echo "Attempting to resolve conflicts automatically..."
+              
+              if [[ "$ANGULAR_VERSION" == *"18."* ]]; then
+                echo "Using --legacy-peer-deps to bypass Angular/Nebular version conflicts..."
+                npm install --legacy-peer-deps
+              fi
+            fi
+          fi
+        fi
+        
+        # General dependency conflict check
+        if [ -f npm_ls_output.json ]; then
+          PROBLEMS=$(jq -r '.problems // []' npm_ls_output.json)
+          if [ "$PROBLEMS" != "[]" ] && [ -n "$PROBLEMS" ]; then
+            echo "Dependency conflicts detected:"
+            echo "$PROBLEMS"
+            echo "Consider using --legacy-peer-deps if these conflicts can't be resolved normally."
+          else
+            echo "No dependency conflicts detected."
+          fi
+          rm npm_ls_output.json
         fi
       shell: bash
 
@@ -181,6 +271,16 @@ inputs:
     # TODO! Add boolean validation if needed
   check-missing:
     description: 'Check for and attempt to install missing dependencies'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  legacy-peer-deps:
+    description: 'Use --legacy-peer-deps flag to bypass peer dependency checks'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  resolve-conflicts:
+    description: 'Attempt to automatically resolve dependency conflicts'
     required: false
     default: 'false'
     # TODO! Add boolean validation if needed

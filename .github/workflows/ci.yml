@@ -46,6 +46,8 @@ jobs:
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
+          legacy-peer-deps: 'true'
+          resolve-conflicts: 'true'
 
       # Run linter with pretty output
       - name: Run lint

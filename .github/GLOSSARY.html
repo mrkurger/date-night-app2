@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Glossary</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    .entry {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+    .entry h3 {
+      margin-top: 0;
+      color: #2980b9;
+    }
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    .params {
+      margin-left: 20px;
+    }
+    .param {
+      margin-bottom: 10px;
+    }
+    .param-name {
+      font-weight: bold;
+      color: #c0392b;
+    }
+    .param-desc {
+      margin-left: 15px;
+    }
+    .example {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #f0f8ff;
+      border-left: 3px solid #3498db;
+    }
+    .note {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #fff8e1;
+      border-left: 3px solid #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Actions Glossary</h1>
+  
+  <div class="entry">
+    <h3 id="setup-nodejs">setup-nodejs</h3>
+    <p>A custom composite action that sets up Node.js and installs dependencies with robust error handling.</p>
+    
+    <h4>Purpose</h4>
+    <p>Provides consistent Node.js setup across all jobs with advanced features for dependency management, conflict resolution, and error handling.</p>
+    
+    <h4>Parameters</h4>
+    <div class="params">
+      <div class="param">
+        <span class="param-name">node-version</span>
+        <div class="param-desc">Node.js version to use (default: "22.x")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">cache-strategy</span>
+        <div class="param-desc">Caching strategy to use - npm, yarn, or pnpm (default: "npm")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">safe-install</span>
+        <div class="param-desc">Use npm install instead of npm ci for safer dependency resolution (default: "false")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">update-lockfile</span>
+        <div class="param-desc">Update the lockfile if dependencies are mismatched (default: "false")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">check-missing</span>
+        <div class="param-desc">Check for and attempt to install missing dependencies (default: "false")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">legacy-peer-deps</span>
+        <div class="param-desc">Use --legacy-peer-deps flag to bypass peer dependency checks (default: "false")</div>
+      </div>
+      <div class="param">
+        <span class="param-name">resolve-conflicts</span>
+        <div class="param-desc">Attempt to automatically resolve dependency conflicts (default: "false")</div>
+      </div>
+    </div>
+    
+    <h4>Example</h4>
+    <div class="example">
+<pre>
+- name: Setup Node.js and dependencies
+  uses: ./.github/actions/setup-nodejs
+  with:
+    node-version: 22.x
+    safe-install: 'true'
+    check-missing: 'true'
+    legacy-peer-deps: 'true'
+    resolve-conflicts: 'true'
+</pre>
+    </div>
+    
+    <div class="note">
+      <p>This action is designed to handle complex Node.js dependency scenarios and automatically adapt to different project structures (client, server, or root-level packages).</p>
+    </div>
+  </div>
+  
+  <div class="entry">
+    <h3 id="ci-workflow">ci.yml (CI Workflow)</h3>
+    <p>Primary continuous integration workflow that runs linting and testing across all project components.</p>
+    
+    <h4>Purpose</h4>
+    <p>Ensures code quality by running linters and tests for all components of the application on every pull request and branch push.</p>
+    
+    <h4>Key Components</h4>
+    <div class="params">
+      <div class="param">
+        <span class="param-name">lint-client</span>
+        <div class="param-desc">Job that lints the Angular client code</div>
+      </div>
+      <div class="param">
+        <span class="param-name">lint-server</span>
+        <div class="param-desc">Job that lints the server-side code</div>
+      </div>
+      <div class="param">
+        <span class="param-name">test-root</span>
+        <div class="param-desc">Job that runs tests from the repository root, supporting multiple Node.js versions</div>
+      </div>
+    </div>
+    
+    <h4>Notable Features</h4>
+    <ul>
+      <li>Runs on all branches with the pattern <code>'**'</code></li>
+      <li>Uses concurrency groups to prevent duplicate runs</li>
+      <li>Implements dependency caching for faster builds</li>
+      <li>Uses the custom <a href="#setup-nodejs">setup-nodejs</a> action for consistent environment setup</li>
+      <li>Supports testing across multiple Node.js versions</li>
+      <li>Uploads code coverage results</li>
+    </ul>
+  </div>
+</body>
+</html>
