@@ -20,9 +20,21 @@ runs:
         echo "Using node version: $(node --version)"
       shell: bash
 
-    # Step 3: Validate the presence and correctness of package.json and package-lock.json
+    # Step 3: Verify package.json and lockfile
     - name: Verify package.json and lockfile
       run: |
+        # For client-angular job
+        if [[ "${{ github.job }}" == *"client"* ]]; then
+          cd ./client-angular || exit 1
+          echo "Checking package files in client-angular directory"
+        fi
+        
+        # For server job
+        if [[ "${{ github.job }}" == *"server"* ]]; then
+          cd ./server || exit 1
+          echo "Checking package files in server directory"
+        fi
+        
         # Check if package.json exists
         if [ -f package.json ]; then
           echo "Found package.json"
@@ -51,6 +63,18 @@ runs:
     - name: Install dependencies (safe mode)
       if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
       run: |
+        # For client-angular job
+        if [[ "${{ github.job }}" == *"client"* ]]; then
+          cd ./client-angular || exit 1
+          echo "Installing dependencies in client-angular directory..."
+        fi
+        
+        # For server job
+        if [[ "${{ github.job }}" == *"server"* ]]; then
+          cd ./server || exit 1
+          echo "Installing dependencies in server directory..."
+        fi
+        
         echo "Using npm install for safer dependency resolution..."
         # Use --no-audit for faster installs when possible
         if [ "${{ inputs.update-lockfile }}" = "true" ]; then
@@ -66,6 +90,18 @@ runs:
     - name: Install dependencies (strict mode)
       if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
       run: |
+        # For client-angular job
+        if [[ "${{ github.job }}" == *"client"* ]]; then
+          cd ./client-angular || exit 1
+          echo "Installing dependencies in client-angular directory..."
+        fi
+        
+        # For server job
+        if [[ "${{ github.job }}" == *"server"* ]]; then
+          cd ./server || exit 1
+          echo "Installing dependencies in server directory..."
+        fi
+        
         echo "Using npm ci for clean installation..."
         # Try npm ci first for a clean slate; fallback to npm install if it fails
         npm ci || {
@@ -83,6 +119,18 @@ runs:
     - name: Check for missing dependencies
       if: ${{ inputs.check-missing == 'true' }}
       run: |
+        # For client-angular job
+        if [[ "${{ github.job }}" == *"client"* ]]; then
+          cd ./client-angular || exit 1
+          echo "Checking for missing dependencies in client-angular directory..."
+        fi
+        
+        # For server job
+        if [[ "${{ github.job }}" == *"server"* ]]; then
+          cd ./server || exit 1
+          echo "Checking for missing dependencies in server directory..."
+        fi
+        
         echo "Checking for missing dependencies..."
 
         # Extract all dependencies and devDependencies from package.json using jq

@@ -43,14 +43,13 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: ./client-angular
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
 
       # Run linter with pretty output
       - name: Run lint
-        working-directory: client
+        working-directory: client-angular
         run: npm run lint -- --format stylish
 
   # Lint server code
@@ -68,7 +67,6 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: server
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
@@ -101,7 +99,6 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: .
           node-version: ${{ matrix.node-version }}
           safe-install: 'false'
           check-missing: 'true'
