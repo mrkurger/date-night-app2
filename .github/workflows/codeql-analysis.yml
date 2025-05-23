@@ -1,13 +1,17 @@
+---
 name: 'CodeQL Security Analysis'
 
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
-    branches: [main, develop]
+    branches: 
+      - '**'  # Matches any branch
   pull_request:
-    branches: [main, develop]
+    branches: 
+      - '**'  # Matches any branch
   schedule:
-    - cron: '0 0 * * 0' # Run weekly on Sunday at midnight
-  workflow_dispatch: # Allow manual triggering
+    - cron: '0 0 * * 0'  # Run weekly on Sunday at midnight
+  workflow_dispatch:  # Allow manual triggering
 
 # Prevent multiple instances from running concurrently
 concurrency:

@@ -1,17 +1,17 @@
+---
 name: Angular Client Lint
 
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
     branches:
-      - main
-      - develop
+      - '**'  # Matches any branch
     paths:
       - 'client-angular/**'
       - '.github/workflows/angular-client-lint.yml'
   pull_request:
     branches:
-      - main
-      - develop
+      - '**'  # Matches any branch
     paths:
       - 'client-angular/**'
   workflow_dispatch:
@@ -24,7 +24,12 @@ on:
 permissions:
   contents: read
   checks: write
-  pull-requests: write # Allows reporting lint status on PRs
+  pull-requests: write  # Allows reporting lint status on PRs
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint-angular-client:

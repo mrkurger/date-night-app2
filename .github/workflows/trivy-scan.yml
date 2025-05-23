@@ -1,16 +1,23 @@
+---
 name: Trivy Security Scan
 
+# Already running on all branches
 on:
   push:
     branches:
-      - "**" # Triggers on any branch where commits are pushed
+      - "**"  # Triggers on any branch where commits are pushed
 
 permissions:
   contents: read
   security-events: write  # For uploading security scan results
-  issues: write         # For creating security issues
-  checks: write        # For creating check runs
-  pull-requests: write # For commenting on PRs
+  issues: write           # For creating security issues
+  checks: write           # For creating check runs
+  pull-requests: write    # For commenting on PRs
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   trivy-scan:

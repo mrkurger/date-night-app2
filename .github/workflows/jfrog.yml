@@ -1,10 +1,21 @@
+---
 name: "JFrog Integration Example"
-on: push
+
+# Updated to run on all branches to improve development workflow and catch issues earlier
+on:
+  push:
+    branches:
+      - '**'  # Matches any branch
 
 permissions:
   contents: write    # For publishing artifacts
   actions: read      # For reading build status
-  pull-requests: write # For commenting results
+  pull-requests: write  # For commenting results
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
