@@ -1,4 +1,4 @@
-import { _NbTableModule, NbDialogService } from '@nebular/theme';
+import { NbTableModule, NbDialogService } from '@nebular/theme';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -14,7 +14,7 @@ import {
   OnDestroy,
   ViewChild,
   TemplateRef,
-  _Input,
+  Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
@@ -29,8 +29,8 @@ import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { TelemetrySocketService } from '../../../../core/services/telemetry-socket.service';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { _catchError, finalize, takeUntil } from 'rxjs/operators';
-import { _of, Subject } from 'rxjs';
+import { catchError, finalize, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 
 // Define interfaces for pagination and sorting
 interface ErrorData {
@@ -59,7 +59,7 @@ interface ErrorData {
     CommonModule,
     ReactiveFormsModule,
     NgxChartsModule,
-
+    NbTableModule,
     AppSortComponent,
     AppSortHeaderComponent,
   ],
@@ -67,7 +67,7 @@ interface ErrorData {
   styleUrls: ['./error-dashboard.component.scss'],
 })
 export class ErrorDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(AppSortComponent)_sort): AppSortComponent;
+  @ViewChild(AppSortComponent) sort!: AppSortComponent;
   @ViewChild('errorDetailsDialog') errorDetailsDialog!: TemplateRef<any>;
 
   filterForm: FormGroup;
@@ -214,7 +214,7 @@ export class ErrorDashboardComponent implements OnInit, OnDestroy {
 
   private transformDistributionData(distribution: any[]): any[] {
     return distribution.map((item) => ({
-      name: item.category,_value: item.count,
+      name: item.category, value: item.count,
     }));
   }
 

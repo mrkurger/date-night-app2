@@ -91,6 +91,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       # Cache node_modules for faster installs
       - name: Cache Node.js modules
         uses: actions/cache@v3
@@ -102,8 +106,10 @@ jobs:
         uses: ./.github/actions/setup-nodejs
         with:
           node-version: ${{ matrix.node-version }}
-          safe-install: 'false'
+          safe-install: 'true'
           check-missing: 'true'
+          legacy-peer-deps: 'true'
+          resolve-conflicts: 'true'
 
       # Run test suite and output coverage
       - name: Run tests
