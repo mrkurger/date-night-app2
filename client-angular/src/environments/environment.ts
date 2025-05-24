@@ -25,6 +25,8 @@
 //   Valid values: A valid CDN URL or empty string
 // - imageSizes: Responsive image size breakpoints (default: [320, 640, 960, 1280, 1920])
 //   Valid values: Array of pixel dimensions
+// - mongoDbUri: MongoDB connection URI (default: 'mongodb://localhost:27017/datenight_dev')
+//   Related to: server/config/environment.js:mongoUri
 // ===================================================
 
 export const environment = {
@@ -40,4 +42,5 @@ export const environment = {
   stripePublicKey: 'pk_test_51NxSampleTestKeyDoNotUseInProductionXYZ', // Replace with actual Stripe public key in production
   cdnUrl: '', // Set to empty for local development, will use local images
   imageSizes: [320, 640, 960, 1280, 1920], // Common responsive image sizes
+  mongoDbUri: 'mongodb://localhost:27017/datenight_dev', // URI for MongoDB connection
 };

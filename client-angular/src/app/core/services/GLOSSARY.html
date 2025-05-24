@@ -285,6 +285,68 @@
               </li>
             </ul>
           </section>
+
+          <section id="MongoDBConnectionService">
+            <h2>MongoDBConnectionService</h2>
+            <p>Service responsible for managing MongoDB connections with connection pooling, error handling, and retry mechanisms.</p>
+
+            <h3>Methods</h3>
+            <ul>
+              <li>
+                <strong>initialize(config?: Partial&lt;MongoDBConfig&gt;)</strong>: Initializes the MongoDB connection service with optional custom configuration
+              </li>
+              <li>
+                <strong>connect()</strong>: Establishes a connection to MongoDB using the configured connection string and options
+              </li>
+              <li>
+                <strong>disconnect()</strong>: Gracefully closes the MongoDB connection
+              </li>
+              <li>
+                <strong>checkConnection()</strong>: Checks the current connection status
+              </li>
+              <li>
+                <strong>getCurrentStatus()</strong>: Returns the current connection status
+              </li>
+              <li>
+                <strong>getConnectionEvents()</strong>: Returns the history of connection events for debugging
+              </li>
+            </ul>
+
+            <h3>Observables</h3>
+            <ul>
+              <li>
+                <strong>status$</strong>: Observable that emits the current connection status
+              </li>
+              <li>
+                <strong>events$</strong>: Observable that emits the history of connection events
+              </li>
+            </ul>
+
+            <h3>Features</h3>
+            <ul>
+              <li>
+                Connection pooling with configurable pool size for optimal performance
+              </li>
+              <li>
+                Comprehensive error handling with categorized error types
+              </li>
+              <li>
+                Automatic retry mechanism with exponential backoff
+              </li>
+              <li>
+                Connection status monitoring with real-time updates
+              </li>
+              <li>
+                Connection events history tracking for debugging
+              </li>
+              <li>
+                Health check system for connection monitoring
+              </li>
+              <li>
+                Environment-based configuration for different deployment environments
+              </li>
+            </ul>
+          </section>
         </article>
       </div>
     </main>
