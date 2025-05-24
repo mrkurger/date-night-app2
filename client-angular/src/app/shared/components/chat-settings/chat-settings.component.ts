@@ -7,154 +7,186 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormsModule,
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbSelectModule,
-  NbAlertModule,
-  NbToggleModule,
-  NbSpinnerModule,
-  NbOptionModule,
-} from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
-
-import { environment } from '../../../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-export interface ChatSettings {
+// PrimeNG imports
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DropdownModule } from 'primeng/dropdown';
+import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RippleModule } from 'primeng/ripple';
+
+// Environment
+import { environment } from '../../../../environments/environment';
+
+// Types
+interface ChatSettings {
   messageExpiryEnabled: boolean;
   messageExpiryTime: number;
   encryptionEnabled: boolean;
 }
 
 @Component({
-    selector: 'app-chat-settings',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbFormFieldModule,
-        NbSelectModule,
-        NbAlertModule,
-        NbToggleModule,
-        NbSpinnerModule,
-        NbOptionModule,
-    ],
-    template: `
-    <nb-card>
-      <nb-card-header>
+  selector: 'app-chat-settings',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CardModule,
+    ButtonModule,
+    InputSwitchModule,
+    DropdownModule,
+    MessageModule,
+    ProgressSpinnerModule,
+    RippleModule,
+  ],
+  template: `
+    <p-card>
+      <ng-template pTemplate="header">
         <h3>Chat Settings</h3>
-      </nb-card-header>
-      <nb-card-body>
-        <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-          <div class="settings-group">
-            <nb-toggle formControlName="messageExpiryEnabled" status="primary">
-              Enable Message Auto-Deletion
-            </nb-toggle>
-            <p class="hint-text">Messages will be automatically deleted after the specified time</p>
+      </ng-template>
 
-            <nb-form-field *ngIf="settingsForm.get('messageExpiryEnabled')?.value">
-              <label>Message Expiry Time</label>
-              <nb-select fullWidth formControlName="messageExpiryTime">
-                <nb-option *ngFor="let option of expiryTimeOptions" [value]="option.value">
-                  {{ option.label }}
-                </nb-option>
-              </nb-select>
-            </nb-form-field>
+      <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+        <div class="settings-group">
+          <div class="field-checkbox">
+            <p-inputSwitch formControlName="messageExpiryEnabled"></p-inputSwitch>
+            <label class="ml-2">Enable Message Auto-Deletion</label>
           </div>
+          <p class="hint-text">Messages will be automatically deleted after the specified time</p>
 
-          <div class="settings-group">
-            <nb-toggle formControlName="encryptionEnabled" status="primary">
-              Enable End-to-End Encryption
-            </nb-toggle>
-            <p class="hint-text">
-              Messages will be encrypted and can only be read by chat participants
-            </p>
+          <div class="field" *ngIf="settingsForm.get('messageExpiryEnabled')?.value">
+            <label>Message Expiry Time</label>
+            <p-dropdown
+              [options]="expiryTimeOptions"
+              formControlName="messageExpiryTime"
+              optionLabel="label"
+              optionValue="value"
+              [style]="{ width: '100%' }"
+            ></p-dropdown>
           </div>
+        </div>
 
-          <nb-alert *ngIf="saveError" status="danger" class="settings-alert">
-            Failed to save settings. Please try again.
-          </nb-alert>
-
-          <nb-alert *ngIf="saveSuccess" status="success" class="settings-alert">
-            Settings saved successfully!
-          </nb-alert>
-
-          <div class="settings-actions">
-            <button
-              nbButton
-              ghost
-              status="basic"
-              type="button"
-              (click)="resetForm()"
-              [disabled]="isSaving"
-            >
-              <nb-icon icon="refresh-outline"></nb-icon>
-              Reset
-            </button>
-            <button
-              nbButton
-              status="primary"
-              type="submit"
-              [disabled]="settingsForm.invalid || isSaving"
-            >
-              <nb-spinner *ngIf="isSaving" size="small"></nb-spinner>
-              <nb-icon *ngIf="!isSaving" icon="save-outline"></nb-icon>
-              Save Settings
-            </button>
+        <div class="settings-group">
+          <div class="field-checkbox">
+            <p-inputSwitch formControlName="encryptionEnabled"></p-inputSwitch>
+            <label class="ml-2">Enable End-to-End Encryption</label>
           </div>
-        </form>
-      </nb-card-body>
-    </nb-card>
+          <p class="hint-text">
+            Messages will be encrypted and can only be read by chat participants
+          </p>
+        </div>
+
+        <p-message
+          *ngIf="saveError"
+          severity="error"
+          text="Failed to save settings. Please try again."
+          styleClass="settings-alert"
+        ></p-message>
+        <p-message
+          *ngIf="saveSuccess"
+          severity="success"
+          text="Settings saved successfully!"
+          styleClass="settings-alert"
+        ></p-message>
+
+        <div class="settings-actions">
+          <button
+            pButton
+            pRipple
+            type="button"
+            (click)="resetForm()"
+            [disabled]="isSaving"
+            class="p-button-text"
+            icon="pi pi-refresh"
+            label="Reset"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            [disabled]="settingsForm.invalid || isSaving"
+            icon="pi pi-save"
+            [label]="isSaving ? 'Saving...' : 'Save Settings'"
+          >
+            <p-progressSpinner
+              *ngIf="isSaving"
+              [style]="{ width: '16px', height: '16px' }"
+              strokeWidth="4"
+            ></p-progressSpinner>
+          </button>
+        </div>
+      </form>
+    </p-card>
   `,
-    styles: [
-        `
+  styles: [
+    `
       .settings-group {
-        margin-bottom: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
+        margin-bottom: var(--content-padding);
 
         .hint-text {
-          margin: var(--nb-theme-margin-xs) 0 var(--nb-theme-margin); /* was nb-theme(margin-xs) 0 nb-theme(margin) */
-          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
-          font-size: var(
-            --nb-theme-text-caption-font-size
-          ); /* was nb-theme(text-caption-font-size) */
+          margin: 0.5rem 0 1rem;
+          color: var(--text-color-secondary);
+          font-size: 0.875rem;
         }
       }
 
       .settings-alert {
-        margin-bottom: var(--nb-theme-margin); /* was nb-theme(margin) */
+        margin-bottom: 1rem;
+        display: block;
       }
 
       .settings-actions {
         display: flex;
-        gap: var(--nb-theme-spacing); /* was nb-theme(spacing) */
+        gap: 0.5rem;
         justify-content: flex-end;
-        margin-top: var(--nb-theme-margin-lg); /* was nb-theme(margin-lg) */
+        margin-top: 2rem;
       }
 
-      /* Dark theme adjustments */
-      :host-context([data-theme='dark']) {
-        .hint-text {
-          color: var(--nb-theme-text-hint-color); /* was nb-theme(text-hint-color) */
+      .field {
+        margin-bottom: 1rem;
+      }
+
+      .field-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      :host ::ng-deep {
+        .p-inputswitch {
+          margin-right: 0.5rem;
+        }
+
+        .p-progressspinner {
+          width: 16px;
+          height: 16px;
+          margin-right: 0.5rem;
         }
       }
     `,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ChatSettingsComponent implements OnInit {
   @Input() roomId!: string;

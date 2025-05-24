@@ -10,145 +10,238 @@
 // ===================================================
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
 
 export interface ChatMessageRequest {
   roomId: string;
   content: string;
-  senderId: string;
-  type?: 'text' | 'image' | 'file';
-  fileUrl?: string;
-  fileName?: string;
+  replyTo?: string;
+  ttl?: number;
 }
 
 export interface ChatMessage {
   id: string;
   roomId: string;
-  senderId: string;
+  sender: string;
+  receiver: string;
   content: string;
+  replyTo?: string;
   timestamp: Date;
-  type?: 'text' | 'image' | 'file';
-  fileUrl?: string;
-  fileName?: string;
+  read: boolean;
+  createdAt: Date;
+  expiresAt?: Date;
 }
 
 export interface ChatParticipant {
   id: string;
-  name: string;
-  status: 'online' | 'offline' | 'away';
-  profileImage?: string;
+  username: string;
+  avatar?: string;
+  profileImage?: string; // Alias for avatar
+  imageUrl?: string; // Another alias for avatar
+  name?: string; // Alias for username
+  status?: string; // Online status
+  online?: boolean; // Online status as boolean
+  unreadCount?: number; // Number of unread messages
+  lastMessage?: {
+    content: string;
+    timestamp: Date | string;
+  };
 }
 
 export interface ChatRoom {
   id: string;
   name?: string;
+  type: 'direct' | 'group' | 'ad';
   participants: ChatParticipant[];
   lastMessage?: ChatMessage;
   unreadCount: number;
+  createdAt: Date;
+  updatedAt: Date;
   pinned?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-  encryptionEnabled?: boolean;
+  messageExpiryEnabled?: boolean;
   messageExpiryTime?: number;
+  encryptionEnabled?: boolean;
+  encryptionVersion?: number;
+  encryption?: {
+    enabled: boolean;
+    enabledBy?: string;
+    enabledAt?: Date;
+    disabledBy?: string;
+    disabledAt?: Date;
+  };
+  isActive?: boolean;
+  ad?: {
+    id: string;
+    title: string;
+    profileImage?: string;
+  };
 }
 
-export interface TypingStatus {
-  roomId: string;
-  userId: string;
-  isTyping: boolean;
+export interface RoomSettings {
+  messageExpiryEnabled?: boolean;
+  messageExpiryTime?: number;
+  encryptionEnabled?: boolean;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private readonly apiUrl = '/api/chat';
-  private typingStatus = new BehaviorSubject<TypingStatus>({
-    roomId: '',
-    userId: '',
-    isTyping: false,
-  });
-  private newMessage = new Subject<ChatMessage>();
+  private socket: WebSocket | null = null;
+  private readonly apiUrl = `${environment.apiUrl}/chat`;
+  private readonly wsUrl = environment.chatWsUrl;
+
+  // Observables for real-time updates
+  private newMessageSubject = new Subject<ChatMessage>();
+  private messageReadSubject = new Subject<string>();
+  private typingStatusSubject = new BehaviorSubject<boolean>(false);
 
   // Online users observable
   private onlineUsersSubject = new BehaviorSubject<string[]>([]);
   public onlineUsers$ = this.onlineUsersSubject.asObservable();
 
   // Public observables
-  public newMessage$ = this.newMessage.asObservable();
-  public typingStatus$ = this.typingStatus.asObservable();
+  public newMessage$ = this.newMessageSubject.asObservable();
+  public messageRead$ = this.messageReadSubject.asObservable();
+  public typingStatus$ = this.typingStatusSubject.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  connectSocket(): void {
+    if (!this.socket || this.socket.readyState === WebSocket.CLOSED) {
+      this.socket = new WebSocket(this.wsUrl);
+      this.setupSocketListeners();
+    }
+  }
+
+  private setupSocketListeners(): void {
+    if (!this.socket) return;
+
+    this.socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      switch (data.type) {
+        case 'message':
+          this.newMessageSubject.next(data.message);
+          break;
+        case 'messageRead':
+          this.messageReadSubject.next(data.messageId);
+          break;
+        case 'typing':
+          this.typingStatusSubject.next(data.isTyping);
+          break;
+      }
+    };
+  }
 
   getRooms(): Observable<ChatRoom[]> {
     return this.http.get<ChatRoom[]>(`${this.apiUrl}/rooms`);
   }
 
-  getMessages(roomId: string): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/messages`);
+  getMessages(roomId: string, limit = 50, beforeId?: string | null): Observable<ChatMessage[]> {
+    let url = `${this.apiUrl}/rooms/${roomId}/messages?limit=${limit}`;
+    if (beforeId) {
+      url += `&beforeId=${beforeId}`;
+    }
+    return this.http.get<ChatMessage[]>(url);
   }
 
-  sendMessage(message: ChatMessageRequest): Observable<ChatMessage> {
-    return this.http.post<ChatMessage>(`${this.apiUrl}/messages`, message);
-  }
-
-  clearHistory(roomId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/rooms/${roomId}/messages`);
-  }
-
-  blockUser(userId: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/block`, {});
-  }
-
-  reportUser(userId: string, reason?: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/report`, { reason });
-  }
-
-  uploadFiles(
-    roomId: string,
-    formData: FormData,
-  ): Observable<{ files: Array<{ name: string; type: string; url: string }> }> {
-    return this.http
-      .post<{ files: Array<{ name: string; type: string; url: string }> }>(
-        `${this.apiUrl}/rooms/${roomId}/files`,
-        formData,
-        {
-          reportProgress: true,
-          observe: 'events',
-        },
-      )
-      .pipe(
-        map((event) => {
-          if (event.type === HttpEventType.Response) {
-            return event.body as { files: Array<{ name: string; type: string; url: string }> };
-          }
-          return { files: [] };
-        }),
-      );
-  }
-
-  sendTypingIndicator(roomId: string): void {
-    // Implementation with WebSocket would go here
-    console.log('Sending typing indicator for room:', roomId);
-  }
-
-  disconnectSocket(): void {
-    // Implementation for WebSocket disconnect
-    console.log('Disconnecting from chat socket');
+  sendMessage(payload: ChatMessageRequest): Observable<ChatMessage> {
+    return this.http.post<ChatMessage>(`${this.apiUrl}/messages`, payload);
   }
 
   markMessagesAsRead(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/read`, {});
   }
 
+  markMessageAsRead(messageId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/messages/${messageId}/read`, {});
+  }
+
+  sendTypingIndicator(roomId: string): void {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      this.socket.send(
+        JSON.stringify({
+          type: 'typing',
+          roomId,
+        }),
+      );
+    }
+  }
+
+  sendMessageWithAttachments(roomId: string, content: string, files: File[]): Promise<ChatMessage> {
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('roomId', roomId);
+    files.forEach((file, index) => {
+      formData.append(`file${index}`, file);
+    });
+
+    return this.http.post<ChatMessage>(`${this.apiUrl}/messages/attachments`, formData).toPromise();
+  }
+
+  /**
+   * Create a chat room for an ad
+   * @param adId The ID of the ad to create a chat room for
+   * @returns Observable<ChatRoom>
+   */
+  createAdRoom(adId: string): Observable<ChatRoom> {
+    return this.http.post<ChatRoom>(`${this.apiUrl}/rooms/ad`, { adId });
+  }
+
+  disconnectSocket(): void {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+    }
+  }
+
   archiveRoom(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/archive`, {});
   }
 
-  pinRoom(roomId: string, pinned: boolean): Observable<ChatRoom> {
-    return this.http.put<ChatRoom>(`${this.apiUrl}/rooms/${roomId}/pin`, { pinned });
+  /**
+   * Pin a chat room
+   */
+  pinRoom(roomId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/pin`, {});
+  }
+
+  /**
+   * Clear all messages in a chat room
+   */
+  clearRoom(roomId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/clear`, {});
+  }
+
+  /**
+   * Block a user
+   */
+  blockUser(userId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/users/${userId}/block`, {});
+  }
+
+  /**
+   * Report a user
+   */
+  reportUser(userId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/users/${userId}/report`, {});
+  }
+
+  /**
+   * Update room settings
+   */
+  updateRoomSettings(roomId: string, settings: RoomSettings): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/rooms/${roomId}/settings`, settings);
+  }
+
+  /**
+   * Convert hours to milliseconds
+   * @param hours Number of hours to convert
+   * @returns Number of milliseconds
+   */
+  convertHoursToMilliseconds(hours: number): number {
+    return hours * 60 * 60 * 1000;
   }
 }

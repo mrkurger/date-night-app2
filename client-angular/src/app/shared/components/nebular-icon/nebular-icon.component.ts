@@ -1,21 +1,23 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
-import { IconService } from '../../../core/services/icon.service';
-// NbIconModule is included in NebularModule, so we don't need to import it separately
 
 @Component({
-  selector: 'app-nebular-icon',
+  selector: 'app-primeng-icon',
   standalone: true,
-  imports: [CommonModule, NebularModule],
+  imports: [CommonModule],
   template: `
-    <nb-icon
-      [icon]="getIconName()"
-      [pack]="'eva'"
-      [status]="getStatus()"
-      [size]="convertSize(size)"
-      [class.spin]="spin"
-    ></nb-icon>
+    <i
+      class="pi pi-{{ getIconName() }}"
+      [ngClass]="{
+        'pi-spin': spin,
+        'p-icon-primary': status === 'primary',
+        'p-icon-success': status === 'success',
+        'p-icon-info': status === 'info',
+        'p-icon-warning': status === 'warning',
+        'p-icon-danger': status === 'danger'
+      }"
+      [style.fontSize]="convertSize(size)"
+    ></i>
   `,
   styles: [
     `
@@ -24,7 +26,7 @@ import { IconService } from '../../../core/services/icon.service';
         align-items: center;
         justify-content: center;
       }
-      .spin {
+      .pi-spin {
         animation: spin 1s linear infinite;
       }
       @keyframes spin {
@@ -39,10 +41,10 @@ import { IconService } from '../../../core/services/icon.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NebularIconComponent {
+export class PrimeNGIconComponent {
   /**
    * The name of the icon. Can be either:
-   * 1. A Material icon name (e.g. 'favorite', 'delete') (DEPRECATED) (DEPRECATED) (DEPRECATED) (DEPRECATED)
+   * 1. A Material icon name (e.g. 'favorite', 'delete') (DEPRECATED)
    * 2. An Eva icon name (e.g. 'heart', 'trash-2')
    */
   @Input() name: string = '';
@@ -50,7 +52,7 @@ export class NebularIconComponent {
   /** Whether to use the filled variant of the icon */
   @Input() filled: boolean = false;
 
-  /** Icon size - will be converted to Nebular's size system */
+  /** Icon size - will be converted to PrimeNG's size system */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   /** Color/status of the icon */
@@ -59,32 +61,23 @@ export class NebularIconComponent {
   /** Whether the icon should spin (for loading states) */
   @Input() spin: boolean = false;
 
-  constructor(private iconService: IconService) {}
-
   /**
-   * Converts our component's size values to Nebular's size system
+   * Converts our component's size values to PrimeNG's size system
    */
   private convertSize(size: string): string {
     const sizeMap: { [key: string]: string } = {
-      small: 'tiny', // 16px
-      medium: 'small', // 24px
-      large: 'medium', // 32px
+      small: '1rem',
+      medium: '1.5rem',
+      large: '2rem',
     };
-    return sizeMap[size] || 'small';
+    return sizeMap[size] || '1.5rem';
   }
 
   /**
    * Gets the icon name, converting from Material names if necessary (DEPRECATED)
    */
   getIconName(): string {
-    return this.iconService.getIconName(this.name, this.filled);
-  }
-
-  /**
-   * Gets the status for the icon. Returns undefined if no status,
-   * which lets the icon inherit its color.
-   */
-  getStatus(): string | undefined {
-    return this.status;
+    // Directly return the name for simplicity
+    return this.name;
   }
 }

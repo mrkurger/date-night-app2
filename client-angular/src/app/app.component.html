@@ -1,50 +1,84 @@
-<nb-layout>
-  <nb-layout-header fixed>
-    <div class="header-container">
-      <div class="left">
-        <button nbButton ghost (click)="toggleSidebar()">
-          <nb-icon icon="menu-2-outline"></nb-icon>
+<div class="app-layout">
+  <p-toolbar styleClass="app-header">
+    <div class="p-toolbar-group-left header-container-left">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-bars"
+        class="p-button-text"
+        (click)="toggleSidebar()"
+      ></button>
+      <span class="app-title">Date Night App</span>
+    </div>
+    <div class="p-toolbar-group-right header-container-right">
+      <div class="action-items">
+        <button
+          pButton
+          type="button"
+          class="p-button-text notification-button"
+          (click)="notificationsOverlay.toggle($event)"
+        >
+          <i
+            class="pi pi-bell"
+            pBadge
+            [value]="notificationCount > 0 ? notificationCount.toString() : null"
+            [severity]="notificationCount > 0 ? 'danger' : null"
+          ></i>
         </button>
-        <span class="app-title">Date Night App</span>
-      </div>
-      <div class="right">
-        <nb-actions size="medium">
-          <nb-action
-            [badgeText]="notificationCount.toString()"
-            [badgeStatus]="notificationCount > 0 ? 'danger' : 'basic'"
+        <p-overlayPanel #notificationsOverlay [showCloseIcon]="true">
+          <ng-template pTemplate>
+            <h5>Notifications</h5>
+            <div *ngIf="notifications && notifications.length > 0; else noNotifications">
+              <ul>
+                <li *ngFor="let notification of notifications">{{ notification.message }}</li>
+              </ul>
+            </div>
+            <ng-template #noNotifications>
+              <p>No new notifications.</p>
+            </ng-template>
+          </ng-template>
+        </p-overlayPanel>
+
+        <div class="user-menu-container">
+          <button
+            pButton
+            type="button"
+            class="p-button-text user-button"
+            (click)="userMenu.toggle($event)"
           >
-            <nb-icon icon="bell-outline"></nb-icon>
-          </nb-action>
-          <nb-action>
-            <nb-user
-              [name]="userName"
-              [picture]="userAvatar"
-              [nbContextMenu]="userMenu"
-              nbContextMenuTag="user-menu"
-              size="medium"
-            >
-            </nb-user>
-          </nb-action>
-        </nb-actions>
+            <p-avatar
+              [image]="userAvatar"
+              [label]="!userAvatar && userName ? userName.substring(0, 1) : null"
+              shape="circle"
+              styleClass="user-avatar"
+            ></p-avatar>
+            <span class="user-name">{{ userName }}</span>
+            <i class="pi pi-angle-down"></i>
+          </button>
+          <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+        </div>
       </div>
     </div>
-  </nb-layout-header>
+  </p-toolbar>
 
-  <nb-sidebar>
-    <nb-menu [items]="menuItems"></nb-menu>
-  </nb-sidebar>
+  <p-sidebar [(visible)]="isSidebarVisible" [showCloseIcon]="true" [modal]="false">
+    <ng-template pTemplate="header">
+      <h3>Menu</h3>
+    </ng-template>
+    <p-panelMenu [model]="menuItems" [style]="{ width: '100%' }"></p-panelMenu>
+  </p-sidebar>
 
-  <nb-layout-column class="main-content">
-    <nb-card *ngIf="isLoading" class="loading-card">
-      <nb-card-body class="loading-container">
-        <nb-spinner status="primary"></nb-spinner>
+  <div class="main-content" [ngClass]="{ 'sidebar-active': isSidebarVisible }">
+    <p-card *ngIf="isLoading" styleClass="loading-card">
+      <div class="loading-container">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
         <span>Loading...</span>
-      </nb-card-body>
-    </nb-card>
-    <router-outlet></router-outlet>
-  </nb-layout-column>
+      </div>
+    </p-card>
+    <router-outlet *ngIf="!isLoading"></router-outlet>
+  </div>
 
-  <nb-layout-footer fixed>
+  <div class="layout-footer">
     <div class="footer-container">
       <div class="footer-content">
         <div class="footer-section">
@@ -56,27 +90,23 @@
         <div class="footer-section">
           <h5 class="footer-heading">Quick Links</h5>
           <ul class="footer-links">
-            <li><a nbButton ghost routerLink="/about">About Us</a></li>
-            <li><a nbButton ghost routerLink="/terms">Terms of Service</a></li>
-            <li><a nbButton ghost routerLink="/privacy">Privacy Policy</a></li>
-            <li><a nbButton ghost routerLink="/contact">Contact Us</a></li>
+            <li><a pButton label="About Us" class="p-button-text" routerLink="/about"></a></li>
+            <li>
+              <a pButton label="Terms of Service" class="p-button-text" routerLink="/terms"></a>
+            </li>
+            <li>
+              <a pButton label="Privacy Policy" class="p-button-text" routerLink="/privacy"></a>
+            </li>
+            <li><a pButton label="Contact Us" class="p-button-text" routerLink="/contact"></a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h5 class="footer-heading">Connect With Us</h5>
           <div class="social-links">
-            <a nbButton ghost href="#" class="social-link">
-              <nb-icon icon="facebook-outline"></nb-icon>
-            </a>
-            <a nbButton ghost href="#" class="social-link">
-              <nb-icon icon="twitter-outline"></nb-icon>
-            </a>
-            <a nbButton ghost href="#" class="social-link">
-              <nb-icon icon="camera-outline"></nb-icon>
-            </a>
-            <a nbButton ghost href="#" class="social-link">
-              <nb-icon icon="paper-plane-outline"></nb-icon>
-            </a>
+            <a pButton icon="pi pi-facebook" class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-twitter" class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-instagram" class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-send" class="p-button-text social-link" href="#"></a>
           </div>
         </div>
       </div>
@@ -84,39 +114,37 @@
         <p>&copy; 2024 DateNight.io - All rights reserved</p>
       </div>
     </div>
-  </nb-layout-footer>
-</nb-layout>
+  </div>
+</div>
 
-<!-- Context Menus -->
-<ng-template #notificationsMenu>
-  <nb-card>
-    <nb-card-header>Notifications</nb-card-header>
-    <nb-list>
-      <nb-list-item *ngFor="let notification of notifications">
-        {{ notification.message }}
-      </nb-list-item>
-    </nb-list>
-  </nb-card>
-</ng-template>
-
-<ng-template #userMenu>
-  <nb-menu>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  </nb-menu>
-</ng-template>
-
-<!-- Notification Components -->
+<!-- Global/Utility Components that might live outside the main navigation structure -->
+<!-- These might need their own PrimeNG migration strategy if they use Nebular -->
 <app-notification [notifications]="notifications"></app-notification>
+<!-- Assuming notifications are managed by a service -->
 <app-alert-notifications></app-alert-notifications>
 <app-debug-info></app-debug-info>
+
+<!-- 
+    This file was partially migrated to PrimeNG by an automated script (2025-05-24T05:15:38.051Z).
+    It may have processed Bootstrap and/or Nebular buttons.
+    Please review the changes carefully, especially for:
+    1. Correct component behavior and visual appearance.
+    2. Ensuring necessary PrimeNG modules (e.g., ButtonModule from 'primeng/button') 
+       are imported in the corresponding Angular component's NgModule.
+    3. Handling any complex attributes, event bindings, or button types 
+       not covered by this script.
+    4. Icon mapping (Nebular icons to PrimeIcons).
+    5. The use of 'w-full' for 'w-full' or 'fullWidth' assumes PrimeFlex is available.
+-->
+<!-- 
+    This file was partially migrated to PrimeNG by an automated script (2025-05-24T05:25:05.102Z).
+    It may have processed Bootstrap and/or Nebular buttons.
+    Please review the changes carefully, especially for:
+    1. Correct component behavior and visual appearance.
+    2. Ensuring necessary PrimeNG modules (e.g., ButtonModule from 'primeng/button') 
+       are imported in the corresponding Angular component's NgModule or standalone component imports.
+    3. Handling any complex attributes, event bindings, or button types 
+       not covered by this script.
+    4. Icon mapping (Nebular icons to PrimeIcons).
+    5. The use of 'w-full' for 'btn-block' or 'fullWidth' assumes PrimeFlex is available.
+-->

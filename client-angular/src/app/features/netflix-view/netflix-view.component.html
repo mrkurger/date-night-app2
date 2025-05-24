@@ -1,60 +1,66 @@
 <div class="netflix-container">
-  <!-- Hero Section with Nebular Card -->
-  <nb-card *ngIf="featuredAd" class="hero-card">
-    <nb-card-header>
+  <!-- Hero Section with PrimeNG Card -->
+  <p-card *ngIf="featuredAd" styleClass="hero-card">
+    <ng-template pTemplate="header">
       <div class="hero-header">
-        <nb-user
-          [name]="getAdvertiserName(featuredAd)"
-          [picture]="getAdvertiserImage(featuredAd)"
-          [title]="getLocationString(featuredAd)"
-          [showTitle]="true"
-          size="large"
-          [onlineStatus]="featuredAd.isAdvertiserOnline ? 'success' : 'basic'"
-        >
-        </nb-user>
+        <div class="user-info">
+          <div class="user-avatar-wrapper">
+            <p-avatar
+              [image]="getAdvertiserImage(featuredAd)"
+              [label]="getAdvertiserName(featuredAd) | slice : 0 : 1"
+              shape="circle"
+              size="large"
+              [styleClass]="featuredAd.isAdvertiserOnline ? 'online-avatar' : 'offline-avatar'"
+            ></p-avatar>
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ getAdvertiserName(featuredAd) }}</span>
+            <span class="user-location">{{ getLocationString(featuredAd) }}</span>
+          </div>
+        </div>
         <div class="hero-actions">
           <button
-            nbButton
-            status="primary"
+            pButton
+            pRipple
+            icon="pi pi-info-circle"
             (click)="onHeroAction('view', getAdIdAsString(featuredAd._id))"
-          >
-            <nb-icon icon="info-circle-outline"></nb-icon>
-            View Profile
-          </button>
+            label="View Profile"
+          ></button>
           <button
-            nbButton
-            ghost
+            pButton
+            pRipple
+            icon="pi pi-heart"
             (click)="onHeroAction('favorite', getAdIdAsString(featuredAd._id))"
-          >
-            <nb-icon icon="heart-outline"></nb-icon>
-            Add to Favorites
-          </button>
-          <button nbButton ghost (click)="onHeroAction('chat', getAdIdAsString(featuredAd._id))">
-            <nb-icon icon="message-circle-outline"></nb-icon>
-            Start Chat
-          </button>
+            label="Add to Favorites"
+            class="p-button-outlined"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-comments"
+            (click)="onHeroAction('chat', getAdIdAsString(featuredAd._id))"
+            label="Start Chat"
+            class="p-button-outlined"
+          ></button>
         </div>
       </div>
-    </nb-card-header>
+    </ng-template>
 
-    <nb-card-body [style.backgroundImage]="'url(' + getMediaUrl(featuredAd) + ')'">
-      <div class="hero-content">
-        <h1>{{ featuredAd.title }}</h1>
-        <p class="hero-description">{{ featuredAd.description }}</p>
+    <div class="hero-content" [style.backgroundImage]="'url(' + getMediaUrl(featuredAd) + ')'">
+      <h1>{{ featuredAd.title }}</h1>
+      <p class="hero-description">{{ featuredAd.description }}</p>
 
-        <!-- Tags -->
-        <div class="hero-tags" *ngIf="featuredAd.tags && featuredAd.tags.length > 0">
-          <nb-badge
-            *ngFor="let tag of featuredAd.tags.slice(0, 5)"
-            [text]="tag"
-            status="primary"
-            position="top start"
-          >
-          </nb-badge>
-        </div>
+      <!-- Tags -->
+      <div class="hero-tags" *ngIf="featuredAd.tags && featuredAd.tags.length > 0">
+        <p-tag
+          *ngFor="let tag of featuredAd.tags.slice(0, 5)"
+          [value]="tag"
+          severity="primary"
+          [rounded]="true"
+        ></p-tag>
       </div>
-    </nb-card-body>
-  </nb-card>
+    </div>
+  </p-card>
 
   <!-- Main Content -->
   <div class="netflix-content">
@@ -63,28 +69,29 @@
       <div class="container">
         <div class="filters-content">
           <h2 class="section-title">Browse Profiles</h2>
-          <button nbButton outline (click)="openFilters()">
-            <nb-icon icon="options-2-outline"></nb-icon>
-            Filters
-          </button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-filter"
+            (click)="openFilters()"
+            label="Filters"
+            class="p-button-outlined"
+          ></button>
         </div>
       </div>
     </div>
 
     <!-- Loading State -->
     <div class="loading-container" *ngIf="loading">
-      <nb-spinner status="primary" size="large"></nb-spinner>
+      <p-progressSpinner [strokeWidth]="4"></p-progressSpinner>
       <p class="loading-text">Loading profiles...</p>
     </div>
 
     <!-- Error State -->
     <div class="error-container" *ngIf="error && !loading">
-      <nb-icon icon="alert-circle-outline" status="danger" size="large"></nb-icon>
+      <i class="pi pi-exclamation-triangle" style="font-size: 2rem; color: var(--red-500)"></i>
       <p class="error-text">{{ error }}</p>
-      <button nbButton status="primary" (click)="loadAds()">
-        <nb-icon icon="refresh-outline"></nb-icon>
-        Try Again
-      </button>
+      <button pButton pRipple icon="pi pi-refresh" (click)="loadAds()" label="Try Again"></button>
     </div>
 
     <!-- Netflix-style Rows -->
@@ -100,68 +107,71 @@
 
           <!-- Grid of Cards -->
           <div class="card-grid" *ngIf="adsByCategory[category]?.length > 0">
-            <nb-card
+            <p-card
               *ngFor="let ad of adsByCategory[category]"
               class="netflix-card"
               (click)="viewAdDetails(ad.id)"
+              [style]="{ cursor: 'pointer' }"
             >
-              <nb-card-header>
-                <nb-user
-                  [name]="ad.advertiserName"
-                  [picture]="ad.advertiserImage"
-                  [onlineStatus]="ad.isAdvertiserOnline ? 'success' : 'basic'"
-                  size="small"
-                >
-                </nb-user>
-              </nb-card-header>
-
-              <nb-card-body [style.backgroundImage]="'url(' + getMediaUrl(ad) + ')'">
-                <div class="card-content">
-                  <h3>{{ ad.title }}</h3>
-                  <p>{{ ad.description?.substring(0, 100) + '...' }}</p>
-
-                  <!-- Tags -->
-                  <div class="card-tags" *ngIf="ad.tags?.length > 0">
-                    <nb-badge
-                      *ngFor="let tag of ad.tags.slice(0, 3)"
-                      [text]="tag"
-                      status="primary"
-                      position="top start"
-                    >
-                    </nb-badge>
-                  </div>
+              <ng-template pTemplate="header">
+                <div class="card-user-info">
+                  <p-avatar
+                    [image]="ad.advertiserImage"
+                    [label]="ad.advertiserName | slice : 0 : 1"
+                    shape="circle"
+                    size="small"
+                    [styleClass]="ad.isAdvertiserOnline ? 'online-avatar' : 'offline-avatar'"
+                  ></p-avatar>
+                  <span class="advertiser-name">{{ ad.advertiserName }}</span>
                 </div>
-              </nb-card-body>
+              </ng-template>
 
-              <nb-card-footer>
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  (click)="$event.stopPropagation(); onCardAction({ id: 'view', itemId: ad.id })"
-                >
-                  <nb-icon icon="info-circle-outline"></nb-icon>
-                </button>
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  (click)="
-                    $event.stopPropagation(); onCardAction({ id: 'favorite', itemId: ad.id })
-                  "
-                >
-                  <nb-icon icon="heart-outline"></nb-icon>
-                </button>
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  (click)="$event.stopPropagation(); onCardAction({ id: 'chat', itemId: ad.id })"
-                >
-                  <nb-icon icon="message-circle-outline"></nb-icon>
-                </button>
-              </nb-card-footer>
-            </nb-card>
+              <div class="card-content" [style.backgroundImage]="'url(' + getMediaUrl(ad) + ')'">
+                <h3>{{ ad.title }}</h3>
+                <p>{{ ad.description?.substring(0, 100) + '...' }}</p>
+
+                <!-- Tags -->
+                <div class="card-tags" *ngIf="ad.tags?.length > 0">
+                  <p-tag
+                    *ngFor="let tag of ad.tags.slice(0, 3)"
+                    [value]="tag"
+                    severity="primary"
+                    [rounded]="true"
+                  ></p-tag>
+                </div>
+              </div>
+
+              <ng-template pTemplate="footer">
+                <div class="card-actions">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-info-circle"
+                    class="p-button-rounded p-button-text"
+                    pTooltip="View Details"
+                    (click)="$event.stopPropagation(); onCardAction({ id: 'view', itemId: ad.id })"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-heart"
+                    class="p-button-rounded p-button-text"
+                    pTooltip="Add to Favorites"
+                    (click)="
+                      $event.stopPropagation(); onCardAction({ id: 'favorite', itemId: ad.id })
+                    "
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-comments"
+                    class="p-button-rounded p-button-text"
+                    pTooltip="Start Chat"
+                    (click)="$event.stopPropagation(); onCardAction({ id: 'chat', itemId: ad.id })"
+                  ></button>
+                </div>
+              </ng-template>
+            </p-card>
           </div>
         </div>
       </div>
@@ -171,72 +181,85 @@
 
 <!-- Floating Action Button -->
 <button
-  nbButton
-  status="primary"
-  size="large"
-  class="floating-action-button"
+  pButton
+  pRipple
+  icon="pi pi-filter"
+  class="floating-action-button p-button-rounded p-button-lg"
   (click)="openFilters()"
->
-  <nb-icon icon="options-2-outline"></nb-icon>
-</button>
+  pTooltip="Filter Profiles"
+></button>
 
 <!-- Filters Dialog -->
-<ng-template #filtersDialog let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>
-      <div class="dialog-header">
-        <h5><nb-icon icon="funnel-outline"></nb-icon> Filter Profiles</h5>
-        <button nbButton ghost size="small" (click)="ref.close()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </div>
-    </nb-card-header>
+<p-dialog
+  [(visible)]="showFiltersDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '90vw', maxWidth: '500px' }"
+  header="Filter Profiles"
+>
+  <form [formGroup]="filterForm">
+    <div class="field">
+      <label for="category">Category</label>
+      <p-dropdown
+        id="category"
+        formControlName="category"
+        [options]="[
+          { label: 'All Categories', value: '' },
+          { label: 'Escort', value: 'Escort' },
+          { label: 'Striptease', value: 'Striptease' },
+          { label: 'Massage', value: 'Massage' },
+          { label: 'Companion', value: 'Companion' },
+          { label: 'Other', value: 'Other' }
+        ]"
+        placeholder="Select a category"
+        [style]="{ width: '100%' }"
+      ></p-dropdown>
+    </div>
 
-    <nb-card-body>
-      <form [formGroup]="filterForm">
-        <nb-form-field>
-          <label>Category</label>
-          <nb-select fullWidth formControlName="category">
-            <nb-option value="">All Categories</nb-option>
-            <nb-option value="Escort">Escort</nb-option>
-            <nb-option value="Striptease">Striptease</nb-option>
-            <nb-option value="Massage">Massage</nb-option>
-            <nb-option value="Companion">Companion</nb-option>
-            <nb-option value="Other">Other</nb-option>
-          </nb-select>
-        </nb-form-field>
+    <div class="field">
+      <label for="location">Location</label>
+      <p-dropdown
+        id="location"
+        formControlName="location"
+        [options]="[
+          { label: 'All Locations', value: '' },
+          { label: 'Oslo', value: 'Oslo' },
+          { label: 'Bergen', value: 'Bergen' },
+          { label: 'Trondheim', value: 'Trondheim' },
+          { label: 'Stavanger', value: 'Stavanger' },
+          { label: 'Tromsø', value: 'Tromsø' },
+          { label: 'Kristiansand', value: 'Kristiansand' }
+        ]"
+        placeholder="Select a location"
+        [style]="{ width: '100%' }"
+      ></p-dropdown>
+    </div>
 
-        <nb-form-field>
-          <label>Location</label>
-          <nb-select fullWidth formControlName="location">
-            <nb-option value="">All Locations</nb-option>
-            <nb-option value="Oslo">Oslo</nb-option>
-            <nb-option value="Bergen">Bergen</nb-option>
-            <nb-option value="Trondheim">Trondheim</nb-option>
-            <nb-option value="Stavanger">Stavanger</nb-option>
-            <nb-option value="Tromsø">Tromsø</nb-option>
-            <nb-option value="Kristiansand">Kristiansand</nb-option>
-          </nb-select>
-        </nb-form-field>
+    <div class="field-checkbox">
+      <p-inputSwitch formControlName="touringOnly"></p-inputSwitch>
+      <label for="touringOnly" class="ml-2">Show only touring profiles</label>
+    </div>
+  </form>
 
-        <div class="toggle-field">
-          <label>Touring Status</label>
-          <nb-toggle formControlName="touringOnly" status="primary">
-            Show only touring profiles
-          </nb-toggle>
-        </div>
-      </form>
-    </nb-card-body>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-refresh"
+      (click)="resetFilters()"
+      label="Reset"
+      class="p-button-text"
+    ></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      (click)="applyFilters(); showFiltersDialog = false"
+      label="Apply"
+    ></button>
+  </ng-template>
+</p-dialog>
 
-    <nb-card-footer>
-      <button nbButton status="basic" (click)="resetFilters()">
-        <nb-icon icon="refresh-outline"></nb-icon>
-        Reset
-      </button>
-      <button nbButton status="primary" (click)="applyFilters(); ref.close()">
-        <nb-icon icon="checkmark-outline"></nb-icon>
-        Apply
-      </button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
+<!-- Toast for notifications -->
+<p-toast position="top-right"></p-toast>

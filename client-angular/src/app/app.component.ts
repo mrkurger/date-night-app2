@@ -4,10 +4,11 @@ import { ThemeService } from './core/services/theme.service';
 import { Subscription } from 'rxjs';
 import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
+import { ButtonModule } from 'primeng/button'; // Import ButtonModule
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, NavigationComponent],
+  imports: [RouterModule, NavigationComponent, ButtonModule], // Add ButtonModule here
   template: `
     <app-navigation>
       <router-outlet></router-outlet>

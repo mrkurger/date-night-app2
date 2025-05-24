@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource } from '@nebular/theme';
+import { Table } from 'primeng/table';
+import { SelectItem } from 'primeng/api';
 
 export interface TableColumn<T = any> {
   prop: keyof T;
@@ -11,111 +12,102 @@ export interface TableColumn<T = any> {
 }
 
 @Component({
-    selector: 'nb-data-table',
-    template: `
-    <nb-card>
-      <nb-card-header *ngIf="showHeader">
-        <div class="header-container">
-          <h5 class="title">{{ title }}</h5>
-          <div class="actions">
-            <ng-content select="[tableActions]"></ng-content>
+  selector: 'app-primeng-data-table',
+  template: `
+    <p-card>
+      <ng-container *ngIf="showHeader">
+        <ng-template pTemplate="header">
+          <div class="header-container">
+            <h5 class="title">{{ title }}</h5>
+            <div class="actions">
+              <ng-content select="[tableActions]"></ng-content>
+            </div>
           </div>
-        </div>
-      </nb-card-header>
+        </ng-template>
+      </ng-container>
 
-      <nb-card-body>
+      <ng-template pTemplate="content">
         <div class="table-responsive">
-          <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="onSort($event)">
-            <tr nbTreeGridHeader>
-              <th
-                *ngFor="let column of visibleColumns"
-                [nbSortHeader]="column.sortable ? column.prop : null"
-                [nbSortDirection]="getSortDirection(column)"
-                [class.sortable]="column.sortable"
-              >
-                {{ column.name }}
-                <nb-icon
-                  *ngIf="column.filterable"
-                  icon="funnel-outline"
-                  (click)="onFilterClick(column)"
-                  class="filter-icon"
+          <p-table
+            [value]="data"
+            [paginator]="showPaginator"
+            [rows]="pageSize"
+            [columns]="visibleColumns"
+            [loading]="loading"
+            [resizableColumns]="true"
+            [scrollable]="true"
+            [scrollHeight]="'400px'"
+            (onSort)="onSort($event)"
+          >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th
+                  *ngFor="let column of columns"
+                  [pSortableColumn]="column.sortable ? column.prop : null"
                 >
-                </nb-icon>
-              </th>
-            </tr>
+                  {{ column.name }}
+                  <p-sortIcon *ngIf="column.sortable" [field]="column.prop"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
 
-            <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: getColumnProps()">
-              <td
-                nbTreeGridCell
-                *nbTreeGridCellDef="let row; column: column"
-                *ngFor="let column of visibleColumns"
-              >
-                <ng-container *ngIf="column.renderFn; else defaultCell">
-                  {{ column.renderFn(row.data[column.prop], row.data) }}
-                </ng-container>
-                <ng-template #defaultCell>
-                  {{ row.data[column.prop] }}
-                </ng-template>
-              </td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Loading State -->
-        <div class="spinner-container" *ngIf="loading">
-          <nb-spinner status="primary"></nb-spinner>
+            <ng-template pTemplate="body" let-row let-columns="columns">
+              <tr>
+                <td *ngFor="let column of columns">
+                  <ng-container *ngIf="column.renderFn; else defaultCell">
+                    {{ column.renderFn(row[column.prop], row) }}
+                  </ng-container>
+                  <ng-template #defaultCell>
+                    {{ row[column.prop] }}
+                  </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
 
         <!-- Empty State -->
         <div class="empty-state" *ngIf="!loading && (!data || data.length === 0)">
           {{ emptyMessage }}
         </div>
-      </nb-card-body>
+      </ng-template>
 
-      <nb-card-footer *ngIf="showPaginator">
-        <div class="footer-container">
-          <div class="page-size">
-            <span>Items per page:</span>
-            <nb-select [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
-              <nb-option *ngFor="let size of pageSizes" [value]="size">{{ size }}</nb-option>
-            </nb-select>
+      <ng-container *ngIf="showPaginator">
+        <ng-template pTemplate="footer">
+          <div class="footer-container">
+            <div class="page-size">
+              <span>Items per page:</span>
+              <p-dropdown
+                [options]="pageSizes.map(size => ({ label: size.toString(), value: size }))"
+                [(ngModel)]="pageSize"
+                (onChange)="onPageSizeChange($event.value)"
+              ></p-dropdown>
+            </div>
+
+            <div class="pagination">
+              <button
+                pButton
+                icon="pi pi-chevron-left"
+                class="p-button-text"
+                [disabled]="currentPage === 1"
+                (click)="onPageChange(currentPage - 1)"
+              ></button>
+              <span class="page-info"> Page {{ currentPage }} of {{ totalPages }} </span>
+              <button
+                pButton
+                icon="pi pi-chevron-right"
+                class="p-button-text"
+                [disabled]="currentPage === totalPages"
+                (click)="onPageChange(currentPage + 1)"
+              ></button>
+            </div>
           </div>
-
-          <div class="pagination">
-            <button
-              nbButton
-              ghost
-              [disabled]="currentPage === 1"
-              (click)="onPageChange(currentPage - 1)"
-            >
-              <nb-icon icon="chevron-left-outline"></nb-icon>
-            </button>
-            <span class="page-info"> Page {{ currentPage }} of {{ totalPages }} </span>
-            <button
-              nbButton
-              ghost
-              [disabled]="currentPage === totalPages"
-              (click)="onPageChange(currentPage + 1)"
-            >
-              <nb-icon icon="chevron-right-outline"></nb-icon>
-            </button>
-          </div>
-        </div>
-      </nb-card-footer>
-    </nb-card>
-
-    <!-- Filter Dialog -->
-    <nb-data-table-filter
-      *ngIf="showFilter"
-      [column]="activeFilterColumn"
-      [value]="filters[activeFilterColumn?.prop]"
-      (filterChange)="onFilterChange($event)"
-      (close)="showFilter = false"
-    >
-    </nb-data-table-filter>
+        </ng-template>
+      </ng-container>
+    </p-card>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
       }
@@ -126,67 +118,15 @@ export interface TableColumn<T = any> {
         align-items: center;
       }
 
-      .title {
-        margin: 0;
-        color: nb-theme(text-basic-color);
-        font-weight: nb-theme(text-heading-5-font-weight);
-      }
-
       .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      th {
-        padding: 1rem;
-        border-bottom: 1px solid nb-theme(border-basic-color-3);
-        font-weight: nb-theme(text-heading-6-font-weight);
-        color: nb-theme(text-basic-color);
-        background-color: nb-theme(background-basic-color-2);
-        transition: background-color 0.2s;
-
-        &.sortable {
-          cursor: pointer;
-
-          &:hover {
-            background-color: nb-theme(background-basic-color-3);
-          }
-        }
-      }
-
-      td {
-        padding: 1rem;
-        border-bottom: 1px solid nb-theme(border-basic-color-2);
-        color: nb-theme(text-basic-color);
-      }
-
-      .filter-icon {
-        cursor: pointer;
-        margin-left: 0.5rem;
-        font-size: 1rem;
-        color: nb-theme(text-hint-color);
-        transition: color 0.2s;
-
-        &:hover {
-          color: nb-theme(text-basic-color);
-        }
-      }
-
-      .spinner-container {
-        display: flex;
-        justify-content: center;
-        padding: 2rem;
-      }
-
       .empty-state {
         text-align: center;
-        padding: 2rem;
-        color: nb-theme(text-hint-color);
+        padding: 1rem;
+        color: var(--text-secondary-color);
       }
 
       .footer-container {
@@ -195,112 +135,39 @@ export interface TableColumn<T = any> {
         align-items: center;
       }
 
-      .page-size {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        span {
-          color: nb-theme(text-hint-color);
-          font-size: nb-theme(text-caption-font-size);
-        }
-      }
-
-      .pagination {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        .page-info {
-          color: nb-theme(text-hint-color);
-          font-size: nb-theme(text-caption-font-size);
-        }
+      .page-info {
+        margin: 0 1rem;
       }
     `,
-    ],
-    standalone: false
+  ],
+  standalone: true,
 })
-export class NbDataTableComponent<T = any> implements OnInit {
-  @Input() data: T[] = [];
-  @Input() columns: TableColumn<T>[] = [];
+export class PrimeNGDataTableComponent {
   @Input() title = '';
+  @Input() data: any[] = [];
+  @Input() visibleColumns: TableColumn[] = [];
+  @Input() pageSize = 10;
+  @Input() pageSizes: number[] = [5, 10, 20, 50];
+  @Input() currentPage = 1;
+  @Input() totalPages = 1;
   @Input() loading = false;
+  @Input() emptyMessage = 'No data available';
   @Input() showHeader = true;
   @Input() showPaginator = true;
-  @Input() pageSize = 10;
-  @Input() pageSizes = [5, 10, 25, 50];
-  @Input() currentPage = 1;
-  @Input() emptyMessage = 'No data available';
 
-  @Output() sortChange = new EventEmitter<NbSortRequest>();
-  @Output() pageChange = new EventEmitter<number>();
+  @Output() sortChange = new EventEmitter<any>();
   @Output() pageSizeChange = new EventEmitter<number>();
-  @Output() filterChange = new EventEmitter<{ column: TableColumn<T>; value: any }>();
-  @Output() columnsChange = new EventEmitter<TableColumn<T>[]>();
+  @Output() pageChange = new EventEmitter<number>();
 
-  dataSource!: NbTreeGridDataSource<T>;
-  visibleColumns: TableColumn<T>[] = [];
-  showFilter = false;
-  activeFilterColumn: TableColumn<T> | null = null;
-  filters: { [key: string]: any } = {};
-  sortColumn: string | null = null;
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
-
-  get totalPages(): number {
-    return Math.ceil(this.data.length / this.pageSize);
-  }
-
-  ngOnInit() {
-    this.visibleColumns = this.columns.filter((col) => !col.hidden);
-  }
-
-  getColumnProps(): string[] {
-    return this.visibleColumns.map((col) => col.prop as string);
-  }
-
-  getSortDirection(column: TableColumn<T>): NbSortDirection {
-    if (column.prop === this.sortColumn) {
-      return this.sortDirection;
-    }
-    return NbSortDirection.NONE;
-  }
-
-  onSort(sortRequest: NbSortRequest) {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
-    this.sortChange.emit(sortRequest);
-  }
-
-  onFilterClick(column: TableColumn<T>) {
-    this.activeFilterColumn = column;
-    this.showFilter = true;
-  }
-
-  onFilterChange(value: any) {
-    if (this.activeFilterColumn) {
-      this.filters[this.activeFilterColumn.prop as string] = value;
-      this.filterChange.emit({
-        column: this.activeFilterColumn,_value,
-      });
-    }
-    this.showFilter = false;
-  }
-
-  onColumnsChange(columns: TableColumn<T>[]) {
-    this.visibleColumns = columns;
-    this.columnsChange.emit(columns);
-  }
-
-  onPageChange(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.pageChange.emit(page);
-    }
+  onSort(event: any) {
+    this.sortChange.emit(event);
   }
 
   onPageSizeChange(size: number) {
-    this.pageSize = size;
-    this.currentPage = 1;
     this.pageSizeChange.emit(size);
+  }
+
+  onPageChange(page: number) {
+    this.pageChange.emit(page);
   }
 }
