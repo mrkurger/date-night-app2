@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 // PrimeNG Components
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { Subscription, Subject } from 'rxjs';
 import { ThemeService } from '../../core/services/theme.service';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Subscription, Subject } from 'rxjs';
@@ -32,6 +36,21 @@ type ThemeName = 'light' | 'dark' | 'system';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    CardModule,
+    InputGroupModule,
+    InputTextModule,
+    ButtonModule,
+    DropdownModule,
+    CheckboxModule,
+    RadioButtonModule,
+    TabViewModule,
+    InputTextareaModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+  ],
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['./user-settings.component.scss'],
+  providers: [MessageService],
     CardModule,
     InputGroupModule,
     InputTextModule,

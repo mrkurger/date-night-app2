@@ -14,6 +14,8 @@ import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 // Pipes
+
+// Pipes
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
@@ -61,6 +63,7 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if this message is from the current user
+    this.isCurrentUser = this.checkIfCurrentUser();
     this.isCurrentUser = this.checkIfCurrentUser();
 
     // Handle message content
@@ -126,6 +129,19 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
+   * Check if the message is from the current user
+   */
+  private checkIfCurrentUser(): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !this.message.sender) return false;
+
+    const senderId =
+      typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
+
+    return senderId === currentUser.id;
+  }
+
+  /**
    * Get the display name for the message sender
    */
   getSenderName(): string {
@@ -137,9 +153,13 @@ export class ChatMessageComponent implements OnInit {
 
   /**
    * Get the profile image for the message sender
+   * Get the profile image for the message sender
    */
   getSenderProfileImage(): string {
     if (typeof this.message.sender === 'string') {
+      return '/assets/img/default-profile.jpg';
+    }
+    return this.message.sender.profileImage || '/assets/img/default-profile.jpg';
       return '/assets/img/default-profile.jpg';
     }
     return this.message.sender.profileImage || '/assets/img/default-profile.jpg';
@@ -161,7 +181,12 @@ export class ChatMessageComponent implements OnInit {
 
   /**
    * Open an attachment (for images)
+   * Open an attachment (for images)
    */
+  openAttachment(attachment: Attachment): void {
+    if (attachment.type === 'image' && attachment.url) {
+      window.open(attachment.url, '_blank');
+    }
   openAttachment(attachment: Attachment): void {
     if (attachment.type === 'image' && attachment.url) {
       window.open(attachment.url, '_blank');
@@ -171,6 +196,9 @@ export class ChatMessageComponent implements OnInit {
   /**
    * Download an attachment
    */
+  downloadAttachment(attachment: Attachment): void {
+    if (attachment.url) {
+      window.open(attachment.url, '_blank');
   downloadAttachment(attachment: Attachment): void {
     if (attachment.url) {
       window.open(attachment.url, '_blank');

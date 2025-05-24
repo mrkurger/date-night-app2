@@ -65,6 +65,8 @@ export class WalletComponent {
   ];
   loading = false;
   _error: string | null = null;
+  loading = false;
+  _error: string | null = null;
 
   openTransactionDetails(transaction: any): void {
     console.log('Transaction details:', transaction);
@@ -104,6 +106,7 @@ export class WalletComponent {
         return 'danger';
       default:
         return 'info';
+        return 'info';
     }
   }
 
@@ -141,6 +144,23 @@ export class WalletComponent {
     }
   }
 
+  getTransactionTypeIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'deposit':
+        return 'pi-arrow-down';
+      case 'withdrawal':
+        return 'pi-arrow-up';
+      case 'transfer':
+        return 'pi-sync';
+      case 'payment':
+        return 'pi-shopping-cart';
+      case 'refund':
+        return 'pi-replay';
+      default:
+        return 'pi-file';
+    }
+  }
+
   getPaymentMethodIcon(type: string): string {
     switch (type.toLowerCase()) {
       case 'credit_card':
@@ -153,6 +173,21 @@ export class WalletComponent {
         return 'flash-outline';
       default:
         return 'options-2-outline';
+    }
+  }
+
+  getPaymentMethodIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'credit_card':
+        return 'pi-credit-card';
+      case 'bank_account':
+        return 'pi-home';
+      case 'paypal':
+        return 'pi-paypal';
+      case 'crypto':
+        return 'pi-bitcoin';
+      default:
+        return 'pi-wallet';
     }
   }
 

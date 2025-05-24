@@ -31,6 +31,21 @@ import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 
+// Application-specific services and models
+import {
+  ChatService,
+  ChatMessage,
+  ChatRoom,
+  ChatParticipant,
+} from '../../../core/services/chat.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { User } from '../../../core/models/auth.model';
+
+// Shared Components and Pipes
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
+
 @Component({
   selector: 'app-chat-list',
   standalone: true,
@@ -43,7 +58,7 @@ import { RippleModule } from 'primeng/ripple';
     BadgeModule,
     TooltipModule,
     RippleModule,
-    AvatarModule,
+    AvatarComponent,
     TimeAgoPipe,
   ],
   templateUrl: './chat-list.component.html',

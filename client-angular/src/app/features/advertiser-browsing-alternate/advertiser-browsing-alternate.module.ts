@@ -4,15 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 // Import PrimeNG modules
-import { AdvertiserBrowsingAlternateComponent } from './advertiser-browsing-alternate.component';
-import { advertiserBrowsingAlternateRoutes } from './advertiser-browsing-alternate.routes';
-
-// Import child components
-import { AltPremiumAdsSectionComponent } from './components/alt-premium-ads-section/alt-premium-ads-section.component';
-import { AltNetflixViewComponent } from './components/alt-netflix-view/alt-netflix-view.component';
-import { AltTinderViewComponent } from './components/alt-tinder-view/alt-tinder-view.component';
-import { AltPaidPlacementSidebarComponent } from './components/alt-paid-placement-sidebar/alt-paid-placement-sidebar.component';
-import { AltChatWidgetComponent } from './components/alt-chat-widget/alt-chat-widget.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -25,6 +16,17 @@ import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
 import { PanelModule } from 'primeng/panel';
 import { RippleModule } from 'primeng/ripple';
+
+import { AdvertiserBrowsingAlternateComponent } from './advertiser-browsing-alternate.component';
+import { advertiserBrowsingAlternateRoutes } from './advertiser-browsing-alternate.routes';
+
+// Import child components
+import { AltPremiumAdsSectionComponent } from './components/alt-premium-ads-section/alt-premium-ads-section.component';
+import { AltNetflixViewComponent } from './components/alt-netflix-view/alt-netflix-view.component';
+import { AltTinderViewComponent } from './components/alt-tinder-view/alt-tinder-view.component';
+import { AltPaidPlacementSidebarComponent } from './components/alt-paid-placement-sidebar/alt-paid-placement-sidebar.component';
+import { AltChatWidgetComponent } from './components/alt-chat-widget/alt-chat-widget.component';
+// TODO: Import AltPaidPlacementSidebarComponent and AltChatWidgetComponent when created
 
 @NgModule({
   declarations: [AdvertiserBrowsingAlternateComponent],

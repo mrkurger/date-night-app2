@@ -1,4 +1,5 @@
 /// <reference path="../../../types/jasmine.d.ts" />
+/// <reference path="../../../types/jasmine.d.ts" />
 
 import {
   ComponentFixture,
@@ -7,7 +8,15 @@ import {
   tick,
   discardPeriodicTasks,
 } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  discardPeriodicTasks,
+} from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -125,7 +134,39 @@ const mockRoom: ChatRoom = {
   unreadCount: 0,
   createdAt: new Date(),
 };
+const mockRoom: ChatRoom = {
+  id: 'room-1',
+  name: 'Test Room',
+  participants: [
+    { id: 'test-user-id', username: 'Test User', status: 'online' },
+    { id: 'other-user-id', username: 'Other User', status: 'offline' },
+  ],
+  lastMessage: {
+    id: 'msg-1',
+    roomId: 'room-1',
+    senderId: 'other-user-id',
+    content: 'Hello!',
+    timestamp: new Date(),
+    type: 'text',
+  },
+  unreadCount: 0,
+  createdAt: new Date(),
+};
 
+const mockMessages: ChatMessage[] = [
+  {
+    id: 'msg-1',
+    roomId: 'room-1',
+    senderId: 'other-user-id',
+    content: 'Hello!',
+    timestamp: new Date(),
+    type: 'text',
+  },
+  {
+    id: 'msg-2',
+    roomId: 'room-1',
+    senderId: 'test-user-id',
+    content: 'Hi there!',
 const mockMessages: ChatMessage[] = [
   {
     id: 'msg-1',
@@ -155,8 +196,37 @@ describe('ChatComponent', () => {
   let authServiceSpy: jasmine.SpyObj<Partial<AuthService>>;
   let routerSpy: jasmine.SpyObj<Router>;
   let debugElement: DebugElement;
+  },
+];
+
+describe('ChatComponent', () => {
+  let component: ChatComponent;
+  let fixture: ComponentFixture<ChatComponent>;
+  let chatServiceSpy: jasmine.SpyObj<ChatServiceMethods>;
+  let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
+  let messageServiceSpy: jasmine.SpyObj<MessageService>;
+  let confirmationServiceSpy: jasmine.SpyObj<ConfirmationService>;
+  let authServiceSpy: jasmine.SpyObj<Partial<AuthService>>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let debugElement: DebugElement;
 
   beforeEach(async () => {
+    chatServiceSpy = jasmine.createSpyObj<ChatServiceMethods>('ChatService', {
+      getRooms: of([mockRoom]),
+      getMessages: of([mockMessages]),
+      sendMessage: of(mockMessages[0]),
+      markAsRead: of(undefined),
+      uploadFiles: of({
+        files: [
+          {
+            name: 'test.jpg',
+            type: 'image/jpeg',
+            url: 'test-url.com',
+          },
+        ],
+      }),
+      disconnectSocket: undefined,
+    });
     chatServiceSpy = jasmine.createSpyObj<ChatServiceMethods>('ChatService', {
       getRooms: of([mockRoom]),
       getMessages: of([mockMessages]),
@@ -208,12 +278,60 @@ describe('ChatComponent', () => {
       },
     );
     authServiceSpy.getCurrentUserId.and.returnValue('user1');
+    // Add subject properties
+    Object.assign(chatServiceSpy, {
+      onlineUsers$: new Subject<string[]>(),
+      newMessage$: new Subject<ChatMessage>(),
+      typingStatus$: new Subject<{ roomId: string; userId: string; typing: boolean }>(),
+    });
+
+    notificationServiceSpy = jasmine.createSpyObj<NotificationService>('NotificationService', [
+      'showSuccess',
+      'showError',
+      'showInfo',
+      'showWarning',
+      'clear',
+    ]);
+
+    messageServiceSpy = jasmine.createSpyObj<MessageService>('MessageService', [
+      'add',
+      'addAll',
+      'clear',
+    ]);
+    confirmationServiceSpy = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', [
+      'confirm',
+      'close',
+    ]);
+    routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
+
+    authServiceSpy = jasmine.createSpyObj<Partial<AuthService>>(
+      'AuthService',
+      ['getCurrentUserId'],
+      {
+        currentUser$: of(mockUser),
+      },
+    );
+    authServiceSpy.getCurrentUserId.and.returnValue('user1');
 
     await TestBed.configureTestingModule({
       imports: [
         CommonModule,
         FormsModule,
         BrowserAnimationsModule,
+        RouterModule,
+        CardModule,
+        ButtonModule,
+        InputTextModule,
+        BadgeModule,
+        TooltipModule,
+        MenuModule,
+        DialogModule,
+        TabViewModule,
+        AvatarModule,
+        SkeletonModule,
+        ConfirmDialogModule,
+        ProgressSpinnerModule,
+        FileUploadModule,
         RouterModule,
         CardModule,
         ButtonModule,

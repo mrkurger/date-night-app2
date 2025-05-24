@@ -20,9 +20,21 @@ export class NotificationService {
       severity: 'success',
       summary: 'Success',
       detail: message,
+  constructor(private messageService: MessageService) {}
+
+  showSuccess(message: string): void {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: message,
     });
   }
 
+  showError(message: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: message,
   showError(message: string): void {
     this.messageService.add({
       severity: 'error',
@@ -45,8 +57,24 @@ export class NotificationService {
       summary: 'Warning',
       detail: message,
     });
+  showInfo(message: string): void {
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Info',
+      detail: message,
+    });
   }
 
+  showWarning(message: string): void {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: message,
+    });
+  }
+
+  clear(): void {
+    this.messageService.clear();
   clear(): void {
     this.messageService.clear();
   }

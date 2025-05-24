@@ -56,7 +56,36 @@ const PRIMENG_MODULES = [
   FontAwesomeModule,
 ];
 
+const PRIMENG_MODULES = [
+  CardModule,
+  ButtonModule,
+  InputTextModule,
+  InputGroupModule,
+  DropdownModule,
+  TagModule,
+  ListboxModule,
+  BadgeModule,
+  MessageModule,
+  CheckboxModule,
+  RadioButtonModule,
+  CalendarModule,
+  ContextMenuModule,
+  TableModule,
+  TabViewModule,
+  AccordionModule,
+  TreeTableModule,
+  TooltipModule,
+  ToggleButtonModule,
+  PaginatorModule,
+  DialogModule,
+  ProgressSpinnerModule,
+  AutoCompleteModule,
+  FontAwesomeModule,
+];
+
 @NgModule({
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
   exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
 })

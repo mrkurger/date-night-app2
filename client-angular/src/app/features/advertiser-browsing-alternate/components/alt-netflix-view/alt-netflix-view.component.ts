@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -25,11 +26,37 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/menuitem';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+// PrimeNG imports
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
+import { ScrollerModule } from 'primeng/scroller';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { MenuItem } from 'primeng/api';
+
+// Core services and interfaces
+import { AdService } from '../../../../core/services/ad.service';
+import { NotificationService } from '../../../../core/services/notification.service';
+import { ChatService } from '../../../../core/services/chat.service';
+import { AuthService } from '../../../../core/services/auth.service';
+import { Ad } from '../../../../core/models/ad.interface';
 
 @Component({
   selector: 'app-alt-netflix-view',
   standalone: true,
-  imports: [MenuItem, SpeedDialModule, MultiSelectModule, InputTextModule, DropdownModule, DividerModule, ScrollerModule, RippleModule, DialogModule, TooltipModule, ProgressSpinnerModule, TagModule, BadgeModule, ButtonModule, CardModule, 
+  imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

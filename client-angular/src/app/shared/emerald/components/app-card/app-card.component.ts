@@ -1,5 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
 import type { Ad } from '../../../../core/models/ad.interface';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';

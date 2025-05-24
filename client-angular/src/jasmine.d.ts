@@ -46,7 +46,21 @@ declare global {
       throwError(error: any): Spy<T>;
       stub(): Spy<T>;
     }
+    interface SpyAnd<T = any> {
+      callThrough(): Spy<T>;
+      returnValue(value: T): Spy<T>;
+      returnValues(...args: T[]): Spy<T>;
+      callFake(fn: (...args: any[]) => T): Spy<T>;
+      throwError(error: any): Spy<T>;
+      stub(): Spy<T>;
+    }
 
+    interface Spy<T = any> extends Function {
+      (...params: any[]): T;
+      and: SpyAnd<T>;
+      calls: Calls;
+      withArgs(...args: any[]): Spy<T>;
+    }
     interface Spy<T = any> extends Function {
       (...params: any[]): T;
       and: SpyAnd<T>;
@@ -108,7 +122,81 @@ declare global {
       methodNames: string[],
       properties?: { [key: string]: any },
     ): any;
+    interface SpyObj<T> {
+      [k: string]: Spy;
+    }
 
+    // PrimeNG specific spy types
+    interface MessageServiceSpyObj extends SpyObj<MessageService> {
+      add: Spy<void>;
+      addAll: Spy<void>;
+      clear: Spy<void>;
+    }
+
+    interface ConfirmationServiceSpyObj extends SpyObj<ConfirmationService> {
+      confirm: Spy<void>;
+      close: Spy<void>;
+    }
+
+    // PrimeNG specific types
+    interface FileUploadEvent {
+      files: File[];
+      currentFiles: File[];
+      originalEvent: Event;
+    }
+
+    interface Message {
+      severity?: string;
+      summary?: string;
+      detail?: string;
+      id?: any;
+      key?: string;
+      life?: number;
+      sticky?: boolean;
+      closable?: boolean;
+      data?: any;
+    }
+
+    interface ConfirmEventType {
+      accept: () => void;
+      reject: () => void;
+    }
+
+    interface FileUploadHandlerEvent {
+      files: File[];
+      uploadHandler: (e: FileUploadEvent) => void;
+    }
+
+    // Helper functions
+    function createSpy(name?: string, originalFn?: Function): Spy;
+    function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy };
+    function createSpyObj<T>(baseName: string, methodNames: string[]): SpyObj<T>;
+    function createSpyObj(
+      baseName: string,
+      methodNames: string[],
+      properties?: { [key: string]: any },
+    ): any;
+
+    interface Clock {
+      install(): void;
+      uninstall(): void;
+      tick(ms?: number): void;
+    }
+
+    interface Calls {
+      count(): number;
+      any(): boolean;
+      all(): boolean;
+      allArgs(): any[];
+      all(): any[];
+      mostRecent(): any;
+      first(): any;
+      reset(): void;
+    }
+  }
+
+  // Global expect function
+  function expect<T>(actual: T): jasmine.Matchers<T>;
     interface Clock {
       install(): void;
       uninstall(): void;

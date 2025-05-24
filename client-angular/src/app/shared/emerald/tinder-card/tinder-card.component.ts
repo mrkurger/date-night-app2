@@ -10,12 +10,20 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
+<<<<<<< HEAD
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+=======
+>>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
+<<<<<<< HEAD
+=======
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+>>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
   faHeart,
   faTimes,
   faMessage,
@@ -149,7 +157,11 @@ export interface TinderCardData {
     </p-card>
   `,
   styleUrls: ['./tinder-card.component.scss'],
+<<<<<<< HEAD
   imports: [TagModule, ChipModule, ButtonModule, CardModule, 
+=======
+  imports: [
+>>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
     CommonModule,
     CardModule,
     ButtonModule,

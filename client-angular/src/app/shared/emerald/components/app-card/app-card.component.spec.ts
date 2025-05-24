@@ -1,7 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { expect, jest } from '@jest/globals';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
@@ -63,10 +68,14 @@ describe('CardModule', () => {
   describe('Component Initialization', () => {
     it('should create', () => {
       expect(component).toBeDefined();
+      expect(component).toBeDefined();
     });
 
     it('should initialize with default values', () => {
       expect(component.layout).toBe('netflix');
+      expect(component.showActions).toBe(true);
+      expect(component.showDescription).toBe(true);
+      expect(component.isOnline).toBe(false);
       expect(component.showActions).toBe(true);
       expect(component.showDescription).toBe(true);
       expect(component.isOnline).toBe(false);
@@ -82,13 +91,27 @@ describe('CardModule', () => {
     it('should render p-card component', () => {
       const cardElement = debugElement.query(By.css('p-card'));
       expect(cardElement).toBeDefined();
+  describe('PrimeNG Components', () => {
+    it('should render p-card component', () => {
+      const cardElement = debugElement.query(By.css('p-card'));
+      expect(cardElement).toBeDefined();
     });
 
     it('should apply correct layout class to card', () => {
       const cardElement = debugElement.query(By.css('.p-card'));
       expect(cardElement.classes['p-card-netflix']).toBe(true);
+    it('should apply correct layout class to card', () => {
+      const cardElement = debugElement.query(By.css('.p-card'));
+      expect(cardElement.classes['p-card-netflix']).toBe(true);
     });
 
+    it('should render status badge with correct severity', () => {
+      component.isOnline = true;
+      fixture.detectChanges();
+
+      const badge = debugElement.query(By.css('p-badge'));
+      expect(badge.attributes['ng-reflect-severity']).toBe('success');
+      expect(badge.attributes['ng-reflect-value']).toBe('Online');
     it('should render status badge with correct severity', () => {
       component.isOnline = true;
       fixture.detectChanges();
@@ -109,11 +132,24 @@ describe('CardModule', () => {
       const emitSpy = jest.spyOn(component.share, 'emit');
       component.onShare(new Event('click'));
       expect(emitSpy).toHaveBeenCalledWith(mockAd._id);
+    it('should render action buttons when showActions is true', () => {
+      const buttons = debugElement.queryAll(By.css('p-button'));
+      expect(buttons.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Event Handling', () => {
+    it('should emit share event with ad ID', () => {
+      const emitSpy = jest.spyOn(component.share, 'emit');
+      component.onShare(new Event('click'));
+      expect(emitSpy).toHaveBeenCalledWith(mockAd._id);
     });
   });
 
   describe('Helper Methods', () => {
+  describe('Helper Methods', () => {
     it('should format price correctly', () => {
+      expect(component.formatPrice(1000)).toBe('$1,000.00');
       expect(component.formatPrice(1000)).toBe('$1,000.00');
     });
 
@@ -126,8 +162,19 @@ describe('CardModule', () => {
 
     it('should get correct media count', () => {
       expect(component.getMediaCount()).toBe(mockAd.images.length);
+      const longDesc = 'A'.repeat(150);
+      component.ad = { ...mockAd, description: longDesc };
+      const truncated = component.getTruncatedDescription();
+      expect(truncated.length).toBeLessThanOrEqual(103); // 100 chars + ellipsis
     });
 
+    it('should get correct media count', () => {
+      expect(component.getMediaCount()).toBe(mockAd.images.length);
+    });
+
+    it('should get media dots array', () => {
+      const dots = component.getMediaDots();
+      expect(dots.length).toBe(mockAd.images.length);
     it('should get media dots array', () => {
       const dots = component.getMediaDots();
       expect(dots.length).toBe(mockAd.images.length);
