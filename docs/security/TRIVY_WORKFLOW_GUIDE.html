@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trivy Security Scan Workflow Guide</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Trivy Security Scan Workflow Guide</h1>
+
+      <section>
+        <h2>Overview</h2>
+        <p>
+          The Trivy Security Scan workflow is designed to identify security vulnerabilities, 
+          secrets, and dependency issues in the Date Night App codebase. This workflow runs 
+          automatically on push events to key branches, on pull requests, weekly, and can be 
+          triggered manually.
+        </p>
+      </section>
+
+      <section>
+        <h2>Workflow Features</h2>
+        <ul>
+          <li>Comprehensive scanning of code, dependencies, and secrets</li>
+          <li>Automatic submodule initialization</li>
+          <li>Multiple report formats (text, JSON, HTML)</li>
+          <li>Detailed scan result handling with customizable severity thresholds</li>
+          <li>Artifact generation and preservation</li>
+          <li>GitHub workflow summary publishing</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Scan Types</h2>
+        
+        <h3>1. Code Vulnerability Scan</h3>
+        <p>
+          Scans the codebase for known security vulnerabilities in the code itself.
+          Focuses on HIGH and CRITICAL severity issues.
+        </p>
+        
+        <h3>2. Secret Scanning</h3>
+        <p>
+          Detects leaked secrets, API keys, tokens, and credentials in the codebase.
+          Helps prevent accidental exposure of sensitive information.
+        </p>
+        
+        <h3>3. Dependency Scanning</h3>
+        <p>
+          Identifies vulnerabilities in project dependencies including NPM packages,
+          system libraries, and other components. Includes MEDIUM, HIGH, and CRITICAL severities.
+        </p>
+      </section>
+
+      <section>
+        <h2>Configuration</h2>
+        <p>
+          The workflow uses the <code>trivy.yaml</code> configuration file in the repository root.
+          This file contains settings for:
+        </p>
+        <ul>
+          <li>Severity thresholds</li>
+          <li>Directories to skip</li>
+          <li>Secret scanning rules</li>
+          <li>Vulnerability database settings</li>
+          <li>Output formats</li>
+        </ul>
+        <p>
+          Most settings can be overridden via command-line flags in the workflow itself.
+        </p>
+      </section>
+
+      <section>
+        <h2>Workflow Behavior</h2>
+        <h3>On Pull Requests</h3>
+        <p>
+          When running on pull requests, the workflow will:
+        </p>
+        <ol>
+          <li>Scan the code in the PR branch</li>
+          <li>Generate detailed reports</li>
+          <li>Upload results as artifacts</li>
+          <li>Publish a summary to the workflow output</li>
+          <li>Continue even if vulnerabilities are found (won't fail the PR)</li>
+        </ol>
+        
+        <h3>On Push to Main/Angular19</h3>
+        <p>
+          When running on direct pushes to main branches, the workflow behaves similarly
+          to PR scans but may provide additional warnings about critical vulnerabilities.
+        </p>
+        
+        <h3>On Weekly Schedule</h3>
+        <p>
+          The weekly scheduled scan helps identify new vulnerabilities in existing code,
+          even when no changes are being made.
+        </p>
+      </section>
+
+      <section>
+        <h2>Interpreting Results</h2>
+        <p>
+          Scan results can be viewed in multiple ways:
+        </p>
+        <ol>
+          <li><strong>Workflow Logs</strong> - View real-time scanning output</li>
+          <li><strong>Workflow Summary</strong> - See counts of issues by category</li>
+          <li><strong>Downloadable Artifacts</strong> - Access detailed reports including:
+            <ul>
+              <li>HTML report with all findings</li>
+              <li>JSON files for programmatic processing</li>
+              <li>Text reports for quick review</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Handling Vulnerabilities</h2>
+        <p>
+          When vulnerabilities are detected:
+        </p>
+        <ol>
+          <li>Review the detailed reports to understand the issues</li>
+          <li>Prioritize fixes based on severity (CRITICAL and HIGH first)</li>
+          <li>For dependency vulnerabilities, check if updates are available</li>
+          <li>For code vulnerabilities, follow secure coding practices</li>
+          <li>For detected secrets, immediately revoke and rotate credentials, then remove from code</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Manual Triggering</h2>
+        <p>
+          The workflow can be triggered manually through the GitHub Actions interface.
+          This is useful for:
+        </p>
+        <ul>
+          <li>Scanning after dependency updates</li>
+          <li>Verifying fixes for previously identified issues</li>
+          <li>Running ad-hoc security checks</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Future Improvements</h2>
+        <ol>
+          <li><strong>Custom Rules</strong> - Develop project-specific scanning rules</li>
+          <li><strong>Vulnerability Trending</strong> - Track vulnerabilities over time</li>
+          <li><strong>Automatic PR Creation</strong> - Generate PRs for dependency updates</li>
+          <li><strong>Integration with Issue Tracking</strong> - Auto-create issues for findings</li>
+          <li><strong>Incremental Scanning</strong> - Scan only changed files for faster results</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Security Scanning AI Lessons</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Security Scanning AI Lessons</h1>
+
+      <section>
+        <h2>Implementation Insights</h2>
+        <p>
+          During the implementation of security scanning workflows in the Date Night App,
+          we learned several key lessons about effective security automation:
+        </p>
+        
+        <h3>1. Balance Between Strictness and Practicality</h3>
+        <p>
+          Initially, the Trivy workflow was configured to fail builds on any vulnerability
+          detection. This proved impractical as many dependencies contain known issues that
+          cannot be immediately resolved. We learned to:
+        </p>
+        <ul>
+          <li>Use <code>continue-on-error</code> for initial scans</li>
+          <li>Set severity thresholds appropriately (focus on CRITICAL and HIGH)</li>
+          <li>Generate comprehensive reports rather than simply failing builds</li>
+          <li>Create actionable outputs that help developers resolve issues</li>
+        </ul>
+        
+        <h3>2. Configuration as Code</h3>
+        <p>
+          Moving the Trivy configuration to a dedicated <code>trivy.yaml</code> file rather than
+          embedding all settings in the workflow provided several advantages:
+        </p>
+        <ul>
+          <li>Easier maintenance and version control</li>
+          <li>Better documentation of scanning parameters</li>
+          <li>Ability to run the same configuration locally</li>
+          <li>Simplified workflow file with less duplication</li>
+        </ul>
+        
+        <h3>3. Multi-Format Reporting</h3>
+        <p>
+          Generating multiple output formats (text, JSON, HTML) enabled different use cases:
+        </p>
+        <ul>
+          <li>HTML for human-readable comprehensive reports</li>
+          <li>JSON for programmatic processing and integration with other tools</li>
+          <li>Text for workflow logs and quick reference</li>
+          <li>Markdown for GitHub workflow summaries</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Dependency Management</h2>
+        <p>
+          Security scanning tools themselves require careful dependency management:
+        </p>
+        <ul>
+          <li>
+            <strong>Tool Installation:</strong> We switched from manually installing Trivy via apt
+            to using the official Trivy GitHub Action, which ensures compatibility and reduces
+            maintenance overhead.
+          </li>
+          <li>
+            <strong>Database Updates:</strong> Security scanners depend on vulnerability databases
+            that need regular updates. We learned to explicitly manage database updates in the
+            workflow to ensure current vulnerability detection.
+          </li>
+          <li>
+            <strong>Tool Versioning:</strong> Pinning to specific versions of security tools helps
+            ensure consistent results, while occasionally updating to newer versions brings
+            improved detection capabilities.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Testing</h2>
+        <p>
+          Testing security scanning workflows required specialized approaches:
+        </p>
+        <ul>
+          <li>
+            <strong>Deliberate Vulnerability Testing:</strong> Creating temporary test files with
+            known vulnerabilities helped verify that the scanner was working correctly.
+          </li>
+          <li>
+            <strong>False Positive Handling:</strong> Developing strategies to identify and suppress
+            false positives while still catching real issues.
+          </li>
+          <li>
+            <strong>Integration Testing:</strong> Verifying that scanning results properly integrate
+            with other GitHub features like code scanning alerts.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Performance Optimization</h2>
+        <p>
+          Security scanning can be resource-intensive. We implemented several optimizations:
+        </p>
+        <ul>
+          <li>
+            <strong>Targeted Scanning:</strong> Focusing scans on relevant directories and file types
+            rather than scanning everything.
+          </li>
+          <li>
+            <strong>Caching:</strong> Enabling Trivy's cache to speed up repeat scans and reduce
+            database download frequency.
+          </li>
+          <li>
+            <strong>Parallelization:</strong> Running different types of scans (code, secrets, dependencies)
+            as separate steps rather than one monolithic scan.
+          </li>
+          <li>
+            <strong>Optimized Triggers:</strong> Running comprehensive scans on schedule rather than
+            on every commit to balance security and performance.
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

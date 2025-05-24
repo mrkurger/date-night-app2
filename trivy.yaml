@@ -1,0 +1,64 @@
+# Trivy Configuration File
+# See https://aquasecurity.github.io/trivy/v0.44/docs/references/customization/config-file/ for details
+
+# General settings
+timeout: 10m
+no-progress: true
+debug: false
+quiet: false
+insecure: false
+
+# Severity settings - used by the workflow but can be overridden with command-line flags
+severity:
+  - MEDIUM
+  - HIGH
+  - CRITICAL
+
+# Vulnerability settings
+vulnerability:
+  type:
+    - os
+    - library
+  ignore-unfixed: false
+  # Configurations for specific vulnerabilities to ignore (examples)
+  # ignore:
+  #   - id: CVE-2021-XXXXX
+  #     reason: "Not applicable to our environment"
+
+# Scanning settings
+scan:
+  skip-dirs:
+    - node_modules
+    - .git
+    - dist
+    - build
+    - tmp
+    - generated
+
+# Secret scanning settings
+secret:
+  # Disable specific secret detection rules if needed
+  # disable-rules:
+  #   - generic-api-key
+  # Configure allowed patterns for specific rules
+  # allowed-patterns:
+  #   - generic-api-key: ["EXAMPLE_API_KEY"]
+  enable-builtin-rules: true
+
+# Output format settings
+report:
+  format: table
+  exit-code: 0 # Default to 0 to prevent failing builds, will be overridden in the workflow
+
+# Miscellaneous settings
+cache:
+  enabled: true
+  ttl: 24h
+
+# GitHub Security Advisory Database settings
+db:
+  repository: ghcr.io/aquasecurity/trivy-db
+  skip-update: false
+
+github:
+  token: ""  # Will use GITHUB_TOKEN from workflow environment

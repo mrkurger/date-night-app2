@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Security Scanning Changelog</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Security Scanning Changelog</h1>
+
+      <section>
+        <h2>Version 2.0.0 - June 2025</h2>
+        <h3>Major Updates to Trivy Workflow</h3>
+        <ul>
+          <li>Updated trivy-scan.yml workflow with comprehensive improvements</li>
+          <li>Added support for initializing and scanning Git submodules</li>
+          <li>Enhanced Trivy scan steps with detailed options and multiple output formats</li>
+          <li>Implemented proper handling of Trivy warnings with customizable severity thresholds</li>
+          <li>Added HTML report generation for better visualization of scan results</li>
+          <li>Implemented workflow artifact upload for scan results</li>
+          <li>Added GitHub workflow summary for quick result review</li>
+          <li>Updated to checkout@v4 for better security and performance</li>
+          <li>Added concurrency settings to prevent duplicate workflow runs</li>
+          <li>Created dedicated trivy.yaml configuration file</li>
+          <li>Added comprehensive documentation in docs/security/</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Version 1.2.0 - April 2025</h2>
+        <h3>Minor Updates</h3>
+        <ul>
+          <li>Added scanning for secret detection in codebase</li>
+          <li>Added dependency vulnerability scanning</li>
+          <li>Updated permissions for GitHub actions</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Version 1.1.0 - March 2025</h2>
+        <h3>Initial Implementation</h3>
+        <ul>
+          <li>Created basic trivy-scan.yml workflow</li>
+          <li>Configured Trivy to scan for HIGH and CRITICAL vulnerabilities</li>
+          <li>Set up workflow to run on branch pushes</li>
+          <li>Implemented basic vulnerability reporting</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

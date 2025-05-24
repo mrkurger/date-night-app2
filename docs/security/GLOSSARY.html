@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Security Scanning Glossary</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Security Scanning Glossary</h1>
+
+      <section>
+        <h2>Terms and Definitions</h2>
+        
+        <dl>
+          <dt id="trivy">Trivy</dt>
+          <dd>
+            A comprehensive, open-source security scanner for containers, file systems, and git repositories.
+            Trivy detects vulnerabilities in OS packages and application dependencies.
+          </dd>
+          
+          <dt id="sbom">SBOM (Software Bill of Materials)</dt>
+          <dd>
+            A formal, machine-readable inventory of software components and dependencies, their relationships, 
+            and hierarchical structure, used to track and manage security vulnerabilities.
+          </dd>
+          
+          <dt id="cve">CVE (Common Vulnerabilities and Exposures)</dt>
+          <dd>
+            A standardized identifier for known security vulnerabilities, maintained by MITRE Corporation.
+            Each CVE entry includes identification number, description, and references.
+          </dd>
+          
+          <dt id="sast">SAST (Static Application Security Testing)</dt>
+          <dd>
+            A testing methodology that analyzes source code for security vulnerabilities without executing the program.
+            Trivy performs SAST when scanning repositories.
+          </dd>
+          
+          <dt id="severity">Severity Level</dt>
+          <dd>
+            A classification of vulnerabilities based on their potential impact and exploitability.
+            Common levels include CRITICAL, HIGH, MEDIUM, and LOW.
+          </dd>
+          
+          <dt id="secret-scanning">Secret Scanning</dt>
+          <dd>
+            The process of detecting credentials, API keys, tokens, and other sensitive information in source code,
+            which should not be committed to repositories.
+          </dd>
+          
+          <dt id="dependency-scanning">Dependency Scanning</dt>
+          <dd>
+            The process of checking software dependencies (libraries, packages, etc.) for known security vulnerabilities.
+          </dd>
+          
+          <dt id="exit-code">Exit Code</dt>
+          <dd>
+            A value returned by a process to indicate its completion status. In security scanning,
+            non-zero exit codes typically indicate that vulnerabilities were found.
+          </dd>
+          
+          <dt id="sarif">SARIF (Static Analysis Results Interchange Format)</dt>
+          <dd>
+            A JSON-based standard format for the output of static analysis tools, enabling integration
+            with different development and security tools.
+          </dd>
+        </dl>
+      </section>
+      
+      <section>
+        <h2>Workflow Components</h2>
+        
+        <dl>
+          <dt id="trivy-config">trivy.yaml</dt>
+          <dd>
+            Configuration file for Trivy scanner that defines scanning parameters, severity thresholds,
+            and output formats.
+          </dd>
+          
+          <dt id="trivy-scan-workflow">trivy-scan.yml</dt>
+          <dd>
+            GitHub Actions workflow file that defines the security scanning process, including
+            when scans run, what they scan for, and how results are processed.
+          </dd>
+          
+          <dt id="workflow-dispatch">workflow_dispatch</dt>
+          <dd>
+            A GitHub Actions trigger that allows workflows to be manually executed from the GitHub interface,
+            useful for running on-demand security scans.
+          </dd>
+          
+          <dt id="concurrency-control">Concurrency Control</dt>
+          <dd>
+            A mechanism in GitHub Actions that prevents multiple instances of the same workflow
+            from running simultaneously, optimizing resource usage.
+          </dd>
+          
+          <dt id="submodule-initialization">Submodule Initialization</dt>
+          <dd>
+            The process of initializing and updating Git submodules, which are Git repositories
+            nested within another Git repository, ensuring they are also scanned for vulnerabilities.
+          </dd>
+        </dl>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
