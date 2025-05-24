@@ -46,6 +46,7 @@
     "express-mongo-sanitize": "2.2.0",
     "express-rate-limit": "7.5.0",
     "express-session": "^1.18.0",
+    "express-validator": "^7.0.1",
     "file-type": "20.5.0",
     "glob": "^10.3.10",
     "helmet": "8.1.0",

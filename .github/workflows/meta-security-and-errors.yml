@@ -9,7 +9,8 @@ on:
   workflow_run:
     workflows: ["*"]
     types: [completed]
-    branches: [main, develop]
+    branches: 
+      - '**'  # Updated to match any branch
 
 # Permissions for all jobs (restricted by step as needed)
 permissions:
@@ -33,23 +34,26 @@ jobs:
     name: Security Scan & Dependency Reports
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # Skip if this is a workflow_run event (handled in sync-workflow-errors job)
     if: github.event_name != 'workflow_run'
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Node setup and tools install
+      # Setup the required Node.js version
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
+      # Install security tools using npm
       - name: Install Security Tools
         run: npm install --save-dev npm-audit-html npm-check snyk
 
-      # NPM Audit for client
+      # Check client dependencies for issues
       - name: Check Client Dependencies
         id: check-client
         continue-on-error: true
@@ -62,7 +66,7 @@ jobs:
             cd ..
           fi
 
-      # NPM Audit for server
+      # Check server dependencies for issues
       - name: Check Server Dependencies
         id: check-server
         continue-on-error: true
@@ -75,37 +79,42 @@ jobs:
             cd ..
           fi
 
+      # Authenticate with Snyk if SNYK_TOKEN secret is set
       - name: Authenticate with Snyk
-        if: ${{ secrets.SNYK_TOKEN != '' }}
-        run: npx snyk auth ${{ secrets.SNYK_TOKEN }}
+        if: env.SNYK_TOKEN != '' # secret must be referenced via env for step-level if
+        run: npx snyk auth ${{ env.SNYK_TOKEN }}
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      # Scan root project with Snyk if SNYK_TOKEN is set
       - name: Scan root project with Snyk
-        if: ${{ secrets.SNYK_TOKEN != '' }}
+        if: env.SNYK_TOKEN != ''
         run: npx snyk test --json > snyk-root-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      # Scan server project with Snyk if SNYK_TOKEN is set
       - name: Scan server project with Snyk
-        if: ${{ secrets.SNYK_TOKEN != '' }}
+        if: env.SNYK_TOKEN != ''
         run: cd server && npx snyk test --json > ../snyk-server-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      # Scan client project with Snyk if SNYK_TOKEN is set
       - name: Scan client project with Snyk
-        if: ${{ secrets.SNYK_TOKEN != '' }}
+        if: env.SNYK_TOKEN != ''
         run: cd client-angular && npx snyk test --json > ../snyk-client-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      # Generate dependency trees for all major project folders
       - name: Generate dependency trees
         run: |
           npm ls --json --depth=2 > npm-root-deps-tree.json || true
           cd server && npm ls --json --depth=2 > ../npm-server-deps-tree.json || true
           cd ../client-angular && npm ls --json --depth=2 > ../npm-client-deps-tree.json || true
 
-      # Generate combined markdown/HTML report and Snyk task list
+      # Generate markdown/HTML security report and snyk task list
       - name: Generate Combined Security Report
         run: |
           mkdir -p downloaded-reports/security downloaded-reports/security/html-reports downloaded-reports/snyk
@@ -127,6 +136,7 @@ jobs:
           3. Known vulnerabilities in third-party libraries
           EOL
 
+      # Upload all JSON results as artifacts for later review
       - name: Upload JSON results as artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -137,9 +147,11 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+      # Remove all JSON files after upload
       - name: Remove JSON files
         run: rm -f snyk-*.json npm-*.json
 
+      # Commit and push the generated reports back to the repository
       - name: Commit Reports
         run: |
           git config --local user.email "action@github.com"
@@ -161,30 +173,36 @@ jobs:
     name: Sync Workflow Errors
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Only run if the workflow_run event indicates a failed/cancelled/timed_out workflow
     if: >
       github.event_name == 'workflow_run' &&
       contains(fromJSON('["failure", "cancelled", "timed_out"]'), github.event.workflow_run.conclusion)
     env:
       ARTIFACTS_RETENTION: 14
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Setup Node.js (for scripts and log processing)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
+      # Install dependencies for scripts (including GitHub API/tools)
       - name: Install Dependencies
         run: |
           npm ci || npm install
           npm install @octokit/rest@20 adm-zip@0.5.10
 
+      # Disable Husky hooks in CI to avoid commit errors
       - name: Disable Husky
         run: node .github/scripts/disable-husky-in-ci.js
 
+      # Fetch workflow logs for analysis
       - name: Fetch Workflow Logs
         id: fetch-logs
         run: |
@@ -194,10 +212,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
 
+      # Run analyzer test scripts for error patterns
       - name: Run Analyzer Tests
         run: |
           node .github/scripts/test-error-analyzer.js
 
+      # Generate error report if previous step succeeded
       - name: Generate Error Report
         if: success()
         run: |
@@ -205,12 +225,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Validate known error patterns
       - name: Run Error Pattern Validation
         run: |
           node .github/scripts/validate-error-patterns.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Always upload error reports and logs as artifacts
       - name: Upload Error Reports
         uses: actions/upload-artifact@v4
         if: always()

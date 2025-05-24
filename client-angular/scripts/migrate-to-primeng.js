@@ -1,192 +1,214 @@
-// migrate-to-primeng.js
-// Script to migrate from Emerald UI and Angular Material to PrimeNG
-import fs from 'fs/promises';
+#!/usr/bin/env node
+
+/**
+ * Script to help migrate from Nebular UI components to PrimeNG
+ * 
+ * Usage: node migrate-to-primeng.js <directory>
+ * 
+ * This script will:
+ * 1. Replace Nebular component selectors with PrimeNG equivalents
+ * 2. Update class names to use PrimeNG conventions
+ * 3. Update component imports
+ * 
+ * Example: node migrate-to-primeng.js src/app/components
+ */
+
+import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+// Get the directory name using ESM syntax
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
-// Component mappings
-const COMPONENT_MAPPINGS = {
-    // Emerald UI to PrimeNG
-    'emerald-app-card': 'p-card',
-    'emerald-button': 'p-button',
-    'emerald-input': 'p-inputText',
-    'emerald-label': 'p-tag',
-    'emerald-toggle': 'p-inputSwitch',
-    'emerald-card-grid': 'div class="grid"',
-    'emerald-pager': 'p-paginator',
-    'emerald-floating-action-button': 'p-button styleClass="p-button-rounded"',
-    'emerald-avatar': 'p-avatar',
-    'emerald-carousel': 'p-carousel',
-    'emerald-info-panel': 'p-panel',
-    'emerald-page-header': 'p-toolbar',
-    'emerald-skeleton-loader': 'p-skeleton',
-    
-    // Angular Material to PrimeNG
-    'mat-card': 'p-card',
-    'mat-button': 'p-button',
-    'mat-raised-button': 'p-button styleClass="p-button-raised"',
-    'mat-stroked-button': 'p-button styleClass="p-button-outlined"',
-    'mat-flat-button': 'p-button styleClass="p-button-flat"',
-    'mat-icon-button': 'p-button styleClass="p-button-icon"',
-    'mat-form-field': 'span class="p-float-label"',
-    'mat-label': 'label',
-    'mat-input': 'p-inputText',
-    'mat-select': 'p-dropdown',
-    'mat-option': 'ng-template pTemplate="item"',
-    'mat-checkbox': 'p-checkbox',
-    'mat-radio': 'p-radioButton',
-    'mat-slide-toggle': 'p-inputSwitch',
-    'mat-progress-spinner': 'p-progressSpinner',
-    'mat-table': 'p-table',
-    'mat-paginator': 'p-paginator'
+// Component mapping from Nebular to PrimeNG
+const componentMap = {
+  // Selectors
+  'nb-card': 'p-card',
+  'nb-card-header': 'p-card-header',
+  'nb-card-body': 'p-card-body',
+  'nb-card-footer': 'p-card-footer',
+  'nb-button': 'p-button',
+  'nb-input': 'p-inputtext',
+  'nb-select': 'p-dropdown',
+  'nb-checkbox': 'p-checkbox',
+  'nb-radio': 'p-radiobutton',
+  'nb-toggle': 'p-inputswitch',
+  'nb-icon': 'p-icon',
+  'nb-spinner': 'p-progressspinner',
+  'nb-badge': 'p-badge',
+  'nb-user': 'p-avatar',
+  'nb-accordion': 'p-accordion',
+  'nb-tabset': 'p-tabview',
+  'nb-datepicker': 'p-calendar',
+  'nb-paginator': 'p-paginator',
+  'nb-dialog': 'p-dialog',
+  'nb-menu': 'p-menu',
+  'nb-tag': 'p-tag',
+  'nb-alert': 'p-message',
+  'nb-toast': 'p-toast',
+  'nb-tree': 'p-tree',
+  'nb-layout': 'p-panel',
+  'nb-sidebar': 'p-sidebar',
+  'nb-stepper': 'p-steps',
+  'nb-divider': 'p-divider',
+  
+  // Class names
+  'nb-card': 'p-card',
+  'nb-card-header': 'p-card-header',
+  'nb-card-body': 'p-card-body',
+  'nb-card-footer': 'p-card-footer',
+  'nb-button': 'p-button',
+  'nb-primary': 'p-button-primary',
+  'nb-secondary': 'p-button-secondary',
+  'nb-success': 'p-button-success',
+  'nb-info': 'p-button-info',
+  'nb-warning': 'p-button-warning',
+  'nb-danger': 'p-button-danger',
+  'nb-small': 'p-button-sm',
+  'nb-medium': 'p-button',
+  'nb-large': 'p-button-lg',
+  'nb-full-width': 'w-full',
+  'nb-icon-start': 'p-button-icon-left',
+  'nb-icon-end': 'p-button-icon-right'
 };
 
-// Import mappings
-const IMPORT_MAPPINGS = {
-    // Emerald UI to PrimeNG
-    '@emerald/core': null,
-    '@emerald/components': null,
-    '@emerald/icons': null,
-    
-    // Angular Material to PrimeNG modules
-    '@angular/material/button': 'primeng/button',
-    '@angular/material/card': 'primeng/card',
-    '@angular/material/checkbox': 'primeng/checkbox',
-    '@angular/material/core': null,
-    '@angular/material/form-field': null,
-    '@angular/material/icon': 'primeng/icon',
-    '@angular/material/input': 'primeng/inputtext',
-    '@angular/material/select': 'primeng/dropdown',
-    '@angular/material/progress-spinner': 'primeng/progressspinner',
-    '@angular/material/table': 'primeng/table',
-    '@angular/material/paginator': 'primeng/paginator'
+// Import mapping for component modules
+const importMap = {
+  '@nebular/theme': 'primeng',
+  // Add more specific mappings as needed
+  'NbCardModule': 'CardModule',
+  'NbButtonModule': 'ButtonModule',
+  'NbInputModule': 'InputTextModule',
+  'NbSelectModule': 'DropdownModule',
+  'NbCheckboxModule': 'CheckboxModule',
+  'NbRadioModule': 'RadioButtonModule',
+  'NbToggleModule': 'InputSwitchModule',
+  'NbIconModule': 'IconField',
+  'NbSpinnerModule': 'ProgressSpinnerModule',
+  'NbBadgeModule': 'BadgeModule',
+  'NbUserModule': 'AvatarModule',
+  'NbAccordionModule': 'AccordionModule',
+  'NbTabsetModule': 'TabViewModule',
+  'NbDatepickerModule': 'CalendarModule',
+  'NbPaginatorModule': 'PaginatorModule',
+  'NbDialogModule': 'DialogModule',
+  'NbMenuModule': 'MenuModule',
+  'NbTagModule': 'TagModule'
 };
 
-// Module mappings
-const MODULE_MAPPINGS = {
-    // Material modules to PrimeNG modules
-    'MatButtonModule': 'ButtonModule',
-    'MatCardModule': 'CardModule',
-    'MatCheckboxModule': 'CheckboxModule',
-    'MatFormFieldModule': null,
-    'MatIconModule': null,
-    'MatInputModule': 'InputTextModule',
-    'MatSelectModule': 'DropdownModule',
-    'MatProgressSpinnerModule': 'ProgressSpinnerModule',
-    'MatTableModule': 'TableModule',
-    'MatPaginatorModule': 'PaginatorModule',
+/**
+ * Process all files in a directory recursively
+ * @param {string} dirPath - Directory to process
+ * @returns {Promise<void>}
+ */
+async function processDirectory(dirPath) {
+  try {
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
     
-    // Emerald modules
-    'EmeraldModule': null,
-    'AppCardComponent': 'CardModule',
-    'AvatarComponent': 'AvatarModule',
-    'CarouselComponent': 'CarouselModule',
-    'InfoPanelComponent': 'PanelModule',
-    'LabelComponent': 'TagModule',
-    'PageHeaderComponent': 'ToolbarModule',
-    'SkeletonLoaderComponent': 'SkeletonModule',
-    'ToggleComponent': 'InputSwitchModule',
-    'CardGridComponent': null,
-    'PagerComponent': 'PaginatorModule',
-    'FloatingActionButtonComponent': 'ButtonModule'
-};
-
-async function findFiles(dir, pattern) {
-    const files = await fs.readdir(dir, { withFileTypes: true });
-    const results = [];
-    
-    for (const file of files) {
-        const fullPath = path.join(dir, file.name);
-        if (file.isDirectory()) {
-            results.push(...(await findFiles(fullPath, pattern)));
-        } else if (pattern.test(file.name)) {
-            results.push(fullPath);
-        }
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name);
+      
+      if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules' && entry.name !== 'dist') {
+        // Process subdirectories recursively
+        await processDirectory(fullPath);
+      } else if (entry.isFile() && (entry.name.endsWith('.ts') || 
+                                   entry.name.endsWith('.html') || 
+                                   entry.name.endsWith('.scss'))) {
+        // Process TypeScript, HTML and SCSS files
+        await replaceInFile(fullPath);
+      }
     }
-    
-    return results;
+  } catch (error) {
+    console.error(`Error processing directory ${dirPath}:`, error);
+    throw error; // Re-throw to be caught by the main function
+  }
 }
 
-async function updateHtmlFile(filePath) {
-    console.log(`Processing HTML file: ${filePath}`);
+/**
+ * Replace Nebular components with PrimeNG equivalents in a file
+ * @param {string} filePath - File to process
+ * @returns {Promise<void>}
+ */
+async function replaceInFile(filePath) {
+  try {
     let content = await fs.readFile(filePath, 'utf8');
     let modified = false;
-    
-    // Replace component selectors
-    for (const [oldSelector, newSelector] of Object.entries(COMPONENT_MAPPINGS)) {
-        if (newSelector) {
-            const regex = new RegExp(`<${oldSelector}([^>]*)>`, 'g');
-            const newContent = content.replace(regex, `<${newSelector}$1>`);
-            
-            const closingRegex = new RegExp(`</${oldSelector}>`, 'g');
-            content = newContent.replace(closingRegex, `</${newSelector.split(' ')[0]}>`);
-            
-            if (content !== newContent) {
-                modified = true;
-            }
-        }
-    }
-    
-    if (modified) {
-        await fs.writeFile(filePath, content, 'utf8');
-        console.log(`Updated ${filePath}`);
-    }
-}
 
-async function updateTypeScriptFile(filePath) {
-    console.log(`Processing TypeScript file: ${filePath}`);
-    let content = await fs.readFile(filePath, 'utf8');
-    let modified = false;
-    
+    // Replace component selectors and class names
+    for (const [nebular, primeng] of Object.entries(componentMap)) {
+      const regex = new RegExp(nebular, 'g');
+      if (content.match(regex)) {
+        content = content.replace(regex, primeng);
+        modified = true;
+      }
+    }
+
     // Replace imports
-    for (const [oldImport, newImport] of Object.entries(IMPORT_MAPPINGS)) {
-        if (newImport) {
-            const importRegex = new RegExp(`from ['"]${oldImport}['"]`, 'g');
-            const newContent = content.replace(importRegex, `from '${newImport}'`);
-            if (content !== newContent) {
-                content = newContent;
-                modified = true;
-            }
-        }
+    for (const [nebular, primeng] of Object.entries(importMap)) {
+      const importRegex = new RegExp(`from ['\"]${nebular}.*['\"]`, 'g');
+      if (content.match(importRegex)) {
+        content = content.replace(importRegex, `from 'primeng/${primeng.toLowerCase()}'`);
+        modified = true;
+      }
+      
+      // Replace module names in imports
+      const moduleRegex = new RegExp(`\\b${nebular}\\b`, 'g');
+      if (content.match(moduleRegex)) {
+        content = content.replace(moduleRegex, primeng);
+        modified = true;
+      }
     }
-    
-    // Replace module names
-    for (const [oldModule, newModule] of Object.entries(MODULE_MAPPINGS)) {
-        if (newModule) {
-            const moduleRegex = new RegExp(`\\b${oldModule}\\b`, 'g');
-            const newContent = content.replace(moduleRegex, newModule);
-            if (content !== newContent) {
-                content = newContent;
-                modified = true;
-            }
-        }
-    }
-    
+
     if (modified) {
-        await fs.writeFile(filePath, content, 'utf8');
-        console.log(`Updated ${filePath}`);
+      await fs.writeFile(filePath, content, 'utf8');
+      console.log(`Updated ${filePath}`);
     }
+  } catch (error) {
+    console.error(`Error processing file ${filePath}:`, error);
+    throw error; // Re-throw to be caught by the main function
+  }
 }
 
-async function main() {
-    const srcDir = path.join(__dirname, '..', 'src');
+/**
+ * Main function to migrate components
+ * @param {string} directoryPath - Directory to migrate
+ * @returns {Promise<void>}
+ */
+async function migrateToNebular(directoryPath) {
+  try {
+    const fullPath = path.resolve(process.cwd(), directoryPath);
+    console.log(`Starting migration in ${fullPath}`);
     
-    // Process HTML files
-    const htmlFiles = await findFiles(srcDir, /\.html$/);
-    for (const file of htmlFiles) {
-        await updateHtmlFile(file);
+    // Check if directory exists
+    try {
+      await fs.access(fullPath);
+    } catch (error) {
+      throw new Error(`Directory not found: ${fullPath}`);
     }
     
-    // Process TypeScript files
-    const tsFiles = await findFiles(srcDir, /\.ts$/);
-    for (const file of tsFiles) {
-        await updateTypeScriptFile(file);
-    }
-    
-    console.log('Migration completed');
+    await processDirectory(fullPath);
+    console.log('Migration complete!');
+  } catch (error) {
+    console.error('Migration failed:', error);
+    throw error; // Re-throw for the main handler
+  }
 }
 
-main().catch(console.error);
+// Main execution
+if (process.argv.length <= 2) {
+  console.error('Error: Please provide a directory path to migrate.');
+  console.error('Usage: node migrate-to-primeng.js <directory>');
+  console.error('Example: node migrate-to-primeng.js src/app/components');
+  process.exit(1);
+}
+
+const directory = process.argv[2];
+try {
+  migrateToNebular(directory);
+} catch (error) {
+  console.error('Migration failed:', error);
+  console.error(error.stack);
+  process.exit(1);
+}

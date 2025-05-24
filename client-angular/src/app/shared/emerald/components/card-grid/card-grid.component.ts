@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
-import { _NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
+import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE

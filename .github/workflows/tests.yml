@@ -1,9 +1,12 @@
 name: Tests
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
   pull_request:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
   workflow_dispatch:
 
 permissions:
@@ -11,6 +14,11 @@ permissions:
   checks: write        # For publishing test results
   pull-requests: write # For commenting test results
   actions: read       # For checking build status
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   server-tests:

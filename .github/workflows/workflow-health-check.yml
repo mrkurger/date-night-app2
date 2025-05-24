@@ -1,3 +1,4 @@
+---
 name: Workflow Health Check
 
 on:
@@ -10,10 +11,15 @@ env:
 
 permissions:
   actions: read       # For reading workflow runs
-  contents: write    # For committing health check results
-  issues: write      # For creating issue reports
+  contents: write     # For committing health check results
+  issues: write       # For creating issue reports
   pull-requests: write # For commenting on PRs
-  checks: write      # For creating check runs
+  checks: write       # For creating check runs
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   health-check:

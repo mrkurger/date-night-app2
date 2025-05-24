@@ -2,7 +2,7 @@ name: Meta Docs & Config
 
 on:
   push:
-    branches: [main, develop, Nebular-UI-Refactor]
+    branches: ['**']  # Updated to match any branch
     paths:
       - 'docs/**'
       - '**/*.md'

@@ -11,7 +11,7 @@ import express from 'express';
 const router = express.Router();
 import favoriteController from '../controllers/favorite.controller.js';
 import { protect as authenticate } from '../middleware/auth.js';
-import { ValidationUtils, zodSchemas } from '../utils/validation-utils.ts';
+import { ValidationUtils, zodSchemas } from '../utils/validation-utils.js';
 import FavoriteSchemas from '../middleware/validators/favorite.validator.js';
 
 /**

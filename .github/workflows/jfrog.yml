@@ -1,50 +1,57 @@
+---
 name: "JFrog Integration Example"
-on: push
+
+# Updated to run on all branches to improve development workflow and catch issues earlier
+on:
+  push:
+    branches:
+      - '**'  # Matches any branch
 
 permissions:
   contents: write    # For publishing artifacts
-  actions: read     # For reading build status
-  pull-requests: write # For commenting results
+  actions: read      # For reading build status
+  pull-requests: write  # For commenting results
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v4
-        env:
-          JF_URL: ${{ vars.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-
-      - name: Setup Node npm
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Install Client Dependencies
-        run: cd client-angular && npm ci
-
-      - name: Set CLI Config
-        run: jf npm-config --global=true --repo-resolve=ht-npm --repo-deploy=ht-npm || echo "JFrog CLI config failed - credentials may be missing"
-
-      - name: Install Deps with JFrog
-        run: jf npm install || echo "JFrog npm install failed - using regular npm install"
-
-      - name: Run tests
-        run: npm test
-
-      - name: Publish
-        run: jf npm publish || echo "JFrog publish failed - credentials may be missing"
-
-      - name: Publish Build info With JFrog CLI
-        run: |
+     runs-on: ubuntu-latest
+       
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v4
+         
+       - name: Setup JFrog CLI
+         uses: jfrog/setup-jfrog-cli@v4
+         env:  
+           JF_URL: ${{ vars.JF_URL }}
+           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+           
+       - name: Setup Node npm
+         uses: actions/setup-node@v3
+           
+       - name: Set CLI Config
+         run: |
+           # Configure JFrog CLI with the necessary server ID
+           jfrog c add my-server --url=${{ vars.JF_URL }} --user=git_art --password=${{ secrets.JFROG_ADMIN_PASSWORD }}
+           jfrog c use my-server
+           jf npm-config --global=true --repo-resolve=ht-npm --repo-deploy=ht-npm
+           
+       - name: Install Deps
+         run: jf npm install
+           
+       - name: Run tests
+         run: npm test
+         
+       - name: Publish
+         run: jf npm publish
+         
+       - name: Publish Build info With JFrog CLI
+         run: |
           # Collect environment variables for the build
           jf rt build-collect-env || echo "Failed to collect build env"
           # Collect VCS details from git and add them to the build
