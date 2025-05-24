@@ -11,7 +11,7 @@ import express from 'express';
 import walletController from '../controllers/wallet.controller.js';
 import { authenticateToken } from '../middleware/authenticateToken.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { ValidationUtils } from '../utils/validation-utils.js';
 import { WalletSchemas } from '../middleware/validators/wallet.validator.ts';
 
 const router = express.Router();

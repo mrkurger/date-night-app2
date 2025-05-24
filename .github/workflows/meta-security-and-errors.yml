@@ -9,7 +9,8 @@ on:
   workflow_run:
     workflows: ["*"]
     types: [completed]
-    branches: [main, develop]
+    branches: 
+      - '**'  # Updated to match any branch
 
 # Permissions for all jobs (restricted by step as needed)
 permissions:

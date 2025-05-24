@@ -3,7 +3,8 @@ const router = express.Router();
 import reviewController from '../controllers/review.controller.js';
 import { protect as authenticate, optionalAuth } from '../middleware/auth.js';
 import { isAdmin } from '../middleware/roles.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { z } from 'zod';
+import { ValidationUtils } from '../utils/validation-utils.js';
 import ReviewSchemas from '../middleware/validators/review.validator.js';
 
 // Create a new review

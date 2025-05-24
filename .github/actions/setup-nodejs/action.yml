@@ -20,9 +20,32 @@ runs:
         echo "Using node version: $(node --version)"
       shell: bash
 
-    # Step 3: Validate the presence and correctness of package.json and package-lock.json
+    # Step 3: Verify package.json and lockfile
     - name: Verify package.json and lockfile
       run: |
+        echo "Current job: ${{ github.job }}"
+        
+        # Determine the working directory based on job name
+        WORKING_DIR="."
+        
+        # For client-angular job
+        if [[ "${{ github.job }}" == *"client"* ]]; then
+          WORKING_DIR="./client-angular"
+          echo "Setting working directory to client-angular"
+        # For server job
+        elif [[ "${{ github.job }}" == *"server"* ]]; then
+          WORKING_DIR="./server"
+          echo "Setting working directory to server"
+        # For root/other jobs
+        else
+          WORKING_DIR="."
+          echo "Setting working directory to repository root"
+        fi
+        
+        # Change to the identified directory
+        cd "$WORKING_DIR" || { echo "Failed to change to $WORKING_DIR directory"; exit 1; }
+        echo "Current directory: $(pwd)"
+        
         # Check if package.json exists
         if [ -f package.json ]; then
           echo "Found package.json"
@@ -42,23 +65,43 @@ runs:
             echo "LOCKFILE_VALID=false" >> $GITHUB_ENV
           fi
         else
-          echo "Error: package.json not found!"
+          echo "Error: package.json not found in $(pwd)!"
+          # List directory contents for debugging
+          echo "Directory contents:"
+          ls -la
           exit 1
         fi
+        
+        # Set the working directory for use in subsequent steps
+        echo "SETUP_WORKING_DIR=$WORKING_DIR" >> $GITHUB_ENV
       shell: bash
 
     # Step 4: Fallback-safe dependency installation (uses npm install)
     - name: Install dependencies (safe mode)
       if: ${{ inputs.safe-install == 'true' || env.LOCKFILE_VALID != 'true' }}
       run: |
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Installing dependencies in $(pwd)..."
+        
         echo "Using npm install for safer dependency resolution..."
         # Use --no-audit for faster installs when possible
         if [ "${{ inputs.update-lockfile }}" = "true" ]; then
           echo "Installing dependencies and updating lockfile..."
-          npm install --no-audit --package-lock-only || npm install --package-lock-only
+          if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+            echo "Using --legacy-peer-deps to handle dependency conflicts..."
+            npm install --no-audit --legacy-peer-deps --package-lock-only || npm install --legacy-peer-deps --package-lock-only
+          else
+            npm install --no-audit --package-lock-only || npm install --package-lock-only
+          fi
         else
           echo "Installing dependencies..."
-          npm install --no-audit || npm install
+          if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+            echo "Using --legacy-peer-deps to handle dependency conflicts..."
+            npm install --no-audit --legacy-peer-deps || npm install --legacy-peer-deps
+          else
+            npm install --no-audit || npm install
+          fi
         fi
       shell: bash
 
@@ -66,23 +109,44 @@ runs:
     - name: Install dependencies (strict mode)
       if: ${{ inputs.safe-install != 'true' && env.LOCKFILE_VALID == 'true' }}
       run: |
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Installing dependencies in $(pwd)..."
+        
         echo "Using npm ci for clean installation..."
         # Try npm ci first for a clean slate; fallback to npm install if it fails
-        npm ci || {
-          echo "npm ci failed, falling back to npm install..."
-          npm install
-          # Optionally update the lockfile if requested
-          if [ "${{ inputs.update-lockfile }}" = "true" ]; then
-            echo "Updating lockfile..."
+        if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+          echo "Using --legacy-peer-deps to handle dependency conflicts..."
+          npm ci --legacy-peer-deps || {
+            echo "npm ci failed, falling back to npm install with --legacy-peer-deps..."
+            npm install --legacy-peer-deps
+            # Optionally update the lockfile if requested
+            if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+              echo "Updating lockfile..."
+              npm install --legacy-peer-deps
+            fi
+          }
+        else
+          npm ci || {
+            echo "npm ci failed, falling back to npm install..."
             npm install
-          fi
-        }
+            # Optionally update the lockfile if requested
+            if [ "${{ inputs.update-lockfile }}" = "true" ]; then
+              echo "Updating lockfile..."
+              npm install
+            fi
+          }
+        fi
       shell: bash
 
     # Step 6: Check for missing dependencies, and attempt to install them if needed
     - name: Check for missing dependencies
       if: ${{ inputs.check-missing == 'true' }}
       run: |
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        echo "Checking for missing dependencies in $(pwd)..."
+        
         echo "Checking for missing dependencies..."
 
         # Extract all dependencies and devDependencies from package.json using jq
@@ -105,14 +169,103 @@ runs:
           echo "Warning: The following dependencies might be missing:$MISSING"
           echo "Attempting to install missing dependencies..."
           for DEP in $MISSING; do
-            if npm install $DEP; then
-              echo "Successfully installed $DEP."
+            if [ "${{ inputs.legacy-peer-deps }}" = "true" ]; then
+              if npm install $DEP --legacy-peer-deps; then
+                echo "Successfully installed $DEP using --legacy-peer-deps."
+              else
+                echo "Failed to install $DEP using --legacy-peer-deps."
+              fi
             else
-              echo "Failed to install $DEP."
+              if npm install $DEP; then
+                echo "Successfully installed $DEP."
+              else
+                echo "Failed to install $DEP. Try using --legacy-peer-deps if peer dependency issues exist."
+              fi
             fi
           done
         else
           echo "All dependencies appear to be installed."
+        fi
+      shell: bash
+
+    # Step 7: Check for dependency conflicts
+    - name: Check for dependency conflicts
+      run: |
+        # Change to the working directory determined in the previous step
+        cd "${{ env.SETUP_WORKING_DIR }}" || { echo "Failed to change to directory"; exit 1; }
+        
+        echo "Checking for dependency conflicts in $(pwd)..."
+        
+        # Run npm ls to check for conflicts
+        npm ls --json > npm_ls_output.json 2>/dev/null
+        
+        # Check specifically for @nebular packages with Angular core dependencies
+        if grep -q "nebular" package.json; then
+          echo "Found @nebular packages in dependencies, checking for version compatibility..."
+          
+          # Extract the installed Angular version
+          ANGULAR_VERSION=$(jq -r '.dependencies["@angular/core"] // "unknown"' package.json)
+          NEBULAR_VERSION=$(jq -r '.dependencies["@nebular/auth"] // "unknown"' package.json)
+          echo "Installed @angular/core version: $ANGULAR_VERSION"
+          echo "Installed @nebular/auth version: $NEBULAR_VERSION"
+          
+          # Check Nebular packages
+          NEBULAR_PACKAGES=$(jq -r 'keys[] | select(startswith("@nebular"))' <<< "$(jq '.dependencies' package.json)")
+          
+          if [ -n "$NEBULAR_PACKAGES" ]; then
+            echo "Found the following @nebular packages: $NEBULAR_PACKAGES"
+            echo "Checking for compatibility issues..."
+            
+            # Try to run npm ls with specific packages to see peer dependency issues
+            npm ls @nebular/auth @angular/core || true
+            
+            # Force install @nebular/auth with --force to bypass peer dependency requirements
+            if [ "${{ inputs.resolve-conflicts }}" = "true" ]; then
+              echo "Force installing @nebular packages to bypass dependency conflicts..."
+              NEBULAR_PACKAGES_LIST=$(echo "$NEBULAR_PACKAGES" | tr '\n' ' ')
+              npm install $NEBULAR_PACKAGES_LIST --legacy-peer-deps --force || true
+              
+              # Verify the installation
+              echo "Verifying @nebular packages installation:"
+              npm list --depth=0 $NEBULAR_PACKAGES_LIST || true
+            fi
+            
+            echo "If you're experiencing dependency conflicts between @nebular and @angular packages, you might need to:"
+            echo "1. Update Angular to a version compatible with @nebular/auth (v19.1.6+)"
+            echo "2. Downgrade @nebular/auth to a version compatible with your Angular version"
+            echo "3. Use --legacy-peer-deps when installing dependencies"
+            
+            if [ "${{ inputs.resolve-conflicts }}" = "true" ]; then
+              echo "Attempting to resolve conflicts automatically..."
+              
+              if [[ "$ANGULAR_VERSION" == *"18."* ]] && [[ "$NEBULAR_VERSION" == *"15."* ]]; then
+                echo "Detected Angular 18.x with Nebular 15.x, using aggressive conflict resolution..."
+                # Use --force to override peer dependency requirements
+                npm install --legacy-peer-deps --force || true
+                
+                # Explicitly reinstall Nebular packages with force flag
+                echo "Reinstalling Nebular packages with force..."
+                npm install @nebular/auth @nebular/theme @nebular/security @nebular/eva-icons --legacy-peer-deps --force || true
+                
+                # Verify installation
+                echo "Verifying final installation status:"
+                npm list --depth=0 @angular/core @angular/common @nebular/auth || true
+              fi
+            fi
+          fi
+        fi
+        
+        # General dependency conflict check
+        if [ -f npm_ls_output.json ]; then
+          PROBLEMS=$(jq -r '.problems // []' npm_ls_output.json)
+          if [ "$PROBLEMS" != "[]" ] && [ -n "$PROBLEMS" ]; then
+            echo "Dependency conflicts detected:"
+            echo "$PROBLEMS"
+            echo "Consider using --legacy-peer-deps if these conflicts can't be resolved normally."
+          else
+            echo "No dependency conflicts detected."
+          fi
+          rm npm_ls_output.json
         fi
       shell: bash
 
@@ -140,6 +293,16 @@ inputs:
     # TODO! Add boolean validation if needed
   check-missing:
     description: 'Check for and attempt to install missing dependencies'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  legacy-peer-deps:
+    description: 'Use --legacy-peer-deps flag to bypass peer dependency checks'
+    required: false
+    default: 'false'
+    # TODO! Add boolean validation if needed
+  resolve-conflicts:
+    description: 'Attempt to automatically resolve dependency conflicts'
     required: false
     default: 'false'
     # TODO! Add boolean validation if needed

@@ -1,7 +1,7 @@
 import express from 'express';
 import { protect } from '../middleware/auth.js';
 import appointmentController from '../controllers/appointment.controller.js';
-import { ValidationUtils, zodSchemas } from '../utils/validation-utils.ts';
+import { ValidationUtils, zodSchemas } from '../utils/validation-utils.js';
 import AppointmentSchemas from '../middleware/validators/appointment.validator.js';
 
 const router = express.Router();

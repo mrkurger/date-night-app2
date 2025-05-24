@@ -13,7 +13,7 @@ import geocodingController from '../controllers/geocoding.controller.js';
 import { authenticateToken, optionalAuth } from '../middleware/authenticateToken.js';
 import { roles } from '../middleware/roles.js';
 import asyncHandler from '../middleware/asyncHandler.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { ValidationUtils } from '../utils/validation-utils.js';
 import GeocodeSchemas from '../middleware/validators/geocoding.validator.js';
 
 /**

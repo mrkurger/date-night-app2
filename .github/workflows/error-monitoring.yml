@@ -4,7 +4,8 @@ on:
   workflow_run:
     workflows: ["*"]
     types: [completed]
-    branches: [main, develop]
+    branches: 
+      - '**'  # Updated to match any branch
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:

@@ -11,8 +11,7 @@ on:
     types: 
       - completed
     branches:
-      - main
-      - develop
+      - '**'  # Updated to match any branch
   workflow_dispatch:
 
 permissions:
@@ -20,6 +19,11 @@ permissions:
   contents: read      # For reading repository content
   issues: write      # For creating monitoring issues
   pull-requests: read # For checking PR status
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   collect-insights:

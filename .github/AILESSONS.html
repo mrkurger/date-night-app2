@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Lessons - GitHub Workflows</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    h1 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    .lesson {
+      margin-bottom: 30px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-left: 4px solid #3498db;
+      border-radius: 4px;
+    }
+    .lesson h3 {
+      margin-top: 0;
+    }
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #e0e0e0;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Lessons - GitHub Workflows</h1>
+  
+  <div class="lesson">
+    <h3>Handling Dependency Conflicts in CI/CD Workflows</h3>
+    <p>Modern JavaScript frameworks often have complex dependency trees with strict peer dependency requirements. This can lead to version conflicts in CI/CD environments that were working fine in development.</p>
+    
+    <h4>Problem</h4>
+    <p>When integrating Angular with Nebular UI components, we encountered dependency conflicts due to version mismatches. Specifically, @nebular/auth@15.0.0 required @angular/common@^19.1.6, but our project was using @angular/common@18.2.13.</p>
+    
+    <h4>Solutions</h4>
+    <ul>
+      <li><strong>Use --legacy-peer-deps:</strong> For immediate fixes, the <code>--legacy-peer-deps</code> flag can bypass peer dependency checks during installation:
+        <pre>npm install --legacy-peer-deps</pre>
+      </li>
+      <li><strong>Version Alignment:</strong> The proper long-term solution is to align framework versions:
+        <ul>
+          <li>Either update Angular to match Nebular's requirements (<code>ng update @angular/core</code>)</li>
+          <li>Or downgrade Nebular to a version compatible with your Angular version</li>
+        </ul>
+      </li>
+      <li><strong>Improve Error Handling:</strong> Enhance CI workflows to better detect and report dependency conflicts</li>
+      <li><strong>Add Automatic Conflict Resolution:</strong> For known conflicts, the workflow can attempt specific resolution strategies</li>
+    </ul>
+    
+    <h4>Implementation</h4>
+    <p>We enhanced our setup-nodejs composite action to handle these scenarios by:</p>
+    <ul>
+      <li>Adding <code>legacy-peer-deps</code> input parameter to safely bypass peer dependency checks</li>
+      <li>Adding explicit checks for Angular/Nebular version compatibility</li>
+      <li>Implementing better diagnostic reporting for dependency conflicts</li>
+      <li>Adding a dependency conflict resolution step that provides clearer error messages and potential fixes</li>
+    </ul>
+    
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>CI environments should have robust dependency handling with fallback strategies</li>
+      <li>Version conflicts should be detected early with clear reporting</li>
+      <li>Use composite actions to encapsulate complex setup logic for reusability</li>
+      <li>For temporary solutions, --legacy-peer-deps can unblock CI pipelines while proper version alignment is implemented</li>
+      <li>Always document workarounds in code comments and project documentation</li>
+    </ul>
+  </div>
+  
+  <div class="lesson">
+    <h3>Effective Working Directory Management in GitHub Actions</h3>
+    <p>When working with monorepos or projects with multiple package.json files in different directories, proper working directory management is crucial.</p>
+    
+    <h4>Problem</h4>
+    <p>Our workflow was failing because steps were referencing incorrect directories ('client' instead of 'client-angular') and the setup-nodejs action didn't support working-directory input.</p>
+    
+    <h4>Solutions</h4>
+    <ul>
+      <li><strong>Consistent Directory References:</strong> Ensure all workflow steps reference the same directory paths</li>
+      <li><strong>Environment Variables for Paths:</strong> Use environment variables to store and share directory paths between steps</li>
+      <li><strong>Job Context-Based Directory Detection:</strong> Implement logic to determine the correct working directory based on the job name or other context</li>
+    </ul>
+    
+    <h4>Implementation</h4>
+    <pre>
+# Example of dynamic directory detection based on job name
+WORKING_DIR="."
+if [[ "${{ github.job }}" == *"client"* ]]; then
+  WORKING_DIR="./client-angular"
+elif [[ "${{ github.job }}" == *"server"* ]]; then
+  WORKING_DIR="./server"
+else
+  WORKING_DIR="."
+fi
+echo "SETUP_WORKING_DIR=$WORKING_DIR" >> $GITHUB_ENV
+    </pre>
+    
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>Directory paths should be consistent across all workflow steps</li>
+      <li>Use job context to determine appropriate working directories</li>
+      <li>Verify directory existence before attempting operations</li>
+      <li>Store paths in environment variables for reuse across steps</li>
+      <li>Use detailed logging to help diagnose path-related issues</li>
+    </ul>
+  </div>
+</body>
+</html>

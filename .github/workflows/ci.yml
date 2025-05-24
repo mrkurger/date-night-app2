@@ -1,10 +1,13 @@
 name: CI
 
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
   pull_request:
-    branches: [main]
+    branches:
+      - '**'  # Matches any branch
 
 # Set the minimum permissions needed for this workflow
 permissions:
@@ -12,6 +15,11 @@ permissions:
   checks: write           # Required for creating check runs
   pull-requests: write    # Required for commenting on PRs
   statuses: write         # Required for setting commit status
+
+# Prevent multiple instances from running concurrently for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   CI: true                # Standard CI environment variable
@@ -35,14 +43,15 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: ./client-angular
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
+          legacy-peer-deps: 'true'
+          resolve-conflicts: 'true'
 
       # Run linter with pretty output
       - name: Run lint
-        working-directory: client
+        working-directory: client-angular
         run: npm run lint -- --format stylish
 
   # Lint server code
@@ -60,7 +69,6 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: server
           node-version: 22.x
           safe-install: 'true'
           check-missing: 'true'
@@ -83,6 +91,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       # Cache node_modules for faster installs
       - name: Cache Node.js modules
         uses: actions/cache@v3
@@ -93,10 +105,11 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-nodejs
         with:
-          working-directory: .
           node-version: ${{ matrix.node-version }}
-          safe-install: 'false'
+          safe-install: 'true'
           check-missing: 'true'
+          legacy-peer-deps: 'true'
+          resolve-conflicts: 'true'
 
       # Run test suite and output coverage
       - name: Run tests
