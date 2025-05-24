@@ -1,96 +1,130 @@
 import { Injectable } from '@angular/core';
-import { NbIconLibraries } from '@nebular/theme';
-import * as eva from 'eva-icons';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IconService {
-  constructor(private iconLibraries: NbIconLibraries) {
-    this.registerEvaIcons();
-  }
-
-  private registerEvaIcons(): void {
-    // Register Eva Icons pack with both filled and outline variants
-    this.iconLibraries.registerSvgPack('eva', {
-      ...eva.icons,
-    });
-    this.iconLibraries.setDefaultPack('eva');
-
-    // Register Eva Icons animation configuration
-    eva.replace({
-      animation: {
-        type: 'zoom', // Default animation
-        hover: true,
-        infinite: false,
-      },
-    });
-  }
+  constructor() {}
 
   /**
-   * Maps /*DEPRECATED:Material*/ icon names to Eva icon equivalents and adds appropriate suffix
-   * @param name /*DEPRECATED:Material*/ icon name
-   * @param filled Whether to use filled variant
-   * @returns Eva icon name with suffix
+   * Maps any icon name (FontAwesome/Eva) to PrimeIcons equivalent
+   * @param name The source icon name (can be FA, Eva, or other)
+   * @param filled Whether to use filled variant (some icons have both styles)
+   * @returns PrimeIcons class name
    */
   getIconName(name: string, filled: boolean = true): string {
-    // Map of /*DEPRECATED:Material*/ icon names to Eva icon names
-    const materialToEva: { [key: string]: string } = {
+    // Strip any common prefixes (fa-, fas, far, etc.)
+    const cleanName = name.replace(/^(fa[rbs]?-|eva-)/, '');
+
+    // Map icon names to PrimeIcons
+    const iconMap: { [key: string]: string } = {
       // Navigation
-      menu: 'menu-2',
-      close: 'close',
-      chevron_right: 'chevron-right',
-      chevron_left: 'chevron-left',
-      arrow_forward: 'arrow-forward',
-      arrow_back: 'arrow-back',
+      'home': 'home',
+      'menu': 'bars',
+      'close': 'times',
+      'chevron-right': 'chevron-right',
+      'chevron-left': 'chevron-left',
+      'arrow-right': 'arrow-right',  
+      'arrow-left': 'arrow-left',
+      'arrow-forward': 'arrow-right',
+      'arrow-back': 'arrow-left',
 
       // Actions
-      edit: 'edit-2',
-      delete: 'trash-2',
-      add: 'plus',
-      remove: 'minus',
-      check: 'checkmark',
-      settings: 'settings-2',
-      refresh: 'refresh',
-      search: 'search',
-      share: 'share',
+      'edit': 'pencil',
+      'trash': 'trash',
+      'delete': 'trash',
+      'plus': 'plus',
+      'minus': 'minus',
+      'check': 'check',
+      'settings': 'cog',
+      'refresh': 'refresh',
+      'search': 'search',
+      'share': 'share-alt',
+      'save': 'save',
+      'download': 'download',
+      'upload': 'upload',
+      'sync': 'sync',
+      'filter': 'filter',
+      'sort': 'sort',
+      'link': 'link',
 
       // Status/Notifications
-      warning: 'alert-triangle',
-      error: 'alert-circle',
-      info: 'info',
-      help: 'question-mark-circle',
-      notifications: 'bell',
-      notifications_off: 'bell-off',
+      'warning': 'exclamation-triangle',
+      'error': 'times-circle',
+      'info': 'info-circle', 
+      'help': 'question-circle',
+      'success': 'check-circle',
+      'alert': 'exclamation-circle',
+      'bell': 'bell',
 
-      // Content
-      favorite: 'heart',
-      favorite_border: 'heart',
-      chat: 'message-square',
-      email: 'email',
-      attach_file: 'attach',
-      photo: 'image',
-      location_on: 'pin',
-      event: 'calendar',
-      note: 'file-text',
-      visibility: 'eye',
-      visibility_off: 'eye-off',
-      attach_money: 'credit-card',
-      priority_high: 'alert-circle',
-      arrow_upward: 'arrow-up',
-      arrow_downward: 'arrow-down',
-      photo_library: 'image-2',
+      // Media
+      'image': 'image',
+      'video': 'video',
+      'camera': 'camera',
+      'play': 'play',
+      'pause': 'pause',
+      'stop': 'stop',
+      
+      // Files/Documents
+      'file': 'file',
+      'folder': 'folder',
+      'document': 'file-o',
+      'copy': 'copy',
+      'paperclip': 'paperclip',
+      
+      // Communication
+      'message': 'comment',
+      'comment': 'comment', 
+      'envelope': 'envelope',
+      'email': 'envelope',
+      'phone': 'phone',
+      'chat': 'comments',
+      
+      // User/Account
+      'user': 'user',
+      'users': 'users',
+      'sign-out': 'sign-out',
+      'sign-in': 'sign-in',
+      'lock': 'lock',
+      'unlock': 'unlock',
+      'key': 'key',
+      
+      // Social/Interactive
+      'heart': 'heart',
+      'star': 'star',
+      'thumbs-up': 'thumbs-up',
+      'thumbs-down': 'thumbs-down',
+      'bookmark': 'bookmark',
+      'flag': 'flag',
+
+      // Misc
+      'calendar': 'calendar',
+      'clock': 'clock',
+      'map': 'map',
+      'print': 'print',
+      'eye': 'eye',
+      'eye-off': 'eye-slash',
+      'list': 'list',
+      
+      // Map legacy Eva Icons
+      'menu-2': 'bars',
+      'edit-2': 'pencil',
+      'trash-2': 'trash',
+      'settings-2': 'cog',
+      'message-square': 'comment',
+      'file-text': 'file',
+      'credit-card': 'credit-card',
+      'alert-circle': 'exclamation-circle',
+      'question-mark-circle': 'question-circle',
+      'image-2': 'images'
     };
 
-    // Convert /*DEPRECATED:Material*/ icon name to Eva icon name
-    const evaName = materialToEva[name] || name;
+    // Get the PrimeIcons name (default to input if no mapping exists)
+    const iconName = iconMap[cleanName] || cleanName;
 
-    // For 'favorite_border' we want to force outline variant
-    if (name === 'favorite_border') {
-      return `${evaName}-outline`;
-    }
-
-    // For all other icons, use the filled parameter
-    return `${evaName}${filled ? '-fill' : '-outline'}`;
+    // Return the complete PrimeIcons class name
+    // Note: PrimeIcons has its own fill/outline variants for some icons
+    // We maintain the filled parameter for compatibility but it doesn't affect all icons
+    return `pi pi-${iconName}`;
   }
 }

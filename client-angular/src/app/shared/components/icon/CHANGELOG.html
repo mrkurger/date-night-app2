@@ -35,21 +35,37 @@
 
           <p>This file tracks changes to the Icon component/module.</p>
 
-          <h2>Unreleased</h2>
+          <h2>Version 1.0.0 - 2024</h2>
+
+          <h3>Breaking Changes</h3>
+          <ul>
+            <li>Migrated from Font Awesome and Eva Icons to PrimeIcons</li>
+            <li>Removed @fortawesome dependencies</li>
+            <li>Removed Eva Icons dependencies</li>
+            <li>Updated component to use PrimeIcons classes</li>
+          </ul>
 
           <h3>Added</h3>
           <ul>
-            <li>Initial documentation structure</li>
+            <li>New icon mapping system in IconService</li>
+            <li>Support for PrimeIcons</li>
+            <li>Improved size and color customization</li>
+            <li>Legacy icon name support through mappers</li>
           </ul>
 
           <h3>Changed</h3>
           <ul>
-            <li>None</li>
+            <li>Updated component template to use PrimeIcons classes</li>
+            <li>Simplified component styles</li>
+            <li>Enhanced icon name conversion logic</li>
+            <li>Improved documentation and type definitions</li>
           </ul>
 
-          <h3>Fixed</h3>
+          <h3>Removed</h3>
           <ul>
-            <li>None</li>
+            <li>Font Awesome dependencies and integrations</li>
+            <li>Eva Icons dependencies and configurations</li>
+            <li>Legacy icon pack registrations</li>
           </ul>
 
           <h2>How to use this file</h2>
@@ -59,20 +75,6 @@
             When a release is made, create a new version section and move the unreleased entries
             there.
           </p>
-
-          <p>Example:</p>
-
-          <pre><code>## [1.0.0] - YYYY-MM-DD
-
-### Added
-- Feature X
-- Feature Y
-
-### Changed
-- Updated component Z
-
-### Fixed
-- Bug in function A</code></pre>
         </article>
       </div>
     </main>

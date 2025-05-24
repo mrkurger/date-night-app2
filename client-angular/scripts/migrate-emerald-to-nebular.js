@@ -65,7 +65,7 @@ const componentMap = {
 const importMap = {
   '@emerald/core': '@nebular/theme',
   '@emerald/components': '@nebular/theme',
-  '@emerald/icons': '@nebular/eva-icons',
+  '@emerald/icons': 'primeicons',
 };
 
 async function findFiles(dir, pattern) {

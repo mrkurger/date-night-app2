@@ -38,8 +38,8 @@ const SCSS_IMPORT_FIXES = [
     replacement: `@import '~@nebular/theme/styles/prebuilt/default.css';`,
   },
   {
-    pattern: /@import ['"]\.\/node_modules\/eva-icons\/style\/eva-icons\.css['"];?/g,
-    replacement: `@import '~eva-icons/style/eva-icons.css';`,
+    pattern: /@import ['"]\.\/node_modules\/primeicons\/primeicons\.css['"];?/g,
+    replacement: `@import '~primeicons/primeicons.css';`,
   },
 ];
 

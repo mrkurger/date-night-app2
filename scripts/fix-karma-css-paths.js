@@ -74,9 +74,8 @@ if (fs.existsSync(actualDefaultCssPath)) {
   console.log(`Created placeholder CSS file (actual file not found): ${defaultCssPath}`);
 }
 
-// Create symbolic links for eva-icons
-const evaIconsDir = path.join(clientNodeModulesDir, 'eva-icons');
-const evaIconsStyleDir = path.join(evaIconsDir, 'style');
+// Create symbolic links for PrimeIcons
+const primeIconsDir = path.join(clientNodeModulesDir, 'primeicons');
 
 // Create the directory structure
 fs.mkdirSync(evaIconsDir, { recursive: true });

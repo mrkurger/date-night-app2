@@ -26,7 +26,6 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
               "node_modules/@fontsource/inter/index.css",
               "node_modules/@fontsource/poppins/index.css",
               "node_modules/leaflet/dist/leaflet.css",
@@ -79,7 +78,6 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "node_modules/eva-icons/style/eva-icons.css",
               "node_modules/@fontsource/inter/index.css",
               "node_modules/@fontsource/poppins/index.css",
               "node_modules/leaflet/dist/leaflet.css",

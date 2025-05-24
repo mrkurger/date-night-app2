@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
 
 import { IconService } from '../../../core/services/icon.service';
@@ -8,25 +6,21 @@ import { IconService } from '../../../core/services/icon.service';
 /**
  * Icon Component
  *
- * A component for displaying SVG icons from the DateNight.io icon library.
- * Supports different sizes and colors.
+ * A component for displaying icons using PrimeIcons.
+ * Supports different sizes and colors from the DateNight.io design system.
  */
 @Component({
   selector: 'app-icon',
   standalone: true,
-  imports: [
-    CommonModule,
-    NbIconModule
-  ],
+  imports: [CommonModule],
   template: `
-    <nb-icon
-      [icon]="iconName"
-      [status]="status"
-      [options]="{ animation: animation }"
-      [class]="customClass"
-      [style.fontSize.px]="size"
-    >
-    </nb-icon>
+    <i
+      [class]="iconClass"
+      [ngStyle]="{
+        'font-size.px': size,
+        'color': color ? 'var(--color-' + color + ')' : undefined
+      }"
+    ></i>
   `,
   styles: [
     `
@@ -35,7 +29,8 @@ import { IconService } from '../../../core/services/icon.service';
         align-items: center;
         justify-content: center;
       }
-      nb-icon {
+      i {
+        line-height: 1;
         cursor: inherit;
       }
     `,
@@ -45,15 +40,13 @@ export class IconComponent implements OnInit {
   @Input() name!: string;
   @Input() filled: boolean = true;
   @Input() size: number = 24;
-  @Input() status: string = 'basic';
-  @Input() animation?: 'zoom' | 'pulse' | 'shake' | 'flip';
-  @Input() customClass: string = '';
+  @Input() color?: string;
 
-  iconName!: string;
+  iconClass: string = '';
 
   constructor(private iconService: IconService) {}
 
   ngOnInit() {
-    this.iconName = this.iconService.getIconName(this.name, this.filled);
+    this.iconClass = this.iconService.getIconName(this.name, this.filled);
   }
 }
