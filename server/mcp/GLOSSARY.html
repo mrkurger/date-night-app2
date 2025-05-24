@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Servers - Glossary</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #1a1a1a;
+    }
+    .term {
+      background-color: #f8f9fa;
+      border-left: 4px solid #17a2b8;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+    }
+    .term h3 {
+      margin-top: 0;
+    }
+    .category {
+      display: inline-block;
+      padding: 2px 8px;
+      margin-right: 5px;
+      border-radius: 3px;
+      font-size: 0.8em;
+      font-weight: bold;
+      background-color: #e9ecef;
+      color: #495057;
+    }
+    code {
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background-color: #f1f1f1;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>MCP Servers - Glossary</h1>
+  
+  <div class="term">
+    <h3>MCP (Model Context Protocol)</h3>
+    <span class="category">Architecture</span>
+    <p>
+      A standardized protocol for interacting with different parts of the application ecosystem, providing consistent interfaces for various services and subsystems.
+    </p>
+    <p>
+      <strong>Usage:</strong> The MCP architecture allows for modular development and integration of specialized services.
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>MongoDB MCP Server</h3>
+    <span class="category">Database</span>
+    <p>
+      An MCP server that provides optimized access to MongoDB database operations, including query optimization, data validation, and connection management.
+    </p>
+    <p>
+      <strong>Usage:</strong> <code>import { mongodbMcp } from './mcp/mongodb/mongodb.mcp.js';</code>
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>GitHub Actions MCP Server</h3>
+    <span class="category">CI/CD</span>
+    <p>
+      An MCP server that interfaces with GitHub Actions for continuous integration and delivery, providing automation for testing, documentation generation, and deployment.
+    </p>
+    <p>
+      <strong>Usage:</strong> <code>import { githubActionsMcp } from './mcp/github-actions/github-actions.mcp.js';</code>
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>Terminal-Control MCP Server</h3>
+    <span class="category">Development</span>
+    <p>
+      An MCP server that provides task automation for development workflows, build process management, and file operations handling with security constraints.
+    </p>
+    <p>
+      <strong>Usage:</strong> <code>import { terminalControlMcp } from './mcp/terminal-control/terminal-control.mcp.js';</code>
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>Mobile MCP Server</h3>
+    <span class="category">Mobile</span>
+    <p>
+      An MCP server that supports mobile application development with testing infrastructure, responsive design validation, and app scraping capabilities.
+    </p>
+    <p>
+      <strong>Usage:</strong> <code>import { mobileMcp } from './mcp/mobile/mobile.mcp.js';</code>
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>MCP Controller</h3>
+    <span class="category">Code Pattern</span>
+    <p>
+      A component that handles HTTP requests to MCP servers, processes inputs, invokes appropriate MCP service methods, and formats responses.
+    </p>
+    <p>
+      <strong>Usage:</strong> Used in route definitions to handle API endpoints for MCP servers.
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>MCP Service</h3>
+    <span class="category">Code Pattern</span>
+    <p>
+      The core implementation of an MCP server that contains the business logic and operations for a specific domain.
+    </p>
+    <p>
+      <strong>Usage:</strong> Invoked by MCP controllers to perform domain-specific operations.
+    </p>
+  </div>
+  
+  <div class="term">
+    <h3>MCP Configuration</h3>
+    <span class="category">Code Pattern</span>
+    <p>
+      Environment-specific settings and setup for an MCP server, including connection details, authentication, and operational parameters.
+    </p>
+    <p>
+      <strong>Usage:</strong> Used by MCP services to configure their behavior based on the environment.
+    </p>
+  </div>
+  
+</body>
+</html>
