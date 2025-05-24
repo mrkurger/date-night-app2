@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 // Nebular imports
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+
 import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
 
 // App imports

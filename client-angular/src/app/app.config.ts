@@ -24,12 +24,6 @@ import { NebularModule } from './shared/nebular.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './core/config/socket.config';
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbThemeModule } from '@nebular/theme';
-
-// PrimeNG Theming
-import Aura from '@primeng/themes/aura';
-import { providePrimeNG } from 'primeng/provideprimeng';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,21 +41,12 @@ export const appConfig: ApplicationConfig = {
           darkMode: false, // Configure as needed
         },
       },
-      ripple: true, // Optional: enable ripple effect globally
+      ripple: true, // Enable ripple effect globally
     }),
     importProvidersFrom(
       CoreModule,
       NebularModule,
       SocketIoModule.forRoot(socketConfig),
-      NbThemeModule.forRoot({ name: 'default' }),
-      NbEvaIconsModule,
     ),
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-        // You can add other options here, e.g.:
-        // ripple: true,
-      },
-    }),
   ],
 };
