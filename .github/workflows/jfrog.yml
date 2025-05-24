@@ -38,7 +38,7 @@ jobs:
         run: jf npm install || echo "JFrog npm install failed - using regular npm install"
 
       - name: Run tests
-        run: npm test || echo "Tests failed or not configured properly"
+        run: npm test
 
       - name: Publish
         run: jf npm publish || echo "JFrog publish failed - credentials may be missing"
