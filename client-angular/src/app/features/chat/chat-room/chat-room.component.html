@@ -1,97 +1,171 @@
 <div class="chat-room">
-  <nb-card>
-    <nb-card-header>
+  <p-card>
+    <ng-template pTemplate="header">
       <div class="chat-header" *ngIf="contact">
-        <nb-user [name]="contact.username" [picture]="contact.avatar" size="medium"> </nb-user>
-        <nb-actions size="small">
-          <nb-action
-            icon="more-vertical-outline"
-            [nbContextMenu]="chatActions"
-            nbContextMenuTag="chat-actions"
+        <div class="user-info">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-arrow-left"
+            class="p-button-text p-button-rounded"
+            (click)="router.navigate(['/chat'])"
+            pTooltip="Back to chat list"
+          ></button>
+          <p-avatar
+            [image]="contact.avatar"
+            [label]="contact.username?.charAt(0)"
+            shape="circle"
+            size="large"
+            [pTooltip]="isTyping ? 'Typing...' : contact.username"
+            styleClass="mr-2"
           >
-          </nb-action>
-        </nb-actions>
+          </p-avatar>
+          <div class="user-details">
+            <span class="username">{{ contact.username }}</span>
+            <small class="encryption-status" *ngIf="isEncryptionEnabled">
+              <i class="pi pi-lock"></i> End-to-End Encrypted
+            </small>
+          </div>
+        </div>
+        <div class="actions">
+          <button
+            pButton
+            icon="pi pi-ellipsis-v"
+            class="p-button-text p-button-rounded"
+            (click)="menu.toggle($event)"
+          ></button>
+          <p-menu #menu [popup]="true" [model]="chatActions"></p-menu>
+        </div>
       </div>
-    </nb-card-header>
-
-    <!-- Chat Settings Dialog -->
-    <ng-template #settingsDialog>
-      <nb-card>
-        <nb-card-header>
-          Chat Settings
-          <button nbButton ghost size="small" (click)="toggleSettings()">
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="setting-item">
-            <nb-checkbox [checked]="isMessageExpiryEnabled" (checkedChange)="toggleMessageExpiry()">
-              Enable Message Expiry
-            </nb-checkbox>
-            <nb-select
-              *ngIf="isMessageExpiryEnabled"
-              [selected]="messageExpiryTime"
-              (selectedChange)="updateMessageExpiryTime($event)"
-            >
-              <nb-option [value]="1">1 hour</nb-option>
-              <nb-option [value]="24">24 hours</nb-option>
-              <nb-option [value]="72">3 days</nb-option>
-              <nb-option [value]="168">7 days</nb-option>
-            </nb-select>
-          </div>
-
-          <div class="setting-item">
-            <nb-checkbox [checked]="isEncryptionEnabled" (checkedChange)="toggleEncryption()">
-              Enable End-to-End Encryption
-            </nb-checkbox>
-          </div>
-        </nb-card-body>
-      </nb-card>
     </ng-template>
 
-    <nb-card-body [nbSpinner]="loading">
-      <div class="messages-container" #messageContainer (scroll)="onScroll($event)">
-        <div class="message-list">
-          <div *ngIf="loadingMore" class="loading-more">
-            <nb-spinner size="small"></nb-spinner>
-            Loading more messages...
-          </div>
-          <app-chat-message
-            *ngFor="let message of messages"
-            [message]="message"
-            [isOwn]="isOwnMessage(message)"
-            [showAvatar]="!isOwnMessage(message)"
+    <!-- Chat Settings Dialog -->
+    <p-dialog
+      [(visible)]="showSettings"
+      [modal]="true"
+      [draggable]="false"
+      [resizable]="false"
+      header="Chat Settings"
+      [style]="{ width: '400px' }"
+      [contentStyle]="{ 'padding-top': '1rem' }"
+    >
+      <div class="setting-item">
+        <div class="p-field-checkbox">
+          <p-checkbox
+            [(ngModel)]="isMessageExpiryEnabled"
+            [binary]="true"
+            (onChange)="toggleMessageExpiry()"
           >
-          </app-chat-message>
+          </p-checkbox>
+          <label class="ml-2">Messages automatically expire</label>
         </div>
-        <div class="typing-indicator" *ngIf="isTyping">
-          <nb-icon icon="message-circle-outline"></nb-icon>
-          <span>Typing...</span>
+        <p-dropdown
+          *ngIf="isMessageExpiryEnabled"
+          [(ngModel)]="messageExpiryTime"
+          (onChange)="updateMessageExpiryTime($event)"
+          [options]="[
+            { label: '1 hour', value: 1 },
+            { label: '24 hours', value: 24 },
+            { label: '3 days', value: 72 },
+            { label: '7 days', value: 168 },
+          ]"
+          styleClass="mt-2"
+          [style]="{ width: '100%' }"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="setting-item mt-3">
+        <div class="p-field-checkbox">
+          <p-checkbox
+            [(ngModel)]="isEncryptionEnabled"
+            [binary]="true"
+            (onChange)="toggleEncryption()"
+          >
+          </p-checkbox>
+          <label class="ml-2">End-to-End Encryption</label>
+        </div>
+        <small class="block mt-2 text-secondary">
+          <i class="pi pi-info-circle mr-2"></i>
+          Messages are encrypted before sending and can only be read by chat participants.
+        </small>
+      </div>
+    </p-dialog>
+
+    <div class="messages-container" #messageContainer (scroll)="onScroll($event)">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-more">
+        <p-progressSpinner [style]="{ width: '30px', height: '30px' }" styleClass="custom-spinner">
+        </p-progressSpinner>
+        <span class="ml-2">Loading messages...</span>
+      </div>
+
+      <!-- Load More Messages -->
+      <div
+        *ngIf="hasMoreMessages && !loading && !loadingMore"
+        class="loading-more"
+        style="cursor: pointer"
+        (click)="loadMoreMessages()"
+      >
+        <i class="pi pi-chevron-up mr-2"></i>
+        <span>Load earlier messages</span>
+      </div>
+
+      <!-- Loading More State -->
+      <div *ngIf="loadingMore" class="loading-more">
+        <p-progressSpinner [style]="{ width: '20px', height: '20px' }" styleClass="custom-spinner">
+        </p-progressSpinner>
+        <span class="ml-2">Loading more messages...</span>
+      </div>
+
+      <!-- Message List -->
+      <div class="message-list">
+        <app-chat-message
+          *ngFor="let message of messages; trackBy: messageTrackBy"
+          [message]="message"
+          [isOwn]="isOwnMessage(message)"
+          [showAvatar]="!isOwnMessage(message)"
+          [isEncrypted]="isEncryptionEnabled"
+        >
+        </app-chat-message>
+
+        <!-- Empty State -->
+        <div *ngIf="!loading && messages.length === 0" class="text-center p-4">
+          <i class="pi pi-comments text-xl mb-3 block text-primary"></i>
+          <p class="text-secondary">No messages yet. Start the conversation!</p>
         </div>
       </div>
-    </nb-card-body>
 
-    <nb-card-footer>
-      <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-        <nb-form-field>
+      <!-- Typing Indicator -->
+      <div class="typing-indicator" *ngIf="isTyping">
+        <i class="pi pi-comment"></i>
+        <span>{{ contact?.username }} is typing...</span>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <form [formGroup]="messageForm" (ngSubmit)="sendMessage()" class="input-container p-fluid">
+        <div class="p-inputgroup">
           <input
-            nbInput
-            fullWidth
+            pInputText
             formControlName="message"
             placeholder="Type a message..."
-            [status]="messageForm.get('message')?.errors ? 'danger' : 'basic'"
+            [class.ng-invalid]="messageForm.get('message')?.errors"
             (input)="onTyping()"
+            #messageInput
           />
+
+          <!-- File Attachment -->
           <button
-            nbButton
-            ghost
+            pButton
             type="button"
+            icon="pi pi-paperclip"
+            class="p-button-text"
+            pTooltip="Send files"
+            [tooltipPosition]="'top'"
             (click)="fileInput.click()"
-            nbTooltip="Send files"
-            nbSuffix
-          >
-            <nb-icon icon="attach-outline"></nb-icon>
-          </button>
+          ></button>
           <input
             type="file"
             #fileInput
@@ -100,11 +174,30 @@
             (change)="onFileSelected($event)"
             accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.txt"
           />
-          <button nbButton type="submit" status="primary" [disabled]="!messageForm.valid" nbSuffix>
-            <nb-icon icon="paper-plane-outline"></nb-icon>
-          </button>
-        </nb-form-field>
+
+          <!-- Send Button -->
+          <button
+            pButton
+            type="submit"
+            icon="pi pi-send"
+            class="p-button-primary"
+            [disabled]="!messageForm.valid"
+            pTooltip="Send message"
+            [tooltipPosition]="'top'"
+          ></button>
+        </div>
+
+        <!-- Attachment Preview (if needed) -->
+        <div *ngIf="selectedFiles?.length" class="selected-files mt-2">
+          <p-chip
+            *ngFor="let file of selectedFiles"
+            [label]="file.name"
+            [removable]="true"
+            (onRemove)="removeFile(file)"
+          >
+          </p-chip>
+        </div>
       </form>
-    </nb-card-footer>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

@@ -6,12 +6,11 @@ import { finalize } from 'rxjs/operators';
 import { NebularModule } from '../../../../shared/nebular.module';
 
 @Component({
-  selector: 'app-request-password',
-  templateUrl: './request-password.component.html',
-  styleUrls: ['./request-password.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, ReactiveFormsModule, RouterLink],
+    selector: 'app-request-password',
+    templateUrl: './request-password.component.html',
+    styleUrls: ['./request-password.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, ReactiveFormsModule, RouterLink]
 })
 export class RequestPasswordComponent {
   requestForm: FormGroup;

@@ -10,11 +10,10 @@ import { BemUtil } from '../../core/utils/bem.util';
  * It serves as a living documentation of the UI guidelines.
  */
 @Component({
-  selector: 'app-style-guide',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './style-guide.component.html',
-  styleUrls: ['./style-guide.component.scss'],
+    selector: 'app-style-guide',
+    imports: [CommonModule],
+    templateUrl: './style-guide.component.html',
+    styleUrls: ['./style-guide.component.scss']
 })
 export class StyleGuideComponent {
   bem = new BemUtil('style-guide');

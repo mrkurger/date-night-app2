@@ -14,8 +14,8 @@ import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
 //   Related to: card-grid.component.scss
 // ===================================================
 // import { Ad } from '../../../../core/models/ad.interface';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-import { AppCardComponent } from '../app-card/app-card.component';
+import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
+import { CardModule } from '../app-card/app-card.component';
 
 /**
  * /*DEPRECATED:Emerald*/ CardGrid Component
@@ -26,8 +26,8 @@ import { AppCardComponent } from '../app-card/app-card.component';
  * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/CardGrid
  */
 @Component({
-  selector: 'nb-card-grid',
-  template: `
+    selector: 'nb-card-grid',
+    template: `
     <div class="card-grid" [ngStyle]="getGridStyle()">
       <!-- Loading State -->
       <div *ngIf="loading" class="loading-container">
@@ -48,8 +48,8 @@ import { AppCardComponent } from '../app-card/app-card.component';
       </ng-container>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(var(--min-item-width, 280px), 1fr));
@@ -88,15 +88,14 @@ import { AppCardComponent } from '../app-card/app-card.component';
         }
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbSpinnerModule,
-    SkeletonLoaderComponent,
-    AppCardComponent
-  ],
+    ],
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbSpinnerModule,
+        SkeletonModule,
+        CardModule
+    ]
 })
 export class CardGridComponent {
   /**

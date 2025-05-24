@@ -22,11 +22,10 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
  * into a single tabbed interface.
  */
 @Component({
-  selector: 'app-telemetry-dashboard',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
-  template: `
+    selector: 'app-telemetry-dashboard',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+    template: `
     <nb-card>
       <nb-card-header>
         <h1>Application Telemetry Dashboard</h1>
@@ -43,8 +42,8 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       h1 {
         margin: 0;
         color: nb-theme(text-basic-color);
@@ -61,7 +60,7 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
         }
       }
     `,
-  ],
+    ]
 })
 export class TelemetryDashboardComponent {
   // This component is primarily a container for the tab components

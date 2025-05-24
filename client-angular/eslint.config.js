@@ -1,212 +1,205 @@
 // @ts-check
 import eslint from '@eslint/js';
-import * as tseslint from 'typescript-eslint';
+import tseslint from 'typescript-eslint';
 import angularEslintPlugin from '@angular-eslint/eslint-plugin';
 import angularEslintTemplateParser from '@angular-eslint/template-parser';
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import { FlatCompat } from '@eslint/eslintrc';
+import rxjsXPlugin from 'eslint-plugin-rxjs-x';
+import globals from 'globals';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import globals from 'globals';
 
 // Correctly define __dirname for ES modules
 const __filenameEsm = fileURLToPath(import.meta.url);
 const __dirnameEsm = path.dirname(__filenameEsm);
 
-// Use FlatCompat for extending older eslintrc-style configs
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const compat = new FlatCompat({
-  baseDirectory: __dirnameEsm, // Use the ESM-compatible __dirname
-});
-
-// Consolidate ignore patterns specific to client-angular
-const clientAngularSpecificIgnores = [
-  '.angular/**/*',
-  '**/*.html',
+// Consolidate ignore patterns
+const commonIgnores = [
+  '**/node_modules/',
+  '**/dist/',
+  '**/coverage/',
+  '**/build/',
+  '**/logs/',
+  '**/uploads/',
+  '**/.cache/',
+  '**/.angular/', // Specific to Angular CLI projects
+  '**/CHANGELOG.html',
+  '**/AILESSONS.html',
+  '**/GLOSSARY.html',
+  '_docs_index.html',
+  '_glossary.html',
+  '_docs*.html',
+  'bakups_arkive.zip',
+  'mongodb.log*',
+  '*.sh',
+  '*.bat',
+  // '*.md', // User wants to retire all .md docs, but let's keep this for now if some are still used by tools
+  'angular.json',
+  'babel.config.js',
+  'package-lock.json',
+  'pnpm-lock.yaml',
+  'yarn.lock',
+  '**/generated/**',
+  '**/temp/**',
+  '**/*.bak',
+  // Client-angular specific
   'projects/**/*',
   'src/csp-config.js',
   'src/babel-runtime-loader.js',
   'src/babel-runtime-loader.cjs',
   'cypress/**',
   'src/jasmine.d.ts',
-  'src/app/testing/**/*.ts',
-  'src/app/components/**/*.spec.ts',
-  'src/app/features/**/*.spec.ts',
-  'src/app/shared/**/*.spec.ts',
-  'src/app/core/**/*.spec.ts',
-  'src/app/components/login/login.component.spec.ts',
-  'src/app/features/admin/admin.module.ts',
-  'src/app/features/admin/content-moderation/moderation-modal/moderation-modal.component.spec.ts',
-  'src/app/features/chat/chat-room/chat-room.component.ts',
-  'src/app/features/chat/chat.component.ts',
-  'src/app/shared/components/button/button.component.ts',
-  'src/app/shared/components/card/card.component.ts',
-  'src/app/shared/components/icon/icon.component.ts',
-  'src/app/shared/emerald/components/card-grid/card-grid.component.ts',
-  'src/app/core/services/**/*.ts',
-  'src/app/core/interceptors/**/*.ts',
-  'src/app/core/models/**/*.ts',
-  'src/app/core/types/**/*.ts',
-  'src/app/shared/types/**/*.ts',
-  'src/app/shared/emerald/**/*.ts',
-  'src/typings.d.ts',
-  'src/main.ts',
-  'src/shared/**/*.ts',
-  'scripts/**',
   'src/assets/**',
   'src/ngsw-worker.js',
   'src/app/core/utils/test-runner.js',
   'run-single-test.js',
-  'src/app/features/auth/components/register/register.component.ts',
-  'src/app/features/features.module.ts',
-  'src/app/shared/modules/review.module.ts',
-  'src/app/shared/modules/shared.module.ts',
-  'src/app/features/chat/chat.component.fixed.ts',
-  'src/app/features/wallet/wallet.component.ts',
-  'src/app/shared/components/custom-nebular-components/nb-paginator/nb-paginator.component.ts',
+  'scripts/**',
 ];
-const uniqueClientAngularSpecificIgnores = [...new Set(clientAngularSpecificIgnores)];
 
 export default tseslint.config(
   {
-    ignores: uniqueClientAngularSpecificIgnores,
+    ignores: [...new Set(commonIgnores)],
   },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended, // Use non-type-aware linting
-  // Angular ESLint configurations
-  {
-    files: ['**/*.ts'],
-    plugins: {
-      '@angular-eslint': angularEslintPlugin,
-    },
-    rules: {
-      // Angular rules
-    },
-  },
-  {
-    files: ['**/*.html'],
-    languageOptions: {
-      parser: angularEslintTemplateParser,
-    },
-    plugins: {
-      '@angular-eslint/template': angularEslintPlugin, // Plugin for HTML templates
-    },
-    rules: {
-      // Template rules
-    },
-  },
-  eslintConfigPrettier, // Disables ESLint rules that conflict with Prettier
+  eslint.configs.recommended, // Base ESLint recommended rules
+  ...tseslint.configs.recommended, // TypeScript recommended (non-type-aware)
+
+  // Configuration for TypeScript files in src/
   {
     files: ['src/**/*.ts'],
+    excludedFiles: [
+      'src/**/*.spec.ts',
+      'src/app/testing/**/*.ts',
+      'src/main.ts',
+      'src/polyfills.ts', // Or wherever your polyfills.ts is
+      // Add other specific TS files to exclude from this strict config if needed
+    ],
+    plugins: {
+      '@typescript-eslint': tseslint.plugin,
+      '@angular-eslint': angularEslintPlugin,
+      prettier: prettierPlugin,
+      'rxjs-x': rxjsXPlugin,
+    },
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: true,
-        tsconfigRootDir: __dirnameEsm, // Use ESM-compatible __dirname
+        project: true, // Enable type-aware linting
+        tsconfigRootDir: __dirnameEsm,
       },
       globals: {
         ...globals.browser,
       },
     },
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-      prettier: prettierPlugin,
-    },
     rules: {
+      ...eslintConfigPrettier.rules, // Add prettier rules from eslint-config-prettier
       'prettier/prettier': 'warn',
+
+      // TypeScript specific rules (including type-aware)
+      ...tseslint.configs.strictTypeChecked.rules,
+      ...tseslint.configs.stylisticTypeChecked.rules,
+      ...rxjsXPlugin.configs.recommended.rules,
+
+      '@typescript-eslint/no-deprecated': 'warn', // THE RULE YOU REQUESTED
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
+      '@typescript-eslint/consistent-type-exports': [
+        'warn',
+        { fixMixedExportsWithInlineTypeSpecifier: true },
+      ],
+      '@typescript-eslint/no-empty-interface': 'off', // Often used in Angular
+      '@typescript-eslint/no-non-null-assertion': 'off', // Sometimes necessary, use with caution
+
+      // Angular specific rules
+      '@angular-eslint/component-class-suffix': 'warn',
+      '@angular-eslint/directive-class-suffix': 'warn',
+      '@angular-eslint/no-input-rename': 'warn',
+      '@angular-eslint/no-output-rename': 'warn',
+      '@angular-eslint/use-pipe-transform-interface': 'warn',
+
+      // General good practice rules (can be adjusted)
+      'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
       'no-debugger': 'warn',
+      eqeqeq: ['warn', 'smart'],
       'no-empty': ['warn', { allowEmptyCatch: true }],
-      'no-eval': 'error',
-      'no-fallthrough': 'warn',
-      'no-new-wrappers': 'warn',
-      'no-throw-literal': 'warn',
-      'no-undef-init': 'warn',
-      'no-underscore-dangle': 'off',
       'no-var': 'warn',
       'prefer-const': 'warn',
-      'arrow-body-style': ['warn', 'as-needed'],
-      'constructor-super': 'error',
-      eqeqeq: ['warn', 'smart'],
-      'guard-for-in': 'warn',
-      'no-bitwise': 'warn',
-      'no-caller': 'warn',
-      radix: 'warn',
-      '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/ban-types': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-inferrable-types': 'off',
-      '@typescript-eslint/no-empty-interface': 'off',
-      '@typescript-eslint/no-unused-expressions': [
+      'no-underscore-dangle': 'off', // Often used
+      'max-len': [
         'warn',
-        { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true },
+        {
+          code: 140, // Increased a bit for modern screens
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
+          ignoreComments: true,
+        },
       ],
-      'no-unused-expressions': 'off',
     },
   },
-  {
-    files: ['src/**/*.spec.ts', 'src/app/testing/**/*.ts'],
-    languageOptions: {
-      globals: {
-        ...globals.jasmine,
-        ...globals.browser,
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-    },
-    rules: {
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/ban-types': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-namespace': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/unbound-method': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-    },
-  },
+
+  // Configuration for Angular Templates (HTML files)
   {
     files: ['src/**/*.html'],
+    plugins: {
+      '@angular-eslint/template': angularEslintPlugin,
+    },
     languageOptions: {
       parser: angularEslintTemplateParser,
     },
+    rules: {
+      ...angularEslintPlugin.configs.recommended.rules, // Changed from recommendedHtml to recommended
+      '@angular-eslint/template/no-negated-async': 'warn',
+      // Add other template rules as needed
+    },
+  },
+
+  // Configuration for Test files (e.g., *.spec.ts)
+  {
+    files: ['src/**/*.spec.ts', 'src/app/testing/**/*.ts'],
     plugins: {
+      '@typescript-eslint': tseslint.plugin,
       '@angular-eslint': angularEslintPlugin,
     },
-    rules: {},
-  },
-  {
-    files: ['*.js', '*.cjs', 'src/**/*.js', 'src/**/*.cjs'],
-    // Use 'not' pattern instead of excludedFiles
-    ignores: ['src/babel-runtime-loader.js', 'src/babel-runtime-loader.cjs'],
     languageOptions: {
-      sourceType: 'commonjs',
-      ecmaVersion: 2020,
+      parser: tseslint.parser,
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: __dirnameEsm,
+      },
+      globals: {
+        ...globals.jasmine, // Add jasmine globals
+        ...globals.browser,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@angular-eslint/component-selector': 'off', // Often not relevant for test components
+      // Relax other rules for test files if necessary
+    },
+  },
+
+  // Configuration for JavaScript files in the root (e.g. config files)
+  // Adjust if you have JS files within src/ that are not Angular/TS
+  {
+    files: ['*.js', '*.mjs', '*.cjs'], // Covers JS, ES Modules, CommonJS in root
+    excludedFiles: ['client-angular/**/*.js'], // Exclude client-angular JS, handled by its own setup if any
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module', // Default to ES Modules
       globals: {
         ...globals.node,
       },
     },
     rules: {
-      '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
-      'no-undef': 'warn',
+      'no-console': 'off', // Often used in scripts
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_|' }],
+      // Add any other specific rules for root scripts
     },
   },
 );

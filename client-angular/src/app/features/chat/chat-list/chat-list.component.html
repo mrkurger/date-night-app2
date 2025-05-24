@@ -2,83 +2,90 @@
   <!-- Header -->
   <div class="chat-list-header">
     <h4 class="chat-list-title">Messages</h4>
-    <button nbButton status="primary" size="small" (click)="createNewChat()">
-      <nb-icon icon="plus-outline"></nb-icon>
+    <button pButton type="button" class="p-button-primary" (click)="createNewChat()">
+      <i class="pi pi-plus"></i>
       <span>New Chat</span>
     </button>
   </div>
 
   <!-- Loading State -->
   <div class="state-container loading-state" *ngIf="loading">
-    <nb-spinner status="primary" size="medium"></nb-spinner>
+    <p-progressSpinner [style]="{ width: '50px', height: '50px' }"></p-progressSpinner>
     <p>Loading conversations...</p>
   </div>
 
   <!-- Error State -->
   <div class="state-container error-state" *ngIf="error && !loading">
-    <nb-icon icon="alert-circle-outline" status="danger" class="state-icon"></nb-icon>
+    <i class="pi pi-exclamation-circle text-danger" style="font-size: 2rem"></i>
     <p>Failed to load conversations</p>
-    <button nbButton status="primary" outline size="small" (click)="loadRooms()">
-      <nb-icon icon="refresh-outline"></nb-icon> Retry
+    <button pButton type="button" class="p-button-outlined p-button-primary" (click)="loadRooms()">
+      <i class="pi pi-refresh"></i> Retry
     </button>
   </div>
 
   <!-- Empty State -->
   <div class="state-container empty-state" *ngIf="!loading && !error && rooms.length === 0">
-    <nb-icon icon="message-square-outline" class="state-icon"></nb-icon>
+    <i class="pi pi-comments" style="font-size: 2rem"></i>
     <p>No conversations yet</p>
-    <button nbButton status="primary" size="small" (click)="createNewChat()">
+    <button pButton type="button" class="p-button-primary" (click)="createNewChat()">
       Start a new conversation
     </button>
   </div>
 
   <!-- Room List -->
-  <nb-list class="room-list" *ngIf="!loading && !error && rooms.length > 0">
-    <nb-list-item
-      *ngFor="let room of rooms"
-      class="room-item"
-      [class.active]="room.id === selectedRoomId"
-      (click)="goToRoom(room.id)"
-    >
-      <app-avatar
-        [imageUrl]="room.avatar || '/assets/img/default-profile.jpg'"
-        [name]="getOtherUserName(room)"
-        [status]="isRoomOnline(room) ? 'online' : 'offline'"
-        size="medium"
+  <p-dataView [value]="rooms" class="room-list" *ngIf="!loading && !error && rooms.length > 0">
+    <ng-template let-room pTemplate="listItem">
+      <div
+        class="room-item p-d-flex"
+        [class.active]="room.id === selectedRoomId"
+        (click)="goToRoom(room.id)"
       >
-      </app-avatar>
-      <div class="room-details">
-        <div class="room-header">
-          <span class="room-name">{{ getOtherUserName(room) }}</span>
-          <span class="room-time">{{ getLastMessageTime(room) | timeAgo }}</span>
-        </div>
-        <div class="room-message-preview">
-          <p class="last-message-text">{{ getLastMessagePreview(room) }}</p>
-          <nb-badge
-            *ngIf="hasUnreadMessages(room)"
-            [text]="room.unreadCount"
-            status="primary"
-            position="center-right"
-            class="unread-indicator"
-          >
-          </nb-badge>
-        </div>
-      </div>
-      <div class="room-actions">
-        <button
-          nbButton
-          ghost
-          size="tiny"
-          nbTooltip="{{ room.pinned ? 'Unpin' : 'Pin' }}"
-          (click)="togglePin($event, room)"
-          [class.active]="room.pinned"
+        <app-avatar
+          [imageUrl]="room.avatar || '/assets/img/default-profile.jpg'"
+          [name]="getOtherUserName(room)"
+          [status]="isRoomOnline(room) ? 'online' : 'offline'"
+          size="medium"
         >
-          <nb-icon icon="pin-outline"></nb-icon>
-        </button>
-        <button nbButton ghost size="tiny" nbTooltip="Archive" (click)="archiveRoom($event, room)">
-          <nb-icon icon="archive-outline"></nb-icon>
-        </button>
+        </app-avatar>
+
+        <div class="room-details p-d-flex p-flex-column p-flex-grow-1">
+          <div class="room-header p-d-flex p-jc-between">
+            <span class="room-name">{{ getOtherUserName(room) }}</span>
+            <span class="room-time">{{ getLastMessageTime(room) | timeAgo }}</span>
+          </div>
+          <div class="room-message-preview p-d-flex p-ai-center p-jc-between">
+            <p class="last-message-text">{{ getLastMessagePreview(room) }}</p>
+            <p-badge
+              *ngIf="hasUnreadMessages(room)"
+              [value]="room.unreadCount.toString()"
+              severity="primary"
+            >
+            </p-badge>
+          </div>
+        </div>
+
+        <div class="room-actions p-d-flex">
+          <button
+            pButton
+            type="button"
+            class="p-button-text p-button-rounded p-button-sm"
+            [pTooltip]="room.pinned ? 'Unpin' : 'Pin'"
+            (click)="togglePin($event, room)"
+            [class.active]="room.pinned"
+          >
+            <i class="pi" [class.pi-star-fill]="room.pinned" [class.pi-star]="!room.pinned"></i>
+          </button>
+          <button
+            pButton
+            type="button"
+            class="p-button-text p-button-rounded p-button-sm"
+            pTooltip="Archive"
+            (click)="archiveRoom($event, room)"
+          >
+            <i class="pi pi-inbox"></i>
+          </button>
+        </div>
       </div>
-    </nb-list-item>
-  </nb-list>
+    </ng-template>
+  </p-dataView>
 </div>

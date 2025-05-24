@@ -3,8 +3,8 @@ import { NbMenuItem } from '@nebular/theme';
 import { UserData } from '../../nb-navigation.component';
 
 @Component({
-  selector: 'nb-user-menu',
-  template: `
+    selector: 'nb-user-menu',
+    template: `
     <div
       class="user-menu"
       [nbContextMenu]="items"
@@ -31,8 +31,8 @@ import { UserData } from '../../nb-navigation.component';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .user-menu {
         display: flex;
         align-items: center;
@@ -125,7 +125,8 @@ import { UserData } from '../../nb-navigation.component';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbUserMenuComponent {
   @Input() userData!: UserData;

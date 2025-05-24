@@ -1,84 +1,87 @@
 import {
   Component,
-  OnInit,
-  OnDestroy,
+  ElementRef,
   ViewChild,
   ElementRef,
-  TemplateRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
   AfterViewChecked,
-  Input,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbContextMenuModule,
-  NbMenuModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 
-// Custom Components
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
-import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
-
-// Services
+// PrimeNG imports
+// Custom components and services
+import { AvatarModule } from '../../shared/components/avatar/avatar.component';
 import {
   ChatService,
   ChatMessage,
   ChatRoom,
   ChatParticipant,
+  ChatMessageRequest,
+  ChatMessageRequest,
 } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+import { DialogModule } from 'primeng/dialog';
+import { TabViewModule } from 'primeng/tabview';
+import { AvatarModule } from 'primeng/avatar';
+import { SkeletonModule } from 'primeng/skeleton';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FileUploadModule } from 'primeng/fileupload';
+import { MenuItem } from 'primeng/menuitem';
+import { MessageService } from 'primeng/messageservice';
+import { ConfirmationService } from 'primeng/confirmationservice';
 
-interface EmojiCategory {
-  name: string;
-  icon: string;
-  emojis: string[];
-}
-
-// Constants
-const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
-const TYPING_INDICATOR_DELAY = 500; // ms
-
+/**
+ * ChatComponent provides a real-time chat interface using PrimeNG components.
+ * It handles user conversations, message sending/receiving, and chat room management.
+ *
+ * Features:
+ * - Real-time messaging
+ * - User presence indicators
+ * - Message history
+ * - User blocking
+ * - Chat room management
+ * - File sharing (images, documents)
+ *
+ * @implements OnInit
+ * @implements OnDestroy
+ * @implements AfterViewChecked
+ */
 @Component({
   selector: 'app-chat',
   standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [MessageService, MenuItem, FileUploadModule, ProgressSpinnerModule, ConfirmDialogModule, SkeletonModule, AvatarModule, TabViewModule, DialogModule, MenuModule, TooltipModule, BadgeModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
     FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbContextMenuModule,
-    NbMenuModule,
-    NbTagModule,
-    AvatarComponent,
-    // These components are imported but not used in the template
-    // Keeping them commented for future reference
-    // SkeletonLoaderComponent,
-    // AppSortComponent,
-    // AppSortHeaderComponent,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    BadgeModule,
+    TooltipModule,
+    MenuModule,
+    DialogModule,
+    TabViewModule,
+    AvatarModule,
+    SkeletonModule,
+    ConfirmDialogModule,
+    ProgressSpinnerModule,
+    FileUploadModule,
+    AvatarModule,
   ],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
@@ -86,14 +89,31 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
   @ViewChild('messageList') messageList!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
-  @ViewChild('newMessageDialog') newMessageDialog!: TemplateRef<any>;
-  @ViewChild('imagePreviewDialog') imagePreviewDialog!: TemplateRef<any>;
-  @ViewChild('searchInChatDialog') searchInChatDialog!: TemplateRef<any>;
-  @ViewChild('mediaGalleryDialog') mediaGalleryDialog!: TemplateRef<any>;
-  @ViewChild('fileInput') fileInput!: ElementRef;
+
+  // Dialog visibility flags
+  showNewMessageDialog = false;
+  showImagePreview = false;
+  showMediaGallery = false;
+
+  // Message input
+  messageText = '';
+  newMessageSearch = '';
+  filteredNewMessageContacts: ChatParticipant[] = [];
+
+  // Dialog visibility flags
+  showNewMessageDialog = false;
+  showImagePreview = false;
+  showMediaGallery = false;
+
+  // Message input
+  messageText = '';
+  newMessageSearch = '';
+  filteredNewMessageContacts: ChatParticipant[] = [];
 
   // Chat data
   messages: ChatMessage[] = [];
+  currentMessages: ChatMessage[] = [];
+  currentMessages: ChatMessage[] = [];
   rooms: ChatRoom[] = [];
   contacts: ChatParticipant[] = [];
   filteredContacts: ChatParticipant[] = [];
@@ -104,7 +124,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   // UI state
   loadingContacts = true;
-  loading = true;
+  loading = false;
+  loading = false;
   isContactTyping = false;
   showEmojiPicker = false;
   notificationsEnabled = true;
@@ -113,287 +134,549 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectedContactId: string | null = null;
   selectedContact: ChatParticipant | null = null;
 
-  // Reply functionality
-  replyingTo: ChatMessage | null = null;
-
-  // Temporary message functionality
-  temporaryMessageMode = false;
-  temporaryMessageTTL = 24 * 60 * 60 * 1000; // Default: 24 hours in milliseconds
-
-  // Message auto-deletion settings
-  messageAutoDeletionEnabled = true;
-  messageExpiryTime = 7 * 24 * 60 * 60 * 1000;
-
-  // Chat menu items
-  chatMenuItems = [
-    { title: 'View Profile', icon: 'person-outline', data: { action: 'viewProfile' } },
-    { title: 'Clear History', icon: 'trash-2-outline', data: { action: 'clearHistory' } },
-    { title: 'Block User', icon: 'slash-outline', data: { action: 'blockUser' } },
-    { title: 'Report', icon: 'alert-triangle-outline', data: { action: 'report' } },
+  // Menu items for chat actions
+  chatMenuItems: MenuItem[] = [
+    {
+      label: 'View Profile',
+      icon: 'pi pi-user',
+      command: () => this.viewProfile(),
+    },
+    {
+      label: 'Clear History',
+      icon: 'pi pi-trash',
+      command: () => this.clearHistory(),
+    },
+    {
+      label: 'Block User',
+      icon: 'pi pi-ban',
+      command: () => this.blockUser(),
+    },
+    {
+      label: 'Report',
+      icon: 'pi pi-exclamation-triangle',
+      command: () => this.report(),
+    },
   ];
 
-  // Current messages
-  currentMessages: ChatMessage[] = [];
+  // Menu items for chat actions
+  chatMenuItems: MenuItem[] = [
+    {
+      label: 'View Profile',
+      icon: 'pi pi-user',
+      command: () => this.viewProfile(),
+    },
+    {
+      label: 'Clear History',
+      icon: 'pi pi-trash',
+      command: () => this.clearHistory(),
+    },
+    {
+      label: 'Block User',
+      icon: 'pi pi-ban',
+      command: () => this.blockUser(),
+    },
+    {
+      label: 'Report',
+      icon: 'pi pi-exclamation-triangle',
+      command: () => this.report(),
+    },
+  ];
 
-  // Typing indicator
-  isTyping = false;
-
-  // Message input
-  messageText = '';
-
-  // Subscriptions
   private subscriptions: Subscription[] = [];
   private typingSubject = new Subject<string>();
   private shouldScrollToBottom = true;
 
+  /**
+   * Initializes the chat component with required services and sets up initial state
+   *
+   * @param chatService - Service handling chat operations
+   * @param authService - Service for user authentication
+   * @param notificationService - Service for showing user notifications
+   * @param confirmationService - Service for confirmation dialogs
+   * @param router - Angular router service
+   * @param route - Current route information
+   */
+  /**
+   * Initializes the chat component with required services and sets up initial state
+   *
+   * @param chatService - Service handling chat operations
+   * @param authService - Service for user authentication
+   * @param notificationService - Service for showing user notifications
+   * @param confirmationService - Service for confirmation dialogs
+   * @param router - Angular router service
+   * @param route - Current route information
+   */
   constructor(
     private chatService: ChatService,
     private authService: AuthService,
     private notificationService: NotificationService,
+    private confirmationService: ConfirmationService,
+    private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
     this.currentUserId = this.authService.getCurrentUserId();
   }
 
+  /**
+   * Lifecycle hook that is called after data-bound properties are initialized
+   */
+  /**
+   * Lifecycle hook that is called after data-bound properties are initialized
+   */
   ngOnInit(): void {
     this.loadRooms();
     this.setupSubscriptions();
   }
 
-  // Send message method
-  sendMessage(): void {
-    if (!this.messageText.trim()) return;
-
-    console.log('Sending message:', this.messageText);
-    // Implementation would typically call a service method
-
-    this.messageText = '';
-  }
-
-  // Handle typing events
-  onTyping(): void {
-    // Implementation would typically notify other users that this user is typing
-    console.log('User is typing...');
-  }
-
-  // Image preview
-  previewImage: { url: string; type: string } | null = null;
-
-  // New message dialog
-  newMessageSearch = '';
-  filteredNewMessageContacts: ChatParticipant[] = [];
-
-  // Search in chat
-  chatSearchQuery = '';
-  chatSearchResults: ChatMessage[] = [];
-
-  // Media gallery
-  galleryTab: 'images' | 'files' | 'links' = 'images';
-  galleryImages: { url: string; type: string }[] = [];
-  galleryFiles: { url: string; type: string }[] = [];
-  galleryLinks: { url: string; title?: string; timestamp: Date }[] = [];
-
-  // Emoji picker
-  emojiCategories: EmojiCategory[] = [
-    {
-      name: 'Smileys & Emotion',
-      icon: 'sentiment_satisfied_alt',
-      emojis: [
-        '😀',
-        '😃',
-        '😄',
-        '😁',
-        '😆',
-        '😅',
-        '😂',
-        '🤣',
-        '😊',
-        '😇',
-        '🙂',
-        '🙃',
-        '😉',
-        '😌',
-        '😍',
-        '🥰',
-        '😘',
-      ],
-    },
-    {
-      name: 'People & Body',
-      icon: 'person',
-      emojis: [
-        '👍',
-        '👎',
-        '👌',
-        '✌️',
-        '🤞',
-        '🤟',
-        '🤘',
-        '🤙',
-        '👈',
-        '👉',
-        '👆',
-        '👇',
-        '👋',
-        '🤚',
-        '🖐️',
-        '✋',
-        '🖖',
-      ],
-    },
-    {
-      name: 'Objects',
-      icon: 'emoji_objects',
-      emojis: [
-        '❤️',
-        '🧡',
-        '💛',
-        '💚',
-        '💙',
-        '💜',
-        '🖤',
-        '💔',
-        '❣️',
-        '💕',
-        '💞',
-        '💓',
-        '💗',
-        '💖',
-        '💘',
-        '💝',
-        '💟',
-      ],
-    },
-  ];
-  currentCategoryEmojis: string[] = this.emojiCategories[0].emojis;
-
-  // Download image
-  downloadImage(): void {
-    if (this.previewImage && this.previewImage.url) {
-      window.open(this.previewImage.url, '_blank');
-    }
-  }
-
-  // Share image
-  shareImage(): void {
-    console.log('Sharing image:', this.previewImage);
-    // Implementation would typically open a share dialog
-  }
-
-  // Scroll to message
-  scrollToMessage(message: any): void {
-    console.log('Scrolling to message:', message);
-    // Implementation would typically scroll to the message in the chat
-  }
-
-  // Select contact for new message
-  selectNewMessageContact(contact: any): void {
-    console.log('Selected contact for new message:', contact);
-    // Implementation would typically start a new chat with the selected contact
-  }
-
-  // Open link in new tab
-  openLink(url: string): void {
-    window.open(url, '_blank');
-  }
-
-  // Show message date if it's the first message of the day or after a time gap
-  showMessageDate(message: ChatMessage): boolean {
-    const index = this.currentMessages.indexOf(message);
-    if (index === 0) return true;
-
-    const prevMessage = this.currentMessages[index - 1];
-    const prevDate = new Date(prevMessage.timestamp);
-    const currentDate = new Date(message.timestamp);
-
-    // Show date if it's a different day or more than 1 hour apart
-    return (
-      prevDate.getDate() !== currentDate.getDate() ||
-      prevDate.getMonth() !== currentDate.getMonth() ||
-      prevDate.getFullYear() !== currentDate.getFullYear() ||
-      currentDate.getTime() - prevDate.getTime() > 60 * 60 * 1000
-    );
-  }
-
-  // Highlight search text in messages
-  highlightSearchText(text: string): string {
-    if (!this.searchQuery || !text) return text;
-
-    const regex = new RegExp(`(${this.escapeRegExp(this.searchQuery)})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
-  }
-
-  // Helper method to escape special characters in regex
-  private escapeRegExp(string: string): string {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  // Open image preview
-  openImagePreview(image: any): void {
-    // Implementation would typically open a modal or lightbox
-    console.log('Opening image preview:', image.url);
-  }
-
-  // Download attachment
-  downloadAttachment(file: any): void {
-    const link = document.createElement('a');
-    link.href = file.url;
-    link.download = file.name || 'download';
-    link.target = '_blank';
-    link.click();
-  }
-
-  // Get file icon based on file type
-  getFileIcon(file: any): string {
-    const type = file.type?.toLowerCase() || '';
-
-    if (type.includes('image')) return 'image-outline';
-    if (type.includes('pdf')) return 'file-text-outline';
-    if (type.includes('word') || type.includes('doc')) return 'file-text-outline';
-    if (type.includes('excel') || type.includes('sheet')) return 'grid-outline';
-    if (type.includes('video')) return 'film-outline';
-    if (type.includes('audio')) return 'music-outline';
-    if (type.includes('zip') || type.includes('rar')) return 'archive-outline';
-
-    return 'file-outline';
-  }
-
-  filterConversations(): void {
-    if (!this.searchQuery) {
-      this.filteredContacts = [...this.contacts];
-      return;
-    }
-
-    const query = this.searchQuery.toLowerCase();
-    this.filteredContacts = this.contacts.filter(
-      (contact) =>
-        contact.name?.toLowerCase().includes(query) ||
-        contact.lastMessage?.content?.toLowerCase().includes(query),
-    );
-  }
-
-  clearSearch(): void {
-    this.searchQuery = '';
-    this.filterConversations();
-  }
-
-  selectContact(contactId: string): void {
-    this.selectedContactId = contactId;
-    this.selectedContact = this.contacts.find((c) => c.id === contactId) || null;
-  }
-
+  /**
+   * Lifecycle hook that is called before the component is destroyed
+   * Cleans up subscriptions and disconnects from chat service
+   */
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.chatService.disconnectSocket();
   }
 
+  /**
+   * Lifecycle hook that is called after every check of the component's view
+   * Handles automatic scrolling to the bottom of the chat
+   */
   ngAfterViewChecked(): void {
     if (this.shouldScrollToBottom) {
       this.scrollToBottom();
     }
   }
 
+  /**
+   * Sends a new message in the current chat room
+   * Shows appropriate loading states and error messages
+   */
+  /**
+   * Lifecycle hook that is called before the component is destroyed
+   * Cleans up subscriptions and disconnects from chat service
+   */
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.chatService.disconnectSocket();
+  }
+
+  /**
+   * Lifecycle hook that is called after every check of the component's view
+   * Handles automatic scrolling to the bottom of the chat
+   */
+  ngAfterViewChecked(): void {
+    if (this.shouldScrollToBottom) {
+      this.scrollToBottom();
+    }
+  }
+
+  /**
+   * Sends a new message in the current chat room
+   * Shows appropriate loading states and error messages
+   */
+  sendMessage(): void {
+    if (!this.messageText.trim()) return;
+
+    const messageRequest: ChatMessageRequest = {
+      content: this.messageText,
+      roomId: this.selectedRoomId!,
+      senderId: this.currentUserId,
+      type: 'text',
+    };
+
+    this.chatService.sendMessage(messageRequest).subscribe({
+      next: () => {
+        this.messageText = '';
+        this.shouldScrollToBottom = true;
+      },
+      error: (error) => {
+        this.notificationService.showError('Failed to send message');
+        console.error('Error sending message:', error);
+      },
+    });
+    const messageRequest: ChatMessageRequest = {
+      content: this.messageText,
+      roomId: this.selectedRoomId!,
+      senderId: this.currentUserId,
+      type: 'text',
+    };
+
+    this.chatService.sendMessage(messageRequest).subscribe({
+      next: () => {
+        this.messageText = '';
+        this.shouldScrollToBottom = true;
+      },
+      error: (error) => {
+        this.notificationService.showError('Failed to send message');
+        console.error('Error sending message:', error);
+      },
+    });
+  }
+
+  /**
+   * Handles user typing events with debounce
+   * Notifies other users when the current user is typing
+   */
+  /**
+   * Handles user typing events with debounce
+   * Notifies other users when the current user is typing
+   */
+  onTyping(): void {
+    if (this.selectedRoomId) {
+      this.typingSubject.next(this.selectedRoomId);
+    }
+    if (this.selectedRoomId) {
+      this.typingSubject.next(this.selectedRoomId);
+    }
+  }
+
+  /**
+   * Filters the contacts list based on search query
+   * Updates filteredContacts array with matching results
+   */
+  filterContacts(): void {
+  /**
+   * Filters the contacts list based on search query
+   * Updates filteredContacts array with matching results
+   */
+  filterContacts(): void {
+    if (!this.searchQuery) {
+      this.filteredContacts = [...this.contacts];
+      return;
+    }
+
+    const query = this.searchQuery.toLowerCase();
+    this.filteredContacts = this.contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(query),
+    );
+  }
+
+  /**
+   * Filters the contacts list for the new message dialog
+   * Excludes the current user from the results
+   */
+  filterNewMessageContacts(): void {
+    if (!this.newMessageSearch) {
+      this.filteredNewMessageContacts = [...this.contacts];
+      return;
+    }
+
+    const query = this.newMessageSearch.toLowerCase();
+    this.filteredNewMessageContacts = this.contacts.filter(
+      (contact) => contact.name.toLowerCase().includes(query) && contact.id !== this.currentUserId,
+    this.filteredContacts = this.contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(query),
+    );
+  }
+
+  /**
+   * Filters the contacts list for the new message dialog
+   * Excludes the current user from the results
+   */
+  filterNewMessageContacts(): void {
+    if (!this.newMessageSearch) {
+      this.filteredNewMessageContacts = [...this.contacts];
+      return;
+    }
+
+    const query = this.newMessageSearch.toLowerCase();
+    this.filteredNewMessageContacts = this.contacts.filter(
+      (contact) => contact.name.toLowerCase().includes(query) && contact.id !== this.currentUserId,
+    );
+  }
+
+  // UI Actions
+  /**
+   * Selects a contact to view the chat history
+   * Loads messages for the selected contact
+   *
+   * @param contactId - ID of the contact to select
+   */
+  // UI Actions
+  /**
+   * Selects a contact to view the chat history
+   * Loads messages for the selected contact
+   *
+   * @param contactId - ID of the contact to select
+   */
+  selectContact(contactId: string): void {
+    this.selectedContactId = contactId;
+    this.selectedContact = this.contacts.find((c) => c.id === contactId) || null;
+    if (this.selectedContact) {
+      this.loadMessages(this.selectedContact.id);
+    }
+  }
+
+  /**
+   * Opens the new message dialog
+   * Initializes the contact filter
+   */
+  openNewMessageDialog(): void {
+    this.showNewMessageDialog = true;
+    this.filterContacts();
+  }
+
+  /**
+   * Navigates to the user profile page of the selected contact
+   */
+  viewProfile(): void {
+    if (this.selectedContact) {
+      this.router.navigate(['/profile', this.selectedContact.id]);
+    }
+  }
+
+  /**
+   * Clears the chat history for the current room after confirmation
+   */
+  clearHistory(): void {
+    if (!this.selectedRoomId) {
+      this.notificationService.showError('No chat room selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to clear the chat history? This action cannot be undone.',
+      header: 'Clear Chat History',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .clearHistory(this.selectedRoomId!)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.currentMessages = [];
+              this.notificationService.showSuccess('Chat history cleared successfully');
+            },
+            error: (error) => {
+              console.error('Error clearing chat history:', error);
+              this.notificationService.showError('Failed to clear chat history. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  /**
+   * Blocks a user after confirmation
+   */
+  blockUser(): void {
+    if (!this.selectedContact) {
+      this.notificationService.showError('No user selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: `Are you sure you want to block ${this.selectedContact.name}? You won't receive messages from this user anymore.`,
+      header: 'Block User',
+      icon: 'pi pi-ban',
+      acceptIcon: 'pi pi-ban',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .blockUser(this.selectedContact!.id)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.notificationService.showSuccess(
+                `${this.selectedContact!.name} has been blocked`,
+              );
+              this.loadRooms(); // Refresh room list
+            },
+            error: (error) => {
+              console.error('Error blocking user:', error);
+              this.notificationService.showError('Failed to block user. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  /**
+   * Reports a user after confirmation
+   */
+  report(): void {
+    if (!this.selectedContact) {
+      this.notificationService.showError('No user selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: `Are you sure you want to report ${this.selectedContact.name}? Our team will review your report.`,
+      header: 'Report User',
+      icon: 'pi pi-exclamation-circle',
+      acceptIcon: 'pi pi-flag',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-warning',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .reportUser(this.selectedContact!.id)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.notificationService.showSuccess('Report submitted successfully');
+            },
+            error: (error) => {
+              console.error('Error reporting user:', error);
+              this.notificationService.showError('Failed to submit report. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  // Helper methods
+  /**
+   * Loads the chat rooms for the current user
+   * Updates the rooms array and handles loading state
+   */
+    if (this.selectedContact) {
+      this.loadMessages(this.selectedContact.id);
+    }
+  }
+
+  /**
+   * Opens the new message dialog
+   * Initializes the contact filter
+   */
+  openNewMessageDialog(): void {
+    this.showNewMessageDialog = true;
+    this.filterContacts();
+  }
+
+  /**
+   * Navigates to the user profile page of the selected contact
+   */
+  viewProfile(): void {
+    if (this.selectedContact) {
+      this.router.navigate(['/profile', this.selectedContact.id]);
+    }
+  }
+
+  /**
+   * Clears the chat history for the current room after confirmation
+   */
+  clearHistory(): void {
+    if (!this.selectedRoomId) {
+      this.notificationService.showError('No chat room selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to clear the chat history? This action cannot be undone.',
+      header: 'Clear Chat History',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .clearHistory(this.selectedRoomId!)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.currentMessages = [];
+              this.notificationService.showSuccess('Chat history cleared successfully');
+            },
+            error: (error) => {
+              console.error('Error clearing chat history:', error);
+              this.notificationService.showError('Failed to clear chat history. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  /**
+   * Blocks a user after confirmation
+   */
+  blockUser(): void {
+    if (!this.selectedContact) {
+      this.notificationService.showError('No user selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: `Are you sure you want to block ${this.selectedContact.name}? You won't receive messages from this user anymore.`,
+      header: 'Block User',
+      icon: 'pi pi-ban',
+      acceptIcon: 'pi pi-ban',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .blockUser(this.selectedContact!.id)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.notificationService.showSuccess(
+                `${this.selectedContact!.name} has been blocked`,
+              );
+              this.loadRooms(); // Refresh room list
+            },
+            error: (error) => {
+              console.error('Error blocking user:', error);
+              this.notificationService.showError('Failed to block user. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  /**
+   * Reports a user after confirmation
+   */
+  report(): void {
+    if (!this.selectedContact) {
+      this.notificationService.showError('No user selected');
+      return;
+    }
+
+    this.confirmationService.confirm({
+      message: `Are you sure you want to report ${this.selectedContact.name}? Our team will review your report.`,
+      header: 'Report User',
+      icon: 'pi pi-exclamation-circle',
+      acceptIcon: 'pi pi-flag',
+      rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-warning',
+      rejectButtonStyleClass: 'p-button-outlined',
+      accept: () => {
+        this.loading = true;
+        this.chatService
+          .reportUser(this.selectedContact!.id)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.notificationService.showSuccess('Report submitted successfully');
+            },
+            error: (error) => {
+              console.error('Error reporting user:', error);
+              this.notificationService.showError('Failed to submit report. Please try again.');
+            },
+          });
+      },
+    });
+  }
+
+  // Helper methods
+  /**
+   * Loads the chat rooms for the current user
+   * Updates the rooms array and handles loading state
+   */
   private loadRooms(): void {
     this.loadingContacts = true;
     this.chatService.getRooms().subscribe({
@@ -401,49 +684,337 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.rooms = rooms;
         this.loadingContacts = false;
       },
-      error: (err) => {
-        console.error('Error loading chat rooms:', err);
+      error: (error) => {
+        this.notificationService.showError('Failed to load chat rooms');
+        console.error('Error loading rooms:', error);
+      error: (error) => {
+        this.notificationService.showError('Failed to load chat rooms');
+        console.error('Error loading rooms:', error);
         this.loadingContacts = false;
       },
     });
   }
 
+  /**
+   * Loads the messages for a specific chat room
+   * Updates the currentMessages array and handles loading state
+   *
+   * @param roomId - ID of the room to load messages for
+   */
+  private loadMessages(roomId: string): void {
+    this.loading = true;
+    this.chatService.getMessages(roomId).subscribe({
+      next: (messages) => {
+        this.currentMessages = messages;
+        this.loading = false;
+        this.shouldScrollToBottom = true;
+      },
+      error: (error) => {
+        this.notificationService.showError('Failed to load messages');
+        console.error('Error loading messages:', error);
+        this.loading = false;
+      },
+    });
+  }
+
+  /**
+   * Sets up subscriptions for chat events
+   * - New messages
+   * - Typing status
+   * - User presence
+   */
+  /**
+   * Loads the messages for a specific chat room
+   * Updates the currentMessages array and handles loading state
+   *
+   * @param roomId - ID of the room to load messages for
+   */
+  private loadMessages(roomId: string): void {
+    this.loading = true;
+    this.chatService.getMessages(roomId).subscribe({
+      next: (messages) => {
+        this.currentMessages = messages;
+        this.loading = false;
+        this.shouldScrollToBottom = true;
+      },
+      error: (error) => {
+        this.notificationService.showError('Failed to load messages');
+        console.error('Error loading messages:', error);
+        this.loading = false;
+      },
+    });
+  }
+
+  /**
+   * Sets up subscriptions for chat events
+   * - New messages
+   * - Typing status
+   * - User presence
+   */
   private setupSubscriptions(): void {
-    // Subscribe to new messages
     this.subscriptions.push(
       this.chatService.newMessage$.subscribe((message) => {
-        this.handleNewMessage(message);
+        if (message.roomId === this.selectedRoomId) {
+          this.currentMessages = [...this.currentMessages, message];
+          this.shouldScrollToBottom = true;
+        }
       }),
-    );
 
-    // Subscribe to typing status
-    this.subscriptions.push(
-      this.chatService.typingStatus$.subscribe((isTyping) => {
-        this.isContactTyping = isTyping;
+      this.chatService.typingStatus$.subscribe((status) => {
+        if (status.roomId === this.selectedRoomId) {
+          this.isContactTyping = status.isTyping;
+        }
       }),
-    );
 
-    // Setup typing indicator
-    this.subscriptions.push(
-      this.typingSubject
-        .pipe(debounceTime(TYPING_INDICATOR_DELAY), distinctUntilChanged())
-        .subscribe((roomId) => {
-          this.chatService.sendTypingIndicator(roomId);
-        }),
+      this.typingSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((roomId) => {
+        this.chatService.sendTypingIndicator(roomId);
+      }),
+        if (message.roomId === this.selectedRoomId) {
+          this.currentMessages = [...this.currentMessages, message];
+          this.shouldScrollToBottom = true;
+        }
+      }),
+
+      this.chatService.typingStatus$.subscribe((status) => {
+        if (status.roomId === this.selectedRoomId) {
+          this.isContactTyping = status.isTyping;
+        }
+      }),
+
+      this.typingSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((roomId) => {
+        this.chatService.sendTypingIndicator(roomId);
+      }),
     );
   }
 
-  private handleNewMessage(message: ChatMessage): void {
-    if (message.roomId === this.selectedRoomId) {
-      this.messages.push(message);
-      this.shouldScrollToBottom = true;
-    }
-  }
-
+  /**
+   * Scrolls the message list to the bottom
+   * Ensures the latest messages are visible
+   */
+  /**
+   * Scrolls the message list to the bottom
+   * Ensures the latest messages are visible
+   */
   private scrollToBottom(): void {
     if (this.messageList) {
       const element = this.messageList.nativeElement;
       element.scrollTop = element.scrollHeight;
     }
+    this.shouldScrollToBottom = false;
+  }
+
+  // File upload functionality
+  readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  readonly ALLOWED_TYPES = [
+    'image/*',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/plain',
+  ];
+
+  /**
+   * Handles file upload for chat attachments
+   * @param event Upload event from PrimeNG FileUpload
+   */
+  onFileUpload(event: any): void {
+    if (!this.selectedRoomId) {
+      this.notificationService.showError('Please select a chat room first');
+      return;
+    }
+
+    const files = event.files;
+    if (!files || files.length === 0) return;
+
+    // Check file size
+    const oversizedFiles = files.filter((file: File) => file.size > this.MAX_FILE_SIZE);
+    if (oversizedFiles.length > 0) {
+      this.notificationService.showError(
+        `Some files exceed the 10MB size limit: ${oversizedFiles.map((f) => f.name).join(', ')}`,
+      );
+      return;
+    }
+
+    // Upload files
+    this.loading = true;
+    const formData = new FormData();
+    files.forEach((file: File) => {
+      formData.append('files', file);
+      formData.append(
+        'fileMetadata',
+        JSON.stringify({
+          originalName: file.name,
+          originalType: file.type,
+        }),
+      );
+    });
+
+    this.chatService
+      .uploadFiles(this.selectedRoomId, formData)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (response) => {
+          // Send file message(s)
+          response.files.forEach((file) => {
+            const message: ChatMessageRequest = {
+              roomId: this.selectedRoomId!,
+              content: '',
+              senderId: this.currentUserId,
+              type: this.getFileType(file.type),
+              fileUrl: file.url,
+              fileName: file.name,
+            };
+            this.sendChatMessage(message);
+          });
+          this.notificationService.showSuccess('Files uploaded successfully');
+        },
+        error: (error) => {
+          console.error('Error uploading files:', error);
+          this.notificationService.showError('Failed to upload files. Please try again.');
+        },
+      });
+  }
+
+  /**
+   * Sends a chat message
+   */
+  sendChatMessage(message: ChatMessageRequest): void {
+    if (!message.content?.trim() && !message.fileUrl) return;
+
+    this.loading = true;
+    this.chatService
+      .sendMessage(message)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (response) => {
+          this.currentMessages = [...this.currentMessages, response];
+          this.scrollToBottom();
+
+          if (message.type === 'text') {
+            this.messageText = ''; // Clear text input after sending
+          }
+        },
+        error: (error) => {
+          console.error('Error sending message:', error);
+          this.notificationService.showError('Failed to send message. Please try again.');
+        },
+      });
+  }
+
+  /**
+   * Determines file type for chat message
+   */
+  private getFileType(mimeType: string): 'image' | 'file' {
+    return mimeType.startsWith('image/') ? 'image' : 'file';
+    this.shouldScrollToBottom = false;
+  }
+
+  // File upload functionality
+  readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  readonly ALLOWED_TYPES = [
+    'image/*',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/plain',
+  ];
+
+  /**
+   * Handles file upload for chat attachments
+   * @param event Upload event from PrimeNG FileUpload
+   */
+  onFileUpload(event: any): void {
+    if (!this.selectedRoomId) {
+      this.notificationService.showError('Please select a chat room first');
+      return;
+    }
+
+    const files = event.files;
+    if (!files || files.length === 0) return;
+
+    // Check file size
+    const oversizedFiles = files.filter((file: File) => file.size > this.MAX_FILE_SIZE);
+    if (oversizedFiles.length > 0) {
+      this.notificationService.showError(
+        `Some files exceed the 10MB size limit: ${oversizedFiles.map((f) => f.name).join(', ')}`,
+      );
+      return;
+    }
+
+    // Upload files
+    this.loading = true;
+    const formData = new FormData();
+    files.forEach((file: File) => {
+      formData.append('files', file);
+      formData.append(
+        'fileMetadata',
+        JSON.stringify({
+          originalName: file.name,
+          originalType: file.type,
+        }),
+      );
+    });
+
+    this.chatService
+      .uploadFiles(this.selectedRoomId, formData)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (response) => {
+          // Send file message(s)
+          response.files.forEach((file) => {
+            const message: ChatMessageRequest = {
+              roomId: this.selectedRoomId!,
+              content: '',
+              senderId: this.currentUserId,
+              type: this.getFileType(file.type),
+              fileUrl: file.url,
+              fileName: file.name,
+            };
+            this.sendChatMessage(message);
+          });
+          this.notificationService.showSuccess('Files uploaded successfully');
+        },
+        error: (error) => {
+          console.error('Error uploading files:', error);
+          this.notificationService.showError('Failed to upload files. Please try again.');
+        },
+      });
+  }
+
+  /**
+   * Sends a chat message
+   */
+  sendChatMessage(message: ChatMessageRequest): void {
+    if (!message.content?.trim() && !message.fileUrl) return;
+
+    this.loading = true;
+    this.chatService
+      .sendMessage(message)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (response) => {
+          this.currentMessages = [...this.currentMessages, response];
+          this.scrollToBottom();
+
+          if (message.type === 'text') {
+            this.messageText = ''; // Clear text input after sending
+          }
+        },
+        error: (error) => {
+          console.error('Error sending message:', error);
+          this.notificationService.showError('Failed to send message. Please try again.');
+        },
+      });
+  }
+
+  /**
+   * Determines file type for chat message
+   */
+  private getFileType(mimeType: string): 'image' | 'file' {
+    return mimeType.startsWith('image/') ? 'image' : 'file';
   }
 }

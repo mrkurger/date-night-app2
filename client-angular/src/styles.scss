@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+// Import PrimeNG styles
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+=======
 @use '@nebular/theme/styles/theming' as *;
 @use '@nebular/theme/styles/themes/default';
 @use '@nebular/theme/styles/themes/cosmic' as dark;
@@ -11,108 +18,226 @@
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
 @use '@primeng/themes/aura/light/blue/theme.css' as primeng-aura;
+>>>>>>> main
 
-// Import Nebular theme styles
-@use '@nebular/theme/styles/globals' as *;
-
-// Include Nebular theme styles
-@include nb-install() {
-  @include nb-theme-global();
-}
-
-:root {
-  --nb-theme-margin: 1rem;
-  --nb-theme-margin-lg: 1.5rem;
-  --nb-theme-margin-xs: 0.25rem;
-  --nb-theme-spacing: 0.5rem;
-  --nb-theme-form-field-spacing: 0.75rem;
-  --nb-theme-card-margin-bottom: 1.5rem;
-  --nb-theme-card-border-radius: 0.5rem;
-  --nb-theme-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --nb-theme-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
-  --nb-theme-transition-duration: 0.2s;
-  --nb-theme-transition-timing-function: ease-in-out;
-  --nb-theme-button-border-radius: 0.25rem;
-  --nb-theme-button-padding: 0.5rem 1rem;
-  --nb-theme-border-radius: 0.25rem;
-  --nb-theme-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --nb-theme-padding: 1rem;
-  --color-danger-default: #ff3d71;
-  --color-primary-default: #3366ff;
-  --color-basic-600: #8f9bb3;
-}
-
-// Nebular theme and Eva Icons are now loaded via index.html
-
-// Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
+// Core styles
+@use 'app/core/design/variables';
+@use 'app/core/design/typography';
+@use 'app/core/design/utilities';
+@use 'styles/primeng';
 
 // Global styles
-html,
-body {
-  height: 100%;
+// Global styles
+:root {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+}
+
+html, body {
   margin: 0;
-  font-family: nb-theme(text-paragraph-font-family);
-  background-color: nb-theme(background-basic-color-1);
-  color: nb-theme(text-basic-color);
+  padding: 0;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--surface-ground);
 }
 
-// Component styles
-nb-card {
-  margin-bottom: nb-theme(card-margin-bottom);
-  border-radius: nb-theme(card-border-radius);
-  box-shadow: nb-theme(card-shadow);
-  transition: transform 0.2s nb-theme(transition-timing-function),
-    box-shadow 0.2s nb-theme(transition-timing-function);
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+}
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: nb-theme(card-shadow-hover);
+// Layout utilities
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 1200px) {
+    max-width: 100%;
   }
 }
 
-// Form styles
-nb-form-field {
-  margin-bottom: nb-theme(form-field-spacing);
+// Common margins and paddings
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
 
-  input,
-  textarea,
-  select {
-    width: 100%;
-    font-family: nb-theme(text-paragraph-font-family);
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mx-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
+.mx-2 { margin-left: 1rem; margin-right: 1rem; }
+.mx-3 { margin-left: 1.5rem; margin-right: 1.5rem; }
+.mx-4 { margin-left: 2rem; margin-right: 2rem; }
+
+.my-1 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.my-2 { margin-top: 1rem; margin-bottom: 1rem; }
+.my-3 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+.my-4 { margin-top: 2rem; margin-bottom: 2rem; }
+
+// Flexbox utilities
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.gap-4 { gap: 2rem; }
+
+// Grid utilities
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr) !important;
   }
+  font-size: 16px;
+  line-height: 1.5;
+}
 
-  &.has-error {
-    .error-message {
-      color: nb-theme(color-danger-default);
-      font-size: nb-theme(text-caption-font-size);
-      margin-top: nb-theme(form-field-spacing);
-    }
+// Layout utilities
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 1200px) {
+    max-width: 100%;
   }
 }
 
-// Button styles
-[nbButton] {
-  font-family: nb-theme(text-button-font-family) !important;
-  font-weight: nb-theme(text-button-font-weight) !important;
-  text-transform: nb-theme(text-button-text-transform) !important;
-  border-radius: nb-theme(button-border-radius) !important;
-  padding: nb-theme(button-padding) !important;
-  transition: all nb-theme(transition-duration) nb-theme(transition-timing-function) !important;
+// Common margins and paddings
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mx-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
+.mx-2 { margin-left: 1rem; margin-right: 1rem; }
+.mx-3 { margin-left: 1.5rem; margin-right: 1.5rem; }
+.mx-4 { margin-left: 2rem; margin-right: 2rem; }
+
+.my-1 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.my-2 { margin-top: 1rem; margin-bottom: 1rem; }
+.my-3 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+.my-4 { margin-top: 2rem; margin-bottom: 2rem; }
+
+// Flexbox utilities
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.gap-4 { gap: 2rem; }
+
+// Grid utilities
+.grid {
+  display: grid;
+  gap: 1rem;
 }
 
-// Utility classes
-.nb-margin {
-  margin: nb-theme(margin);
+.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
 }
 
-.nb-padding {
-  padding: nb-theme(padding);
-}
+// Typography utilities
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-.nb-rounded {
-  border-radius: nb-theme(border-radius);
-}
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
 
-.nb-shadow {
-  box-shadow: nb-theme(shadow);
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-normal { font-weight: 400; }
+
+// Colors
+.text-primary { color: var(--primary-color); }
+.text-error { color: var(--error-color); }
+.text-success { color: var(--success-color); }
+.text-warning { color: var(--warning-color); }
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-before {
+    page-break-before: always;
+  }
+  
+  .print-break-after {
+    page-break-after: always;
+  }
+// Typography utilities
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-normal { font-weight: 400; }
+
+// Colors
+.text-primary { color: var(--primary-color); }
+.text-error { color: var(--error-color); }
+.text-success { color: var(--success-color); }
+.text-warning { color: var(--warning-color); }
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-before {
+    page-break-before: always;
+  }
+  
+  .print-break-after {
+    page-break-after: always;
+  }
 }

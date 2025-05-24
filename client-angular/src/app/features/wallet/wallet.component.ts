@@ -1,40 +1,33 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-  NbListModule,
-} from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { ListboxModule } from 'primeng/listbox';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
+// PrimeNG imports
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss'],
-  standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  standalone: true,
+  imports: [ProgressSpinnerModule, SelectButtonModule, TagModule, BadgeModule, ListboxModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
     RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbBadgeModule,
-    NbTagModule,
-    NbSelectModule,
-    NbListModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    ListboxModule,
+    BadgeModule,
+    TagModule,
+    SelectButtonModule,
+    ProgressSpinnerModule,
   ],
 })
 export class WalletComponent {
@@ -70,7 +63,10 @@ export class WalletComponent {
       },
     },
   ];
-  loading = false;_error: string | null = null;
+  loading = false;
+  _error: string | null = null;
+  loading = false;
+  _error: string | null = null;
 
   openTransactionDetails(transaction: any): void {
     console.log('Transaction details:', transaction);
@@ -109,7 +105,8 @@ export class WalletComponent {
       case 'failed':
         return 'danger';
       default:
-        return 'basic';
+        return 'info';
+        return 'info';
     }
   }
 
@@ -130,6 +127,40 @@ export class WalletComponent {
     }
   }
 
+  getTransactionTypeIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'deposit':
+        return 'pi-arrow-down';
+      case 'withdrawal':
+        return 'pi-arrow-up';
+      case 'transfer':
+        return 'pi-sync';
+      case 'payment':
+        return 'pi-shopping-cart';
+      case 'refund':
+        return 'pi-replay';
+      default:
+        return 'pi-file';
+    }
+  }
+
+  getTransactionTypeIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'deposit':
+        return 'pi-arrow-down';
+      case 'withdrawal':
+        return 'pi-arrow-up';
+      case 'transfer':
+        return 'pi-sync';
+      case 'payment':
+        return 'pi-shopping-cart';
+      case 'refund':
+        return 'pi-replay';
+      default:
+        return 'pi-file';
+    }
+  }
+
   getPaymentMethodIcon(type: string): string {
     switch (type.toLowerCase()) {
       case 'credit_card':
@@ -142,6 +173,36 @@ export class WalletComponent {
         return 'flash-outline';
       default:
         return 'options-2-outline';
+    }
+  }
+
+  getPaymentMethodIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'credit_card':
+        return 'pi-credit-card';
+      case 'bank_account':
+        return 'pi-home';
+      case 'paypal':
+        return 'pi-paypal';
+      case 'crypto':
+        return 'pi-bitcoin';
+      default:
+        return 'pi-wallet';
+    }
+  }
+
+  getPaymentMethodIconPrime(type: string): string {
+    switch (type.toLowerCase()) {
+      case 'credit_card':
+        return 'pi-credit-card';
+      case 'bank_account':
+        return 'pi-home';
+      case 'paypal':
+        return 'pi-paypal';
+      case 'crypto':
+        return 'pi-bitcoin';
+      default:
+        return 'pi-wallet';
     }
   }
 

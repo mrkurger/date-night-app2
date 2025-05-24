@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PagerComponent } from './pager.component';
+import { PaginatorModule } from './pager.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-describe('PagerComponent', () => {
-  let component: PagerComponent;
-  let fixture: ComponentFixture<PagerComponent>;
+describe('PaginatorModule', () => {
+  let component: PaginatorModule;
+  let fixture: ComponentFixture<PaginatorModule>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, PagerComponent],
+      imports: [CommonModule, FormsModule, PaginatorModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PagerComponent);
+    fixture = TestBed.createComponent(PaginatorModule);
     component = fixture.componentInstance;
 
     // Set default values for testing

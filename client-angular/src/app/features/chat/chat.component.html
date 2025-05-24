@@ -1,43 +1,55 @@
+<p-confirmDialog
+  [style]="{ width: '450px' }"
+  [closeOnEscape]="true"
+  rejectButtonStyleClass="p-button-text"
+  acceptButtonStyleClass="p-button-danger"
+>
+</p-confirmDialog>
+
 <div class="chat-container">
   <!-- Left Sidebar with Conversation List -->
   <div class="chat-sidebar">
     <div class="chat-header">
       <h2>Messages</h2>
       <div class="chat-header-actions">
-        <button nbButton outline status="primary" size="small" (click)="openNewMessageDialog()">
-          New Message
-        </button>
-        <button nbButton ghost size="small" (click)="openChatSettings()">
-          <nb-icon icon="settings-2-outline"></nb-icon>
-        </button>
+        <p-button
+          icon="pi pi-plus"
+          styleClass="p-button-outlined"
+          (onClick)="openNewMessageDialog()"
+          label="New Message"
+        >
+        </p-button>
+        <p-button icon="pi pi-cog" styleClass="p-button-text" (onClick)="openChatSettings()">
+        </p-button>
       </div>
     </div>
 
     <div class="chat-search">
-      <nb-form-field>
-        <nb-icon nbPrefix icon="search-outline"></nb-icon>
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
         <input
-          nbInput
-          fullWidth
+          pInputText
+          class="w-full"
           type="text"
           placeholder="Search conversations..."
           [(ngModel)]="conversationSearchQuery"
           (ngModelChange)="filterContacts()"
         />
         <button
-          nbSuffix
           *ngIf="conversationSearchQuery"
-          nbButton
-          ghost
-          size="tiny"
+          pButton
+          icon="pi pi-times"
+          class="p-button-text p-button-rounded"
           (click)="clearConversationSearch()"
-        >
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-form-field>
+        ></button>
+      </span>
     </div>
 
     <div class="conversation-list" #conversationList>
+      <div *ngIf="loadingContacts" class="loading-container">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+        <span>Loading contacts...</span>
+      </div>
       <div
         *ngFor="let contact of filteredContacts"
         class="conversation-item"
@@ -49,7 +61,8 @@
           [name]="contact.name"
           [status]="contact.status"
           size="medium"
-        ></app-avatar>
+        >
+        </app-avatar>
         <div class="conversation-info">
           <div class="conversation-header">
             <span class="contact-name">{{ contact.name }}</span>
@@ -61,32 +74,32 @@
             <p class="last-message">
               {{ contact.lastMessage?.content || 'No messages yet' }}
             </p>
-            <nb-badge
+            <p-badge
               *ngIf="contact.unreadCount > 0"
-              [text]="contact.unreadCount"
-              status="primary"
-              position="center-right"
-              class="unread-badge"
+              [value]="contact.unreadCount"
+              severity="primary"
             >
-            </nb-badge>
+            </p-badge>
           </div>
         </div>
       </div>
 
       <div *ngIf="loading" class="loading-conversations">
         <div *ngFor="let i of [1, 2, 3, 4, 5]" class="skeleton-conversation-item">
-          <nb-card class="skeleton-card">
-            <div class="skeleton-avatar"></div>
-            <div class="skeleton-text-lines">
-              <nb-skeleton-text animated width="60%"></nb-skeleton-text>
-              <nb-skeleton-text animated width="90%"></nb-skeleton-text>
+          <p-card styleClass="p-mb-3">
+            <div class="flex align-items-center gap-3">
+              <p-skeleton shape="circle" size="4rem"></p-skeleton>
+              <div class="flex-1">
+                <p-skeleton width="60%" height="1rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="90%" height="1rem"></p-skeleton>
+              </div>
             </div>
-          </nb-card>
+          </p-card>
         </div>
       </div>
 
       <div *ngIf="!loading && filteredContacts.length === 0" class="no-conversations">
-        <span class="icon">��</span>
+        <i class="pi pi-comments text-6xl text-color-secondary mb-3"></i>
         <p>No conversations found</p>
       </div>
     </div>
@@ -102,26 +115,32 @@
             [name]="selectedContact?.name"
             [status]="selectedContact?.status"
             size="small"
-          ></app-avatar>
+          >
+          </app-avatar>
           <div class="contact-details">
             <h3>{{ selectedContact?.name }}</h3>
             <span class="status-text">{{ selectedContact?.status | titlecase }}</span>
           </div>
         </div>
         <div class="chat-actions">
-          <button nbButton ghost nbTooltip="Voice Call">
-            <nb-icon icon="phone-outline"></nb-icon>
-          </button>
-          <button nbButton ghost nbTooltip="Video Call">
-            <nb-icon icon="video-outline"></nb-icon>
-          </button>
-          <button nbButton ghost nbTooltip="Chat Info" [nbContextMenu]="chatMenuItems">
-            <nb-icon icon="more-vertical-outline"></nb-icon>
-          </button>
+          <p-button icon="pi pi-phone" styleClass="p-button-text" pTooltip="Voice Call"> </p-button>
+          <p-button icon="pi pi-video" styleClass="p-button-text" pTooltip="Video Call"> </p-button>
+          <p-button
+            icon="pi pi-ellipsis-v"
+            styleClass="p-button-text"
+            [pTooltip]="'Chat Info'"
+            (click)="menu.toggle($event)"
+          >
+          </p-button>
+          <p-menu #menu [popup]="true" [model]="chatMenuItems"></p-menu>
         </div>
       </div>
 
       <div class="messages-container" #messagesContainer>
+        <div *ngIf="loading" class="loading-container">
+          <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+          <span>Loading messages...</span>
+        </div>
         <div class="messages-list">
           <div *ngFor="let message of currentMessages" class="message-group">
             <div class="message-date" *ngIf="showMessageDate(message)">
@@ -148,41 +167,32 @@
       </div>
 
       <div class="message-input">
-        <nb-form-field>
-          <nb-icon nbPrefix icon="message-square-outline"></nb-icon>
+        <span class="p-input-icon-left p-input-icon-right w-full">
+          <i class="pi pi-comments"></i>
           <input
-            nbInput
-            fullWidth
+            pInputText
+            class="w-full"
             type="text"
             placeholder="Type a message..."
             [(ngModel)]="newMessage"
             (keyup.enter)="sendMessage()"
             (input)="onTyping()"
           />
-          <div nbSuffix class="message-actions">
-            <button nbButton ghost nbTooltip="Add attachment">
-              <nb-icon icon="attach-outline"></nb-icon>
-            </button>
-            <button nbButton ghost nbTooltip="Add emoji">
-              <nb-icon icon="smiling-face-outline"></nb-icon>
-            </button>
-            <button
-              nbButton
-              status="primary"
-              size="small"
-              [disabled]="!newMessage.trim()"
-              (click)="sendMessage()"
-            >
-              <nb-icon icon="paper-plane-outline"></nb-icon>
-            </button>
+          <div class="message-actions">
+            <p-button icon="pi pi-paperclip" styleClass="p-button-text" pTooltip="Add attachment">
+            </p-button>
+            <p-button icon="pi pi-smile" styleClass="p-button-text" pTooltip="Add emoji">
+            </p-button>
+            <p-button icon="pi pi-send" [disabled]="!newMessage.trim()" (onClick)="sendMessage()">
+            </p-button>
           </div>
-        </nb-form-field>
+        </span>
       </div>
     </ng-container>
 
     <ng-template #noChat>
       <div class="no-chat-selected">
-        <nb-icon icon="message-square-outline" size="huge"></nb-icon>
+        <i class="pi pi-comments text-6xl text-color-secondary mb-3"></i>
         <h3>Select a conversation</h3>
         <p>Choose a contact to start chatting</p>
       </div>
@@ -190,170 +200,383 @@
   </div>
 </div>
 
-<!-- New Message Dialog Template -->
-<ng-template #newMessageDialog>
-  <h2 nb-dialog-title>New Message</h2>
-  <nb-dialog-content>
-    <nb-form-field appearance="outline" class="full-width">
-      <nb-form-field-label>Search contacts</nb-form-field-label>
-      <input nbInput fullWidth [(ngModel)]="newMessageSearch" placeholder="Type a name..." />
-      <nb-icon nbPrefix icon="search-outline"></nb-icon>
-    </nb-form-field>
+<!-- New Message Dialog -->
+<p-dialog
+  header="New Message"
+  [(visible)]="showNewMessageDialog"
+  [style]="{ width: '450px' }"
+  [modal]="true"
+>
+  <div class="p-fluid">
+    <span class="p-input-icon-left w-full mb-3">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        class="w-full"
+        [(ngModel)]="newMessageSearch"
+        placeholder="Search contacts..."
+      />
+    </span>
 
     <div class="contact-list">
       <div
         *ngFor="let contact of filteredNewMessageContacts"
-        class="contact-option"
+        class="contact-option p-2 cursor-pointer"
         (click)="selectNewMessageContact(contact)"
       >
-        <nb-user
-          [imageUrl]="contact.imageUrl"
-          [name]="contact.name"
-          [isOnline]="contact.online"
-          size="small"
-        >
-        </nb-user>
-        <div class="contact-name">{{ contact.name }}</div>
+        <div class="flex align-items-center gap-2">
+          <p-avatar
+            [image]="contact.imageUrl"
+            [label]="contact.name?.charAt(0)"
+            [size]="'large'"
+            shape="circle"
+          >
+          </p-avatar>
+          <div class="contact-name">{{ contact.name }}</div>
+        </div>
       </div>
 
-      <div *ngIf="filteredNewMessageContacts.length === 0" class="no-contacts">
+      <div *ngIf="filteredNewMessageContacts.length === 0" class="no-contacts p-3 text-center">
         <p>No contacts found</p>
       </div>
     </div>
-  </nb-dialog-content>
-  <nb-dialog-actions align="end">
-    <button nbButton nb-dialog-close>Cancel</button>
-  </nb-dialog-actions>
-</ng-template>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      (onClick)="showNewMessageDialog = false"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
 
-<!-- Image Preview Dialog Template -->
-<ng-template #imagePreviewDialog>
+<!-- Image Preview Dialog -->
+<p-dialog
+  [(visible)]="showImagePreview"
+  [modal]="true"
+  [maximizable]="true"
+  [style]="{ width: '90vw' }"
+  class="image-preview-dialog"
+>
   <div class="image-preview-container">
-    <button nbButton ghost class="close-button" nb-dialog-close>
-      <nb-icon icon="close"></nb-icon>
-    </button>
-
     <img [src]="previewImage?.url" [alt]="previewImage?.type || 'Image'" class="preview-image" />
 
     <div class="image-preview-actions">
-      <button nbButton ghost nbTooltip="Download" (click)="downloadImage()">
-        <nb-icon icon="download"></nb-icon>
-      </button>
-      <button nbButton ghost nbTooltip="Share" (click)="shareImage()">
-        <nb-icon icon="share"></nb-icon>
-      </button>
+      <p-button
+        icon="pi pi-download"
+        styleClass="p-button-text"
+        pTooltip="Download"
+        (onClick)="downloadImage()"
+      >
+      </p-button>
+      <p-button
+        icon="pi pi-share-alt"
+        styleClass="p-button-text"
+        pTooltip="Share"
+        (onClick)="shareImage()"
+      >
+      </p-button>
     </div>
   </div>
-</ng-template>
+</p-dialog>
 
-<!-- Search in Chat Dialog Template -->
-<ng-template #searchInChatDialog>
-  <h2 nb-dialog-title>Search in Conversation</h2>
-  <nb-dialog-content>
-    <nb-form-field appearance="outline" class="full-width">
-      <nb-form-field-label>Search messages</nb-form-field-label>
-      <input nbInput fullWidth [(ngModel)]="chatSearchQuery" placeholder="Type to search..." />
-      <nb-icon nbPrefix icon="search-outline"></nb-icon>
-    </nb-form-field>
-
-    <div class="search-results">
-      <div
-        *ngFor="let result of chatSearchResults"
-        class="search-result-item"
-        (click)="scrollToMessage(result)"
-      >
-        <div class="result-sender">
-          {{ result.sender && typeof result.sender === 'object' ? result.sender.username : 'User' }}
+<!-- Media Gallery Dialog -->
+<p-dialog
+  header="Media Gallery"
+  [(visible)]="showMediaGallery"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+  [maximizable]="true"
+>
+  <p-tabView>
+    <p-tabPanel header="Images">
+      <div class="gallery-images grid">
+        <div *ngFor="let image of galleryImages" class="col-4 sm:col-3 md:col-2 p-2">
+          <img
+            [src]="image.url"
+            [alt]="image.type || 'Image'"
+            class="w-full cursor-pointer"
+            (click)="openImagePreview(image)"
+          />
         </div>
-        <div class="result-message" [innerHTML]="highlightSearchText(result.content || '')"></div>
-        <div class="result-time">{{ result.timestamp | date: 'short' }}</div>
+        <div *ngIf="galleryImages.length === 0" class="col-12 text-center p-4">
+          <p>No images shared in this conversation</p>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Files">
+      <div class="gallery-files">
+        <div *ngFor="let file of galleryFiles" class="file-item p-3 border-bottom-1 surface-border">
+          <div class="flex align-items-center justify-content-between">
+            <div class="flex align-items-center gap-2">
+              <i [class]="'pi ' + getFileIconClass(file)"></i>
+              <div class="file-info">
+                <div class="file-name">{{ file.name }}</div>
+                <div class="text-sm text-color-secondary">{{ file.size | fileSize }}</div>
+              </div>
+            </div>
+            <p-button
+              icon="pi pi-download"
+              styleClass="p-button-text"
+              (onClick)="downloadAttachment(file)"
+            >
+            </p-button>
+          </div>
+        </div>
+        <div *ngIf="galleryFiles.length === 0" class="text-center p-4">
+          <p>No files shared in this conversation</p>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Links">
+      <div class="gallery-links">
+        <div *ngFor="let link of galleryLinks" class="link-item p-3 border-bottom-1 surface-border">
+          <div class="flex align-items-center justify-content-between">
+            <div class="flex-1">
+              <div class="link-title font-medium">{{ link.title || link.url }}</div>
+              <div class="link-url text-color-secondary text-sm">{{ link.url }}</div>
+            </div>
+            <div class="flex align-items-center gap-2">
+              <span class="text-sm text-color-secondary">
+                {{ link.timestamp | date: 'shortDate' }}
+              </span>
+              <p-button
+                icon="pi pi-external-link"
+                styleClass="p-button-text"
+                (onClick)="openLink(link.url)"
+              >
+              </p-button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="galleryLinks.length === 0" class="text-center p-4">
+          <p>No links shared in this conversation</p>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>
+
+<div class="chat">
+  <!-- Sidebar -->
+  <div class="chat-sidebar">
+    <div class="chat-header">
+      <h2>Messages</h2>
+      <p-button
+        icon="pi pi-plus"
+        (onClick)="openNewMessageDialog()"
+        pTooltip="New Message"
+        tooltipPosition="bottom"
+      ></p-button>
+    </div>
+
+    <!-- Room List -->
+    <div class="chat-rooms">
+      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2"></p-skeleton>
+      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2"></p-skeleton>
+      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2"></p-skeleton>
+
+      <div *ngIf="!loading && rooms.length === 0" class="no-chats">
+        <p>No conversations yet</p>
+        <p-button label="Start a Chat" (onClick)="openNewMessageDialog()"></p-button>
       </div>
 
-      <div *ngIf="chatSearchResults.length === 0 && chatSearchQuery" class="no-results">
-        <p>No messages found</p>
+      <div
+        *ngFor="let room of rooms"
+        class="chat-room-item"
+        [class.active]="room.id === selectedRoomId"
+        (click)="selectRoom(room.id)"
+      >
+        <p-avatar
+          [image]="room.participants[0].profileImage"
+          [label]="room.participants[0].name[0]"
+          styleClass="mr-2"
+          size="large"
+          [pBadge]="room.unreadCount"
+          [badgeDisabled]="room.unreadCount === 0"
+          severity="info"
+        ></p-avatar>
+        <div class="chat-room-info">
+          <h3>{{ room.participants[0].name }}</h3>
+          <p>{{ room.lastMessage?.content || 'No messages yet' }}</p>
+        </div>
       </div>
     </div>
-  </nb-dialog-content>
-  <nb-dialog-actions align="end">
-    <button nbButton nb-dialog-close>Close</button>
-  </nb-dialog-actions>
-</ng-template>
+  </div>
 
-<!-- Media Gallery Dialog Template -->
-<ng-template #mediaGalleryDialog>
-  <h2 nb-dialog-title>Media Gallery</h2>
-  <nb-dialog-content>
-    <nb-tabset
-      fullWidth
-      class="gallery-tabset"
-      (changeTab)="galleryTab = $event.tabTitle.toLowerCase()"
-    >
-      <nb-tab tabTitle="images" [active]="galleryTab === 'images'">
-        <ng-template nbTabContent>
-          <div class="gallery-images">
-            <div
-              *ngFor="let image of galleryImages"
-              class="gallery-image"
-              (click)="openImagePreview(image)"
-            >
-              <img [src]="image.url" [alt]="image.type || 'Image'" />
+  <!-- Main Chat Area -->
+  <div class="chat-main">
+    <!-- Empty State -->
+    <div *ngIf="!selectedRoomId" class="chat-empty-state">
+      <p-card>
+        <h3>Select a conversation</h3>
+        <p>Choose from your existing conversations or start a new one</p>
+        <p-button label="New Message" (onClick)="openNewMessageDialog()"></p-button>
+      </p-card>
+    </div>
+
+    <!-- Active Chat -->
+    <ng-container *ngIf="selectedRoomId">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-contact-info" *ngIf="selectedContact">
+          <p-avatar
+            [image]="selectedContact.profileImage"
+            [label]="selectedContact.name[0]"
+            size="large"
+            styleClass="mr-2"
+          ></p-avatar>
+          <div>
+            <h3>{{ selectedContact.name }}</h3>
+            <span class="status-badge" [class.online]="selectedContact.status === 'online'">
+              {{ selectedContact.status }}
+            </span>
+          </div>
+        </div>
+        <div class="chat-actions">
+          <p-menu #menu [popup]="true" [model]="chatMenuItems"></p-menu>
+          <p-button icon="pi pi-ellipsis-v" (onClick)="menu.toggle($event)"></p-button>
+        </div>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="messages-container" #messageList>
+        <p-progressSpinner
+          *ngIf="loading"
+          styleClass="w-4rem h-4rem"
+          strokeWidth="3"
+        ></p-progressSpinner>
+
+        <div
+          *ngFor="let message of currentMessages"
+          class="message"
+          [class.own-message]="message.senderId === currentUserId"
+        >
+          <div class="message-content" [ngSwitch]="message.type">
+            <!-- Text Message -->
+            <p *ngSwitchCase="'text'" class="message-text">
+              {{ message.content }}
+            </p>
+
+            <!-- Image Message -->
+            <div *ngSwitchCase="'image'" class="message-image">
+              <img
+                [src]="message.fileUrl"
+                [alt]="message.fileName || 'Image'"
+                (click)="openImagePreview(message)"
+              />
             </div>
-            <div *ngIf="galleryImages.length === 0" class="no-media">
-              <p>No images shared in this conversation</p>
+
+            <!-- File Message -->
+            <div *ngSwitchCase="'file'" class="message-file">
+              <p-button
+                [icon]="getFileIcon(message)"
+                [label]="message.fileName || 'File'"
+                (onClick)="downloadAttachment(message)"
+              >
+              </p-button>
             </div>
           </div>
-        </ng-template>
-      </nb-tab>
-      <nb-tab tabTitle="files" [active]="galleryTab === 'files'">
-        <ng-template nbTabContent>
-          <div class="gallery-files">
-            <div
-              *ngFor="let file of galleryFiles"
-              class="gallery-file"
-              (click)="downloadAttachment(file)"
-            >
-              <nb-icon [icon]="getFileIcon(file)"></nb-icon>
-              <div class="file-info">
-                <div class="file-name">{{ file.type || 'File' }}</div>
-                <div class="file-meta">
-                  <span class="file-size">1.0 KB</span>
-                  <span class="file-date">Unknown date</span>
-                </div>
-              </div>
-              <button nbButton ghost size="tiny">
-                <nb-icon icon="download-outline"></nb-icon>
-              </button>
-            </div>
-            <div *ngIf="galleryFiles.length === 0" class="no-media">
-              <p>No files shared in this conversation</p>
-            </div>
-          </div>
-        </ng-template>
-      </nb-tab>
-      <nb-tab tabTitle="links" [active]="galleryTab === 'links'">
-        <ng-template nbTabContent>
-          <div class="gallery-links">
-            <div
-              *ngFor="let link of galleryLinks"
-              class="gallery-link"
-              (click)="openLink(link.url)"
-            >
-              <nb-icon icon="link-2-outline"></nb-icon>
-              <div class="link-info">
-                <div class="link-title">{{ link.title || link.url }}</div>
-                <div class="link-url">{{ link.url }}</div>
-              </div>
-              <div class="link-date">{{ link.timestamp | date: 'shortDate' }}</div>
-            </div>
-            <div *ngIf="galleryLinks.length === 0" class="no-media">
-              <p>No links shared in this conversation</p>
-            </div>
-          </div>
-        </ng-template>
-      </nb-tab>
-    </nb-tabset>
-  </nb-dialog-content>
-  <nb-dialog-actions align="end">
-    <button nbButton nb-dialog-close>Close</button>
-  </nb-dialog-actions>
-</ng-template>
+          <small class="message-time">
+            {{ message.timestamp | date: 'shortTime' }}
+          </small>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div *ngIf="isContactTyping" class="typing-indicator">
+          {{ selectedContact?.name }} is typing...
+        </div>
+      </div>
+
+      <!-- Message Input Area -->
+      <div class="message-input-container">
+        <!-- File Upload -->
+        <p-fileUpload
+          #fileUpload
+          mode="basic"
+          [auto]="true"
+          [maxFileSize]="MAX_FILE_SIZE"
+          [accept]="ALLOWED_TYPES.join(',')"
+          (onSelect)="onFileUpload($event)"
+          [customUpload]="true"
+          chooseLabel="Attach"
+          styleClass="p-button-outlined p-button-secondary"
+          [disabled]="loading"
+        ></p-fileUpload>
+
+        <!-- Message Input -->
+        <div class="input-wrapper">
+          <textarea
+            pInputTextarea
+            #messageInput
+            [(ngModel)]="messageText"
+            placeholder="Type a message..."
+            (keydown.enter)="$event.preventDefault(); sendMessage()"
+            (input)="onTyping()"
+            [disabled]="loading"
+            rows="1"
+            autoResize="true"
+          >
+          </textarea>
+        </div>
+
+        <!-- Send Button -->
+        <p-button
+          icon="pi pi-send"
+          (onClick)="sendMessage()"
+          [disabled]="!messageText.trim() || loading"
+          styleClass="p-button-rounded"
+        >
+        </p-button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<p-confirmDialog
+  [style]="{ width: '450px' }"
+  rejectButtonStyleClass="p-button-text"
+  acceptButtonStyleClass="p-button-text"
+>
+</p-confirmDialog>
+
+<!-- New Message Dialog -->
+<p-dialog
+  [(visible)]="showNewMessageDialog"
+  header="New Message"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [draggable]="false"
+>
+  <div class="new-message-dialog">
+    <div class="search-container">
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="newMessageSearch"
+          (ngModelChange)="filterNewMessageContacts()"
+          placeholder="Search contacts..."
+          class="w-full"
+        />
+      </span>
+    </div>
+    <div class="contacts-list">
+      <div
+        *ngFor="let contact of filteredNewMessageContacts"
+        class="contact-item"
+        (click)="selectNewMessageContact(contact)"
+      >
+        <p-avatar
+          [image]="contact.profileImage"
+          [label]="contact.name[0]"
+          styleClass="mr-2"
+        ></p-avatar>
+        <span>{{ contact.name }}</span>
+      </div>
+    </div>
+  </div>
+</p-dialog>

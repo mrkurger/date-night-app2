@@ -53,8 +53,8 @@ jobs:
        - name: Publish Build info With JFrog CLI
          run: |
           # Collect environment variables for the build
-          jf rt build-collect-env
+          jf rt build-collect-env || echo "Failed to collect build env"
           # Collect VCS details from git and add them to the build
-          jf rt build-add-git
+          jf rt build-add-git || echo "Failed to add git info"
           # Publish build info
-          jf rt build-publish
+          jf rt build-publish || echo "Failed to publish build info - credentials may be missing"

@@ -7,17 +7,45 @@ module.exports = {
 
   // Test patterns
   testMatch: [
+    '**/tests/**/*.test.ts',
     '**/tests/**/*.test.js',
-    '**/tests/**/*.test.cjs',
-    '**/tests/**/*.test.mjs',
+    '**/tests/**/*.spec.ts',
     '**/tests/**/*.spec.js',
   ],
+
+  // TypeScript and ESM support
+  preset: 'ts-jest',
+  extensionsToTreatAsEsm: ['.ts'],
+  transform: {
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        useESM: true,
+      },
+    ],
+  },
+
+  // Module resolution
+  moduleDirectories: ['node_modules', 'src'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
+  },
 
   // Setup files
   setupFilesAfterEnv: ['jest-extended/all'],
 
   // Coverage collection
-  collectCoverageFrom: ['**/*.js', '!**/node_modules/**', '!**/tests/**', '!**/scripts/**'],
+  collectCoverageFrom: [
+    '**/*.{js,ts}',
+    '!**/node_modules/**',
+    '!**/tests/**',
+    '!**/scripts/**',
+    '!**/dist/**',
+  ],
+
+  // Module file extensions
+  moduleFileExtensions: ['ts', 'js', 'json'],
 
   // Coverage thresholds
   coverageThreshold: {

@@ -10,50 +10,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Import all required Nebular modules
-import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbToastrModule,
-  NbDialogModule,
-  NbSidebarModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbWindowModule,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbAutocompleteModule,
-  NbTagModule,
-  NbTooltipModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbBadgeModule,
-  NbUserModule,
-  NbSearchModule,
-  NbContextMenuModule,
-  NbPopoverModule,
-  NbTabsetModule,
-  NbAccordionModule,
-  NbListModule,
-  NbStepperModule,
-  NbProgressBarModule,
-  NbActionsModule,
-  NbTreeGridModule,
-  NbTableModule,
-  NbCalendarModule,
-  NbChatModule,
-  NbRouteTabsetModule,
-  NbToggleModule,
-} from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-
+// Import all required PrimeNG modules
 // Import custom Nebular components
 import { NbAdvancedFormComponent } from './components/custom-nebular-components/nb-advanced-form/nb-advanced-form.component';
 import { NbFormArrayComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-array/form-array.component';
@@ -74,53 +31,27 @@ import { NbDataTableHeaderComponent } from './components/custom-nebular-componen
 import { NbDataTablePaginatorComponent } from './components/custom-nebular-components/nb-data-table/components/paginator/paginator.component';
 import { NbDataTableFilterComponent } from './components/custom-nebular-components/nb-data-table/components/filter/filter.component';
 import { NbDataTableSortComponent } from './components/custom-nebular-components/nb-data-table/components/sort/sort.component';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 
-// Array of all Nebular modules that need to be configured at root level
-const ROOT_NEBULAR_MODULES = [
-  NbThemeModule.forRoot({ name: 'default' }),
-  NbMenuModule.forRoot(),
-  NbToastrModule.forRoot(),
-  NbDialogModule.forRoot(),
-  NbSidebarModule.forRoot(),
-  NbDatepickerModule.forRoot(),
-  NbTimepickerModule.forRoot(),
-  NbWindowModule.forRoot(),
-];
+// Array of all PrimeNG modules that need to be configured at root level
+const ROOT_PRIMENG_MODULES = [ToastModule];
 
-// Array of feature Nebular modules that can be imported multiple times
-const FEATURE_NEBULAR_MODULES = [
-  NbLayoutModule,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbSelectModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbAutocompleteModule,
-  NbTagModule,
-  NbTooltipModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbBadgeModule,
-  NbUserModule,
-  NbSearchModule,
-  NbContextMenuModule,
-  NbPopoverModule,
-  NbTabsetModule,
-  NbAccordionModule,
-  NbListModule,
-  NbStepperModule,
-  NbProgressBarModule,
-  NbActionsModule,
-  NbTreeGridModule,
-  NbTableModule,
-  NbCalendarModule,
-  NbChatModule,
-  NbRouteTabsetModule,
-  NbToggleModule,
-  NbEvaIconsModule,
+// Array of feature PrimeNG modules that can be imported multiple times
+const FEATURE_PRIMENG_MODULES = [
+  ButtonModule,
+  CardModule,
+  DialogModule,
+  DropdownModule,
+  InputTextModule,
+  TableModule,
+  TooltipModule,
 ];
 
 // Array of custom form components
@@ -165,15 +96,15 @@ const DATA_TABLE_COMPONENTS = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ...ROOT_NEBULAR_MODULES,
-    ...FEATURE_NEBULAR_MODULES,
+    ...ROOT_PRIMENG_MODULES,
+    ...FEATURE_PRIMENG_MODULES,
   ],
   exports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ...FEATURE_NEBULAR_MODULES,
+    ...FEATURE_PRIMENG_MODULES,
     ...FORM_COMPONENTS,
     ...NAVIGATION_COMPONENTS,
     ...DATA_TABLE_COMPONENTS,

@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class InfoPanelComponent implements OnInit {
+export class PanelModule implements OnInit {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() items: InfoPanelItem[] = [];

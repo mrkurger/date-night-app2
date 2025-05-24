@@ -1,70 +1,117 @@
-import {
-  NbDialogRef,
-  ,
-  ,
-  ,
-  ,
-  ,
-} from '@nebular/theme';
-import { _NebularModule } from '../../nebular.module';
-
-import { Component, OnInit, Inject } from '@angular/core';
-// ===================================================
-// This file contains settings for component configuration (notes-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared.module';
+import { DialogService } from 'primeng/dialogservice';
+import { DynamicDialogRef } from 'primeng/dynamicdialogref';
+import { DynamicDialogConfig } from 'primeng/dynamicdialogconfig';
 
 export interface NotesDialogData {
-  title: string;
-  notes: string;
+  title?: string;
+  notes?: string;
   maxLength?: number;
   placeholder?: string;
 }
 
 @Component({
   selector: 'app-notes-dialog',
-  standalone: true,
-  imports: [CommonModule,
-    FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
   template: `
-    <nb-card>
-      <nb-card-header>{{ data.title }}</nb-card-header>
-      <nb-card-body>
-        <nb-form-field>
+    <p-dialog
+      [header]="data.title || 'Edit Notes'"
+      [(visible)]="visible"
+      [modal]="true"
+      [style]="{ width: '600px', minWidth: '400px' }"
+      [contentStyle]="{ padding: '1rem' }"
+      [baseZIndex]="10000"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="p-fluid">
+        <div class="p-field">
+    <p-dialog
+      [header]="data.title || 'Edit Notes'"
+      [(visible)]="visible"
+      [modal]="true"
+      [style]="{ width: '600px', minWidth: '400px' }"
+      [contentStyle]="{ padding: '1rem' }"
+      [baseZIndex]="10000"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="p-fluid">
+        <div class="p-field">
           <textarea
-            nbInput
-            fullWidth
+            pInputTextarea
+            pInputTextarea
             [(ngModel)]="notes"
             [placeholder]="data.placeholder || 'Enter your notes here...'"
             [maxlength]="data.maxLength || 500"
+            [placeholder]="data.placeholder || 'Enter your notes here...'"
+            [maxlength]="data.maxLength || 500"
             rows="5"
+            class="w-full"
+            class="w-full"
           ></textarea>
-          <div class="text-right">{{ notes.length }} / {{ data.maxLength || 500 }}</div>
-        </nb-form-field>
-      </nb-card-body>
-      <nb-card-footer class="dialog-footer">
-        <button nbButton status="basic" (click)="onCancel()">Cancel</button>
-        <button nbButton status="primary" (click)="onSave()">Save</button>
-      </nb-card-footer>
-    </nb-card>
+          <small class="text-right" *ngIf="notes">
+            {{ notes?.length || 0 }} / {{ data.maxLength || 500 }}
+          </small>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="p-dialog-footer">
+          <p-button label="Cancel" styleClass="p-button-text" (onClick)="onCancel()"></p-button>
+          <p-button label="Save" (onClick)="onSave()"></p-button>
+        </div>
+      </ng-template>
+    </p-dialog>
+          <small class="text-right" *ngIf="notes">
+            {{ notes?.length || 0 }} / {{ data.maxLength || 500 }}
+          </small>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="p-dialog-footer">
+          <p-button label="Cancel" styleClass="p-button-text" (onClick)="onCancel()"></p-button>
+          <p-button label="Save" (onClick)="onSave()"></p-button>
+        </div>
+      </ng-template>
+    </p-dialog>
   `,
   styles: [
     `
-      :host {
-        nb-card {
-          max-width: 600px;
-        }
+      :host ::ng-deep .p-dialog .p-dialog-content {
+        padding: 0;
+      :host ::ng-deep .p-dialog .p-dialog-content {
+        padding: 0;
+      }
 
-        nb-card-footer {
-          display: flex;
-          justify-content: flex-end;
-          gap: 1rem;
-        }
+      .p-dialog-footer {
+      .p-dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+
+      .text-right {
+        display: block;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+
+      :host ::ng-deep textarea.p-inputtextarea {
+        min-height: 120px;
+      }
+
+      .text-right {
+        display: block;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+
+      :host ::ng-deep textarea.p-inputtextarea {
+        min-height: 120px;
       }
     `,
   ],
@@ -72,16 +119,20 @@ export interface NotesDialogData {
 export class NotesDialogComponent implements OnInit {
   notes: string = '';
   data: NotesDialogData;
+  visible: boolean = true;
+  visible: boolean = true;
 
   constructor(
-    protected dialogRef: NbDialogRef<NotesDialogComponent>,
-    @Inject('NOTES_DIALOG_DATA') public injectedData?: NotesDialogData,
-  ) {}
+    private dialogRef: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private dialogRef: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+  ) {
+    this.data = this.config.data || {};
+    this.data = this.config.data || {};
+  }
 
   ngOnInit() {
-    // Use injected data if available, otherwise try to get it from the dialog ref
-    this.data = this.injectedData ||
-      this.dialogRef.componentRef?.instance['data'] || { title: 'Notes', notes: '' };
     this.notes = this.data?.notes || '';
   }
 

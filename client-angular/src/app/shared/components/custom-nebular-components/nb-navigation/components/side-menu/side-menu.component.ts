@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
-  selector: 'nb-side-menu',
-  template: `
+    selector: 'nb-side-menu',
+    template: `
     <div class="side-menu" [class.compact]="compact">
       <nb-menu
         [items]="items"
@@ -27,8 +27,8 @@ import { NbMenuItem } from '@nebular/theme';
       </nb-menu>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .side-menu {
         height: 100%;
         padding: 0.5rem;
@@ -136,7 +136,8 @@ import { NbMenuItem } from '@nebular/theme';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbSideMenuComponent {
   @Input() items: NbMenuItem[] = [];

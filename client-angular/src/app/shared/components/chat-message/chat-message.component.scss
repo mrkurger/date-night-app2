@@ -37,75 +37,76 @@ nb-card {
 }
 
 .message {
-  display: flex;
   margin-bottom: 1rem;
-  position: relative;
-
-  &--incoming {
-    justify-content: flex-start;
-
-    .message__content {
-      background-color: var(--color-background-light);
-      border-radius: 1rem 1rem 1rem 0;
-    }
-  }
+  max-width: 75%;
 
   &--outgoing {
-    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 0;
 
-    .message__content {
-      background-color: var(--color-primary-light);
-      border-radius: 1rem 1rem 0;
-    }
-  }
+    :host ::ng-deep .p-card {
+      background-color: var(--primary-color-lighter);
 
-  &--system {
-    justify-content: center;
-
-    .message__content {
-      background-color: var(--color-background-medium);
-      border-radius: 1rem;
-      max-width: 80%;
-      text-align: center;
-      font-style: italic;
-      color: var(--color-text-muted);
-    }
-  }
-
-  &--encrypted {
-    .message__content {
-      position: relative;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('/assets/icons/lock-pattern.svg');
-        background-repeat: repeat;
-        opacity: 0.05;
-        pointer-events: none;
+      .p-card-content {
+        border-radius: 1rem 1rem 0 1rem;
       }
     }
   }
 
-  &--decryption-failed {
-    .message__content {
-      background-color: var(--color-warning-light);
-      border: 1px solid var(--color-warning);
+  &--incoming {
+    margin-left: 0;
+    margin-right: auto;
+
+    :host ::ng-deep .p-card {
+      background-color: var(--surface-ground);
+
+      .p-card-content {
+        border-radius: 1rem 1rem 1rem 0;
+      }
+    }
+  }
+
+  &--system {
+    max-width: 80%;
+    margin: 1rem auto;
+
+    :host ::ng-deep .p-card {
+      background-color: var(--surface-hover);
+
+      .p-card-content {
+        border-radius: 1rem;
+        text-align: center;
+        font-style: italic;
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+
+  // Card Customization
+  :host ::ng-deep .p-card {
+    margin: 0;
+    box-shadow: none;
+
+    .p-card-body {
+      padding: 0.5rem;
     }
 
-    .message__text {
-      color: var(--color-warning-dark);
+    .p-card-content {
+      padding: 0.5rem;
     }
   }
 }
 
+.message__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
 .message__avatar {
-  margin-right: 0.5rem;
-  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
   .avatar-img {
     width: 2rem;
@@ -115,48 +116,41 @@ nb-card {
   }
 }
 
-.message__content {
-  padding: nb-theme(spacing-2);
-  max-width: 70%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.message__header {
-  margin-bottom: 0.25rem;
-}
-
 .message__sender {
   font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--color-text-dark);
+  color: var(--text-color);
 }
 
-.message__body {
-  word-break: break-word;
+.message__content {
+  position: relative;
+}
+
+.message__loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
 }
 
 .message__text {
-  font-size: nb-theme(text-paragraph-font-size);
-  line-height: nb-theme(text-paragraph-line-height);
+  position: relative;
+  word-break: break-word;
 
   &--system {
-    text-align: center;
     font-style: italic;
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
   }
 }
 
 .message__footer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   margin-top: 0.25rem;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
+  text-align: right;
 }
 
 .message__time {
-  margin-right: 0.5rem;
+  color: var(--text-color-secondary);
+  font-size: 0.75rem;
 }
 
 .message__read-status {
@@ -177,23 +171,30 @@ nb-card {
 .message__encryption-indicator {
   display: inline-flex;
   align-items: center;
-  margin-right: nb-theme(spacing-1);
-  color: var(--color-success);
+  margin-right: 0.25rem;
+  color: var(--primary-color);
+  font-size: 0.875rem;
 
   &--failed {
-    color: var(--color-warning);
+    color: var(--red-500);
   }
 }
 
-.message__loading {
-  display: flex;
-  align-items: center;
-  gap: nb-theme(spacing-2);
-  color: nb-theme(text-hint-color);
-}
-
 .message__attachments {
-  margin-top: nb-theme(spacing-2);
+  margin-top: 0.5rem;
+
+  .attachment {
+    margin-bottom: 0.5rem;
+
+    :host ::ng-deep .p-card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--surface-border);
+
+      .p-card-body {
+        padding: 0.5rem;
+      }
+    }
+  }
 }
 
 .attachment {
@@ -217,20 +218,25 @@ nb-card {
 
     .attachment__icon {
       font-size: 1.5rem;
-      color: nb-theme(text-hint-color);
+      color: var(--text-color-secondary);
     }
 
     .attachment__details {
       flex: 1;
+      min-width: 0;
 
       .attachment__name {
-        font-weight: nb-theme(text-button-font-weight);
-        margin-bottom: nb-theme(spacing-1);
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+        color: var(--text-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .attachment__size {
-        font-size: nb-theme(text-caption-font-size);
-        color: nb-theme(text-hint-color);
+        font-size: 0.75rem;
+        color: var(--text-color-secondary);
       }
     }
   }

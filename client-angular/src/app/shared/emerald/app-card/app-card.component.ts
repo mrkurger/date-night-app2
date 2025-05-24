@@ -24,8 +24,8 @@ import { CommonModule } from '@angular/common';
  * Supports various layouts including default, netflix, and tinder styles.
  */
 @Component({
-  selector: 'app-card',
-  template: `
+    selector: 'app-card',
+    template: `
     <nb-card [ngClass]="layout" (click)="handleClick()" class="app-card">
       <nb-card-header *ngIf="title || avatarUrl">
         <div class="card-header-content">
@@ -70,18 +70,17 @@ import { CommonModule } from '@angular/common';
       </nb-card-footer>
     </nb-card>
   `,
-  styleUrls: ['./app-card.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbBadgeModule,
-    NbButtonModule,
-    NbCardModule,
-    NbIconModule,
-    NbTooltipModule
-  ],
+    styleUrls: ['./app-card.component.scss'],
+    imports: [
+        CommonModule,
+        NbBadgeModule,
+        NbButtonModule,
+        NbCardModule,
+        NbIconModule,
+        NbTooltipModule
+    ]
 })
-export class AppCardComponent {
+export class CardModule {
   /**
    * The title of the card
    */

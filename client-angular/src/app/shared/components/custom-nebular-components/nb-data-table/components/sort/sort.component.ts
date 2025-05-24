@@ -2,15 +2,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbSortDirection, NbSortRequest } from '@nebular/theme';
 
 @Component({
-  selector: 'nb-data-table-sort',
-  template: `
+    selector: 'nb-data-table-sort',
+    template: `
     <div class="sort-header" [class.active]="isActive" (click)="toggleSort()">
       <span class="sort-title">{{ title }}</span>
       <nb-icon [icon]="getSortIcon()" [class.visible]="isActive" class="sort-icon"></nb-icon>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .sort-header {
         display: flex;
         align-items: center;
@@ -42,7 +42,8 @@ import { NbSortDirection, NbSortRequest } from '@nebular/theme';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbDataTableSortComponent {
   @Input() title = '';

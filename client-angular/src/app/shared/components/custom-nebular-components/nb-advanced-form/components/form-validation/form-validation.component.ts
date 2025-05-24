@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'nb-form-validation',
-  template: `
+    selector: 'nb-form-validation',
+    template: `
     <div class="validation-messages" *ngIf="shouldShowErrors">
       <nb-alert status="danger" size="tiny">
         <ul class="validation-list">
@@ -12,8 +12,8 @@ import { AbstractControl } from '@angular/forms';
       </nb-alert>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .validation-messages {
         margin-top: 0.5rem;
       }
@@ -31,7 +31,8 @@ import { AbstractControl } from '@angular/forms';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbFormValidationComponent {
   @Input() control!: AbstractControl;

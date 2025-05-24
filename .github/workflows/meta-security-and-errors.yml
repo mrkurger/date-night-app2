@@ -195,7 +195,7 @@ jobs:
       # Install dependencies for scripts (including GitHub API/tools)
       - name: Install Dependencies
         run: |
-          npm ci
+          npm ci || npm install
           npm install @octokit/rest@20 adm-zip@0.5.10
 
       # Disable Husky hooks in CI to avoid commit errors

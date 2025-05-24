@@ -2,6 +2,9 @@
 @use '@nebular/theme/styles/themes/default' as default-theme;
 @use '@nebular/theme/styles/global/breakpoints' as *;
 @use '../../core/styles/breakpoints' as bp;
+@use '../../../core/design/main' as ds;
+@use '../../../../styles/mixins/_breakpoints' as breakpoints;
+@use '../../../core/design/animation-utilities' as animation;
 
 /* Removed emerald-ui import as it's causing build issues */
 
@@ -67,13 +70,9 @@ $mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
 
 // Chat Container
 .chat-container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  min-height: 600px;
-  max-height: 800px;
-  background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(border-radius);
-  box-shadow: nb-theme(shadow);
+  display: flex;
+  height: 100%;
+  background-color: var(--surface-ground);
 
   @include media-breakpoint-down(md) {
     grid-template-columns: 1fr;
@@ -85,553 +84,242 @@ $mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
 
 // Chat Sidebar
 .chat-sidebar {
-  background-color: nb-theme(background-basic-color-2);
-  border-right: 1px solid nb-theme(border-color);
+  width: 320px;
+  border-right: 1px solid var(--surface-200);
+  background-color: var(--surface-0);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 
-  @include bp.breakpoint-down(md) {
-    display: none;
-    &.mobile-visible {
-      display: flex;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: $mobile-sidebar-width;
-      height: 100%;
-      z-index: nb-theme(z-index-sidebar);
-      box-shadow: nb-theme(shadow-lg);
-    }
-  }
-}
-
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: nb-theme(card-padding-medium);
-  border-bottom: 1px solid nb-theme(divider-color);
-  background-color: nb-theme(background-basic-color-1);
-
-  h2 {
-    margin: 0;
-    font-size: nb-theme(text-heading-4-font-size);
-    font-weight: nb-theme(text-heading-4-font-weight);
-    color: nb-theme(text-basic-color);
-  }
-
-  .chat-header-actions {
+  .chat-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-200);
     display: flex;
-    gap: nb-theme(spacing-xs);
-  }
-}
+    align-items: center;
+    justify-content: space-between;
 
-.chat-search {
-  padding: nb-theme(card-padding-medium);
-  border-bottom: 1px solid nb-theme(divider-color);
-}
+    h2 {
+      margin: 0;
+      color: var(--text-color);
+      font-size: 1.25rem;
+    }
 
-.conversation-list {
-  flex: 1;
-  overflow-y: auto;
-  background-color: nb-theme(background-basic-color-2);
-}
-
-.conversation-item {
-  display: flex;
-  align-items: center;
-  padding: nb-theme(padding-md) nb-theme(padding-lg);
-  border-bottom: 1px solid nb-theme(divider-color);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: nb-theme(background-basic-color-3);
-  }
-
-  &.active {
-    background-color: nb-theme(color-primary-transparent-100);
-    .contact-name,
-    .last-message-time,
-    .last-message {
-      color: nb-theme(text-primary-color);
+    .chat-header-actions {
+      display: flex;
+      gap: 0.5rem;
     }
   }
 
-  &.unread {
+  .chat-search {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-200);
+  }
+
+  .conversation-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--surface-300);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--surface-100);
+    }
+  }
+
+  .conversation-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--surface-100);
+    }
+
+    &.active {
+      background-color: var(--primary-50);
+    }
+
+    .conversation-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.25rem;
+    }
+
     .contact-name {
-      font-weight: nb-theme(text-font-weight-bold);
-      color: nb-theme(text-basic-color);
+      font-weight: 600;
+      color: var(--text-color);
     }
 
-    .contact-preview {
-      font-weight: nb-theme(text-font-weight-medium);
-      color: nb-theme(text-basic-color-800);
+    .last-message-time {
+      font-size: 0.75rem;
+      color: var(--text-color-secondary);
     }
-  }
 
-  .contact-info {
-    flex: 1;
-    min-width: 0;
-    margin-left: nb-theme(spacing-md);
-  }
-
-  .contact-name-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: nb-theme(spacing-xs);
-  }
-
-  .contact-name {
-    font-weight: nb-theme(text-font-weight-medium);
-    color: nb-theme(text-basic-color-800);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .contact-time {
-    font-size: nb-theme(text-font-size-xs);
-    color: nb-theme(text-basic-color-600);
-    white-space: nowrap;
-    margin-left: nb-theme(spacing-xs);
-  }
-
-  .contact-preview-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .contact-preview {
-    font-size: nb-theme(text-font-size-sm);
-    color: nb-theme(text-basic-color-600);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-
-    .typing-indicator {
-      color: nb-theme(color-primary-500);
-      font-style: italic;
+    .conversation-preview {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-  }
 
-  .contact-badges {
-    display: flex;
-    align-items: center;
-    margin-left: nb-theme(spacing-xs);
-  }
-
-  .unread-badge {
-    // This class was added in HTML to nb-badge, ensure styles apply if needed beyond nb-badge defaults
-    // background-color: nb-theme(color-primary-500); // Already default for status="primary"
-    // color: nb-theme(text-control-color); // Already default for status="primary"
-    // min-width, height, border-radius are handled by nb-badge
-    // padding: 0 nb-theme(padding-xs); // nb-badge has its own padding logic
-  }
-
-  .pin-icon {
-    font-size: 16px;
-    color: nb-theme(text-basic-color-500);
-    margin-left: nb-theme(spacing-xs);
-  }
-
-  .last-message-time {
-    color: nb-theme(text-hint-color);
-  }
-
-  .last-message {
-    color: nb-theme(text-basic-color);
-  }
-
-  &.active .last-message-time,
-  &.active .last-message {
-    color: nb-theme(text-primary-color);
+    .last-message {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 
-.empty-conversations {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: nb-theme(padding-lg);
-  color: nb-theme(text-basic-color-600);
-  text-align: center;
-
-  nb-icon {
-    font-size: 48px;
-    margin-bottom: nb-theme(spacing-md);
-    color: nb-theme(text-basic-color-400);
-  }
-
-  p {
-    margin-bottom: nb-theme(spacing-md);
-  }
-}
-
-// Chat Main Area
 .chat-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: nb-theme(background-basic-color-1);
-  overflow: hidden;
-  position: relative;
-}
+  background-color: var(--surface-0);
+  min-width: 0;
 
-.chat-conversation {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.chat-main-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: nb-theme(card-padding-medium);
-  border-bottom: 1px solid nb-theme(divider-color);
-  background-color: nb-theme(background-basic-color-1);
-  z-index: 10;
-
-  .header-left {
+  .chat-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-200);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    background-color: var(--surface-0);
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .contact-details {
+        h3 {
+          margin: 0;
+          color: var(--text-color);
+        }
+
+        .status-text {
+          font-size: 0.875rem;
+          color: var(--text-color-secondary);
+        }
+      }
+    }
+
+    .chat-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+
+  .messages-container {
     flex: 1;
-    min-width: 0;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: var(--surface-50);
 
-    .back-button {
-      margin-right: nb-theme(spacing-xs);
-      display: none;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
 
-      @include media-breakpoint-down(lg) {
-        display: block;
-      }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--surface-300);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--surface-100);
     }
   }
 
-  .chat-recipient {
-    margin-left: nb-theme(spacing-md);
-    flex: 1;
-    min-width: 0;
-  }
+  .message-group {
+    margin-bottom: 1rem;
 
-  .recipient-name {
-    font-weight: nb-theme(text-font-weight-semibold);
-    color: nb-theme(text-basic-color);
-    margin-bottom: nb-theme(spacing-xs);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .recipient-status {
-    font-size: nb-theme(text-font-size-sm);
-    color: nb-theme(text-basic-color-600);
-
-    &.online {
-      color: nb-theme(color-success);
-    }
-  }
-
-  .header-actions {
-    display: flex;
-    gap: nb-theme(spacing-xs);
-  }
-
-  .contact-details h3 {
-    font-size: nb-theme(text-subtitle-font-size);
-    font-weight: nb-theme(text-subtitle-font-weight);
-    margin-bottom: 0;
-  }
-
-  .status-text {
-    font-size: nb-theme(text-caption-font-size);
-    color: nb-theme(text-hint-color);
-    &.online {
-      color: nb-theme(text-success-color);
-    }
-  }
-}
-
-// Message List
-.messages-container {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: nb-theme(card-padding-medium);
-  background-color: nb-theme(background-basic-color-1);
-  display: flex;
-  flex-direction: column;
-}
-
-.messages-list {
-  display: flex;
-  flex-direction: column;
-  gap: nb-theme(spacing-md);
-  padding-bottom: nb-theme(padding-sm);
-}
-
-.message-date {
-  text-align: center;
-  margin: nb-theme(spacing-lg) 0;
-  span {
-    background-color: nb-theme(background-basic-color-3);
-    color: nb-theme(text-hint-color);
-    font-size: nb-theme(text-caption-2-font-size);
-    font-weight: nb-theme(text-caption-2-font-weight);
-    padding: nb-theme(button-tiny-padding);
-    border-radius: nb-theme(button-rectangle-border-radius);
-  }
-}
-
-// Message Bubbles
-.message {
-  display: flex;
-  align-items: flex-end;
-  gap: nb-theme(spacing-md);
-  max-width: 80%;
-  position: relative;
-
-  &.sent {
-    align-self: flex-end;
-    flex-direction: row-reverse;
-
-    .message-bubble {
-      background-color: nb-theme(chat-message-sent-background-color);
-      color: nb-theme(chat-message-sent-text-color);
-      border-bottom-right-radius: 4px;
+    .message-date {
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
     }
 
-    .message-actions {
-      left: -30px;
-    }
-  }
-
-  &.received {
-    align-self: flex-start;
-
-    .message-bubble {
-      background-color: nb-theme(chat-message-received-background-color);
-      border-bottom-left-radius: 4px;
-    }
-
-    .message-actions {
-      right: -30px;
-    }
-  }
-
-  .message-avatar {
-    align-self: flex-end;
-    margin-bottom: nb-theme(spacing-xs);
-  }
-
-  .message-bubble {
-    padding: nb-theme(chat-message-padding);
-    border-radius: nb-theme(chat-message-border-radius);
-    box-shadow: nb-theme(shadow-sm);
-    max-width: 100%;
-    word-break: break-word;
-    position: relative;
-
-    // Styling for temporary messages
-    &.temporary-message {
-      border: 1px dashed nb-theme(color-warning-500);
-    }
-
-    // Styling for messages about to expire
-    &.about-to-expire {
-      animation: pulse 2s infinite;
-      border: 1px dashed nb-theme(color-warning-500);
-
-      .temporary-message-indicator {
-        animation: spin 2s infinite linear;
-      }
-    }
-
-    .temporary-message-indicator {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background-color: nb-theme(color-warning-500);
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
+    .message {
       display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      margin-bottom: 0.5rem;
 
-    p {
-      margin: 0 0 nb-theme(spacing-xs) 0;
-      &:last-child {
-        margin-bottom: 0;
+      &.outgoing {
+        justify-content: flex-end;
+
+        .message-content {
+          background-color: var(--primary-color);
+          color: var(--primary-color-text);
+          border-radius: 1rem 1rem 0 1rem;
+        }
+
+        .message-time {
+          color: var(--primary-200);
+        }
+      }
+
+      &.incoming {
+        justify-content: flex-start;
+
+        .message-content {
+          background-color: var(--surface-200);
+          color: var(--text-color);
+          border-radius: 1rem 1rem 1rem 0;
+        }
+      }
+
+      .message-content {
+        max-width: 70%;
+        padding: 0.75rem 1rem;
+        position: relative;
+
+        p {
+          margin: 0;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+
+        .message-time {
+          font-size: 0.75rem;
+          margin-top: 0.25rem;
+          opacity: 0.7;
+        }
       }
     }
   }
 
-  .message-content {
-    margin-bottom: nb-theme(spacing-md);
-
-    a {
-      color: inherit;
-      text-decoration: underline;
-    }
-  }
-
-  .message-attachments {
-    margin-top: nb-theme(spacing-md);
-    display: flex;
-    flex-direction: column;
-    gap: nb-theme(spacing-md);
-
-    img {
-      max-width: 100%;
-      max-height: 300px;
-      border-radius: nb-theme(border-radius-md);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-
-    .file-attachment {
-      display: flex;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.05);
-      border-radius: nb-theme(border-radius-md);
-      padding: nb-theme(padding-md);
-      cursor: pointer;
-    }
-  }
-
-  .message-meta {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: nb-theme(spacing-xs);
-    margin-top: nb-theme(spacing-xs);
-
-    .message-time {
-      font-size: nb-theme(text-caption-2-font-size);
-      color: nb-theme(chat-message-meta-text-color);
-      margin-top: nb-theme(spacing-xs);
-      display: block;
-      text-align: right;
-    }
-
-    .message-expiry {
-      display: flex;
-      align-items: center;
-
-      .expiry-icon {
-        font-size: 14px;
-        color: nb-theme(color-warning-500);
-      }
-    }
-
-    .status-icon {
-      font-size: 14px;
-      width: 14px;
-      height: 14px;
-      color: rgba(255, 255, 255, 0.8);
-    }
-  }
-
-  &.received .message-meta {
-    .message-time,
-    .status-icon {
-      color: nb-theme(text-basic-color-600);
-    }
-
-    .message-expiry .expiry-icon {
-      color: nb-theme(color-warning-500);
-    }
-  }
-
-  .message-actions {
-    position: absolute;
-    bottom: 0;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-
-    button {
-      background-color: nb-theme(background-basic-color-1);
-      box-shadow: nb-theme(shadow-md);
-    }
-  }
-
-  &:hover .message-actions {
-    opacity: 1;
-  }
-
-  // Message expiry styles
-  &--expiring {
-    .message__content {
-      border-style: dashed;
-    }
-  }
-
-  &--about-to-expire {
-    .message__content {
-      animation: pulse 2s infinite;
-    }
-
-    .message__expiry mat-icon {
-      animation: rotate 2s linear infinite;
-    }
-  }
-
-  &__expiry {
+  .typing-indicator {
     display: flex;
     align-items: center;
-    margin-left: nb-theme(spacing-md);
-    color: nb-theme(color-warning-color);
+    gap: 0.5rem;
+    padding: 0.5rem;
+    color: var(--text-color-secondary);
+    font-size: 0.875rem;
 
-    mat-icon {
-      font-size: 16px;
-      height: 16px;
-      width: 16px;
-    }
-
-    &.rotating mat-icon {
-      animation: rotate 2s linear infinite;
-    }
-  }
-}
-
-// Typing Indicator
-.typing-indicator-container {
-  display: flex;
-  align-items: flex-end;
-  gap: nb-theme(spacing-md);
-  margin-top: nb-theme(spacing-md);
-
-  .typing-bubble {
-    background-color: nb-theme(background-basic-color-2);
-    padding: nb-theme(padding-md) nb-theme(padding-lg);
-    border-radius: nb-theme(border-radius-lg);
-    border-bottom-left-radius: 4px;
-  }
-
-  .typing-dots {
-    display: flex;
-    gap: 4px;
-
-    span {
+    .dot {
       width: 8px;
       height: 8px;
+      background-color: var(--text-color-secondary);
       border-radius: 50%;
-      background-color: nb-theme(color-primary-default);
-      animation: typingAnimation 1.4s infinite ease-in-out;
-
-      &:nth-child(1) {
-        animation-delay: 0s;
-      }
+      animation: typing-dot 1s infinite;
 
       &:nth-child(2) {
         animation-delay: 0.2s;
@@ -642,487 +330,125 @@ $mobile-sidebar-width: 280px; // For when sidebar is overlaid on mobile
       }
     }
   }
-}
 
-@keyframes typingAnimation {
-  0%,
-  60%,
-  100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-6px);
-  }
-}
+  .message-input {
+    padding: 1rem;
+    background-color: var(--surface-0);
+    border-top: 1px solid var(--surface-200);
 
-// Empty Messages
-.empty-messages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: nb-theme(padding-lg);
-  color: nb-theme(text-basic-color-600);
-  text-align: center;
-  margin: auto 0;
-
-  nb-icon {
-    font-size: 48px;
-    margin-bottom: nb-theme(spacing-md);
-    color: nb-theme(text-basic-color-400);
-  }
-
-  h3 {
-    margin-bottom: nb-theme(spacing-md);
-    color: nb-theme(text-basic-color-700);
-    font-weight: nb-theme(text-font-weight-semibold);
+    .message-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
   }
 }
 
-// Reply Preview
-.reply-preview {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: nb-theme(padding-md) nb-theme(padding-lg);
-  background-color: nb-theme(background-basic-color-1);
-  border-top: 1px solid nb-theme(border-basic-color-2);
-
-  .reply-content {
-    display: flex;
-    align-items: center;
-    gap: nb-theme(spacing-md);
-    flex: 1;
-    min-width: 0;
-  }
-
-  .reply-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .reply-to {
-    font-size: nb-theme(text-font-size-sm);
-    font-weight: nb-theme(text-font-weight-medium);
-    color: nb-theme(color-primary-500);
-  }
-
-  .reply-message {
-    font-size: nb-theme(text-font-size-sm);
-    color: nb-theme(text-basic-color-600);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-// Message Input
-.message-input-container {
-  display: flex;
-  align-items: flex-end;
-  gap: nb-theme(spacing-md);
-  padding: nb-theme(card-padding-medium);
-  background-color: nb-theme(background-basic-color-2);
-  border-top: 1px solid nb-theme(divider-color);
-}
-
-.message-input {
+.no-chat-selected {
   flex: 1;
   display: flex;
-  align-items: flex-end;
-  background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(border-radius-lg);
-  padding: nb-theme(padding-xs);
-  transition: background-color 0.3s ease;
-
-  // Temporary message mode styling
-  &.temp-message-mode {
-    background-color: nb-theme(color-warning-100);
-    border: 1px dashed nb-theme(color-warning-500);
-
-    textarea::placeholder {
-      color: nb-theme(color-warning-500);
-    }
-  }
-
-  textarea {
-    flex: 1;
-    border: none;
-    background: transparent;
-    resize: none;
-    padding: nb-theme(padding-xs);
-    max-height: 120px;
-    font-family: inherit;
-    font-size: nb-theme(text-font-size-md);
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  // Temporary message duration selector
-  .temp-message-duration {
-    display: flex;
-    align-items: center;
-    color: nb-theme(color-warning-500);
-    font-size: nb-theme(text-font-size-sm);
-    margin-right: nb-theme(spacing-md);
-
-    .mat-icon {
-      font-size: 16px;
-      height: 16px;
-      width: 16px;
-      margin-right: nb-theme(spacing-xs);
-    }
-  }
-
-  &.temp-message-mode {
-    textarea {
-      border-color: nb-theme(color-warning-color);
-      background-color: nb-theme(color-warning-bg-light);
-
-      &::placeholder {
-        color: nb-theme(color-warning-color);
-      }
-    }
-  }
-}
-
-.temp-message-indicator {
-  display: flex;
-  align-items: center;
-  padding: nb-theme(padding-xs);
-  background-color: nb-theme(color-warning-bg);
-  border-radius: nb-theme(border-radius-md);
-  margin-bottom: nb-theme(spacing-md);
-  color: nb-theme(color-warning-color);
-
-  mat-icon {
-    margin-right: nb-theme(spacing-xs);
-  }
-
-  button {
-    margin-left: auto;
-  }
-}
-
-.attachment-button,
-.emoji-button,
-.temp-message-button {
-  color: nb-theme(text-basic-color-600);
-
-  &.active {
-    color: nb-theme(color-warning-500);
-  }
-}
-
-.send-button {
-  width: 40px !important;
-  height: 40px !important;
-}
-
-// Emoji Picker
-.emoji-picker {
-  position: absolute;
-  bottom: 80px;
-  right: 20px;
-  background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(border-radius-lg);
-  box-shadow: nb-theme(shadow-lg);
-  width: 300px;
-  max-height: 300px;
-  overflow: hidden;
-  display: flex;
   flex-direction: column;
-  z-index: 100;
-
-  .emoji-categories {
-    display: flex;
-    border-bottom: 1px solid nb-theme(border-basic-color-2);
-    padding: nb-theme(padding-xs);
-
-    button {
-      flex: 1;
-    }
-  }
-
-  .emoji-list {
-    padding: nb-theme(padding-xs);
-    display: flex;
-    flex-wrap: wrap;
-    gap: nb-theme(spacing-xs);
-    overflow-y: auto;
-    max-height: 250px;
-  }
-
-  .emoji-item {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    border-radius: nb-theme(border-radius-md);
-
-    &:hover {
-      background-color: nb-theme(background-basic-color-2);
-    }
-  }
-}
-
-// Empty State
-.empty-state {
-  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  background-color: nb-theme(background-basic-color-1);
+  color: var(--text-color-secondary);
+  padding: 2rem;
 
-  .empty-state-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 400px;
-    padding: nb-theme(padding-md);
-  }
-
-  .empty-icon {
-    font-size: 64px;
-    width: 64px;
-    height: 64px;
-    margin-bottom: nb-theme(spacing-md);
-    color: nb-theme(text-basic-color-400);
+  i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
   }
 
   h3 {
-    font-size: nb-theme(text-font-size-xl);
-    font-weight: nb-theme(text-font-weight-semibold);
-    color: nb-theme(text-basic-color-800);
-    margin-bottom: nb-theme(spacing-md);
+    margin: 0;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
   }
 
   p {
-    color: nb-theme(text-basic-color-600);
-    margin-bottom: nb-theme(spacing-md);
+    margin: 0;
   }
 }
 
-// Dialog Styles
-.full-width {
-  width: 100%;
-}
-
-.contact-list {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: nb-theme(spacing-md);
-}
-
-.contact-option {
-  display: flex;
-  align-items: center;
-  padding: nb-theme(padding-xs) nb-theme(padding-md);
-  border-radius: nb-theme(border-radius-md);
-  cursor: pointer;
-
-  &:hover {
-    background-color: nb-theme(background-basic-color-2);
+@keyframes typing-dot {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-
-  .contact-name {
-    margin-left: nb-theme(spacing-md);
-    font-weight: nb-theme(text-font-weight-medium);
+  50% {
+    transform: translateY(-3px);
   }
 }
 
-.no-contacts,
-.no-results,
-.no-media {
-  padding: nb-theme(padding-md);
-  text-align: center;
-  color: nb-theme(text-basic-color-600);
-}
-
-// Image Preview Dialog
-.image-preview-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: nb-theme(padding-md);
-
-  .close-button {
-    position: absolute;
-    top: nb-theme(padding-xs);
-    right: nb-theme(padding-xs);
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: nb-theme(background-basic-color-1);
-  }
-
-  .preview-image {
-    max-width: 100%;
-    max-height: 80vh;
-    border-radius: nb-theme(border-radius-md);
-  }
-
-  .image-preview-actions {
-    display: flex;
-    gap: nb-theme(spacing-md);
-    margin-top: nb-theme(spacing-md);
-  }
-}
-
-// Search Results
-.search-results {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: nb-theme(spacing-md);
-}
-
-.search-result-item {
-  padding: nb-theme(padding-md);
-  border-radius: nb-theme(border-radius-md);
-  cursor: pointer;
-  border-bottom: 1px solid nb-theme(border-basic-color-2);
-
-  &:hover {
-    background-color: nb-theme(background-basic-color-2);
-  }
-
-  .result-sender {
-    font-weight: nb-theme(text-font-weight-medium);
-    color: nb-theme(color-primary-500);
-    margin-bottom: nb-theme(spacing-xs);
-  }
-
-  .result-message {
-    margin-bottom: nb-theme(spacing-xs);
-
-    mark {
-      background-color: rgba(nb-theme(color-primary-500), 0.2);
-      color: inherit;
-      padding: 0 2px;
-      border-radius: 2px;
+// Dialog styles
+::ng-deep {
+  .image-preview-dialog {
+    .p-dialog-content {
+      padding: 0;
     }
   }
 
-  .result-time {
-    font-size: nb-theme(text-font-size-xs);
-    color: nb-theme(text-basic-color-600);
-  }
-}
-
-// Gallery Tabs
-.gallery-tabs {
-  display: flex;
-  border-bottom: 1px solid nb-theme(border-basic-color-2);
-  margin-bottom: nb-theme(spacing-md);
-
-  button {
-    flex: 1;
-    padding: nb-theme(padding-xs) nb-theme(padding-md);
-
-    &.active {
-      color: nb-theme(color-primary-500);
-      border-bottom: 2px solid nb-theme(color-primary-500);
+  .gallery-tabset {
+    .p-tabview-nav {
+      justify-content: center;
     }
   }
 }
 
 .gallery-images {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: nb-theme(spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 
-  .gallery-image {
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: nb-theme(border-radius-md);
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: transform 0.2s;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.2s ease;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
 
-      &:hover {
-        transform: scale(1.05);
+.gallery-files {
+  .file-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .file-info {
+      .file-name {
+        color: var(--text-color);
+        margin-bottom: 0.25rem;
       }
     }
   }
 }
 
-.gallery-files,
 .gallery-links {
-  display: flex;
-  flex-direction: column;
-  gap: nb-theme(spacing-md);
+  .link-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-200);
 
-  .gallery-file,
-  .gallery-link {
-    display: flex;
-    align-items: center;
-    padding: nb-theme(padding-md);
-    border-radius: nb-theme(border-radius-md);
-    background-color: nb-theme(background-basic-color-2);
-    cursor: pointer;
-
-    &:hover {
-      background-color: nb-theme(background-basic-color-3);
+    &:last-child {
+      border-bottom: none;
     }
 
-    .file-info,
-    .link-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .file-name,
     .link-title {
-      font-weight: nb-theme(text-font-weight-medium);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: var(--text-color);
+      margin-bottom: 0.25rem;
     }
 
-    .file-meta,
     .link-url {
-      font-size: nb-theme(text-font-size-xs);
-      color: nb-theme(text-basic-color-600);
-    }
-
-    .file-date,
-    .link-date {
-      font-size: nb-theme(text-font-size-xs);
-      color: nb-theme(text-basic-color-600);
-      white-space: nowrap;
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
     }
   }
-}
-
-// Responsive Styles
-@media (max-width: var(--breakpoint-md) /* TODO: Verify correct CSS variable */) {
-  .message {
-    max-width: 90%;
-  }
-}
-
-// Message Highlight Animation
-@keyframes highlightMessage {
-  0% {
-    background-color: rgba(nb-theme(color-primary-500), 0.3);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-.highlight {
-  animation: highlightMessage 2s ease;
 }

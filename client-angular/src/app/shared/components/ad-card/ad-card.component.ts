@@ -16,8 +16,8 @@ import { Subscription } from 'rxjs';
 import { NebularModule } from '../../nebular.module';
 
 @Component({
-  selector: 'app-ad-card',
-  template: `
+    selector: 'app-ad-card',
+    template: `
     <nb-card [ngClass]="[size, density]" class="ad-card">
       <nb-card-header>
         <div class="ad-header">
@@ -59,8 +59,8 @@ import { NebularModule } from '../../nebular.module';
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -189,9 +189,8 @@ import { NebularModule } from '../../nebular.module';
         }
       }
     `,
-  ],
-  standalone: true,
-  imports: [CommonModule, RouterModule, NebularModule],
+    ],
+    imports: [CommonModule, RouterModule, NebularModule]
 })
 export class AdCardComponent implements OnInit, OnDestroy {
   @Input() ad!: Ad;

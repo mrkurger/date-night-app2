@@ -10,23 +10,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Inject,
 } from '@angular/core';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-  NbContextMenuModule,
-  NbMenuModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,8 +17,8 @@ import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // Custom Components
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { AvatarModule } from '../../shared/components/avatar/avatar.component';
+import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
@@ -49,6 +32,19 @@ import {
 } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { BadgeModule } from 'primeng/badge';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { MenuModule } from 'primeng/menu';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+// // Alternative for NbMenuModule if a panel structure is needed
+// // For p-float-label if used
+// // For input groups
 
 interface EmojiCategory {
   name: string;
@@ -64,20 +60,34 @@ const TYPING_INDICATOR_DELAY = 500; // ms
   selector: 'app-chat',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
+  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbContextMenuModule,
-    NbMenuModule,
-    AvatarComponent,
-    SkeletonLoaderComponent,
+    // Nebular Modules to be replaced:
+    // NbCardModule,
+    // NbButtonModule,
+    // NbInputModule,
+    // NbFormFieldModule, // No direct PrimeNG equivalent, handled by structure or FloatLabelModule
+    // NbIconModule, // Icons are handled differently (e.g., pi classes, icon props)
+    // NbTooltipModule,
+    // NbBadgeModule,
+    // NbContextMenuModule,
+    // NbMenuModule,
+
+    // PrimeNG Modules:
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    BadgeModule,
+    ContextMenuModule,
+    MenuModule,
+    // FloatLabelModule, // Uncomment if p-float-label is used for form fields
+    // InputGroupModule, // Uncomment if input groups are used
+
+    // Existing non-Nebular imports:
+    AvatarModule,
+    SkeletonModule, // Assuming this is not Nebular's or already handled
     AppSortComponent,
     AppSortHeaderComponent,
   ],

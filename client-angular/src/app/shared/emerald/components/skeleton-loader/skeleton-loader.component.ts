@@ -20,8 +20,8 @@ import { CommonModule } from '@angular/common';
  * This component displays a loading indicator for content.
  */
 @Component({
-  selector: 'nb-skeleton',
-  template: `
+    selector: 'nb-skeleton',
+    template: `
     <div class="skeleton-container" [style.width]="width" [style.height]="height">
       <nb-spinner
         *ngFor="let i of getArray()"
@@ -30,8 +30,8 @@ import { CommonModule } from '@angular/common';
       ></nb-spinner>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .skeleton-container {
         display: flex;
         flex-direction: column;
@@ -40,14 +40,13 @@ import { CommonModule } from '@angular/common';
         justify-content: center;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbSpinnerModule
-  ],
+    ],
+    imports: [
+        CommonModule,
+        NbSpinnerModule
+    ]
 })
-export class SkeletonLoaderComponent {
+export class SkeletonModule {
   @Input() type: 'small' | 'medium' | 'large' = 'medium';
   @Input() width?: string;
   @Input() height?: string;

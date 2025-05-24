@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
-  selector: 'nb-breadcrumbs',
-  template: `
+    selector: 'nb-breadcrumbs',
+    template: `
     <nav class="breadcrumbs" aria-label="breadcrumb">
       <ol class="breadcrumb-list">
         <li
@@ -26,8 +26,8 @@ import { NbMenuItem } from '@nebular/theme';
       </ol>
     </nav>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .breadcrumbs {
         padding: 1rem 0;
       }
@@ -79,7 +79,8 @@ import { NbMenuItem } from '@nebular/theme';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbBreadcrumbsComponent {
   @Input() items: NbMenuItem[] = [];

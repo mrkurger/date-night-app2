@@ -32,17 +32,16 @@ import { ModerationModalComponent } from './moderation-modal/moderation-modal.co
  * Allows reviewing and moderating user-submitted media
  */
 @Component({
-  selector: 'app-content-moderation',
-  templateUrl: './content-moderation.component.html',
-  styleUrls: ['./content-moderation.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModalModule,
-    ModerationModalComponent,
-  ],
+    selector: 'app-content-moderation',
+    templateUrl: './content-moderation.component.html',
+    styleUrls: ['./content-moderation.component.scss'],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgbModalModule,
+        ModerationModalComponent,
+    ]
 })
 export class ContentModerationComponent implements OnInit, OnDestroy {
   // Data

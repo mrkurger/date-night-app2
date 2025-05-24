@@ -1,5 +1,6 @@
-<nb-card
-  class="alt-premium-ad-card"
+<p-card
+  [style]="{ width: '280px' }"
+  styleClass="alt-premium-ad-card"
   (mouseenter)="isHovered = true"
   (mouseleave)="isHovered = false"
 >
@@ -11,51 +12,47 @@
     />
 
     <div class="badges-container">
-      <nb-badge
-        text="Premium"
-        status="primary"
+      <p-badge
+        value="Premium"
+        severity="info"
         *ngIf="ad.isPremium"
-        class="premium-badge"
-      ></nb-badge>
-      <nb-badge text="Online" status="success" *ngIf="ad.isOnline" class="online-badge"></nb-badge>
-      <nb-badge text="VIP" status="warning" *ngIf="ad.isVip" class="vip-badge"></nb-badge>
+        styleClass="premium-badge"
+      ></p-badge>
+      <p-badge
+        value="Online"
+        severity="success"
+        *ngIf="ad.isOnline"
+        styleClass="online-badge"
+      ></p-badge>
+      <p-badge value="VIP" severity="warning" *ngIf="ad.isVip" styleClass="vip-badge"></p-badge>
     </div>
 
-    <!-- TODO: Add FavoriteButtonComponent here -->
-    <div class="favorite-button-placeholder">Fav</div>
-
+    <!-- Hover overlay -->
     <div class="hover-overlay" [class.visible]="isHovered">
       <div class="overlay-actions">
-        <button nbButton size="small" status="primary">
-          <nb-icon icon="message-circle-outline"></nb-icon> Chat
+        <button pButton type="button" class="p-button-rounded p-button-success p-mr-2">
+          <i class="pi pi-comments"></i> Chat
         </button>
-        <button nbButton size="small" status="info">
-          <nb-icon icon="video-outline"></nb-icon> Call
+        <button pButton type="button" class="p-button-rounded p-button-info p-mr-2">
+          <i class="pi pi-video"></i> Call
         </button>
-        <button nbButton size="small" status="success">
-          <nb-icon icon="gift-outline"></nb-icon> Tip
+        <button pButton type="button" class="p-button-rounded p-button-warning">
+          <i class="pi pi-dollar"></i> Tip
         </button>
-        <!-- gift-outline for DollarSign -->
       </div>
       <div class="overlay-tags" *ngIf="ad.tags && ad.tags.length > 0">
-        <span *ngFor="let tag of ad.tags" class="tag-item">#{{ tag }}</span>
+        <p-tag *ngFor="let tag of ad.tags" [value]="'#' + tag" severity="secondary"></p-tag>
       </div>
     </div>
   </div>
 
-  <nb-card-body>
-    <div class="ad-info-header">
-      <h5 class="ad-name">{{ ad.name }}{{ ad.age ? ', ' + ad.age : '' }}</h5>
-      <div class="ad-rating" *ngIf="ad.rating">
-        <nb-icon icon="star" status="warning"></nb-icon> {{ ad.rating }}
-      </div>
-    </div>
-    <p class="ad-location" *ngIf="ad.location">{{ ad.location }}</p>
-    <p class="ad-description">
-      {{ ad.description | slice: 0 : 100
-      }}{{ ad.description && ad.description.length > 100 ? '...' : '' }}
-    </p>
-  </nb-card-body>
-  <!-- No explicit footer in React example, View Profile was part of Link wrapping card -->
-  <!-- Could add <nb-card-footer> with a View Profile button if desired -->
-</nb-card>
+  <div class="ad-info-header">
+    <h5 class="ad-name">{{ ad.name }}{{ ad.age ? ', ' + ad.age : '' }}</h5>
+    <div class="ad-rating" *ngIf="ad.rating"><i class="pi pi-star-fill"></i> {{ ad.rating }}</div>
+  </div>
+  <p class="ad-location" *ngIf="ad.location">{{ ad.location }}</p>
+  <p class="ad-description">
+    {{ ad.description | slice: 0 : 100
+    }}{{ ad.description && ad.description.length > 100 ? '...' : '' }}
+  </p>
+</p-card>

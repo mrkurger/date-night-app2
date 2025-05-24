@@ -11,6 +11,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version || '22.x' }}
         cache: ${{ inputs.cache-strategy || 'npm' }}
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
       # End Node.js setup
 
     # Step 2: Output the versions of Node and npm for debugging
@@ -18,7 +19,9 @@ runs:
       run: |
         echo "Using npm version: $(npm --version)"
         echo "Using node version: $(node --version)"
+        echo "Working directory: ${{ inputs.working-directory }}"
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     # Step 3: Verify package.json and lockfile
     - name: Verify package.json and lockfile
@@ -75,6 +78,7 @@ runs:
         # Set the working directory for use in subsequent steps
         echo "SETUP_WORKING_DIR=$WORKING_DIR" >> $GITHUB_ENV
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     # Step 4: Fallback-safe dependency installation (uses npm install)
     - name: Install dependencies (safe mode)
@@ -104,6 +108,7 @@ runs:
           fi
         fi
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     # Step 5: Strict dependency installation (uses npm ci, falls back to npm install)
     - name: Install dependencies (strict mode)
@@ -138,6 +143,7 @@ runs:
           }
         fi
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     # Step 6: Check for missing dependencies, and attempt to install them if needed
     - name: Check for missing dependencies
@@ -187,6 +193,7 @@ runs:
           echo "All dependencies appear to be installed."
         fi
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     # Step 7: Check for dependency conflicts
     - name: Check for dependency conflicts
@@ -271,6 +278,10 @@ runs:
 
 # Action inputs with detailed descriptions and defaults.
 inputs:
+  working-directory:
+    description: 'Working directory for the action'
+    required: false
+    default: '.'
   node-version:
     description: 'Node.js version to use'
     required: false

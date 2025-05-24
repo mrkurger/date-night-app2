@@ -9,26 +9,30 @@ import { Subject, interval } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 interface SystemMetric {
-  name: string;_value: number;
+  name: string;
+  value: number;
   unit: string;
   status: 'success' | 'warning' | 'danger';
   trend: 'up' | 'down' | 'stable';
 }
 
+interface TimeSeriesDataPoint {
+  name: string;
+  value: number;
+}
+
 interface TimeSeriesData {
   name: string;
-  series: {
-    name: string;_value: number;
-  }[];
+  series: TimeSeriesDataPoint[];
 }
 
 @Component({
   selector: 'app-system-health',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule,
+    CommonModule,
     FormsModule,
     NgxChartsModule,
-
     NbCardModule,
     NbProgressBarModule,
     NbBadgeModule,
@@ -136,7 +140,8 @@ export class SystemHealthComponent implements OnInit, OnDestroy {
 
   systemMetrics: SystemMetric[] = [
     {
-      name: 'CPU Usage',_value: 45,
+      name: 'CPU Usage',
+      value: 45,
       unit: '%',
       status: 'success',
       trend: 'stable',
@@ -235,7 +240,9 @@ export class SystemHealthComponent implements OnInit, OnDestroy {
     // Simulate metric updates
     this.systemMetrics = this.systemMetrics.map((metric) => ({
       ...metric,
-      value: Math.min(100, Math.max(0, metric.value + (Math.random() * 10 - 5))),
+      value: parseFloat(
+        Math.min(100, Math.max(0, metric.value + (Math.random() * 10 - 5))).toFixed(1),
+      ),
       trend: Math.random() > 0.5 ? 'up' : 'down',
     }));
 

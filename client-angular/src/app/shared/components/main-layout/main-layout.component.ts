@@ -31,11 +31,10 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss'],
-  standalone: true,
-  imports: [CommonModule, RouterModule, ThemeToggleComponent],
+    selector: 'app-main-layout',
+    templateUrl: './main-layout.component.html',
+    styleUrls: ['./main-layout.component.scss'],
+    imports: [CommonModule, RouterModule, ThemeToggleComponent]
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

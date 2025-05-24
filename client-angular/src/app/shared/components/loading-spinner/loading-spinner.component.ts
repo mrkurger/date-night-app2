@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
+import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-loading-spinner',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div class="loading-spinner" [class]="'loading-spinner--' + size">

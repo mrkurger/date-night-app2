@@ -16,20 +16,19 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { SearchService, SearchResult } from '../../services/search.service';
 
 @Component({
-  selector: 'app-search-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    NbCardModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbListModule,
-  ],
-  template: `
+    selector: 'app-search-dialog',
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        NbCardModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbListModule,
+    ],
+    template: `
     <nb-card>
       <nb-card-header class="search-header">
         <div class="search-input-container">
@@ -95,8 +94,8 @@ import { SearchService, SearchResult } from '../../services/search.service';
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -241,7 +240,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         }
       }
     `,
-  ],
+    ]
 })
 export class SearchDialogComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

@@ -18,10 +18,9 @@ interface ShortcutGroup {
 }
 
 @Component({
-  selector: 'app-keyboard-shortcuts-help',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbListModule],
-  template: `
+    selector: 'app-keyboard-shortcuts-help',
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbListModule],
+    template: `
     <nb-card>
       <nb-card-header class="header">
         <div class="title">
@@ -61,8 +60,8 @@ interface ShortcutGroup {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -178,7 +177,7 @@ interface ShortcutGroup {
         }
       }
     `,
-  ],
+    ]
 })
 export class KeyboardShortcutsHelpComponent {
   shortcutGroups: ShortcutGroup[] = [

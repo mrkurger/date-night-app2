@@ -74,19 +74,18 @@ const validateTimeSlotOverlap: ValidatorFn = (
 };
 
 @Component({
-  selector: 'app-availability-calendar',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NbDatepickerModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbButtonModule,
-    NbSelectModule,
-    NbIconModule,
-  ],
-  template: `
+    selector: 'app-availability-calendar',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NbDatepickerModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbSelectModule,
+        NbIconModule,
+    ],
+    template: `
     <div class="availability-calendar">
       <form [formGroup]="availabilityForm">
         <!-- Date Selection -->
@@ -153,8 +152,8 @@ const validateTimeSlotOverlap: ValidatorFn = (
       </form>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .availability-calendar {
         padding: 1rem;
       }
@@ -179,7 +178,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
         margin-bottom: 8px;
       }
     `,
-  ],
+    ]
 })
 export class AvailabilityCalendarComponent implements OnInit {
   @Input() initialAvailability?: AvailabilitySlot;

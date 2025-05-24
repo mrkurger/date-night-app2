@@ -1,13 +1,18 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
-
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/menuitem';
 export interface NavigationConfig {
   showSidebar?: boolean;
   showTopMenu?: boolean;
   showUserMenu?: boolean;
   showSearch?: boolean;
   showBreadcrumbs?: boolean;
-  sidebarState?: 'expanded' | 'collapsed' | 'compacted';
+  sidebarVisible?: boolean;
   theme?: 'default' | 'dark' | 'cosmic' | 'corporate';
 }
 
@@ -19,170 +24,121 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'nb-navigation',
+  selector: 'app-primeng-navigation',
   template: `
-    <nb-layout>
+    <div class="layout">
       <!-- Sidebar -->
-      <nb-sidebar
+      <p-sidebar
         *ngIf="config.showSidebar"
-        [state]="config.sidebarState || 'expanded'"
-        [responsive]="true"
-        [compacted]="config.sidebarState === 'compacted'"
+        [(visible)]="config.sidebarVisible"
+        [baseZIndex]="1000"
+        [modal]="true"
       >
-        <nb-side-menu
-          [items]="menuItems"
-          [compact]="config.sidebarState === 'compacted'"
-          (itemClick)="onMenuItemClick($event)"
-        ></nb-side-menu>
-      </nb-sidebar>
+        <p-panelMenu [model]="menuItems"></p-panelMenu>
+      </p-sidebar>
 
       <!-- Header -->
-      <nb-layout-header fixed>
-        <div class="header-container">
-          <!-- Sidebar Toggle -->
-          <button *ngIf="config.showSidebar" nbButton ghost (click)="toggleSidebar()">
-            <nb-icon icon="menu-2-outline"></nb-icon>
-          </button>
+      <div class="header">
+        <button
+          *ngIf="config.showSidebar"
+          pButton
+          icon="pi pi-bars"
+          (click)="toggleSidebar()"
+        ></button>
+        <p-menubar *ngIf="config.showTopMenu" [model]="topMenuItems"></p-menubar>
 
-          <!-- Top Menu -->
-          <nb-top-menu
-            *ngIf="config.showTopMenu"
-            [items]="topMenuItems"
-            (itemClick)="onTopMenuItemClick($event)"
-          ></nb-top-menu>
+        <div class="header-right">
+          <!-- Search -->
+          <input
+            *ngIf="config.showSearch"
+            type="text"
+            pInputText
+            placeholder="Search..."
+            (input)="onSearch($event.target.value)"
+          />
 
-          <div class="header-right">
-            <!-- Search -->
-            <nb-search-bar *ngIf="config.showSearch" (search)="onSearch($event)"></nb-search-bar>
-
-            <!-- User Menu -->
-            <nb-user-menu
-              *ngIf="config.showUserMenu && userData"
-              [userData]="userData"
-              [items]="userMenuItems"
-              (itemClick)="onUserMenuItemClick($event)"
-            ></nb-user-menu>
+          <!-- User Menu -->
+          <div *ngIf="config.showUserMenu && userData" class="user-menu">
+            <img [src]="userData.picture" alt="User Picture" class="user-picture" />
+            <span>{{ userData.name }}</span>
           </div>
         </div>
-      </nb-layout-header>
+      </div>
 
-      <!-- Main Content -->
-      <nb-layout-column>
-        <!-- Breadcrumbs -->
-        <nb-breadcrumbs
-          *ngIf="config.showBreadcrumbs"
-          [items]="breadcrumbItems"
-          (itemClick)="onBreadcrumbClick($event)"
-        ></nb-breadcrumbs>
+      <!-- Breadcrumbs -->
+      <p-breadcrumb *ngIf="config.showBreadcrumbs" [model]="breadcrumbItems"></p-breadcrumb>
 
-        <!-- Content -->
+      <!-- Content -->
+      <div class="content">
         <ng-content></ng-content>
-      </nb-layout-column>
-
-      <!-- Footer -->
-      <nb-layout-footer fixed>
-        <ng-content select="[footer]"></ng-content>
-      </nb-layout-footer>
-    </nb-layout>
+      </div>
+    </div>
   `,
   styles: [
     `
-      :host {
-        display: block;
-      }
-
-      .header-container {
+      .layout {
         display: flex;
-        align-items: center;
-        width: 100%;
+        flex-direction: column;
         height: 100%;
-        padding: 0 1.25rem;
       }
-
-      .header-right {
+      .header {
         display: flex;
         align-items: center;
+        padding: 1rem;
+        background-color: var(--header-background-color);
+        border-bottom: 1px solid var(--divider-color);
+      }
+      .header-right {
         margin-left: auto;
+        display: flex;
+        align-items: center;
         gap: 1rem;
       }
-
-      nb-layout-header {
-        background-color: nb-theme(header-background-color);
-        border-bottom: 1px solid nb-theme(divider-color);
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
-
-      nb-sidebar {
-        background-color: nb-theme(sidebar-background-color);
-        border-right: 1px solid nb-theme(divider-color);
-      }
-
-      nb-layout-footer {
-        background-color: nb-theme(footer-background-color);
-        border-top: 1px solid nb-theme(divider-color);
+      .user-picture {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
       }
     `,
   ],
+  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule, 
+    CommonModule,
+    RouterModule,
+    MenubarModule,
+    SidebarModule,
+    BreadcrumbModule,
+    ButtonModule,
+  ],
+  standalone: true,
 })
-export class NbNavigationComponent {
+export class PrimeNGNavigationComponent {
   @Input() config: NavigationConfig = {
     showSidebar: true,
     showTopMenu: true,
     showUserMenu: true,
     showSearch: true,
     showBreadcrumbs: true,
-    sidebarState: 'expanded',
+    sidebarVisible: false,
     theme: 'default',
   };
 
-  @Input() menuItems: NbMenuItem[] = [];
-  @Input() topMenuItems: NbMenuItem[] = [];
-  @Input() userMenuItems: NbMenuItem[] = [];
-  @Input() breadcrumbItems: NbMenuItem[] = [];
+  @Input() menuItems: MenuItem[] = [];
+  @Input() topMenuItems: MenuItem[] = [];
+  @Input() breadcrumbItems: MenuItem[] = [];
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter<NbMenuItem>();
-  @Output() topMenuItemClicked = new EventEmitter<NbMenuItem>();
-  @Output() userMenuItemClicked = new EventEmitter<NbMenuItem>();
-  @Output() breadcrumbClicked = new EventEmitter<NbMenuItem>();
+  @Output() menuItemClicked = new EventEmitter<MenuItem>();
+  @Output() topMenuItemClicked = new EventEmitter<MenuItem>();
+  @Output() breadcrumbClicked = new EventEmitter<MenuItem>();
   @Output() searchSubmitted = new EventEmitter<string>();
-  @Output() sidebarStateChanged = new EventEmitter<string>();
 
   toggleSidebar() {
-    const currentState = this.config.sidebarState;
-    let newState: 'expanded' | 'collapsed' | 'compacted';
-
-    switch (currentState) {
-      case 'expanded':
-        newState = 'compacted';
-        break;
-      case 'compacted':
-        newState = 'collapsed';
-        break;
-      case 'collapsed':
-        newState = 'expanded';
-        break;
-      default:
-        newState = 'expanded';
-    }
-
-    this.config = { ...this.config, sidebarState: newState };
-    this.sidebarStateChanged.emit(newState);
-  }
-
-  onMenuItemClick(item: NbMenuItem) {
-    this.menuItemClicked.emit(item);
-  }
-
-  onTopMenuItemClick(item: NbMenuItem) {
-    this.topMenuItemClicked.emit(item);
-  }
-
-  onUserMenuItemClick(item: NbMenuItem) {
-    this.userMenuItemClicked.emit(item);
-  }
-
-  onBreadcrumbClick(item: NbMenuItem) {
-    this.breadcrumbClicked.emit(item);
+    this.config.sidebarVisible = !this.config.sidebarVisible;
   }
 
   onSearch(query: string) {

@@ -2,8 +2,11 @@
 import eslint from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
-import nPlugin from 'eslint-plugin-n'; // Changed from eslint-plugin-node
+import nPlugin from 'eslint-plugin-n';
 import globals from 'globals';
+import * as tseslint from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
+import airbnbTypescript from 'eslint-config-airbnb-typescript';
 
 export default [
   eslint.configs.recommended,
@@ -44,8 +47,31 @@ export default [
     },
     ignores: ['services/file-encryption.service.js'],
   },
+  // TypeScript specific rules
   {
-    files: ['tests/**/*.js', '**/*.test.js', '**/*.spec.js'],
+    files: ['**/*.ts'],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      ...airbnbTypescript.rules,
+      '@typescript-eslint/explicit-function-return-type': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'import/prefer-default-export': 'off',
+      'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    },
+  },
+  {
+    files: ['tests/**/*.{js,ts}', '**/*.test.{js,ts}', '**/*.spec.{js,ts}'],
     languageOptions: {
       globals: {
         ...globals.jest,

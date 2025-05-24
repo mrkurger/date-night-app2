@@ -192,7 +192,7 @@ export interface HeaderAction {
     `,
   ],
 })
-export class PageHeaderComponent {
+export class ToolbarModule {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() breadcrumbs: { title: string; link?: string[]; icon?: string }[] = [];

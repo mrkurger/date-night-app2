@@ -28,11 +28,10 @@ export interface ReviewData {
 }
 
 @Component({
-  selector: 'app-review-form',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],
-  template: `
+    selector: 'app-review-form',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, ReactiveFormsModule, NebularModule],
+    template: `
     <div class="review-form-container">
       <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>
 
@@ -159,8 +158,8 @@ export interface ReviewData {
       </form>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -225,7 +224,7 @@ export interface ReviewData {
         margin-top: 2rem;
       }
     `,
-  ],
+    ]
 })
 export class ReviewFormComponent implements OnInit {
   @Input() adId!: string;

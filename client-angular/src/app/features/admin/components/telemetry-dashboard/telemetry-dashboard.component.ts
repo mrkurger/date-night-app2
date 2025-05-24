@@ -16,11 +16,10 @@ import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.comp
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 @Component({
-  selector: 'app-telemetry-dashboard',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
-  template: `
+    selector: 'app-telemetry-dashboard',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
+    template: `
     <div class="telemetry-dashboard-container">
       <h1>Application Telemetry Dashboard</h1>
 
@@ -34,8 +33,8 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
       </nb-tabset>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .telemetry-dashboard-container {
         padding: 20px;
       }
@@ -50,7 +49,7 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
         }
       }
     `,
-  ],
+    ]
 })
 export class TelemetryDashboardComponent {
   constructor() {}

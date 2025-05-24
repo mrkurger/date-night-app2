@@ -19,19 +19,18 @@ import {
  * It includes examples of keyboard navigation, focus management, ARIA attributes, and more.
  */
 @Component({
-  selector: 'app-accessibility-demo',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
-    NbCardModule,
-    NbAccordionModule,
-    NbTabsetModule,
-    NbButtonModule,
-    NbIconModule,
-    NbListModule,
-    NbBadgeModule,
-  ],
-  templateUrl: './accessibility-demo.component.html',
-  styleUrls: ['./accessibility-demo.component.scss'],
+    selector: 'app-accessibility-demo',
+    imports: [NebularModule, CommonModule,
+        NbCardModule,
+        NbAccordionModule,
+        NbTabsetModule,
+        NbButtonModule,
+        NbIconModule,
+        NbListModule,
+        NbBadgeModule,
+    ],
+    templateUrl: './accessibility-demo.component.html',
+    styleUrls: ['./accessibility-demo.component.scss']
 })
 export class AccessibilityDemoComponent {
   bem = new BemUtil('a11y-demo');

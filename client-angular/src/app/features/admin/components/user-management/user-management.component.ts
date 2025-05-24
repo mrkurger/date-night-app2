@@ -7,11 +7,10 @@ import { User } from '../../../../core/models/user.model';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 
 @Component({
-  selector: 'app-user-management',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule],
-  template: `
+    selector: 'app-user-management',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, FormsModule],
+    template: `
     <nb-card>
       <nb-card-header class="d-flex justify-content-between align-items-center">
         <h5>User Management</h5>
@@ -83,8 +82,8 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         max-width: 100%;
@@ -114,7 +113,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
         gap: 0.5rem;
       }
     `,
-  ],
+    ]
 })
 export class UserManagementComponent implements OnInit {
   users: User[] = [];

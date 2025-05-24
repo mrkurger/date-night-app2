@@ -17,14 +17,13 @@ import { CommonModule
     NbCardModule, } from '@angular/common';
 
 import { CardGridComponent } from './card-grid.component';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
 
 // Mock component for nb-card
 @Component({
-  selector: 'nb-card',
-  template: '<div class="mock-card">{{ title }}</div>',
-  standalone: true,
-  imports: [CommonModule],
+    selector: 'nb-card',
+    template: '<div class="mock-card">{{ title }}</div>',
+    imports: [CommonModule]
 })
 class MockAppCardComponent {
   @Input() title = '';
@@ -42,7 +41,7 @@ class MockAppCardComponent {
 
 // Test host component with template reference
 @Component({
-  template: `
+    template: `
     <ng-template #customTemplate let-item>
       <div class="custom-template">{{ item.title }}</div>
     </ng-template>
@@ -61,8 +60,7 @@ class MockAppCardComponent {
     >
     </nb-card-grid>
   `,
-  standalone: true,
-  imports: [CommonModule, CardGridComponent],
+    imports: [CommonModule, CardGridComponent]
 })
 class TestHostComponent {
   @ViewChild('customTemplate') customTemplate!: TemplateRef<any>;
@@ -99,7 +97,7 @@ describe('CardGridComponent', () => {
         CommonModule,
         CardGridComponent,
         MockAppCardComponent,
-        SkeletonLoaderComponent,
+        SkeletonModule,
         TestHostComponent,
       ],
     }).compileComponents();
@@ -188,14 +186,14 @@ describe('CardGridComponent', () => {
     hostFixture.detectChanges();
 
     // Check if skeleton loaders are displayed
-    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
+    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
     expect(skeletonLoaders.length).toBe(6); // Default skeletonCount is 6
 
     // Change skeleton count
     hostComponent.skeletonCount = 3;
     hostFixture.detectChanges();
 
-    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
+    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
     expect(updatedSkeletonLoaders.length).toBe(3);
   });
 

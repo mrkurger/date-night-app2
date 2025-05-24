@@ -27,6 +27,7 @@ interface PaginationChangeEvent {
 import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
+import { NbDatepickerModule } from '@nebular/theme';
 
 /**
  * Performance Dashboard Component
@@ -40,13 +41,13 @@ import { AppSortHeaderComponent } from '../../../../shared/components/custom-neb
  */
 @Component({
   selector: 'app-performance-dashboard',
-  standalone: true,
   imports: [
     CommonModule,
     NebularModule,
     ReactiveFormsModule,
     AppSortComponent,
     AppSortHeaderComponent,
+    NbDatepickerModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `

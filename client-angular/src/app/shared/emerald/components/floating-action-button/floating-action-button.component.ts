@@ -31,7 +31,7 @@ import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
   standalone: true,
   imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
 })
-export class FloatingActionButtonComponent {
+export class ButtonModule {
   /**
    * The icon to display in the button
    * Uses Font Awesome icons (e.g., 'fa-plus')

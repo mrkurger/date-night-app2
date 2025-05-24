@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LSP-MCP Integration Documentation</title>
+    <style>
+      :root {
+        --primary-color: #4a6da7;
+        --secondary-color: #f8f9fa;
+        --accent-color: #5d93ff;
+        --text-color: #333;
+        --link-color: #0066cc;
+        --border-color: #ddd;
+        --code-bg: #f5f5f5;
+        --warning-color: #e6a23c;
+        --success-color: #67c23a;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--primary-color);
+      }
+
+      header h1 {
+        color: white;
+        margin: 0;
+      }
+
+      nav {
+        background-color: var(--secondary-color);
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
+      }
+
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      nav a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      code {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: var(--code-bg);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background-color: var(--code-bg);
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+      }
+
+      .note {
+        background-color: #e8f4fd;
+        border-left: 4px solid #2196f3;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+      }
+
+      .warning {
+        background-color: #fff8e6;
+        border-left: 4px solid var(--warning-color);
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+      }
+
+      .success {
+        background-color: #f0f9eb;
+        border-left: 4px solid var(--success-color);
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid var(--border-color);
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: var(--secondary-color);
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>LSP-MCP Integration Documentation</h1>
+      <p>Language Server Protocol - Model Context Protocol Integration for Date Night App</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#tools">Available Tools</a></li>
+        <li><a href="#resources">MCP Resources</a></li>
+        <li><a href="#testing">Testing</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="../_docs_index.html">Main Documentation Index</a></li>
+      </ul>
+    </nav>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        The LSP-MCP (Language Server Protocol - Model Context Protocol) integration enables AI
+        assistants to interact with language servers to provide more accurate code suggestions,
+        hover information, and diagnostics. This integration acts as a bridge between AI models and
+        language servers, allowing the AI to leverage the language server's understanding of the
+        codebase.
+      </p>
+      <div class="note">
+        <strong>Note:</strong> This integration enhances AI capabilities by providing access to
+        language-specific features like type information, code completion, and error diagnostics.
+      </div>
+    </section>
+
+    <section id="installation">
+      <h2>Installation</h2>
+      <p>
+        The LSP-MCP server has been installed in the Date Night App project as a dependency. The
+        installation includes:
+      </p>
+      <ul>
+        <li>The LSP-MCP server package</li>
+        <li>TypeScript language server for JavaScript/TypeScript support</li>
+      </ul>
+      <p>The installation was done using npm:</p>
+      <pre><code>npm install github:Tritlo/lsp-mcp
+npm install --save-dev typescript-language-server</code></pre>
+      <div class="note">
+        <strong>Note:</strong> The lsp-mcp-server package is not available in the npm registry, so
+        it must be installed directly from GitHub.
+      </div>
+    </section>
+
+    <section id="configuration">
+      <h2>Configuration</h2>
+      <p>
+        The LSP-MCP server is configured in the VS Code settings. The configuration has been added
+        to the global VS Code settings to make it available across all projects.
+      </p>
+      <p>The configuration includes:</p>
+      <pre><code>"mcpServers": {
+  "typescript-lsp": {
+    "type": "stdio",
+    "command": "npx",
+    "args": [
+      "lsp-mcp",
+      "typescript",
+      "typescript-language-server",
+      "--stdio"
+    ]
+  },
+  "javascript-lsp": {
+    "type": "stdio",
+    "command": "npx",
+    "args": [
+      "lsp-mcp",
+      "javascript",
+      "typescript-language-server",
+      "--stdio"
+    ]
+  }
+}</code></pre>
+      <div class="note">
+        <strong>Note:</strong> This configuration sets up two MCP servers - one for TypeScript and
+        one for JavaScript, both using the TypeScript language server.
+      </div>
+    </section>
+
+    <section id="usage">
+      <h2>Usage</h2>
+      <p>
+        To use the LSP-MCP integration with AI assistants, the AI needs to be configured to use the
+        MCP protocol. When the AI is connected to the MCP server, it can use the following tools and
+        resources:
+      </p>
+      <h3>Starting the LSP Server</h3>
+      <p>
+        Before using any LSP functionality, the LSP server must be started using the
+        <code>start_lsp</code> tool:
+      </p>
+      <pre><code>{
+  "tool": "lsp-mcp",
+  "arguments": {
+    "command": "start_lsp",
+    "root_dir": "/Users/oivindlund/date-night-app"
+  }
+}</code></pre>
+      <h3>Opening a Document</h3>
+      <p>
+        Before accessing diagnostics or performing other operations on a file, it must be opened
+        using the <code>open_document</code> tool:
+      </p>
+      <pre><code>{
+  "tool": "lsp-mcp",
+  "arguments": {
+    "command": "open_document",
+    "file_path": "/Users/oivindlund/date-night-app/path/to/your/file.ts",
+    "language_id": "typescript"
+  }
+}</code></pre>
+    </section>
+
+    <section id="tools">
+      <h2>Available Tools</h2>
+      <p>The LSP-MCP server provides the following tools:</p>
+      <table>
+        <tr>
+          <th>Tool</th>
+          <th>Description</th>
+          <th>Parameters</th>
+        </tr>
+        <tr>
+          <td><code>get_info_on_location</code></td>
+          <td>Get hover information at a specific location in a file</td>
+          <td>file_path, language_id, line, column</td>
+        </tr>
+        <tr>
+          <td><code>get_completions</code></td>
+          <td>Get completion suggestions at a specific location in a file</td>
+          <td>file_path, language_id, line, column</td>
+        </tr>
+        <tr>
+          <td><code>get_code_actions</code></td>
+          <td>Get code actions for a specific range in a file</td>
+          <td>file_path, language_id, start_line, start_column, end_line, end_column</td>
+        </tr>
+        <tr>
+          <td><code>open_document</code></td>
+          <td>Open a file in the LSP server for analysis</td>
+          <td>file_path, language_id</td>
+        </tr>
+        <tr>
+          <td><code>close_document</code></td>
+          <td>Close a file in the LSP server</td>
+          <td>file_path</td>
+        </tr>
+        <tr>
+          <td><code>get_diagnostics</code></td>
+          <td>Get diagnostic messages for open files</td>
+          <td>file_path (optional)</td>
+        </tr>
+        <tr>
+          <td><code>start_lsp</code></td>
+          <td>Start the LSP server with a specified root directory</td>
+          <td>root_dir</td>
+        </tr>
+        <tr>
+          <td><code>restart_lsp_server</code></td>
+          <td>Restart the LSP server</td>
+          <td>root_dir (optional)</td>
+        </tr>
+        <tr>
+          <td><code>set_log_level</code></td>
+          <td>Change the server's logging verbosity level</td>
+          <td>level</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="resources">
+      <h2>MCP Resources</h2>
+      <p>In addition to tools, the LSP-MCP server provides resources for accessing LSP features:</p>
+      <h3>Diagnostic Resources</h3>
+      <p>Access diagnostic information via the <code>lsp-diagnostics://</code> resource scheme:</p>
+      <ul>
+        <li><code>lsp-diagnostics://</code> - Diagnostics for all open files</li>
+        <li><code>lsp-diagnostics:///path/to/file</code> - Diagnostics for a specific file</li>
+      </ul>
+      <h3>Hover Information Resources</h3>
+      <p>Access hover information via the <code>lsp-hover://</code> resource scheme:</p>
+      <pre><code>lsp-hover:///path/to/file?line={line}&column={column}&language_id={language_id}</code></pre>
+      <h3>Code Completion Resources</h3>
+      <p>
+        Access code completion suggestions via the <code>lsp-completions://</code> resource scheme:
+      </p>
+      <pre><code>lsp-completions:///path/to/file?line={line}&column={column}&language_id={language_id}</code></pre>
+    </section>
+
+    <section id="testing">
+      <h2>Testing</h2>
+      <p>
+        A test script has been created to verify that the LSP-MCP integration is working correctly.
+        The script tests the following functionality:
+      </p>
+      <ul>
+        <li>Starting the LSP server</li>
+        <li>Opening a TypeScript file</li>
+        <li>Getting hover information for a code element</li>
+        <li>Getting completion suggestions</li>
+        <li>Getting diagnostics</li>
+        <li>Closing the file</li>
+      </ul>
+      <p>To run the test script:</p>
+      <pre><code>node scripts/test-lsp-mcp.js</code></pre>
+      <p>
+        The script will output detailed information about each step of the test, including any
+        errors or warnings that occur.
+      </p>
+      <div class="note">
+        <strong>Note:</strong> The test script is a useful tool for verifying that the LSP-MCP
+        integration is working correctly and for diagnosing issues.
+      </div>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <p>If you encounter issues with the LSP-MCP integration, try the following:</p>
+      <ul>
+        <li>
+          <strong>LSP server not starting:</strong> Make sure the TypeScript language server is
+          installed and the path is correct. You can reinstall it with
+          <code>npm install --save-dev typescript-language-server</code>.
+        </li>
+        <li>
+          <strong>No diagnostics or completions:</strong> Make sure you've started the LSP server
+          with <code>start_lsp</code> and opened the document with <code>open_document</code>.
+        </li>
+        <li>
+          <strong>Incorrect or outdated information:</strong> Try restarting the LSP server with
+          <code>restart_lsp_server</code>.
+        </li>
+        <li>
+          <strong>Debug logging:</strong> Set the log level to debug with
+          <code>set_log_level</code> to get more detailed information.
+        </li>
+        <li>
+          <strong>Run the test script:</strong> Use the test script at
+          <code>scripts/test-lsp-mcp.js</code> to verify that the LSP-MCP integration is working
+          correctly.
+        </li>
+      </ul>
+      <div class="warning">
+        <strong>Warning:</strong> The LSP server needs to be restarted if you make significant
+        changes to the project structure or configuration.
+      </div>
+    </section>
+
+    <section>
+      <h2>Changelog</h2>
+      <ul>
+        <li><strong>May 21, 2025:</strong> Initial implementation of LSP-MCP integration</li>
+        <li><strong>May 21, 2025:</strong> Added documentation for LSP-MCP integration</li>
+        <li>
+          <strong>May 21, 2025:</strong> Added test script for verifying LSP-MCP functionality
+        </li>
+        <li><strong>May 21, 2025:</strong> Added typescript-language-server as a dev dependency</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Date Night App - LSP-MCP Integration Documentation - Last updated: May 21, 2025</p>
+    </footer>
+  </body>
+</html>

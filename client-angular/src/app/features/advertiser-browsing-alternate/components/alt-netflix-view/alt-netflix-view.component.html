@@ -1,97 +1,210 @@
 <p>Placeholder for AltNetflixViewComponent. Content will be a grid of ad cards.</p>
 
 <!-- Netflix-style grid layout for advertisers -->
-<div class="netflix-grid-container">
-  <!-- Loading state -->
-  <div *ngIf="loading" class="loading-container">
-    <nb-spinner status="primary"></nb-spinner>
+<div class="netflix-view">
+  <!-- Error State -->
+  <div *ngIf="error" class="error-message p-4 text-center">
+    <p-card>
+      <span class="pi pi-exclamation-circle text-red-500 text-xl mr-2"></span>
+      {{ error }}
+      <div class="mt-3">
+        <p-button icon="pi pi-refresh" (onClick)="loadAds()" label="Try Again"></p-button>
+      </div>
+    </p-card>
   </div>
 
-  <!-- Empty state -->
-  <nb-card *ngIf="!loading && advertisers.length === 0" class="empty-state">
-    <nb-card-body>
-      <nb-icon icon="alert-circle-outline" status="warning"></nb-icon>
-      <h3>No Advertisers Found</h3>
-      <p>Try adjusting your search criteria or check back later.</p>
-    </nb-card-body>
-  </nb-card>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container p-5 text-center">
+    <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    <p class="mt-3">Loading profiles...</p>
+  </div>
 
-  <!-- Grid layout -->
-  <div *ngIf="!loading && advertisers.length > 0" class="grid-layout">
-    <nb-card
-      *ngFor="let advertiser of advertisers"
-      class="advertiser-card"
-      [ngClass]="{ premium: advertiser.isPremium }"
-      (mouseenter)="onCardHover(advertiser.id, true)"
-      (mouseleave)="onCardHover(advertiser.id, false)"
-    >
-      <!-- Card Header with Image -->
-      <nb-card-header class="card-image-header">
-        <div class="image-container">
-          <img
-            [src]="advertiser.image || 'assets/images/placeholder.jpg'"
-            [alt]="advertiser.name"
-            class="advertiser-image"
-          />
-          <div class="image-overlay">
-            <div class="status-badges">
-              <nb-badge *ngIf="advertiser.isOnline" status="success" text="Online"></nb-badge>
-              <nb-badge *ngIf="advertiser.isPremium" status="warning" text="Premium"></nb-badge>
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error" class="content-container">
+    <!-- Grid Layout -->
+    <div class="grid">
+      <div
+        *ngFor="let advertiser of advertisers"
+        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2"
+      >
+        <p-card class="advertiser-card h-full" [style]="{ 'min-height': '360px' }">
+          <!-- Image Section -->
+          <ng-template pTemplate="header">
+            <div class="relative">
+              <img
+                [src]="advertiser.image || 'assets/images/profile-placeholder.jpg'"
+                [alt]="advertiser.name"
+                class="w-full h-48 object-cover"
+              />
+              <div class="absolute top-2 right-2 flex gap-2">
+                <!-- VIP Badge -->
+                <p-badge
+                  *ngIf="advertiser.isVip"
+                  value="VIP"
+                  severity="warning"
+                  [style]="{ background: 'linear-gradient(45deg, #FFD700, #FFA500)' }"
+                >
+                </p-badge>
+                <!-- Online Status -->
+                <p-badge *ngIf="advertiser.isOnline" value="Online" severity="success"> </p-badge>
+              </div>
             </div>
+          </ng-template>
+
+          <!-- Content Section -->
+          <div class="card-content">
+            <h3 class="text-xl font-semibold mb-2">{{ advertiser.name }}</h3>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-sm text-gray-600">{{ formatLocation(advertiser.location) }}</span>
+              <span class="text-sm text-gray-600">•</span>
+              <span class="text-sm text-gray-600">{{ advertiser.age }} yrs</span>
+            </div>
+
+            <!-- Rating -->
+            <div class="mb-3">
+              <p-tag
+                [value]="advertiser.rating.toFixed(1)"
+                [severity]="getRatingClass(advertiser.rating)"
+                icon="pi pi-star"
+              >
+              </p-tag>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1 mb-3">
+              <p-chip
+                *ngFor="let tag of advertiser.tags?.slice(0, 3)"
+                [label]="tag"
+                class="text-xs"
+              >
+              </p-chip>
+            </div>
+
+            <!-- Description -->
+            <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+              {{ advertiser.description }}
+            </p>
           </div>
-        </div>
-      </nb-card-header>
 
-      <!-- Card Body -->
-      <nb-card-body>
-        <div class="advertiser-info">
-          <h4 class="advertiser-name">
-            {{ advertiser.name }}
-            <span class="age" *ngIf="advertiser.age">, {{ advertiser.age }}</span>
-          </h4>
-          <p class="location" *ngIf="advertiser.location">
-            <nb-icon icon="pin-outline"></nb-icon>
-            {{ advertiser.location }}
-          </p>
-          <p class="description" *ngIf="advertiser.description">
-            {{ advertiser.description | slice : 0 : 100
-            }}{{ advertiser.description.length > 100 ? '...' : '' }}
-          </p>
-        </div>
+          <!-- Actions -->
+          <ng-template pTemplate="footer">
+            <div class="flex justify-between gap-2">
+              <p-button
+                icon="pi pi-heart"
+                (onClick)="onFavorite(advertiser)"
+                [styleClass]="'p-button-rounded p-button-text p-button-danger'"
+                pTooltip="Add to Favorites"
+              >
+              </p-button>
+              <p-button
+                icon="pi pi-comments"
+                (onClick)="onChat(advertiser)"
+                [styleClass]="'p-button-rounded p-button-text p-button-info'"
+                pTooltip="Start Chat"
+              >
+              </p-button>
+              <p-button
+                icon="pi pi-user"
+                (onClick)="onViewProfile(advertiser)"
+                [styleClass]="'p-button-rounded p-button-text p-button-secondary'"
+                pTooltip="View Profile"
+              >
+              </p-button>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
 
-        <!-- Tags -->
-        <div class="tags-container" *ngIf="advertiser.tags?.length">
-          <nb-tag-list>
-            <nb-tag
-              *ngFor="let tag of advertiser.tags"
-              [text]="tag"
-              appearance="filled"
-              status="primary"
-              size="tiny"
-            >
-            </nb-tag>
-          </nb-tag-list>
-        </div>
-      </nb-card-body>
-
-      <!-- Card Footer -->
-      <nb-card-footer>
-        <div class="action-buttons">
-          <button nbButton ghost size="small" (click)="onFavorite(advertiser)">
-            <nb-icon
-              [icon]="advertiser.isFavorite ? 'heart' : 'heart-outline'"
-              [status]="advertiser.isFavorite ? 'danger' : 'basic'"
-            >
-            </nb-icon>
-          </button>
-          <button nbButton ghost size="small" (click)="onChat(advertiser)">
-            <nb-icon icon="message-circle-outline"></nb-icon>
-          </button>
-          <button nbButton filled status="primary" size="small" (click)="onViewProfile(advertiser)">
-            View Profile
-          </button>
-        </div>
-      </nb-card-footer>
-    </nb-card>
+    <!-- Empty State -->
+    <div *ngIf="!loading && advertisers.length === 0" class="empty-state p-5 text-center">
+      <p-card>
+        <h3 class="text-xl mb-2">No profiles found</h3>
+        <p class="text-gray-600 mb-3">Try adjusting your search filters</p>
+        <p-button icon="pi pi-filter" (onClick)="openFilters()" label="Adjust Filters"> </p-button>
+      </p-card>
+    </div>
   </div>
+
+  <!-- Filters Dialog -->
+  <p-dialog
+    header="Filter Profiles"
+    [(visible)]="filterDialogVisible"
+    [style]="{ width: '90%', maxWidth: '500px' }"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <form [formGroup]="filterForm" class="p-fluid">
+      <!-- Categories -->
+      <div class="mb-4">
+        <label class="block mb-2">Categories</label>
+        <p-multiSelect
+          [options]="categories"
+          formControlName="categories"
+          [placeholder]="'Select categories'"
+          [showToggleAll]="true"
+        >
+        </p-multiSelect>
+      </div>
+
+      <!-- Location -->
+      <div class="mb-4">
+        <label class="block mb-2">Location</label>
+        <input type="text" pInputText formControlName="location" placeholder="Enter location" />
+      </div>
+
+      <!-- Age Range -->
+      <div class="mb-4">
+        <label class="block mb-2">Age Range</label>
+        <p-dropdown
+          [options]="[
+            { label: '18-25', value: [18, 25] },
+            { label: '26-35', value: [26, 35] },
+            { label: '36-45', value: [36, 45] },
+            { label: '46+', value: [46, 100] },
+          ]"
+          formControlName="ageRange"
+          placeholder="Select age range"
+        >
+        </p-dropdown>
+      </div>
+
+      <!-- Rating -->
+      <div class="mb-4">
+        <label class="block mb-2">Minimum Rating</label>
+        <p-dropdown
+          [options]="[
+            { label: '5 stars', value: 5 },
+            { label: '4+ stars', value: 4 },
+            { label: '3+ stars', value: 3 },
+          ]"
+          formControlName="rating"
+          placeholder="Select minimum rating"
+        >
+        </p-dropdown>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-end gap-2">
+        <p-button label="Reset" (onClick)="resetFilters()" [styleClass]="'p-button-text'">
+        </p-button>
+        <p-button label="Apply" icon="pi pi-check" (onClick)="applyFilters()"> </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Floating Action Button (SpeedDial) -->
+  <p-speedDial
+    [model]="speedDialItems"
+    [radius]="80"
+    direction="up"
+    buttonClassName="p-button-info"
+    [transitionDelay]="80"
+    showIcon="pi pi-bars"
+    hideIcon="pi pi-times"
+    class="fixed bottom-5 right-5"
+  >
+  </p-speedDial>
 </div>

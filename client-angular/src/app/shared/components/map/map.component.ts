@@ -77,7 +77,6 @@ export interface MapMarker {
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
-  standalone: true,
   imports: [CommonModule],
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
@@ -559,7 +558,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   private addMarkers(): void {
     if (!this.map || !this.markerLayer) return;
 
-    const _startTime = performance.now(); // Track start time for performance monitoring
+    const startTime = performance.now(); // Track start time for performance monitoring
 
     // Clear existing markers
     this.markerLayer.clearLayers();
@@ -687,7 +686,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   private showUserLocation(): void {
     if (!this.map) return;
 
-    const _startTime = performance.now(); // Track start time for performance monitoring
+    const startTime = performance.now(); // Track start time for performance monitoring
 
     if (!navigator.geolocation) {
       this.announceToScreenReader('Geolocation is not supported by your browser');
@@ -920,7 +919,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
    * @param markers - Array of MapMarker objects to display
    */
   updateMarkers(markers: MapMarker[]): void {
-    const _startTime = performance.now(); // Track start time for performance monitoring
+    const startTime = performance.now(); // Track start time for performance monitoring
 
     this.markers = markers;
     this.addMarkers();
@@ -1012,7 +1011,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges
   refreshMap(): void {
     if (!this.map) return;
 
-    const _startTime = performance.now(); // Track start time for performance monitoring
+    const startTime = performance.now(); // Track start time for performance monitoring
 
     // Force map to recalculate its size
     setTimeout(() => {

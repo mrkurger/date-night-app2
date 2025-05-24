@@ -29,7 +29,6 @@ import { AppSortEvent } from '../../../../shared/components/custom-nebular-compo
 
 @Component({
   selector: 'app-performance-dashboard',
-  standalone: true,
   imports: [
     CommonModule,
     NebularModule,
@@ -172,18 +171,21 @@ export class PerformanceDashboardComponent implements OnInit {
 
     // Format for chart
     return buckets.map((bucket) => ({
-      name: bucket.name,_value: bucket.count,
+      name: bucket.name,
+      _value: bucket.count,
     }));
   }
 
   transformTimeSeriesData(data: any[]): any[] {
     // Group by day and calculate average
-    const groupedByDay = data.reduce((acc,_item)=> {
+    const groupedByDay = data.reduce((acc, item) => {
       const date = new Date(item.date);
-      const day = date.toISOString().split('T')[0];
+      const day = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+        date.getDate(),
+      ).padStart(2, '0')}`;
 
       if (!acc[day]) {
-        acc[day] = { total: 0, count: 0 };
+        acc[day] = { total: 0, count: 0, date: day };
       }
 
       acc[day].total += item.avgDuration * item.count;
@@ -193,7 +195,8 @@ export class PerformanceDashboardComponent implements OnInit {
 
     // Convert to series format
     const series = Object.keys(groupedByDay).map((day) => ({
-      name: day,_value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
+      name: day,
+      _value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
     }));
 
     // NbSortEvent by date

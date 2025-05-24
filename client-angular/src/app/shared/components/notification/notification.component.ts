@@ -4,10 +4,9 @@ import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NotificationMessage } from './notification.model';
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  imports: [CommonModule, NebularModule],
-  template: `
+    selector: 'app-notification',
+    imports: [CommonModule, NebularModule],
+    template: `
     <div class="notifications-container">
       <nb-card
         *ngFor="let notification of notifications"
@@ -23,8 +22,8 @@ import { NotificationMessage } from './notification.model';
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .notifications-container {
         position: fixed;
         top: 20px;
@@ -58,7 +57,7 @@ import { NotificationMessage } from './notification.model';
         font-size: 1.5rem;
       }
     `,
-  ],
+    ]
 })
 export class NotificationComponent implements OnDestroy {
   @Input() notifications: NotificationMessage[] = [];

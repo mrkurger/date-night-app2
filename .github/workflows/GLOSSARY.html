@@ -90,6 +90,26 @@
             <li>Uploads test results as artifacts</li>
           </ul>
         </dd>
+        
+        <dt id="trivy-scan-yml">trivy-scan.yml</dt>
+        <dd>
+          <p>
+            A GitHub Actions workflow file that performs security scanning using Trivy, focusing on vulnerability detection and secret scanning.
+          </p>
+          <p>
+            <strong>Key Features:</strong>
+          </p>
+          <ul>
+            <li>Runs on pushes to any branch</li>
+            <li>Uses minimal permissions following the principle of least privilege</li>
+            <li>Directly installs Trivy for more control over the scanning process</li>
+            <li>Checks out repository with recursive submodule initialization</li>
+            <li>Performs vulnerability scanning with exit code 1 to fail on HIGH/CRITICAL issues</li>
+            <li>Scans for secrets with exit code 1 to enforce security standards</li>
+            <li>Includes a specialized step for dependency vulnerability scanning</li>
+            <li>Provides helpful error information when scans fail</li>
+          </ul>
+        </dd>
 
         <dt id="docs-generation-and-deployment-yml">docs-generation-and-deployment.yml</dt>
         <dd>
@@ -144,6 +164,23 @@
           <p>
             A GitHub Action that sets up a Node.js environment for use in actions. It installs the
             specified version of Node.js and can optionally cache dependencies.
+          </p>
+        </dd>
+        
+        <dt id="trivy">Trivy</dt>
+        <dd>
+          <p>
+            A comprehensive vulnerability scanner for containers and other artifacts, maintained by Aqua Security. In our workflows, 
+            it's used to scan the codebase for various security issues including:
+          </p>
+          <ul>
+            <li>Vulnerability scanning in dependencies</li>
+            <li>Secret detection in code files</li>
+            <li>Security misconfigurations</li>
+            <li>License compliance issues</li>
+          </ul>
+          <p>
+            Trivy can be installed directly on runners or used via the <code>aquasecurity/trivy-action</code> GitHub Action.
           </p>
         </dd>
 

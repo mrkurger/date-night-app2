@@ -8,10 +8,9 @@ import { CommonModule } from '@angular/common';
  * Features customizable appearance, animation, and various shapes.
  */
 @Component({
-  selector: 'app-skeleton',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-skeleton',
+    imports: [CommonModule],
+    template: `
     <div
       class="skeleton"
       [class]="'skeleton--' + variant"
@@ -28,8 +27,8 @@ import { CommonModule } from '@angular/common';
       ></div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .skeleton {
         display: flex;
         flex-direction: column;
@@ -119,9 +118,9 @@ import { CommonModule } from '@angular/common';
         background-color: nb-theme(background-basic-color-3);
       }
     `,
-  ],
+    ]
 })
-export class SkeletonLoaderComponent {
+export class SkeletonModule {
   @Input() type: 'text' | 'title' | 'avatar' | 'thumbnail' | 'button' = 'text';
   @Input() variant: 'text' | 'card' | 'circle' = 'text';
   @Input() width?: string;

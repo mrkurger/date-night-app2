@@ -77,6 +77,117 @@ export class ContentSanitizerService {
   }
 
   /**
+   * Sanitizes text content to prevent XSS attacks
+   * @param text The text content to sanitize
+   * @returns Sanitized text content
+   */
+  sanitizeText(text: string): string {
+    if (!text) return '';
+    return text.replace(/[<>&"']/g, (match) => {
+      const entities: { [key: string]: string } = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&#x27;',
+      };
+      return entities[match];
+    });
+  }
+
+  /**
+   * Sanitizes HTML content, allowing only basic formatting tags
+   * @param html The HTML content to sanitize
+   * @returns Sanitized HTML content
+   */
+  sanitizeHtml(html: string): string {
+    if (!html) return '';
+
+    // Define allowed tags and their attributes
+    const allowedTags = new Set(['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'span']);
+    const allowedAttrs = new Set(['href', 'target', 'rel']);
+
+    // Create a temporary element
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+
+    // Recursively clean nodes
+    const cleanNode = (node: Node): Node | null => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node;
+      }
+
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as Element;
+        const tagName = element.tagName.toLowerCase();
+
+        // Remove disallowed tags
+        if (!allowedTags.has(tagName)) {
+          return document.createTextNode(element.textContent || '');
+        }
+
+        // Clean attributes
+        Array.from(element.attributes).forEach((attr) => {
+          if (!allowedAttrs.has(attr.name)) {
+            element.removeAttribute(attr.name);
+          }
+          // Additional security for links
+          if (attr.name === 'href') {
+            const url = attr.value;
+            if (!this.isValidUrl(url)) {
+              element.removeAttribute(attr.name);
+            }
+            // Force noopener noreferrer for external links
+            if (url.startsWith('http')) {
+              element.setAttribute('rel', 'noopener noreferrer');
+              element.setAttribute('target', '_blank');
+            }
+          }
+        });
+
+        // Clean children
+        Array.from(element.childNodes)
+          .map(cleanNode)
+          .filter(Boolean)
+          .forEach((newChild) => {
+            element.appendChild(newChild!);
+          });
+
+        return element;
+      }
+
+      return null;
+    };
+
+    // Clean the content
+    const cleanedContent = Array.from(tempElement.childNodes)
+      .map(cleanNode)
+      .filter(Boolean)
+      .map((node) => (node as Element).outerHTML || node!.textContent)
+      .join('');
+
+    return cleanedContent;
+  }
+
+  /**
+   * Sanitizes and formats input for database storage
+   * @param input The input to sanitize
+   * @returns Sanitized input
+   */
+  sanitize(input: unknown): string {
+    if (input === null || input === undefined) return '';
+    if (typeof input !== 'string') return String(input);
+
+    // For HTML content, use sanitizeHtml
+    if (/<[a-z][\s\S]*>/i.test(input)) {
+      return this.sanitizeHtml(input);
+    }
+
+    // For plain text, use sanitizeText
+    return this.sanitizeText(input);
+  }
+
+  /**
    * Validates if a string is a valid URL and checks for potential SSRF vectors
    * @param url The URL to validate
    * @returns Boolean indicating if the URL is valid and safe

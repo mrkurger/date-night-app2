@@ -22,12 +22,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ToggleComponent),
+      useExisting: forwardRef(() => InputSwitchModule),
       multi: true,
     },
   ],
 })
-export class ToggleComponent implements ControlValueAccessor {
+export class InputSwitchModule implements ControlValueAccessor {
   @Input() label?: string;
   @Input() labelPosition: 'left' | 'right' = 'right';
   @Input() color: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';

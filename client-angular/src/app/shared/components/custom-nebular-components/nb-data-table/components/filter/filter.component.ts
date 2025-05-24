@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableColumn } from '../../nb-data-table.component';
+import { NbDatepickerModule } from '@nebular/theme';
 
 @Component({
   selector: 'nb-data-table-filter',
@@ -127,6 +128,7 @@ import { TableColumn } from '../../nb-data-table.component';
       }
     `,
   ],
+  standalone: false,
 })
 export class NbDataTableFilterComponent<T = any> {
   @Input() column: TableColumn<T> | null = null;

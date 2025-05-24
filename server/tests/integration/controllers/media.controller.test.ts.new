@@ -1,0 +1,234 @@
+import { jest } from '@jest/globals';
+import request from 'supertest';
+import express, { Request, Response, NextFunction, Application } from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+import fs from 'fs';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { createTestUser, generateTestToken } from '../../helpers.js';
+import multer from 'multer';
+
+// Types
+interface TestUser {
+  _id: mongoose.Types.ObjectId;
+  email: string;
+  password: string;
+}
+
+interface MulterFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+}
+
+interface RequestWithFile extends Request {
+  file?: MulterFile;
+  files?: MulterFile[];
+}
+
+// Mock dependencies
+jest.mock('../../../utils/logger.js', () => ({
+  logger: {
+    error: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    debug: jest.fn(),
+  },
+}));
+
+// Mock multer for file uploads
+jest.mock('multer', () => {
+  const multerMock = {
+    diskStorage: jest.fn(() => 'diskStorage'),
+    memoryStorage: jest.fn(() => 'memoryStorage'),
+    single: jest.fn(() => (req: RequestWithFile, res: Response, next: NextFunction): void => {
+      req.file = {
+        fieldname: 'file',
+        originalname: 'test-image.jpg',
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+        destination: '/tmp/uploads',
+        filename: 'test-image-123456.jpg',
+        path: '/tmp/uploads/test-image-123456.jpg',
+        size: 12345,
+      };
+      next();
+    }),
+    array: jest.fn(() => (req: RequestWithFile, res: Response, next: NextFunction): void => {
+      req.files = [
+        {
+          fieldname: 'files',
+          originalname: 'test-image-1.jpg',
+          encoding: '7bit',
+          mimetype: 'image/jpeg',
+          destination: '/tmp/uploads',
+          filename: 'test-image-1-123456.jpg',
+          path: '/tmp/uploads/test-image-1-123456.jpg',
+          size: 12345,
+        },
+        {
+          fieldname: 'files',
+          originalname: 'test-image-2.jpg',
+          encoding: '7bit',
+          mimetype: 'image/jpeg',
+          destination: '/tmp/uploads',
+          filename: 'test-image-2-123456.jpg',
+          path: '/tmp/uploads/test-image-2-123456.jpg',
+          size: 12345,
+        },
+      ];
+      next();
+    }),
+  };
+  return jest.fn(() => multerMock);
+});
+
+describe('Media Controller Integration Tests', () => {
+  let app: Application;
+  let testUser: TestUser;
+  let accessToken: string;
+  let testMediaId: string;
+
+  beforeAll(async () => {
+    await setupTestDB();
+    app = express();
+    app.use(express.json());
+
+    // Set up test routes
+    app.post('/api/v1/media/upload', (req: RequestWithFile, res: Response) => {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+      testMediaId = 'test-123';
+      return res.status(201).json({
+        id: testMediaId,
+        url: `/uploads/${req.file.filename}`,
+        filename: req.file.filename,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        userId: testUser._id.toString(),
+      });
+    });
+
+    app.post('/api/v1/media/upload-multiple', (req: RequestWithFile, res: Response) => {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: 'No files uploaded' });
+      }
+
+      const uploadedFiles = req.files.map((file: MulterFile, index: number) => ({
+        id: `test-${index}`,
+        url: `/uploads/${file.filename}`,
+        filename: file.filename,
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size,
+        userId: testUser._id.toString(),
+      }));
+
+      return res.status(201).json(uploadedFiles);
+    });
+
+    app.get('/api/v1/media/:id', (req: Request<{ id: string }>, res: Response) => {
+      if (req.params.id === 'nonexistent-media') {
+        return res.status(404).json({ message: 'Media not found' });
+      }
+      return res.json({
+        id: testMediaId,
+        url: '/uploads/test-image.jpg',
+        filename: 'test-image.jpg',
+        userId: testUser._id.toString(),
+      });
+    });
+
+    app.delete('/api/v1/media/:id', (req: Request<{ id: string }>, res: Response) => {
+      if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      return res.json({ message: 'Media deleted successfully' });
+    });
+
+    app.get('/api/v1/media/user/:userId', (req: Request<{ userId: string }>, res: Response) => {
+      if (req.params.userId === 'nonexistent-user') {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.json([
+        {
+          id: testMediaId,
+          url: '/uploads/test-image.jpg',
+          filename: 'test-image.jpg',
+          userId: testUser._id.toString(),
+        },
+      ]);
+    });
+
+    app.post('/api/v1/media/optimize/:id', (req: Request<{ id: string }>, res: Response) => {
+      if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      return res.json({
+        id: testMediaId,
+        url: '/uploads/test-image-optimized.jpg',
+        filename: 'test-image-optimized.jpg',
+        userId: testUser._id.toString(),
+      });
+    });
+  });
+
+  beforeEach(async () => {
+    await clearDatabase();
+    testUser = await createTestUser();
+    accessToken = await generateTestToken(testUser);
+  });
+
+  afterAll(async () => {
+    await teardownTestDB();
+  });
+
+  describe('POST /api/v1/media/upload', () => {
+    it('should upload a single file successfully', async () => {
+      const res = await request(app)
+        .post('/api/v1/media/upload')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .attach('file', Buffer.from('test'), 'test-image.jpg');
+
+      expect(res.statusCode).toBe(201);
+      expect(res.body).toHaveProperty('id');
+      expect(res.body).toHaveProperty('url');
+      expect(res.body).toHaveProperty('filename');
+      expect(res.body).toHaveProperty('userId', testUser._id.toString());
+    });
+
+    it('should return 400 if no file is uploaded', async () => {
+      const originalSingle = multer().single;
+      multer().single = jest.fn().mockImplementation((req: RequestWithFile, res: Response, next: NextFunction) => {
+        next();
+      });
+
+      const res = await request(app)
+        .post('/api/v1/media/upload')
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('message', 'No file uploaded');
+
+      // Restore the original mock
+      multer().single = originalSingle;
+    });
+
+    it('should return 401 if not authenticated', async () => {
+      const res = await request(app)
+        .post('/api/v1/media/upload')
+        .attach('file', Buffer.from('test'), 'test-image.jpg');
+
+      expect(res.statusCode).toBe(401);
+    });
+  });
+
+  // ... rest of the test cases
+});

@@ -38,12 +38,11 @@ interface LocationMatchResult {
 }
 
 @Component({
-  selector: 'app-location-matching',
-  templateUrl: './location-matching.component.html',
-  styleUrls: ['./location-matching.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MapComponent],
+    selector: 'app-location-matching',
+    templateUrl: './location-matching.component.html',
+    styleUrls: ['./location-matching.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, MapComponent]
 })
 export class LocationMatchingComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;

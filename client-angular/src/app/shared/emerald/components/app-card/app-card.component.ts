@@ -1,30 +1,27 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
-import { _NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
-
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
 import type { Ad } from '../../../../core/models/ad.interface';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
 
 /**
  * AppCard Component
  *
  * This component displays an advertiser card with various layouts and features.
- * It uses Nebular UI components for consistent styling.
+ * It uses PrimeNG UI components for consistent styling.
  */
 @Component({
-  selector: 'nb-card',
+  selector: 'app-card',
   templateUrl: './app-card.component.html',
   styleUrls: ['./app-card.component.scss'],
+  imports: [CommonModule, CardModule, ButtonModule, BadgeModule],
   standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule
-  ],
 })
-export class AppCardComponent implements OnInit {
+export class CardModule implements OnInit {
   @Input() ad!: Ad;
   @Input() layout: 'tinder' | 'netflix' | 'list' = 'netflix';
   @Input() showActions = true;
@@ -100,165 +97,134 @@ export class AppCardComponent implements OnInit {
       return '/assets/img/default-profile.jpg';
     }
 
-    // Check for media array
-    if (
-      this.ad.media &&
-      Array.isArray(this.ad.media) &&
-      this.ad.media.length > 0 &&
-      this.currentMediaIndex < this.ad.media.length
-    ) {
-      const media = this.ad.media[this.currentMediaIndex];
-      if ('url' in media) {
-        return media.url;
-      }
+    // Get all media URLs
+    const mediaUrls = this.getMediaUrls();
+    if (mediaUrls.length === 0) {
+      return '/assets/img/default-profile.jpg';
     }
 
-    // Check for images array
-    if (
-      this.ad.images &&
-      Array.isArray(this.ad.images) &&
-      this.ad.images.length > 0 &&
-      this.currentMediaIndex < this.ad.images.length
-    ) {
-      const image = this.ad.images[this.currentMediaIndex];
-      if (typeof image === 'string') {
-        return image;
-      } else if (typeof image === 'object' && 'url' in image) {
-        return image.url;
-      }
-    }
-
-    return '/assets/img/default-profile.jpg';
+    // Return current media URL or first one
+    return mediaUrls[this.currentMediaIndex] || mediaUrls[0];
   }
 
   /**
-   * Navigate to the next media item in the carousel
+   * Get all media URLs from the ad
    */
-  nextMedia(event: Event): void {
-    event.stopPropagation();
+  private getMediaUrls(): string[] {
+    if (!this.ad) return [];
 
-    // Check if ad is defined
-    if (!this.ad) {
-      return;
+    const urls: string[] = [];
+
+    // Add images array URLs
+    if (this.ad.images && Array.isArray(this.ad.images)) {
+      this.ad.images.forEach((image) => {
+        if (typeof image === 'string') {
+          urls.push(image);
+        } else if (typeof image === 'object' && 'url' in image) {
+          urls.push((image as { url: string }).url);
+        }
+      });
     }
 
-    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.media.length;
-      this.backgroundImageUrl = this.getCurrentMediaUrl();
-    } else if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex + 1) % this.ad.images.length;
-      this.backgroundImageUrl = this.getCurrentMediaUrl();
+    // Add media array URLs
+    if (this.ad.media && Array.isArray(this.ad.media)) {
+      this.ad.media.forEach((media) => {
+        if ('url' in media) {
+          urls.push(media.url);
+        }
+      });
     }
+
+    return urls;
   }
 
   /**
-   * Navigate to the previous media item in the carousel
+   * Get media count
+   */
+  getMediaCount(): number {
+    return this.getMediaUrls().length;
+  }
+
+  /**
+   * Get media navigation dots
+   */
+  getMediaDots(): any[] {
+    const count = this.getMediaCount();
+    return new Array(count).fill(0);
+  }
+
+  /**
+   * Navigate to previous media
    */
   prevMedia(event: Event): void {
     event.stopPropagation();
-
-    // Check if ad is defined
-    if (!this.ad) {
-      return;
-    }
-
-    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      this.currentMediaIndex =
-        (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
-      this.backgroundImageUrl = this.getCurrentMediaUrl();
-    } else if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
-      this.currentMediaIndex =
-        (this.currentMediaIndex - 1 + this.ad.images.length) % this.ad.images.length;
+    const count = this.getMediaCount();
+    if (count > 1) {
+      this.currentMediaIndex = (this.currentMediaIndex - 1 + count) % count;
       this.backgroundImageUrl = this.getCurrentMediaUrl();
     }
   }
 
   /**
-   * Get the total number of media items
+   * Navigate to next media
    */
-  getMediaCount(): number {
-    // Check if ad is defined
-    if (!this.ad) {
-      return 0;
+  nextMedia(event: Event): void {
+    event.stopPropagation();
+    const count = this.getMediaCount();
+    if (count > 1) {
+      this.currentMediaIndex = (this.currentMediaIndex + 1) % count;
+      this.backgroundImageUrl = this.getCurrentMediaUrl();
     }
-
-    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      return this.ad.media.length;
-    }
-
-    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
-      return this.ad.images.length;
-    }
-
-    return 0;
   }
 
   /**
-   * Get an array of indices for the media dots
-   */
-  getMediaDots(): number[] {
-    return Array(this.getMediaCount())
-      .fill(0)
-      .map((_, i) => i);
-  }
-
-  /**
-   * Handle image loading error
-   */
-  onImageError(event: Event): void {
-    const target = event.target as HTMLImageElement;
-    target.src = '/assets/img/default-profile.jpg';
-  }
-
-  /**
-   * Format the price for display
+   * Format price for display
    */
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0, // Ensure no decimal places are shown
     }).format(price);
   }
 
   /**
-   * Get a truncated description
-   *
-   * Note: This method is specifically designed to match the test expectations.
-   * For maxLength=20, it returns "This is a very long d..."
-   * For maxLength=10, it returns "This is a ..."
+   * Get truncated description
    */
-  getTruncatedDescription(maxLength = 120): string {
-    // Check if ad is defined
-    if (!this.ad) {
-      return '';
+  getTruncatedDescription(): string {
+    if (!this.ad?.description) return '';
+    return this.ad.description.length > 100
+      ? `${this.ad.description.slice(0, 100)}...`
+      : this.ad.description;
+  }
+
+  /**
+   * Handle like button click
+   */
+  onLike(event: Event): void {
+    event.stopPropagation();
+    if (this.ad && this.ad._id) {
+      this.like.emit(this.ad._id);
     }
+  }
 
-    // Check if description exists and is a string
-    const description = this.ad.description;
-    if (!description || typeof description !== 'string') {
-      return '';
+  /**
+   * Handle chat button click
+   */
+  onChat(event: Event): void {
+    event.stopPropagation();
+    if (this.ad && this.ad._id) {
+      this.chat.emit(this.ad._id);
     }
+  }
 
-    if (description.length <= maxLength) {
-      return description;
+  /**
+   * Handle share button click
+   */
+  onShare(event: Event): void {
+    event.stopPropagation();
+    if (this.ad && this.ad._id) {
+      this.share.emit(this.ad._id);
     }
-
-    // Special case for test expectations
-    if (maxLength === 20) {
-      return 'This is a very long d...';
-    } else if (maxLength === 10) {
-      return 'This is a ...';
-    }
-
-    // For other cases, truncate at word boundary
-    const truncated = description.substring(0, maxLength);
-    const lastSpaceIndex = truncated.lastIndexOf(' ');
-
-    // If we found a space, truncate at that position, otherwise use the full length
-    const finalLength = lastSpaceIndex > 0 ? lastSpaceIndex : maxLength;
-    return description.substring(0, finalLength) + '...';
   }
 
   /**
@@ -267,45 +233,7 @@ export class AppCardComponent implements OnInit {
   onViewDetails(event?: Event): void {
     if (event) event.stopPropagation();
     if (this.ad && this.ad._id) {
-      // Convert complex _id to string if needed
-      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-      this.viewDetails.emit(adId);
-    }
-  }
-
-  /**
-   * Handle like click
-   */
-  onLike(event: Event): void {
-    event.stopPropagation();
-    if (this.ad && this.ad._id) {
-      // Convert complex _id to string if needed
-      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-      this.like.emit(adId);
-    }
-  }
-
-  /**
-   * Handle chat click
-   */
-  onChat(event: Event): void {
-    event.stopPropagation();
-    if (this.ad && this.ad._id) {
-      // Convert complex _id to string if needed
-      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-      this.chat.emit(adId);
-    }
-  }
-
-  /**
-   * Handle share click
-   */
-  onShare(event: Event): void {
-    event.stopPropagation();
-    if (this.ad && this.ad._id) {
-      // Convert complex _id to string if needed
-      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-      this.share.emit(adId);
+      this.viewDetails.emit(this.ad._id);
     }
   }
 
@@ -315,9 +243,7 @@ export class AppCardComponent implements OnInit {
   onSwipe(direction: 'left' | 'right', event?: Event): void {
     if (event) event.stopPropagation();
     if (this.ad && this.ad._id) {
-      // Convert complex _id to string if needed
-      const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-      this.swiped.emit({ direction, adId });
+      this.swiped.emit({ direction, adId: this.ad._id });
     }
   }
 }

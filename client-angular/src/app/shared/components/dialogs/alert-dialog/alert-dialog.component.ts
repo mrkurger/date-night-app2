@@ -9,10 +9,9 @@ export interface AlertDialogData {
 }
 
 @Component({
-  selector: 'nb-alert-dialog',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule],
-  template: `
+    selector: 'nb-alert-dialog',
+    imports: [CommonModule, NbCardModule, NbButtonModule],
+    template: `
     <nb-card>
       <nb-card-header>
         <h4 class="dialog-title">{{ data.title }}</h4>
@@ -27,8 +26,8 @@ export interface AlertDialogData {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -47,7 +46,7 @@ export interface AlertDialogData {
         justify-content: flex-end;
       }
     `,
-  ],
+    ]
 })
 export class AlertDialogComponent {
   constructor(

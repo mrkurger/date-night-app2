@@ -22,18 +22,17 @@ import {
 } from '@nebular/theme';
 
 @Component({
-  selector: 'app-ad-browser',
-  templateUrl: './ad-browser.component.html',
-  styleUrls: ['./ad-browser.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbLayoutModule,
-  ],
+    selector: 'app-ad-browser',
+    templateUrl: './ad-browser.component.html',
+    styleUrls: ['./ad-browser.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbLayoutModule,
+    ]
 })
 export class AdBrowserComponent implements OnInit {
   ads: Ad[] = [];
