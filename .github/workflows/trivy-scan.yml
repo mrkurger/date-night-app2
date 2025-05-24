@@ -6,12 +6,11 @@ on:
       - "**" # Triggers on any branch where commits are pushed
 
 permissions:
-  contents: write      # For committing security reports
+  contents: read
   security-events: write  # For uploading security scan results
   issues: write         # For creating security issues
   checks: write        # For creating check runs
   pull-requests: write # For commenting on PRs
-  actions: read        # For accessing workflow run information
 
 jobs:
   trivy-scan:
@@ -21,117 +20,36 @@ jobs:
     steps:
       # Step 1: Checkout the branch where the commit was made
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
-          # Target only the branch that triggered this workflow
           ref: ${{ github.ref }}
+          submodules: recursive
 
-      # Step 2: Run Trivy vulnerability scanner (Table format for easy reading)
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@v0.11.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'table'
-          severity: 'HIGH,CRITICAL'
-          exit-code: '0'  # Don't fail the build on vulnerabilities
+      # Step 2: Initialize Submodules
+      - name: Initialize Submodules
+        run: git submodule update --init --recursive
 
-      # Step 3: Generate SARIF report (only if Code Scanning is enabled)
-      - name: Generate SARIF report
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'HIGH,CRITICAL'
-          exit-code: '0'
+      # Step 3: Install Trivy
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
 
-      # Step 4: Upload Trivy scan results to GitHub Security tab (if enabled)
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        continue-on-error: true  # Don't fail the workflow if upload fails
-        with:
-          sarif_file: 'trivy-results.sarif'
+      # Step 4: Scan the repository for vulnerabilities
+      - name: Trivy Scan for Vulnerabilities
+        run: |
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+          trivy fs --security-checks secret --exit-code 1 .
 
-      # Step 5: Scan for secrets in the codebase
-      - name: Scan for Secrets
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          scanners: 'secret'
-          format: 'table'
-          exit-code: '0'  # Don't fail the build on secrets
+      # Step 5: Handle Trivy Warnings (Optional)
+      - name: Handle Trivy Warnings (Optional)
+        if: failure()
+        run: echo "Review Trivy scan warnings for details."
 
       # Step 6: Scan dependencies for vulnerabilities
       - name: Scan Dependencies
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          scanners: 'vuln'
-          format: 'table'
-          exit-code: '0'  # Don't fail the build on vulnerabilities
-
-      # Step 7: Create trivy logs directory
-      - name: Create trivy logs directory
-        run: mkdir -p logs/trivy
-
-      # Step 8: Generate comprehensive security report
-      - name: Generate security report
-        run: |
-          # Set timestamp for filenames
-          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-          REPORT_DIR="logs/trivy"
-
-          echo "# Trivy Security Scan Report" > "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "Generated on: $(date)" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "Repository: ${{ github.repository }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "Branch: ${{ github.ref_name }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "Commit: ${{ github.sha }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-
-          # Run comprehensive vulnerability scan
-          echo "## Vulnerability Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          trivy fs --format table --severity HIGH,CRITICAL . >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md" 2>&1 || echo "No HIGH/CRITICAL vulnerabilities found" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-
-          # Run secret scan
-          echo "## Secret Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          trivy fs --scanners secret --format table . >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md" 2>&1 || echo "No secrets found" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-
-          # Run license scan
-          echo "## License Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          trivy fs --scanners license --format table . >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md" 2>&1 || echo "No license issues found" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-          echo "\`\`\`" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
-
-          # Generate JSON report for programmatic access
-          trivy fs --format json --severity HIGH,CRITICAL . > "$REPORT_DIR/trivy-report-$TIMESTAMP.json" 2>/dev/null || echo "{\"Results\": []}" > "$REPORT_DIR/trivy-report-$TIMESTAMP.json"
-
-          echo "Reports generated:"
-          ls -la "$REPORT_DIR/trivy-report-$TIMESTAMP"*
-
-      # Step 9: Cleanup old reports and generate index
-      - name: Cleanup old reports
-        run: node .github/scripts/cleanup-trivy-reports.js
-
-      # Step 10: Commit security reports to repository
-      - name: Commit security reports
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add logs/trivy/
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Add Trivy security scan report - $(date +"%Y-%m-%d %H:%M:%S")"
-            git push
-          fi
+        run: trivy fs --security-checks vuln --exit-code 1 .
