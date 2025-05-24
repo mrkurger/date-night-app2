@@ -196,7 +196,60 @@
     <h2>Key Lessons</h2>
 
     <div class="card">
-      <h3>1. Consolidating Nebular Imports</h3>
+      <h3>1. Migrating from Nebular to PrimeNG</h3>
+      <p>
+        Migrating from Nebular to PrimeNG components involves several important considerations to ensure a smooth transition.
+      </p>
+
+      <h4>Problem:</h4>
+      <p>
+        Nebular and PrimeNG use different component selectors, import structures, and styling conventions. Manual migration is error-prone and time-consuming.
+      </p>
+
+      <h4>Solution:</h4>
+      <p>
+        We created two scripts (<code>migrate-to-primeng.js</code> and <code>update-primeng-imports.js</code>) that automate the migration process:
+      </p>
+
+      <ul>
+        <li>Component selector mapping (e.g., <code>nb-card</code> → <code>p-card</code>)</li>
+        <li>CSS class mapping (e.g., <code>nb-primary</code> → <code>p-button-primary</code>)</li>
+        <li>Module import updates (e.g., <code>NbButtonModule</code> → <code>ButtonModule</code> from 'primeng/button')</li>
+        <li>Automatic detection of used components to include in imports array</li>
+      </ul>
+
+      <h4>Key Implementation Details:</h4>
+      <pre><code>// Component mapping example
+const componentMap = {
+  'nb-card': 'p-card',
+  'nb-button': 'p-button',
+  'nb-input': 'p-inputtext',
+  // ...
+};
+
+// Import mapping example
+const importMap = {
+  '@nebular/theme': 'primeng',
+  'NbCardModule': 'CardModule',
+  // ...
+};</code></pre>
+
+      <div class="tip">
+        <strong>Tip:</strong> When migrating between UI libraries, always create a comprehensive mapping of components, directives, and styles to ensure consistency.
+      </div>
+
+      <h4>Lessons:</h4>
+      <ul>
+        <li><strong>Argument Validation:</strong> Always validate required script arguments and provide clear error messages.</li>
+        <li><strong>Error Handling:</strong> Wrap operations in try/catch blocks and provide detailed error messages with stack traces.</li>
+        <li><strong>Selective Processing:</strong> Filter files by type to only process relevant files (.ts, .html, .scss).</li>
+        <li><strong>Module Detection:</strong> Analyze template usage to automatically include necessary component modules.</li>
+        <li><strong>Safe Replacements:</strong> Ensure string replacements are specific and don't cause unintended changes.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>2. Consolidating Nebular Imports</h3>
       <p>
         Angular applications using Nebular often have scattered imports across component files. 
         This leads to code duplication and makes maintenance difficult.
