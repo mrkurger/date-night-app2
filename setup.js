@@ -97,7 +97,7 @@ async function mainSetup() {
       'dotenv',
       'express-rate-limit',
       'express-mongo-sanitize',
-      'xss-clean',
+      'xss-filters',
       'hpp',
       'cookie-parser',
       'uuid',

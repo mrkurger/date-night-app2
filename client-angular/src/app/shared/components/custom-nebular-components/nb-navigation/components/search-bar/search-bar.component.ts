@@ -3,8 +3,8 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'nb-search-bar',
-  template: `
+    selector: 'nb-search-bar',
+    template: `
     <div class="search-bar">
       <nb-search
         type="modal-half"
@@ -13,8 +13,8 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
       ></nb-search>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .search-bar {
         display: flex;
         align-items: center;
@@ -72,7 +72,8 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbSearchBarComponent implements OnDestroy {
   @Output() search = new EventEmitter<string>();

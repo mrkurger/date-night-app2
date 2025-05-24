@@ -24,26 +24,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
  * This component showcases various components and their variants.
  */
 @Component({
-  selector: 'app-design-system-demo',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbInputModule,
-    NbToggleModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbTagModule,
-  ],
-  template: `
+    selector: 'app-design-system-demo',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbInputModule,
+        NbToggleModule,
+        NbSelectModule,
+        NbFormFieldModule,
+        NbSpinnerModule,
+        NbAlertModule,
+        NbTooltipModule,
+        NbBadgeModule,
+        NbTagModule,
+    ],
+    template: `
     <nb-card>
       <nb-card-header>
         <h1>Design System Demo</h1>
@@ -92,8 +91,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         padding: 2rem;
@@ -217,7 +216,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         color: var(--text-hint-color);
       }
     `,
-  ],
+    ]
 })
 export class DesignSystemDemoComponent {
   colors = [

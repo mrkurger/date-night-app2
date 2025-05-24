@@ -20,12 +20,11 @@ import { NebularModule } from '../../../shared/nebular.module';
 // ===================================================
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', './social-login.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, ReactiveFormsModule, RouterLink],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss', './social-login.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, ReactiveFormsModule, RouterLink]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

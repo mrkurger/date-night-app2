@@ -22,7 +22,8 @@ import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 import { marked } from 'marked';
 import * as cheerio from 'cheerio';
-import { glob } from 'glob';
+import pkg from 'glob';
+const { glob } = pkg;
 import { load as yamlLoad, dump as yamlDump } from 'js-yaml';
 
 // Get the directory name
@@ -455,35 +456,35 @@ function parseHtmlSections(html) {
 
   // Extract sections based on IDs or headings
   const overviewSection = $(
-    '#overview, #introduction, section:has(h2:contains("Overview")), section:has(h2:contains("Introduction"))'
+    '#overview, #introduction, section:has(h2:contains("Overview")), section:has(h2:contains("Introduction"))',
   );
   if (overviewSection.length) {
     sections.overview = overviewSection.html() || '';
   }
 
   const usageSection = $(
-    '#usage, #how-to-use, section:has(h2:contains("Usage")), section:has(h2:contains("How to Use"))'
+    '#usage, #how-to-use, section:has(h2:contains("Usage")), section:has(h2:contains("How to Use"))',
   );
   if (usageSection.length) {
     sections.usage = usageSection.html() || '';
   }
 
   const apiSection = $(
-    '#api, #interface, #methods, section:has(h2:contains("API")), section:has(h2:contains("Interface")), section:has(h2:contains("Methods"))'
+    '#api, #interface, #methods, section:has(h2:contains("API")), section:has(h2:contains("Interface")), section:has(h2:contains("Methods"))',
   );
   if (apiSection.length) {
     sections.api = apiSection.html() || '';
   }
 
   const examplesSection = $(
-    '#examples, #sample, section:has(h2:contains("Example")), section:has(h2:contains("Sample"))'
+    '#examples, #sample, section:has(h2:contains("Example")), section:has(h2:contains("Sample"))',
   );
   if (examplesSection.length) {
     sections.examples = examplesSection.html() || '';
   }
 
   const relatedSection = $(
-    '#related, #see-also, section:has(h2:contains("Related")), section:has(h2:contains("See Also"))'
+    '#related, #see-also, section:has(h2:contains("Related")), section:has(h2:contains("See Also"))',
   );
   if (relatedSection.length) {
     sections.related = relatedSection.html() || '';
@@ -625,7 +626,9 @@ function generateSidebar(featureName, relatedComponents) {
         <li><a href="./CHANGELOG.html">Changelog</a></li>
         <li><a href="./AILESSONS.html">AI Lessons</a></li>
         <li><a href="./GLOSSARY.html">Glossary</a></li>
-        <li><a href="./${featureName.toLowerCase().replace(/_/g, '-')}.html">${formattedFeatureName}</a></li>
+        <li><a href="./${featureName
+          .toLowerCase()
+          .replace(/_/g, '-')}.html">${formattedFeatureName}</a></li>
       </ul>
   `;
 
@@ -964,7 +967,7 @@ async function main() {
       }
     } else {
       console.log(
-        'Please specify a feature name with --feature or use --all to process all features.'
+        'Please specify a feature name with --feature or use --all to process all features.',
       );
       console.log('Example: node enhanced_doc_migration.js --feature chat');
       console.log('Example: node enhanced_doc_migration.js --all');

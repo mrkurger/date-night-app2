@@ -24,20 +24,19 @@ export interface TagsDialogData {
  * Allows users to add, edit, and remove tags
  */
 @Component({
-  selector: 'app-tags-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbTagModule,
-  ],
-  template: `
+    selector: 'app-tags-dialog',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbInputModule,
+        NbFormFieldModule,
+        NbTagModule,
+    ],
+    template: `
     <nb-card>
       <nb-card-header class="dialog-header">
         <h2>{{ data.title }}</h2>
@@ -82,8 +81,8 @@ export interface TagsDialogData {
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         min-width: 400px;
@@ -152,7 +151,7 @@ export interface TagsDialogData {
         gap: 0.625rem;
       }
     `,
-  ],
+    ]
 })
 export class TagsDialogComponent {
   tags: string[] = [];

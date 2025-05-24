@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableColumn } from '../../nb-data-table.component';
 
 @Component({
-  selector: 'nb-data-table-header',
-  template: `
+    selector: 'nb-data-table-header',
+    template: `
     <div class="header-container">
       <div class="title-section">
         <h5 class="title">{{ title }}</h5>
@@ -37,8 +37,8 @@ import { TableColumn } from '../../nb-data-table.component';
       </div>
     </ng-template>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .header-container {
         display: flex;
         justify-content: space-between;
@@ -84,7 +84,8 @@ import { TableColumn } from '../../nb-data-table.component';
         }
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbDataTableHeaderComponent<T = any> {
   @Input() title = '';

@@ -35,7 +35,7 @@ const REPLACEMENTS = [
 
 const CSS_IMPORTS_TO_REMOVE = [
   /@import\s+['"][^'"]*node_modules\/@nebular\/theme\/styles\/prebuilt\/default\.css['"];/g,
-  /@import\s+['"][^'"]*node_modules\/eva-icons\/style\/eva-icons\.css['"];/g,
+  /@import\s+['"][^'"]*node_modules\/primeicons\/primeicons\.css['"];/g,
 ];
 
 const INVALID_VAR_ASSIGN = /^\s*var\(--([^)]+)\)\s*:\s*([^;]+);/gm;

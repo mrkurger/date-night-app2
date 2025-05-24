@@ -31,11 +31,10 @@ export interface Review {
 }
 
 @Component({
-  selector: 'app-reviews-list',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterModule, NebularModule],
-  template: `
+    selector: 'app-reviews-list',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, RouterModule, NebularModule],
+    template: `
     <div class="reviews-list-container">
       <!-- Loading State -->
       <div class="loading-container" *ngIf="loading">
@@ -181,8 +180,8 @@ export interface Review {
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -305,7 +304,7 @@ export interface Review {
         padding: 0 0.5rem;
       }
     `,
-  ],
+    ]
 })
 export class ReviewsListComponent implements OnInit {
   @Input() reviews: Review[] = [];

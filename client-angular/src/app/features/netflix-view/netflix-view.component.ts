@@ -12,7 +12,6 @@
 import {
   Component,
   OnInit,
-  AfterViewInit,
   ElementRef,
   ViewChildren,
   QueryList,
@@ -21,32 +20,35 @@ import {
   Input,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-  NbLayoutModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+// PrimeNG Modules
+// Application Services
 import { AdService } from '../../core/services/ad.service';
-import { NotificationService } from '../../core/services/notification.service';
+import { NotificationPrimeNGService } from '../../core/services/notification.primeng.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Ad } from '../../core/models/ad.interface';
-import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 
-// AppSortComponent is imported but not used in the template
-// import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+// Application Models
+import { Ad } from '../../core/models/ad.interface';
+
+// Layout Components
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { RippleModule } from 'primeng/ripple';
+import { DataViewModule } from 'primeng/dataview';
+import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
 
 interface GetAdsResponse {
   ads: Ad[];
@@ -59,22 +61,27 @@ interface GetAdsResponse {
   selector: 'app-netflix-view',
   templateUrl: './netflix-view.component.html',
   styleUrls: ['./netflix-view.component.scss'],
-  standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  standalone: true,
+  imports: [TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     MainLayoutComponent,
-    NbLayoutModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbTagModule,
-    NbSpinnerModule,
-    NbCardModule,
+    // PrimeNG Modules
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    AvatarModule,
+    BadgeModule,
+    ProgressSpinnerModule,
+    DialogModule,
+    DropdownModule,
+    InputSwitchModule,
+    RippleModule,
+    DataViewModule,
+    TooltipModule,
+    TagModule,
   ],
 })
 export class NetflixViewComponent implements OnInit {
@@ -85,7 +92,8 @@ export class NetflixViewComponent implements OnInit {
   adsByCategory: { [key: string]: Ad[] } = {};
 
   // Component state
-  loading = true;_error: string | null = null;
+  loading = true;
+  error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
 
@@ -106,9 +114,12 @@ export class NetflixViewComponent implements OnInit {
     },
   };
 
+  // PrimeNG-specific properties
+  showFiltersDialog = false; // For PrimeNG dialog visibility
+
   constructor(
     private adService: AdService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationPrimeNGService,
     private chatService: ChatService,
     private authService: AuthService,
     private fb: FormBuilder,
@@ -485,11 +496,10 @@ export class NetflixViewComponent implements OnInit {
   }
 
   /**
-   * Open the filters modal
+   * Open the filters dialog
    */
   openFilters(): void {
-    // Apply filters directly
-    this.applyFilters();
+    this.showFiltersDialog = true;
   }
 
   /**

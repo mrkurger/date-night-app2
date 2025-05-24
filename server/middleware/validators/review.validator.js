@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils.ts';
+import { zodSchemas } from '../../utils/validation-utils.js';
 
 const ReviewSchemas = {
   createReview: z.object({

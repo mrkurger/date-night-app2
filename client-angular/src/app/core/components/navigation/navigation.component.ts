@@ -1,306 +1,139 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import {
-  NbMenuModule,
-  NbSidebarModule,
-  NbLayoutModule,
-  NbButtonModule,
-  NbIconModule,
-  NbContextMenuModule,
-  NbUserModule,
-  NbActionsModule,
-  NbMenuItem,
-  NbDialogService,
-} from '@nebular/theme';
-import { AuthService } from '../../services/auth.service';
-import { MenuStateService } from '../../services/menu-state.service';
-import { SearchService } from '../../services/search.service';
-import { KeyboardShortcutsService } from '../../services/keyboard-shortcuts.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AppMenuItem } from '../../models/menu.model';
-import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
-import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keyboard-shortcuts-help/keyboard-shortcuts-help.component';
-import { NebularModule } from '../../../shared/nebular.module';
+
+// PrimeNG Modules
+// Import MenuItem
+
+// Application-specific services and components
+import { AuthService } from '../../services/auth.service'; // Corrected path
+import { ThemeService } from '../../services/theme.service';
+import { NotificationService } from '../../services/notification.service';
+import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component'; // Assuming this is already PrimeNG or will be migrated
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'; // Assuming this is already PrimeNG or will be migrated
+import { User } from '../../models/user.model'; // Corrected path
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuItem } from 'primeng/menuitem';
 
 @Component({
   selector: 'app-navigation',
-  standalone: true,
-  imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
+  standalone: true, // Ensure this component is standalone
+  imports: [MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
+    CommonModule,
+    RouterModule,
+    BreadcrumbsComponent,
+    ThemeToggleComponent,
+    // PrimeNG Modules
+    SidebarModule,
+    PanelMenuModule,
+    ToolbarModule,
+    ButtonModule,
+    AvatarModule,
+    MenuModule,
+    TooltipModule,
+  ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
+  @Input() items: MenuItem[] = []; // Changed from NbMenuItem[] to PrimeNG MenuItem[]
+
+  sidebarVisible = true; // Replaces sidebarState
+  currentUser: User | null = null;
+  userName: string | undefined = 'Guest';
+  userAvatar: string | undefined;
+  userMenuItems: MenuItem[] = []; // For PrimeNG user menu
+  currentYear: number = new Date().getFullYear();
+
   private destroy$ = new Subject<void>();
-
-  items: AppMenuItem[] = [
-    {
-      title: 'Home',
-      icon: 'home-outline',
-      link: '/',
-      home: true,
-      id: 'home',
-    },
-    {
-      title: 'Browse',
-      icon: 'search-outline',
-      link: '/browse',
-      id: 'browse',
-    },
-    {
-      title: 'My Ads',
-      icon: 'file-text-outline',
-      link: '/my-ads',
-      id: 'my-ads',
-    },
-    {
-      title: 'Messages',
-      icon: 'message-circle-outline',
-      link: '/chat',
-      id: 'chat',
-    },
-    {
-      title: 'Favorites',
-      icon: 'heart-outline',
-      link: '/favorites',
-      id: 'favorites',
-    },
-    {
-      title: 'Demos',
-      icon: 'layers-outline',
-      id: 'demos',
-      children: [
-        {
-          title: 'Design System',
-          link: '/design-system',
-          id: 'design-system',
-        },
-        {
-          title: 'Style Guide',
-          link: '/style-guide',
-          id: 'style-guide',
-        },
-        {
-          title: 'Accessibility',
-          link: '/accessibility',
-          id: 'accessibility',
-        },
-        {
-          title: 'Micro-interactions',
-          link: '/micro-interactions',
-          id: 'micro-interactions',
-        },
-        {
-          title: 'Preferences Demo',
-          link: '/preferences-demo',
-          id: 'preferences-demo',
-        },
-        {
-          title: 'Advertiser Browsing (Alt)',
-          link: '/advertiser-browsing-alt',
-          id: 'advertiser-browsing-alt',
-        },
-      ],
-    },
-  ];
-
-  sidebarState: 'expanded' | 'collapsed' | 'compacted' = 'expanded';
-
-  userItems = [
-    { title: 'Profile', icon: 'person-outline', link: '/profile' },
-    { title: 'Settings', icon: 'settings-2-outline', link: '/settings' },
-    { title: 'Notifications', icon: 'bell-outline', link: '/notifications' },
-    { title: 'Help', icon: 'question-mark-circle-outline', link: '/help' },
-    { title: 'Logout', icon: 'log-out-outline', data: { action: 'logout' } },
-  ];
-
-  adminItems = [
-    { title: 'Admin Dashboard', icon: 'shield-outline', link: '/admin', id: 'admin' },
-    { title: 'Telemetry', icon: 'activity-outline', link: '/telemetry', id: 'telemetry' },
-    {
-      title: 'User Management',
-      icon: 'people-outline',
-      link: '/admin/users',
-      id: 'user-management',
-    },
-    {
-      title: 'Content Moderation',
-      icon: 'edit-2-outline',
-      link: '/admin/moderation',
-      id: 'moderation',
-    },
-  ];
-
-  isLoggedIn = false;
-  isAdmin = false;
-  userProfile: {
-    username?: string;
-    profileImage?: string;
-    roles?: string[];
-  } | null = null;
 
   constructor(
     private authService: AuthService,
-    private menuStateService: MenuStateService,
-    private searchService: SearchService,
     private router: Router,
-    private dialogService: NbDialogService,
-    private keyboardShortcuts: KeyboardShortcutsService,
+    private themeService: ThemeService, // Keep if theme toggle or logic relies on it
+    private notificationService: NotificationService, // Keep if used
+    private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit() {
-    // Load saved menu state
-    const savedState = this.menuStateService.getCurrentState();
-    this.sidebarState = savedState.sidebarState;
-
-    // Restore expanded items
-    savedState.expandedItems.forEach((itemId) => {
-      const item = this.findMenuItem(this.items, itemId);
-      if (item) {
-        item.expanded = true;
-      }
+  ngOnInit(): void {
+    this.authService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+      this.currentUser = user;
+      this.userName = user?.username || 'Guest';
+      this.userAvatar = user?.profile?.avatar; // Corrected from avatarUrl to avatar
+      this.cdr.detectChanges();
+      this.updateUserMenuItems();
     });
 
-    // Set selected item if exists
-    if (savedState.selectedItem) {
-      const item = this.findMenuItem(this.items, savedState.selectedItem);
-      if (item) {
-        item.selected = true;
-      }
-    }
+    // Example menu items - replace with your actual logic for generating menu items
+    this.items = [
+      { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
+      { label: 'Ads', icon: 'pi pi-list', routerLink: ['/ads'] },
+      // Add more items as needed
+    ];
 
-    // Subscribe to menu item selections
-    this.menuStateService.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
-      this.sidebarState = state.sidebarState;
-    });
-
-    // Subscribe to auth state
-    this.authService.isAuthenticated().subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-
-      if (isLoggedIn) {
-        this.authService.getCurrentUser().subscribe((user) => {
-          this.userProfile = user;
-          this.isAdmin = user?.roles?.includes('admin') || false;
-
-          // Add admin items if user is admin
-          if (this.isAdmin) {
-            this.items = [...this.items, ...this.adminItems];
-          }
-        });
-      }
-    });
-
-    // Register keyboard shortcuts
-    this.registerKeyboardShortcuts();
+    this.updateUserMenuItems(); // Initialize user menu items
   }
 
-  ngOnDestroy() {
+  updateUserMenuItems(): void {
+    if (this.currentUser) {
+      this.userMenuItems = [
+        { label: 'Profile', icon: 'pi pi-user', routerLink: ['/profile', this.currentUser.id] }, // Corrected from _id to id
+        { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
+        { separator: true },
+        { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
+      ];
+    } else {
+      this.userMenuItems = [
+        { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/auth/login'] },
+        { label: 'Register', icon: 'pi pi-user-plus', routerLink: ['/auth/register'] },
+      ];
+    }
+  }
+
+  toggleSidebar(): void {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  onMenuItemClick(event: any): void {
+    // event.item is the clicked PrimeNG MenuItem
+    // Add any specific logic here if routerLink is not sufficient
+    // For example, closing the sidebar on mobile after a click
+    if (this.sidebarVisible && window.innerWidth < 768) {
+      // Example breakpoint
+      this.sidebarVisible = false;
+    }
+    // If the item has a command, it will be executed automatically by PrimeNG.
+    // If it has a routerLink, PrimeNG's menu will handle navigation.
+  }
+
+  logout(): void {
+    this.authService.logout(); // Assuming logout method exists
+    this.router.navigate(['/auth/login']);
+  }
+
+  // Placeholder for methods that might be called from the template
+  openSearch(): void {
+    console.log('Open search clicked');
+    // Implement search functionality, perhaps opening a dialog or navigating
+    this.notificationService.showInfo('Search functionality not yet implemented.');
+  }
+
+  openKeyboardShortcuts(): void {
+    console.log('Open keyboard shortcuts clicked');
+    // Implement keyboard shortcuts display, perhaps a dialog
+    this.notificationService.showInfo('Keyboard shortcuts not yet implemented.');
+  }
+
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    this.keyboardShortcuts.destroy();
-  }
-
-  /**
-   * Register keyboard shortcuts
-   */
-  private registerKeyboardShortcuts() {
-    // Show keyboard shortcuts help
-    this.keyboardShortcuts.register({ key: '?' }, () => {
-      this.dialogService.open(KeyboardShortcutsHelpComponent);
-    });
-
-    // Navigation shortcuts
-    this.keyboardShortcuts.register({ key: 'g', shift: true, ctrl: true }, () => {
-      this.router.navigate(['/']);
-    });
-
-    this.keyboardShortcuts.register({ key: 'p', shift: true, ctrl: true }, () => {
-      this.router.navigate(['/profile']);
-    });
-
-    this.keyboardShortcuts.register({ key: 's', shift: true, ctrl: true }, () => {
-      this.router.navigate(['/settings']);
-    });
-
-    // View shortcuts
-    this.keyboardShortcuts.register({ key: '\\' }, () => {
-      this.toggleSidebar();
-    });
-
-    this.keyboardShortcuts.register({ key: 't' }, () => {
-      const currentState = this.menuStateService.getCurrentState();
-      this.menuStateService.updateTheme(currentState.theme === 'dark' ? 'default' : 'dark');
-    });
-
-    // Search shortcut is handled by the search dialog component
-  }
-
-  /**
-   * Toggle sidebar state
-   */
-  toggleSidebar() {
-    const newState =
-      this.sidebarState === 'expanded'
-        ? 'compacted'
-        : this.sidebarState === 'compacted'
-          ? 'collapsed'
-          : 'expanded';
-
-    this.menuStateService.updateSidebarState(newState);
-  }
-
-  /**
-   * Handle menu item click
-   */
-  onMenuItemClick(item: AppMenuItem) {
-    if (item.id) {
-      // Update selected item
-      this.menuStateService.setSelectedItem(item.id);
-
-      // Update expanded state if item has children
-      if (item.children?.length) {
-        this.menuStateService.toggleMenuItem(item.id);
-      }
-    }
-  }
-
-  /**
-   * Open search dialog
-   */
-  openSearch() {
-    this.searchService.openSearch().subscribe((result) => {
-      if (result) {
-        this.router.navigateByUrl(result.link);
-      }
-    });
-  }
-
-  /**
-   * Find menu item by ID (recursive)
-   */
-  private findMenuItem(items: AppMenuItem[], id: string): AppMenuItem | null {
-    for (const item of items) {
-      if (item.id === id) {
-        return item;
-      }
-      if (item.children?.length) {
-        const found = this.findMenuItem(item.children, id);
-        if (found) {
-          return found;
-        }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Handle user menu item selection
-   */
-  onUserMenuSelect(event: { item: AppMenuItem }): void {
-    if (event.item.data?.action === 'logout') {
-      this.authService.logout();
-    }
   }
 }

@@ -13,6 +13,7 @@ import Session from '../models/session.model.js'; // Import the Session model
 import TokenBlacklist from '../models/token-blacklist.model.js'; // Import TokenBlacklist model
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import { isDeepStrictEqual } from 'node:util';
 
 class AuthService {
   /**
@@ -115,8 +116,8 @@ class AuthService {
       user.knownDeviceFingerprints = [];
     }
 
-    const fingerprintExists = user.knownDeviceFingerprints.some(
-      fp => JSON.stringify(fp) === JSON.stringify(deviceFingerprint)
+    const fingerprintExists = user.knownDeviceFingerprints.some(fp =>
+      isDeepStrictEqual(fp, deviceFingerprint)
     );
 
     if (deviceFingerprint && Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
@@ -378,8 +379,8 @@ class AuthService {
       if (ipAddress && !user.knownIpAddresses.includes(ipAddress)) {
         user.knownIpAddresses.push(ipAddress);
       }
-      const fingerprintExists = user.knownDeviceFingerprints?.some(
-        fp => JSON.stringify(fp) === JSON.stringify(deviceFingerprint)
+      const fingerprintExists = user.knownDeviceFingerprints?.some(fp =>
+        isDeepStrictEqual(fp, deviceFingerprint)
       );
       if (deviceFingerprint && Object.keys(deviceFingerprint).length > 0 && !fingerprintExists) {
         user.knownDeviceFingerprints.push(deviceFingerprint);

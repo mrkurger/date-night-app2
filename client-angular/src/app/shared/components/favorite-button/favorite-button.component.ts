@@ -19,10 +19,9 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-favorite-button',
-  standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
-  template: `
+    selector: 'app-favorite-button',
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+    template: `
     <button
       nbButton
       ghost
@@ -38,8 +37,8 @@ import { Router } from '@angular/router';
       <nb-icon [icon]="isFavorite ? 'heart' : 'heart-outline'"></nb-icon>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .favorite-button {
         transition: transform 0.2s ease;
         padding: 0.4rem !important;
@@ -75,7 +74,7 @@ import { Router } from '@angular/router';
         }
       }
     `,
-  ],
+    ]
 })
 export class FavoriteButtonComponent implements OnInit, OnDestroy {
   @Input() adId = '';

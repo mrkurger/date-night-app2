@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 // ===================================================
 // UNIT TESTS FOR APP CARD COMPONENT
 // ===================================================
-// This file contains unit tests for the AppCardComponent
+// This file contains unit tests for the CardModule
 //
 // COMMON CUSTOMIZATIONS:
 // - MOCK_AD: Mock ad data for testing
@@ -18,13 +18,13 @@ import { Component } from '@angular/core';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppCardComponent } from './app-card.component';
+import { CardModule } from './app-card.component';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../../../core/models/ad.interface';
 
-describe('AppCardComponent (Unit Tests)', () => {
-  let component: AppCardComponent;
-  let fixture: ComponentFixture<AppCardComponent>;
+describe('CardModule (Unit Tests)', () => {
+  let component: CardModule;
+  let fixture: ComponentFixture<CardModule>;
 
   // Mock ad data for testing
   const mockAd: Ad = {
@@ -55,10 +55,10 @@ describe('AppCardComponent (Unit Tests)', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, AppCardComponent],
+      imports: [CommonModule, CardModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppCardComponent);
+    fixture = TestBed.createComponent(CardModule);
     component = fixture.componentInstance;
     component.ad = { ...mockAd };
     fixture.detectChanges();

@@ -12,19 +12,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Import all /*DEPRECATED:Emerald*/ components
-import { AppCardComponent } from './components/app-card/app-card.component';
-import { AvatarComponent } from './components/avatar/avatar.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
-import { InfoPanelComponent } from './components/info-panel/info-panel.component';
-import { LabelComponent } from './components/label/label.component';
-import { PageHeaderComponent } from './components/page-header/page-header.component';
-import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
-import { ToggleComponent } from './components/toggle/toggle.component';
+import { CardModule } from './components/app-card/app-card.component';
+import { AvatarModule } from './components/avatar/avatar.component';
+import { CarouselModule } from './components/carousel/carousel.component';
+import { PanelModule } from './components/info-panel/info-panel.component';
+import { TagModule } from './components/label/label.component';
+import { ToolbarModule } from './components/page-header/page-header.component';
+import { SkeletonModule } from './components/skeleton-loader/skeleton-loader.component';
+import { InputSwitchModule } from './components/toggle/toggle.component';
 
 // Import new components we'll create
 import { CardGridComponent } from './components/card-grid/card-grid.component';
-import { PagerComponent } from './components/pager/pager.component';
-import { FloatingActionButtonComponent } from './components/floating-action-button/floating-action-button.component';
+import { PaginatorModule } from './components/pager/pager.component';
+import { ButtonModule } from './components/floating-action-button/floating-action-button.component';
 import { TinderCardComponent } from './tinder-card/tinder-card.component';
 
 /**
@@ -56,18 +56,18 @@ import { TinderCardComponent } from './tinder-card/tinder-card.component';
   imports: [CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AvatarComponent,
-    CarouselComponent,
-    InfoPanelComponent,
-    LabelComponent,
-    PageHeaderComponent,
-    PagerComponent,
-    SkeletonLoaderComponent,
-    ToggleComponent,
+    AvatarModule,
+    CarouselModule,
+    PanelModule,
+    TagModule,
+    ToolbarModule,
+    PaginatorModule,
+    SkeletonModule,
+    InputSwitchModule,
     CardGridComponent,
-    FloatingActionButtonComponent,
+    ButtonModule,
     TinderCardComponent
-    AppCardComponent,],
+    CardModule,],
   // No exports needed for standalone components - they are imported directly where needed
 })
 export class EmeraldModule {}

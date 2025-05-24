@@ -25,22 +25,21 @@ import {
 } from '@nebular/theme';
 
 @Component({
-  selector: 'app-browse',
-  templateUrl: './browse.component.html',
-  styleUrls: ['./browse.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbTabsetModule,
-    NbIconModule,
-    NbButtonModule,
-    NbLayoutModule,
-    NetflixViewComponent,
-    TinderComponent,
-    ListViewComponent,
-  ],
+    selector: 'app-browse',
+    templateUrl: './browse.component.html',
+    styleUrls: ['./browse.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        RouterModule,
+        NbCardModule,
+        NbTabsetModule,
+        NbIconModule,
+        NbButtonModule,
+        NbLayoutModule,
+        NetflixViewComponent,
+        TinderComponent,
+        ListViewComponent,
+    ]
 })
 export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

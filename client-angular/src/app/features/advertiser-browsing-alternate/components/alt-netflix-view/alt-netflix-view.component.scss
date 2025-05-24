@@ -1,202 +1,418 @@
 /* Styles for AltNetflixViewComponent */
-
-@use '@nebular/theme/styles/theming' as *;
+:host {
+  display: block;
+  width: 100%;
+}
 
 .netflix-grid-container {
   width: 100%;
   min-height: 200px;
   position: relative;
+  padding: 1rem;
 }
 
+// Loading state
 .loading-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
-  width: 100%;
+  min-height: 400px;
+  gap: 1rem;
+
+  .loading-text {
+    color: var(--text-color-secondary);
+    font-size: 1.1rem;
+  }
 }
 
+// Empty state
 .empty-state {
-  text-align: center;
-  padding: 2rem;
+  .empty-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem;
+    text-align: center;
 
-  nb-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
+    .warning-icon {
+      font-size: 3rem;
+      color: var(--yellow-500);
+      margin-bottom: 1rem;
+    }
 
-  h3 {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
+    h3 {
+      font-size: 1.5rem;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
 
-  p {
-    color: nb-theme(text-hint-color);
+    p {
+      color: var(--text-color-secondary);
+    }
   }
 }
 
+// Grid layout
 .grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
 }
 
-.advertiser-card {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  cursor: pointer;
-  overflow: hidden;
+// Card styles
+:host ::ng-deep {
+  .advertiser-card {
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+    height: 100%;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: nb-theme(shadow-lg);
-  }
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow);
 
-  &.premium {
-    border: 2px solid nb-theme(color-warning-500);
-  }
+      .card-img {
+        transform: scale(1.05);
+      }
+    }
 
-  .card-image-header {
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-    border-radius: nb-theme(card-border-radius) nb-theme(card-border-radius) 0 0;
-  }
+    .p-card-body {
+      padding: 0;
+    }
 
-  .image-container {
-    position: relative;
-    padding-top: 133.33%; // 3:4 aspect ratio
-    width: 100%;
-
-    .advertiser-image {
-      position: absolute;
-      top: 0;
-      left: 0;
+    // Card image container
+    .card-img-container {
+      position: relative;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
+      height: 320px;
+      overflow: hidden;
 
-    &:hover .advertiser-image {
-      transform: scale(1.05);
-    }
+      .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+      }
 
-    .image-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0) 30%,
-        rgba(0, 0, 0, 0) 70%,
-        rgba(0, 0, 0, 0.4) 100%
-      );
-
-      .status-badges {
+      .card-img-overlay {
         position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        display: flex;
-        gap: 0.5rem;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+
+        // Advertiser info
+        .advertiser-info {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 1.5rem;
+          color: #fff;
+
+          .advertiser-avatar {
+            position: relative;
+            margin-bottom: 1rem;
+
+            .online-status {
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              border: 2px solid #fff;
+              background-color: var(--gray-400);
+
+              &.online {
+                background-color: var(--green-500);
+              }
+            }
+          }
+
+          .advertiser-details {
+            .advertiser-name {
+              font-size: 1.25rem;
+              font-weight: 600;
+              margin-bottom: 0.5rem;
+            }
+
+            .advertiser-location {
+              font-size: 0.9rem;
+              opacity: 0.9;
+            }
+          }
+        }
       }
     }
-  }
 
-  nb-card-body {
-    padding: 1rem;
-
-    .advertiser-info {
-      margin-bottom: 1rem;
-
-      .advertiser-name {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-
-        .age {
-          font-weight: normal;
-          color: nb-theme(text-hint-color);
-        }
-      }
-
-      .location {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: nb-theme(text-hint-color);
-        margin-bottom: 0.5rem;
-
-        nb-icon {
-          font-size: 1rem;
-        }
-      }
+    // Card content
+    .card-content {
+      padding: 1.5rem;
 
       .description {
-        font-size: 0.875rem;
-        line-height: 1.4;
-        color: nb-theme(text-basic-color);
-        margin-bottom: 0.5rem;
+        color: var(--text-color-secondary);
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .tag-chip {
+          background: var(--primary-100);
+          color: var(--primary-700);
+        }
       }
     }
 
-    .tags-container {
-      margin-top: 0.5rem;
+    // Card actions
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--surface-border);
 
-      nb-tag-list {
-        gap: 0.25rem;
-        flex-wrap: wrap;
+      .p-button {
+        &.favorite {
+          color: var(--red-500);
+        }
+      }
+
+      .p-button:last-child {
+        margin-left: auto;
       }
     }
   }
 
-  nb-card-footer {
-    padding: 1rem;
-    border-top: 1px solid nb-theme(divider-color);
+  // Filter dialog styles
+  .filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-    .action-buttons {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-
-      button:last-child {
-        margin-left: auto;
+    .filter-section {
+      h4 {
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+        font-weight: 600;
       }
 
-      nb-icon {
+      .price-range-values {
+        font-size: 0.9rem;
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+
+  // Speed dial (filters button)
+  .filters-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+
+    .p-speeddial-button {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}
+
+// Netflix view styles
+.netflix-view {
+  // Container styles
+  .content-container {
+    padding: var(--content-padding);
+    margin: 0 auto;
+    max-width: 1920px;
+  }
+
+  // Card styles
+  .advertiser-card {
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow);
+    }
+
+    // Image container
+    ::ng-deep .p-card-header {
+      padding: 0;
+      overflow: hidden;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+      img {
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    // Content area
+    ::ng-deep .p-card-content {
+      padding-top: 1rem;
+    }
+
+    // Footer area
+    ::ng-deep .p-card-footer {
+      padding: 1rem;
+      border-top: 1px solid var(--surface-border);
+    }
+  }
+
+  // Loading container
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: var(--text-color-secondary);
+
+    ::ng-deep .p-progress-spinner {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  // Error message
+  .error-message {
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+    color: var(--text-color-secondary);
+  }
+
+  // Empty state
+  .empty-state {
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+
+  // Tags and badges
+  ::ng-deep {
+    .p-tag {
+      font-size: 0.875rem;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .p-chip {
+      font-size: 0.75rem;
+      padding: 0 0.5rem;
+    }
+
+    .p-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  }
+
+  // SpeedDial styles
+  ::ng-deep .p-speeddial {
+    .p-speeddial-button {
+      width: 3rem;
+      height: 3rem;
+
+      .p-button-icon {
         font-size: 1.25rem;
       }
     }
+
+    .p-speeddial-action {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      .p-button-icon {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // Dialog customization
+  ::ng-deep .p-dialog {
+    .p-dialog-header {
+      padding: 1.5rem;
+    }
+
+    .p-dialog-content {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+
+    .p-dialog-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--surface-border);
+    }
+  }
+
+  // Form elements
+  ::ng-deep {
+    .p-dropdown,
+    .p-multiselect {
+      width: 100%;
+    }
+
+    .p-inputtext {
+      width: 100%;
+    }
+
+    label {
+      color: var(--text-color);
+      font-weight: 500;
+    }
+  }
+
+  // Responsive grid adjustments
+  @media screen and (max-width: 576px) {
+    .grid {
+      margin: 0;
+    }
+
+    .col-12 {
+      padding: 0.5rem;
+    }
+  }
+
+  // Layout utilities
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
   .grid-layout {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
   }
 
-  .advertiser-card {
-    nb-card-body {
-      padding: 0.75rem;
-
-      .advertiser-info {
-        .advertiser-name {
-          font-size: 1.125rem;
-        }
-
-        .description {
-          font-size: 0.8125rem;
-        }
-      }
+  :host ::ng-deep .advertiser-card {
+    .card-img-container {
+      height: 280px;
     }
 
-    nb-card-footer {
-      padding: 0.75rem;
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card-actions {
+      padding: 0.75rem 1rem;
     }
   }
 }

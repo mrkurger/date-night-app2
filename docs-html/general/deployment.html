@@ -500,7 +500,8 @@ git subtree push --prefix client-angular/dist heroku-client master
 <h3>GitHub Actions</h3>
 <p>The repository includes GitHub Actions workflows for CI/CD:</p>
 <ol>
-<li><code>.github/workflows/ci.yml</code> - Runs tests and linting on pull requests.</li>
+<li><code>.github/workflows/ci.yml</code> - Runs tests and linting on all branches.</li>
+<li><code>.github/workflows/tests.yml</code> - Runs comprehensive tests on all branches.</li>
 <li><code>.github/workflows/cd-staging.yml</code> - Deploys to staging on merges to the develop branch.</li>
 <li><code>.github/workflows/cd-production.yml</code> - Deploys to production on merges to the main branch.</li>
 </ol>
@@ -514,6 +515,13 @@ git subtree push --prefix client-angular/dist heroku-client master
 </ul>
 </li>
 <li><p>Configure the workflows as needed for your deployment platforms.</p>
+</li>
+<li><p>Branch-specific steps are conditioned using GitHub Actions expressions:</p>
+<pre><code class="language-yaml">- name: Deploy to Production
+  if: github.ref == 'refs/heads/main'
+  run: |
+    # Deployment steps
+</code></pre>
 </li>
 </ol>
 <h2>Monitoring and Logging</h2>

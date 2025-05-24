@@ -1,4 +1,4 @@
-       <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -67,6 +67,21 @@
 <body>
   <h1>Date Night App - Changelog</h1>
   
+  <h2>2025-05-24</h2>
+  
+  <div class="entry">
+    <h3>Workflow Setup Improvements <span class="tag fix">Fix</span> <span class="tag improvement">Improvement</span></h3>
+    <p class="date">May 24, 2025</p>
+    <p>Improved GitHub workflow dependency handling to resolve Angular/Nebular version conflicts:</p>
+    <ul>
+      <li>Enhanced setup-nodejs action with better dependency conflict detection</li>
+      <li>Added support for --legacy-peer-deps flag to bypass peer dependency conflicts</li>
+      <li>Added automatic conflict resolution for known Angular/Nebular version mismatches</li>
+      <li>Improved error reporting for dependency-related failures</li>
+      <li>Updated CI workflow to handle @nebular/auth compatibility issues with Angular 18</li>
+    </ul>
+  </div>
+
   <h2>2025-05-15</h2>
   
   <div class="entry">
@@ -95,6 +110,24 @@
           <li>Fixing CSP issues</li>
           <li>Checking MongoDB setup</li>
           <li>Fixing test-related issues</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <h2>2025-05-24</h2>
+  
+  <div class="entry">
+    <h3>PrimeNG Migration Progress</h3>
+    <p class="date">May 24, 2025</p>
+    <ul>
+      <li>
+        <strong>Changed:</strong> Migrated AppCard component from Nebular to PrimeNG
+        <ul>
+          <li>Replaced nb-card with p-card</li>
+          <li>Integrated PrimeNG buttons, badges, and icons</li>
+          <li>Updated SCSS to use PrimeNG theme variables</li>
+          <li>Kept existing functionality while improving UX with PrimeNG components</li>
         </ul>
       </li>
     </ul>

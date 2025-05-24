@@ -89,8 +89,7 @@ export class DialogService {
   openReviewDialog(data: ReviewDialogData): Observable<unknown> {
     return this.nbDialogService.open<ReviewDialogComponent>(ReviewDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'REVIEW_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -102,8 +101,7 @@ export class DialogService {
 
     return this.nbDialogService.open<ReportDialogComponent>(ReportDialogComponent, {
       ...this.defaultConfig,
-      context: dialogData,
-      providers: [{ provide: 'REPORT_DIALOG_DATA', useValue: dialogData }],
+      context: dialogData as any,
     }).onClose;
   }
 
@@ -115,8 +113,7 @@ export class DialogService {
   openResponseDialog(data: ResponseDialogData): Observable<string | undefined> {
     return this.nbDialogService.open<ResponseDialogComponent>(ResponseDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'RESPONSE_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -126,8 +123,7 @@ export class DialogService {
   openFavoriteDialog(data: FavoriteDialogData): Observable<FavoriteDialogResult | undefined> {
     return this.nbDialogService.open<FavoriteDialogComponent>(FavoriteDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'FAVORITE_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -137,8 +133,7 @@ export class DialogService {
   openNotesDialog(data: NotesDialogData): Observable<string | undefined> {
     return this.nbDialogService.open<NotesDialogComponent>(NotesDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'NOTES_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -148,8 +143,7 @@ export class DialogService {
   openTagsDialog(data: TagsDialogData): Observable<string[] | undefined> {
     return this.nbDialogService.open<TagsDialogComponent>(TagsDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'TAGS_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -209,8 +203,7 @@ export class DialogService {
     return this.nbDialogService.open<T>(component, {
       ...this.defaultConfig,
       ...config,
-      context: config?.data || config?.context,
-      providers: [{ provide: 'DIALOG_DATA', useValue: config?.data || config?.context }],
+      context: (config?.data || config?.context) as any,
     });
   }
 
@@ -240,8 +233,7 @@ export class DialogService {
 
     return this.nbDialogService.open<ConfirmDialogComponent>(ConfirmDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'CONFIRM_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -261,8 +253,7 @@ export class DialogService {
 
     return this.nbDialogService.open<AlertDialogComponent>(AlertDialogComponent, {
       ...this.defaultConfig,
-      context: data,
-      providers: [{ provide: 'ALERT_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
   }
 
@@ -284,60 +275,15 @@ export class DialogService {
       title,
       message,
       defaultValue,
+      placeholder: (config?.data as PromptDialogData)?.placeholder || '',
+      required: (config?.data as PromptDialogData)?.required || false,
       confirmText: config?.confirmText || 'OK',
       cancelText: config?.cancelText || 'Cancel',
-      placeholder: config?.data?.placeholder,
-      required: config?.data?.required,
     };
 
     return this.nbDialogService.open<PromptDialogComponent>(PromptDialogComponent, {
       ...this.defaultConfig,
-      ...config,
-      context: data,
-      providers: [{ provide: 'PROMPT_DIALOG_DATA', useValue: data }],
+      context: data as any,
     }).onClose;
-  }
-}
-
-@Component({
-  selector: 'app-confirm-dialog',
-  template: `
-    <nb-card>
-      <nb-card-header>{{ title }}</nb-card-header>
-      <nb-card-body>
-        <p>{{ message }}</p>
-      </nb-card-body>
-      <nb-card-footer class="dialog-footer">
-        <button nbButton status="basic" (click)="cancel()">{{ cancelText }}</button>
-        <button nbButton status="primary" (click)="confirm()">{{ confirmText }}</button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-  styles: [
-    `
-      .dialog-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-      }
-    `,
-  ],
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule],
-})
-export class ConfirmDialogComponent {
-  constructor(private dialogRef: NbDialogRef<ConfirmDialogComponent>) {}
-
-  title: string = '';
-  message: string = '';
-  confirmText: string = 'Yes';
-  cancelText: string = 'No';
-
-  confirm(): void {
-    this.dialogRef.close(true);
-  }
-
-  cancel(): void {
-    this.dialogRef.close(false);
   }
 }

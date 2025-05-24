@@ -1,8 +1,11 @@
+---
 name: Monorepo Tests
 
+# Updated to run on all branches to improve development workflow and catch issues earlier
 on:
   push:
-    branches: [main, develop]
+    branches:
+      - '**'  # Matches any branch
     paths:
       - 'client-angular/**'
       - 'server/**'
@@ -10,7 +13,8 @@ on:
       - '.github/workflows/**'
       - '.github/workflows/monorepo-tests.yml'
   pull_request:
-    branches: [main, develop]
+    branches:
+      - '**'  # Matches any branch
     paths:
       - 'client-angular/**'
       - 'server/**'
@@ -52,7 +56,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm ci
+          npm ci || npm install
           npm install yargs --save-dev
       - name: Setup Chrome Browser
         uses: browser-actions/setup-chrome@v1
@@ -95,7 +99,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm ci
+          npm ci || npm install
       - name: Start Angular App
         working-directory: ./client-angular
         run: npm start -- --host=0.0.0.0 --port=4200 &

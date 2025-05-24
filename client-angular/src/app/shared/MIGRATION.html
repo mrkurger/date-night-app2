@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebular to PrimeNG Migration Guide</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2a3f5f;
+      }
+      .section {
+        margin-bottom: 30px;
+        border-left: 4px solid #3366cc;
+        padding-left: 15px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f8f9fa;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      .note {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Nebular to PrimeNG Migration Guide</h1>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>
+        This document outlines the strategy and process for migrating from Nebular UI components to
+        PrimeNG components in the Date Night App.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Component Mapping</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nebular Component</th>
+            <th>PrimeNG Component</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>nb-card</code></td>
+            <td><code>p-card</code></td>
+            <td>🔄 Pending</td>
+            <td>Similar API, straightforward migration</td>
+          </tr>
+          <tr>
+            <td><code>nb-button</code></td>
+            <td><code>p-button</code></td>
+            <td>🔄 Pending</td>
+            <td>Map status props to severity</td>
+          </tr>
+          <tr>
+            <td><code>nb-input</code></td>
+            <td><code>p-inputText</code></td>
+            <td>🔄 Pending</td>
+            <td>Direct attribute mapping</td>
+          </tr>
+          <tr>
+            <td><code>nb-select</code></td>
+            <td><code>p-dropdown</code></td>
+            <td>🔄 Pending</td>
+            <td>Different event names</td>
+          </tr>
+          <tr>
+            <td><code>nb-paginator</code></td>
+            <td><code>p-paginator</code></td>
+            <td>✅ Complete</td>
+            <td>Successfully migrated</td>
+          </tr>
+          <tr>
+            <td><code>nb-menu</code></td>
+            <td><code>p-panelMenu</code></td>
+            <td>🔄 Pending</td>
+            <td>Different structure needed</td>
+          </tr>
+          <tr>
+            <td><code>nb-sidebar</code></td>
+            <td><code>p-sidebar</code></td>
+            <td>🔄 Pending</td>
+            <td>Position prop differences</td>
+          </tr>
+          <tr>
+            <td><code>nb-dialog</code></td>
+            <td><code>p-dialog</code></td>
+            <td>🔄 Pending</td>
+            <td>Different service approach</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Migration Strategy</h2>
+      <ol>
+        <li>
+          <strong>Parallel Integration:</strong>
+          <ul>
+            <li>Created PrimeNGModule alongside NebularModule</li>
+            <li>Both UI libraries available during migration</li>
+            <li>Components migrated one at a time</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Migration Order:</strong>
+          <ul>
+            <li>Start with simpler, self-contained components</li>
+            <li>Progress to more complex, interconnected components</li>
+            <li>Navigation and layout components last</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Testing Strategy:</strong>
+          <ul>
+            <li>Unit tests updated alongside component migration</li>
+            <li>Visual regression testing for each component</li>
+            <li>End-to-end tests maintained throughout</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2>Theme Migration</h2>
+      <p>
+        PrimeNG themes will be customized to match our current Nebular theme. Key color variables
+        and design tokens will be mapped across.
+      </p>
+      <div class="note">
+        <strong>Note:</strong> PrimeNG uses a different theming system. Colors and styles will be
+        mapped through CSS variables to maintain consistency.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>CSS Class Mapping</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nebular Class</th>
+            <th>PrimeNG Class</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>status-primary</code></td>
+            <td><code>p-button-primary</code></td>
+          </tr>
+          <tr>
+            <td><code>status-success</code></td>
+            <td><code>p-button-success</code></td>
+          </tr>
+          <tr>
+            <td><code>status-warning</code></td>
+            <td><code>p-button-warning</code></td>
+          </tr>
+          <tr>
+            <td><code>status-danger</code></td>
+            <td><code>p-button-danger</code></td>
+          </tr>
+          <tr>
+            <td><code>size-tiny</code></td>
+            <td><code>p-button-sm</code></td>
+          </tr>
+          <tr>
+            <td><code>size-giant</code></td>
+            <td><code>p-button-lg</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Progress Tracking</h2>
+      <ul>
+        <li>Total Components to Migrate: ~25</li>
+        <li>Components Migrated: 1</li>
+        <li>Current Focus: Card components</li>
+        <li>Next Up: Button components</li>
+      </ul>
+    </div>
+  </body>
+</html>

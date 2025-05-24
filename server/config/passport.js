@@ -12,7 +12,6 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as RedditStrategy } from 'passport-reddit';
 import AppleStrategy from 'passport-apple';
 import bcrypt from 'bcrypt';
 import { User } from '../models/user.model.js';
@@ -133,40 +132,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   );
 }
 
-// Reddit OAuth Strategy
-if (process.env.REDDIT_CLIENT_ID && process.env.REDDIT_CLIENT_SECRET) {
-  passport.use(
-    new RedditStrategy(
-      {
-        clientID: process.env.REDDIT_CLIENT_ID,
-        clientSecret: process.env.REDDIT_CLIENT_SECRET,
-        callbackURL: `${process.env.SERVER_URL || 'http://localhost:3000'}/auth/reddit/callback`,
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        try {
-          let user = await User.findOne({ 'socialProfiles.reddit.id': profile.id });
-
-          if (!user) {
-            // Create new user
-            user = new User({
-              username: `r_${profile.id}`,
-              role: 'user',
-              socialProfiles: {
-                reddit: { id: profile.id },
-              },
-            });
-
-            await user.save();
-          }
-
-          return done(null, user);
-        } catch (err) {
-          return done(err);
-        }
-      }
-    )
-  );
-}
+// Reddit OAuth Strategy removed
 
 // Apple OAuth Strategy
 if (process.env.APPLE_CLIENT_ID && process.env.APPLE_TEAM_ID && process.env.APPLE_KEY_ID) {

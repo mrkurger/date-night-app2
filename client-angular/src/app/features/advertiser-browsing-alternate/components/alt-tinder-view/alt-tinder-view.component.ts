@@ -27,119 +27,85 @@ interface Advertiser {
 type SwipeDirection = 'left' | 'right' | null;
 
 @Component({
-  selector: 'app-alt-tinder-view',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbSpinnerModule,
-    NbTagModule,
-    NbTooltipModule,
-  ],
-  templateUrl: './alt-tinder-view.component.html',
-  styleUrls: ['./alt-tinder-view.component.scss'],
-  animations: [
-    trigger('cardAnimation', [
-      state(
-        'default',
-        style({
-          transform: 'translate(0, 0) rotate(0deg) scale(1)',
-        }),
-      ),
-      state(
-        'like',
-        style({
-          transform: 'translate(150%, -30px) rotate(30deg) scale(0.8)',
-          opacity: 0,
-        }),
-      ),
-      state(
-        'nope',
-        style({
-          transform: 'translate(-150%, -30px) rotate(-30deg) scale(0.8)',
-          opacity: 0,
-        }),
-      ),
-      state(
-        'superlike',
-        style({
-          transform: 'translateY(-200%) scale(0.8)',
-          opacity: 0,
-        }),
-      ),
-      state(
-        'rewind',
-        style({
-          transform: 'translateY(200%) scale(0.8)',
-          opacity: 0,
-        }),
-      ),
-      transition('default => like', [
-        animate(
-          '400ms cubic-bezier(0.4, 0, 0.2, 1)',
-          keyframes([
-            style({ transform: 'translate(0) rotate(0deg) scale(1)', offset: 0 }),
-            style({ transform: 'translate(75%, -15px) rotate(15deg) scale(0.9)', offset: 0.5 }),
-            style({ transform: 'translate(150%, -30px) rotate(30deg) scale(0.8)', offset: 1 }),
-          ]),
-        ),
-      ]),
-      transition('default => nope', [
-        animate(
-          '400ms cubic-bezier(0.4, 0, 0.2, 1)',
-          keyframes([
-            style({ transform: 'translate(0) rotate(0deg) scale(1)', offset: 0 }),
-            style({ transform: 'translate(-75%, -15px) rotate(-15deg) scale(0.9)', offset: 0.5 }),
-            style({ transform: 'translate(-150%, -30px) rotate(-30deg) scale(0.8)', offset: 1 }),
-          ]),
-        ),
-      ]),
-      transition('default => superlike', [
-        animate(
-          '400ms cubic-bezier(0.4, 0, 0.2, 1)',
-          keyframes([
-            style({ transform: 'translateY(0) scale(1)', offset: 0 }),
-            style({ transform: 'translateY(-100%) scale(0.9)', offset: 0.5 }),
-            style({ transform: 'translateY(-200%) scale(0.8)', offset: 1 }),
-          ]),
-        ),
-      ]),
-      transition('default => rewind', [
-        animate(
-          '400ms cubic-bezier(0.4, 0, 0.2, 1)',
-          keyframes([
-            style({ transform: 'translateY(0) scale(1)', offset: 0 }),
-            style({ transform: 'translateY(100%) scale(0.9)', offset: 0.5 }),
-            style({ transform: 'translateY(200%) scale(0.8)', offset: 1 }),
-          ]),
-        ),
-      ]),
-      transition('* => default', [
-        style({ transform: 'scale(0.8)', opacity: 0 }),
-        animate('300ms cubic-bezier(0.4, 0, 0.2, 1)'),
-      ]),
-    ]),
-    trigger('overlayAnimation', [
-      state(
-        'void',
-        style({
-          opacity: 0,
-          transform: 'scale(0.8) translateZ(-100px)',
-        }),
-      ),
-      state(
-        '*',
-        style({
-          opacity: 1,
-          transform: 'scale(1) translateZ(0)',
-        }),
-      ),
-      transition('void <=> *', animate('200ms cubic-bezier(0.4, 0, 0.2, 1)')),
-    ]),
-  ],
+    selector: 'app-alt-tinder-view',
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbBadgeModule,
+        NbSpinnerModule,
+        NbTagModule,
+        NbTooltipModule,
+    ],
+    templateUrl: './alt-tinder-view.component.html',
+    styleUrls: ['./alt-tinder-view.component.scss'],
+    animations: [
+        trigger('cardAnimation', [
+            state('default', style({
+                transform: 'translate(0, 0) rotate(0deg) scale(1)',
+            })),
+            state('like', style({
+                transform: 'translate(150%, -30px) rotate(30deg) scale(0.8)',
+                opacity: 0,
+            })),
+            state('nope', style({
+                transform: 'translate(-150%, -30px) rotate(-30deg) scale(0.8)',
+                opacity: 0,
+            })),
+            state('superlike', style({
+                transform: 'translateY(-200%) scale(0.8)',
+                opacity: 0,
+            })),
+            state('rewind', style({
+                transform: 'translateY(200%) scale(0.8)',
+                opacity: 0,
+            })),
+            transition('default => like', [
+                animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
+                    style({ transform: 'translate(0) rotate(0deg) scale(1)', offset: 0 }),
+                    style({ transform: 'translate(75%, -15px) rotate(15deg) scale(0.9)', offset: 0.5 }),
+                    style({ transform: 'translate(150%, -30px) rotate(30deg) scale(0.8)', offset: 1 }),
+                ])),
+            ]),
+            transition('default => nope', [
+                animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
+                    style({ transform: 'translate(0) rotate(0deg) scale(1)', offset: 0 }),
+                    style({ transform: 'translate(-75%, -15px) rotate(-15deg) scale(0.9)', offset: 0.5 }),
+                    style({ transform: 'translate(-150%, -30px) rotate(-30deg) scale(0.8)', offset: 1 }),
+                ])),
+            ]),
+            transition('default => superlike', [
+                animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
+                    style({ transform: 'translateY(0) scale(1)', offset: 0 }),
+                    style({ transform: 'translateY(-100%) scale(0.9)', offset: 0.5 }),
+                    style({ transform: 'translateY(-200%) scale(0.8)', offset: 1 }),
+                ])),
+            ]),
+            transition('default => rewind', [
+                animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', keyframes([
+                    style({ transform: 'translateY(0) scale(1)', offset: 0 }),
+                    style({ transform: 'translateY(100%) scale(0.9)', offset: 0.5 }),
+                    style({ transform: 'translateY(200%) scale(0.8)', offset: 1 }),
+                ])),
+            ]),
+            transition('* => default', [
+                style({ transform: 'scale(0.8)', opacity: 0 }),
+                animate('300ms cubic-bezier(0.4, 0, 0.2, 1)'),
+            ]),
+        ]),
+        trigger('overlayAnimation', [
+            state('void', style({
+                opacity: 0,
+                transform: 'scale(0.8) translateZ(-100px)',
+            })),
+            state('*', style({
+                opacity: 1,
+                transform: 'scale(1) translateZ(0)',
+            })),
+            transition('void <=> *', animate('200ms cubic-bezier(0.4, 0, 0.2, 1)')),
+        ]),
+    ]
 })
 export class AltTinderViewComponent implements OnInit {
   @Input() advertisers: Advertiser[] = [];

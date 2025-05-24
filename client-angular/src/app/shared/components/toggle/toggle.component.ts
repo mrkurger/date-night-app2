@@ -6,10 +6,9 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-toggle',
-  standalone: true,
-  imports: [CommonModule, NbToggleModule],
-  template: `
+    selector: 'app-toggle',
+    imports: [CommonModule, NbToggleModule],
+    template: `
     <nb-toggle
       [checked]="value"
       [disabled]="disabled"
@@ -20,22 +19,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       <ng-content></ng-content>
     </nb-toggle>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: inline-block;
       }
     `,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ToggleComponent),
-      multi: true,
-    },
-  ],
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputSwitchModule),
+            multi: true,
+        },
+    ]
 })
-export class ToggleComponent implements ControlValueAccessor {
+export class InputSwitchModule implements ControlValueAccessor {
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() labelPosition: 'start' | 'end' = 'end';
   @Input() disabled = false;

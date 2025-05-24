@@ -1,4 +1,4 @@
-import { _Input } from '@angular/core';
+import { Input } from '@angular/core';
 import { NebularModule } from '../shared/nebular.module';
 
 import { OnInit } from '@angular/core';
@@ -26,7 +26,6 @@ import { UserProfile } from '../../core/models/user.interface';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule, NebularModule],
 })
 export class ProfileComponent implements OnInit {

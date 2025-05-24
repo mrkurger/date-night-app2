@@ -14,6 +14,7 @@ import { Component } from '@angular/core';
 //   Related to: floating-action-button.component.scss
 // ===================================================
 import { CommonModule } from '@angular/common';
+import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 
 /**
  * /*DEPRECATED:Emerald*/ FloatingActionButton Component
@@ -28,9 +29,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './floating-action-button.component.html',
   styleUrls: ['./floating-action-button.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
 })
-export class FloatingActionButtonComponent {
+export class ButtonModule {
   /**
    * The icon to display in the button
    * Uses Font Awesome icons (e.g., 'fa-plus')

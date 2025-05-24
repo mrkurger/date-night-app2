@@ -38,10 +38,9 @@ export interface TinderCardAction {
 export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
 @Component({
-  selector: 'nb-tinder-card',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
-  template: `
+    selector: 'nb-tinder-card',
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
+    template: `
     <nb-card
       #card
       class="tinder-card"
@@ -136,8 +135,8 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
       </nb-card-footer>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         position: relative;
@@ -338,7 +337,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         }
       }
     `,
-  ],
+    ]
 })
 export class TinderCardComponent implements AfterViewInit, OnDestroy {
   @Input() media: TinderCardMedia[] = [];

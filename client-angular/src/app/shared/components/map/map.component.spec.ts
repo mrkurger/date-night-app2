@@ -61,7 +61,7 @@ spyOn(L, 'divIcon').and.returnValue(
 
 // Test host component to test @Input and @Output
 @Component({
-  template: `
+    template: `
     <app-map
       #mapComponent
       [height]="height"
@@ -75,8 +75,7 @@ spyOn(L, 'divIcon').and.returnValue(
       (markerClick)="onMarkerClick($event)"
     ></app-map>
   `,
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 class TestHostComponent {
   @ViewChild('mapComponent') mapComponent!: MapComponent;

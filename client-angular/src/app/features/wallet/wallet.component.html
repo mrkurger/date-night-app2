@@ -1,104 +1,129 @@
 <div class="wallet-container">
-  <nb-card>
-    <nb-card-header>
+  <p-card>
+    <ng-template pTemplate="header">
       <h3>My Wallet</h3>
-    </nb-card-header>
-    <nb-card-body>
-      <div class="balance-section">
-        <h4>Current Balance</h4>
-        <div class="balance-amount">{{ formatCurrency(balance) }}</div>
-        <div class="action-buttons">
-          <button nbButton status="success" (click)="openDepositDialog()">
-            <nb-icon icon="plus-outline"></nb-icon>
-            Deposit
-          </button>
-          <button nbButton status="info" (click)="openWithdrawDialog()">
-            <nb-icon icon="arrow-upward-outline"></nb-icon>
-            Withdraw
-          </button>
-          <button nbButton status="primary" (click)="openTransferDialog()">
-            <nb-icon icon="swap-outline"></nb-icon>
-            Transfer
-          </button>
-        </div>
-      </div>
+    </ng-template>
 
-      <div class="transactions-section">
-        <h4>Recent Transactions</h4>
-        <nb-card *ngIf="transactions.length > 0">
-          <nb-list>
-            <nb-list-item *ngFor="let transaction of transactions" (click)="openTransactionDetails(transaction)">
-              <div class="transaction-item">
-                <div class="transaction-icon">
-                  <nb-icon [icon]="getTransactionTypeIcon(transaction.type)"></nb-icon>
-                </div>
-                <div class="transaction-details">
-                  <div class="transaction-type">{{ transaction.type }}</div>
-                  <div class="transaction-date">{{ formatDate(transaction.createdAt) }}</div>
-                </div>
-                <div class="transaction-amount">
-                  {{ formatCurrency(transaction.amount) }}
-                </div>
-                <div class="transaction-status">
-                  <nb-badge [text]="transaction.status" [status]="getTransactionStatusClass(transaction.status)"></nb-badge>
+    <div class="balance-section">
+      <h4>Current Balance</h4>
+      <div class="balance-amount">{{ formatCurrency(balance) }}</div>
+      <div class="action-buttons">
+        <p-button
+          icon="pi pi-plus"
+          label="Deposit"
+          severity="success"
+          (onClick)="openDepositDialog()"
+        ></p-button>
+        <p-button
+          icon="pi pi-arrow-up"
+          label="Withdraw"
+          severity="info"
+          (onClick)="openWithdrawDialog()"
+        ></p-button>
+        <p-button
+          icon="pi pi-sync"
+          label="Transfer"
+          severity="primary"
+          (onClick)="openTransferDialog()"
+        ></p-button>
+      </div>
+    </div>
+
+    <div class="transactions-section">
+      <h4>Recent Transactions</h4>
+      <p-card *ngIf="transactions.length > 0">
+        <p-listbox
+          [options]="transactions"
+          [listStyle]="{ 'max-height': '300px' }"
+          styleClass="w-full"
+        >
+          <ng-template let-transaction pTemplate="item">
+            <div
+              class="transaction-item cursor-pointer"
+              (click)="openTransactionDetails(transaction)"
+            >
+              <div class="transaction-icon">
+                <i [class]="'pi ' + getTransactionTypeIconPrime(transaction.type)"></i>
+              </div>
+              <div class="transaction-details">
+                <div class="transaction-type">{{ transaction.type }}</div>
+                <div class="transaction-date">{{ formatDate(transaction.createdAt) }}</div>
+              </div>
+              <div class="transaction-amount">
+                {{ formatCurrency(transaction.amount) }}
+              </div>
+              <div class="transaction-status">
+                <p-tag
+                  [value]="transaction.status"
+                  [severity]="getTransactionStatusClass(transaction.status)"
+                ></p-tag>
+              </div>
+            </div>
+          </ng-template>
+        </p-listbox>
+      </p-card>
+      <p-card *ngIf="transactions.length === 0">
+        <div class="empty-state">
+          <i class="pi pi-credit-card text-6xl text-500"></i>
+          <p>No transactions yet</p>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="payment-methods-section">
+      <div class="section-header">
+        <h4>Payment Methods</h4>
+        <p-button
+          icon="pi pi-plus"
+          label="Add New"
+          severity="secondary"
+          size="small"
+          (onClick)="openAddPaymentMethodDialog()"
+        ></p-button>
+      </div>
+      <p-card *ngIf="paymentMethods.length > 0">
+        <p-listbox
+          [options]="paymentMethods"
+          [listStyle]="{ 'max-height': '300px' }"
+          styleClass="w-full"
+        >
+          <ng-template let-method pTemplate="item">
+            <div class="payment-method-item">
+              <div class="payment-method-icon">
+                <i [class]="'pi ' + getPaymentMethodIconPrime(method.type)"></i>
+              </div>
+              <div class="payment-method-details">
+                <div class="payment-method-name">{{ method.name }}</div>
+                <div class="payment-method-info">
+                  <span *ngIf="method.cardDetails">•••• {{ method.cardDetails.last4 }}</span>
                 </div>
               </div>
-            </nb-list-item>
-          </nb-list>
-        </nb-card>
-        <nb-card *ngIf="transactions.length === 0">
-          <nb-card-body>
-            <div class="empty-state">
-              <nb-icon icon="credit-card-outline" status="basic"></nb-icon>
-              <p>No transactions yet</p>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-
-      <div class="payment-methods-section">
-        <div class="section-header">
-          <h4>Payment Methods</h4>
-          <button nbButton ghost size="small" (click)="openAddPaymentMethodDialog()">
-            <nb-icon icon="plus-outline"></nb-icon>
-            Add New
-          </button>
-        </div>
-        <nb-card *ngIf="paymentMethods.length > 0">
-          <nb-list>
-            <nb-list-item *ngFor="let method of paymentMethods">
-              <div class="payment-method-item">
-                <div class="payment-method-icon">
-                  <nb-icon [icon]="getPaymentMethodIcon(method.type)"></nb-icon>
-                </div>
-                <div class="payment-method-details">
-                  <div class="payment-method-name">{{ method.name }}</div>
-                  <div class="payment-method-info">
-                    <span *ngIf="method.cardDetails">•••• {{ method.cardDetails.last4 }}</span>
-                  </div>
-                </div>
-                <div class="payment-method-actions">
-                  <nb-badge *ngIf="method.isDefault" text="Default" status="success"></nb-badge>
-                  <button nbButton ghost size="small" (click)="setDefaultPaymentMethod(method)" *ngIf="!method.isDefault">
-                    Set Default
-                  </button>
-                  <button nbButton ghost status="danger" size="small" (click)="removePaymentMethod(method)">
-                    <nb-icon icon="trash-2-outline"></nb-icon>
-                  </button>
-                </div>
+              <div class="payment-method-actions">
+                <p-tag *ngIf="method.isDefault" value="Default" severity="success"></p-tag>
+                <p-button
+                  *ngIf="!method.isDefault"
+                  label="Set Default"
+                  severity="secondary"
+                  size="small"
+                  (onClick)="setDefaultPaymentMethod(method)"
+                ></p-button>
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  size="small"
+                  (onClick)="removePaymentMethod(method)"
+                ></p-button>
               </div>
-            </nb-list-item>
-          </nb-list>
-        </nb-card>
-        <nb-card *ngIf="paymentMethods.length === 0">
-          <nb-card-body>
-            <div class="empty-state">
-              <nb-icon icon="credit-card-outline" status="basic"></nb-icon>
-              <p>No payment methods added yet</p>
             </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </nb-card-body>
-  </nb-card>
+          </ng-template>
+        </p-listbox>
+      </p-card>
+      <p-card *ngIf="paymentMethods.length === 0">
+        <div class="empty-state">
+          <i class="pi pi-credit-card text-6xl text-500"></i>
+          <p>No payment methods added yet</p>
+        </div>
+      </p-card>
+    </div>
+  </p-card>
 </div>

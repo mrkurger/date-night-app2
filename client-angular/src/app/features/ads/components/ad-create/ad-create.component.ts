@@ -1,4 +1,4 @@
-import { _Input } from '@angular/core';
+import { Input } from '@angular/core';
 import { NebularModule } from '../../../shared/nebular.module';
 
 import { OnInit } from '@angular/core';
@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ad-create',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, NebularModule],
   templateUrl: './ad-create.component.html',
   styles: [

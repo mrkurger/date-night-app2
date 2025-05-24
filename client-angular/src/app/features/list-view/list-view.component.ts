@@ -44,7 +44,8 @@ interface HeaderAction {
 }
 
 interface FilterItem {
-  key: string;_value: any;
+  key: string;
+  value: any;
   label: string;
 }
 
@@ -58,7 +59,6 @@ interface SavedFilter {
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
-  standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule],
 })
@@ -69,7 +69,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   // Data
   ads: Ad[] = [];
   filteredAds: Ad[] = [];
-  loading = true;_error: string | null = null;
+  loading = true;
+  error: string | null = null;
   filterForm: FormGroup;
   isAuthenticated = false;
 
@@ -90,7 +91,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   // Sort menu items for NbMenu
   sortMenuItems = this.sortOptions.map((option) => ({
-    title: option.label,_data: { value: option.value },
+    title: option.label,
+    data: { value: option.value },
   }));
 
   // Search debouncing
@@ -162,7 +164,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Check authentication status
-    this.isAuthenticated = this.authService.isAuthenticated();
+    this.authService.isAuthenticated().subscribe((isAuth) => (this.isAuthenticated = isAuth));
 
     // Load initial data
     this.loadAds();
@@ -419,29 +421,29 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   getActiveFilters(): FilterItem[] {
-    const filters: FilterItem[] = [];
+    const activeFilters: FilterItem[] = [];
     const formValue = this.filterForm.value;
 
     if (formValue.searchQuery) {
-      filters.push({
-        key: 'search',
+      activeFilters.push({
+        key: 'searchQuery',
         value: formValue.searchQuery,
         label: `Search: ${formValue.searchQuery}`,
       });
     }
 
-    Object.entries(formValue.categories).forEach(([category, isSelected]) => {
-      if (isSelected) {
-        filters.push({
-          key: `category-${category}`,
+    Object.keys(formValue.categories).forEach((category) => {
+      if (formValue.categories[category]) {
+        activeFilters.push({
+          key: `categories.${category}`,
           value: category,
-          label: `Category: ${category}`,
+          label: `Category: ${this.capitalizeFirstLetter(category)}`,
         });
       }
     });
 
     if (formValue.location && formValue.location.length > 0) {
-      filters.push({
+      activeFilters.push({
         key: 'location',
         value: formValue.location,
         label: `Location: ${formValue.location.join(', ')}`,
@@ -449,63 +451,51 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
 
     if (formValue.dateRange.from || formValue.dateRange.to) {
-      const fromDate = formValue.dateRange.from
-        ? new Date(formValue.dateRange.from).toLocaleDateString()
-        : '';
-      const toDate = formValue.dateRange.to
-        ? new Date(formValue.dateRange.to).toLocaleDateString()
-        : '';
-      filters.push({
+      activeFilters.push({
         key: 'dateRange',
         value: { from: formValue.dateRange.from, to: formValue.dateRange.to },
-        label: `Date: ${fromDate} - ${toDate}`,
+        label: `Date: ${formValue.dateRange.from || ''} - ${formValue.dateRange.to || ''}`,
       });
     }
 
-    Object.entries(formValue.status).forEach(([status, isSelected]) => {
-      if (isSelected) {
-        filters.push({
-          key: `status-${status}`,
+    Object.keys(formValue.status).forEach((status) => {
+      if (formValue.status[status]) {
+        activeFilters.push({
+          key: `status.${status}`,
           value: status,
-          label: `Status: ${status}`,
+          label: `Status: ${this.capitalizeFirstLetter(status)}`,
         });
       }
     });
 
-    return filters;
+    return activeFilters;
   }
 
   removeFilter(filter: FilterItem): void {
-    const formValue = this.filterForm.value;
-
-    if (filter.key === 'search') {
-      this.filterForm.patchValue({ searchQuery: '' });
-    } else if (filter.key.startsWith('category-')) {
-      const category = filter.value;
-      this.filterForm.patchValue({
-        categories: {
-          ...formValue.categories,
-          [category]: false,
-        },
-      });
-    } else if (filter.key === 'location') {
-      this.filterForm.patchValue({ location: [] });
-    } else if (filter.key === 'dateRange') {
-      this.filterForm.patchValue({
-        dateRange: {
-          from: null,
-          to: null,
-        },
-      });
-    } else if (filter.key.startsWith('status-')) {
-      const status = filter.value;
-      this.filterForm.patchValue({
-        status: {
-          ...formValue.status,
-          [status]: false,
-        },
-      });
+    const keyParts = filter.key.split('.');
+    if (keyParts.length === 1) {
+      this.filterForm.get(filter.key)?.reset();
+    } else if (keyParts.length === 2) {
+      this.filterForm.get(keyParts[0])?.get(keyParts[1])?.reset();
     }
+
+    // Special handling for specific filter types if needed
+    if (filter.key === 'searchQuery') {
+      this.filterForm.get('searchQuery')?.setValue('');
+    } else if (filter.key.startsWith('categories.')) {
+      const category = filter.value;
+      this.filterForm.get('categories')?.get(category)?.setValue(false);
+    } else if (filter.key === 'location') {
+      this.filterForm.get('location')?.setValue([]);
+    } else if (filter.key === 'dateRange') {
+      this.filterForm.get('dateRange')?.reset();
+    } else if (filter.key.startsWith('status.')) {
+      const status = filter.value;
+      this.filterForm.get('status')?.get(status)?.setValue(false);
+    }
+
+    this.applyFilters();
+    this.updateActiveFilterCount();
   }
 
   onHeaderActionClick(action: HeaderAction): void {
@@ -594,5 +584,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
 
     return pages;
+  }
+
+  capitalizeFirstLetter(string: string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }

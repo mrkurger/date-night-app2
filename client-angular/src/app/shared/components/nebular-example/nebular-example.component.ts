@@ -1,27 +1,35 @@
 import { Component } from '@angular/core';
-import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
-// These imports are removed as we're using NebularModule instead
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 
 /**
- * Example component demonstrating the use of Nebular components
+ * Example component demonstrating the use of PrimeNG components
  * with the DateNight.io design system.
  */
 @Component({
   selector: 'app-nebular-example',
   standalone: true,
-  imports: [CommonModule, FormsModule, NebularModule, StarRatingComponent],
+  imports: [MessagesModule, MessageModule, ButtonModule, 
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    MessageModule,
+    MessagesModule,
+    StarRatingComponent,
+  ],
   template: `
     <div class="nebular-example">
-      <nb-card>
-        <nb-card-header>
-          <h2>Nebular UI Example</h2>
-        </nb-card-header>
-        <nb-card-body>
+      <p-card>
+        <p-card-header>
+          <h2>PrimeNG UI Example</h2>
+        </p-card-header>
+        <p-card-body>
           <p>
-            This component demonstrates the use of Nebular components with the DateNight.io design
+            This component demonstrates the use of PrimeNG components with the DateNight.io design
             system.
           </p>
 
@@ -29,26 +37,30 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
           <section class="example-section">
             <h3>Buttons</h3>
             <div class="button-examples">
-              <button nbButton status="primary">Primary</button>
-              <button nbButton status="basic">Basic</button>
-              <button nbButton status="success">Success</button>
-              <button nbButton status="danger">Danger</button>
-              <button nbButton status="warning">Warning</button>
-              <button nbButton status="info">Info</button>
-              <button nbButton status="control">Control</button>
+              <button pButton label="Primary" class="p-button-primary"></button>
+              <button pButton label="Basic" class="p-button-secondary"></button>
+              <button pButton label="Success" class="p-button-success"></button>
+              <button pButton label="Danger" class="p-button-danger"></button>
+              <button pButton label="Warning" class="p-button-warning"></button>
+              <button pButton label="Info" class="p-button-info"></button>
+              <button pButton label="Control" class="p-button-help"></button>
             </div>
 
             <div class="button-examples mt-3">
-              <button nbButton outline status="primary">Outline Primary</button>
-              <button nbButton outline status="info">Outline Info</button>
+              <button
+                pButton
+                label="Outline Primary"
+                class="p-button-outlined p-button-primary"
+              ></button>
+              <button pButton label="Outline Info" class="p-button-outlined p-button-info"></button>
             </div>
 
             <div class="button-examples mt-3">
-              <button nbButton size="tiny" status="primary">Tiny</button>
-              <button nbButton size="small" status="primary">Small</button>
-              <button nbButton size="medium" status="primary">Medium</button>
-              <button nbButton size="large" status="primary">Large</button>
-              <button nbButton size="giant" status="primary">Giant</button>
+              <button pButton label="Tiny" class="p-button-sm"></button>
+              <button pButton label="Small" class="p-button-sm"></button>
+              <button pButton label="Medium" class="p-button-md"></button>
+              <button pButton label="Large" class="p-button-lg"></button>
+              <button pButton label="Giant" class="p-button-lg"></button>
             </div>
           </section>
 
@@ -56,19 +68,10 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
           <section class="example-section">
             <h3>Alerts</h3>
             <div class="alert-examples">
-              <nb-alert status="primary">This is a primary alert</nb-alert>
-              <nb-alert status="success">
-                <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
-                This is a success alert with an icon
-              </nb-alert>
-              <nb-alert status="warning">
-                <nb-icon icon="alert-triangle-outline"></nb-icon>
-                This is a warning alert with an icon
-              </nb-alert>
-              <nb-alert status="danger">
-                <nb-icon icon="close-circle-outline"></nb-icon>
-                This is a danger alert with an icon
-              </nb-alert>
+              <p-message severity="info" text="This is a primary alert"></p-message>
+              <p-message severity="success" text="This is a success alert with an icon"></p-message>
+              <p-message severity="warn" text="This is a warning alert with an icon"></p-message>
+              <p-message severity="error" text="This is a danger alert with an icon"></p-message>
             </div>
           </section>
 
@@ -88,8 +91,8 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
               <nb-tag appearance="outline" status="success" text="Outline Success"></nb-tag>
             </div>
           </section>
-        </nb-card-body>
-      </nb-card>
+        </p-card-body>
+      </p-card>
 
       <!-- Cards Example -->
       <section class="example-section">

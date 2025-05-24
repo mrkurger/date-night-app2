@@ -1,3 +1,4 @@
+---
 name: Cleanup Artifacts
 
 on:
@@ -7,8 +8,13 @@ on:
 
 permissions:
   actions: write    # For deleting workflow artifacts
-  contents: read   # For checking out code
-  issues: write    # For closing stale issues
+  contents: read    # For checking out code
+  issues: write     # For closing stale issues
+
+# Prevent multiple instances from running concurrently
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   cleanup:

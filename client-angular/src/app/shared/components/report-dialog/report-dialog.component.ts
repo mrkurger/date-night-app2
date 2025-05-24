@@ -1,16 +1,7 @@
-import {
-  NbDialogRef,
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
-  ,
-} from '@nebular/theme';
-import { _NebularModule } from '../../nebular.module';
+import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -26,7 +17,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-  _FormControl,
+  FormControl,
 } from '@angular/forms';
 
 export interface ReportDialogData {
@@ -41,22 +32,20 @@ export interface ReportDialogData {
 
 @Component({
   selector: 'app-report-dialog',
-  standalone: true,
-  imports: [CommonModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   template: `
     <nb-card class="report-dialog">
       <nb-card-header class="dialog-header">
-        <h2>Report Issue</h2>
+        <h2>{{ data?.title || 'Report Issue' }}</h2>
         <button nbButton ghost (click)="onClose()">
-          <nb-icon icon="close"></nb-icon>
+          <nb-icon icon="close-outline"></nb-icon>
         </button>
       </nb-card-header>
       <nb-card-body>
         <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
           <nb-form-field class="full-width">
-            <label class="label">Reason for report *</label>
-            <nb-select formControlName="reason" placeholder="Select a reason" fullWidth>
+            <label class="label" for="reason">Reason for report *</label>
+            <nb-select formControlName="reason" placeholder="Select a reason" fullWidth id="reason">
               <nb-option value="inappropriate">Inappropriate content</nb-option>
               <nb-option value="spam">Spam</nb-option>
               <nb-option value="fake">Fake profile</nb-option>
@@ -64,38 +53,39 @@ export interface ReportDialogData {
               <nb-option value="scam">Scam attempt</nb-option>
               <nb-option value="other">Other</nb-option>
             </nb-select>
-            <div
-              class="text-danger"
-              *ngIf="
-                reportForm.get('reason')?.hasError('required') && reportForm.get('reason')?.touched
-              "
+            <p
+              class="caption status-danger"
+              *ngIf="reportForm.get('reason')?.invalid && reportForm.get('reason')?.touched"
             >
-              Please select a reason
-            </div>
+              Please select a reason.
+            </p>
           </nb-form-field>
 
           <nb-form-field class="full-width">
-            <label class="label">Details *</label>
+            <label class="label" for="details">Details *</label>
             <textarea
               nbInput
               formControlName="details"
               placeholder="Please provide specific details..."
               rows="5"
               fullWidth
+              id="details"
             ></textarea>
-            <div class="text-right">{{ reportForm.get('details')?.value?.length || 0 }}/500</div>
-            <div
-              class="text-danger"
-              *ngIf="
-                reportForm.get('details')?.hasError('required') &&
-                reportForm.get('details')?.touched
-              "
+            <div class="text-right" *ngIf="reportForm.get('details')?.value">
+              {{ reportForm.get('details')?.value?.length || 0 }}/500
+            </div>
+            <p
+              class="caption status-danger"
+              *ngIf="reportForm.get('details')?.errors?.['required'] && reportForm.get('details')?.touched"
             >
-              Please provide details
-            </div>
-            <div class="text-danger" *ngIf="reportForm.get('details')?.hasError('maxlength')">
-              Maximum 500 characters
-            </div>
+              Details are required.
+            </p>
+            <p
+              class="caption status-danger"
+              *ngIf="reportForm.get('details')?.errors?.['maxlength'] && reportForm.get('details')?.touched"
+            >
+              Details cannot exceed 500 characters.
+            </p>
           </nb-form-field>
 
           <div class="form-actions">
@@ -105,6 +95,7 @@ export interface ReportDialogData {
               type="submit"
               status="danger"
               [disabled]="reportForm.invalid || submitted"
+              [class.btn-loading]="submitted"
             >
               Submit Report
             </button>
@@ -117,6 +108,7 @@ export interface ReportDialogData {
     `
       .report-dialog {
         max-width: 600px;
+        min-width: 400px;
         width: 100%;
       }
 
@@ -141,43 +133,58 @@ export interface ReportDialogData {
       .text-right {
         text-align: right;
         font-size: 0.875rem;
-        color: #8f9bb3;
+        color: var(--text-hint-color);
       }
 
-      .text-danger {
-        color: #ff3d71;
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
+      .btn-loading {
+        cursor: wait;
       }
     `,
   ],
 })
-export class ReportDialogComponent {
-  reportForm: FormGroup;
-  submitted = false;_data: ReportDialogData = {};
+export class ReportDialogComponent implements OnInit {
+  reportForm!: FormGroup;
+  submitted = false;
+  data: ReportDialogData;
 
   constructor(
-    private dialogRef: NbDialogRef<ReportDialogComponent>,
+    protected dialogRef: NbDialogRef<ReportDialogComponent>,
     private fb: FormBuilder,
-    @Inject('REPORT_DIALOG_DATA') public injectedData?: ReportDialogData,
+    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ReportDialogData,
   ) {
-    this.data = injectedData || {};
+    this.data = this.injectedData || {};
+  }
+
+  ngOnInit(): void {
     this.reportForm = this.fb.group({
       reason: ['', Validators.required],
       details: ['', [Validators.required, Validators.maxLength(500)]],
+      userId: [this.data?.userId],
+      advertiserId: [this.data?.advertiserId],
+      adId: [this.data?.adId],
+      type: [this.data?.type],
+      contentId: [this.data?.contentId],
     });
   }
 
   onSubmit(): void {
+    this.submitted = true;
+    this.reportForm.markAllAsTouched();
+
     if (this.reportForm.invalid) {
+      this.submitted = false;
       return;
     }
 
-    this.submitted = true;
-    const reportData = this.reportForm.value;
+    const reportData = {
+      ...this.data,
+      ...this.reportForm.value,
+    };
 
+    console.log('Submitting report:', reportData);
     setTimeout(() => {
       this.dialogRef.close(reportData);
+      this.submitted = false;
     }, 1000);
   }
 

@@ -533,9 +533,78 @@ closeDialog() {
         <pre><code>readonly separatorKeysCodes: number[] = [13, 188]; // Enter and comma</code></pre>
       </div>
     </div>
+    
+    <div class="alphabet-section" id="U">
+      <h2>U</h2>
+      
+      <div class="term">
+        <h3>
+          update-primeng-imports.js
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that analyzes and optimizes PrimeNG module imports in Angular components.
+          It consolidates imports, adds missing modules based on template usage, and ensures proper module
+          inclusion in standalone components.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>node update-primeng-imports.js src/app/components</code></pre>
+      </div>
+    </div>
+
+    <div class="alphabet-section" id="M">
+      <h2>M</h2>
+      
+      <div class="term">
+        <h3>
+          migrate-to-primeng.js
+          <span class="term-type script">Script</span>
+        </h3>
+        <p>
+          A script that migrates Nebular component selectors and class names to their PrimeNG equivalents.
+          The script processes TypeScript, HTML, and SCSS files to replace Nebular references with PrimeNG.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>node migrate-to-primeng.js src/app/components</code></pre>
+      </div>
+    </div>
+    
+    <div class="alphabet-section" id="P">
+      <h2>P</h2>
+      
+      <div class="term">
+        <h3>
+          PrimengButtonComponent
+          <span class="term-type component">Component</span>
+        </h3>
+        <p>
+          A wrapper component for PrimeNG Button with additional features such as tooltips and standardized styling.
+          Uses standalone component pattern with proper module imports.
+        </p>
+        <p>
+          <strong>Example:</strong>
+        </p>
+        <pre><code>@Component({
+  selector: 'app-primeng-button',
+  standalone: true,
+  imports: [CommonModule, ButtonModule, TooltipModule],
+  template: `
+    <p-button
+      [label]="label"
+      [icon]="icon"
+      (onClick)="handleClick($event)">
+    </p-button>
+  `
+})</code></pre>
+      </div>
+    </div>
 
     <footer>
-      <p>Last updated: May 2024</p>
+      <p>Last updated: April 2025</p>
     </footer>
   </div>
 </body>

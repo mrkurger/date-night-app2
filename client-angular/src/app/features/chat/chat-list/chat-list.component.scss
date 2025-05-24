@@ -6,23 +6,21 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: nb-theme(background-basic-color-2);
+  background-color: var(--surface-ground);
 }
 
-// Header
 .chat-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: nb-theme(card-padding-medium);
-  border-bottom: 1px solid nb-theme(divider-color);
-}
+  padding: 1rem;
+  background-color: var(--surface-card);
+  border-bottom: 1px solid var(--surface-border);
 
-.chat-list-title {
-  font-size: nb-theme(text-heading-5-font-size);
-  font-weight: nb-theme(text-heading-5-font-weight);
-  color: nb-theme(text-basic-color);
-  margin: 0;
+  .chat-list-title {
+    margin: 0;
+    color: var(--text-color);
+  }
 }
 
 .chat-list__new-chat {
@@ -54,38 +52,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
+  height: 100%;
+  padding: 2rem;
   text-align: center;
-  color: nb-theme(text-hint-color);
-  flex-grow: 1;
 
-  &.loading-state p {
-    margin-top: 1rem;
+  &.loading-state {
+    color: var(--text-color-secondary);
   }
 
   &.error-state {
-    .state-icon {
-      font-size: 3rem;
-      color: nb-theme(text-danger-color);
-      margin-bottom: 1rem;
-    }
-    p {
-      margin-bottom: 1.5rem;
-      color: nb-theme(text-basic-color);
-    }
+    color: var(--red-500);
   }
 
-  &.empty-state {
-    .state-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      opacity: 0.7;
-    }
-    p {
-      font-size: nb-theme(text-subtitle-font-size);
-      margin-bottom: 1.5rem;
-      color: nb-theme(text-basic-color);
-    }
+  p {
+    margin: 1rem 0;
+    color: var(--text-color-secondary);
   }
 }
 
@@ -157,193 +138,99 @@
 .room-list {
   flex: 1;
   overflow-y: auto;
+
+  ::ng-deep .p-dataview-content {
+    padding: 0;
+  }
+
+  .room-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid var(--surface-border);
+
+    &:hover {
+      background-color: var(--surface-hover);
+    }
+
+    &.active {
+      background-color: var(--primary-color-lighter);
+    }
+  }
 }
 
-.room-item {
-  display: flex;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid nb-theme(divider-color);
-  cursor: pointer;
-  transition: background-color 0.2s;
-  position: relative;
-
-  &:hover {
-    background-color: nb-theme(background-basic-hover);
-
-    .room-actions {
-      opacity: 1;
-    }
-  }
-
-  &.unread {
-    background-color: nb-theme(color-primary-100);
-
-    .room-name {
-      font-weight: 600;
-    }
-
-    .room-message-preview .last-message-text {
-      font-weight: 500;
-      color: nb-theme(text-basic-color);
-    }
-  }
-
-  &.pinned {
-    background-color: nb-theme(color-primary-100);
-    border-left: 3px solid nb-theme(color-primary-500);
-  }
-
-  &.active {
-    background-color: nb-theme(list-item-active-background-color);
-    color: nb-theme(list-item-active-text-color);
-    .room-name,
-    .room-time,
-    .last-message-text {
-      color: nb-theme(list-item-active-text-color);
-    }
-  }
-
-  app-avatar {
-    margin-right: 1rem;
-  }
-
-  .room-details {
-    flex: 1;
-    min-width: 0;
-  }
+.room-details {
+  flex: 1;
+  margin: 0 1rem;
+  overflow: hidden;
 
   .room-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.25rem;
-  }
+    margin-bottom: 0.5rem;
 
-  .room-name {
-    font-size: 1rem;
-    color: nb-theme(text-basic-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 70%;
-  }
+    .room-name {
+      font-weight: 600;
+      color: var(--text-color);
+    }
 
-  .room-time {
-    font-size: 0.75rem;
-    color: nb-theme(text-hint-color);
+    .room-time {
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
+    }
   }
 
   .room-message-preview {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
+
     .last-message-text {
+      margin: 0;
       font-size: 0.875rem;
-      color: nb-theme(text-hint-color);
+      color: var(--text-color-secondary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    .unread-indicator {
-      margin-left: 0.5rem;
+      max-width: calc(100% - 3rem);
     }
   }
+}
 
-  .room-actions {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    padding-left: 0.25rem;
-    opacity: 0;
-    transition: opacity 0.2s;
+.room-actions {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
 
-    button[nbButton] {
-      &.active nb-icon {
-        color: nb-theme(color-primary-500);
-      }
-    }
-  }
-
-  &:hover .room-actions,
-  &:focus-within .room-actions {
+  .room-item:hover & {
     opacity: 1;
   }
 
-  @include media-breakpoint-down(sm) {
-    padding: 0.75rem 1rem;
-    app-avatar {
-      img {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-    }
-    .room-name {
-      font-size: 0.9375rem;
-    }
-    .room-message-preview .last-message-text {
-      font-size: 0.8125rem;
+  .p-button.p-button-sm {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+
+    &.active {
+      color: var(--primary-color);
     }
   }
 }
 
-.chat-room-item__status {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: nb-theme(text-hint-color);
-  border: 2px solid nb-theme(background-basic-color-1);
-
-  &.online {
-    background-color: nb-theme(color-success-500);
-  }
-}
-
-.chat-room-item__pin-indicator {
-  display: inline-block;
-  margin-left: 0.5rem;
-  color: nb-theme(color-primary-500);
-  font-size: 0.75rem;
-}
-
-.chat-room-item__encryption {
-  color: nb-theme(color-success-500);
-  font-size: 0.75rem;
-}
-
-.chat-room-item__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 0.75rem;
-  background-color: nb-theme(color-primary-500);
-  color: nb-theme(text-control-color);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0 0.5rem;
-}
-
-.chat-room-item__action-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  color: nb-theme(text-hint-color);
-  margin-left: 0.25rem;
-
-  &:hover {
-    background-color: nb-theme(background-basic-hover);
-    color: nb-theme(text-basic-color);
+::ng-deep {
+  .p-badge {
+    min-width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    padding: 0 0.5rem;
   }
 
-  &.active {
-    color: nb-theme(color-primary-500);
+  .p-dataview .p-dataview-content {
+    background-color: var(--surface-card);
   }
 }
 

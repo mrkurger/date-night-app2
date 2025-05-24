@@ -1,0 +1,55 @@
+name: Trivy Security Scan
+
+on:
+  push:
+    branches:
+      - "**" # Triggers on any branch where commits are pushed
+
+permissions:
+  contents: read
+  security-events: write  # For uploading security scan results
+  issues: write         # For creating security issues
+  checks: write        # For creating check runs
+  pull-requests: write # For commenting on PRs
+
+jobs:
+  trivy-scan:
+    name: Run Trivy Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the branch where the commit was made
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
+
+      # Step 2: Initialize Submodules
+      - name: Initialize Submodules
+        run: git submodule update --init --recursive
+
+      # Step 3: Install Trivy
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      # Step 4: Scan the repository for vulnerabilities
+      - name: Trivy Scan for Vulnerabilities
+        run: |
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+          trivy fs --security-checks secret --exit-code 1 .
+
+      # Step 5: Handle Trivy Warnings (Optional)
+      - name: Handle Trivy Warnings (Optional)
+        if: failure()
+        run: echo "Review Trivy scan warnings for details."
+
+      # Step 6: Scan dependencies for vulnerabilities
+      - name: Scan Dependencies
+        run: trivy fs --security-checks vuln --exit-code 1 .

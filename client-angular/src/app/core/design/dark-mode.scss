@@ -33,7 +33,6 @@ $color-map: (
   '--color-dark-gray-2': var(--color-light-gray-2),
   '--color-dark-gray-1': var(--color-medium-gray-1),
   // Border colors
-  '--color-light-gray-2': var(--color-dark-gray-1),
   '--color-medium-gray-1': var(--color-dark-gray-2),
   // Shadows
   '--shadow-sm': var(--shadow-dark-sm),
@@ -251,6 +250,9 @@ $color-map: (
 
 // Theme transition
 .nb-theme-transition {
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }

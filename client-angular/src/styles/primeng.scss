@@ -1,0 +1,236 @@
+/* PrimeNG Theme Customization */
+@use 'sass:map';
+@use 'sass:color';
+@use '../app/core/design/variables' as *;
+
+:root {
+  // Brand Colors
+  --primary-color: var(--color-primary);
+  --primary-color-text: var(--color-on-primary);
+  --secondary-color: var(--color-secondary);
+  --accent-color: var(--color-accent);
+
+  // Background Colors
+  --surface-ground: var(--color-background);
+  --surface-section: var(--color-surface);
+  --surface-card: var(--color-surface);
+  --surface-overlay: var(--color-surface);
+  --surface-border: var(--color-border);
+
+  // Text Colors
+  --text-color: var(--color-text);
+  --text-color-secondary: var(--color-text-secondary);
+  --input-text-color: var(--color-text);
+  --text-muted: var(--color-text-muted);
+
+  // Status Colors
+  --success-color: var(--color-success);
+  --info-color: var(--color-info);
+  --warning-color: var(--color-warning);
+  --error-color: var(--color-error);
+
+  // Component Styles
+  --border-radius: var(--radius-md);
+  --focus-ring: var(--color-focus-ring);
+  --transition-duration: 0.2s;
+  --sidebar-width: 250px;
+  --font-family: var(--font-family-base);
+}
+
+[data-theme='dark'] {
+  // Brand Colors
+  --primary-color: var(--color-primary-dark);
+  --primary-color-text: var(--color-on-primary-dark);
+  --secondary-color: var(--color-secondary-dark);
+  --accent-color: var(--color-accent-dark);
+
+  // Background Colors
+  --surface-ground: var(--color-background-dark);
+  --surface-section: var(--color-surface-dark);
+  --surface-card: var(--color-surface-dark);
+  --surface-overlay: var(--color-surface-dark);
+  --surface-border: var(--color-border-dark);
+
+  // Text Colors
+  --text-color: var(--color-text-dark);
+  --text-color-secondary: var(--color-text-secondary-dark);
+  --input-text-color: var(--color-text-dark);
+  --text-muted: var(--color-text-muted-dark);
+
+  .p-button {
+    &.p-button-outlined,
+    &.p-button-text {
+      color: var(--text-color);
+      border-color: var(--text-color);
+    }
+  }
+}
+
+// Component Styles
+.p-component {
+  font-family: var(--font-family);
+}
+
+.p-card {
+  border-radius: var(--border-radius);
+  background-color: var(--surface-card);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+
+  .p-card-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    margin-bottom: 1rem;
+  }
+
+  .p-card-content {
+    padding: 0;
+  }
+
+  .p-card-footer {
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--surface-border);
+  }
+}
+
+.p-button {
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1.25rem;
+  font-weight: var(--font-medium);
+  transition: all var(--transition-duration);
+  font-size: var(--text-base);
+
+  &:focus {
+    box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+
+  &.p-button-lg {
+    font-size: var(--text-lg);
+    padding: 1rem 1.5rem;
+  }
+
+  &.p-button-sm {
+    font-size: var(--text-sm);
+    padding: 0.5rem 1rem;
+  }
+
+  &.p-button-icon-only {
+    width: 3rem;
+    padding: 0.75rem;
+  }
+}
+
+// Input styles
+.p-input-text,
+.p-inputnumber-input,
+.p-dropdown {
+  border-radius: var(--border-radius);
+  padding: 0.75rem;
+  font-size: var(--text-base);
+  border: 1px solid var(--surface-border);
+  background: var(--surface-ground);
+  color: var(--input-text-color);
+
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: var(--error-color);
+  }
+}
+
+// Dialog styles
+.p-dialog {
+  border-radius: var(--border-radius);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+
+  .p-dialog-header {
+    border-bottom: 1px solid var(--surface-border);
+    padding: 1.5rem;
+    font-weight: var(--font-semibold);
+  }
+
+  .p-dialog-content {
+    padding: 1.5rem;
+  }
+
+  .p-dialog-footer {
+    border-top: 1px solid var(--surface-border);
+    padding: 1.5rem;
+  }
+}
+
+// Table styles
+.p-datatable {
+  .p-datatable-header {
+    background: var(--surface-section);
+    border: 1px solid var(--surface-border);
+    border-width: 1px 0;
+    padding: 1rem;
+  }
+
+  .p-datatable-thead > tr > th {
+    background: var(--surface-ground);
+    color: var(--text-color);
+    border: 1px solid var(--surface-border);
+    border-width: 0 0 1px 0;
+    font-weight: var(--font-semibold);
+    padding: 1rem;
+  }
+
+  .p-datatable-tbody > tr > td {
+    border: 1px solid var(--surface-border);
+    border-width: 0 0 1px 0;
+    padding: 1rem;
+  }
+}
+
+// Menu styles
+.p-menu {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+
+  .p-menuitem {
+    margin: 0.25rem 0;
+
+    .p-menuitem-link {
+      padding: 0.75rem 1rem;
+      border-radius: var(--border-radius);
+      color: var(--text-color);
+      transition: background-color var(--transition-duration);
+
+      &:hover {
+        background: var(--surface-hover);
+      }
+
+      .p-menuitem-text {
+        color: inherit;
+      }
+
+      .p-menuitem-icon {
+        color: var(--text-color-secondary);
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 576px) {
+  .p-dialog {
+    width: 90vw !important;
+    margin: 0 auto;
+  }
+
+  .p-button {
+    &:not(.p-button-icon-only) {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}

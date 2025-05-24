@@ -26,11 +26,10 @@ import { ThemeService } from '../../core/services/theme.service';
  * It showcases hover effects, loading states, transitions, and feedback animations.
  */
 @Component({
-  selector: 'app-micro-interactions-demo',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule],
-  template: `
+    selector: 'app-micro-interactions-demo',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule],
+    template: `
     <div [class]="bem.block()">
       <header [class]="bem.element('header')">
         <div class="container">
@@ -267,8 +266,8 @@ import { ThemeService } from '../../core/services/theme.service';
       </main>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -377,7 +376,7 @@ import { ThemeService } from '../../core/services/theme.service';
         }
       }
     `,
-  ],
+    ]
 })
 export class MicroInteractionsDemoComponent {
   bem = new BemUtil('micro-demo');

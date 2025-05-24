@@ -1,11 +1,11 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // For View All link
-import { NebularModule } from '../../../../../app/shared/nebular.module';
-import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
-import { AltPremiumAdCardComponent } from '../alt-premium-ad-card/alt-premium-ad-card.component'; // Import the new card component
+import { RouterModule } from '@angular/router';
+import { AltPremiumAdCardComponent } from '../alt-premium-ad-card/alt-premium-ad-card.component';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
-// Assuming Advertiser interface is accessible or defined here/imported
+// Interface for the component
 interface Advertiser {
   id: number | string;
   name: string;
@@ -23,13 +23,7 @@ interface Advertiser {
 @Component({
   selector: 'app-alt-premium-ads-section',
   standalone: true,
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    AltPremiumAdCardComponent, // Add to imports
-  ],
+  imports: [CommonModule, RouterModule, ButtonModule, CardModule, AltPremiumAdCardComponent],
   templateUrl: './alt-premium-ads-section.component.html',
   styleUrls: ['./alt-premium-ads-section.component.scss'],
 })

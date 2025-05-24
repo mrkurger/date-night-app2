@@ -2,62 +2,58 @@
 
 .premium-ads-section {
   margin-bottom: 2rem;
-  // padding: 1rem; // Padding handled by internal elements or not needed if full bleed
-  // background-color: nb-theme(background-basic-color-2);
-  // border-radius: nb-theme(card-border-radius);
 
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    padding: 0 0.5rem; // Slight horizontal padding for header elements
+    padding: 0 0.5rem;
   }
 
   .section-title {
-    font-size: 1.75rem; // Made slightly larger
+    font-size: 1.75rem;
     font-weight: 600;
-    // color: nb-theme(text-primary-color); // Keep if pink/primary title desired
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 
   .view-all-link {
-    font-size: nb-theme(text-paragraph-2-font-size);
-    color: nb-theme(text-primary-color);
+    font-size: 0.875rem;
+    color: var(--primary-color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    nb-icon {
-      margin-left: nb-theme(spacing-xxs);
+
+    i {
+      margin-left: 0.25rem;
     }
+
     &:hover {
-      color: nb-theme(text-primary-hover-color);
+      color: var(--primary-600);
     }
   }
 
   .scroll-wrapper {
-    position: relative; // For absolute positioning of scroll buttons
+    position: relative;
   }
 
   .premium-ads-grid-scrollable {
-    // Renamed from premium-ads-grid
-    display: flex; // Changed from grid to flex for horizontal scrolling
+    display: flex;
     overflow-x: auto;
     gap: 1rem;
-    padding-bottom: 1rem; // For scrollbar or just spacing if scrollbar is hidden
-    scroll-snap-type: x mandatory; // For snap scrolling from React version
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
 
-    // Hide scrollbar (cross-browser)
+    // Hide scrollbar
     &::-webkit-scrollbar {
       display: none;
     }
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     .premium-ad-item {
-      // Target the wrapper around app-alt-premium-ad-card
-      flex: 0 0 auto; // Prevent flex items from shrinking/growing, maintain their width
-      scroll-snap-align: start; // Snap alignment
+      flex: 0 0 auto;
+      scroll-snap-align: start;
     }
   }
 
@@ -66,26 +62,27 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    background-color: rgba(
-      nb-theme(background-basic-color-1),
-      0.8
-    ) !important; // Semi-transparent background
-    border-color: nb-theme(border-basic-color-4) !important;
-    box-shadow: nb-theme(shadow-md);
+    margin: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--surface-ground);
+    border-radius: 50%;
+    box-shadow: var(--card-shadow);
 
     &.prev {
-      left: -16px; // Adjust for visibility outside the scroll container
+      left: -1.25rem;
     }
+
     &.next {
-      right: -16px; // Adjust for visibility
+      right: -1.25rem;
     }
+
     &:hover {
-      background-color: rgba(nb-theme(background-basic-color-2), 0.9) !important;
+      background-color: var(--surface-hover);
     }
-    nb-icon {
-      color: nb-theme(text-basic-color);
+
+    i {
+      font-size: 1rem;
     }
   }
-
-  // Styles for the card itself are in alt-premium-ad-card.component.scss
 }

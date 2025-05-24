@@ -12,7 +12,7 @@ const router = express.Router();
 import multer from 'multer';
 import mediaController from '../controllers/media.controller.js';
 import { protect } from '../middleware/auth.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { ValidationUtils } from '../utils/validation-utils.js';
 import { MediaSchemas } from '../middleware/validators/media.validator.ts';
 
 // Configure multer for memory storage

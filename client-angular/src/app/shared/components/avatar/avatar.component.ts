@@ -1,95 +1,135 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { _NebularModule } from '../../nebular.module';
-import {
-  NbMenuItem,
-  NbMenuService,
-  ,
-  ,
-  ,
-  ,
-} from '@nebular/theme';
-
-export interface AvatarMenuItem extends NbMenuItem {
+import { MenuItem } from 'primeng/menuitem';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ContextMenuModule, ContextMenu } from 'primeng/contextmenu';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+export interface AvatarMenuItem extends MenuItem {
   data?: any;
 }
 
 /**
  * Avatar Component
  *
- * A modern avatar component using Nebular UI components.
+ * A modern avatar component using PrimeNG UI components.
  * Features user image, name, online status, and optional context menu.
  */
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule,
-    RouterModule],
+  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem, 
+    CommonModule,
+    RouterModule,
+    AvatarModule,
+    BadgeModule,
+    ContextMenuModule,
+    TieredMenuModule,
+  ],
   template: `
-    <div class="avatar" [class]="'avatar--' + size">
-      <nb-user
-        [picture]="imageUrl"
-        [name]="showName ? name : ''"
-        [title]="showTitle ? title : ''"
-        [size]="size"
-        [nbContextMenu]="menuItems"
-        [nbContextMenuTag]="menuTag"
-        [class.avatar--clickable]="menuItems?.length"
-      >
-        <nb-badge
-          *ngIf="showOnlineStatus"
-          [status]="isOnline ? 'success' : 'basic'"
-          position="bottom right"
-          [text]="isOnline ? 'Online' : 'Offline'"
-        ></nb-badge>
-      </nb-user>
+    <div
+      #avatarContainer
+      class="avatar-container"
+      [class]="'avatar--' + size"
+      (click)="menu && menuItems?.length && menu.toggle($event)"
+      [class.avatar--clickable]="menuItems?.length"
+    >
+      <p-avatar
+        [image]="imageUrl"
+        [label]="!imageUrl ? getInitials() : undefined"
+        [size]="mapNebularSizeToPrimeNG(size)"
+        shape="circle"
+        (onImageError)="handleImageError($event)"
+        styleClass="user-avatar"
+      ></p-avatar>
+      <p-badge
+        *ngIf="showOnlineStatus"
+        [severity]="isOnline ? 'success' : 'danger'"
+        styleClass="online-status-badge"
+        [class.offline]="!isOnline"
+      ></p-badge>
+      <div *ngIf="showName || showTitle" class="avatar-info">
+        <div *ngIf="showName" class="avatar-name">{{ name }}</div>
+        <div *ngIf="showTitle" class="avatar-title">{{ title }}</div>
+      </div>
+      <p-contextMenu
+        #menu
+        [model]="processedMenuItems"
+        [target]="avatarContainer"
+        triggerEvent="click"
+      ></p-contextMenu>
     </div>
   `,
   styles: [
     `
-      .avatar {
-        display: inline-block;
+      .avatar-container {
+        display: inline-flex;
+        align-items: center;
         position: relative;
+        gap: 8px;
       }
 
       .avatar--clickable {
         cursor: pointer;
       }
 
-      /* Size variations */
-      .avatar--tiny ::ng-deep nb-user {
+      .user-avatar {
+      }
+
+      .online-status-badge {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+      .online-status-badge.offline {
+        background-color: var(--p-gray-400);
+      }
+      .online-status-badge.p-badge-success {
+        background-color: var(--p-green-500);
+      }
+      .online-status-badge.p-badge-danger {
+        background-color: var(--p-red-500);
+      }
+
+      .avatar-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .avatar-name {
+        font-weight: bold;
+      }
+
+      .avatar-title {
+        font-size: 0.9em;
+        color: var(--p-text-secondary-color);
+      }
+
+      .avatar--tiny .user-avatar {
+        width: 24px;
+        height: 24px;
         font-size: 0.75rem;
       }
-
-      .avatar--small ::ng-deep nb-user {
-        font-size: 0.875rem;
+      .avatar--tiny .online-status-badge {
+        width: 6px;
+        height: 6px;
+        bottom: -1px;
+        right: -1px;
       }
 
-      .avatar--medium ::ng-deep nb-user {
-        font-size: 1rem;
-      }
-
-      .avatar--large ::ng-deep nb-user {
-        font-size: 1.25rem;
-      }
-
-      .avatar--giant ::ng-deep nb-user {
-        font-size: 1.5rem;
-      }
-
-      /* Online status badge */
-      .avatar ::ng-deep nb-badge {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        transform: translate(25%, 25%);
+      .avatar--small .user-avatar {
       }
     `,
   ],
 })
-export class AvatarComponent {
-  @Input() imageUrl = '/assets/img/default-profile.jpg';
+export class AvatarModule {
+  @Input() imageUrl: string | undefined = '/assets/img/default-profile.jpg';
   @Input() name = '';
   @Input() title = '';
   @Input() size: 'tiny' | 'small' | 'medium' | 'large' | 'giant' = 'medium';
@@ -97,32 +137,62 @@ export class AvatarComponent {
   @Input() showOnlineStatus = false;
   @Input() showName = true;
   @Input() showTitle = false;
-  @Input() menuItems: AvatarMenuItem[] = [];
+
+  private _menuItems: AvatarMenuItem[] = [];
+  @Input()
+  set menuItems(items: AvatarMenuItem[]) {
+    this._menuItems = items;
+    this.processedMenuItems = this.processMenuItems(items);
+  }
+  get menuItems(): AvatarMenuItem[] {
+    return this._menuItems;
+  }
+
+  processedMenuItems: MenuItem[] = [];
 
   @Output() menuItemClick = new EventEmitter<AvatarMenuItem>();
 
-  readonly menuTag = 'avatar-menu-' + Math.random().toString(36).substring(7);
+  constructor() {}
 
-  constructor(private nbMenuService: NbMenuService) {
-    // Subscribe to menu item clicks
-    this.nbMenuService.onItemClick().subscribe((event) => {
-      if (event.tag === this.menuTag && event.item) {
-        this.menuItemClick.emit(event.item as AvatarMenuItem);
-      }
-    });
+  processMenuItems(items: AvatarMenuItem[]): MenuItem[] {
+    if (!items) return [];
+    return items.map((item) => ({
+      ...item,
+      command: (event?: { originalEvent?: Event; item?: MenuItem }) => {
+        if (event && event.item) {
+          this.menuItemClick.emit(event.item as AvatarMenuItem);
+        }
+      },
+    }));
   }
 
-  /**
-   * Get initials from name
-   */
+  mapNebularSizeToPrimeNG(
+    nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',
+  ): 'normal' | 'large' | 'xlarge' {
+    switch (nebSize) {
+      case 'tiny':
+      case 'small':
+        return 'normal';
+      case 'medium':
+        return 'normal';
+      case 'large':
+        return 'large';
+      case 'giant':
+        return 'xlarge';
+      default:
+        return 'normal';
+    }
+  }
+
+  handleImageError(event: Event) {}
+
   getInitials(): string {
     if (!this.name) return '';
-
-    const nameParts = this.name.split(' ');
+    const nameParts = this.name.trim().split(/\s+/);
+    if (nameParts.length === 0 || nameParts[0] === '') return '';
     if (nameParts.length === 1) {
       return nameParts[0].charAt(0).toUpperCase();
     }
-
     return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
   }
 }

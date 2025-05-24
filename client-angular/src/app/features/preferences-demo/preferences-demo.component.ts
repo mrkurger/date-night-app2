@@ -176,21 +176,20 @@ const MOCK_ADS: Ad[] = [
 ];
 
 @Component({
-  selector: 'app-preferences-demo',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSelectModule,
-    NbFormFieldModule,
-    NbLayoutModule,
-    AdCardComponent,
-  ],
-  template: `
+    selector: 'app-preferences-demo',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSelectModule,
+        NbFormFieldModule,
+        NbLayoutModule,
+        AdCardComponent,
+    ],
+    template: `
     <div class="preferences-demo-container">
       <nb-card class="settings-card">
         <nb-card-header>
@@ -279,8 +278,8 @@ const MOCK_ADS: Ad[] = [
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -345,7 +344,7 @@ const MOCK_ADS: Ad[] = [
         }
       }
     `,
-  ],
+    ]
 })
 export class PreferencesDemoComponent implements OnInit, OnDestroy {
   // User preferences

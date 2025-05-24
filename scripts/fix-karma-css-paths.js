@@ -78,48 +78,46 @@ if (fs.existsSync(actualDefaultCssPath)) {
 const primeIconsDir = path.join(clientNodeModulesDir, 'primeicons');
 
 // Create the directory structure
-fs.mkdirSync(evaIconsDir, { recursive: true });
-fs.mkdirSync(evaIconsStyleDir, { recursive: true });
+fs.mkdirSync(primeIconsDir, { recursive: true });
 
-// Create a symbolic link to the actual eva-icons.css file in the root node_modules
-const evaIconsCssPath = path.join(evaIconsStyleDir, 'eva-icons.css');
-const actualEvaIconsCssPath = path.join(
+// Create a symbolic link to the actual primeicons.css file in the root node_modules
+const primeIconsCssPath = path.join(primeIconsDir, 'primeicons.css');
+const actualPrimeIconsCssPath = path.join(
   rootDir,
   'node_modules',
-  'eva-icons',
-  'style',
-  'eva-icons.css',
+  'primeicons',
+  'primeicons.css',
 );
 
-if (fs.existsSync(actualEvaIconsCssPath)) {
+if (fs.existsSync(actualPrimeIconsCssPath)) {
   try {
     // If the file already exists, remove it first
-    if (fs.existsSync(evaIconsCssPath)) {
-      fs.unlinkSync(evaIconsCssPath);
+    if (fs.existsSync(primeIconsCssPath)) {
+      fs.unlinkSync(primeIconsCssPath);
     }
 
     // Create a symbolic link to the actual CSS file
-    fs.copyFileSync(actualEvaIconsCssPath, evaIconsCssPath);
-    console.log(`Created copy of actual CSS file: ${evaIconsCssPath}`);
+    fs.copyFileSync(actualPrimeIconsCssPath, primeIconsCssPath);
+    console.log(`Created copy of actual CSS file: ${primeIconsCssPath}`);
   } catch (error) {
     console.error(`Error creating symbolic link: ${error.message}`);
 
     // Fallback to creating a placeholder file
-    const evaIconsCssContent = `
+    const primeIconsCssContent = `
     /* This is a placeholder CSS file created by the fix-karma-css-paths.js script */
     /* It's used to prevent Karma test failures due to missing CSS files */
     `;
-    fs.writeFileSync(evaIconsCssPath, evaIconsCssContent);
-    console.log(`Created placeholder CSS file (fallback): ${evaIconsCssPath}`);
+    fs.writeFileSync(primeIconsCssPath, primeIconsCssContent);
+    console.log(`Created placeholder CSS file (fallback): ${primeIconsCssPath}`);
   }
 } else {
   // If the actual CSS file doesn't exist, create a placeholder
-  const evaIconsCssContent = `
+  const primeIconsCssContent = `
   /* This is a placeholder CSS file created by the fix-karma-css-paths.js script */
   /* It's used to prevent Karma test failures due to missing CSS files */
   `;
-  fs.writeFileSync(evaIconsCssPath, evaIconsCssContent);
-  console.log(`Created placeholder CSS file (actual file not found): ${evaIconsCssPath}`);
+  fs.writeFileSync(primeIconsCssPath, primeIconsCssContent);
+  console.log(`Created placeholder CSS file (actual file not found): ${primeIconsCssPath}`);
 }
 
 // Update the karma.conf.js file to use the correct paths
@@ -134,7 +132,7 @@ if (fs.existsSync(karmaConfigPath)) {
       /files: \[/,
       `files: [
       { pattern: 'node_modules/@nebular/theme/styles/prebuilt/default.css', included: true },
-      { pattern: 'node_modules/eva-icons/style/eva-icons.css', included: true },`,
+      { pattern: 'node_modules/primeicons/primeicons.css', included: true },`,
     );
 
     fs.writeFileSync(karmaConfigPath, karmaConfig);
@@ -191,7 +189,7 @@ module.exports = function (config) {
     restartOnFileChange: true,
     files: [
       { pattern: 'node_modules/@nebular/theme/styles/prebuilt/default.css', included: true },
-      { pattern: 'node_modules/eva-icons/style/eva-icons.css', included: true },
+      { pattern: 'node_modules/primeicons/primeicons.css', included: true },
     ]
   });
 };

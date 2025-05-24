@@ -18,11 +18,10 @@ import { ContentSanitizerService } from '../../../../core/services/content-sanit
  * Component for displaying and handling media moderation in a modal
  */
 @Component({
-  selector: 'app-moderation-modal',
-  templateUrl: './moderation-modal.component.html',
-  styleUrls: ['./moderation-modal.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+    selector: 'app-moderation-modal',
+    templateUrl: './moderation-modal.component.html',
+    styleUrls: ['./moderation-modal.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class ModerationModalComponent implements OnChanges {
   @Input() media: PendingMedia | null = null;

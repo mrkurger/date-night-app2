@@ -2,7 +2,7 @@ import express from 'express';
 import { protect as authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
 import travelController from '../controllers/travel.controller.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { ValidationUtils } from '../utils/validation-utils.js';
 import TravelSchemas from '../middleware/validators/travel.validator.js';
 
 const router = express.Router();

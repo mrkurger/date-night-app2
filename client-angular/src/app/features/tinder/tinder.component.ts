@@ -22,19 +22,17 @@ import { MainLayoutComponent } from '../../shared/components/main-layout/main-la
 import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-card.component';
 
 @Component({
-  selector: 'app-tinder',
-  templateUrl: './tinder.component.html',
-  styleUrls: ['./tinder.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-
-    MainLayoutComponent,
-    TinderCardComponent,
-  ],
+    selector: 'app-tinder',
+    templateUrl: './tinder.component.html',
+    styleUrls: ['./tinder.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        MainLayoutComponent,
+        TinderCardComponent,
+    ]
 })
 export class TinderComponent implements OnInit {
   /**

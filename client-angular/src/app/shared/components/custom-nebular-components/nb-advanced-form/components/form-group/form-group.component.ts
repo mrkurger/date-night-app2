@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NbDatepickerModule } from '@nebular/theme';
 import { FormField } from '../../nb-advanced-form.component';
 
 @Component({
@@ -193,6 +194,7 @@ import { FormField } from '../../nb-advanced-form.component';
       }
     `,
   ],
+  standalone: false,
 })
 export class NbFormGroupComponent {
   @Input() field!: FormField;

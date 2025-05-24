@@ -21,8 +21,8 @@ import { CommonModule } from '@angular/common';
  * Supports various layouts including default, compact, and masonry.
  */
 @Component({
-  selector: 'app-card-grid',
-  template: `
+    selector: 'app-card-grid',
+    template: `
     <div class="card-grid" [ngClass]="layout" [ngStyle]="getGridStyle()">
       <ng-container *ngIf="!isLoading; else loadingTpl">
         <ng-container *ngIf="items.length > 0; else emptyTpl">
@@ -77,14 +77,13 @@ import { CommonModule } from '@angular/common';
       </div>
     </ng-template>
   `,
-  styleUrls: ['./card-grid.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbSpinnerModule,
-    NbIconModule
-  ],
+    styleUrls: ['./card-grid.component.scss'],
+    imports: [
+        CommonModule,
+        NbCardModule,
+        NbSpinnerModule,
+        NbIconModule
+    ]
 })
 export class CardGridComponent {
   /**

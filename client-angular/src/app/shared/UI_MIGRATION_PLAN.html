@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Migration Plan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>UI Migration Plan</h1>
+    <p>
+      This document outlines the migration of UI elements from Nebular and other frameworks to
+      PrimeNG components.
+    </p>
+
+    <h2>Migration Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Current Component</th>
+          <th>PrimeNG Replacement</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>NbButton</td>
+          <td>p-button</td>
+          <td>Replace with PrimeNG Button component.</td>
+        </tr>
+        <tr>
+          <td>NbCard</td>
+          <td>p-card</td>
+          <td>Replace with PrimeNG Card component.</td>
+        </tr>
+        <tr>
+          <td>NbDialog</td>
+          <td>p-dialog</td>
+          <td>Replace with PrimeNG Dialog component.</td>
+        </tr>
+        <tr>
+          <td>NbInput</td>
+          <td>p-inputText</td>
+          <td>Replace with PrimeNG InputText component.</td>
+        </tr>
+        <tr>
+          <td>NbSelect</td>
+          <td>p-dropdown</td>
+          <td>Replace with PrimeNG Dropdown component.</td>
+        </tr>
+        <tr>
+          <td>NbTable</td>
+          <td>p-table</td>
+          <td>Replace with PrimeNG Table component.</td>
+        </tr>
+        <tr>
+          <td>NbToastrService</td>
+          <td>p-toast</td>
+          <td>Replace with PrimeNG Toast component for notifications.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Next Steps</h2>
+    <ol>
+      <li>Identify all instances of the components listed above in the codebase.</li>
+      <li>Replace each instance with the corresponding PrimeNG component.</li>
+      <li>Update styles and logic as necessary to ensure compatibility.</li>
+      <li>Test each component thoroughly after migration.</li>
+    </ol>
+  </body>
+</html>

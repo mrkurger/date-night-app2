@@ -66,7 +66,7 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class LabelComponent {
+export class TagModule {
   @Input() text = '';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

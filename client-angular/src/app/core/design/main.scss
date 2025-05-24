@@ -31,7 +31,7 @@
 
 /* Forward design utilities */
 @forward 'bem-utilities';
-@forward 'responsive-utilities';
+@forward 'responsive-utilities' hide dark-mode;
 @forward 'accessibility-utilities';
 @forward 'css-variable-checker';
 @forward 'animation-utilities';

@@ -23,7 +23,6 @@ export interface Breadcrumb {
 
 @Component({
   selector: 'app-breadcrumbs',
-  standalone: true,
   imports: [CommonModule, RouterModule, NbIconModule],
   template: `
     <nav class="breadcrumbs" aria-label="breadcrumb">
@@ -173,7 +172,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     const urlSegments = this.router.url.split('/').filter((segment) => segment);
     this.breadcrumbs = [
       { label: 'Home', url: '/', icon: 'home-outline' },
-      ...urlSegments.map((segment,_index)=> {
+      ...urlSegments.map((segment, index) => {
         const url = `/${urlSegments.slice(0, index + 1).join('/')}`;
         return {
           label: this.formatLabel(segment),

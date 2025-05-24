@@ -20,11 +20,10 @@ import {
 // ===================================================
 
 @Component({
-  selector: 'app-debug-info',
-  standalone: true,
-  imports: [CommonModule,
-    NebularModule],
-  template: `
+    selector: 'app-debug-info',
+    imports: [CommonModule,
+        NebularModule],
+    template: `
     <nb-card *ngIf="showDebugInfo" class="debug-info">
       <nb-card-header>
         Debug Information
@@ -57,8 +56,8 @@ import {
       </nb-card-body>
     </nb-card>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .debug-info {
         position: fixed;
         bottom: 20px;
@@ -86,7 +85,7 @@ import {
         }
       }
     `,
-  ],
+    ]
 })
 export class DebugInfoComponent implements OnInit {
   showDebugInfo = !environment.production;

@@ -26,6 +26,7 @@ import {
   NbTableModule,
   NbListModule,
   NbTreeGridModule,
+  NbDatepickerModule,
 } from '@nebular/theme';
 
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
@@ -77,8 +78,9 @@ type ErrorColumnKey =
  */
 @Component({
   selector: 'app-telemetry-dashboard',
-  standalone: true,
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     NbCardModule,

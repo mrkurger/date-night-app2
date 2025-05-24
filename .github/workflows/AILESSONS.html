@@ -61,6 +61,20 @@
           balance freshness of data with resource usage.
         </li>
         <li>
+          <strong>Run workflows on all branches</strong>: Configure workflow triggers to run on all
+          branches using the <code>branches: ['**']</code> pattern to catch issues earlier in the
+          development process. Use branch-specific conditionals for deployment steps.
+        </li>
+        <li>
+          <strong>Standardize workflow structure</strong>: Apply consistent patterns across all
+          workflows including document start markers (---), concurrency controls, proper indentation,
+          and descriptive comments.
+        </li>
+        <li>
+          <strong>Apply YAML best practices</strong>: Follow YAML formatting conventions including
+          appropriate line length, avoiding trailing spaces, and using consistent quoting styles.
+        </li>
+        <li>
           <strong>Use artifact uploads</strong>: Upload large JSON files as artifacts instead of
           committing them to the repository.
         </li>
@@ -121,6 +135,35 @@
         </li>
       </ul>
 
+      <h2>Security Scanning Best Practices</h2>
+      <p>Lessons learned from implementing and optimizing the Trivy security scan workflow:</p>
+      
+      <ul>
+        <li>
+          <strong>Permission scoping</strong>: Always use the principle of least privilege when setting up permissions. Avoid using <code>contents: write</code> unless specifically needed.
+        </li>
+        <li>
+          <strong>Direct installation vs Actions</strong>: Consider direct installation of security tools for more control over the scanning process versus using pre-built actions which offer convenience but less flexibility.
+        </li>
+        <li>
+          <strong>Fail on vulnerabilities</strong>: Prefer to fail workflows when serious security issues are found by using appropriate exit codes (<code>--exit-code 1</code>) to enforce security standards.
+        </li>
+        <li>
+          <strong>Error handling</strong>: Add specific error handling steps that execute on failure to provide useful diagnostic information.
+        </li>
+        <li>
+          <strong>Workflow simplicity</strong>: Keep security workflows focused on specific purposes and minimize steps for better maintainability.
+        </li>
+        <li>
+          <strong>Submodule handling</strong>: Explicitly check out submodules and run initialization commands for complete scanning coverage.
+        </li>
+        <li>
+          <strong>Separate enforcement from reporting</strong>: Consider using different workflows for security enforcement (failing builds) and detailed reporting.
+        </li>
+      </ul>
+
+      <p>For a detailed example, see the <code>trivy-scan.yml</code> workflow which implements these practices.</p>
+
       <h2>Workflow Organization</h2>
       <p>GitHub Actions workflows in this project are organized into several categories:</p>
       <ul>
@@ -134,7 +177,7 @@
         </li>
         <li>
           <strong>Security workflows</strong>: Scan for security vulnerabilities and generate
-          reports (<code>security-reporting.yml</code>)
+          reports (<code>security-reporting.yml</code>, <code>trivy-scan.yml</code>)
         </li>
         <li>
           <strong>Monitoring workflows</strong>: Track errors and insights

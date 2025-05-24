@@ -22,6 +22,77 @@
     <main class="container">
       <h1>GitHub Actions Workflows Changelog</h1>
 
+      <h2>2025-05-24</h2>
+      <h3>Improved</h3>
+      <ul>
+        <li>
+          Enhanced workflow YAML formatting with document start markers (---) across all files
+        </li>
+        <li>
+          Extended branch configuration updates to additional workflows including angular-client-lint.yml, codeql-analysis.yml, and jfrog.yml
+        </li>
+        <li>
+          Added concurrency controls to all workflow files to prevent redundant runs
+        </li>
+        <li>
+          Standardized file formatting by updating indentation and removing trailing spaces
+        </li>
+        <li>
+          Improved documentation comments across all workflow files
+        </li>
+        <li>
+          Updated AILESSONS.html with additional workflow standardization guidance
+        </li>
+      </ul>
+
+      <h2>2025-05-23</h2>
+      <h3>Fixed</h3>
+      <ul>
+        <li>
+          Improved setup-nodejs GitHub Action to better handle working directory paths based on job context
+        </li>
+        <li>
+          Fixed incorrect directory reference in ci.yml (changed 'client' to 'client-angular')
+        </li>
+        <li>
+          Removed invalid input parameters from setup-nodejs action calls
+        </li>
+        <li>
+          Enhanced directory handling in setup-nodejs action for all job types (client, server, and root)
+        </li>
+        <li>
+          Added improved error reporting with directory context information
+        </li>
+        <li>
+          Implemented environment variable to share working directory between steps in the setup-nodejs action
+        </li>
+      </ul>
+
+      <h2>2025-05-03</h2>
+      <h3>Changed</h3>
+      <ul>
+        <li>
+          Updated workflow triggers to run on all branches using <code>branches: ['**']</code> pattern
+          to catch issues earlier in development
+        </li>
+        <li>
+          Added concurrency controls to prevent multiple instances of the same workflow from running
+          simultaneously
+        </li>
+        <li>
+          Fixed invalid branch configuration in <code>frogbot.yml</code> that used incorrect syntax
+        </li>
+        <li>
+          Updated incomplete branch configuration in <code>monitoring.yml</code> to run on all branches
+        </li>
+        <li>
+          Updated the CI/CD section in documentation to reflect branch-specific steps pattern
+        </li>
+        <li>
+          Added example of conditional execution for branch-specific actions in documentation
+        </li>
+      </ul>
+
       <h2>2025-05-02</h2>
       <h3>Fixed</h3>
       <ul>

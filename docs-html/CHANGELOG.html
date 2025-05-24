@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trivy Scan Workflow Changelog - Date Night App</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #333;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -150px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .function-link {
+        color: #0366d6;
+        text-decoration: none;
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .function-link:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Trivy Security Scan Workflow Changelog</h1>
+
+      <h2>Latest Changes</h2>
+      <h3>2025-04-25: Updated Trivy Security Scan Workflow</h3>
+
+      <p>The Trivy Security Scan workflow has been updated to improve the security scanning capabilities of the repository. This update simplifies the workflow and improves its effectiveness.</p>
+
+      <h4>Key Changes</h4>
+      <ul>
+        <li><strong>Changed permissions</strong>: Modified the permissions to be more restrictive (removed <code>contents: write</code> and <code>actions: read</code>) while maintaining the necessary permissions for security scanning</li>
+        <li><strong>Updated checkout action</strong>: Changed to use actions/checkout@v3 with recursive submodule initialization</li>
+        <li><strong>Direct installation</strong>: Now directly installs Trivy on the runner instead of using pre-built actions</li>
+        <li><strong>Streamlined scanning</strong>: Simplified the scanning process with more direct commands</li>
+        <li><strong>Exit code changes</strong>: Modified to fail the workflow when vulnerabilities are found (exit code 1), improving security enforcement</li>
+        <li><strong>Removed report generation</strong>: Removed the report generation and commit functionality to focus on security enforcement</li>
+        <li><strong>Simplified steps</strong>: Reduced the number of steps from 10 to 6, making the workflow more maintainable</li>
+      </ul>
+
+      <h4>Benefits</h4>
+      <ul>
+        <li>More focused security enforcement</li>
+        <li>Clearer failure conditions for security issues</li>
+        <li>Better submodule support</li>
+        <li>Streamlined workflow with fewer external dependencies</li>
+        <li>More direct control over the Trivy installation and scanning options</li>
+      </ul>
+
+      <h4>Implementation Details</h4>
+      <p>The new workflow:</p>
+      <ul>
+        <li>Installs Trivy directly on the runner</li>
+        <li>Scans for both high and critical vulnerabilities</li>
+        <li>Scans specifically for secrets</li>
+        <li>Has a separate step for dependency vulnerabilities</li>
+        <li>Includes a step to handle Trivy warnings when failures occur</li>
+      </ul>
+
+      <p>These changes align with best practices for security scanning in CI/CD pipelines.</p>
+      
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Date Night App. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Add click handlers to function links
+      document.addEventListener('DOMContentLoaded', function () {
+        const functionLinks = document.querySelectorAll('.function-link');
+        functionLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href) {
+              window.location.href = href;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

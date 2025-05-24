@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'nb-data-table-paginator',
-  template: `
+    selector: 'nb-data-table-paginator',
+    template: `
     <div class="paginator-container">
       <div class="page-size">
         <span class="page-size-label">Items per page:</span>
@@ -70,8 +70,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .paginator-container {
         display: flex;
         justify-content: space-between;
@@ -122,7 +122,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         margin-left: -0.5rem;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class NbDataTablePaginatorComponent {
   @Input() page = 1;

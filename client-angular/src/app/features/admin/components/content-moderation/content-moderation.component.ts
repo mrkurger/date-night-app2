@@ -16,11 +16,10 @@ interface ReportedContent {
 }
 
 @Component({
-  selector: 'app-content-moderation',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule, NebularModule],
-  template: `
+    selector: 'app-content-moderation',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, FormsModule, NebularModule],
+    template: `
     <div class="content-moderation">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between align-items-center">
@@ -90,8 +89,8 @@ interface ReportedContent {
       </nb-card>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         max-width: 100%;
@@ -120,7 +119,7 @@ interface ReportedContent {
         vertical-align: middle;
       }
     `,
-  ],
+    ]
 })
 export class ContentModerationComponent implements OnInit {
   loading = false;

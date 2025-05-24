@@ -5,10 +5,9 @@ import { CommonModule } from '@angular/common';
 import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
 
 @Component({
-  selector: 'app-error-details-dialog',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-error-details-dialog',
+    imports: [CommonModule],
+    template: `
     <div class="error-dialog-container">
       <h2>Error Details</h2>
       <mat-dialog-content>
@@ -48,8 +47,8 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
       </mat-dialog-actions>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
       }
@@ -99,7 +98,7 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
         padding: 0;
       }
     `,
-  ],
+    ]
 })
 export class ErrorDetailsDialogComponent {
   constructor(
