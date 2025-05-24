@@ -93,3 +93,6 @@ debug.log
 *.log
 test-results/
 archive/
+
+# MCP files
+lsp-mcp/*
