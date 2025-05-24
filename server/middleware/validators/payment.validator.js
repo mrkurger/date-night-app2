@@ -1,130 +1,43 @@
 /**
  * Validation middleware for payment-related routes
  */
-import { body } from 'express-validator';
-import { AppError } from '../errorHandler.js';
+import { z } from 'zod';
+import { zodSchemas } from '../../utils/validation-utils.ts';
 
-// Helper function to check validation results
-const validateResults = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(
-      new AppError(
-        `Validation error: ${errors
-          .array()
-          .map(e => e.msg)
-          .join(', ')}`,
-        400
-      )
-    );
-  }
-  next();
-};
+export const PaymentSchemas = {
+  // Schema for payment intent creation
+  createPaymentIntent: z.object({
+    amount: z.number().int().positive('Amount must be greater than 0'),
+    currency: z.enum(['nok', 'usd', 'eur']).optional().default('nok'),
+    metadata: z.record(z.string()).optional(),
+  }),
 
-// Validate payment intent creation
-const validatePaymentIntent = [
-  body('amount')
-    .notEmpty()
-    .withMessage('Amount is required')
-    .isInt({ min: 1 })
-    .withMessage('Amount must be greater than 0'),
+  // Schema for subscription
+  subscription: z.object({
+    planId: zodSchemas.objectId,
+    paymentMethodId: zodSchemas.objectId.optional(),
+    metadata: z.record(z.string()).optional(),
+  }),
 
-  body('currency')
-    .optional()
-    .isIn(['nok', 'usd', 'eur'])
-    .withMessage('Currency must be NOK, USD, or EUR'),
+  // Schema for ad boost
+  boostAd: z.object({
+    adId: zodSchemas.objectId,
+    duration: z.number().int().min(1).max(30),
+    boostLevel: z.enum(['basic', 'premium', 'ultra']),
+    paymentMethodId: zodSchemas.objectId.optional(),
+  }),
 
-  body('metadata')
-    .optional()
-    .isObject()
-    .withMessage('Metadata must be an object'),
+  // Schema for ad feature
+  featureAd: z.object({
+    adId: zodSchemas.objectId,
+    duration: z.number().int().min(1).max(90),
+    position: z.enum(['top', 'sidebar', 'homepage']).optional(),
+    paymentMethodId: zodSchemas.objectId.optional(),
+  }),
 
-  validateResults,
-];
-
-// Validate subscription creation
-const validateSubscription = [
-  body('priceId')
-    .notEmpty()
-    .withMessage('Price ID is required')
-    .matches(/^price_/)
-    .withMessage('Invalid price ID format'),
-
-  body('paymentMethodId')
-    .notEmpty()
-    .withMessage('Payment method ID is required')
-    .matches(/^pm_/)
-    .withMessage('Invalid payment method ID format'),
-
-  validateResults,
-];
-
-// Validate ad boost
-const validateBoostAd = [
-  body('adId')
-    .notEmpty()
-    .withMessage('Ad ID is required')
-    .isMongoId()
-    .withMessage('Invalid ad ID format'),
-
-  body('paymentMethodId')
-    .notEmpty()
-    .withMessage('Payment method ID is required')
-    .matches(/^pm_/)
-    .withMessage('Invalid payment method ID format'),
-
-  body('days')
-    .optional()
-    .isInt({ min: 1, max: 30 })
-    .withMessage('Days must be between 1 and 30'),
-
-  validateResults,
-];
-
-// Validate ad feature
-const validateFeatureAd = [
-  body('adId')
-    .notEmpty()
-    .withMessage('Ad ID is required')
-    .isMongoId()
-    .withMessage('Invalid ad ID format'),
-
-  body('paymentMethodId')
-    .notEmpty()
-    .withMessage('Payment method ID is required')
-    .matches(/^pm_/)
-    .withMessage('Invalid payment method ID format'),
-
-  validateResults,
-];
-
-// Validate webhook signature and request
-const validateWebhook = (req, res, next) => {
-  const signature = req.headers['stripe-signature'];
-  if (!signature) {
-    return next(new AppError('Stripe signature is missing', 400));
-  }
-
-  // Raw body is required for signature verification
-  if (!req.rawBody) {
-    return next(new AppError('Raw request body is required', 400));
-  }
-
-  next();
-};
-
-export {
-  validatePaymentIntent,
-  validateSubscription,
-  validateBoostAd,
-  validateFeatureAd,
-  validateWebhook,
-};
-
-export default {
-  validatePaymentIntent,
-  validateSubscription,
-  validateBoostAd,
-  validateFeatureAd,
-  validateWebhook,
+  // Schema for webhook request
+  webhookRequest: z.object({
+    type: z.string(),
+    data: z.object({}).passthrough(), // Allow any data in webhook payload
+  }),
 };

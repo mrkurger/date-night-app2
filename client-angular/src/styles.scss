@@ -1,8 +1,24 @@
+<<<<<<< HEAD
 // Import PrimeNG styles
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
+=======
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+@use '@nebular/theme/styles/themes/cosmic' as dark;
+@use './app/core/design/tokens' as tokens;
+@use './app/core/design/utilities' as utils;
+@use '@fontsource/inter' as inter;
+@use '@fontsource/poppins' as poppins;
+@use './app/core/design/responsive' as responsive;
+@use './app/core/design/animations' as animations;
+@use './app/core/design/typography' as typography;
+@use './app/core/design/spacing' as spacing;
+@use './app/core/design/spacing-utilities-fix' as spacing-fix;
+@use '@primeng/themes/aura/light/blue/theme.css' as primeng-aura;
+>>>>>>> main
 
 // Core styles
 @use 'app/core/design/variables';

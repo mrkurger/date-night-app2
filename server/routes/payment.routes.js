@@ -12,28 +12,41 @@ const router = express.Router();
 import paymentController from '../controllers/payment.controller.js';
 import { protect } from '../middleware/auth.js';
 import bodyParser from 'body-parser';
-import {
-  validatePaymentIntent,
-  validateSubscription,
-  validateBoostAd,
-  validateFeatureAd,
-  validateWebhook,
-} from '../middleware/validators/payment.validator.js';
+import { validateWithZod } from '../utils/validation-utils.ts';
+import PaymentSchemas from '../middleware/validators/payment.validator.js';
 
 // Special raw body parser for Stripe webhooks
 const stripeWebhookParser = bodyParser.raw({ type: 'application/json' });
 
 // Public routes
-router.post('/webhook', stripeWebhookParser, validateWebhook, paymentController.handleWebhook);
+router.post(
+  '/webhook',
+  stripeWebhookParser,
+  validateWithZod(PaymentSchemas.webhookRequest),
+  paymentController.handleWebhook
+);
+
 router.get('/subscription-prices', paymentController.getSubscriptionPrices);
 
 // Protected routes (require authentication)
 router.use(protect);
 
-router.post('/create-payment-intent', validatePaymentIntent, paymentController.createPaymentIntent);
-router.post('/create-subscription', validateSubscription, paymentController.createSubscription);
+router.post(
+  '/create-payment-intent',
+  validateWithZod(PaymentSchemas.createPaymentIntent),
+  paymentController.createPaymentIntent
+);
+
+router.post(
+  '/create-subscription',
+  validateWithZod(PaymentSchemas.subscription),
+  paymentController.createSubscription
+);
+
 router.post('/cancel-subscription', paymentController.cancelSubscription);
-router.post('/boost-ad', validateBoostAd, paymentController.boostAd);
-router.post('/feature-ad', validateFeatureAd, paymentController.featureAd);
+
+router.post('/boost-ad', validateWithZod(PaymentSchemas.boostAd), paymentController.boostAd);
+
+router.post('/feature-ad', validateWithZod(PaymentSchemas.featureAd), paymentController.featureAd);
 
 export default router;

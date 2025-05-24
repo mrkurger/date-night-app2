@@ -1,17 +1,58 @@
 import { Request, Response, NextFunction } from 'express';
-import { validationResult, ValidationChain } from 'express-validator';
 import { AnyZodObject, ZodError } from 'zod';
-import { ValidationErrorHandler } from './error-handler';
+import { ValidationError } from '../../utils/validation-utils';
 
+/**
+ * Standardized error response format for validation errors
+ */
+interface ValidationErrorResponse {
+  success: false;
+  message: string;
+  errors: ValidationError[];
+}
+
+/**
+ * Handles formatting and sending validation error responses
+ */
+export class ValidationErrorHandler {
+  /**
+   * Format Zod validation errors into a consistent structure
+   */
+  static formatZodError(error: ZodError): ValidationError[] {
+    return error.errors.map(err => ({
+      field: err.path.join('.'),
+      message: err.message,
+      value: err.code,
+    }));
+  }
+
+  /**
+   * Send formatted validation error response
+   */
+  static sendValidationError(res: Response, errors: ValidationError[]): Response {
+    const errorResponse: ValidationErrorResponse = {
+      success: false,
+      message: 'Validation failed',
+      errors,
+    };
+    return res.status(422).json(errorResponse);
+  }
+}
+
+/**
+ * Main validation middleware class
+ */
 export class ValidationMiddleware {
   /**
    * Validate request using Zod schema
+   * @param schema Schema to validate against
+   * @param property Request property to validate (body, query, params)
    */
-  static validateWithZod(schema: AnyZodObject, property: keyof Request = 'body') {
+  static validateWithZod(schema: AnyZodObject, property: 'body' | 'query' | 'params' = 'body') {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
-        req[property] = await schema.parseAsync(req[property]);
-        next();
+        await schema.parseAsync(req[property]);
+        return next();
       } catch (error) {
         if (error instanceof ZodError) {
           const formattedErrors = ValidationErrorHandler.formatZodError(error);
@@ -23,45 +64,18 @@ export class ValidationMiddleware {
   }
 
   /**
-   * Validate request using express-validator
-   */
-  static validateWithExpressValidator(validations: ValidationChain[]) {
-    return async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        // Execute all validations
-        await Promise.all(validations.map(validation => validation.run(req)));
-
-        // Check results
-        const errors = validationResult(req);
-        if (errors.isEmpty()) {
-          return next();
-        }
-
-        // Format errors
-        const formattedErrors = ValidationErrorHandler.formatExpressValidatorError(errors.array());
-        return ValidationErrorHandler.sendValidationError(res, formattedErrors);
-      } catch (error) {
-        next(error);
-      }
-    };
-  }
-
-  /**
    * Combine multiple validation middlewares
    */
   static combine(
-    ...validations: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
+    ...middlewares: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
   ) {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
-        for (const validation of validations) {
-          await new Promise<void>((resolve, reject) => {
-            validation(req, res, (error?: any) => {
-              if (error) {
-                reject(error);
-              } else {
-                resolve();
-              }
+        for (const middleware of middlewares) {
+          await new Promise((resolve, reject) => {
+            middleware(req, res, err => {
+              if (err) reject(err);
+              else resolve(true);
             });
           });
         }

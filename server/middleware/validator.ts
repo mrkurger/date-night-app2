@@ -3,17 +3,25 @@
  * Implements validation rules for various API endpoints
  */
 
-import { body, query, param, validationResult } from 'express-validator';
+import type { Request, Response, NextFunction } from 'express';
+import {
+  body,
+  query,
+  param,
+  validationResult,
+  ValidationError as ExpressValidationError,
+} from 'express-validator';
 import { zodSchemas, ValidationUtils } from '../utils/validation-utils';
+import { ZodError } from 'zod';
 
 // Helper function to validate validation results
-const validate = (req, res, next) => {
+const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
-      errors: errors.array().map(error => ({
-        field: error.param,
+      errors: errors.array().map((error: ExpressValidationError) => ({
+        field: error.type === 'field' ? error.path : error.type,
         message: error.msg,
       })),
     });
@@ -82,7 +90,10 @@ const standardValidation = {
         zodSchemas.password.parse(value);
         return true;
       } catch (error) {
-        throw new Error(error.errors[0].message);
+        if (error instanceof ZodError) {
+          throw new Error(error.errors[0].message);
+        }
+        throw error;
       }
     }),
 

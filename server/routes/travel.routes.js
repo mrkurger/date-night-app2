@@ -1,47 +1,49 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for travel.routes settings
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.js:OTHER_SETTING
-// ===================================================
 import express from 'express';
-const router = express.Router();
-import travelController from '../controllers/travel.controller.js';
-import { authenticateToken } from '../middleware/authenticateToken.js';
+import { protect as authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
-import travelValidator from '../middleware/validators/travel.validator.js';
+import travelController from '../controllers/travel.controller.js';
+import { ValidationUtils } from '../utils/validation-utils.ts';
+import TravelSchemas from '../middleware/validators/travel.validator.js';
 
-// Protected routes requiring authentication
-router.use(authenticateToken);
+const router = express.Router();
 
-// Routes for managing travel itineraries
-router.get('/ad/:adId', travelValidator.validateAdId, travelController.getItineraries);
+// All routes require authentication
+router.use(authenticate);
 
+// Create a new itinerary
 router.post(
-  '/ad/:adId',
+  '/ad/:adId/itinerary',
   isAdvertiser,
-  travelValidator.validateAdId,
-  travelValidator.validateItineraryData,
-  travelController.addItinerary
+  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
+  ValidationUtils.validateWithZod(TravelSchemas.itineraryData),
+  travelController.createItinerary
 );
 
+// Get advertiser itineraries
+router.get(
+  '/ad/:adId/itineraries',
+  isAdvertiser,
+  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
+  ValidationUtils.validateWithZod(ValidationUtils.zodSchemas.pagination, 'query'),
+  travelController.getAdvertiserItineraries
+);
+
+// Update an itinerary
 router.put(
   '/ad/:adId/itinerary/:itineraryId',
   isAdvertiser,
-  travelValidator.validateAdId,
-  travelValidator.validateItineraryId,
-  travelValidator.validateItineraryData,
+  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
+  ValidationUtils.validateWithZod(TravelSchemas.itineraryIdParam, 'params'),
+  ValidationUtils.validateWithZod(TravelSchemas.itineraryData),
   travelController.updateItinerary
 );
 
+// Delete an itinerary
 router.delete(
   '/ad/:adId/itinerary/:itineraryId',
   isAdvertiser,
-  travelValidator.validateAdId,
-  travelValidator.validateItineraryId,
+  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
+  ValidationUtils.validateWithZod(TravelSchemas.itineraryIdParam, 'params'),
   travelController.cancelItinerary
 );
 
@@ -49,20 +51,28 @@ router.delete(
 router.put(
   '/ad/:adId/location',
   isAdvertiser,
-  travelValidator.validateAdId,
-  travelValidator.validateLocationUpdate,
+  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
+  ValidationUtils.validateWithZod(TravelSchemas.locationUpdate),
   travelController.updateLocation
 );
 
 // Public routes for browsing travel information
-router.get('/touring', travelController.getTouringAdvertisers);
+router.get(
+  '/touring',
+  ValidationUtils.validateWithZod(ValidationUtils.zodSchemas.pagination, 'query'),
+  travelController.getTouringAdvertisers
+);
 
 router.get(
   '/upcoming',
-  travelValidator.validateUpcomingToursQuery,
+  ValidationUtils.validateWithZod(TravelSchemas.upcomingToursQuery, 'query'),
   travelController.getUpcomingTours
 );
 
-router.get('/location', travelValidator.validateLocationQuery, travelController.getAdsByLocation);
+router.get(
+  '/location',
+  ValidationUtils.validateWithZod(TravelSchemas.locationQuery, 'query'),
+  travelController.getAdsByLocation
+);
 
 export default router;

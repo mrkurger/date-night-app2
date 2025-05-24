@@ -12,6 +12,8 @@ import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
@@ -37,6 +39,15 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: false, // Disable in development mode to prevent 404 errors
       registrationStrategy: 'registerWhenStable:30000',
+    }),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkMode: false, // Configure as needed
+        },
+      },
+      ripple: true, // Optional: enable ripple effect globally
     }),
     importProvidersFrom(
       CoreModule,

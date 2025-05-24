@@ -5,6 +5,7 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
+<<<<<<< HEAD
     "start": "node -r dotenv/config dist/server.js",
     "dev": "npx nodemon -r dotenv/config dist/server.js",
     "build": "tsc",
@@ -12,6 +13,13 @@
     "test": "NODE_ENV=test npx jest --config=jest.config.ts",
     "test:watch": "NODE_ENV=test npx jest --watch --config=jest.config.ts",
     "test:coverage": "NODE_ENV=test npx jest --coverage --config=jest.config.ts",
+=======
+    "start": "tsx -r dotenv/config server.js",
+    "dev": "npx nodemon -r dotenv/config server.js",
+    "test": "NODE_ENV=test npx jest --config=jest.config.cjs",
+    "test:esm": "NODE_ENV=test npx jest --config=jest.config.cjs",
+    "test:server": "NODE_ENV=test npx jest --config=jest.config.cjs",
+>>>>>>> main
     "predev": "node ../scripts/ensure-mongodb.js",
     "start-client": "node ./scripts/start-client.js",
     "audit-fix": "npm audit fix --force",
@@ -38,7 +46,6 @@
     "express-mongo-sanitize": "2.2.0",
     "express-rate-limit": "7.5.0",
     "express-session": "^1.18.0",
-    "express-validator": "^7.2.1",
     "file-type": "20.5.0",
     "glob": "^10.3.10",
     "helmet": "8.1.0",
@@ -112,10 +119,14 @@
     "nodemon": "^3.1.9",
     "prettier": "3.5.3",
     "supertest": "7.1.1",
+<<<<<<< HEAD
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.3.1",
     "typescript": "^5.8.3"
+=======
+    "tsx": "^4.19.4"
+>>>>>>> main
   },
   "engines": {
     "node": "22.14.0",

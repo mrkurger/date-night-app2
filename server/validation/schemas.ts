@@ -1,10 +1,11 @@
 /**
- * Validation schemas using Zod
+ * Common validation schemas using Zod
  */
 import { z } from 'zod';
 import mongoose from 'mongoose';
 
 export const zodSchemas = {
+  // Basic types
   objectId: z.string().refine((val: string) => mongoose.Types.ObjectId.isValid(val), {
     message: 'Invalid ObjectId format',
   }),
@@ -21,8 +22,7 @@ export const zodSchemas = {
 
   url: z.string().url(),
 
-  date: z.string().datetime(),
-
+  // Norwegian specific
   norwegianPhone: z.string().regex(/^(\+47)?[2-9]\d{7}$/, {
     message: 'Must be a valid Norwegian phone number',
   }),
@@ -31,6 +31,7 @@ export const zodSchemas = {
     message: 'Must be a valid Norwegian postal code',
   }),
 
+  // Common objects
   coordinates: z.object({
     type: z.literal('Point'),
     coordinates: z.tuple([
@@ -42,12 +43,20 @@ export const zodSchemas = {
   pagination: z.object({
     page: z.number().int().positive().optional().default(1),
     limit: z.number().int().min(1).max(100).optional().default(10),
+    sort: z.string().optional(),
+    order: z.enum(['asc', 'desc']).optional().default('asc'),
   }),
 
   // Common string validations
-  nonEmptyString: z.string().min(1, 'Field cannot be empty').max(1000, 'Field is too long'),
+  nonEmptyString: z.string().min(1, 'Field cannot be empty'),
   shortString: z.string().max(100, 'Text is too long'),
+  mediumString: z.string().max(500, 'Text is too long'),
   longString: z.string().max(2000, 'Text is too long'),
+
+  // Date validation
+  date: z.string().datetime(),
+  pastDate: z.date().max(new Date(), 'Date cannot be in the future'),
+  futureDate: z.date().min(new Date(), 'Date cannot be in the past'),
 
   // Date range validation
   dateRange: z
@@ -58,4 +67,8 @@ export const zodSchemas = {
     .refine(data => new Date(data.endDate) > new Date(data.startDate), {
       message: 'End date must be after start date',
     }),
+
+  // Array validations
+  nonEmptyArray: z.array(z.any()).min(1, 'Array cannot be empty'),
+  limitedArray: z.array(z.any()).max(100, 'Too many items'),
 };
