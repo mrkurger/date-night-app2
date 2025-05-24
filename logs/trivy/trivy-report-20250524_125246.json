@@ -1,0 +1,57 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-05-24T12:54:00.508926258Z",
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "Metadata": {
+    "ImageConfig": {
+      "architecture": "",
+      "created": "0001-01-01T00:00:00Z",
+      "os": "",
+      "rootfs": {
+        "type": "",
+        "diff_ids": null
+      },
+      "config": {}
+    }
+  },
+  "Results": [
+    {
+      "Target": ".github/scripts/package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm"
+    },
+    {
+      "Target": "client-angular/package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm"
+    },
+    {
+      "Target": "package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm"
+    },
+    {
+      "Target": "server/package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm"
+    },
+    {
+      "Target": "server/pnpm-lock.yaml",
+      "Class": "lang-pkgs",
+      "Type": "pnpm"
+    },
+    {
+      "Target": "client-angular/src/environments/environment.ts",
+      "Class": "secret"
+    },
+    {
+      "Target": "docs/component-library/js/search/search_index.js",
+      "Class": "secret"
+    },
+    {
+      "Target": "docs/component-library/miscellaneous/variables.html",
+      "Class": "secret"
+    }
+  ]
+}
