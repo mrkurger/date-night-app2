@@ -138,13 +138,18 @@ jobs:
         run: |
           echo "::group::Processing scan results"
           # Count vulnerabilities found
-          CODE_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' scan-results/code-vulnerabilities.json)
-          SECRET_VULNS=$(jq '.Results | map(.Secrets | length) | add // 0' scan-results/secrets.json)
-          DEP_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' scan-results/dependencies.json)
+          CODE_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' \
+            scan-results/code-vulnerabilities.json)
+          SECRET_VULNS=$(jq '.Results | map(.Secrets | length) | add // 0' \
+            scan-results/secrets.json)
+          DEP_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' \
+            scan-results/dependencies.json)
           
           # Generate HTML report
           echo "<html><head><title>Trivy Scan Results</title>" > scan-results/report.html
-          echo "<style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}th{background-color:#f2f2f2}tr:nth-child(even){background-color:#f9f9f9}</style>" >> scan-results/report.html
+          echo "<style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}" \
+            "th,td{border:1px solid #ddd;padding:8px}th{background-color:#f2f2f2}" \
+            "tr:nth-child(even){background-color:#f9f9f9}</style>" >> scan-results/report.html
           echo "</head><body><h1>Trivy Scan Results</h1>" >> scan-results/report.html
           
           # Add summary
@@ -178,7 +183,8 @@ jobs:
           echo "| Dependency Vulnerabilities | $DEP_VULNS |" >> scan-results/summary.md
           
           # Set exit status if critical vulnerabilities found (for non-PR runs)
-          CRITICAL_VULNS=$(jq '.Results | map(.Vulnerabilities // [] | map(select(.Severity=="CRITICAL")) | length) | add // 0' scan-results/code-vulnerabilities.json)
+          CRITICAL_VULNS=$(jq '.Results | map(.Vulnerabilities // [] | '\
+'map(select(.Severity=="CRITICAL")) | length) | add // 0' scan-results/code-vulnerabilities.json)
           if [[ $CRITICAL_VULNS -gt 0 && "${{ github.event_name }}" != "pull_request" ]]; then
             echo "::warning::$CRITICAL_VULNS critical vulnerabilities found!"
             # Don't fail the workflow, but alert the user
