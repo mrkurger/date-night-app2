@@ -6,8 +6,6 @@
 // ===================================================
 
 import { NgModule } from '@angular/core';
-
-// PrimeNG Modules
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -47,8 +45,10 @@ import { MessagesModule } from 'primeng/messages';
 import { TextareaModule } from 'primeng/textarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/messageservice';
+import { ConfirmationService } from 'primeng/confirmationservice';
 
+// PrimeNG Modules
 const PRIMENG_MODULES = [
   CardModule,
   ButtonModule,

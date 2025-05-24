@@ -213,7 +213,7 @@ export interface InfoPanelItem {
     `,
   ],
 })
-export class InfoPanelComponent {
+export class PanelModule {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() items: InfoPanelItem[] = [];

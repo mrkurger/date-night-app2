@@ -1,10 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import type { Ad } from '../../../../core/models/ad.interface';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
-
-import type { Ad } from '../../../../core/models/ad.interface';
 
 /**
  * AppCard Component
@@ -19,7 +18,7 @@ import type { Ad } from '../../../../core/models/ad.interface';
   imports: [CommonModule, CardModule, ButtonModule, BadgeModule],
   standalone: true,
 })
-export class AppCardComponent implements OnInit {
+export class CardModule implements OnInit {
   @Input() ad!: Ad;
   @Input() layout: 'tinder' | 'netflix' | 'list' = 'netflix';
   @Input() showActions = true;

@@ -25,6 +25,17 @@ import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNG Modules
+// Application Services
+import { AdService } from '../../core/services/ad.service';
+import { NotificationPrimeNGService } from '../../core/services/notification.primeng.service';
+import { ChatService } from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+
+// Application Models
+import { Ad } from '../../core/models/ad.interface';
+
+// Layout Components
+import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -39,18 +50,6 @@ import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
 
-// Application Services
-import { AdService } from '../../core/services/ad.service';
-import { NotificationPrimeNGService } from '../../core/services/notification.primeng.service';
-import { ChatService } from '../../core/services/chat.service';
-import { AuthService } from '../../core/services/auth.service';
-
-// Application Models
-import { Ad } from '../../core/models/ad.interface';
-
-// Layout Components
-import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
-
 interface GetAdsResponse {
   ads: Ad[];
   total: number;
@@ -64,7 +63,7 @@ interface GetAdsResponse {
   styleUrls: ['./netflix-view.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [
+  imports: [TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

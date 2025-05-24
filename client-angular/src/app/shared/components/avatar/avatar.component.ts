@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/menuitem';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ContextMenuModule, ContextMenu } from 'primeng/contextmenu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
-
 export interface AvatarMenuItem extends MenuItem {
   data?: any;
 }
@@ -20,7 +19,7 @@ export interface AvatarMenuItem extends MenuItem {
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [
+  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem, 
     CommonModule,
     RouterModule,
     AvatarModule,
@@ -129,7 +128,7 @@ export interface AvatarMenuItem extends MenuItem {
     `,
   ],
 })
-export class AvatarComponent {
+export class AvatarModule {
   @Input() imageUrl: string | undefined = '/assets/img/default-profile.jpg';
   @Input() name = '';
   @Input() title = '';

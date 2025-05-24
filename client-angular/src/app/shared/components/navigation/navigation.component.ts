@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/menuitem';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { MenubarModule } from 'primeng/menubar';
@@ -10,7 +10,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
-
 export interface NavigationConfig {
   showSidebar?: boolean;
   showTopMenu?: boolean;
@@ -253,7 +252,7 @@ export interface UserData {
       }
     }
   `],
-  imports: [
+  imports: [RippleModule, MenuModule, AvatarModule, AutoCompleteModule, BreadcrumbModule, MenubarModule, SidebarModule, ButtonModule, MenuItem, 
     CommonModule,
     RouterModule,
     ButtonModule,

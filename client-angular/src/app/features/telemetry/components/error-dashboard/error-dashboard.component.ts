@@ -8,8 +8,6 @@ import { ErrorCategory } from '../../../../core/interceptors/http-error.intercep
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
 import { ErrorLog } from '../../../admin/components/error-security-dashboard/error-security-dashboard.component'; // Added import
 import { FormGroup, FormBuilder } from '@angular/forms';
-
-// PrimeNG Modules
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,6 +18,7 @@ import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
 
+// PrimeNG Modules
 /**
  * Error Dashboard Component
  *

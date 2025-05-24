@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
-import { MenuItem } from 'primeng/api';
-
+import { MenuItem } from 'primeng/menuitem';
 @Component({
   selector: 'p-top-menu',
   template: `
@@ -71,7 +70,7 @@ import { MenuItem } from 'primeng/api';
     `,
   ],
   standalone: true,
-  imports: [CommonModule, MenubarModule],
+  imports: [MenuItem, CommonModule, MenubarModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopMenuComponent {

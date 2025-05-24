@@ -8,13 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 
 // PrimeNG imports
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { BadgeModule } from 'primeng/badge';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { AvatarModule } from 'primeng/avatar';
-import { TooltipModule } from 'primeng/tooltip';
-
 // Services and Models
 import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
 import { EncryptionService } from '../../../core/services/encryption.service';
@@ -24,10 +17,16 @@ import { AuthService } from '../../../core/services/auth.service';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AvatarModule } from 'primeng/avatar';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-chat-message',
-  imports: [
+  imports: [TooltipModule, AvatarModule, ProgressSpinnerModule, BadgeModule, ButtonModule, CardModule, 
     CommonModule,
     CardModule,
     ButtonModule,

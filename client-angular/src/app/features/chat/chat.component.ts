@@ -13,6 +13,17 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 
 // PrimeNG imports
+// Custom components and services
+import { AvatarModule } from '../../shared/components/avatar/avatar.component';
+import {
+  ChatService,
+  ChatMessage,
+  ChatRoom,
+  ChatParticipant,
+  ChatMessageRequest,
+} from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,20 +37,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FileUploadModule } from 'primeng/fileupload';
-import { MenuItem } from 'primeng/api';
-import { MessageService, ConfirmationService } from 'primeng/api';
-
-// Custom components and services
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import {
-  ChatService,
-  ChatMessage,
-  ChatRoom,
-  ChatParticipant,
-  ChatMessageRequest,
-} from '../../core/services/chat.service';
-import { AuthService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
+import { MenuItem } from 'primeng/menuitem';
+import { MessageService } from 'primeng/messageservice';
+import { ConfirmationService } from 'primeng/confirmationservice';
 
 /**
  * ChatComponent provides a real-time chat interface using PrimeNG components.
@@ -60,7 +60,7 @@ import { NotificationService } from '../../core/services/notification.service';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [
+  imports: [MessageService, MenuItem, FileUploadModule, ProgressSpinnerModule, ConfirmDialogModule, SkeletonModule, AvatarModule, TabViewModule, DialogModule, MenuModule, TooltipModule, BadgeModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
     CardModule,
@@ -76,7 +76,7 @@ import { NotificationService } from '../../core/services/notification.service';
     ConfirmDialogModule,
     ProgressSpinnerModule,
     FileUploadModule,
-    AvatarComponent,
+    AvatarModule,
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './chat.component.html',

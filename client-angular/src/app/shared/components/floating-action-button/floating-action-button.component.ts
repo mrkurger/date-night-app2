@@ -121,7 +121,7 @@ export interface FabMenuItem extends NbMenuItem {
     `,
     ]
 })
-export class FloatingActionButtonComponent {
+export class ButtonModule {
   @Input() icon = 'plus-outline';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

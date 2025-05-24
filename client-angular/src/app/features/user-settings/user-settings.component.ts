@@ -2,9 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Message, MessageService } from 'primeng/api';
-
 // PrimeNG Components
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Message } from 'primeng/message';
+import { MessageService } from 'primeng/messageservice';
 import { CardModule } from 'primeng/card';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,19 +23,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessagesModule } from 'primeng/messages';
 
-import { AuthService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
-import { ThemeService } from '../../core/services/theme.service';
-import { UserPreferencesService } from '../../core/services/user-preferences.service';
-import { Subscription, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 type ThemeName = 'light' | 'dark' | 'system';
 
 @Component({
   selector: 'app-user-settings',
   standalone: true,
-  imports: [
+  imports: [MessagesModule, ProgressSpinnerModule, InputTextareaModule, TabViewModule, RadioButtonModule, CheckboxModule, DropdownModule, ButtonModule, InputTextModule, InputGroupModule, CardModule, MessageService, Message, 
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

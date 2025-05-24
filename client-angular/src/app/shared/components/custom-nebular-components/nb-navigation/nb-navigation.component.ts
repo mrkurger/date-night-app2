@@ -5,8 +5,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { SidebarModule } from 'primeng/sidebar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
-import { MenuItem } from 'primeng/api';
-
+import { MenuItem } from 'primeng/menuitem';
 export interface NavigationConfig {
   showSidebar?: boolean;
   showTopMenu?: boolean;
@@ -107,7 +106,7 @@ export interface UserData {
       }
     `,
   ],
-  imports: [
+  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule, 
     CommonModule,
     RouterModule,
     MenubarModule,

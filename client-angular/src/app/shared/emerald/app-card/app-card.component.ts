@@ -80,7 +80,7 @@ import { CommonModule } from '@angular/common';
         NbTooltipModule
     ]
 })
-export class AppCardComponent {
+export class CardModule {
   /**
    * The title of the card
    */

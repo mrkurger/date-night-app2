@@ -2,9 +2,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { CommonModule } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/menuitem';
 import { BadgeModule } from 'primeng/badge';
-
 export interface UserData {
   name: string;
   title?: string;
@@ -99,7 +98,7 @@ export interface UserData {
     \`
   ],
   standalone: true,
-  imports: [
+  imports: [BadgeModule, MenuItem, MenuModule, AvatarModule, 
     CommonModule,
     AvatarModule,
     MenuModule,

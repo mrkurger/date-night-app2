@@ -38,7 +38,7 @@ import { ChatComponent } from './chat.component';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
+import { AvatarModule } from '../../shared/components/avatar/avatar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../core/models/user.interface';
 
@@ -229,7 +229,7 @@ describe('ChatComponent', () => {
         ProgressSpinnerModule,
         FileUploadModule,
         ChatComponent,
-        AvatarComponent,
+        AvatarModule,
       ],
       providers: [
         { provide: ChatService, useValue: chatServiceSpy },

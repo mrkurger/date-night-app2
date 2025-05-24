@@ -26,8 +26,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbThemeModule } from '@nebular/theme';
 
 // PrimeNG Theming
-import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { providePrimeNG } from 'primeng/provideprimeng';
 
 export const appConfig: ApplicationConfig = {
   providers: [

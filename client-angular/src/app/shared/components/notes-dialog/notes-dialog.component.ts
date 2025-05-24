@@ -1,8 +1,10 @@
-import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared.module';
+import { DialogService } from 'primeng/dialogservice';
+import { DynamicDialogRef } from 'primeng/dynamicdialogref';
+import { DynamicDialogConfig } from 'primeng/dynamicdialogconfig';
 
 export interface NotesDialogData {
   title?: string;

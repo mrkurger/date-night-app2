@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class FloatingActionButtonComponent {
+export class ButtonModule {
   /**
    * The icon to display in the button
    * Uses Font Awesome icons (e.g., 'fa-plus')

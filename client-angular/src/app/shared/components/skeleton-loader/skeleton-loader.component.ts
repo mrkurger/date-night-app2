@@ -120,7 +120,7 @@ import { CommonModule } from '@angular/common';
     `,
     ]
 })
-export class SkeletonLoaderComponent {
+export class SkeletonModule {
   @Input() type: 'text' | 'title' | 'avatar' | 'thumbnail' | 'button' = 'text';
   @Input() variant: 'text' | 'card' | 'circle' = 'text';
   @Input() width?: string;

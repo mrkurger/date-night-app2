@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
   faHeart,
   faTimes,
   faMessage,
@@ -149,7 +149,7 @@ export interface TinderCardData {
     </p-card>
   `,
   styleUrls: ['./tinder-card.component.scss'],
-  imports: [
+  imports: [TagModule, ChipModule, ButtonModule, CardModule, 
     CommonModule,
     CardModule,
     ButtonModule,

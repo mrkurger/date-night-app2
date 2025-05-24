@@ -14,8 +14,8 @@ import { NebularModule } from '../../nebular.module';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AppCardComponent } from './app-card.component';
-import { LabelComponent } from '../components/label/label.component';
+import { CardModule } from './app-card.component';
+import { TagModule } from '../components/label/label.component';
 
 /**
  * Custom HTML template for testing to avoid using the shared template
@@ -35,12 +35,12 @@ import { LabelComponent } from '../components/label/label.component';
       </div>
     </div>
   `,
-    imports: [CommonModule, LabelComponent,
+    imports: [CommonModule, TagModule,
         NbTagModule,]
 })
-class TestAppCardComponent extends AppCardComponent {}
+class TestAppCardComponent extends CardModule {}
 
-describe('AppCardComponent (Basic Version)', () => {
+describe('CardModule (Basic Version)', () => {
   let component: TestAppCardComponent;
   let fixture: ComponentFixture<TestAppCardComponent>;
   // let debugElement: DebugElement;
@@ -64,7 +64,7 @@ describe('AppCardComponent (Basic Version)', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, TestAppCardComponent, LabelComponent],
+      imports: [CommonModule, TestAppCardComponent, TagModule],
       schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements/attributes
     }).compileComponents();
 
@@ -93,7 +93,7 @@ describe('AppCardComponent (Basic Version)', () => {
     });
 
     it('should initialize with default values', () => {
-      const newComponent = new AppCardComponent();
+      const newComponent = new CardModule();
       expect(newComponent.layout).toBe('default');
       expect(newComponent.title).toBe('');
       expect(newComponent.subtitle).toBe('');

@@ -5,7 +5,6 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
-
 interface Advertiser {
   id: number | string;
   name: string;

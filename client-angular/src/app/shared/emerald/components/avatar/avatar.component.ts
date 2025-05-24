@@ -22,7 +22,7 @@ import {
     RouterModule
   ],
 })
-export class AvatarComponent implements OnInit {
+export class AvatarModule implements OnInit {
   @Input() imageUrl = '/assets/img/default-profile.jpg';
   @Input() name = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

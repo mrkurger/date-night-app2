@@ -29,9 +29,9 @@ import { Ad } from '../../core/models/ad.interface';
 
 // Import our Nebular-based components
 import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-card.component';
-import { FloatingActionButtonComponent } from '../../shared/components/floating-action-button/floating-action-button.component';
-import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
-import { ToggleComponent } from '../../shared/components/toggle/toggle.component';
+import { ButtonModule } from '../../shared/components/floating-action-button/floating-action-button.component';
+import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { InputSwitchModule } from '../../shared/components/toggle/toggle.component';
 
 // Mock MainLayoutComponent
 @Component({
@@ -159,9 +159,9 @@ describe('TinderComponent', () => {
         FormsModule,
         TinderComponent,
         TinderCardComponent,
-        FloatingActionButtonComponent,
-        SkeletonLoaderComponent,
-        ToggleComponent,
+        ButtonModule,
+        SkeletonModule,
+        InputSwitchModule,
       ],
       declarations: [MockMainLayoutComponent],
       providers: [

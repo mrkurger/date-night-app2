@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { NbPaginationChangeEvent } from './nb-paginator.module';
+import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorState } from 'primeng/paginatorstate';
 
 @Component({
   selector: 'nb-paginator',

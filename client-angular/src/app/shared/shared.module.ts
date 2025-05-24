@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNG Modules
+// Font Awesome for icons (replacement for Eva Icons)
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,9 +28,6 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { PaginatorModule } from 'primeng/paginator';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
-// Font Awesome for icons (replacement for Eva Icons)
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const PRIMENG_MODULES = [
   CardModule,

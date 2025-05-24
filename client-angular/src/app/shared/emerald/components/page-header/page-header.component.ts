@@ -22,7 +22,7 @@ import {
     RouterModule,
     NbBreadcrumbModule],
 })
-export class PageHeaderComponent {
+export class ToolbarModule {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() breadcrumbs: Breadcrumb[] = [];

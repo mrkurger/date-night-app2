@@ -46,7 +46,7 @@ import { CommonModule } from '@angular/common';
         NbSpinnerModule
     ]
 })
-export class SkeletonLoaderComponent {
+export class SkeletonModule {
   @Input() type: 'small' | 'medium' | 'large' = 'medium';
   @Input() width?: string;
   @Input() height?: string;

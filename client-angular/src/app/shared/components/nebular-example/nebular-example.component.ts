@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 /**
  * Example component demonstrating the use of PrimeNG components
@@ -13,7 +13,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 @Component({
   selector: 'app-nebular-example',
   standalone: true,
-  imports: [
+  imports: [MessagesModule, MessageModule, ButtonModule, 
     CommonModule,
     FormsModule,
     ButtonModule,

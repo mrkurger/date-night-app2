@@ -223,7 +223,7 @@ export interface CarouselItem {
     ]),
   ],
 })
-export class CarouselComponent {
+export class CarouselModule {
   @Input() items: CarouselItem[] = [];
   @Input() loop = true;
   @Input() autoplay = false;

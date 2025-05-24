@@ -2,8 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { CommonModule } from '@angular/common';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem } from 'primeng/api';
-
+import { MenuItem } from 'primeng/menuitem';
 @Component({
   selector: 'p-side-menu',
   template: `
@@ -103,7 +102,7 @@ import { MenuItem } from 'primeng/api';
     `,
   ],
   standalone: true,
-  imports: [CommonModule, SidebarModule, PanelMenuModule],
+  imports: [MenuItem, CommonModule, SidebarModule, PanelMenuModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuComponent {

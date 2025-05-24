@@ -11,15 +11,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Import all required PrimeNG modules
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
-
 // Import custom Nebular components
 import { NbAdvancedFormComponent } from './components/custom-nebular-components/nb-advanced-form/nb-advanced-form.component';
 import { NbFormArrayComponent } from './components/custom-nebular-components/nb-advanced-form/components/form-array/form-array.component';
@@ -40,6 +31,14 @@ import { NbDataTableHeaderComponent } from './components/custom-nebular-componen
 import { NbDataTablePaginatorComponent } from './components/custom-nebular-components/nb-data-table/components/paginator/paginator.component';
 import { NbDataTableFilterComponent } from './components/custom-nebular-components/nb-data-table/components/filter/filter.component';
 import { NbDataTableSortComponent } from './components/custom-nebular-components/nb-data-table/components/sort/sort.component';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 
 // Array of all PrimeNG modules that need to be configured at root level
 const ROOT_PRIMENG_MODULES = [ToastModule];

@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
         NbButtonModule
     ]
 })
-export class PagerComponent implements OnChanges {
+export class PaginatorModule implements OnChanges {
   /**
    * The current page number (1-based)
    */

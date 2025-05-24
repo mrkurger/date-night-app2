@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
     NbIconModule
   ],
 })
-export class CarouselComponent implements OnInit, OnDestroy {
+export class CarouselModule implements OnInit, OnDestroy {
   @Input() items: CarouselItem[] = [];
   @Input() showDots = true;
   @Input() showArrows = true;

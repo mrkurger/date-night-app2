@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
+import { MenuItem } from 'primeng/menuitem';
 
 // TODO: Create User interface if not available
 interface User {

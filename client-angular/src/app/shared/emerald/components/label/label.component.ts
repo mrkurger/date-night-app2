@@ -20,7 +20,7 @@ import {
         NbTagComponent
     ]
 })
-export class LabelComponent {
+export class TagModule {
   @Input() text = '';
   @Input() variant: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

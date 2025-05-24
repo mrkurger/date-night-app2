@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common';
 //   Related to: card-grid.component.scss
 // ===================================================
 // import { Ad } from '../../../../core/models/ad.interface';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-import { AppCardComponent } from '../app-card/app-card.component';
+import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
+import { CardModule } from '../app-card/app-card.component';
 
 /**
  * /*DEPRECATED:Emerald*/ CardGrid Component
@@ -94,8 +94,8 @@ import { AppCardComponent } from '../app-card/app-card.component';
         CommonModule,
         NbCardModule,
         NbSpinnerModule,
-        SkeletonLoaderComponent,
-        AppCardComponent
+        SkeletonModule,
+        CardModule
     ]
 })
 export class CardGridComponent {

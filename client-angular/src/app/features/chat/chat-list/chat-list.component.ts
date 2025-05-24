@@ -10,13 +10,6 @@ import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 // PrimeNG Modules
-import { ButtonModule } from 'primeng/button';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { DataViewModule } from 'primeng/dataview';
-import { BadgeModule } from 'primeng/badge';
-import { TooltipModule } from 'primeng/tooltip';
-import { RippleModule } from 'primeng/ripple';
-
 // Application-specific services and models
 import {
   ChatService,
@@ -29,13 +22,19 @@ import { NotificationService } from '../../../core/services/notification.service
 import { User } from '../../../core/models/auth.model';
 
 // Shared Components and Pipes
-import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { AvatarModule } from '../../../shared/components/avatar/avatar.component';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DataViewModule } from 'primeng/dataview';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [
+  imports: [RippleModule, TooltipModule, BadgeModule, DataViewModule, ProgressSpinnerModule, ButtonModule, 
     CommonModule,
     RouterModule,
     ButtonModule,
@@ -44,7 +43,7 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
     BadgeModule,
     TooltipModule,
     RippleModule,
-    AvatarComponent,
+    AvatarModule,
     TimeAgoPipe,
   ],
   templateUrl: './chat-list.component.html',

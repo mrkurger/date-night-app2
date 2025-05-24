@@ -17,7 +17,7 @@ import { CommonModule
     NbCardModule, } from '@angular/common';
 
 import { CardGridComponent } from './card-grid.component';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
 
 // Mock component for nb-card
 @Component({
@@ -97,7 +97,7 @@ describe('CardGridComponent', () => {
         CommonModule,
         CardGridComponent,
         MockAppCardComponent,
-        SkeletonLoaderComponent,
+        SkeletonModule,
         TestHostComponent,
       ],
     }).compileComponents();
@@ -186,14 +186,14 @@ describe('CardGridComponent', () => {
     hostFixture.detectChanges();
 
     // Check if skeleton loaders are displayed
-    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
+    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
     expect(skeletonLoaders.length).toBe(6); // Default skeletonCount is 6
 
     // Change skeleton count
     hostComponent.skeletonCount = 3;
     hostFixture.detectChanges();
 
-    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonLoaderComponent));
+    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
     expect(updatedSkeletonLoaders.length).toBe(3);
   });
 

@@ -17,8 +17,8 @@ import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // Custom Components
-import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
-import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { AvatarModule } from '../../shared/components/avatar/avatar.component';
+import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
@@ -39,10 +39,12 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BadgeModule } from 'primeng/badge';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuModule } from 'primeng/menu';
-
-// import { PanelMenuModule } from 'primeng/panelmenu'; // Alternative for NbMenuModule if a panel structure is needed
-// import { FloatLabelModule } from 'primeng/floatlabel'; // For p-float-label if used
-// import { InputGroupModule } from 'primeng/inputgroup'; // For input groups
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+// // Alternative for NbMenuModule if a panel structure is needed
+// // For p-float-label if used
+// // For input groups
 
 interface EmojiCategory {
   name: string;
@@ -58,7 +60,7 @@ const TYPING_INDICATOR_DELAY = 500; // ms
   selector: 'app-chat',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
+  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
     // Nebular Modules to be replaced:
@@ -84,8 +86,8 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     // InputGroupModule, // Uncomment if input groups are used
 
     // Existing non-Nebular imports:
-    AvatarComponent,
-    SkeletonLoaderComponent, // Assuming this is not Nebular's or already handled
+    AvatarModule,
+    SkeletonModule, // Assuming this is not Nebular's or already handled
     AppSortComponent,
     AppSortHeaderComponent,
   ],

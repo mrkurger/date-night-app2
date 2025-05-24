@@ -5,14 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // PrimeNG Modules
-import { SidebarModule } from 'primeng/sidebar';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
-import { MenuModule } from 'primeng/menu';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuItem } from 'primeng/api'; // Import MenuItem
+// Import MenuItem
 
 // Application-specific services and components
 import { AuthService } from '../../services/auth.service'; // Corrected path
@@ -21,11 +14,19 @@ import { NotificationService } from '../../services/notification.service';
 import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component'; // Assuming this is already PrimeNG or will be migrated
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'; // Assuming this is already PrimeNG or will be migrated
 import { User } from '../../models/user.model'; // Corrected path
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuItem } from 'primeng/menuitem';
 
 @Component({
   selector: 'app-navigation',
   standalone: true, // Ensure this component is standalone
-  imports: [
+  imports: [MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
     CommonModule,
     RouterModule,
     BreadcrumbsComponent,

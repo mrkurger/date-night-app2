@@ -28,6 +28,8 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 // PrimeNG imports
+// Environment
+import { environment } from '../../../../environments/environment';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -35,9 +37,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
-
-// Environment
-import { environment } from '../../../../environments/environment';
 
 // Types
 interface ChatSettings {
@@ -48,7 +47,7 @@ interface ChatSettings {
 
 @Component({
   selector: 'app-chat-settings',
-  imports: [
+  imports: [RippleModule, ProgressSpinnerModule, MessageModule, DropdownModule, InputSwitchModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

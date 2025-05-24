@@ -21,6 +21,15 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // PrimeNG imports
+import {
+  ChatService,
+  ChatMessage,
+  ChatRoom,
+  ChatMessageRequest,
+} from '../../../core/services/chat.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { ChatMessageComponent } from '../../../shared/components/chat-message/chat-message.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -32,17 +41,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { MenuItem } from 'primeng/api';
-
-import {
-  ChatService,
-  ChatMessage,
-  ChatRoom,
-  ChatMessageRequest,
-} from '../../../core/services/chat.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { NotificationService } from '../../../core/services/notification.service';
-import { ChatMessageComponent } from '../../../shared/components/chat-message/chat-message.component';
+import { MenuItem } from 'primeng/menuitem';
 
 interface ChatUser {
   id: string;
@@ -59,7 +58,7 @@ interface User {
 @Component({
   selector: 'app-chat-room',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
+  imports: [MenuItem, DialogModule, TooltipModule, ProgressSpinnerModule, DropdownModule, CheckboxModule, MenuModule, AvatarModule, InputGroupModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

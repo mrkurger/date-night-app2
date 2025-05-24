@@ -7,12 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { expect, jest } from '@jest/globals';
 
-import { AppCardComponent } from './app-card.component';
+import { CardModule } from './app-card.component';
 import { Ad } from '../../../../core/models/ad.interface';
 
-describe('AppCardComponent', () => {
-  let component: AppCardComponent;
-  let fixture: ComponentFixture<AppCardComponent>;
+describe('CardModule', () => {
+  let component: CardModule;
+  let fixture: ComponentFixture<CardModule>;
   let debugElement: DebugElement;
 
   // Mock ad data for testing
@@ -47,10 +47,10 @@ describe('AppCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CardModule, ButtonModule, BadgeModule, AppCardComponent],
+      imports: [CommonModule, CardModule, ButtonModule, BadgeModule, CardModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppCardComponent);
+    fixture = TestBed.createComponent(CardModule);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
 

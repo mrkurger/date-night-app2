@@ -4,6 +4,12 @@ import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNG imports
+// Core services and interfaces
+import { AdService } from '../../../../core/services/ad.service';
+import { NotificationService } from '../../../../core/services/notification.service';
+import { ChatService } from '../../../../core/services/chat.service';
+import { AuthService } from '../../../../core/services/auth.service';
+import { Ad } from '../../../../core/models/ad.interface';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
@@ -18,19 +24,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SpeedDialModule } from 'primeng/speeddial';
-import { MenuItem } from 'primeng/api';
-
-// Core services and interfaces
-import { AdService } from '../../../../core/services/ad.service';
-import { NotificationService } from '../../../../core/services/notification.service';
-import { ChatService } from '../../../../core/services/chat.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { Ad } from '../../../../core/models/ad.interface';
+import { MenuItem } from 'primeng/menuitem';
 
 @Component({
   selector: 'app-alt-netflix-view',
   standalone: true,
-  imports: [
+  imports: [MenuItem, SpeedDialModule, MultiSelectModule, InputTextModule, DropdownModule, DividerModule, ScrollerModule, RippleModule, DialogModule, TooltipModule, ProgressSpinnerModule, TagModule, BadgeModule, ButtonModule, CardModule, 
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

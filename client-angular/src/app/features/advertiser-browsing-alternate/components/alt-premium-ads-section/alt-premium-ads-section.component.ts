@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AltPremiumAdCardComponent } from '../alt-premium-ad-card/alt-premium-ad-card.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { AltPremiumAdCardComponent } from '../alt-premium-ad-card/alt-premium-ad-card.component';
 
 // Interface for the component
 interface Advertiser {

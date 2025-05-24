@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
-import { Message, MessageService, ConfirmationService } from 'primeng/api';
-
+import { Message } from 'primeng/message';
+import { MessageService } from 'primeng/messageservice';
+import { ConfirmationService } from 'primeng/confirmationservice';
 declare global {
   namespace jasmine {
     interface Matchers<T> {

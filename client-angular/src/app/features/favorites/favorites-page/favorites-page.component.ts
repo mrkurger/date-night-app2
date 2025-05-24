@@ -1,27 +1,4 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { TableModule, Table } from 'primeng/table';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { TooltipModule } from 'primeng/tooltip';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TagModule } from 'primeng/tag';
-import { AvatarModule } from 'primeng/avatar';
-import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { ChipModule } from 'primeng/chip';
-import { PaginatorState } from 'primeng/paginator';
-
 import { FavoriteManagementService } from '@features/favorites/services/favorite-management.service';
 import {
   AdvancedSearchQuery,
@@ -44,6 +21,29 @@ import {
   tap,
 } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { TableModule, Table } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/menuitem';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/messageservice';
+import { ConfirmationService } from 'primeng/confirmationservice';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ChipModule } from 'primeng/chip';
+import { PaginatorState } from 'primeng/paginatorstate';
 
 interface Column {
   field: string;
@@ -55,7 +55,7 @@ interface Column {
   templateUrl: './favorites-page.component.html',
   styleUrls: ['./favorites-page.component.scss'],
   standalone: true,
-  imports: [
+  imports: [PaginatorState, ChipModule, OverlayPanelModule, InputSwitchModule, MultiSelectModule, MessageService, ToastModule, ConfirmDialogModule, DialogModule, MenuItem, MenuModule, AvatarModule, TagModule, ProgressSpinnerModule, DropdownModule, InputTextModule, TooltipModule, CheckboxModule, ButtonModule, CardModule, TableModule, ContextMenuModule, 
     CardModule,
     TableModule,
     ButtonModule,

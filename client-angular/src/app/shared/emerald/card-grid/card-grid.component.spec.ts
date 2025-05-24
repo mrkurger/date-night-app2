@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 
 import { CardGridComponent } from './card-grid.component';
-import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
+import { SkeletonModule } from '../components/skeleton-loader/skeleton-loader.component';
 import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-test.module';
 
 // Test host component to test CardGridComponent in a realistic scenario
@@ -112,7 +112,7 @@ describe('CardGridComponent', () => {
     })
       .overrideComponent(CardGridComponent, {
         set: {
-          imports: [CommonTestModule, MockAppCardComponent, SkeletonLoaderComponent],
+          imports: [CommonTestModule, MockAppCardComponent, SkeletonModule],
         },
       })
       .compileComponents();

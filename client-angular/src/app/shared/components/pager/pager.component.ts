@@ -174,7 +174,7 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class PagerComponent implements OnChanges {
+export class PaginatorModule implements OnChanges {
   @Input() currentPage = 1;
   @Input() totalPages = 1;
   @Input() maxVisiblePages = 5;

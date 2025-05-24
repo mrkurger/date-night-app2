@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
-import { SelectItem } from 'primeng/api';
-
+import { SelectItem } from 'primeng/selectitem';
 export interface TableColumn<T = any> {
   prop: keyof T;
   name: string;
@@ -141,6 +140,7 @@ export interface TableColumn<T = any> {
     `,
   ],
   standalone: true,
+  imports: [Table, SelectItem],
 })
 export class PrimeNGDataTableComponent {
   @Input() title = '';
