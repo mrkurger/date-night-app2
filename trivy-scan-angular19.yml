@@ -1,0 +1,245 @@
+name: Trivy Security Scan
+
+on:
+  push:
+    branches:
+      - main
+      - Angular19
+      - "feature/**"
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+      - Angular19
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly on Sundays at midnight
+  workflow_dispatch:  # Allow manual triggering
+
+# Prevent multiple workflow runs for the same branch/PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write  # For uploading security scan results
+  issues: write           # For creating security issues
+  checks: write           # For creating check runs
+  pull-requests: write    # For commenting on PRs
+  actions: read           # For downloading artifacts
+  id-token: write         # For GitHub OIDC authentication
+  packages: read          # For accessing package registries
+
+jobs:
+  trivy-scan:
+    name: Run Trivy Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # Set timeout to prevent hung jobs
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          # Target only the branch that triggered this workflow
+          ref: ${{ github.ref }}
+          # Fetch all history for proper vulnerability detection
+          fetch-depth: 0
+          # Initialize and update submodules
+          submodules: recursive
+
+      # Step 2: Install Trivy using the official GitHub Action
+      - name: Install Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          trivy-config: trivy.yaml
+          install-only: true
+
+      # Step 3: Initialize environment for scanning
+      - name: Setup Scan Environment
+        run: |
+          echo "::group::Setting up scan environment"
+          # Create a directory for scan results
+          mkdir -p scan-results
+          # Check if there are any submodules and update them if needed
+          if [ -f .gitmodules ]; then
+            echo "Submodules detected, verifying initialization..."
+            git submodule status || git submodule update --init --recursive
+          fi
+          echo "::endgroup::"
+
+      # Step 4: Scan the repository for vulnerabilities with detailed output
+      - name: Scan Repository (Code Vulnerabilities)
+        continue-on-error: true  # Continue to next steps even if vulnerabilities are found
+        run: |
+          echo "::group::Scanning code for vulnerabilities"
+          # Generate both a table output for the logs and a JSON report
+          trivy fs --exit-code 0 \
+            --format table \
+            --severity HIGH,CRITICAL \
+            --vuln-type os,library \
+            --security-checks vuln \
+            --output scan-results/code-vulnerabilities.txt \
+            .
+          # Generate JSON for further processing
+          trivy fs --exit-code 0 \
+            --format json \
+            --severity HIGH,CRITICAL \
+            --vuln-type os,library \
+            --security-checks vuln \
+            --output scan-results/code-vulnerabilities.json \
+            .
+          echo "::endgroup::"
+
+      # Step 5: Scan for secrets in the codebase
+      - name: Scan for Secrets
+        continue-on-error: true
+        run: |
+          echo "::group::Scanning for secrets"
+          # Generate a table report for the logs
+          trivy fs --exit-code 0 \
+            --format table \
+            --security-checks secret \
+            --output scan-results/secrets.txt \
+            .
+          # Generate JSON for further processing
+          trivy fs --exit-code 0 \
+            --format json \
+            --security-checks secret \
+            --output scan-results/secrets.json \
+            .
+          echo "::endgroup::"
+
+      # Step 6: Scan dependencies for vulnerabilities with different formats
+      - name: Scan Dependencies
+        continue-on-error: true
+        run: |
+          echo "::group::Scanning dependencies for vulnerabilities"
+          # Generate a table report for the logs
+          trivy fs --exit-code 0 \
+            --format table \
+            --severity MEDIUM,HIGH,CRITICAL \
+            --vuln-type library \
+            --security-checks vuln \
+            --output scan-results/dependencies.txt \
+            .
+          # Generate JSON for further processing
+          trivy fs --exit-code 0 \
+            --format json \
+            --severity MEDIUM,HIGH,CRITICAL \
+            --vuln-type library \
+            --security-checks vuln \
+            --output scan-results/dependencies.json \
+            .
+          echo "::endgroup::"
+
+      # Step 7: Handle Trivy warnings and process scan results
+      - name: Process Scan Results
+        run: |
+          echo "::group::Processing scan results"
+          # Count vulnerabilities found
+          CODE_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' scan-results/code-vulnerabilities.json)
+          SECRET_VULNS=$(jq '.Results | map(.Secrets | length) | add // 0' scan-results/secrets.json)
+          DEP_VULNS=$(jq '.Results | map(.Vulnerabilities | length) | add // 0' scan-results/dependencies.json)
+          
+          # Generate HTML report
+          echo "<html><head><title>Trivy Scan Results</title>" > scan-results/report.html
+          echo "<style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}th{background-color:#f2f2f2}tr:nth-child(even){background-color:#f9f9f9}</style>" >> scan-results/report.html
+          echo "</head><body><h1>Trivy Scan Results</h1>" >> scan-results/report.html
+          
+          # Add summary
+          echo "<h2>Summary</h2>" >> scan-results/report.html
+          echo "<p>Code Vulnerabilities: $CODE_VULNS</p>" >> scan-results/report.html
+          echo "<p>Secret Findings: $SECRET_VULNS</p>" >> scan-results/report.html
+          echo "<p>Dependency Vulnerabilities: $DEP_VULNS</p>" >> scan-results/report.html
+          
+          # Add detailed tables from the TXT outputs
+          echo "<h2>Code Vulnerabilities</h2><pre>" >> scan-results/report.html
+          cat scan-results/code-vulnerabilities.txt >> scan-results/report.html
+          echo "</pre>" >> scan-results/report.html
+          
+          echo "<h2>Secrets</h2><pre>" >> scan-results/report.html
+          cat scan-results/secrets.txt >> scan-results/report.html
+          echo "</pre>" >> scan-results/report.html
+          
+          echo "<h2>Dependencies</h2><pre>" >> scan-results/report.html
+          cat scan-results/dependencies.txt >> scan-results/report.html
+          echo "</pre>" >> scan-results/report.html
+          
+          echo "</body></html>" >> scan-results/report.html
+          
+          # Create a summary for GitHub workflow
+          echo "### Trivy Security Scan Results" > scan-results/summary.md
+          echo "" >> scan-results/summary.md
+          echo "| Category | Findings |" >> scan-results/summary.md
+          echo "| -------- | -------- |" >> scan-results/summary.md
+          echo "| Code Vulnerabilities | $CODE_VULNS |" >> scan-results/summary.md
+          echo "| Secret Findings | $SECRET_VULNS |" >> scan-results/summary.md
+          echo "| Dependency Vulnerabilities | $DEP_VULNS |" >> scan-results/summary.md
+          
+          # Set exit status if critical vulnerabilities found (for non-PR runs)
+          CRITICAL_VULNS=$(jq '.Results | map(.Vulnerabilities // [] | map(select(.Severity=="CRITICAL")) | length) | add // 0' scan-results/code-vulnerabilities.json)
+          if [[ $CRITICAL_VULNS -gt 0 && "${{ github.event_name }}" != "pull_request" ]]; then
+            echo "::warning::$CRITICAL_VULNS critical vulnerabilities found!"
+            # Don't fail the workflow, but alert the user
+            echo "::warning::Please review the scan results and address the critical vulnerabilities."
+          fi
+          echo "::endgroup::"
+
+      # Step 8: Upload scan results as artifacts
+      - name: Upload Scan Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-scan-results
+          path: scan-results/
+          retention-days: 7  # Keep artifacts for 7 days
+
+      # Step 9: Publish scan results as Job Summary
+      - name: Publish Scan Summary
+        run: cat scan-results/summary.md >> $GITHUB_STEP_SUMMARY
+      
+      # Step 10: Create trivy logs directory (for compatibility with Angular19 branch)
+      - name: Create trivy logs directory
+        run: mkdir -p logs/trivy
+
+      # Step 11: Generate comprehensive security report (for compatibility with Angular19 branch)
+      - name: Generate security report
+        run: |
+          # Set timestamp for filenames
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+          REPORT_DIR="logs/trivy"
+
+          echo "# Trivy Security Scan Report" > "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "Generated on: $(date)" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "Repository: ${{ github.repository }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "Branch: ${{ github.ref_name }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "Commit: ${{ github.sha }}" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+
+          # Add summary from our processed results
+          cat scan-results/summary.md >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+
+          # Include detailed results
+          echo "## Vulnerability Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          cat scan-results/code-vulnerabilities.txt >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+
+          echo "## Secret Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          cat scan-results/secrets.txt >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+
+          echo "## Dependency Scan Results" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          cat scan-results/dependencies.txt >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+          echo "```" >> "$REPORT_DIR/trivy-report-$TIMESTAMP.md"
+
+          # Generate JSON report for programmatic access
+          cp scan-results/code-vulnerabilities.json "$REPORT_DIR/trivy-report-$TIMESTAMP.json"
+
+          echo "Reports generated:"
+          ls -la "$REPORT_DIR/trivy-report-$TIMESTAMP"*
