@@ -1,7 +1,7 @@
-<nb-card>
+<p-card>
   <nb-card-header class="dialog-header">
     <h3>Transaction Details</h3>
-    <button nbButton ghost (click)="close()">
+    <p-button></p-button>
       <nb-icon icon="close-outline"></nb-icon>
     </button>
   </nb-card-header>
@@ -11,7 +11,7 @@
         <div class="label">Transaction ID</div>
         <div class="value">
           {{ transaction.id }}
-          <button nbButton ghost size="small" (click)="copyToClipboard(transaction.id)">
+          <p-button></p-button>
             <nb-icon icon="copy-outline"></nb-icon>
           </button>
         </div>
@@ -66,6 +66,6 @@
     </div>
   </nb-card-body>
   <nb-card-footer class="dialog-footer">
-    <button nbButton status="basic" (click)="close()">Close</button>
+    <p-button></p-button>Close</button>
   </nb-card-footer>
 </nb-card>

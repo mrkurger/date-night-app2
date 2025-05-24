@@ -96,10 +96,10 @@
       </nb-form-field>
 
       <div class="form-actions">
-        <button nbButton status="basic" type="button" (click)="cancel()">
+        <p-button></p-button>
           <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
         </button>
-        <button nbButton status="primary" type="submit" [disabled]="loading || profileForm.invalid">
+        <p-button></p-button>
           <nb-spinner *ngIf="loading" size="tiny" status="control"></nb-spinner>
           <nb-icon icon="save-outline" *ngIf="!loading"></nb-icon> Save Changes
         </button>

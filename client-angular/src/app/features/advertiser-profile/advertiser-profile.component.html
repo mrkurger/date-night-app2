@@ -18,7 +18,7 @@
         <div class="profile-title-section">
           <h1 class="profile-title">{{ advertiser.username }}</h1>
           <div class="profile-actions" *ngIf="isOwner">
-            <button nbButton ghost status="primary" *ngIf="!editMode" (click)="toggleEditMode()">
+            <p-button></p-button>
               <nb-icon icon="edit-2-outline"></nb-icon>
               Edit Profile
             </button>
@@ -123,7 +123,7 @@
           </div>
 
           <div class="form-actions">
-            <button nbButton ghost status="basic" type="button" (click)="cancelEdit()">
+            <p-button></p-button>
               <nb-icon icon="close-outline"></nb-icon>
               Cancel
             </button>
@@ -163,7 +163,7 @@
   <div class="error-container" *ngIf="error && !loading">
     <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
     <p class="error-text">{{ error }}</p>
-    <button nbButton status="primary" (click)="loadAdvertiser()">
+    <p-button></p-button>
       <nb-icon icon="refresh-outline"></nb-icon>
       Try Again
     </button>

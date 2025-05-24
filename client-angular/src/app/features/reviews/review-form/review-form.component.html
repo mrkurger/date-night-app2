@@ -95,7 +95,7 @@
     <!-- Form Actions -->
     <div class="form-actions">
       <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
-      <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid || submitting">
+      <p-button label="Primary" class="p-button-primary"></p-button>
         <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
         {{ isEditMode ? 'Update Review' : 'Submit Review' }}
       </button>

@@ -8,7 +8,7 @@
        Related to: other_file.html:OTHER_SETTING
      =================================================== -->
 <div class="settings-container">
-  <nb-card>
+  <p-card>
     <div class="settings-header">
       <h1 class="settings-title">Account Settings</h1>
       <p class="settings-subtitle">Manage your account preferences and personal information</p>
@@ -110,7 +110,7 @@
             </nb-form-field>
 
             <div class="form-actions">
-              <button nbButton status="primary" type="submit" [disabled]="profileForm.invalid || loading">
+              <p-button></p-button>
                 <nb-icon icon="save-outline"></nb-icon> Save Changes
               </button>
             </div>
@@ -163,7 +163,7 @@
             </nb-form-field>
 
             <div class="form-actions">
-              <button nbButton status="primary" type="submit" [disabled]="passwordForm.invalid || loading">
+              <p-button></p-button>
                 <nb-icon icon="keypad-outline"></nb-icon> Change Password 
               </button>
             </div>
@@ -179,7 +179,7 @@
                   undone.
                 </p>
               </div>
-              <button nbButton status="danger" (click)="deleteAccount()">
+              <p-button></p-button>
                 <nb-icon icon="trash-2-outline"></nb-icon> Delete Account
               </button>
             </div>
@@ -212,7 +212,7 @@
             </div>
 
             <div class="form-actions">
-              <button nbButton status="primary" type="submit" [disabled]="loading">
+              <p-button></p-button>
                 <nb-icon icon="save-outline"></nb-icon> Save Preferences
               </button>
             </div>
@@ -254,7 +254,7 @@
             </nb-checkbox>
 
             <div class="form-actions">
-              <button nbButton status="primary" type="submit" [disabled]="loading">
+              <p-button></p-button>
                 <nb-icon icon="save-outline"></nb-icon> Save Privacy Settings
               </button>
             </div>
@@ -356,10 +356,10 @@
             </div>
 
             <div class="form-actions">
-              <button nbButton status="basic" type="button" (click)="resetDisplaySettings()">
+              <p-button></p-button>
                 <nb-icon icon="undo-outline"></nb-icon> Reset to Defaults
               </button>
-              <button nbButton status="primary" type="submit" [disabled]="displayForm.pristine || loading">
+              <p-button></p-button>
                 <nb-icon icon="save-outline"></nb-icon> Save Display Settings
               </button>
             </div>

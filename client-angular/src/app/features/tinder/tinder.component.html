@@ -1,6 +1,6 @@
 <div class="tinder-view-container" [class.dark-theme]="isDarkMode">
   <div class="mobile-header md:hidden">
-    <button nbButton ghost (click)="goBack()">
+    <p-button></p-button>
       <nb-icon icon="arrow-left"></nb-icon>
     </button>
   </div>
@@ -8,7 +8,7 @@
     <div class="tinder-header">
       <h1 class="tinder-title">Discover</h1>
       <div class="tinder-filters">
-        <button nbButton status="primary" (click)="openFilters(filtersDialog)">
+        <p-button></p-button>
           <nb-icon icon="options-2-outline"></nb-icon>
           Filters
         </button>
@@ -25,7 +25,7 @@
     <div class="error-container" *ngIf="error && !loading">
       <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
       <p class="error-text">{{ error }}</p>
-      <button nbButton status="primary" (click)="loadSwipeAds()">
+      <p-button></p-button>
         <nb-icon icon="refresh-outline"></nb-icon>
         Try Again
       </button>
@@ -69,14 +69,14 @@
 
   <!-- Filters Dialog -->
   <ng-template #filtersDialog let-ref="dialogRef">
-    <nb-card>
+    <p-card>
       <nb-card-header>
         <div class="dialog-header">
           <h5>
             <nb-icon icon="funnel-outline"></nb-icon>
             Filter Profiles
           </h5>
-          <button nbButton ghost (click)="ref.close()">
+          <p-button></p-button>
             <nb-icon icon="close-outline"></nb-icon>
           </button>
         </div>
@@ -120,11 +120,11 @@
       </nb-card-body>
       <nb-card-footer>
         <div class="dialog-footer">
-          <button nbButton status="basic" (click)="resetFilters()">
+          <p-button></p-button>
             <nb-icon icon="refresh-outline"></nb-icon>
             Reset
           </button>
-          <button nbButton status="primary" (click)="applyFilters(); ref.close()">
+          <p-button></p-button>
             <nb-icon icon="checkmark-outline"></nb-icon>
             Apply Filters
           </button>

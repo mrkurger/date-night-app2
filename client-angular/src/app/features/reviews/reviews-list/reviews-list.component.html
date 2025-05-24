@@ -40,7 +40,7 @@
 
         <!-- Review Actions -->
         <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
-          <button nbButton ghost [nbContextMenu]="reviewMenu" aria-label="Review actions">
+          <p-button></p-button>
             <nb-icon icon="more-vertical-outline"></nb-icon>
           </button>
           <nb-menu #reviewMenu="matMenu">

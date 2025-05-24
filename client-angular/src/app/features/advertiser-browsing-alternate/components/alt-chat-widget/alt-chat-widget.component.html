@@ -3,10 +3,10 @@
 </div>
 
 <div class="chat-widget-window" *ngIf="isOpen">
-  <nb-card>
+  <p-card>
     <nb-card-header>
       <span>Chat</span>
-      <button nbButton ghost size="tiny" (click)="toggleChat()">
+      <p-button></p-button>
         <nb-icon icon="close-outline"></nb-icon>
       </button>
     </nb-card-header>
@@ -19,7 +19,7 @@
     <nb-card-footer *ngIf="false">
       <!-- Hidden for now -->
       <input nbInput placeholder="Type your message..." class="chat-input" />
-      <button nbButton status="primary" size="small">Send</button>
+      <p-button></p-button>Send</button>
     </nb-card-footer>
   </nb-card>
 </div>

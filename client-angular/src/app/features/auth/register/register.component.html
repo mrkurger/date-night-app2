@@ -1,5 +1,5 @@
 <div class="register-container">
-  <nb-card>
+  <p-card>
     <nb-card-header>
       <h2>Create an Account</h2>
     </nb-card-header>
@@ -139,25 +139,25 @@
         </div>
 
         <div class="form-actions">
-          <button nbButton status="primary" [disabled]="registerForm.invalid" type="submit">
+          <p-button></p-button>
             Register
           </button>
-          <button nbButton status="basic" type="button" (click)="onCancel()">Cancel</button>
+          <p-button></p-button>Cancel</button>
         </div>
 
         <div class="social-auth">
           <p class="divider"><span>or register with</span></p>
 
           <div class="social-buttons">
-            <button nbButton ghost status="primary" type="button" (click)="socialLogin('google')">
+            <p-button></p-button>
               <nb-icon icon="google-outline"></nb-icon> Google
             </button>
 
-            <button nbButton ghost status="primary" type="button" (click)="socialLogin('facebook')">
+            <p-button></p-button>
               <nb-icon icon="facebook-outline"></nb-icon> Facebook
             </button>
 
-            <button nbButton ghost status="primary" type="button" (click)="socialLogin('apple')">
+            <p-button></p-button>
               <nb-icon pack="custom" icon="apple"></nb-icon> Apple
             </button>
 
