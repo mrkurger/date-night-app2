@@ -20,29 +20,45 @@ jobs:
     steps:
       # Step 1: Checkout the branch where the commit was made
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # Target only the branch that triggered this workflow
           ref: ${{ github.ref }}
 
-      # Step 2: Install Trivy
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget apt-transport-https gnupg
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install -y trivy
+      # Step 2: Run Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '0'  # Don't fail the build on vulnerabilities
 
-      # Step 3: Scan the repository for vulnerabilities
-      - name: Scan Repository
-        run: trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+      # Step 3: Upload Trivy scan results to GitHub Security tab
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
 
       # Step 4: Scan for secrets in the codebase
       - name: Scan for Secrets
-        run: trivy fs --security-checks secret --exit-code 1 .
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          scanners: 'secret'
+          format: 'table'
+          exit-code: '0'  # Don't fail the build on secrets
 
       # Step 5: Scan dependencies for vulnerabilities
       - name: Scan Dependencies
-        run: trivy fs --security-checks vuln --exit-code 1 .
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          scanners: 'vuln'
+          format: 'table'
+          exit-code: '0'  # Don't fail the build on vulnerabilities

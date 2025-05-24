@@ -8,35 +8,45 @@ permissions:
 
 jobs:
   build:
-     runs-on: ubuntu-latest
-       
-     steps:
-       - name: Checkout
-         uses: actions/checkout@v4
-         
-       - name: Setup JFrog CLI
-         uses: jfrog/setup-jfrog-cli@v4
-         env:  
-           JF_URL: ${{ vars.JF_URL }}
-           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-           
-       - name: Setup Node npm
-         uses: actions/setup-node@v3
-           
-       - name: Set CLI Config
-         run: jf npm-config --global=true --repo-resolve=ht-npm --repo-deploy=ht-npm
-           
-       - name: Install Deps
-         run: jf npm install
-           
-       - name: Run tests
-         run: npm test
-         
-       - name: Publish
-         run: jf npm publish
-         
-       - name: Publish Build info With JFrog CLI
-         run: |
+    runs-on: ubuntu-latest
+    if: false  # Disable this workflow until JFrog is properly configured
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: ${{ vars.JF_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+      - name: Setup Node npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Set CLI Config
+        run: jf npm-config --global=true --repo-resolve=ht-npm --repo-deploy=ht-npm
+        if: ${{ vars.JF_URL != '' && secrets.JF_ACCESS_TOKEN != '' }}
+
+      - name: Install Deps with JFrog
+        run: jf npm install
+        if: ${{ vars.JF_URL != '' && secrets.JF_ACCESS_TOKEN != '' }}
+
+      - name: Run tests
+        run: npm test
+
+      - name: Publish
+        run: jf npm publish
+        if: ${{ vars.JF_URL != '' && secrets.JF_ACCESS_TOKEN != '' }}
+
+      - name: Publish Build info With JFrog CLI
+        if: ${{ vars.JF_URL != '' && secrets.JF_ACCESS_TOKEN != '' }}
+        run: |
           # Collect environment variables for the build
           jf rt build-collect-env
           # Collect VCS details from git and add them to the build

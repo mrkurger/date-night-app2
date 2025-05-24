@@ -76,25 +76,25 @@ jobs:
           fi
 
       - name: Authenticate with Snyk
-        if: secrets.SNYK_TOKEN != '' # ✅ Correct usage for step-level if
+        if: ${{ secrets.SNYK_TOKEN != '' }}
         run: npx snyk auth ${{ secrets.SNYK_TOKEN }}
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Scan root project with Snyk
-        if: secrets.SNYK_TOKEN != '' # ✅
+        if: ${{ secrets.SNYK_TOKEN != '' }}
         run: npx snyk test --json > snyk-root-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Scan server project with Snyk
-        if: secrets.SNYK_TOKEN != '' # ✅
+        if: ${{ secrets.SNYK_TOKEN != '' }}
         run: cd server && npx snyk test --json > ../snyk-server-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Scan client project with Snyk
-        if: secrets.SNYK_TOKEN != '' # ✅
+        if: ${{ secrets.SNYK_TOKEN != '' }}
         run: cd client-angular && npx snyk test --json > ../snyk-client-results.json || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -179,7 +179,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm ci
+          npm ci || npm install
           npm install @octokit/rest@20 adm-zip@0.5.10
 
       - name: Disable Husky

@@ -42,7 +42,7 @@ jobs:
 
       # Run linter with pretty output
       - name: Run lint
-        working-directory: client
+        working-directory: client-angular
         run: npm run lint -- --format stylish
 
   # Lint server code

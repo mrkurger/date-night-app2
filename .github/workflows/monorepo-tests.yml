@@ -52,7 +52,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm ci
+          npm ci || npm install
           npm install yargs --save-dev
       - name: Setup Chrome Browser
         uses: browser-actions/setup-chrome@v1
@@ -95,7 +95,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ./client-angular
-          npm ci
+          npm ci || npm install
       - name: Start Angular App
         working-directory: ./client-angular
         run: npm start -- --host=0.0.0.0 --port=4200 &
