@@ -1,10 +1,58 @@
+// filepath: /Users/oivindlund/date-night-app/.github/instructions/prime-ng.instructions.md
 ---
 applyTo: '**'
 ---
-use #sequentialthinking whhen you embark on very complex tasks.
-use #add_observations with entityName "Angular Project Upgrade and Migration Progress" to save valuable lessons learned and observations.
-edit as many files as your context window allows before stopping
+Use the following MCP servers and tools faithfully to help you in the migration process. The goal is to replace Emerald UI, Angular Material, and Bootstrap UI with PrimeNG components in the codebase. This will involve identifying the components used in the current codebase, researching their PrimeNG equivalents, and systematically replacing them while ensuring that the application remains functional and visually consistent.
+LSP (Language Server Protocol) Tools:
+#start_lsp: Initializes the LSP server with a root directory
+#open_document: Opens a file for analysis
+#close_document: Closes a file to free resources
+#get_diagnostics: Gets errors/warnings for files
+#get_completions: Gets code completion suggestions
+#get_info_on_location: Gets hover information for code
+#get_code_actions: Gets available refactoring and quick fixes
+#restart_lsp_server: Restarts the LSP server
+#set_log_level: Controls server logging verbosity
+File System Tools:
+#read_file: Reads file contents
+#write_file: Creates/overwrites files
+#read_multiple_files: Reads multiple files at once
+#move_file: Moves/renames files
+#list_directory: Lists directory contents
+#directory_tree: Gets recursive tree view of directories
+#search_files: Searches for files by pattern
+#get_file_info: Gets detailed file metadata
+Knowledge Graph Tools:
+#create_entities: Creates entities in knowledge graph
+#create_relations: Creates relations between entities
+#add_observations: Adds observations to entities
+#read_graph: Reads entire knowledge graph
+#search_nodes: Searches nodes in knowledge graph
+#open_nodes: Opens specific nodes
+#delete_entities: Deletes entities
+#delete_relations: Deletes relations
+#delete_observations: Deletes specific observations
+Web Crawling/Research Tools (FireCrawl):
+#firecrawl_crawl: Crawls websites comprehensively
+#firecrawl_scrape: Scrapes single page content
+#firecrawl_search: Searches web content
+#firecrawl_map: Discovers website URLs
+#firecrawl_extract: Extracts structured data
+#firecrawl_deep_research: Performs deep web research
+#firecrawl_generate_llmstxt: Generates LLMs.txt files
+GitHub Integration Tools:
+Various tools for managing repositories, issues, pull requests, and code scanning
+Thinking/Analysis Tools:
+#sequentialthinking: Helps with complex problem-solving through structured thought process
+Documentation Search Tools:
+Tools specific to the date-night-app repository:
+#fetch_date_night_app2_docs
+#search_date_night_app2_docs
+#search_date_night_app2_code
 # PrimeNG Migration Instructions
+
+PrimeNG Documentation: https://primeng.org/installation Use this diligently to find the names and types of components that should be implemented in the codebase to replace Emerald UI, Angular Material and Bootstrap UI components.
+
 
 Nebular to PrimeNG Migration:
 begin the systematic replacement of Nebular components with their PrimeNG equivalents. This will involve:
@@ -25,6 +73,3 @@ Address Sass deprecation warnings (e.g., in chat-room.component.scss).
 Remove unused component imports (e.g., MainLayoutComponent warnings).
 Immediate Next Steps (Suggestion):
 Attempt to fix the ErrorLog interface import in ErrorDashboardComponent.
-Add NbDatepickerModule to the components that use [nbDatepicker].
-Focus on one of the components with many Nebular errors (e.g., AdvertiserBrowsingAlternateComponent or AvatarComponent) and try to resolve its "unknown element" / "can't bind to" errors by ensuring the correct Nebular modules are available to it. This will serve as a pattern for other components.
-Run npm run build frequently to check progress.

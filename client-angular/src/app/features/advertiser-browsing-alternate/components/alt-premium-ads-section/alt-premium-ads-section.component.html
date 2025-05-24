@@ -2,20 +2,19 @@
   <div class="section-header">
     <h2 class="section-title">⭐ Premium Advertisers ⭐</h2>
     <a routerLink="/advertiser-browsing-alt/premium" class="view-all-link">
-      View all premium advertisers <nb-icon icon="arrow-ios-forward-outline" pack="eva"></nb-icon>
+      View all premium advertisers <i class="pi pi-angle-right"></i>
     </a>
   </div>
 
   <div class="scroll-wrapper">
     <button
-      nbButton
-      ghost
-      shape="round"
-      class="scroll-button prev"
+      pButton
+      type="button"
+      class="scroll-button prev p-button-text p-button-rounded"
       (click)="scroll('left')"
       aria-label="Scroll left"
     >
-      <nb-icon icon="chevron-left-outline"></nb-icon>
+      <i class="pi pi-chevron-left"></i>
     </button>
 
     <div class="premium-ads-grid-scrollable" #scrollContainer>
@@ -27,14 +26,13 @@
     </div>
 
     <button
-      nbButton
-      ghost
-      shape="round"
-      class="scroll-button next"
+      pButton
+      type="button"
+      class="scroll-button next p-button-text p-button-rounded"
       (click)="scroll('right')"
       aria-label="Scroll right"
     >
-      <nb-icon icon="chevron-right-outline"></nb-icon>
+      <i class="pi pi-chevron-right"></i>
     </button>
   </div>
 </div>

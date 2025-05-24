@@ -1,15 +1,11 @@
-@use 'sass:color';
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default' as default;
-
-// AppCard Component Styles using Nebular Theme
+// AppCard Component Styles using PrimeNG Theme
 
 :host {
   display: block;
   height: 100%;
 }
 
-nb-card {
+.p-card {
   position: relative;
   height: 100%;
   margin-bottom: 0;
@@ -21,12 +17,21 @@ nb-card {
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: nb-theme(card-shadow);
+    box-shadow: var(--card-shadow);
+  }
+
+  // Override PrimeNG default padding
+  ::ng-deep .p-card-body {
+    padding: 0;
+  }
+
+  ::ng-deep .p-card-content {
+    padding: 0;
   }
 }
 
 // Card Media Section
-.nb-card-media {
+.p-card-media {
   position: relative;
   height: 100%;
   min-height: 300px;
@@ -41,10 +46,15 @@ nb-card {
   top: 12px;
   left: 12px;
   z-index: 2;
+
+  ::ng-deep .p-badge {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
 }
 
 // Media Navigation Dots
-.nb-card-media-dots {
+.p-card-media-dots {
   position: absolute;
   bottom: 16px;
   left: 50%;
@@ -54,7 +64,7 @@ nb-card {
   z-index: 2;
 }
 
-.nb-card-media-dot {
+.p-card-media-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -64,30 +74,40 @@ nb-card {
     background-color 0.2s ease,
     transform 0.2s ease;
 
-  &.nb-card-media-dot-active {
-    background-color: nb-theme(color-white);
+  &.p-card-media-dot-active {
+    background-color: var(--surface-0);
     transform: scale(1.2);
   }
 }
 
 // Media Navigation Buttons
-.nb-card-media-nav {
+.p-card-media-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
 
-  &.nb-card-media-nav-prev {
+  &.p-card-media-nav-prev {
     left: 12px;
   }
 
-  &.nb-card-media-nav-next {
+  &.p-card-media-nav-next {
     right: 12px;
+  }
+
+  ::ng-deep .p-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+
+    .p-button-icon {
+      font-size: 1rem;
+    }
   }
 }
 
 // Content Overlay with Blur Effect
-.nb-card-content-overlay {
+.p-card-content-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -99,43 +119,43 @@ nb-card {
   z-index: 1;
 }
 
-.nb-card-content {
-  color: nb-theme(color-white);
-  padding: nb-theme(card-padding);
+.p-card-content {
+  color: var(--surface-0);
+  padding: var(--content-padding);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.nb-card-title {
+.p-card-title {
   margin: 0 0 0.5rem;
-  font-size: nb-theme(text-heading-5-font-size);
-  font-weight: nb-theme(text-heading-5-font-weight);
+  font-size: 1.25rem;
+  font-weight: 600;
   line-height: 1.2;
 }
 
-.nb-card-meta {
+.p-card-meta {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.5rem;
-  font-size: nb-theme(text-subtitle-2-font-size);
+  font-size: 0.875rem;
 }
 
-.nb-card-location,
-.nb-card-price {
+.p-card-location,
+.p-card-price {
   display: flex;
   align-items: center;
 
-  nb-icon {
+  .pi {
     margin-right: 0.25rem;
     font-size: 1rem;
   }
 }
 
-.nb-card-description {
+.p-card-description {
   margin: 0;
-  font-size: nb-theme(text-subtitle-2-font-size);
+  font-size: 0.875rem;
   line-height: 1.4;
   opacity: 0.9;
   display: -webkit-box;
@@ -146,111 +166,78 @@ nb-card {
 }
 
 // Card Actions
-.nb-card-actions {
+.p-card-actions {
   position: relative;
   display: flex;
   justify-content: space-between;
-  padding: nb-theme(card-padding);
+  padding: var(--content-padding);
   background: transparent;
   border-top: none;
-}
 
-.nb-card-fab {
-  width: 3rem;
-  height: 3rem;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  ::ng-deep .p-button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
 
-// Tinder-specific Swipe Actions
-.nb-card-swipe-actions {
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 1rem;
+    .p-button-icon {
+      font-size: 1.25rem;
+    }
+  }
 }
 
 // Layout Variations
-.nb-card-tinder {
+.p-card-tinder {
   max-width: 400px;
   margin: 0 auto;
   height: 70vh;
   max-height: 600px;
 
-  .nb-card-media {
+  .p-card-media {
     height: 100%;
   }
 }
 
-.nb-card-netflix {
+.p-card-netflix {
   height: 280px;
   width: 200px;
 
-  .nb-card-media {
+  .p-card-media {
     height: 100%;
   }
 
-  .nb-card-title {
-    font-size: nb-theme(text-subtitle-font-size);
+  .p-card-title {
+    font-size: 1rem;
   }
 
-  .nb-card-description {
-    display: none;
-  }
-
-  .nb-card-fab {
-    width: 2.5rem;
-    height: 2.5rem;
+  .p-card-description {
+    font-size: 0.875rem;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
   }
 }
 
-.nb-card-list {
-  ::ng-deep nb-card {
-    flex-direction: row;
-    height: 160px;
-  }
+.p-card-list {
+  height: auto;
 
-  .nb-card-media {
-    width: 160px;
-    min-width: 160px;
-    height: 100%;
-  }
-
-  .nb-card-content-overlay {
-    position: relative;
-    height: 100%;
-    background: nb-theme(card-background-color);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .nb-card-content {
-    color: nb-theme(text-basic-color);
-  }
-
-  .nb-card-fab {
-    display: none;
+  .p-card-media {
+    min-height: 200px;
   }
 }
 
 // Responsive Styles
-@media (max-width: nb-theme(breakpoint-md)) {
-  .nb-card-list {
-    ::ng-deep nb-card {
+@media (max-width: 960px) {
+  .p-card-list {
+    ::ng-deep .p-card {
       flex-direction: column;
       height: auto;
     }
 
-    .nb-card-media {
+    .p-card-media {
       width: 100%;
       height: 200px;
     }
 
-    .nb-card-content-overlay {
+    .p-card-content-overlay {
       position: absolute;
       height: 40%;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
@@ -258,28 +245,28 @@ nb-card {
       -webkit-backdrop-filter: blur(4px);
     }
 
-    .nb-card-content {
-      color: nb-theme(color-white);
+    .p-card-content {
+      color: var(--surface-0);
     }
   }
 }
 
-@media (max-width: nb-theme(breakpoint-sm)) {
-  .nb-card-tinder {
+@media (max-width: 576px) {
+  .p-card-tinder {
     height: 60vh;
   }
 
-  .nb-card-title {
-    font-size: nb-theme(text-button-tiny-font-size);
+  .p-card-title {
+    font-size: var(--font-size-sm);
   }
 
-  .nb-card-meta {
+  .p-card-meta {
     gap: 0.5rem;
-    font-size: nb-theme(text-caption-2-font-size);
+    font-size: var(--text-xs);
   }
 
-  .nb-card-description {
-    font-size: nb-theme(text-caption-2-font-size);
+  .p-card-description {
+    font-size: var(--text-xs);
     -webkit-line-clamp: 1;
     line-clamp: 1;
   }

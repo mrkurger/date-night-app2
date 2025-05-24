@@ -6,39 +6,43 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbCardModule,
-  NbIconModule,
-  NbButtonModule,
-  NbBadgeModule,
-  NbSpinnerModule,
-  NbUserModule,
-} from '@nebular/theme';
 
-import { ChatMessage } from '../../../core/services/chat.service';
+// PrimeNG imports
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AvatarModule } from 'primeng/avatar';
+import { TooltipModule } from 'primeng/tooltip';
+
+// Services and Models
+import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
+
+// Pipes
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
-    selector: 'app-chat-message',
-    imports: [
-        CommonModule,
-        NbCardModule,
-        NbIconModule,
-        NbButtonModule,
-        NbBadgeModule,
-        NbSpinnerModule,
-        NbUserModule,
-        TimeAgoPipe,
-        LinkifyPipe,
-        FileSizePipe,
-    ],
-    templateUrl: './chat-message.component.html',
-    styleUrls: ['./chat-message.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-chat-message',
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    BadgeModule,
+    ProgressSpinnerModule,
+    AvatarModule,
+    TooltipModule,
+    TimeAgoPipe,
+    LinkifyPipe,
+    FileSizePipe,
+  ],
+  templateUrl: './chat-message.component.html',
+  styleUrls: ['./chat-message.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ChatMessageComponent implements OnInit {
   @Input() message!: ChatMessage;
@@ -58,12 +62,7 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if this message is from the current user
-    const currentUser = this.authService.getCurrentUser();
-    const currentUserId = currentUser?.id;
-    const senderId =
-      typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
-
-    this.isCurrentUser = senderId === currentUserId;
+    this.isCurrentUser = this.checkIfCurrentUser();
 
     // Handle message content
     this.processMessageContent();
@@ -115,6 +114,19 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
+   * Check if the message is from the current user
+   */
+  private checkIfCurrentUser(): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !this.message.sender) return false;
+
+    const senderId =
+      typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
+
+    return senderId === currentUser.id;
+  }
+
+  /**
    * Get the display name for the message sender
    */
   getSenderName(): string {
@@ -125,30 +137,13 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Get the profile image URL for the message sender
-   * @returns URL to the sender's profile image or default image
+   * Get the profile image for the message sender
    */
   getSenderProfileImage(): string {
-    const defaultImage = '/assets/img/default-profile.jpg';
-
-    if (!this.message.sender) {
-      return defaultImage;
-    }
-
     if (typeof this.message.sender === 'string') {
-      return defaultImage;
+      return '/assets/img/default-profile.jpg';
     }
-
-    // Check if the sender object has a profileImage property
-    return (this.message.sender as any).profileImage || defaultImage;
-  }
-
-  /**
-   * Get the timestamp for the message
-   */
-  getTimestamp(): Date {
-    // Use timestamp property, fallback to Date.now() if not available
-    return new Date(this.message.timestamp || Date.now());
+    return this.message.sender.profileImage || '/assets/img/default-profile.jpg';
   }
 
   /**
@@ -166,62 +161,20 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Open an attachment in a new window or download it
-   * @param attachment The attachment to open
+   * Open an attachment (for images)
    */
-  openAttachment(attachment: any): void {
-    if (!attachment || !attachment.url) {
-      console.error('Invalid attachment or missing URL');
-      return;
+  openAttachment(attachment: Attachment): void {
+    if (attachment.type === 'image' && attachment.url) {
+      window.open(attachment.url, '_blank');
     }
-
-    // Open the attachment in a new window
-    window.open(attachment.url, '_blank');
   }
 
   /**
    * Download an attachment
-   * @param attachment The attachment to download
    */
-  downloadAttachment(attachment: any): void {
-    if (!attachment || !attachment.url) {
-      console.error('Invalid attachment or missing URL');
-      return;
+  downloadAttachment(attachment: Attachment): void {
+    if (attachment.url) {
+      window.open(attachment.url, '_blank');
     }
-
-    // Create a temporary anchor element to trigger the download
-    const link = document.createElement('a');
-    link.href = attachment.url;
-    link.download = attachment.name || 'download';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  /**
-   * Get the expiry date as a Date object
-   * @returns Date object for the expiry time
-   */
-  getExpiryDate(): Date {
-    if (!this.message.expiresAt) {
-      return new Date();
-    }
-
-    // If expiresAt is a number (timestamp), convert it to a Date
-    if (typeof this.message.expiresAt === 'number') {
-      return new Date(this.message.expiresAt);
-    }
-
-    // Check if it's a Date object by checking if it has a getTime method
-    if (
-      typeof this.message.expiresAt === 'object' &&
-      this.message.expiresAt !== null &&
-      typeof (this.message.expiresAt as Date).getTime === 'function'
-    ) {
-      return this.message.expiresAt as Date;
-    }
-
-    // If it's a string, parse it
-    return new Date(this.message.expiresAt);
   }
 }

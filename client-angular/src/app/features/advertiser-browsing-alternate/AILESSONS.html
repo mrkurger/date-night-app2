@@ -23,13 +23,65 @@
     <h1>AI Lessons: Advertiser browsing alternate</h1>
     
     <p>This file contains lessons learned and best practices for the Advertiser browsing alternate component/module.</p>
-<h2>Best Practices</h2>
+
+<h2>Component Architecture</h2>
+<h3>Layout and Theming</h3>
+<p>Key lessons from migrating to PrimeNG:</p>
 <ul>
-  <li>Add best practices specific to this component/module</li>
+  <li>PrimeNG's theme system is highly adaptable and can match most Nebular color schemes</li>
+  <li>CSS custom properties enable smooth theme transitions and maintenance</li>
+  <li>Component decomposition improves maintainability and reusability</li>
+  <li>PrimeNG's layout primitives (Panel, Toolbar) provide consistent structure</li>
 </ul>
-<h2>Implementation Patterns</h2>
+
+<h3>State Management</h3>
 <ul>
-  <li>Add common implementation patterns used in this component/module</li>
+  <li>Keep state management close to where it's used</li>
+  <li>Use clear parent-child component hierarchies</li>
+  <li>Leverage PrimeNG's built-in state management for menus and tabs</li>
+</ul>
+
+<h2>Dependencies</h2>
+<h3>PrimeNG Modules</h3>
+<ul>
+  <li>CardModule - Content containers and layouts</li>
+  <li>ButtonModule - Interactive elements</li>
+  <li>ToolbarModule - Navigation and action bars</li>
+  <li>InputTextModule - Form inputs</li>
+  <li>TabViewModule - View switching</li>
+  <li>MenuModule and TieredMenuModule - Navigation menus</li>
+  <li>TooltipModule - User guidance</li>
+  <li>PanelModule - Layout structure</li>
+</ul>
+
+<h2>Performance Optimizations</h2>
+<ul>
+  <li>Theme switching is optimized using CSS custom properties</li>
+  <li>Lazy loading child components improves initial load</li>
+  <li>PrimeNG provides efficient event handling</li>
+</ul>
+
+<h2>Accessibility</h2>
+<ul>
+  <li>PrimeNG components include built-in ARIA support</li>
+  <li>Theme variables maintain WCAG color contrast</li>
+  <li>Keyboard navigation is properly handled</li>
+</ul>
+
+<h2>Testing Strategy</h2>
+<ul>
+  <li>Mock PrimeNG services in unit tests</li>
+  <li>Test theme switching functionality</li>
+  <li>Verify component interactions</li>
+  <li>Check responsive behavior across breakpoints</li>
+</ul>
+
+<h2>Documentation Best Practices</h2>
+<ul>
+  <li>Keep component documentation in sync with changes</li>
+  <li>Document all theme customizations</li>
+  <li>Maintain clear interface definitions</li>
+  <li>Include accessibility considerations</li>
 </ul>
   </main>
   

@@ -1,392 +1,223 @@
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/global/breakpoints' as *;
-@use '../../core/styles/breakpoints' as bp;
+@use '@angular/material' as mat;
 
-/* Styles for the converted React/Tailwind components will go here */
-/* We will aim to use Nebular's theming capabilities as much as possible */
-
-// Define specific colors from Tailwind's theme for precise matching
-$tailwind-gray-900: #111827;
-$tailwind-gray-800: #1f2937; // Used for border in React version
-$tailwind-gray-700: #374151; // For input border in React
-$tailwind-pink-500: #ec4899;
-$tailwind-pink-600: #db2777;
-$tailwind-pink-700: #be185d;
-$tailwind-gray-300: #d1d5db; // For text
-$tailwind-white: #ffffff;
-
-// This component will likely need its own scope for Nebular theming
-// if it deviates significantly from the main app theme.
+/* PrimeNG theme variables will be used from :root */
 
 :host {
   display: block;
-  height: 100%; // Ensure the component can take full height if needed
+  height: 100vh;
 
-  // This makes the nb-layout inside this component behave as the top-level layout
-  // for this specific "alternative browsing" feature page.
-  nb-layout {
-    height: 100vh; // Or 100% if :host has a defined height from its parent
+  .layout-main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-    ::ng-deep nb-layout-column.alt-content-column {
-      padding: nb-theme(layout-padding); // Use Nebular theme's padding
-      // Add more styling for the main content area of this alternative view if needed
-    }
-
-    // Style for the mobile sidebar specific to this component
-    nb-sidebar.mobile-sidebar {
-      // Nebular might apply default sidebar styles; override as needed
-      // Example: Ensure it has a dark background matching the header
-      background-color: $tailwind-gray-900; // Match header
-
-      // TODO: Style nb-menu items within this mobile sidebar if they need to differ
-      // from the main application's mobile menu.
+    ::ng-deep .p-panel-content {
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
   }
 }
 
-// Class for the header itself if global overrides are too broad
-.alt-header {
-  // Ensure it uses a dark theme context if the rest of the app might be light
-  background-color: $tailwind-gray-900 !important; // Override Nebular theme if needed for exact match
-  border-bottom: 1px solid $tailwind-gray-800 !important;
-  padding: 0 !important; // Override default nb-layout-header padding if any
-}
-
+// Header styles
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: nb-theme(header-height); // Use Nebular's header height
-  padding: 0 1rem; // Default padding, adjust as needed
-  margin: 0 auto; // Centering the container if a max-width is set
-  max-width: 1280px; // Typical container max-width like Tailwind's `container` with `px-4`
-}
+  padding: 0.5rem 1rem;
+  background-color: var(--surface-card);
+  box-shadow: var(--card-shadow);
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
+  .logo-container {
+    flex: 0 0 auto;
+    margin-right: 2rem;
 
-.logo {
-  font-size: 1.75rem; // Adjusted size
-  font-weight: bold;
-  text-decoration: none;
-  color: $tailwind-pink-500; // Sensual color
-  span {
-    color: $tailwind-white; // Meet color
-  }
+    .logo {
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-color);
 
-  .text-pink {
-    color: nb-theme(color-primary-500); // Nebular primary, should be pink
-  }
-}
-
-.desktop-navigation {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-start; // Align to left after logo
-  margin-left: 2rem;
-
-  nb-actions {
-    nb-action button.nb-button.ghost-button,
-    nb-action button.nb-button[nbButton][ghost] {
-      // More specific selector
-      color: $tailwind-gray-300;
-      font-weight: 500;
-      padding: 0.5rem 0.75rem; // Tailwind: px-3 py-2 -> 0.75rem 0.5rem. Adjusted for vertical alignment.
-      border-bottom: 2px solid transparent; // For active state underline
-      border-radius: nb-theme(button-ghost-border-radius); // Use Nebular's ghost button radius
-      &:hover {
-        color: $tailwind-white;
-        background-color: transparent !important;
-      }
-      &.active-link {
-        color: $tailwind-pink-500;
-        border-bottom-color: $tailwind-pink-500;
-      }
-      nb-icon.menu-chevron-icon {
-        font-size: 1rem;
-        line-height: 1;
+      .text-pink {
+        color: var(--primary-color);
       }
     }
-
-    .rankings-menu-item button.nb-button[nbButton][ghost] {
-      display: flex;
-      align-items: center;
-    }
   }
-}
 
-.search-user-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; // Reduced gap for tighter icons
+  .desktop-navigation {
+    flex: 1;
+    display: none;
 
-  nb-action.search-action {
-    position: relative; // For input positioning
-    button.search-toggle-btn,
-    button.search-close-btn {
-      color: $tailwind-gray-300;
-      &:hover {
-        color: $tailwind-white;
+    @media (min-width: 768px) {
+      display: block;
+    }
+
+    ::ng-deep {
+      .p-toolbar {
+        background: transparent;
+        border: none;
+        padding: 0;
       }
     }
-    input[nbInput].search-input {
-      background-color: $tailwind-gray-800;
-      border-color: $tailwind-gray-700;
-      color: $tailwind-white;
-      width: 0px; // Hidden by default
-      padding: nb-theme(input-medium-padding);
-      border-radius: nb-theme(input-border-radius);
-      transition:
-        width 0.3s ease-in-out,
-        padding 0.3s ease-in-out;
-      &::placeholder {
-        color: nb-theme(text-hint-color);
-      }
-      &:focus {
-        // Nebular inputs handle focus styling, ensure it's visible on dark bg
-      }
-    }
-    &.search-visible input[nbInput].search-input {
-      width: 200px;
-      padding-left: 0.75rem;
-      padding-right: 2.5rem; // Space for close button
-    }
-    button.search-close-btn {
-      position: absolute;
-      right: 0.25rem;
-      top: 50%;
-      transform: translateY(-50%);
-      display: none; // Hidden by default
-    }
-    &.search-visible button.search-close-btn {
-      display: inline-flex;
-    }
-    &.search-visible button.search-toggle-btn {
-      display: none; // Hide search icon when input is visible
+  }
+
+  .mobile-navigation {
+    @media (min-width: 768px) {
+      display: none;
     }
   }
 
-  nb-action button.nb-button[nbButton][ghost] {
-    color: $tailwind-gray-300;
-    &:hover {
-      color: $tailwind-white;
-    }
-  }
-
-  .nb-button.pink-button.signup-button {
-    background-color: $tailwind-pink-600;
-    border-color: $tailwind-pink-600;
-    color: $tailwind-white;
-    &:hover {
-      background-color: $tailwind-pink-700;
-      border-color: $tailwind-pink-700;
-    }
-  }
-
-  nb-user {
-    ::ng-deep .user-name {
-      color: $tailwind-white !important;
-    }
-    // Optionally style avatar
-    // ::ng-deep .user-picture {
-    //   border: 1px solid $tailwind-pink-500;
-    // }
-  }
-
-  .notification-btn {
-    position: relative; // For badge positioning
-    nb-badge {
-      position: absolute;
-      top: 0.15rem;
-      right: 0.15rem;
-    }
-  }
-}
-
-.mobile-menu-toggle {
-  @include media-breakpoint-up(md) {
-    display: none !important;
-  }
-  button.nb-button[nbButton][ghost] {
-    color: $tailwind-gray-300;
-    &:hover {
-      color: $tailwind-white;
-    }
-  }
-}
-
-.mobile-only {
-  @include media-breakpoint-up(md) {
-    display: none !important;
-  }
-}
-
-// TODO: Style nbContextMenu for rankingsMenu and userMenuAccount to match dark theme / pink accents
-// TODO: Map Lucide icon styles if custom SVGs are used. For now, relying on Eva icons.
-// TODO: Refine colors to exactly match the Tailwind pinks and grays by customizing Nebular theme further or using direct CSS values.
-// For example, Tailwind's gray-900 is #111827. Nebular's dark theme color-basic-800 might be different.
-// If specific color codes are needed: background-color: #111827;
-
-.alt-footer {
-  background-color: $tailwind-gray-900; // Match header background
-  border-top: 1px solid $tailwind-gray-800; // border-t
-  color: nb-theme(text-hint-color); // For text-muted-foreground
-  padding: 0 !important; // Override default nb-layout-footer padding
-
-  .footer-container {
+  .user-menu {
     display: flex;
-    flex-direction: column; // Default for mobile
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem; // Tailwind gap-4 is 1rem, reduced for footer
-    width: 100%;
-    min-height: nb-theme(footer-height); // Use Nebular's footer height as min
-    padding: 1.5rem 1rem; // py-6 equivalent (1.5rem = 24px)
-    margin: 0 auto;
-    max-width: 1280px; // Match header container
 
-    @include bp.breakpoint-up(md) {
-      flex-direction: row;
-      padding: 0 1rem; // md:py-0
-      gap: 1rem; // md gap
+    .user-avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .username {
+      margin-right: 0.5rem;
+      color: var(--text-color);
     }
   }
+}
+
+// Content styles
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--surface-ground);
+  padding: 1rem;
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (min-width: 992px) {
+      grid-template-columns: 1fr 300px;
+    }
+  }
+
+  .search-pane {
+    background: var(--surface-card);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--card-shadow);
+
+    .search-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      ::ng-deep {
+        .p-float-label input:focus ~ label,
+        .p-float-label input.p-filled ~ label {
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  .sidebar-pane {
+    @media (max-width: 991px) {
+      display: none;
+    }
+  }
+}
+
+.page-context-title {
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  .text-hint {
+    margin: 0.5rem 0 0;
+    color: var(--text-secondary-color);
+  }
+}
+
+// Placeholder styles
+.placeholder-text {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary-color);
+}
+
+// Footer styles
+.footer-container {
+  padding: 1rem;
+  background-color: var(--surface-card);
+  text-align: center;
+  border-top: 1px solid var(--surface-border);
 
   .footer-copyright-text {
-    text-align: center;
-    font-size: nb-theme(text-paragraph-2-font-size); // text-sm
-    line-height: nb-theme(text-paragraph-2-line-height); // leading-loose
-    @include bp.breakpoint-up(md) {
-      text-align: left;
-    }
+    margin: 0;
+    color: var(--text-secondary-color);
+    font-size: 0.875rem;
   }
 
   .footer-links {
+    margin-top: 0.5rem;
     display: flex;
-    gap: 1rem; // Tailwind gap-4
+    justify-content: center;
+    gap: 1rem;
 
     .footer-link {
-      font-size: nb-theme(text-paragraph-2-font-size); // text-sm
-      color: nb-theme(text-hint-color); // text-muted-foreground
+      color: var(--primary-color);
       text-decoration: none;
-      position: relative; // For underline offset
+      font-size: 0.875rem;
 
-      &::after {
-        // For underline on hover with offset
-        content: '';
-        position: absolute;
-        width: 100%;
-        transform: scaleX(0);
-        height: 1px;
-        bottom: -4px; // underline-offset-4 (approx)
-        left: 0;
-        background-color: nb-theme(text-hint-color); // Underline color
-        transform-origin: bottom right;
-        transition: transform 0.25s ease-out;
-      }
-
-      &:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
       &:hover {
-        color: nb-theme(text-basic-color); // Slightly lighten on hover for better visibility
+        text-decoration: underline;
       }
     }
   }
 }
 
-// TODO: Review focus states for all interactive elements for visibility on dark theme.
-
-// Styles for the main content area within alt-content-column
-.alt-browse-container {
-  padding: 1rem; // Overall padding for the browse content
-
-  .search-bar-container {
-    margin-bottom: 1.5rem;
-    .search-form {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-
-      .search-input-field {
-        flex-grow: 1;
-        // nb-form-field might add its own margin, adjust if needed
-        margin-bottom: 0 !important;
-      }
-      input[nbInput] {
-        // Assuming dark theme for this component, ensure input is styled for it
-        // background-color: $tailwind-gray-800; (Example, if not covered by Nebular theme on dark)
-        // border-color: $tailwind-gray-700;
-      }
-      .search-button {
-        min-width: 100px; // Ensure text doesn't get too cramped
-      }
-      .clear-button {
-        // Styling for clear button
-      }
-    }
+// Theme overrides for menus
+::ng-deep {
+  .p-menu .p-menuitem-link:not(.p-disabled):hover,
+  .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover {
+    background: var(--surface-hover);
   }
 
-  .view-tabset {
-    margin-bottom: 1.5rem;
-    // Custom styling for nb-tabset if needed
-    // e.g., border color, active tab indicator to match alt design
+  .p-menu .p-menuitem-link .p-menuitem-text,
+  .p-tieredmenu .p-menuitem-link .p-menuitem-text {
+    color: var(--text-color);
   }
 
-  .page-context-title {
-    margin-bottom: 1.5rem;
-    h2 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-    .text-hint {
-      color: nb-theme(text-hint-color);
-    }
+  .p-menu .p-menuitem-link .p-menuitem-icon,
+  .p-tieredmenu .p-menuitem-link .p-menuitem-icon {
+    color: var(--text-secondary-color);
   }
 
-  .content-area-wrapper {
-    display: flex;
-    gap: 1.5rem;
-
-    .main-content-pane {
-      flex: 3; // Takes more space
-      // background-color: nb-theme(background-basic-color-2); // Optional distinct background
-      // padding: 1rem;
-      // border-radius: nb-theme(card-border-radius);
-    }
-
-    .sidebar-pane {
-      flex: 1; // Takes less space
-      // background-color: nb-theme(background-basic-color-2);
-      // padding: 1rem;
-      // border-radius: nb-theme(card-border-radius);
-      @include bp.breakpoint-down(md) {
-        // Hide sidebar on medium and below
-        display: none;
-      }
-    }
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    background: var(--surface-ground);
   }
 
-  // Placeholders for sections/components to be converted
-  .premium-placeholder,
-  .paid-placement-placeholder,
-  .chat-widget-placeholder {
-    border: 1px dashed nb-theme(border-basic-color-4);
-    padding: 2rem;
-    text-align: center;
-    color: nb-theme(text-hint-color);
-    margin-bottom: 1.5rem;
-    border-radius: nb-theme(card-border-radius);
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: var(--surface-card);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
   }
+}
 
-  .placeholder-text {
-    padding: 2rem;
-    text-align: center;
-    color: nb-theme(text-hint-color);
-  }
+// Add theme transitions for smoother theme switching
+* {
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
 }

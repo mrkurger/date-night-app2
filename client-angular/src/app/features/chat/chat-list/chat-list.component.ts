@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,17 +16,21 @@ import { DataViewModule } from 'primeng/dataview';
 import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
-import { SkeletonModule } from 'primeng/skeleton';
 
 // Application-specific services and models
-import { ChatService, ChatRoom } from '@features/chat/services/chat.service';
-import { AuthService } from '@core/auth/services/auth.service';
-import { NotificationService } from '@core/services/notification.service';
-import { User } from '@core/auth/models/auth.model';
+import {
+  ChatService,
+  ChatMessage,
+  ChatRoom,
+  ChatParticipant,
+} from '../../../core/services/chat.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { User } from '../../../core/models/auth.model';
 
 // Shared Components and Pipes
-import { AvatarComponent } from '@shared/components/avatar/avatar.component';
-import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-chat-list',
@@ -34,7 +44,6 @@ import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
     BadgeModule,
     TooltipModule,
     RippleModule,
-    SkeletonModule,
     AvatarComponent,
     TimeAgoPipe,
   ],
@@ -56,6 +65,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private notificationService: NotificationService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -85,12 +95,14 @@ export class ChatListComponent implements OnInit, OnDestroy {
       (rooms) => {
         this.rooms = this.sortRooms(rooms);
         this.loading = false;
+        this.cdr.markForCheck();
       },
       (error) => {
         console.error('Error loading rooms:', error);
         this.notificationService.error('Failed to load chat rooms');
         this.loading = false;
         this.error = true;
+        this.cdr.markForCheck();
       },
     );
   }
@@ -103,26 +115,37 @@ export class ChatListComponent implements OnInit, OnDestroy {
         const roomIndex = this.rooms.findIndex((r) => r.id === message.roomId);
         if (roomIndex > -1) {
           this.rooms[roomIndex].lastMessage = message;
-          this.rooms = this.sortRooms(this.rooms);
+          if (message.sender !== this.currentUserId) {
+            this.rooms[roomIndex].unreadCount++;
+          }
+          this.rooms = this.sortRooms([...this.rooms]);
+          this.cdr.markForCheck();
         }
       }),
-    );
 
-    this.subscriptions.push(
       this.chatService.onlineUsers$.subscribe((users) => {
-        // Logic to update online status of users/rooms
+        this.rooms.forEach((room) => {
+          const otherUser = room.participants.find(
+            (p) => p.id !== this.currentUserId,
+          ) as ChatParticipant;
+          if (otherUser) {
+            otherUser.online = users.includes(otherUser.id);
+          }
+        });
+        this.cdr.markForCheck();
       }),
     );
   }
 
   sortRooms(rooms: ChatRoom[]): ChatRoom[] {
     return [...rooms].sort((a, b) => {
+      // Pinned rooms first
       if (a.pinned && !b.pinned) return -1;
       if (!a.pinned && b.pinned) return 1;
 
+      // Then by last message time
       const aTime = a.lastMessage?.timestamp || a.updatedAt || a.createdAt;
       const bTime = b.lastMessage?.timestamp || b.updatedAt || b.createdAt;
-
       return new Date(bTime).getTime() - new Date(aTime).getTime();
     });
   }
@@ -140,15 +163,22 @@ export class ChatListComponent implements OnInit, OnDestroy {
       return room.name;
     }
 
-    const otherParticipant = room.participants?.find((p) => p.id !== this.currentUserId);
-    return otherParticipant?.name || 'Unknown User';
+    const otherParticipant = room.participants.find(
+      (p) => p.id !== this.currentUserId,
+    ) as ChatParticipant;
+    return otherParticipant?.name || otherParticipant?.username || 'Unknown User';
   }
 
   getLastMessagePreview(room: ChatRoom): string {
-    if (room.lastMessage) {
-      return room.lastMessage.content || '';
+    if (!room.lastMessage) {
+      return 'No messages yet';
     }
-    return 'No messages yet';
+
+    if (room.lastMessage.isEncrypted) {
+      return '🔒 Encrypted message';
+    }
+
+    return room.lastMessage.content || '';
   }
 
   getLastMessageTime(room: ChatRoom): Date | undefined {
@@ -156,15 +186,33 @@ export class ChatListComponent implements OnInit, OnDestroy {
   }
 
   hasUnreadMessages(room: ChatRoom): boolean {
-    return room.unreadCount ? room.unreadCount > 0 : false;
+    return room.unreadCount > 0;
   }
 
   isRoomOnline(room: ChatRoom): boolean {
-    if (!room.isGroupChat) {
-      const otherParticipant = room.participants?.find((p) => p.id !== this.currentUserId);
-      return otherParticipant?.isOnline || false;
+    if (room.type === 'group') {
+      return false;
     }
-    return false;
+    const otherParticipant = room.participants.find(
+      (p) => p.id !== this.currentUserId,
+    ) as ChatParticipant;
+    return otherParticipant?.online || false;
+  }
+
+  togglePin(event: Event, room: ChatRoom): void {
+    event.stopPropagation();
+    this.chatService.pinRoom(room.id, !room.pinned).subscribe(
+      (updatedRoom) => {
+        room.pinned = !room.pinned;
+        this.rooms = this.sortRooms([...this.rooms]);
+        this.notificationService.success(room.pinned ? 'Chat pinned to top' : 'Chat unpinned');
+        this.cdr.markForCheck();
+      },
+      (error) => {
+        console.error('Error toggling pin:', error);
+        this.notificationService.error('Failed to update pin status');
+      },
+    );
   }
 
   archiveRoom(event: Event, room: ChatRoom): void {
@@ -173,17 +221,12 @@ export class ChatListComponent implements OnInit, OnDestroy {
       () => {
         this.rooms = this.rooms.filter((r) => r.id !== room.id);
         this.notificationService.success('Chat room archived');
+        this.cdr.markForCheck();
       },
       (error) => {
         console.error('Error archiving room:', error);
         this.notificationService.error('Failed to archive chat room');
       },
     );
-  }
-
-  togglePin(event: Event, room: ChatRoom): void {
-    event.stopPropagation();
-    room.pinned = !room.pinned;
-    this.rooms = this.sortRooms(this.rooms);
   }
 }

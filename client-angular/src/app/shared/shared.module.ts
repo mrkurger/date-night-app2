@@ -1,113 +1,64 @@
 import { NgModule } from '@angular/core';
-import { NebularModule } from './nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSelectModule,
-  NbTagModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbContextMenuModule,
-  NbActionsModule,
-  NbTabsetModule,
-  NbRouteTabsetModule,
-  NbAccordionModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbPopoverModule,
-  NbTooltipModule,
-  NbToggleModule,
-  NbChatModule,
-  NbCalendarModule,
-  NbSpinnerModule,
-  NbSearchModule,
-} from '@nebular/theme';
+// PrimeNG Modules
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ListboxModule } from 'primeng/listbox';
+import { BadgeModule } from 'primeng/badge';
+import { MessageModule } from 'primeng/message';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CalendarModule } from 'primeng/calendar';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { AccordionModule } from 'primeng/accordion';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { TreeTableModule } from 'primeng/treetable';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PaginatorModule } from 'primeng/paginator';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
-// Import custom components
-import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
+// Font Awesome for icons (replacement for Eva Icons)
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-const NEBULAR_MODULES = [
-  // Basic Nebular modules
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSelectModule,
-  NbTagModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbContextMenuModule,
-  NbActionsModule,
-  NbTabsetModule,
-  NbRouteTabsetModule,
-  NbAccordionModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbEvaIconsModule,
-
-  // Additional modules needed
-  NbPopoverModule,
-  NbTooltipModule,
-  NbToggleModule,
-  NbChatModule,
-  NbCalendarModule,
-  NbSpinnerModule,
-  NbSearchModule,
+const PRIMENG_MODULES = [
+  CardModule,
+  ButtonModule,
+  InputTextModule,
+  InputGroupModule,
+  DropdownModule,
+  TagModule,
+  ListboxModule,
+  BadgeModule,
+  MessageModule,
+  CheckboxModule,
+  RadioButtonModule,
+  CalendarModule,
+  ContextMenuModule,
+  TableModule,
+  TabViewModule,
+  AccordionModule,
+  TreeTableModule,
+  TooltipModule,
+  ToggleButtonModule,
+  PaginatorModule,
+  DialogModule,
+  ProgressSpinnerModule,
+  AutoCompleteModule,
+  FontAwesomeModule,
 ];
 
-// Custom components and modules
-const CUSTOM_COMPONENTS = [NbErrorComponent];
-
-const CUSTOM_MODULES = [];
-
-/**
- * Shared Module
- *
- * This module exports common Angular modules and Nebular modules.
- * Standalone components and pipes should be imported directly where needed.
- *
- * Note: All components and pipes have been migrated to standalone.
- * They should be imported directly in the components that use them.
- */
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ...NEBULAR_MODULES,
-    ...CUSTOM_MODULES,
-    ...CUSTOM_COMPONENTS,
-    NebularModule,
-  ],
-  exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ...NEBULAR_MODULES,
-    ...CUSTOM_MODULES,
-    ...CUSTOM_COMPONENTS,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
 })
 export class SharedModule {}

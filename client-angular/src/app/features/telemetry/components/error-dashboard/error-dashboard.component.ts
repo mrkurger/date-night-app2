@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
+import { ErrorLog } from '../../../admin/components/error-security-dashboard/error-security-dashboard.component'; // Added import
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 // PrimeNG Modules

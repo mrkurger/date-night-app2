@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebular to PrimeNG Migration</title>
+    <link rel="stylesheet" href="/docs/component-library/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Date Night App Documentation</h1>
+        <nav>
+          <ul>
+            <li><a href="/_docs_index.html">Home</a></li>
+            <li><a href="/_glossary.html">Glossary</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Nebular to PrimeNG Migration</h1>
+
+      <section>
+        <h2>1. Overview</h2>
+        <p>
+          This document tracks the migration of components from Nebular to PrimeNG. The migration
+          follows a component-first approach, prioritizing standalone components and commonly used
+          UI elements.
+        </p>
+
+        <h3>Current Setup</h3>
+        <ul>
+          <li>
+            Main Nebular configuration in <code>nebular.module.ts</code> and
+            <code>nebular-custom.module.ts</code>
+          </li>
+          <li>
+            Custom Nebular components in <code>shared/components/custom-nebular-components</code>
+          </li>
+          <li>Several standalone components already using PrimeNG successfully</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. Key Components to Migrate</h2>
+
+        <h3>Layout Components</h3>
+        <ul>
+          <li>✅ app-card → p-card</li>
+          <li>⏳ nb-layout → PrimeNG layout</li>
+          <li>⏳ nb-sidebar → p-sidebar</li>
+          <li>⏳ nb-menu → p-menubar/p-menu</li>
+        </ul>
+
+        <h3>Form Components</h3>
+        <ul>
+          <li>⏳ nb-form-field → p-inputgroup</li>
+          <li>⏳ nb-input → p-input</li>
+          <li>⏳ nb-select → p-dropdown</li>
+        </ul>
+
+        <h3>Data Display</h3>
+        <ul>
+          <li>⏳ nb-data-table → p-table</li>
+          <li>⏳ nb-list → p-listbox</li>
+          <li>⏳ nb-tree-grid → p-treegrid</li>
+        </ul>
+
+        <h3>Feedback Components</h3>
+        <ul>
+          <li>⏳ nb-spinner → p-progressSpinner</li>
+          <li>⏳ nb-alert → p-message</li>
+          <li>⏳ nb-tooltip → p-tooltip</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. Standalone Components Status</h2>
+
+        <h3>Completed</h3>
+        <ul>
+          <li>ChatListComponent - Using PrimeNG components properly</li>
+        </ul>
+
+        <h3>In Progress</h3>
+        <ul>
+          <li>AppComponent - Still using NbLayoutModule</li>
+        </ul>
+
+        <h3>Pending</h3>
+        <ul>
+          <li>NetflixView component</li>
+          <li>TinderView component</li>
+          <li>Additional standalone components to be evaluated</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Migration Strategy</h2>
+
+        <h3>Step 1: Replace Core Layout</h3>
+        <ul>
+          <li>Replace nb-layout with PrimeNG equivalent layout structure</li>
+          <li>Migrate sidebar navigation to p-sidebar</li>
+          <li>Update menu system to use p-menubar/p-menu</li>
+        </ul>
+
+        <h3>Step 2: Migrate Standalone Components</h3>
+        <ul>
+          <li>Identify and update existing standalone components</li>
+          <li>Convert high-traffic components to standalone + PrimeNG</li>
+          <li>Create new components as standalone with PrimeNG</li>
+        </ul>
+
+        <h3>Step 3: Migrate NgModule-based Components</h3>
+        <ul>
+          <li>Convert module-based components to standalone</li>
+          <li>Replace Nebular components with PrimeNG equivalents</li>
+          <li>Update templates and styles</li>
+        </ul>
+
+        <h3>Step 4: Clean Up</h3>
+        <ul>
+          <li>Remove @nebular/* dependencies</li>
+          <li>Clean up SCSS/styles</li>
+          <li>Remove Nebular theme customization</li>
+          <li>Update global styles to PrimeNG theme system</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Dependencies</h2>
+
+        <h3>Current</h3>
+        <ul>
+          <li>@nebular/theme</li>
+          <li>@nebular/eva-icons</li>
+          <li>@nebular/security</li>
+        </ul>
+
+        <h3>Target</h3>
+        <ul>
+          <li>@primeng/core</li>
+          <li>primeng (all needed modules)</li>
+          <li>primeicons</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Common Challenges</h2>
+        <ul>
+          <li>Theme variable migration from Nebular to PrimeNG</li>
+          <li>Layout structure differences between frameworks</li>
+          <li>Custom component adaptations</li>
+          <li>Event binding syntax changes</li>
+          <li>Icon system migration (eva-icons to PrimeIcons)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7. Next Steps</h2>
+        <ul>
+          <li>Complete AppComponent migration to PrimeNG layout</li>
+          <li>Create PrimeNG equivalents for custom Nebular components</li>
+          <li>Update standalone components to use PrimeNG</li>
+          <li>Establish PrimeNG theming system</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 Date Night App. Last updated: 2024-03-07</p>
+      </div>
+    </footer>
+  </body>
+</html>

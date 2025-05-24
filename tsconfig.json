@@ -2,11 +2,23 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ES2022",
-    "moduleResolution": "node",
+    /* Changed from "node" to "bundler" for better ESM support */
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": false,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    /* Added for scripts folder support */
+    "allowJs": true,
+    "checkJs": true
   },
-  "exclude": ["node_modules", "dist", "client-angular"]
+  /* Updated exclude to keep scripts folder */
+  "exclude": ["node_modules", "dist", "client-angular"],
+  /* Added ts-node config for ESM support */
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  /* Added include for scripts */
+  "include": ["scripts/**/*"]
 }

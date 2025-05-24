@@ -1,29 +1,28 @@
-<!-- AppCard Component using Nebular UI -->
+<!-- AppCard Component using PrimeNG UI -->
 
-<nb-card
+<p-card
   [ngClass]="{
-    'nb-card-tinder': layout === 'tinder',
-    'nb-card-netflix': layout === 'netflix',
-    'nb-card-list': layout === 'list',
+    'p-card-tinder': layout === 'tinder',
+    'p-card-netflix': layout === 'netflix',
+    'p-card-list': layout === 'list',
   }"
   (click)="onViewDetails()"
 >
   <!-- Card Background Image -->
-  <div class="nb-card-media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
+  <div class="p-card-media" [style.background-image]="'url(' + backgroundImageUrl + ')'">
     <!-- Online/Offline Status Badge -->
-    <nb-badge
-      [text]="isOnline ? 'Online' : 'Offline'"
-      [status]="isOnline ? 'success' : 'danger'"
-      position="top-left"
+    <p-badge
+      [value]="isOnline ? 'Online' : 'Offline'"
+      [severity]="isOnline ? 'success' : 'danger'"
       class="status-badge"
-    ></nb-badge>
+    ></p-badge>
 
     <!-- Media Navigation Dots -->
-    <div class="nb-card-media-dots" *ngIf="getMediaCount() > 1">
+    <div class="p-card-media-dots" *ngIf="getMediaCount() > 1">
       <div
         *ngFor="let dot of getMediaDots(); let i = index"
-        class="nb-card-media-dot"
-        [ngClass]="{ 'nb-card-media-dot-active': i === currentMediaIndex }"
+        class="p-card-media-dot"
+        [ngClass]="{ 'p-card-media-dot-active': i === currentMediaIndex }"
         (click)="
           $event.stopPropagation(); currentMediaIndex = i; backgroundImageUrl = getCurrentMediaUrl()
         "
@@ -31,102 +30,93 @@
     </div>
 
     <!-- Media Navigation Buttons -->
-    <button
+    <p-button
       *ngIf="getMediaCount() > 1"
-      nbButton
-      ghost
+      [outlined]="true"
+      [rounded]="true"
       size="small"
-      class="nb-card-media-nav nb-card-media-nav-prev"
-      (click)="prevMedia($event)"
+      class="p-card-media-nav p-card-media-nav-prev"
+      (onClick)="prevMedia($event)"
+      icon="pi pi-chevron-left"
       aria-label="Previous image"
-    >
-      <nb-icon icon="chevron-left-outline"></nb-icon>
-    </button>
-    <button
+    ></p-button>
+    <p-button
       *ngIf="getMediaCount() > 1"
-      nbButton
-      ghost
+      [outlined]="true"
+      [rounded]="true"
       size="small"
-      class="nb-card-media-nav nb-card-media-nav-next"
-      (click)="nextMedia($event)"
+      class="p-card-media-nav p-card-media-nav-next"
+      (onClick)="nextMedia($event)"
+      icon="pi pi-chevron-right"
       aria-label="Next image"
-    >
-      <nb-icon icon="chevron-right-outline"></nb-icon>
-    </button>
+    ></p-button>
 
     <!-- Content Overlay with Blur Effect -->
-    <div class="nb-card-content-overlay">
-      <nb-card-body class="nb-card-content">
-        <h3 class="nb-card-title" *ngIf="ad">{{ ad.title }}</h3>
-        <h3 class="nb-card-title" *ngIf="!ad">Untitled</h3>
+    <div class="p-card-content-overlay">
+      <div class="p-card-content">
+        <h3 class="p-card-title" *ngIf="ad">{{ ad.title }}</h3>
+        <h3 class="p-card-title" *ngIf="!ad">Untitled</h3>
 
-        <div class="nb-card-meta" *ngIf="ad">
-          <div class="nb-card-location" *ngIf="ad.location">
-            <nb-icon icon="map-outline"></nb-icon>
+        <div class="p-card-meta" *ngIf="ad">
+          <div class="p-card-location" *ngIf="ad.location">
+            <i class="pi pi-map-marker"></i>
             <span>{{ ad.location }}</span>
           </div>
 
-          <div class="nb-card-price" *ngIf="ad.price">
-            <nb-icon icon="pricetags-outline"></nb-icon>
+          <div class="p-card-price" *ngIf="ad.price">
+            <i class="pi pi-tag"></i>
             <span>{{ formatPrice(ad.price) }}</span>
           </div>
         </div>
 
-        <p class="nb-card-description" *ngIf="ad && showDescription && ad.description">
+        <p class="p-card-description" *ngIf="ad && showDescription && ad.description">
           {{ getTruncatedDescription() }}
         </p>
-      </nb-card-body>
+      </div>
     </div>
   </div>
 
   <!-- Card Actions -->
-  <nb-card-footer class="nb-card-actions" *ngIf="showActions">
-    <!-- Bottom Left Floating Action Button -->
-    <button
-      nbButton
-      status="primary"
-      shape="round"
-      class="nb-card-fab nb-card-fab-left"
-      (click)="onLike($event)"
-      aria-label="Like"
-    >
-      <nb-icon icon="heart-outline"></nb-icon>
-    </button>
+  <ng-template pTemplate="footer" *ngIf="showActions">
+    <div class="p-card-actions">
+      <!-- Bottom Left Floating Action Button -->
+      <p-button
+        [rounded]="true"
+        severity="primary"
+        class="p-card-fab p-card-fab-left"
+        (onClick)="onLike($event)"
+        icon="pi pi-heart"
+        aria-label="Like"
+      ></p-button>
 
-    <!-- Bottom Right Floating Action Button -->
-    <button
-      nbButton
-      status="info"
-      shape="round"
-      class="nb-card-fab nb-card-fab-right"
-      (click)="onChat($event)"
-      aria-label="Chat"
-    >
-      <nb-icon icon="message-circle-outline"></nb-icon>
-    </button>
+      <!-- Bottom Right Floating Action Button -->
+      <p-button
+        [rounded]="true"
+        severity="info"
+        class="p-card-fab p-card-fab-right"
+        (onClick)="onShare($event)"
+        icon="pi pi-share-alt"
+        aria-label="Share"
+      ></p-button>
 
-    <!-- Tinder-specific Swipe Actions -->
-    <div class="nb-card-swipe-actions" *ngIf="layout === 'tinder'">
-      <button
-        nbButton
-        status="danger"
-        shape="round"
-        class="nb-card-swipe-button nb-card-swipe-button-left"
-        (click)="onSwipe('left', $event)"
-        aria-label="Swipe left"
-      >
-        <nb-icon icon="close-outline"></nb-icon>
-      </button>
-      <button
-        nbButton
-        status="success"
-        shape="round"
-        class="nb-card-swipe-button nb-card-swipe-button-right"
-        (click)="onSwipe('right', $event)"
-        aria-label="Swipe right"
-      >
-        <nb-icon icon="heart-outline"></nb-icon>
-      </button>
+      <!-- View Details Button -->
+      <p-button
+        [rounded]="true"
+        class="p-card-action-btn"
+        (onClick)="onViewDetails($event)"
+        icon="pi pi-eye"
+        aria-label="View Details"
+      ></p-button>
+
+      <!-- Chat Button -->
+      <p-button
+        [rounded]="true"
+        severity="success"
+        class="p-card-action-btn"
+        (onClick)="onChat($event)"
+        icon="pi pi-comments"
+        aria-label="Chat"
+      ></p-button>
     </div>
-  </nb-card-footer>
-</nb-card>
+  </ng-template>
+</p-card>

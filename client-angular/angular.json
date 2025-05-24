@@ -26,11 +26,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/primeicons/primeicons.css",
-              "./node_modules/primeflex/primeflex.css",
-              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "./node_modules/eva-icons/style/eva-icons.css",
-              "./node_modules/@fontsource/inter/index.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeflex/primeflex.css",
               "src/styles.scss"
             ],
             "scripts": [],

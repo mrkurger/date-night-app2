@@ -1,17 +1,8 @@
-import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
-
-import { Component, OnInit, Inject, Optional } from '@angular/core';
-// ===================================================
-// This file contains settings for component configuration (notes-dialog.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
+import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedModule } from '../../shared.module';
 
 export interface NotesDialogData {
   title?: string;
@@ -22,42 +13,61 @@ export interface NotesDialogData {
 
 @Component({
   selector: 'app-notes-dialog',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NebularModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
   template: `
-    <nb-card>
-      <nb-card-header>{{ data?.title || 'Edit Notes' }}</nb-card-header>
-      <nb-card-body>
-        <nb-form-field>
+    <p-dialog
+      [header]="data.title || 'Edit Notes'"
+      [(visible)]="visible"
+      [modal]="true"
+      [style]="{ width: '600px', minWidth: '400px' }"
+      [contentStyle]="{ padding: '1rem' }"
+      [baseZIndex]="10000"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="p-fluid">
+        <div class="p-field">
           <textarea
-            nbInput
-            fullWidth
+            pInputTextarea
             [(ngModel)]="notes"
-            [placeholder]="data?.placeholder || 'Enter your notes here...'"
-            [maxlength]="data?.maxLength || 500"
+            [placeholder]="data.placeholder || 'Enter your notes here...'"
+            [maxlength]="data.maxLength || 500"
             rows="5"
+            class="w-full"
           ></textarea>
-          <div class="text-right" *ngIf="notes">
-            {{ notes?.length || 0 }} / {{ data?.maxLength || 500 }}
-          </div>
-        </nb-form-field>
-      </nb-card-body>
-      <nb-card-footer class="dialog-footer">
-        <button nbButton status="basic" (click)="onCancel()">Cancel</button>
-        <button nbButton status="primary" (click)="onSave()">Save</button>
-      </nb-card-footer>
-    </nb-card>
+          <small class="text-right" *ngIf="notes">
+            {{ notes?.length || 0 }} / {{ data.maxLength || 500 }}
+          </small>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="p-dialog-footer">
+          <p-button label="Cancel" styleClass="p-button-text" (onClick)="onCancel()"></p-button>
+          <p-button label="Save" (onClick)="onSave()"></p-button>
+        </div>
+      </ng-template>
+    </p-dialog>
   `,
   styles: [
     `
-      :host nb-card {
-        max-width: 600px;
-        min-width: 400px;
+      :host ::ng-deep .p-dialog .p-dialog-content {
+        padding: 0;
       }
 
-      :host nb-card-footer {
+      .p-dialog-footer {
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
+      }
+
+      .text-right {
+        display: block;
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+
+      :host ::ng-deep textarea.p-inputtextarea {
+        min-height: 120px;
       }
     `,
   ],
@@ -65,12 +75,13 @@ export interface NotesDialogData {
 export class NotesDialogComponent implements OnInit {
   notes: string = '';
   data: NotesDialogData;
+  visible: boolean = true;
 
   constructor(
-    protected dialogRef: NbDialogRef<NotesDialogComponent>,
-    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: NotesDialogData,
+    private dialogRef: DynamicDialogRef,
+    private config: DynamicDialogConfig,
   ) {
-    this.data = this.injectedData || {};
+    this.data = this.config.data || {};
   }
 
   ngOnInit() {

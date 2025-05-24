@@ -1,12 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { NbMenuItem, NbSidebarService, NbTabComponent } from '@nebular/theme';
+import { Subject } from 'rxjs';
 import { filter, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../core/models/user.interface';
 
-// Mock data (similar to React component)
+// TODO: Create User interface if not available
+interface User {
+  username?: string;
+  profile?: {
+    avatar?: string;
+  };
+  roles?: string[];
+}
+
 const mockAdvertisers = [
   {
     id: 1,
@@ -90,10 +97,9 @@ interface Advertiser {
 }
 
 @Component({
-    selector: 'app-advertiser-browsing-alternate',
-    templateUrl: './advertiser-browsing-alternate.component.html',
-    styleUrls: ['./advertiser-browsing-alternate.component.scss'],
-    standalone: false
+  selector: 'app-advertiser-browsing-alternate',
+  templateUrl: './advertiser-browsing-alternate.component.html',
+  styleUrls: ['./advertiser-browsing-alternate.component.scss'],
 })
 export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
@@ -103,9 +109,10 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   isAdvertiser: boolean = false;
   userName: string = '';
   userPicture: string = 'assets/img/kitten-dark.png';
-  isSearchVisible: boolean = false; // For header search toggle
+  isSearchVisible: boolean = false;
   currentUrl: string = '';
   isMobileMenuOpen: boolean = false;
+  isLoading: boolean = false;
 
   // For page content
   searchQuery: string = '';
@@ -115,26 +122,44 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   pageTitle: string = '';
   searchResultCount: number | null = null;
 
+  // Data
   allAdvertisers: Advertiser[] = [...mockAdvertisers];
   displayedAdvertisers: Advertiser[] = [];
   premiumAds: Advertiser[] = [];
-  // paidPlacementAds: Advertiser[] = []; // For sidebar
+  paidPlacementAds: Advertiser[] = []; // TODO: Populate with actual paid ads
 
-  userMenuAccount: NbMenuItem[] = [];
-  rankingsMenu: NbMenuItem[] = [
-    { title: 'Top Rated', link: '/advertiser-browsing-alt/rankings?type=rating' },
-    { title: 'Most Popular', link: '/advertiser-browsing-alt/rankings?type=popular' },
-    { title: 'Most Reviewed', link: '/advertiser-browsing-alt/rankings?type=reviews' },
-    { title: 'Newest', link: '/advertiser-browsing-alt/rankings?type=new' },
+  // PrimeNG Menus
+  userMenuAccount: MenuItem[] = [];
+  rankingsMenu: MenuItem[] = [
+    {
+      label: 'Top Rated',
+      routerLink: '/advertiser-browsing-alt/rankings',
+      queryParams: { type: 'rating' },
+    },
+    {
+      label: 'Most Popular',
+      routerLink: '/advertiser-browsing-alt/rankings',
+      queryParams: { type: 'popular' },
+    },
+    {
+      label: 'Most Reviewed',
+      routerLink: '/advertiser-browsing-alt/rankings',
+      queryParams: { type: 'reviews' },
+    },
+    {
+      label: 'Newest',
+      routerLink: '/advertiser-browsing-alt/rankings',
+      queryParams: { type: 'new' },
+    },
   ];
-  mobileMenuItems: NbMenuItem[] = [];
+  mobileMenuItems: MenuItem[] = [];
 
-  // Add new properties for handling advertiser interactions
-  isLoading = false;
+  // Add these properties to the component class
+  activeIndex: number = 0;
+  currentYear: number = new Date().getFullYear();
 
   constructor(
     private router: Router,
-    private sidebarService: NbSidebarService,
     private authService: AuthService,
   ) {
     this.router.events
@@ -192,92 +217,103 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  updateUserMenus(): void {
+  private updateUserMenus(): void {
     this.userMenuAccount = [
       {
-        title: 'Profile',
-        icon: 'person-outline',
-        link: '/advertiser-browsing-alt/user-profile',
-        hidden: !this.isLoggedIn,
+        label: 'Profile',
+        icon: 'pi pi-user',
+        routerLink: '/advertiser-browsing-alt/user-profile',
+        visible: this.isLoggedIn,
       },
       {
-        title: 'Wallet',
-        icon: 'credit-card-outline',
-        link: '/advertiser-browsing-alt/wallet',
-        hidden: !this.isLoggedIn,
+        label: 'Wallet',
+        icon: 'pi pi-credit-card',
+        routerLink: '/advertiser-browsing-alt/wallet',
+        visible: this.isLoggedIn,
       },
     ];
+
     if (this.isLoggedIn && this.isAdvertiser) {
       this.userMenuAccount.push({
-        title: 'Dashboard',
-        icon: 'layout-outline',
-        link: '/advertiser-browsing-alt/advertiser-dashboard',
+        label: 'Dashboard',
+        icon: 'pi pi-th-large',
+        routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
       });
     }
+
     if (this.isLoggedIn) {
       this.userMenuAccount.push({
-        title: 'Logout',
-        icon: 'log-out-outline',
-        data: { id: 'logout' },
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => this.handleUserMenuClick('logout'),
       });
-    }
-    if (!this.isLoggedIn) {
-      this.userMenuAccount = [];
     }
   }
 
-  updateMobileMenuItems(): void {
+  private updateMobileMenuItems(): void {
     this.mobileMenuItems = [
-      { title: 'Browse', link: '/advertiser-browsing-alt/browse', icon: 'search-outline' },
-      { title: 'Favorites', link: '/advertiser-browsing-alt/favorites', icon: 'heart-outline' },
       {
-        title: 'Rankings',
-        icon: 'bar-chart-outline',
-        expanded: false,
-        children: this.rankingsMenu.map((item) => ({ ...item })), // Copy rankings menu for mobile
+        label: 'Browse',
+        routerLink: '/advertiser-browsing-alt/browse',
+        icon: 'pi pi-search',
+      },
+      {
+        label: 'Favorites',
+        routerLink: '/advertiser-browsing-alt/favorites',
+        icon: 'pi pi-heart',
+      },
+      {
+        label: 'Rankings',
+        icon: 'pi pi-chart-bar',
+        items: this.rankingsMenu,
       },
     ];
+
     if (this.isLoggedIn) {
       if (this.isAdvertiser) {
         this.mobileMenuItems.push({
-          title: 'Dashboard',
-          icon: 'layout-outline',
-          link: '/advertiser-browsing-alt/advertiser-dashboard',
+          label: 'Dashboard',
+          icon: 'pi pi-th-large',
+          routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
         });
       }
-      this.mobileMenuItems.push({
-        title: 'Profile',
-        icon: 'person-outline',
-        link: '/advertiser-browsing-alt/user-profile',
-      });
-      this.mobileMenuItems.push({
-        title: 'Wallet',
-        icon: 'credit-card-outline',
-        link: '/advertiser-browsing-alt/wallet',
-      });
-      this.mobileMenuItems.push({
-        title: 'Logout',
-        icon: 'log-out-outline',
-        data: { id: 'logout' },
-      });
+      this.mobileMenuItems.push(
+        {
+          label: 'Profile',
+          icon: 'pi pi-user',
+          routerLink: '/advertiser-browsing-alt/user-profile',
+        },
+        {
+          label: 'Wallet',
+          icon: 'pi pi-credit-card',
+          routerLink: '/advertiser-browsing-alt/wallet',
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-sign-out',
+          command: () => this.handleUserMenuClick('logout'),
+        },
+      );
     } else {
-      this.mobileMenuItems.push({ title: 'Log In', icon: 'log-in-outline', link: '/auth/login' });
-      this.mobileMenuItems.push({
-        title: 'Sign Up',
-        icon: 'person-add-outline',
-        link: '/auth/signup',
-      });
+      this.mobileMenuItems.push(
+        {
+          label: 'Log In',
+          icon: 'pi pi-sign-in',
+          routerLink: '/auth/login',
+        },
+        {
+          label: 'Sign Up',
+          icon: 'pi pi-user-plus',
+          routerLink: '/auth/signup',
+        },
+      );
     }
-    this.mobileMenuItems = [...this.mobileMenuItems];
   }
 
-  handleUserMenuClick(event: { item: NbMenuItem }): void {
-    if (event.item.data && event.item.data.id === 'logout') {
-      this.authService.logout().subscribe(() => {
-        // Navigation handled by AuthService or can be done here
-      });
-    } else if (event.item.link) {
-      this.router.navigate([event.item.link]);
+  handleUserMenuClick(itemId: string): void {
+    if (itemId === 'logout') {
+      this.authService.logout();
+      this.router.navigate(['/auth/login']);
     }
   }
 
@@ -292,7 +328,6 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
 
   toggleMobileSidebar(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    this.sidebarService.toggle(this.isMobileMenuOpen, 'alt-mobile-menu');
   }
 
   // Methods for page content
@@ -350,11 +385,9 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     this.filterAndDisplayAds();
   }
 
-  onViewChange(event: { tabTitle: string }): void {
-    const newView = event.tabTitle.toLowerCase() as typeof this.activeView;
-    if (['grid', 'cards', 'map', 'nearby', 'featured'].includes(newView)) {
-      this.activeView = newView;
-      // Potentially reload data or change display based on view
+  onViewChange(event: { value: string }): void {
+    if (['grid', 'cards', 'map', 'nearby', 'featured'].includes(event.value)) {
+      this.activeView = event.value as typeof this.activeView;
     }
   }
 
@@ -421,14 +454,12 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
         isFavorite: true,
       };
       // TODO: Call favorite/like service to persist changes
-      // TODO: Show notification or feedback
     }
   }
 
   onAdvertiserNope(advertiser: Advertiser): void {
     // Handle nope/reject action
     // TODO: Update user preferences or filtering based on rejection
-    // TODO: Show notification or feedback
   }
 
   onRefreshAdvertisers(): void {
@@ -443,8 +474,4 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     }, 1000);
   }
-
-  // TODO: Add loadMore for infinite scroll if implementing full NetflixView functionality
-  // TODO: Implement actual API calls instead of mock data
-  // TODO: Implement logic for selectedLocation and its impact on filtering
 }

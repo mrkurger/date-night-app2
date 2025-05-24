@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSP-MCP Glossary</title>
+    <style>
+        :root {
+            --primary-color: #4a6da7;
+            --secondary-color: #f8f9fa;
+            --accent-color: #5d93ff;
+            --text-color: #333;
+            --link-color: #0066cc;
+            --border-color: #ddd;
+            --code-bg: #f5f5f5;
+            --warning-color: #e6a23c;
+            --success-color: #67c23a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+        }
+
+        header h1 {
+            color: white;
+            margin: 0;
+        }
+
+        nav {
+            background-color: var(--secondary-color);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .warning {
+            background-color: #fff8e6;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .success {
+            background-color: #f0f9eb;
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .glossary-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .glossary-item:last-child {
+            border-bottom: none;
+        }
+
+        .glossary-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        .glossary-category {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .glossary-definition {
+            margin-top: 5px;
+        }
+
+        .glossary-example {
+            background-color: var(--code-bg);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LSP-MCP Glossary</h1>
+        <p>Terms, functions, and concepts related to the Language Server Protocol - Model Context Protocol integration</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../_docs_index.html">Main Documentation Index</a></li>
+            <li><a href="LSP_MCP_INTEGRATION.html">LSP-MCP Integration</a></li>
+            <li><a href="CHANGELOG.html">Documentation Changelog</a></li>
+            <li><a href="AILESSONS.html">AI Lessons</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Terms and Concepts</h2>
+
+        <div class="glossary-item" id="lsp">
+            <div class="glossary-term">LSP (Language Server Protocol)</div>
+            <div class="glossary-category">Protocol</div>
+            <div class="glossary-definition">
+                A protocol that allows code editors to communicate with language servers, which provide language features like code completion, error checking, and hover information.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="mcp">
+            <div class="glossary-term">MCP (Model Context Protocol)</div>
+            <div class="glossary-category">Protocol</div>
+            <div class="glossary-definition">
+                A protocol that allows AI models to interact with external tools and resources, enabling them to access information beyond their training data.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="lsp-mcp">
+            <div class="glossary-term">LSP-MCP</div>
+            <div class="glossary-category">Integration</div>
+            <div class="glossary-definition">
+                An integration that bridges the Language Server Protocol and the Model Context Protocol, allowing AI models to access language server features.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="language-server">
+            <div class="glossary-term">Language Server</div>
+            <div class="glossary-category">Component</div>
+            <div class="glossary-definition">
+                A server that implements the Language Server Protocol to provide language features like code completion, error checking, and hover information for a specific programming language.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="typescript-language-server">
+            <div class="glossary-term">TypeScript Language Server</div>
+            <div class="glossary-category">Component</div>
+            <div class="glossary-definition">
+                A language server that provides language features for TypeScript and JavaScript, including type checking, code completion, and hover information.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="hover-information">
+            <div class="glossary-term">Hover Information</div>
+            <div class="glossary-category">Feature</div>
+            <div class="glossary-definition">
+                Information displayed when hovering over a code element, typically including type information, documentation, and other relevant details.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="code-completion">
+            <div class="glossary-term">Code Completion</div>
+            <div class="glossary-category">Feature</div>
+            <div class="glossary-definition">
+                Suggestions for completing code as it is being typed, based on the context and available symbols.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="diagnostics">
+            <div class="glossary-term">Diagnostics</div>
+            <div class="glossary-category">Feature</div>
+            <div class="glossary-definition">
+                Error messages, warnings, and other information about potential issues in the code.
+            </div>
+        </div>
+
+        <div class="glossary-item" id="code-actions">
+            <div class="glossary-term">Code Actions</div>
+            <div class="glossary-category">Feature</div>
+            <div class="glossary-definition">
+                Suggested actions to fix issues or improve code, such as adding missing imports or fixing type errors.
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Functions and Tools</h2>
+
+        <div class="glossary-item" id="start_lsp">
+            <div class="glossary-term">start_lsp</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Starts the LSP server with a specified root directory. This must be called before using any other LSP-related tools.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "start_lsp",
+  "arguments": {
+    "root_dir": "/path/to/your/project"
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="open_document">
+            <div class="glossary-term">open_document</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Opens a file in the LSP server for analysis. This must be called before accessing diagnostics or performing other operations on the file.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "open_document",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts",
+    "language_id": "typescript"
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="close_document">
+            <div class="glossary-term">close_document</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Closes a file in the LSP server when you're done working with it. This helps manage resources and cleanup.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "close_document",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts"
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="get_info_on_location">
+            <div class="glossary-term">get_info_on_location</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Gets hover information at a specific location in a file, including type information, documentation, and other relevant details.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "get_info_on_location",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts",
+    "language_id": "typescript",
+    "line": 3,
+    "column": 5
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="get_completions">
+            <div class="glossary-term">get_completions</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Gets completion suggestions at a specific location in a file, based on the context and available symbols.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "get_completions",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts",
+    "language_id": "typescript",
+    "line": 3,
+    "column": 10
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="get_diagnostics">
+            <div class="glossary-term">get_diagnostics</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Gets diagnostic messages (errors, warnings) for one or all open files.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "get_diagnostics",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts"
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="get_code_actions">
+            <div class="glossary-term">get_code_actions</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Gets code actions for a specific range in a file, such as suggested fixes for errors or code improvements.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "get_code_actions",
+  "arguments": {
+    "file_path": "/path/to/your/file.ts",
+    "language_id": "typescript",
+    "start_line": 3,
+    "start_column": 5,
+    "end_line": 3,
+    "end_column": 10
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="restart_lsp_server">
+            <div class="glossary-term">restart_lsp_server</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Restarts the LSP server process without restarting the MCP server. This is useful for recovering from LSP server issues or for applying changes to the LSP server configuration.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "restart_lsp_server",
+  "arguments": {
+    "root_dir": "/path/to/your/project"
+  }
+}
+            </div>
+        </div>
+
+        <div class="glossary-item" id="set_log_level">
+            <div class="glossary-term">set_log_level</div>
+            <div class="glossary-category">MCP Tool</div>
+            <div class="glossary-definition">
+                Sets the server's logging level to control verbosity of log messages.
+            </div>
+            <div class="glossary-example">
+{
+  "tool": "set_log_level",
+  "arguments": {
+    "level": "debug"
+  }
+}
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Resources</h2>
+
+        <div class="glossary-item" id="lsp-diagnostics">
+            <div class="glossary-term">lsp-diagnostics://</div>
+            <div class="glossary-category">MCP Resource</div>
+            <div class="glossary-definition">
+                A resource scheme for accessing diagnostic information for open files.
+            </div>
+            <div class="glossary-example">
+lsp-diagnostics:///path/to/file.ts
+            </div>
+        </div>
+
+        <div class="glossary-item" id="lsp-hover">
+            <div class="glossary-term">lsp-hover://</div>
+            <div class="glossary-category">MCP Resource</div>
+            <div class="glossary-definition">
+                A resource scheme for accessing hover information at specific positions in files.
+            </div>
+            <div class="glossary-example">
+lsp-hover:///path/to/file.ts?line=3&column=5&language_id=typescript
+            </div>
+        </div>
+
+        <div class="glossary-item" id="lsp-completions">
+            <div class="glossary-term">lsp-completions://</div>
+            <div class="glossary-category">MCP Resource</div>
+            <div class="glossary-definition">
+                A resource scheme for accessing code completion suggestions at specific positions in files.
+            </div>
+            <div class="glossary-example">
+lsp-completions:///path/to/file.ts?line=3&column=10&language_id=typescript
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Date Night App - LSP-MCP Glossary - Last updated: May 21, 2025</p>
+    </footer>
+</body>
+</html>
