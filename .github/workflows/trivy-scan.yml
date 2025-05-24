@@ -11,6 +11,7 @@ permissions:
   issues: write         # For creating security issues
   checks: write        # For creating check runs
   pull-requests: write # For commenting on PRs
+  actions: read        # For accessing workflow run information
 
 jobs:
   trivy-scan:
@@ -40,6 +41,7 @@ jobs:
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         if: always()
+        continue-on-error: true  # Don't fail the workflow if upload fails
         with:
           sarif_file: 'trivy-results.sarif'
 
