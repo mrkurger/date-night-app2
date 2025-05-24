@@ -92,8 +92,4 @@ debug.log
 .DS_Store
 *.log
 test-results/
-archive/
 
-# MCP files
-lsp-mcp/*
-scripts/lsp-mcp
