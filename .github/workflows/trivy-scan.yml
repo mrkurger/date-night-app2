@@ -22,10 +22,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          # Target only the branch that triggered this workflow
           ref: ${{ github.ref }}
+          submodules: recursive
 
-      # Step 2: Install Trivy
+      # Step 2: Initialize Submodules
+      - name: Initialize Submodules
+        run: git submodule update --init --recursive
+
+      # Step 3: Install Trivy
       - name: Install Trivy
         run: |
           sudo apt-get update
@@ -35,14 +39,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # Step 3: Scan the repository for vulnerabilities
-      - name: Scan Repository
-        run: trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+      # Step 4: Scan the repository for vulnerabilities
+      - name: Trivy Scan for Vulnerabilities
+        run: |
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+          trivy fs --security-checks secret --exit-code 1 .
 
-      # Step 4: Scan for secrets in the codebase
-      - name: Scan for Secrets
-        run: trivy fs --security-checks secret --exit-code 1 .
+      # Step 5: Handle Trivy Warnings (Optional)
+      - name: Handle Trivy Warnings (Optional)
+        if: failure()
+        run: echo "Review Trivy scan warnings for details."
 
-      # Step 5: Scan dependencies for vulnerabilities
+      # Step 6: Scan dependencies for vulnerabilities
       - name: Scan Dependencies
         run: trivy fs --security-checks vuln --exit-code 1 .
