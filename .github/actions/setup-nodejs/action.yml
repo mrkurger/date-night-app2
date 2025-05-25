@@ -252,7 +252,7 @@ runs:
                 
                 # Explicitly reinstall Nebular packages with force flag
                 echo "Reinstalling Nebular packages with force..."
-                npm install @nebular/auth @nebular/theme @nebular/security @nebular/eva-icons --legacy-peer-deps --force || true
+                npm install @nebular/auth @nebular/theme @nebular/security --legacy-peer-deps --force || true
                 
                 # Verify installation
                 echo "Verifying final installation status:"

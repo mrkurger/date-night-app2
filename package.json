@@ -6,19 +6,11 @@
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "cd server && pnpm start",
-<<<<<<< HEAD
-    "start:client": "cd client-angular && npm start",
-    "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && npm install",
-    "build": "cd client-angular && npm run build",
-    "test": "cd client-angular && npm test",
-    "lint": "cd client-angular && npm lint",
-=======
     "start:client": "cd client-angular && ./node_modules/.bin/ng serve --project=client-angular",
     "install:all": "pnpm install && cd server && pnpm install && cd ../client-angular && pnpm install",
     "build": "cd client-angular && pnpm build",
     "test": "cd client-angular && pnpm test",
     "lint": "cd client-angular && pnpm lint",
->>>>>>> main
     "prepare": "[ -n \"$CI\" ] || husky install",
     "docs:ensure": "node .github/scripts/ensure-docs.js",
     "docs:update": "npm run docs:ensure",
@@ -27,14 +19,9 @@
     "analyze:security": "npm audit"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@angular-devkit/build-angular": "19.2.12",
-    "@angular/compiler-cli": "^19.2.11",
-=======
     "@angular-devkit/build-angular": "^18.2.19",
     "@angular/cli": "^18.2.19",
     "@angular/compiler-cli": "^18.2.13",
->>>>>>> main
     "@types/jest": "29.5.14",
     "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
@@ -78,7 +65,7 @@
     "@fortawesome/angular-fontawesome": "1.0.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
-    "@nebular/eva-icons": "11.0.1",
+
 >>>>>>> ba789e291ffa486d7c9618c0ef19650055bfad43
     "@nebular/theme": "11.0.1",
 =======

@@ -28,10 +28,6 @@ import { UserService } from '@core/services/user.service';
 import { AuthResponse } from '@core/models/auth.model';
 import { createSpyObject } from '../../../testing/test-utils';
 
-// Nebular Imports
-
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -63,7 +59,6 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        NbThemeModule.forRoot(),
         NbCardModule,
         NbFormFieldModule,
         NbInputModule,
@@ -71,7 +66,6 @@ describe('LoginComponent', () => {
         NbIconModule,
         NbSpinnerModule,
         NbTooltipModule,
-        NbEvaIconsModule,
       ],
       declarations: [],
       providers: [{ provide: UserService, useValue: userService }],

@@ -1,205 +1,220 @@
-// @ts-check
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import angularEslintPlugin from '@angular-eslint/eslint-plugin';
-import angularEslintTemplateParser from '@angular-eslint/template-parser';
-import prettierPlugin from 'eslint-plugin-prettier';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import rxjsXPlugin from 'eslint-plugin-rxjs-x';
+import js from '@eslint/js';
+import typescript from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
+import angular from '@angular-eslint/eslint-plugin';
+import angularTemplate from '@angular-eslint/eslint-plugin-template';
+import * as templateParser from '@angular-eslint/template-parser';
 import globals from 'globals';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import rxjsPlugin from 'eslint-plugin-rxjs';
+import sonarjs from 'eslint-plugin-sonarjs';
+import jsdoc from 'eslint-plugin-jsdoc';
+import importPlugin from 'eslint-plugin-import';
+import prettier from 'eslint-plugin-prettier';
 
-// Correctly define __dirname for ES modules
-const __filenameEsm = fileURLToPath(import.meta.url);
-const __dirnameEsm = path.dirname(__filenameEsm);
-
-// Consolidate ignore patterns
-const commonIgnores = [
-  '**/node_modules/',
-  '**/dist/',
-  '**/coverage/',
-  '**/build/',
-  '**/logs/',
-  '**/uploads/',
-  '**/.cache/',
-  '**/.angular/', // Specific to Angular CLI projects
-  '**/CHANGELOG.html',
-  '**/AILESSONS.html',
-  '**/GLOSSARY.html',
-  '_docs_index.html',
-  '_glossary.html',
-  '_docs*.html',
-  'bakups_arkive.zip',
-  'mongodb.log*',
-  '*.sh',
-  '*.bat',
-  // '*.md', // User wants to retire all .md docs, but let's keep this for now if some are still used by tools
-  'angular.json',
-  'babel.config.js',
-  'package-lock.json',
-  'pnpm-lock.yaml',
-  'yarn.lock',
-  '**/generated/**',
-  '**/temp/**',
-  '**/*.bak',
-  // Client-angular specific
-  'projects/**/*',
-  'src/csp-config.js',
-  'src/babel-runtime-loader.js',
-  'src/babel-runtime-loader.cjs',
-  'cypress/**',
-  'src/jasmine.d.ts',
-  'src/assets/**',
-  'src/ngsw-worker.js',
-  'src/app/core/utils/test-runner.js',
-  'run-single-test.js',
-  'scripts/**',
-];
-
-export default tseslint.config(
+export default [
+  js.configs.recommended,
   {
-    ignores: [...new Set(commonIgnores)],
-  },
-  eslint.configs.recommended, // Base ESLint recommended rules
-  ...tseslint.configs.recommended, // TypeScript recommended (non-type-aware)
-
-  // Configuration for TypeScript files in src/
-  {
-    files: ['src/**/*.ts'],
-    excludedFiles: [
-      'src/**/*.spec.ts',
-      'src/app/testing/**/*.ts',
-      'src/main.ts',
-      'src/polyfills.ts', // Or wherever your polyfills.ts is
-      // Add other specific TS files to exclude from this strict config if needed
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '**/e2e/**',
+      'scripts/**',
+      'karma.conf.js',
+      'tailwind.config.js',
     ],
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-      '@angular-eslint': angularEslintPlugin,
-      prettier: prettierPlugin,
-      'rxjs-x': rxjsXPlugin,
-    },
+  },
+  {
+    files: ['**/*.ts'],
     languageOptions: {
-      parser: tseslint.parser,
+      parser: typescriptParser,
       parserOptions: {
-        project: true, // Enable type-aware linting
-        tsconfigRootDir: __dirnameEsm,
+        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
       globals: {
         ...globals.browser,
+        ...globals.es2021,
       },
     },
+    plugins: {
+      '@typescript-eslint': typescript,
+      '@angular-eslint': angular,
+      rxjs: rxjsPlugin,
+      sonarjs: sonarjs,
+      jsdoc: jsdoc,
+      import: importPlugin,
+      prettier: prettier,
+    },
     rules: {
-      ...eslintConfigPrettier.rules, // Add prettier rules from eslint-config-prettier
-      'prettier/prettier': 'warn',
-
-      // TypeScript specific rules (including type-aware)
-      ...tseslint.configs.strictTypeChecked.rules,
-      ...tseslint.configs.stylisticTypeChecked.rules,
-      ...rxjsXPlugin.configs.recommended.rules,
-
-      '@typescript-eslint/no-deprecated': 'warn', // THE RULE YOU REQUESTED
+      // TypeScript Rules
+      '@typescript-eslint/explicit-function-return-type': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
-      ],
-      '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
-      '@typescript-eslint/consistent-type-exports': [
-        'warn',
-        { fixMixedExportsWithInlineTypeSpecifier: true },
-      ],
-      '@typescript-eslint/no-empty-interface': 'off', // Often used in Angular
-      '@typescript-eslint/no-non-null-assertion': 'off', // Sometimes necessary, use with caution
-
-      // Angular specific rules
-      '@angular-eslint/component-class-suffix': 'warn',
-      '@angular-eslint/directive-class-suffix': 'warn',
-      '@angular-eslint/no-input-rename': 'warn',
-      '@angular-eslint/no-output-rename': 'warn',
-      '@angular-eslint/use-pipe-transform-interface': 'warn',
-
-      // General good practice rules (can be adjusted)
-      'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
-      'no-debugger': 'warn',
-      eqeqeq: ['warn', 'smart'],
-      'no-empty': ['warn', { allowEmptyCatch: true }],
-      'no-var': 'warn',
-      'prefer-const': 'warn',
-      'no-underscore-dangle': 'off', // Often used
-      'max-len': [
-        'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/prefer-readonly': 'warn',
+      '@typescript-eslint/consistent-type-assertions': 'warn',
+      '@typescript-eslint/member-ordering': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/naming-convention': [
+        'error',
         {
-          code: 140, // Increased a bit for modern screens
-          ignoreUrls: true,
-          ignoreStrings: true,
-          ignoreTemplateLiterals: true,
-          ignoreRegExpLiterals: true,
-          ignoreComments: true,
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+        },
+        {
+          selector: 'enum',
+          format: ['PascalCase'],
+          prefix: ['E'],
+        },
+        {
+          selector: 'class',
+          format: ['PascalCase'],
         },
       ],
+
+      // Angular Rules
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'app',
+          style: 'camelCase',
+        },
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'app',
+          style: 'kebab-case',
+        },
+      ],
+      '@angular-eslint/no-empty-lifecycle-method': 'error',
+      '@angular-eslint/prefer-output-readonly': 'error',
+      '@angular-eslint/use-component-selector': 'error',
+      '@angular-eslint/use-lifecycle-interface': 'error',
+      '@angular-eslint/no-host-metadata-property': 'error',
+      '@angular-eslint/no-inputs-metadata-property': 'error',
+      '@angular-eslint/contextual-lifecycle': 'error',
+      '@angular-eslint/no-conflicting-lifecycle': 'error',
+      '@angular-eslint/component-class-suffix': 'error',
+      '@angular-eslint/directive-class-suffix': 'error',
+
+      // Template Rules
+      '@angular-eslint/template/accessibility-alt-text': 'error',
+      '@angular-eslint/template/accessibility-elements-content': 'error',
+      '@angular-eslint/template/accessibility-label-has-associated-control': 'error',
+      '@angular-eslint/template/accessibility-valid-aria': 'error',
+      '@angular-eslint/template/click-events-have-key-events': 'error',
+      '@angular-eslint/template/mouse-events-have-key-events': 'error',
+      '@angular-eslint/template/no-autofocus': 'warn',
+      '@angular-eslint/template/no-positive-tabindex': 'error',
+
+      // RxJS Rules
+      'rxjs/no-unsafe-takeuntil': 'error',
+      'rxjs/no-unbound-methods': 'error',
+      'rxjs/no-nested-subscribe': 'error',
+      'rxjs/no-ignored-observable': 'warn',
+      'rxjs/no-exposed-subjects': 'warn',
+      'rxjs/finnish': 'error',
+      'rxjs/no-async-subscribe': 'error',
+      'rxjs/no-ignored-replay-buffer': 'error',
+      'rxjs/no-unsubscribe': 'error',
+
+      // SonarJS Rules
+      'sonarjs/no-duplicate-string': 'warn',
+      'sonarjs/cognitive-complexity': ['warn', 15],
+      'sonarjs/no-identical-functions': 'warn',
+      'sonarjs/prefer-immediate-return': 'warn',
+      'sonarjs/no-redundant-jump': 'error',
+      'sonarjs/no-small-switch': 'error',
+      'sonarjs/prefer-object-literal': 'error',
+      'sonarjs/no-nested-template-literals': 'error',
+
+      // JSDoc Rules
+      'jsdoc/require-jsdoc': [
+        'warn',
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+          },
+          contexts: [
+            'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+            'ClassDeclaration',
+            'FunctionDeclaration',
+          ],
+        },
+      ],
+      'jsdoc/require-param': 'warn',
+      'jsdoc/require-param-type': 'warn',
+      'jsdoc/require-param-description': 'warn',
+      'jsdoc/require-returns': 'warn',
+      'jsdoc/require-returns-type': 'warn',
+      'jsdoc/require-returns-description': 'warn',
+      'jsdoc/newline-after-description': 'warn',
+      'jsdoc/require-example': ['warn', { exemptedBy: ['private'] }],
+
+      // Import Rules
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'index',
+            'object',
+            'type',
+          ],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+      'import/no-duplicates': 'error',
+      'import/no-unresolved': 'error',
+      'import/no-cycle': 'error',
+      'import/prefer-default-export': 'off',
+      'import/first': 'error',
+      'import/no-mutable-exports': 'error',
+
+      // Security Rules
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'security/detect-object-injection': 'warn',
+      'security/detect-possible-timing-attacks': 'warn',
+      'security/detect-unsafe-regex': 'warn',
     },
   },
-
-  // Configuration for Angular Templates (HTML files)
   {
-    files: ['src/**/*.html'],
+    files: ['**/*.html'],
     plugins: {
-      '@angular-eslint/template': angularEslintPlugin,
+      '@angular-eslint/template': angularTemplate,
     },
-    languageOptions: {
-      parser: angularEslintTemplateParser,
-    },
+    parser: templateParser,
     rules: {
-      ...angularEslintPlugin.configs.recommended.rules, // Changed from recommendedHtml to recommended
-      '@angular-eslint/template/no-negated-async': 'warn',
-      // Add other template rules as needed
+      '@angular-eslint/template/accessibility-alt-text': 'error',
+      '@angular-eslint/template/accessibility-elements-content': 'error',
+      '@angular-eslint/template/accessibility-label-has-associated-control': 'error',
+      '@angular-eslint/template/accessibility-valid-aria': 'error',
+      '@angular-eslint/template/click-events-have-key-events': 'error',
+      '@angular-eslint/template/mouse-events-have-key-events': 'error',
+      '@angular-eslint/template/no-autofocus': 'warn',
+      '@angular-eslint/template/no-positive-tabindex': 'error',
     },
   },
-
-  // Configuration for Test files (e.g., *.spec.ts)
-  {
-    files: ['src/**/*.spec.ts', 'src/app/testing/**/*.ts'],
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-      '@angular-eslint': angularEslintPlugin,
-    },
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: __dirnameEsm,
-      },
-      globals: {
-        ...globals.jasmine, // Add jasmine globals
-        ...globals.browser,
-      },
-    },
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@angular-eslint/component-selector': 'off', // Often not relevant for test components
-      // Relax other rules for test files if necessary
-    },
-  },
-
-  // Configuration for JavaScript files in the root (e.g. config files)
-  // Adjust if you have JS files within src/ that are not Angular/TS
-  {
-    files: ['*.js', '*.mjs', '*.cjs'], // Covers JS, ES Modules, CommonJS in root
-    excludedFiles: ['client-angular/**/*.js'], // Exclude client-angular JS, handled by its own setup if any
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module', // Default to ES Modules
-      globals: {
-        ...globals.node,
-      },
-    },
-    rules: {
-      'no-console': 'off', // Often used in scripts
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_|' }],
-      // Add any other specific rules for root scripts
-    },
-  },
-);
+];

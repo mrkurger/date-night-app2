@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 
 // Nebular imports
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 
 import { LoginComponent } from '../../features/auth/login/login.component';
@@ -72,23 +72,17 @@ describe('LoginComponent', () => {
     const nbAuthServiceSpy = jasmine.createSpyObj<NbAuthService>('NbAuthService', ['authenticate']);
 
     await TestBed.configureTestingModule({
-    imports: [ReactiveFormsModule,
+    imports: [
+        ReactiveFormsModule,
         FormsModule,
         RouterTestingModule.withRoutes([
             { path: 'browse', },
             { path: 'dashboard' }
         ]),
         BrowserAnimationsModule,
-        NbThemeModule.forRoot(),
-        NbCardModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbTooltipModule,
-        NbEvaIconsModule,
-        CommonModule],
+        NebularModule,
+        CommonModule
+    ],
     providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },

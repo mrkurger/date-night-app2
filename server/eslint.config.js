@@ -1,4 +1,4 @@
-// @ts-check
+s for a createEmitAndSemanticDiagnosticsBuilderProgram, node// @ts-check
 import eslint from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
