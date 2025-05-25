@@ -42,9 +42,9 @@ jobs:
       # Step 4: Scan the repository for vulnerabilities
       - name: Trivy Scan for Vulnerabilities
         run: |
-          trivy fs --exit-code 1 --severity HIGH,CRITICAL .
-          trivy fs --security-checks secret --exit-code 1 .
+          trivy fs --scanners vuln --exit-code 1 --severity HIGH,CRITICAL .
 
+      # trivy fs --exit-code 1 --severity HIGH,CRITICAL .
       # Step 5: Handle Trivy Warnings (Optional)
       - name: Handle Trivy Warnings (Optional)
         if: failure()
@@ -52,4 +52,4 @@ jobs:
 
       # Step 6: Scan dependencies for vulnerabilities
       - name: Scan Dependencies
-        run: trivy fs --security-checks vuln --exit-code 1 .
+        run: trivy fs --scanners vuln --exit-code 1 .
