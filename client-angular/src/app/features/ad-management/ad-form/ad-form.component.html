@@ -5,7 +5,7 @@
     <nb-spinner status="primary" size="large"></nb-spinner>
   </div>
 
-  <nb-card>
+  <p-card>
     <nb-card-header>
       <h3>{{ isEditMode ? 'Edit' : 'Create' }} Advertisement</h3>
     </nb-card-header>
@@ -126,7 +126,7 @@
         </div>
 
         <div class="form-actions">
-          <button nbButton status="primary" size="large" [disabled]="!adForm.valid" type="submit">
+          <p-button></p-button>
             {{ isEditMode ? 'Update' : 'Create' }} Advertisement
           </button>
         </div>

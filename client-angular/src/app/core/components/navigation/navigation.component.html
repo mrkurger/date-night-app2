@@ -85,7 +85,7 @@
 
   <nb-layout-header fixed>
     <div class="header-container">
-      <button nbButton ghost (click)="toggleSidebar()" class="sidebar-toggle">
+      <p-button></p-button>
         <nb-icon
           [icon]="sidebarState === 'collapsed' ? 'menu-2-outline' : 'menu-arrow-outline'"
         ></nb-icon>
@@ -94,7 +94,7 @@
       <app-breadcrumbs></app-breadcrumbs>
 
       <div class="header-actions">
-        <button nbButton ghost class="search-button" (click)="openSearch()">
+        <p-button></p-button>
           <nb-icon icon="search-outline"></nb-icon>
         </button>
 

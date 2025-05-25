@@ -1,7 +1,7 @@
 <nb-card [nbSpinner]="isSubmitting" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <nb-card-header>
     <h3>Deposit Funds</h3>
-    <button nbButton ghost status="basic" size="small" (click)="close()" class="close-button">
+    <p-button></p-button>
       <nb-icon icon="close-outline"></nb-icon>
     </button>
   </nb-card-header>
@@ -70,7 +70,7 @@
     </form>
   </nb-card-body>
   <nb-card-footer class="actions-footer">
-    <button nbButton status="basic" (click)="close()" [disabled]="isSubmitting">Cancel</button>
+    <p-button></p-button>Cancel</button>
     <button
       nbButton
       status="primary"

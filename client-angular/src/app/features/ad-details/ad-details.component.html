@@ -42,7 +42,7 @@
         </div>
 
         <div class="ad-actions" *ngIf="!isOwner">
-          <button class="btn btn-primary" (click)="startChat()">
+          <p-button label="Primary" class="p-button-primary"></p-button>
             <i class="icon-message"></i> Contact Advertiser
           </button>
           <button class="btn btn-outline-primary" (click)="toggleFavorite()">
@@ -59,7 +59,7 @@
             <h3 class="section-title">Ad Management</h3>
             <p>You are the owner of this ad.</p>
             <div class="ad-actions">
-              <button class="btn btn-primary" (click)="editAd()">
+              <p-button label="Primary" class="p-button-primary"></p-button>
                 <i class="icon-edit"></i> Edit Ad
               </button>
               <button class="btn btn-outline-secondary" (click)="toggleAdStatus()">
@@ -86,7 +86,7 @@
       </div>
 
       <div class="contact-actions" *ngIf="!isOwner">
-        <button class="btn btn-primary btn-block" (click)="startChat()">
+        <p-button label="Primary" class="p-button-primary"></p-button>
           <i class="icon-message"></i> Send Message
         </button>
         <button class="btn btn-outline-primary btn-block" (click)="showPhone()">

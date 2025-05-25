@@ -19,9 +19,9 @@
           <nb-icon icon="arrow_back"></nb-icon> Previous
         </button>
 
-        <button *ngIf="showSkip" nbButton class="btn-skip" (click)="skipTour()">Skip Tour</button>
+        <p-button></p-button>Skip Tour</button>
 
-        <button nbButton status="primary" color="primary" class="btn-next" (click)="nextStep()">
+        <p-button></p-button>
           {{ currentStepIndex < steps.length - 1 ? 'Next' : 'Finish' }}
           <nb-icon *ngIf="currentStepIndex < steps.length - 1">arrow_forward"></nb-icon>
         </button>

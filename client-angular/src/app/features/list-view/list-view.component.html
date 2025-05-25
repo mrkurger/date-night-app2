@@ -9,15 +9,15 @@ consistent UI # ===================================================
       <h1>Browse Profiles</h1>
       <p class="subtitle">Find your perfect match</p>
       <div class="header-actions">
-        <button nbButton status="primary" (click)="onHeaderActionClick(headerActions[0])">
+        <p-button></p-button>
           <nb-icon icon="plus-outline"></nb-icon>
           Create Ad
         </button>
-        <button nbButton ghost (click)="onHeaderActionClick(headerActions[1])">
+        <p-button></p-button>
           <nb-icon icon="refresh-outline"></nb-icon>
           Refresh
         </button>
-        <button nbButton ghost (click)="onHeaderActionClick(headerActions[2])">
+        <p-button></p-button>
           <nb-icon icon="question-mark-circle-outline"></nb-icon>
           Help
         </button>
@@ -72,14 +72,14 @@ consistent UI # ===================================================
         </div>
 
         <!-- Sort Dropdown -->
-        <button nbButton ghost [nbContextMenu]="sortMenuItems" nbContextMenuTag="sort-menu">
+        <p-button></p-button>
           <nb-icon icon="sort-outline"></nb-icon>
           <span>Sort: {{ getCurrentSortLabel() }}</span>
           <nb-icon icon="chevron-down-outline"></nb-icon>
         </button>
 
         <!-- Filter Button -->
-        <button nbButton outline (click)="toggleFilterSidebar()">
+        <p-button></p-button>
           <nb-icon icon="funnel-outline"></nb-icon>
           <span>Filters</span>
           <nb-badge
@@ -90,7 +90,7 @@ consistent UI # ===================================================
         </button>
 
         <!-- Clear Filters Button -->
-        <button nbButton status="danger" ghost (click)="clearFilters()" *ngIf="hasActiveFilters()">
+        <p-button></p-button>
           <nb-icon icon="close-outline"></nb-icon>
           <span>Clear</span>
         </button>
@@ -103,14 +103,14 @@ consistent UI # ===================================================
       <nb-sidebar [state]="filterSidebarOpen ? 'expanded' : 'collapsed'" fixed>
         <div class="filter-sidebar-header">
           <h3>Filters</h3>
-          <button nbButton ghost size="small" (click)="toggleFilterSidebar()">
+          <p-button></p-button>
             <nb-icon icon="close-outline"></nb-icon>
           </button>
         </div>
 
         <div class="filter-sidebar-content">
           <form [formGroup]="filterForm">
-            <nb-card>
+            <p-card>
               <nb-card-body>
                 <h4>Categories</h4>
                 <div class="filter-group">
@@ -184,14 +184,14 @@ consistent UI # ===================================================
                   >
                     <nb-icon icon="clock-outline"></nb-icon> Recently Viewed
                   </button>
-                  <button nbButton outline (click)="saveCurrentFilter()" class="saved-filter-btn">
+                  <p-button></p-button>
                     <nb-icon icon="save-outline"></nb-icon> Save Current Filter
                   </button>
                 </div>
 
                 <div class="filter-actions">
-                  <button nbButton ghost (click)="clearFilters()">Reset All</button>
-                  <button nbButton status="primary" (click)="applyFilters()">Apply Filters</button>
+                  <p-button></p-button>Reset All</button>
+                  <p-button></p-button>Apply Filters</button>
                 </div>
               </nb-card-body>
             </nb-card>
@@ -297,7 +297,7 @@ consistent UI # ===================================================
             </nb-select>
 
             <div class="page-buttons">
-              <button nbButton ghost [disabled]="currentPage === 1" (click)="goToPage(1)">
+              <p-button></p-button>
                 <nb-icon icon="arrow-ios-double-left-outline"></nb-icon>
               </button>
               <button
@@ -356,7 +356,7 @@ consistent UI # ===================================================
 
 <!-- Save Filter Dialog Template -->
 <ng-template #saveFilterDialog>
-  <nb-card>
+  <p-card>
     <nb-card-header>Save Filter</nb-card-header>
     <nb-card-body>
       <nb-form-field>
@@ -364,8 +364,8 @@ consistent UI # ===================================================
       </nb-form-field>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton status="basic" (click)="closeDialog()">Cancel</button>
-      <button nbButton status="primary" (click)="closeDialogWithValue(newFilterName)">Save</button>
+      <p-button></p-button>Cancel</button>
+      <p-button></p-button>Save</button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

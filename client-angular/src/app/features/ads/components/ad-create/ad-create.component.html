@@ -1,5 +1,5 @@
 <div class="ad-create-container">
-  <nb-card>
+  <p-card>
     <nb-card-header>
       <h2>Create New Advertisement</h2>
     </nb-card-header>
@@ -89,13 +89,13 @@
         <div class="form-group">
           <label>Images</label>
           <div class="image-upload-container">
-            <button nbButton status="basic" (click)="onAddImage()">
+            <p-button></p-button>
               <nb-icon icon="plus-outline"></nb-icon>
               Add Image
             </button>
             <div class="image-preview" *ngIf="imagePreviewUrl">
               <img [src]="imagePreviewUrl" alt="Preview" />
-              <button nbButton status="danger" class="remove-button" (click)="onRemoveImage()">
+              <p-button></p-button>
                 <nb-icon icon="trash-2-outline"></nb-icon>
               </button>
             </div>
@@ -103,10 +103,10 @@
         </div>
 
         <div class="form-actions">
-          <button nbButton status="primary" [disabled]="adForm.invalid" type="submit">
+          <p-button></p-button>
             Create Advertisement
           </button>
-          <button nbButton status="basic" type="button" (click)="onCancel()">Cancel</button>
+          <p-button></p-button>Cancel</button>
         </div>
       </form>
     </nb-card-body>
