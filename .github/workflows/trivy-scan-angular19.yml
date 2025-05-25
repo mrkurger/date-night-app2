@@ -8,9 +8,9 @@ on:
 permissions:
   contents: read
   security-events: write  # For uploading security scan results
-  issues: write         # For creating security issues
-  checks: write        # For creating check runs
-  pull-requests: write # For commenting on PRs
+  issues: write           # For creating security issues
+  checks: write           # For creating check runs
+  pull-requests: write    # For commenting on PRs
 
 jobs:
   trivy-scan:
@@ -25,11 +25,11 @@ jobs:
           ref: ${{ github.ref }}
           submodules: recursive
 
-      # Step 2: Initialize Submodules
+      # Step 2: Initialize Git Submodules (if any exist)
       - name: Initialize Submodules
         run: git submodule update --init --recursive
 
-      # Step 3: Install Trivy
+      # Step 3: Install Trivy (latest version from Aqua Security repository)
       - name: Install Trivy
         run: |
           sudo apt-get update
@@ -39,17 +39,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # Step 4: Scan the repository for vulnerabilities
-      - name: Trivy Scan for Vulnerabilities
+      # Step 4: Scan the repository for vulnerabilities ONLY (disable secret scanning for faster results)
+      - name: Trivy Scan for Vulnerabilities Only
         run: |
+          # Only scan for vulnerabilities (no secret scanning), for faster scan times as recommended
           trivy fs --scanners vuln --exit-code 1 --severity HIGH,CRITICAL .
 
-      # trivy fs --exit-code 1 --severity HIGH,CRITICAL .
       # Step 5: Handle Trivy Warnings (Optional)
       - name: Handle Trivy Warnings (Optional)
         if: failure()
         run: echo "Review Trivy scan warnings for details."
 
-      # Step 6: Scan dependencies for vulnerabilities
-      - name: Scan Dependencies
-        run: trivy fs --scanners vuln --exit-code 1 .
+      # Step 6: Scan dependencies for vulnerabilities ONLY (again, disables secret scanning for speed)
+      - name: Scan Dependencies for Vulnerabilities Only
+        run: |
+          # Only scan for vulnerabilities again, e.g. in dependencies (if needed)
+          trivy fs --scanners vuln --exit-code 1 .
