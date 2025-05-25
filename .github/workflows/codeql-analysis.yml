@@ -1,0 +1,244 @@
+strategy:
+  fail-fast: false
+  matrix:
+    language: [ 'javascript-typescript', 'python' ]
+    include:
+      - language: 'javascript-typescript'
+        build-mode: 'none'  # No build needed for JS/TS analysis
+      - language: 'python'
+        build-mode: 'none'
+
+steps:
+# Step 1: Checkout repository code
+- name: Checkout repository
+  uses: actions/checkout@v4
+  with:
+    fetch-depth: 2
+
+# Step 2: Setup Node.js for JavaScript/TypeScript
+- name: Setup Node.js
+  if: matrix.language == 'javascript-typescript'
+  uses: actions/setup-node@v4
+  with:
+    node-version: '20'
+    cache: 'npm'
+
+# Step 3: Setup Python for backend analysis
+- name: Setup Python
+  if: matrix.language == 'python'
+  uses: actions/setup-python@v5
+  with:
+    python-version: '3.11'  # TODO: Update to match your Python version
+    cache: 'pip'
+
+# Step 4: Initialize CodeQL with CSV output (Pro+ compatible)
+- name: Initialize CodeQL
+  uses: github/codeql-action/init@v3
+  with:
+    languages: ${{ matrix.language }}
+    queries: security-and-quality
+    # Use CSV format for output since we can't use SARIF upload
+    config: |
+      paths-ignore:
+        - node_modules
+        - dist
+        - build
+        - .angular
+
+# Step 5: Install dependencies for better analysis accuracy
+- name: Install dependencies
+  run: |
+    echo "📦 Installing dependencies for ${{ matrix.language }} analysis..."
+    
+    if [ "${{ matrix.language }}" == "javascript-typescript" ]; then
+      # Install JavaScript/TypeScript dependencies
+      if [ -f "package.json" ]; then
+        npm ci --prefer-offline --no-audit || npm install
+      fi
+    elif [ "${{ matrix.language }}" == "python" ]; then
+      # Install Python dependencies
+      if [ -f "requirements.txt" ]; then
+        pip install -r requirements.txt --no-deps 2>/dev/null || true
+      fi
+    fi
+
+# Step 6: Perform CodeQL Analysis (no autobuild needed)
+- name: Perform CodeQL Analysis
+  uses: github/codeql-action/analyze@v3
+  with:
+    category: "/language:${{ matrix.language }}"
+    # Don't upload to code scanning since it's not available
+    upload: false
+    # Output results to a specific directory
+    output: codeql-results-${{ matrix.language }}
+
+# Step 7: Convert CodeQL results to readable format
+- name: Process CodeQL Results
+  id: process-results
+  run: |
+    echo "📊 Processing CodeQL results for ${{ matrix.language }}..."
+    
+    # Create results directory
+    mkdir -p processed-results
+    
+    # Find SARIF files in the results directory
+    SARIF_FILE=$(find codeql-results-${{ matrix.language }} -name "*.sarif" -type f | head -n 1)
+    
+    if [ -n "$SARIF_FILE" ]; then
+      echo "Found SARIF file: $SARIF_FILE"
+      
+      # Create a simple markdown report from SARIF
+      node --input-type=module --eval "
+      import { readFileSync, writeFileSync } from 'fs';
+      
+      // Read SARIF file
+      const sarifContent = readFileSync('$SARIF_FILE', 'utf8');
+      const sarif = JSON.parse(sarifContent);
+      
+      // Initialize counters
+      let criticalCount = 0;
+      let highCount = 0;
+      let mediumCount = 0;
+      let lowCount = 0;
+      const findings = [];
+      
+      // Process each run in the SARIF file
+      for (const run of sarif.runs || []) {
+        const tool = run.tool?.driver?.name || 'CodeQL';
+        
+        // Process results
+        for (const result of run.results || []) {
+          // Determine severity
+          const level = result.level || 'warning';
+          let severity = 'MEDIUM';
+          
+          if (level === 'error') {
+            severity = 'HIGH';
+            highCount++;
+          } else if (level === 'warning') {
+            severity = 'MEDIUM';
+            mediumCount++;
+          } else {
+            severity = 'LOW';
+            lowCount++;
+          }
+          
+          // Extract location information
+          const location = result.locations?.[0]?.physicalLocation;
+          const file = location?.artifactLocation?.uri || 'unknown';
+          const line = location?.region?.startLine || '?';
+          
+          // Add to findings array
+          findings.push({
+            severity,
+            rule: result.ruleId || 'unknown',
+            message: result.message?.text || 'No description',
+            file,
+            line,
+            tool
+          });
+        }
+      }
+      
+      // Sort findings by severity
+      const severityOrder = { 'CRITICAL': 0, 'HIGH': 1, 'MEDIUM': 2, 'LOW': 3 };
+      findings.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
+      
+      // Generate markdown report
+      let markdown = '# CodeQL Security Analysis Results\\n\\n';
+      markdown += '**Language:** ${{ matrix.language }}\\n';
+      markdown += '**Date:** ' + new Date().toISOString() + '\\n\\n';
+      
+      markdown += '## 📊 Summary\\n\\n';
+      markdown += '| Severity | Count |\\n';
+      markdown += '|----------|-------|\\n';
+      markdown += '| 🔴 HIGH | ' + highCount + ' |\\n';
+      markdown += '| 🟡 MEDIUM | ' + mediumCount + ' |\\n';
+      markdown += '| 🔵 LOW | ' + lowCount + ' |\\n';
+      markdown += '| **TOTAL** | **' + findings.length + '** |\\n\\n';
+      
+      if (findings.length > 0) {
+        markdown += '## 🔍 Detailed Findings\\n\\n';
+        
+        // Group by severity
+        const grouped = findings.reduce((acc, finding) => {
+          if (!acc[finding.severity]) acc[finding.severity] = [];
+          acc[finding.severity].push(finding);
+          return acc;
+        }, {});
+        
+        // Output findings by severity
+        for (const [severity, items] of Object.entries(grouped)) {
+          markdown += '### ' + severity + ' Severity Issues\\n\\n';
+          
+          for (const item of items.slice(0, 10)) {
+            markdown += '#### ' + item.rule + '\\n';
+            markdown += '- **File:** \`' + item.file + ':' + item.line + '\`\\n';
+            markdown += '- **Message:** ' + item.message + '\\n\\n';
+          }
+          
+          if (items.length > 10) {
+            markdown += '*... and ' + (items.length - 10) + ' more ' + severity + ' issues*\\n\\n';
+          }
+        }
+      } else {
+        markdown += '## ✅ No Security Issues Found!\\n\\n';
+        markdown += 'Great job! CodeQL analysis found no security vulnerabilities.\\n';
+      }
+      
+      // Save markdown report
+      writeFileSync('processed-results/codeql-${{ matrix.language }}.md', markdown);
+      
+      // Save JSON report
+      const jsonReport = {
+        language: '${{ matrix.language }}',
+        timestamp: new Date().toISOString(),
+        summary: {
+          total: findings.length,
+          high: highCount,
+          medium: mediumCount,
+          low: lowCount
+        },
+        findings: findings
+      };
+      
+      writeFileSync('processed-results/codeql-${{ matrix.language }}.json', JSON.stringify(jsonReport, null, 2));
+      
+      // Set outputs for GitHub Actions
+      console.log('::set-output name=total_issues::' + findings.length);
+      console.log('::set-output name=high_issues::' + highCount);
+      console.log('::set-output name=has_issues::' + (findings.length > 0));
+      "
+    else
+      echo "No SARIF file found, creating empty report..."
+      echo "# CodeQL Security Analysis Results" > processed-results/codeql-${{ matrix.language }}.md
+      echo "" >> processed-results/codeql-${{ matrix.language }}.md
+      echo "No results file generated. This might indicate an analysis error." >> processed-results/codeql-${{ matrix.language }}.md
+      echo "::set-output name=total_issues::0"
+      echo "::set-output name=high_issues::0"
+      echo "::set-output name=has_issues::false"
+    fi
+
+# Step 8: Upload results as artifacts (accessible without Advanced Security)
+- name: Upload CodeQL Results
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: codeql-results-${{ matrix.language }}
+    path: |
+      codeql-results-${{ matrix.language }}/
+      processed-results/
+    retention-days: 30
+
+# Step 9: Add results to job summary
+- name: Add to Job Summary
+  if: always()
+  run: |
+    echo "## 🔐 CodeQL Analysis Results for ${{ matrix.language }}" >> $GITHUB_STEP_SUMMARY
+    echo "" >> $GITHUB_STEP_SUMMARY
+    
+    if [ -f "processed-results/codeql-${{ matrix.language }}.md" ]; then
+      cat "processed-results/codeql-${{ matrix.language }}.md" >> $GITHUB_STEP_SUMMARY
+    else
+      echo "⚠️ No results file found. Check the workflow logs for errors." >> $GITHUB_STEP_SUMMARY
+    fi
