@@ -15,43 +15,43 @@ import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../core/models/ad.model';
 import { NebularModule } from '../../../app/shared/nebular.module';
-  NbCardModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
   NbLayoutModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-ad-browser',;
-    templateUrl: './ad-browser.component.html',;
-    styleUrls: ['./ad-browser.component.scss'],;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [NebularModule, CommonModule,;
-        NbCardModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbSpinnerModule,;
-        NbLayoutModule,;
-    ];
-});
+    selector: 'app-ad-browser',
+    templateUrl: './ad-browser.component.html',
+    styleUrls: ['./ad-browser.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbLayoutModule,
+    ]
+})
 export class AdBrowserComponen {t implements OnInit {
-  ads: Ad[] = [];
+  ads: Ad[] = []
   currentIndex = 0;
   loading = false;
   error: string | null = null;
-  favorites: string[] = []; // Array of ad IDs
+  favorites: string[] = [] // Array of ad IDs
 
   constructor(;
-    private adService: AdService,;
-    private router: Router,;
+    private adService: AdService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.loadAds();
-    const favs = localStorage.getItem('favorites');
+    this.loadAds()
+    const favs = localStorage.getItem('favorites')
     if (favs) {
-      this.favorites = JSON.parse(favs);
+      this.favorites = JSON.parse(favs)
     }
   }
 
@@ -61,26 +61,26 @@ export class AdBrowserComponen {t implements OnInit {
       next: (response) => {
         this.ads = response.ads;
         this.loading = false;
-      },;
+      },
       error: (_err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   swipeLeft(): void {
-    if (this.currentIndex  favId === ad._id);
+    if (this.currentIndex  favId === ad._id)
     if (index === -1) {
-      this.favorites.push(ad._id);
+      this.favorites.push(ad._id)
     } else {
-      this.favorites.splice(index, 1);
+      this.favorites.splice(index, 1)
     }
-    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    localStorage.setItem('favorites', JSON.stringify(this.favorites))
   }
 
   isFavorite(ad: Ad): boolean {
-    return this.favorites.includes(ad._id);
+    return this.favorites.includes(ad._id)
   }
 
   searchNearby(): void {
@@ -97,20 +97,20 @@ export class AdBrowserComponen {t implements OnInit {
           next: (data) => {
             this.ads = data;
             this.loading = false;
-          },;
+          },
           error: (_err) => {
             this.error = 'Failed to find nearby ads';
             this.loading = false;
-          },;
-        });
-      },;
+          },
+        })
+      },
       (_error) => {
         this.error = 'Unable to retrieve your location';
-      },;
-    );
+      },
+    )
   }
 
   viewAdDetails(adId: string): void {
-    this.router.navigate(['/ad-details', adId]);
+    this.router.navigate(['/ad-details', adId])
   }
 }

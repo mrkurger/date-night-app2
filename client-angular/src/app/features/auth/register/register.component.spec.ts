@@ -5,17 +5,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RegisterComponent } from './register.component';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
   NbSelectModule';
 } from '@nebular/theme';
 
@@ -26,48 +26,48 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [;
-        ReactiveFormsModule,;
-        RouterTestingModule,;
-        NbCardModule,;
-        NbFormFieldModule,;
-        NbInputModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbCheckboxModule,;
-        NbRadioModule,;
-        NbSpinnerModule,;
-      ],;
-      declarations: [],;
-    }).compileComponents();
+        ReactiveFormsModule,
+        RouterTestingModule,
+        NbCardModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbCheckboxModule,
+        NbRadioModule,
+        NbSpinnerModule,
+      ],
+      declarations: [],
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(RegisterComponent);
+    fixture = TestBed.createComponent(RegisterComponent)
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should initialize form controls', () => {
-    expect(component.registerForm).toBeDefined();
-    expect(component.registerForm.get('firstname')).toBeDefined();
-    expect(component.registerForm.get('lastname')).toBeDefined();
-    expect(component.registerForm.get('email')).toBeDefined();
-    expect(component.registerForm.get('password')).toBeDefined();
-    expect(component.registerForm.get('confirmPassword')).toBeDefined();
-    expect(component.registerForm.get('termsAccepted')).toBeDefined();
-  });
+    expect(component.registerForm).toBeDefined()
+    expect(component.registerForm.get('firstname')).toBeDefined()
+    expect(component.registerForm.get('lastname')).toBeDefined()
+    expect(component.registerForm.get('email')).toBeDefined()
+    expect(component.registerForm.get('password')).toBeDefined()
+    expect(component.registerForm.get('confirmPassword')).toBeDefined()
+    expect(component.registerForm.get('termsAccepted')).toBeDefined()
+  })
 
   it('should validate form before submission', () => {
     // Arrange
-    const routerSpy = spyOn(component['router'], 'navigate');
+    const routerSpy = spyOn(component['router'], 'navigate')
 
     // Act
-    component.onSubmit();
+    component.onSubmit()
 
     // Assert
-    expect(routerSpy).not.toHaveBeenCalled();
-    expect(component.registerForm.valid).toBeFalsy();
-  });
-});
+    expect(routerSpy).not.toHaveBeenCalled()
+    expect(component.registerForm.valid).toBeFalsy()
+  })
+})

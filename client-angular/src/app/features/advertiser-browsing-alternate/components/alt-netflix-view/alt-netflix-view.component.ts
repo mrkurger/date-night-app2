@@ -55,39 +55,39 @@ import { ChipModule } from 'primeng/chip';
 // Core services and interfaces
 
 @Component({';
-  selector: 'app-alt-netflix-view',;
-  standalone: true,;
+  selector: 'app-alt-netflix-view',
+  standalone: true,
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    ReactiveFormsModule,;
-    CardModule,;
-    ButtonModule,;
-    BadgeModule,;
-    TagModule,;
-    ProgressSpinnerModule,;
-    TooltipModule,;
-    DialogModule,;
-    RippleModule,;
-    ScrollerModule,;
-    DividerModule,;
-    DropdownModule,;
-    InputTextModule,;
-    MultiSelectModule,;
-    SpeedDialModule,,;
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    CardModule,
+    ButtonModule,
+    BadgeModule,
+    TagModule,
+    ProgressSpinnerModule,
+    TooltipModule,
+    DialogModule,
+    RippleModule,
+    ScrollerModule,
+    DividerModule,
+    DropdownModule,
+    InputTextModule,
+    MultiSelectModule,
+    SpeedDialModule,,
     ChipModule;
-  ],;
-  templateUrl: './alt-netflix-view.component.html',;
-  styleUrls: ['./alt-netflix-view.component.scss'],;
-});
+  ],
+  templateUrl: './alt-netflix-view.component.html',
+  styleUrls: ['./alt-netflix-view.component.scss'],
+})
 export class AltNetflixViewComponen {t implements OnInit {
   // Inputs and Outputs
-  @Input() advertisers: Ad[] = [];
+  @Input() advertisers: Ad[] = []
 
   @Input() loading = false;
-  @Output() favorite = new EventEmitter();
-  @Output() chat = new EventEmitter();
-  @Output() viewProfile = new EventEmitter();
+  @Output() favorite = new EventEmitter()
+  @Output() chat = new EventEmitter()
+  @Output() viewProfile = new EventEmitter()
 
   // Component state
   filterDialogVisible = false;
@@ -96,76 +96,76 @@ export class AltNetflixViewComponen {t implements OnInit {
   isAuthenticated = false;
 
   // Data categories
-  categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
-  selectedCategories: string[] = [];
+  categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring']
+  selectedCategories: string[] = []
 
   // SpeedDial items for floating action button
   speedDialItems: MenuItem[] = [;
     {
-      icon: 'pi pi-refresh',;
+      icon: 'pi pi-refresh',
       command: () => {
-        this.loadAds();
-      },;
+        this.loadAds()
+      },
       tooltipOptions: {
-        tooltipLabel: 'Refresh',;
-      },;
-    },;
+        tooltipLabel: 'Refresh',
+      },
+    },
     {
-      icon: 'pi pi-filter',;
+      icon: 'pi pi-filter',
       command: () => {
-        this.openFilters();
-      },;
+        this.openFilters()
+      },
       tooltipOptions: {
-        tooltipLabel: 'Filters',;
-      },;
-    },;
-  ];
+        tooltipLabel: 'Filters',
+      },
+    },
+  ]
 
   constructor(;
-    private formBuilder: FormBuilder,;
-    private authService: AuthService,;
-    private adService: AdService,;
-    private notificationService: NotificationService,;
-    private chatService: ChatService,;
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private adService: AdService,
+    private notificationService: NotificationService,
+    private chatService: ChatService,
   ) {
     // Initialize the filter form
     this.filterForm = this.formBuilder.group({
-      categories: [[]],;
-      location: [''],;
-      ageRange: [[]],;
-      rating: [[]],;
-    });
+      categories: [[]],
+      location: [''],
+      ageRange: [[]],
+      rating: [[]],
+    })
   }
 
   ngOnInit(): void {
     // Check authentication status
-    this.authService.currentUser$.subscribe((user) => (this.isAuthenticated = !!user));
+    this.authService.currentUser$.subscribe((user) => (this.isAuthenticated = !!user))
 
     // Load initial data if needed
     if (!this.advertisers.length && !this.loading) {
-      this.loadAds();
+      this.loadAds()
     }
   }
 
   // Action handlers
   onFavorite(advertiser: Ad): void {
     if (!this.isAuthenticated) {
-      this.notificationService.info('Please log in to favorite profiles');
+      this.notificationService.info('Please log in to favorite profiles')
       return;
     }
-    this.favorite.emit(advertiser.id as string);
+    this.favorite.emit(advertiser.id as string)
   }
 
   onChat(advertiser: Ad): void {
     if (!this.isAuthenticated) {
-      this.notificationService.info('Please log in to chat with advertisers');
+      this.notificationService.info('Please log in to chat with advertisers')
       return;
     }
-    this.chat.emit(advertiser.id as string);
+    this.chat.emit(advertiser.id as string)
   }
 
   onViewProfile(advertiser: Ad): void {
-    this.viewProfile.emit(advertiser.id as string);
+    this.viewProfile.emit(advertiser.id as string)
   }
 
   // Filter handling
@@ -180,19 +180,19 @@ export class AltNetflixViewComponen {t implements OnInit {
   applyFilters(): void {
     const filters = this.filterForm.value;
     // Apply filters and reload ads with filters
-    this.loadAds(filters);
-    this.closeFilters();
+    this.loadAds(filters)
+    this.closeFilters()
   }
 
   resetFilters(): void {
     this.filterForm.reset({
-      categories: [],;
-      location: '',;
-      ageRange: [],;
-      rating: [],;
-    });
-    this.loadAds();
-    this.closeFilters();
+      categories: [],
+      location: '',
+      ageRange: [],
+      rating: [],
+    })
+    this.loadAds()
+    this.closeFilters()
   }
 
   // Data loading
@@ -202,15 +202,15 @@ export class AltNetflixViewComponen {t implements OnInit {
 
     this.adService.getAds(filters).subscribe({
       next: (response: any) => {
-        this.advertisers = Array.isArray(response) ? response : response.ads || [];
+        this.advertisers = Array.isArray(response) ? response : response.ads || []
         this.loading = false;
-      },;
+      },
       error: (error) => {
         this.error = 'Failed to load profiles. Please try again.';
         this.loading = false;
-        console.error('Error loading ads:', error);
-      },;
-    });
+        console.error('Error loading ads:', error)
+      },
+    })
   }
 
   // Helper method to get rating class for UI

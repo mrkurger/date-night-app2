@@ -24,13 +24,13 @@ import { CommonModule } from '@angular/common';
  * - Comprehensive documentation;
  */
 @Component({';
-  selector: 'app-component-name',;
-  standalone: true,;
-  imports: [CommonModule],;
-  templateUrl: './component-name.component.html',;
-  styleUrls: ['./component-name.component.scss'],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+  selector: 'app-component-name',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './component-name.component.html',
+  styleUrls: ['./component-name.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class ComponentNameComponen {t {
   /**
    * Primary input property description.;
@@ -55,13 +55,13 @@ export class ComponentNameComponen {t {
    * Event emitted when the primary action occurs.;
    * Explain when this event is emitted and what data it contains.;
    */
-  @Output() actionCompleted = new EventEmitter();
+  @Output() actionCompleted = new EventEmitter()
 
   /**
    * Event emitted when a secondary action occurs.;
    * Explain when this event is emitted and what data it contains.;
    */
-  @Output() secondaryAction = new EventEmitter();
+  @Output() secondaryAction = new EventEmitter()
 
   /**
    * Internal state property.;
@@ -83,7 +83,7 @@ export class ComponentNameComponen {t {
    */
   handlePrimaryAction(): void {
     // Implementation
-    this.actionCompleted.emit(this.inputProperty);
+    this.actionCompleted.emit(this.inputProperty)
   }
 
   /**
@@ -92,7 +92,7 @@ export class ComponentNameComponen {t {
    */
   handleSecondaryAction(): void {
     // Implementation
-    this.secondaryAction.emit();
+    this.secondaryAction.emit()
   }
 
   /**
@@ -103,6 +103,6 @@ export class ComponentNameComponen {t {
    */
   private processValue(value: string): string {
     // Implementation
-    return value.toUpperCase();
+    return value.toUpperCase()
   }
 }

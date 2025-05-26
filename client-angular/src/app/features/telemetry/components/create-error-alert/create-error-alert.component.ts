@@ -4,14 +4,14 @@ import { NebularModule } from '../../../../../app/shared/nebular.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ErrorCategory } from '../../../../core/models/error.model';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
   NbSelectModule,';
 } from '@nebular/theme';
 
@@ -19,21 +19,21 @@ import { ErrorCategory } from '../../../../core/models/error.model';
  * Component for creating alerts based on error categories;
  */
 @Component({
-  selector: 'app-create-error-alert',;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [NebularModule, CommonModule,;
-    ReactiveFormsModule,;
-    NbCardModule,;
-    NbFormFieldModule,;
-    NbInputModule,;
-    NbSelectModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbSpinnerModule,;
-    NbAlertModule,;
-    NbTooltipModule,;
-  ],;
+  selector: 'app-create-error-alert',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [NebularModule, CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+  ],
   template: `;`
     ;
       ;
@@ -108,7 +108,7 @@ import { ErrorCategory } from '../../../../core/models/error.model';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -118,65 +118,65 @@ import { ErrorCategory } from '../../../../core/models/error.model';
       }
 
       .subtitle {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         margin: 0;
       }
 
       .form-row {
-        margin-bottom: var(--margin);
+        margin-bottom: var(--margin)
       }
 
       .hint-text {
-        color: var(--text-hint-color);
-        font-size: var(--text-caption-font-size);
-        margin-top: var(--spacing-xs);
+        color: var(--text-hint-color)
+        font-size: var(--text-caption-font-size)
+        margin-top: var(--spacing-xs)
       }
 
       .error-message {
-        color: var(--color-danger-default);
-        font-size: var(--text-caption-font-size);
-        margin-top: var(--spacing-xs);
+        color: var(--color-danger-default)
+        font-size: var(--text-caption-font-size)
+        margin-top: var(--spacing-xs)
       }
 
       .form-actions {
         display: flex;
-        gap: var(--spacing);
-        margin-top: var(--margin);
+        gap: var(--spacing)
+        margin-top: var(--margin)
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class CreateErrorAlertComponen {t implements OnInit {
   alertForm: FormGroup;
 
   errorCategories = [;
-    { value: ErrorCategory.NETWORK, label: 'Network Errors' },;
-    { value: ErrorCategory.SERVER, label: 'Server Errors' },;
-    { value: ErrorCategory.CLIENT, label: 'Client Errors' },;
-    { value: ErrorCategory.AUTHENTICATION, label: 'Authentication Errors' },;
-    { value: ErrorCategory.AUTHORIZATION, label: 'Authorization Errors' },;
-    { value: ErrorCategory.VALIDATION, label: 'Validation Errors' },;
-  ];
+    { value: ErrorCategory.NETWORK, label: 'Network Errors' },
+    { value: ErrorCategory.SERVER, label: 'Server Errors' },
+    { value: ErrorCategory.CLIENT, label: 'Client Errors' },
+    { value: ErrorCategory.AUTHENTICATION, label: 'Authentication Errors' },
+    { value: ErrorCategory.AUTHORIZATION, label: 'Authorization Errors' },
+    { value: ErrorCategory.VALIDATION, label: 'Validation Errors' },
+  ]
 
   timeWindows = [;
-    { value: 300, label: '5 minutes' },;
-    { value: 900, label: '15 minutes' },;
-    { value: 1800, label: '30 minutes' },;
-    { value: 3600, label: '1 hour' },;
-    { value: 7200, label: '2 hours' },;
-    { value: 14400, label: '4 hours' },;
-    { value: 28800, label: '8 hours' },;
-    { value: 86400, label: '24 hours' },;
-  ];
+    { value: 300, label: '5 minutes' },
+    { value: 900, label: '15 minutes' },
+    { value: 1800, label: '30 minutes' },
+    { value: 3600, label: '1 hour' },
+    { value: 7200, label: '2 hours' },
+    { value: 14400, label: '4 hours' },
+    { value: 28800, label: '8 hours' },
+    { value: 86400, label: '24 hours' },
+  ]
 
   constructor(private fb: FormBuilder) {
     this.alertForm = this.fb.group({
-      name: ['', Validators.required],;
-      description: ['', Validators.required],;
-      category: ['', Validators.required],;
-      threshold: [1, [Validators.required, Validators.min(1)]],;
-      timeWindow: [300, Validators.required],;
-    });
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      category: ['', Validators.required],
+      threshold: [1, [Validators.required, Validators.min(1)]],
+      timeWindow: [300, Validators.required],
+    })
   }
 
   ngOnInit(): void {}
@@ -185,7 +185,7 @@ export class CreateErrorAlertComponen {t implements OnInit {
     if (this.alertForm.valid) {
       // Handle form submission
       // eslint-disable-next-line no-console
-      console.log(this.alertForm.value);
+      console.log(this.alertForm.value)
     }
   }
 

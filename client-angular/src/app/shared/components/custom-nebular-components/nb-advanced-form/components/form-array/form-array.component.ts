@@ -4,11 +4,11 @@ import { NbDatepickerModule } from '@nebular/theme';
 import { FormField } from '../../nb-advanced-form.component';
 
 @Component({';
-  selector: 'nb-form-array',;
+  selector: 'nb-form-array',
   template: `;`
     ;
       ;
-        {{ field.label }};
+        {{ field.label }}
         ;
           ;
         ;
@@ -18,7 +18,7 @@ import { FormField } from '../../nb-advanced-form.component';
         ;
           ;
             ;
-              {{ field.label }} #{{ i + 1 }};
+              {{ field.label }} #{{ i + 1 }}
               ;
                 ;
               ;
@@ -30,9 +30,9 @@ import { FormField } from '../../nb-advanced-form.component';
               ;
                 ;
                 ;
-                  {{ subField.label }};
+                  {{ subField.label }}
                   ;
-                  {{ subField.hint }};
+                  {{ subField.hint }}
                   ;
                     {{ getErrorMessage(i, subField.key, subField.errorMessages) }}
                   ;
@@ -40,13 +40,13 @@ import { FormField } from '../../nb-advanced-form.component';
 
                 ;
                 ;
-                  {{ subField.label }};
+                  {{ subField.label }}
                   ;
                     ;
                       {{ option.label }}
                     ;
                   ;
-                  {{ subField.hint }};
+                  {{ subField.hint }}
                   ;
                     {{ getErrorMessage(i, subField.key, subField.errorMessages) }}
                   ;
@@ -57,7 +57,7 @@ import { FormField } from '../../nb-advanced-form.component';
                   ;
                     {{ subField.label }}
                   ;
-                  {{ subField.hint }};
+                  {{ subField.hint }}
                   ;
                     {{ getErrorMessage(i, subField.key, subField.errorMessages) }}
                   ;
@@ -65,10 +65,10 @@ import { FormField } from '../../nb-advanced-form.component';
 
                 ;
                 ;
-                  {{ subField.label }};
+                  {{ subField.label }}
                   ;
                   ;
-                  {{ subField.hint }};
+                  {{ subField.hint }}
                   ;
                     {{ getErrorMessage(i, subField.key, subField.errorMessages) }}
                   ;
@@ -79,9 +79,9 @@ import { FormField } from '../../nb-advanced-form.component';
         ;
       ;
 
-      {{ field.hint }};
+      {{ field.hint }}
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .form-array {
@@ -108,8 +108,8 @@ import { FormField } from '../../nb-advanced-form.component';
       }
 
       .item-title {
-        font-weight: nb-theme(text-subtitle-font-weight);
-        color: nb-theme(text-basic-color);
+        font-weight: nb-theme(text-subtitle-font-weight)
+        color: nb-theme(text-basic-color)
       }
 
       nb-card {
@@ -131,10 +131,10 @@ import { FormField } from '../../nb-advanced-form.component';
           margin-bottom: 0;
         }
       }
-    `,;`
-  ],;
-  standalone: false,;
-});
+    `,`
+  ],
+  standalone: false,
+})
 export class NbFormArrayComponen {t {
   @Input() field!: FormField;
   @Input() form!: FormGroup;
@@ -150,32 +150,32 @@ export class NbFormArrayComponen {t {
 
   addItem() {
     if (!this.isMaxItems()) {
-      const group = this.createFormGroup();
-      this.items.push(group);
+      const group = this.createFormGroup()
+      this.items.push(group)
     }
   }
 
   removeItem(index: number) {
     if (!this.isMinItems()) {
-      this.items.removeAt(index);
+      this.items.removeAt(index)
     }
   }
 
   private createFormGroup(): FormGroup {
-    const group: { [key: string]: any } = {};
+    const group: { [key: string]: any } = {}
 
     (this.field.fields || []).forEach((field) => {
-      const validators = field.validators || [];
-      const asyncValidators = field.asyncValidators || [];
+      const validators = field.validators || []
+      const asyncValidators = field.asyncValidators || []
 
       group[field.key] = [;
-        { value: field.defaultValue, disabled: field.disabled },;
-        validators,;
-        asyncValidators,;
-      ];
-    });
+        { value: field.defaultValue, disabled: field.disabled },
+        validators,
+        asyncValidators,
+      ]
+    })
 
-    return this.fb.group(group);
+    return this.fb.group(group)
   }
 
   isMinItems(): boolean {
@@ -183,30 +183,30 @@ export class NbFormArrayComponen {t {
   }
 
   shouldShowError(index: number, fieldKey: string): boolean {
-    const control = this.items.at(index).get(fieldKey);
+    const control = this.items.at(index).get(fieldKey)
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
 
   getErrorMessage(;
-    index: number,;
-    fieldKey: string,;
-    errorMessages?: { [key: string]: string },;
+    index: number,
+    fieldKey: string,
+    errorMessages?: { [key: string]: string },
   ): string {
-    const control = this.items.at(index).get(fieldKey);
+    const control = this.items.at(index).get(fieldKey)
     if (!control || !control.errors) return '';
 
     const defaultMessages: { [key: string]: string } = {
-      required: 'This field is required',;
-      email: 'Please enter a valid email address',;
-      min: 'Value is too small',;
-      max: 'Value is too large',;
-      minlength: 'Value is too short',;
-      maxlength: 'Value is too long',;
-      pattern: 'Invalid format',;
-    };
+      required: 'This field is required',
+      email: 'Please enter a valid email address',
+      min: 'Value is too small',
+      max: 'Value is too large',
+      minlength: 'Value is too short',
+      maxlength: 'Value is too long',
+      pattern: 'Invalid format',
+    }
 
-    const messages = { ...defaultMessages, ...errorMessages };
-    const errorKey = Object.keys(control.errors)[0];
+    const messages = { ...defaultMessages, ...errorMessages }
+    const errorKey = Object.keys(control.errors)[0]
     return messages[errorKey] || 'Invalid value';
   }
 }

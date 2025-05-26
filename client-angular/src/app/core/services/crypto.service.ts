@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class CryptoServic {e {
-  private keyCache = new Map();
-  private keyPairCache = new Map();
+  private keyCache = new Map()
+  private keyPairCache = new Map()
 
   constructor(private readonly window: Window) {}
 
@@ -16,15 +16,15 @@ export class CryptoServic {e {
   async generateEncryptionKey(): Promise {
     const key = await window.crypto.subtle.generateKey(;
       {
-        name: 'AES-GCM',;
-        length: 256,;
-      },;
-      true,;
-      ['encrypt', 'decrypt'],;
-    );
+        name: 'AES-GCM',
+        length: 256,
+      },
+      true,
+      ['encrypt', 'decrypt'],
+    )
 
-    const exportedKey = await window.crypto.subtle.exportKey('raw', key);
-    return this.arrayBufferToBase64(exportedKey);
+    const exportedKey = await window.crypto.subtle.exportKey('raw', key)
+    return this.arrayBufferToBase64(exportedKey)
   }
 
   /**
@@ -34,22 +34,22 @@ export class CryptoServic {e {
   async generateKeyPair(): Promise {
     const keyPair = await window.crypto.subtle.generateKey(;
       {
-        name: 'RSA-OAEP',;
-        modulusLength: 2048,;
-        publicExponent: new Uint8Array([1, 0, 1]),;
-        hash: 'SHA-256',;
-      },;
-      true,;
-      ['encrypt', 'decrypt'],;
-    );
+        name: 'RSA-OAEP',
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: 'SHA-256',
+      },
+      true,
+      ['encrypt', 'decrypt'],
+    )
 
-    const exportedPublicKey = await window.crypto.subtle.exportKey('spki', keyPair.publicKey);
-    const exportedPrivateKey = await window.crypto.subtle.exportKey('pkcs8', keyPair.privateKey);
+    const exportedPublicKey = await window.crypto.subtle.exportKey('spki', keyPair.publicKey)
+    const exportedPrivateKey = await window.crypto.subtle.exportKey('pkcs8', keyPair.privateKey)
 
     return {
-      publicKey: this.arrayBufferToBase64(exportedPublicKey),;
-      privateKey: this.arrayBufferToBase64(exportedPrivateKey),;
-    };
+      publicKey: this.arrayBufferToBase64(exportedPublicKey),
+      privateKey: this.arrayBufferToBase64(exportedPrivateKey),
+    }
   }
 
   /**
@@ -59,20 +59,20 @@ export class CryptoServic {e {
    * @returns Promise Base64 encoded encrypted message;
    */
   async encryptWithPublicKey(message: string, publicKeyBase64: string): Promise {
-    const publicKey = await this.importPublicKey(publicKeyBase64);
+    const publicKey = await this.importPublicKey(publicKeyBase64)
 
-    const encoder = new TextEncoder();
-    const data = encoder.encode(message);
+    const encoder = new TextEncoder()
+    const data = encoder.encode(message)
 
     const encrypted = await window.crypto.subtle.encrypt(;
       {
-        name: 'RSA-OAEP',;
-      },;
-      publicKey,;
-      data,;
-    );
+        name: 'RSA-OAEP',
+      },
+      publicKey,
+      data,
+    )
 
-    return this.arrayBufferToBase64(encrypted);
+    return this.arrayBufferToBase64(encrypted)
   }
 
   /**
@@ -82,23 +82,23 @@ export class CryptoServic {e {
    * @returns Promise Decrypted message;
    */
   async decryptWithPrivateKey(;
-    encryptedMessageBase64: string,;
-    privateKeyBase64: string,;
+    encryptedMessageBase64: string,
+    privateKeyBase64: string,
   ): Promise {
-    const privateKey = await this.importPrivateKey(privateKeyBase64);
+    const privateKey = await this.importPrivateKey(privateKeyBase64)
 
-    const encryptedData = this.base64ToArrayBuffer(encryptedMessageBase64);
+    const encryptedData = this.base64ToArrayBuffer(encryptedMessageBase64)
 
     const decrypted = await window.crypto.subtle.decrypt(;
       {
-        name: 'RSA-OAEP',;
-      },;
-      privateKey,;
-      encryptedData,;
-    );
+        name: 'RSA-OAEP',
+      },
+      privateKey,
+      encryptedData,
+    )
 
-    const decoder = new TextDecoder();
-    return decoder.decode(decrypted);
+    const decoder = new TextDecoder()
+    return decoder.decode(decrypted)
   }
 
   /**
@@ -108,29 +108,29 @@ export class CryptoServic {e {
    * @returns Promise;
    */
   async encryptWithSymmetricKey(;
-    message: string,;
-    keyBase64: string,;
+    message: string,
+    keyBase64: string,
   ): Promise {
-    const key = await this.importSymmetricKey(keyBase64);
+    const key = await this.importSymmetricKey(keyBase64)
 
-    const encoder = new TextEncoder();
-    const data = encoder.encode(message);
+    const encoder = new TextEncoder()
+    const data = encoder.encode(message)
 
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const iv = window.crypto.getRandomValues(new Uint8Array(12))
 
     const encrypted = await window.crypto.subtle.encrypt(;
       {
-        name: 'AES-GCM',;
-        iv,;
-      },;
-      key,;
-      data,;
-    );
+        name: 'AES-GCM',
+        iv,
+      },
+      key,
+      data,
+    )
 
     return {
-      iv: this.arrayBufferToBase64(iv),;
-      encrypted: this.arrayBufferToBase64(encrypted),;
-    };
+      iv: this.arrayBufferToBase64(iv),
+      encrypted: this.arrayBufferToBase64(encrypted),
+    }
   }
 
   /**
@@ -140,25 +140,25 @@ export class CryptoServic {e {
    * @returns Promise Decrypted message;
    */
   async decryptWithSymmetricKey(;
-    encryptedData: { iv: string; encrypted: string },;
-    keyBase64: string,;
+    encryptedData: { iv: string; encrypted: string },
+    keyBase64: string,
   ): Promise {
-    const key = await this.importSymmetricKey(keyBase64);
+    const key = await this.importSymmetricKey(keyBase64)
 
-    const iv = this.base64ToArrayBuffer(encryptedData.iv);
-    const encryptedMessage = this.base64ToArrayBuffer(encryptedData.encrypted);
+    const iv = this.base64ToArrayBuffer(encryptedData.iv)
+    const encryptedMessage = this.base64ToArrayBuffer(encryptedData.encrypted)
 
     const decrypted = await window.crypto.subtle.decrypt(;
       {
-        name: 'AES-GCM',;
-        iv,;
-      },;
-      key,;
-      encryptedMessage,;
-    );
+        name: 'AES-GCM',
+        iv,
+      },
+      key,
+      encryptedMessage,
+    )
 
-    const decoder = new TextDecoder();
-    return decoder.decode(decrypted);
+    const decoder = new TextDecoder()
+    return decoder.decode(decrypted)
   }
 
   /**
@@ -171,20 +171,20 @@ export class CryptoServic {e {
       return this.keyCache.get(publicKeyBase64)!;
     }
 
-    const publicKeyData = this.base64ToArrayBuffer(publicKeyBase64);
+    const publicKeyData = this.base64ToArrayBuffer(publicKeyBase64)
 
     const publicKey = await window.crypto.subtle.importKey(;
-      'spki',;
-      publicKeyData,;
+      'spki',
+      publicKeyData,
       {
-        name: 'RSA-OAEP',;
-        hash: 'SHA-256',;
-      },;
-      false,;
-      ['encrypt'],;
-    );
+        name: 'RSA-OAEP',
+        hash: 'SHA-256',
+      },
+      false,
+      ['encrypt'],
+    )
 
-    this.keyCache.set(publicKeyBase64, publicKey);
+    this.keyCache.set(publicKeyBase64, publicKey)
     return publicKey;
   }
 
@@ -198,20 +198,20 @@ export class CryptoServic {e {
       return this.keyCache.get(privateKeyBase64)!;
     }
 
-    const privateKeyData = this.base64ToArrayBuffer(privateKeyBase64);
+    const privateKeyData = this.base64ToArrayBuffer(privateKeyBase64)
 
     const privateKey = await window.crypto.subtle.importKey(;
-      'pkcs8',;
-      privateKeyData,;
+      'pkcs8',
+      privateKeyData,
       {
-        name: 'RSA-OAEP',;
-        hash: 'SHA-256',;
-      },;
-      false,;
-      ['decrypt'],;
-    );
+        name: 'RSA-OAEP',
+        hash: 'SHA-256',
+      },
+      false,
+      ['decrypt'],
+    )
 
-    this.keyCache.set(privateKeyBase64, privateKey);
+    this.keyCache.set(privateKeyBase64, privateKey)
     return privateKey;
   }
 
@@ -225,19 +225,19 @@ export class CryptoServic {e {
       return this.keyCache.get(keyBase64)!;
     }
 
-    const keyData = this.base64ToArrayBuffer(keyBase64);
+    const keyData = this.base64ToArrayBuffer(keyBase64)
 
     const key = await window.crypto.subtle.importKey(;
-      'raw',;
-      keyData,;
+      'raw',
+      keyData,
       {
-        name: 'AES-GCM',;
-      },;
-      false,;
-      ['encrypt', 'decrypt'],;
-    );
+        name: 'AES-GCM',
+      },
+      false,
+      ['encrypt', 'decrypt'],
+    )
 
-    this.keyCache.set(keyBase64, key);
+    this.keyCache.set(keyBase64, key)
     return key;
   }
 
@@ -247,12 +247,12 @@ export class CryptoServic {e {
    * @returns string Base64 encoded string;
    */
   private arrayBufferToBase64(buffer: ArrayBuffer): string {
-    const bytes = new Uint8Array(buffer);
+    const bytes = new Uint8Array(buffer)
     let binary = '';
     for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
+      binary += String.fromCharCode(bytes[i])
     }
-    return btoa(binary);
+    return btoa(binary)
   }
 
   /**
@@ -261,10 +261,10 @@ export class CryptoServic {e {
    * @returns ArrayBuffer Decoded ArrayBuffer;
    */
   private base64ToArrayBuffer(base64: string): ArrayBuffer {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
+    const binaryString = atob(base64)
+    const bytes = new Uint8Array(binaryString.length)
     for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
+      bytes[i] = binaryString.charCodeAt(i)
     }
     return bytes.buffer;
   }

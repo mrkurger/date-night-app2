@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
  * Supports various layouts including default, compact, and masonry.;
  */
 @Component({';
-    selector: 'app-card-grid',;
+    selector: 'app-card-grid',
     template: `;`
     ;
       
@@ -42,8 +42,8 @@ import { CommonModule } from '@angular/common';
       ;
         ;
         ;
-          {{ item.subtitle }};
-          {{ item.description }};
+          {{ item.subtitle }}
+          {{ item.description }}
           ;
             ;
               {{ tag }}
@@ -66,25 +66,25 @@ import { CommonModule } from '@angular/common';
     ;
       ;
         ;
-        {{ emptyStateMessage }};
+        {{ emptyStateMessage }}
       ;
     ;
-  `,;`
-    styleUrls: ['./card-grid.component.scss'],;
+  `,`
+    styleUrls: ['./card-grid.component.scss'],
     imports: [;
-        CommonModule,;
-        NbCardModule,;
-        NbSpinnerModule,;
+        CommonModule,
+        NbCardModule,
+        NbSpinnerModule,
         NbIconModule;
-    ];
-});
+    ]
+})
 export class CardGridComponen {t {
   /**
    * The items to display in the grid;
    */
   @Input() items: Array;
     [key: string]: any;
-  }> = [];
+  }> = []
 
   /**
    * The layout style of the grid;
@@ -124,12 +124,12 @@ export class CardGridComponen {t {
   /**
    * Event emitted when a card is clicked;
    */
-  @Output() cardClick = new EventEmitter();
+  @Output() cardClick = new EventEmitter()
 
   /**
    * Event emitted when an action button is clicked;
    */
-  @Output() actionClick = new EventEmitter();
+  @Output() actionClick = new EventEmitter()
 
   /**
    * Optional template for custom item rendering;
@@ -141,43 +141,43 @@ export class CardGridComponen {t {
    */
   getGridStyle(): { [key: string]: string } {
     if (this.layout === 'netflix') {
-      return {};
+      return {}
     }
 
     return {
-      display: 'grid',;
-      'grid-template-columns': `repeat(${this.columns}, 1fr)`,;`
-      gap: `${this.gap}px`,;`
-    };
+      display: 'grid',
+      'grid-template-columns': `repeat(${this.columns}, 1fr)`,`
+      gap: `${this.gap}px`,`
+    }
   }
 
   /**
    * Handle item click;
    */
   onItemClick(item: any): void {
-    this.cardClick.emit(item.id);
+    this.cardClick.emit(item.id)
   }
 
   /**
    * Alias for onItemClick to support tests;
    */
   handleCardClick(itemId: string): void {
-    this.cardClick.emit(itemId);
+    this.cardClick.emit(itemId)
   }
 
   /**
    * Handle action click;
    */
   handleActionClick(event: { id: string; itemId: string }): void {
-    this.actionClick.emit(event);
+    this.actionClick.emit(event)
   }
 
   /**
    * Get skeleton array for loading state;
    */
   getSkeletonArray(): number[] {
-    return Array(this.columns * 2);
-      .fill(0);
-      .map((_, i) => i);
+    return Array(this.columns * 2)
+      .fill(0)
+      .map((_, i) => i)
   }
 }

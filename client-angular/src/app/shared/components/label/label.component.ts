@@ -9,24 +9,24 @@ import { CommonModule } from '@angular/common';
  * Features customizable appearance, size, and icon support.;
  */
 @Component({';
-  selector: 'app-label',;
-  standalone: true,;
-  imports: [CommonModule, NbTagModule, NbIconModule],;
+  selector: 'app-label',
+  standalone: true,
+  imports: [CommonModule, NbTagModule, NbIconModule],
   template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .label {
         display: inline-flex;
         align-items: center;
-        gap: nb-theme(spacing-1);
+        gap: nb-theme(spacing-1)
 
         &--small {
-          font-size: nb-theme(text-caption-font-size);
-          padding: nb-theme(spacing-1) nb-theme(spacing-2);
+          font-size: nb-theme(text-caption-font-size)
+          padding: nb-theme(spacing-1) nb-theme(spacing-2)
 
           nb-icon {
             font-size: 1rem;
@@ -34,8 +34,8 @@ import { CommonModule } from '@angular/common';
         }
 
         &--medium {
-          font-size: nb-theme(text-subtitle-2-font-size);
-          padding: nb-theme(spacing-2) nb-theme(spacing-3);
+          font-size: nb-theme(text-subtitle-2-font-size)
+          padding: nb-theme(spacing-2) nb-theme(spacing-3)
 
           nb-icon {
             font-size: 1.25rem;
@@ -43,8 +43,8 @@ import { CommonModule } from '@angular/common';
         }
 
         &--large {
-          font-size: nb-theme(text-subtitle-1-font-size);
-          padding: nb-theme(spacing-3) nb-theme(spacing-4);
+          font-size: nb-theme(text-subtitle-1-font-size)
+          padding: nb-theme(spacing-3) nb-theme(spacing-4)
 
           nb-icon {
             font-size: 1.5rem;
@@ -55,9 +55,9 @@ import { CommonModule } from '@angular/common';
           border-radius: 999px;
         }
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class TagModul {e {
   @Input() text = '';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic' = 'primary';

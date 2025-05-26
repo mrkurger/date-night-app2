@@ -28,21 +28,21 @@ import { TooltipModule } from 'primeng/tooltip';
  * - Detailed error information;
  */
 @Component({';
-  selector: 'app-error-dashboard',;
+  selector: 'app-error-dashboard',
   imports: [;
-    CommonModule,;
-    ReactiveFormsModule,;
-    CalendarModule,;
-    DropdownModule,;
-    InputTextModule,;
-    ButtonModule,;
-    TableModule,;
-    PaginatorModule,;
-    CardModule,;
-    ProgressSpinnerModule,;
-    TooltipModule,;
-  ],;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    CommonModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    DropdownModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    PaginatorModule,
+    CardModule,
+    ProgressSpinnerModule,
+    TooltipModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `;`
     ;
       Error Monitoring Dashboard;
@@ -84,22 +84,22 @@ import { TooltipModule } from 'primeng/tooltip';
       ;
         ;
           ;
-            {{ (errorStats$ | async)?.totalErrors || 0 }};
+            {{ (errorStats$ | async)?.totalErrors || 0 }}
             Total Errors;
           ;
 
           ;
-            {{ (errorStats$ | async)?.uniqueErrors || 0 }};
+            {{ (errorStats$ | async)?.uniqueErrors || 0 }}
             Unique Error Codes;
           ;
 
           ;
-            {{ (errorStats$ | async)?.serverErrors || 0 }};
+            {{ (errorStats$ | async)?.serverErrors || 0 }}
             Server Errors;
           ;
 
           ;
-            {{ (errorStats$ | async)?.clientErrors || 0 }};
+            {{ (errorStats$ | async)?.clientErrors || 0 }}
             Client Errors;
           ;
         ;
@@ -124,12 +124,12 @@ import { TooltipModule } from 'primeng/tooltip';
             ;
             ;
               ;
-                {{ error.timestamp | date: 'medium' }};
-                {{ error.statusCode || 'N/A' }};
-                {{ error.category }};
-                {{ error.type }};
-                {{ error.message }};
-                {{ error.count }};
+                {{ error.timestamp | date: 'medium' }}
+                {{ error.statusCode || 'N/A' }}
+                {{ error.category }}
+                {{ error.type }}
+                {{ error.message }}
+                {{ error.count }}
                 ;
                   ;
                 ;
@@ -146,7 +146,7 @@ import { TooltipModule } from 'primeng/tooltip';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .dashboard-container {
@@ -155,7 +155,7 @@ import { TooltipModule } from 'primeng/tooltip';
 
       h1 {
         margin-bottom: 20px;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .filter-card {
@@ -195,12 +195,12 @@ import { TooltipModule } from 'primeng/tooltip';
       .stat-value {
         font-size: 2.5rem;
         font-weight: bold;
-        color: var(--text-primary-color);
+        color: var(--text-primary-color)
       }
 
       .stat-label {
         font-size: 1rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .error-list-card {
@@ -216,12 +216,12 @@ import { TooltipModule } from 'primeng/tooltip';
         justify-content: center;
         padding: 20px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ErrorDashboardComponen {t implements OnInit {
   // Error data
-  errors: ErrorTelemetry[] = [];
+  errors: ErrorTelemetry[] = []
   totalErrors = 0;
   loading = true;
 
@@ -235,43 +235,43 @@ export class ErrorDashboardComponen {t implements OnInit {
 
   // Table columns
   displayedColumnsPrime = [;
-    { field: 'timestamp', header: 'Timestamp' },;
-    { field: 'statusCode', header: 'Status Code' },;
-    { field: 'category', header: 'Category' },;
-    { field: 'type', header: 'Type' },;
-    { field: 'message', header: 'Message' },;
-    { field: 'count', header: 'Count' },;
-  ];
+    { field: 'timestamp', header: 'Timestamp' },
+    { field: 'statusCode', header: 'Status Code' },
+    { field: 'category', header: 'Category' },
+    { field: 'type', header: 'Type' },
+    { field: 'message', header: 'Message' },
+    { field: 'count', header: 'Count' },
+  ]
 
   // Filter form
   filterForm: FormGroup;
 
   // Error categories for filter dropdown
   errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({
-    label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '),;
-    value,;
-  }));
+    label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '),
+    value,
+  }))
 
   // Error statistics
   errorStats$: Observable;
 
   constructor(;
-    private telemetryService: TelemetryService,;
-    private fb: FormBuilder,;
+    private telemetryService: TelemetryService,
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
-      category: [''],;
-      statusCode: [''],;
-      fromDate: [null],;
-      toDate: [null],;
-    });
+      category: [''],
+      statusCode: [''],
+      fromDate: [null],
+      toDate: [null],
+    })
 
     // Initialize error statistics
-    this.errorStats$ = this.getErrorStatistics();
+    this.errorStats$ = this.getErrorStatistics()
   }
 
   ngOnInit(): void {
-    this.loadErrors();
+    this.loadErrors()
   }
 
   /**
@@ -280,28 +280,28 @@ export class ErrorDashboardComponen {t implements OnInit {
   loadErrors(): void {
     this.loading = true;
 
-    const filters = this.getFilters();
+    const filters = this.getFilters()
 
     this.telemetryService;
       .getErrorStatistics({
-        ...filters,;
-        page: this.currentPage,;
-        limit: this.pageSize,;
-        _sort: this.sortField,;
-        order: this.sortDirection,;
-      });
+        ...filters,
+        page: this.currentPage,
+        limit: this.pageSize,
+        _sort: this.sortField,
+        order: this.sortDirection,
+      })
       .pipe(;
         catchError((error) => {
-          console.error('Error loading error data:', error);
+          console.error('Error loading error data:', error)
           this.loading = false;
-          return of({ errors: [], total: 0 });
-        }),;
-      );
+          return of({ errors: [], total: 0 })
+        }),
+      )
       .subscribe((data) => {
-        this.errors = data.errors || [];
+        this.errors = data.errors || []
         this.totalErrors = data.total || 0;
         this.loading = false;
-      });
+      })
   }
 
   /**
@@ -309,35 +309,35 @@ export class ErrorDashboardComponen {t implements OnInit {
    */
   getErrorStatistics(): Observable {
     return this.filterForm.valueChanges.pipe(;
-      startWith(this.filterForm.value),;
+      startWith(this.filterForm.value),
       switchMap(() => {
-        const filters = this.getFilters();
+        const filters = this.getFilters()
         return this.telemetryService;
           .getErrorStatistics({
-            ...filters,;
-            stats: true,;
-          });
+            ...filters,
+            stats: true,
+          })
           .pipe(;
             map(;
               (data) =>;
                 data.statistics || {
-                  totalErrors: 0,;
-                  uniqueErrors: 0,;
-                  serverErrors: 0,;
-                  clientErrors: 0,;
-                },;
-            ),;
+                  totalErrors: 0,
+                  uniqueErrors: 0,
+                  serverErrors: 0,
+                  clientErrors: 0,
+                },
+            ),
             catchError(() =>;
               of({
-                totalErrors: 0,;
-                uniqueErrors: 0,;
-                serverErrors: 0,;
-                clientErrors: 0,;
-              }),;
-            ),;
-          );
-      }),;
-    );
+                totalErrors: 0,
+                uniqueErrors: 0,
+                serverErrors: 0,
+                clientErrors: 0,
+              }),
+            ),
+          )
+      }),
+    )
   }
 
   /**
@@ -346,7 +346,7 @@ export class ErrorDashboardComponen {t implements OnInit {
   pageChanged(event: any): void {
     this.currentPage = event.first / event.rows + 1;
     this.pageSize = event.rows;
-    this.loadErrors();
+    this.loadErrors()
   }
 
   /**
@@ -355,7 +355,7 @@ export class ErrorDashboardComponen {t implements OnInit {
   sortDataPrime(event: any): void {
     this.sortField = event.field;
     this.sortDirection = event.order === 1 ? 'asc' : 'desc';
-    this.loadErrors();
+    this.loadErrors()
   }
 
   /**
@@ -363,7 +363,7 @@ export class ErrorDashboardComponen {t implements OnInit {
    */
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filtering
-    this.loadErrors();
+    this.loadErrors()
   }
 
   /**
@@ -371,20 +371,20 @@ export class ErrorDashboardComponen {t implements OnInit {
    */
   resetFilters(): void {
     this.filterForm.reset({
-      category: '',;
-      statusCode: '',;
-      fromDate: null,;
-      toDate: null,;
-    });
+      category: '',
+      statusCode: '',
+      fromDate: null,
+      toDate: null,
+    })
     this.currentPage = 1;
-    this.loadErrors();
+    this.loadErrors()
   }
 
   /**
    * Get current filters from the form;
    */
   getFilters(): any {
-    const filters: any = {};
+    const filters: any = {}
     const formValues = this.filterForm.value;
 
     if (formValues.category) {
@@ -396,11 +396,11 @@ export class ErrorDashboardComponen {t implements OnInit {
     }
 
     if (formValues.fromDate) {
-      filters.fromDate = formValues.fromDate.toISOString();
+      filters.fromDate = formValues.fromDate.toISOString()
     }
 
     if (formValues.toDate) {
-      filters.toDate = formValues.toDate.toISOString();
+      filters.toDate = formValues.toDate.toISOString()
     }
 
     return filters;
@@ -412,7 +412,7 @@ export class ErrorDashboardComponen {t implements OnInit {
   viewErrorDetails(error: ErrorTelemetry): void {
     // This would typically open a dialog with detailed error information
     // eslint-disable-next-line no-console
-    console.log('View error details:', error);
+    console.log('View error details:', error)
     // Implementation for error details dialog would go here
   }
 }

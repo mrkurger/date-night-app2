@@ -15,15 +15,15 @@ import { ImageOptimizationService } from '../../../core/services/image-optimizat
 // ===================================================
 
 @Component({';
-  selector: 'app-optimized-image',;
-  standalone: true,;
-  imports: [CommonModule],;
+  selector: 'app-optimized-image',
+  standalone: true,
+  imports: [CommonModule],
   template: `;`
     ;
     ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -60,11 +60,11 @@ import { ImageOptimizationService } from '../../../core/services/image-optimizat
         width: 100%;
         height: 100%;
         object-fit: cover;
-        filter: blur(10px);
+        filter: blur(10px)
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class OptimizedImageComponen {t implements OnInit {
   @Input() src!: string;
   @Input() alt = '';
@@ -90,17 +90,17 @@ export class OptimizedImageComponen {t implements OnInit {
 
   ngOnInit(): void {
     // Generate optimized image URLs
-    this.optimizedSrc = this.imageService.getOptimizedUrl(this.src, this.width || 800);
-    this.srcset = this.imageService.generateSrcset(this.src);
-    this.placeholderSrc = this.imageService.getPlaceholderUrl(this.src);
+    this.optimizedSrc = this.imageService.getOptimizedUrl(this.src, this.width || 800)
+    this.srcset = this.imageService.generateSrcset(this.src)
+    this.placeholderSrc = this.imageService.getPlaceholderUrl(this.src)
 
     // If priority is true, preload the image
     if (this.priority) {
-      const link = document.createElement('link');
+      const link = document.createElement('link')
       link.rel = 'preload';
       link.as = 'image';
       link.href = this.optimizedSrc;
-      document.head.appendChild(link);
+      document.head.appendChild(link)
 
       // Mark as loaded immediately for priority images
       this.loaded = true;

@@ -26,21 +26,21 @@ import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
  * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/FloatingActionButton
  */
 @Component({';
-  selector: 'nb-fab',;
-  templateUrl: './floating-action-button.component.html',;
-  styleUrls: ['./floating-action-button.component.scss'],;
-  standalone: true,;
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],;
-});
+  selector: 'nb-fab',
+  templateUrl: './floating-action-button.component.html',
+  styleUrls: ['./floating-action-button.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+})
 export class ButtonModul {e {
   /**
    * The icon to display in the button;
-   * Uses Font Awesome icons (e.g., 'fa-plus');
+   * Uses Font Awesome icons (e.g., 'fa-plus')
    */
   @Input() icon = 'fa-plus';
 
   /**
-   * The label for the button (for accessibility);
+   * The label for the button (for accessibility)
    */
   @Input() label = 'Action';
 
@@ -83,7 +83,7 @@ export class ButtonModul {e {
   /**
    * The menu items to display;
    */
-  @Input() menuItems: { icon: string; label: string; action?: string }[] = [];
+  @Input() menuItems: { icon: string; label: string; action?: string }[] = []
 
   /**
    * Whether the menu is currently open;
@@ -93,23 +93,23 @@ export class ButtonModul {e {
   /**
    * Emitted when the button is clicked;
    */
-  @Output() buttonClick = new EventEmitter();
+  @Output() buttonClick = new EventEmitter()
 
   /**
    * Emitted when a menu item is clicked;
    */
-  @Output() menuItemClick = new EventEmitter();
+  @Output() menuItemClick = new EventEmitter()
 
   /**
    * Toggle the menu open/closed;
    */
   toggleMenu(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
 
     if (this.hasMenu) {
       this.menuOpen = !this.menuOpen;
     } else {
-      this.buttonClick.emit();
+      this.buttonClick.emit()
     }
   }
 
@@ -117,8 +117,8 @@ export class ButtonModul {e {
    * Handle menu item click;
    */
   onMenuItemClick(item: { icon: string; label: string; action?: string }, event: Event): void {
-    event.stopPropagation();
-    this.menuItemClick.emit(item);
+    event.stopPropagation()
+    this.menuItemClick.emit(item)
     this.menuOpen = false;
   }
 

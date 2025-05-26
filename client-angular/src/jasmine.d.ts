@@ -87,8 +87,8 @@ declare global {
 
     // PrimeNG specific types
     interface FileUploadEvent {
-      files: File[];
-      currentFiles: File[];
+      files: File[]
+      currentFiles: File[]
       originalEvent: Event;
     }
 
@@ -110,18 +110,18 @@ declare global {
     }
 
     interface FileUploadHandlerEvent {
-      files: File[];
+      files: File[]
       uploadHandler: (e: FileUploadEvent) => void;
     }
 
     // Helper functions
     function createSpy(name?: string, originalFn?: Function): Spy;
-    function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy };
+    function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy }
     function createSpyObj(baseName: string, methodNames: string[]): SpyObj;
     function createSpyObj(
-      baseName: string,;
-      methodNames: string[],;
-      properties?: { [key: string]: any },;
+      baseName: string,
+      methodNames: string[],
+      properties?: { [key: string]: any },
     ): any;
     interface SpyObj {
       [k: string]: Spy;
@@ -141,8 +141,8 @@ declare global {
 
     // PrimeNG specific types
     interface FileUploadEvent {
-      files: File[];
-      currentFiles: File[];
+      files: File[]
+      currentFiles: File[]
       originalEvent: Event;
     }
 
@@ -164,18 +164,18 @@ declare global {
     }
 
     interface FileUploadHandlerEvent {
-      files: File[];
+      files: File[]
       uploadHandler: (e: FileUploadEvent) => void;
     }
 
     // Helper functions
     function createSpy(name?: string, originalFn?: Function): Spy;
-    function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy };
+    function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy }
     function createSpyObj(baseName: string, methodNames: string[]): SpyObj;
     function createSpyObj(
-      baseName: string,;
-      methodNames: string[],;
-      properties?: { [key: string]: any },;
+      baseName: string,
+      methodNames: string[],
+      properties?: { [key: string]: any },
     ): any;
 
     interface Clock {
@@ -188,8 +188,8 @@ declare global {
       count(): number;
       any(): boolean;
       all(): boolean;
-      allArgs(): any[];
-      all(): any[];
+      allArgs(): any[]
+      all(): any[]
       mostRecent(): any;
       first(): any;
       reset(): void;
@@ -208,8 +208,8 @@ declare global {
       count(): number;
       any(): boolean;
       all(): boolean;
-      allArgs(): any[];
-      all(): any[];
+      allArgs(): any[]
+      all(): any[]
       mostRecent(): any;
       first(): any;
       reset(): void;

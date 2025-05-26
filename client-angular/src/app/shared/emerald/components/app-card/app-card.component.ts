@@ -15,12 +15,12 @@ import { BadgeModule } from 'primeng/badge';
  * It uses PrimeNG UI components for consistent styling.;
  */
 @Component({';
-  selector: 'app-card',;
-  templateUrl: './app-card.component.html',;
-  styleUrls: ['./app-card.component.scss'],;
-  imports: [CommonModule, CardModule, ButtonModule, BadgeModule],;
-  standalone: true,;
-});
+  selector: 'app-card',
+  templateUrl: './app-card.component.html',
+  styleUrls: ['./app-card.component.scss'],
+  imports: [CommonModule, CardModule, ButtonModule, BadgeModule],
+  standalone: true,
+})
 export class CardModul {e implements OnInit {
   @Input() ad!: Ad;
   @Input() layout: 'tinder' | 'netflix' | 'list' = 'netflix';
@@ -28,11 +28,11 @@ export class CardModul {e implements OnInit {
   @Input() showDescription = true;
   @Input() isOnline = false; // Whether the advertiser is online or offline
 
-  @Output() viewDetails = new EventEmitter();
-  @Output() like = new EventEmitter();
-  @Output() chat = new EventEmitter();
-  @Output() share = new EventEmitter();
-  @Output() swiped = new EventEmitter();
+  @Output() viewDetails = new EventEmitter()
+  @Output() like = new EventEmitter()
+  @Output() chat = new EventEmitter()
+  @Output() share = new EventEmitter()
+  @Output() swiped = new EventEmitter()
 
   // Background image URL for the card
   backgroundImageUrl = '';
@@ -47,7 +47,7 @@ export class CardModul {e implements OnInit {
   ngOnInit(): void {
     // Only set the background image if the ad is defined
     if (this.ad) {
-      this.backgroundImageUrl = this.getPrimaryImage();
+      this.backgroundImageUrl = this.getPrimaryImage()
     } else {
       this.backgroundImageUrl = '/assets/img/default-profile.jpg';
     }
@@ -75,7 +75,7 @@ export class CardModul {e implements OnInit {
     // Check for media array
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
       // Find an image type media
-      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image');
+      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image')
       if (image && 'url' in image) {
         return image.url;
       }
@@ -98,41 +98,41 @@ export class CardModul {e implements OnInit {
     }
 
     // Get all media URLs
-    const mediaUrls = this.getMediaUrls();
+    const mediaUrls = this.getMediaUrls()
     if (mediaUrls.length === 0) {
       return '/assets/img/default-profile.jpg';
     }
 
     // Return current media URL or first one
-    return mediaUrls[this.currentMediaIndex] || mediaUrls[0];
+    return mediaUrls[this.currentMediaIndex] || mediaUrls[0]
   }
 
   /**
    * Get all media URLs from the ad;
    */
   private getMediaUrls(): string[] {
-    if (!this.ad) return [];
+    if (!this.ad) return []
 
-    const urls: string[] = [];
+    const urls: string[] = []
 
     // Add images array URLs
     if (this.ad.images && Array.isArray(this.ad.images)) {
       this.ad.images.forEach((image) => {
         if (typeof image === 'string') {
-          urls.push(image);
+          urls.push(image)
         } else if (typeof image === 'object' && 'url' in image) {
-          urls.push((image as { url: string }).url);
+          urls.push((image as { url: string }).url)
         }
-      });
+      })
     }
 
     // Add media array URLs
     if (this.ad.media && Array.isArray(this.ad.media)) {
       this.ad.media.forEach((media) => {
         if ('url' in media) {
-          urls.push(media.url);
+          urls.push(media.url)
         }
-      });
+      })
     }
 
     return urls;
@@ -149,19 +149,19 @@ export class CardModul {e implements OnInit {
    * Get media navigation dots;
    */
   getMediaDots(): any[] {
-    const count = this.getMediaCount();
-    return new Array(count).fill(0);
+    const count = this.getMediaCount()
+    return new Array(count).fill(0)
   }
 
   /**
    * Navigate to previous media;
    */
   prevMedia(event: Event): void {
-    event.stopPropagation();
-    const count = this.getMediaCount();
+    event.stopPropagation()
+    const count = this.getMediaCount()
     if (count > 1) {
       this.currentMediaIndex = (this.currentMediaIndex - 1 + count) % count;
-      this.backgroundImageUrl = this.getCurrentMediaUrl();
+      this.backgroundImageUrl = this.getCurrentMediaUrl()
     }
   }
 
@@ -169,11 +169,11 @@ export class CardModul {e implements OnInit {
    * Navigate to next media;
    */
   nextMedia(event: Event): void {
-    event.stopPropagation();
-    const count = this.getMediaCount();
+    event.stopPropagation()
+    const count = this.getMediaCount()
     if (count > 1) {
       this.currentMediaIndex = (this.currentMediaIndex + 1) % count;
-      this.backgroundImageUrl = this.getCurrentMediaUrl();
+      this.backgroundImageUrl = this.getCurrentMediaUrl()
     }
   }
 
@@ -182,9 +182,9 @@ export class CardModul {e implements OnInit {
    */
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',;
-      currency: 'USD',;
-    }).format(price);
+      style: 'currency',
+      currency: 'USD',
+    }).format(price)
   }
 
   /**
@@ -201,9 +201,9 @@ export class CardModul {e implements OnInit {
    * Handle like button click;
    */
   onLike(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     if (this.ad && this.ad._id) {
-      this.like.emit(this.ad._id);
+      this.like.emit(this.ad._id)
     }
   }
 
@@ -211,9 +211,9 @@ export class CardModul {e implements OnInit {
    * Handle chat button click;
    */
   onChat(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     if (this.ad && this.ad._id) {
-      this.chat.emit(this.ad._id);
+      this.chat.emit(this.ad._id)
     }
   }
 
@@ -221,9 +221,9 @@ export class CardModul {e implements OnInit {
    * Handle share button click;
    */
   onShare(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     if (this.ad && this.ad._id) {
-      this.share.emit(this.ad._id);
+      this.share.emit(this.ad._id)
     }
   }
 
@@ -231,9 +231,9 @@ export class CardModul {e implements OnInit {
    * Handle view details click;
    */
   onViewDetails(event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
     if (this.ad && this.ad._id) {
-      this.viewDetails.emit(this.ad._id);
+      this.viewDetails.emit(this.ad._id)
     }
   }
 
@@ -241,9 +241,9 @@ export class CardModul {e implements OnInit {
    * Handle swipe action;
    */
   onSwipe(direction: 'left' | 'right', event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
     if (this.ad && this.ad._id) {
-      this.swiped.emit({ direction, adId: this.ad._id });
+      this.swiped.emit({ direction, adId: this.ad._id })
     }
   }
 }

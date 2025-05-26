@@ -12,13 +12,13 @@ export interface TableColumn {
 }
 
 @Component({';
-  selector: 'app-primeng-data-table',;
+  selector: 'app-primeng-data-table',
   template: `;`
     ;
       ;
         ;
           ;
-            {{ title }};
+            {{ title }}
             ;
               ;
             ;
@@ -79,7 +79,7 @@ export interface TableColumn {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -100,7 +100,7 @@ export interface TableColumn {
       .empty-state {
         text-align: center;
         padding: 1rem;
-        color: var(--text-secondary-color);
+        color: var(--text-secondary-color)
       }
 
       .footer-container {
@@ -112,17 +112,17 @@ export interface TableColumn {
       .page-info {
         margin: 0 1rem;
       }
-    `,;`
-  ],;
-  standalone: true,;
-  imports: [Table, SelectItem],;
-});
+    `,`
+  ],
+  standalone: true,
+  imports: [Table, SelectItem],
+})
 export class PrimeNGDataTableComponen {t {
   @Input() title = '';
-  @Input() data: any[] = [];
-  @Input() visibleColumns: TableColumn[] = [];
+  @Input() data: any[] = []
+  @Input() visibleColumns: TableColumn[] = []
   @Input() pageSize = 10;
-  @Input() pageSizes: number[] = [5, 10, 20, 50];
+  @Input() pageSizes: number[] = [5, 10, 20, 50]
   @Input() currentPage = 1;
   @Input() totalPages = 1;
   @Input() loading = false;
@@ -130,19 +130,19 @@ export class PrimeNGDataTableComponen {t {
   @Input() showHeader = true;
   @Input() showPaginator = true;
 
-  @Output() sortChange = new EventEmitter();
-  @Output() pageSizeChange = new EventEmitter();
-  @Output() pageChange = new EventEmitter();
+  @Output() sortChange = new EventEmitter()
+  @Output() pageSizeChange = new EventEmitter()
+  @Output() pageChange = new EventEmitter()
 
   onSort(event: any) {
-    this.sortChange.emit(event);
+    this.sortChange.emit(event)
   }
 
   onPageSizeChange(size: number) {
-    this.pageSizeChange.emit(size);
+    this.pageSizeChange.emit(size)
   }
 
   onPageChange(page: number) {
-    this.pageChange.emit(page);
+    this.pageChange.emit(page)
   }
 }

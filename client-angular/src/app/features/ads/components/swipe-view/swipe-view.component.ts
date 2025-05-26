@@ -15,21 +15,21 @@ import { CommonModule } from '@angular/common';
 // ===================================================
 
 @Component({';
-    selector: 'app-swipe-view',;
-    imports: [CommonModule],;
+    selector: 'app-swipe-view',
+    imports: [CommonModule],
     template: `;`
     ;
       ;
         ;
         ;
-          {{ currentAd.title }};
-          {{ currentAd.description }};
+          {{ currentAd.title }}
+          {{ currentAd.description }}
           Reject;
           Accept;
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .swipe-card {
@@ -44,33 +44,33 @@ import { CommonModule } from '@angular/common';
         max-height: 200px;
         object-fit: cover;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class SwipeViewComponen {t implements OnInit {
-  ads: Ad[] = [];
+  ads: Ad[] = []
   currentAd: Ad | null = null;
   index = 0;
 
   constructor(private adService: AdService) {}
 
   ngOnInit(): void {
-    this.loadAds();
+    this.loadAds()
   }
 
   loadAds(): void {
     this.adService.getSwipeAds().subscribe({
       next: (ads) => {
         this.ads = ads;
-        this.showNextAd();
-      },;
-      error: (err) => console.error('Error loading ads:', err),;
-    });
+        this.showNextAd()
+      },
+      error: (err) => console.error('Error loading ads:', err),
+    })
   }
 
   showNextAd(): void {
     if (this.ads.length > 0) {
-      this.currentAd = this.ads[this.index % this.ads.length];
+      this.currentAd = this.ads[this.index % this.ads.length]
       this.index++;
     } else {
       this.currentAd = null;
@@ -80,9 +80,9 @@ export class SwipeViewComponen {t implements OnInit {
   swipe(direction: 'left' | 'right'): void {
     if (this.currentAd) {
       this.adService.recordSwipe(this.currentAd._id, direction).subscribe({
-        next: () => this.showNextAd(),;
-        error: (err) => console.error('Error recording swipe:', err),;
-      });
+        next: () => this.showNextAd(),
+        error: (err) => console.error('Error recording swipe:', err),
+      })
     }
   }
 }

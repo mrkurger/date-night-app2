@@ -9,22 +9,22 @@ import { CommonModule } from '@angular/common';
  * Features customizable size, message, and appearance.;
  */
 @Component({';
-  selector: 'app-loading-spinner',;
-  imports: [CommonModule],;
+  selector: 'app-loading-spinner',
+  imports: [CommonModule],
   template: `;`
     ;
       ;
-      {{ message }};
+      {{ message }}
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .loading-spinner {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: nb-theme(spacing-2);
-        padding: nb-theme(spacing-4);
+        gap: nb-theme(spacing-2)
+        padding: nb-theme(spacing-4)
       }
 
       .loading-spinner--small nb-spinner {
@@ -41,14 +41,14 @@ import { CommonModule } from '@angular/common';
 
       .loading-spinner__message {
         margin: 0;
-        color: nb-theme(text-hint-color);
-        font-size: nb-theme(text-subtitle-2-font-size);
-        line-height: nb-theme(text-subtitle-2-line-height);
+        color: nb-theme(text-hint-color)
+        font-size: nb-theme(text-subtitle-2-font-size)
+        line-height: nb-theme(text-subtitle-2-line-height)
         text-align: center;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class LoadingSpinnerComponen {t {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() message = '';

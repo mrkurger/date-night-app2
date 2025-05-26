@@ -18,22 +18,22 @@ import { SharedModule } from '../../../app/shared/shared.module';
 import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { ButtonModule } from 'primeng/button';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
   NbSelectModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-gallery',;
+    selector: 'app-gallery',
     template: `;`
     ;
       ;
@@ -56,7 +56,7 @@ import { ButtonModule } from 'primeng/button';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .gallery-container {
@@ -66,7 +66,7 @@ import { ButtonModule } from 'primeng/button';
       }
       .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
         gap: 16px;
         padding: 16px;
       }
@@ -81,29 +81,29 @@ import { ButtonModule } from 'primeng/button';
         margin-left: auto;
         gap: 8px;
       }
-    `,;`
-    ],;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [NebularModule, CommonModule,;
-        FormsModule,;
-        NbButtonModule,;
-        NbCardModule,;
-        NbIconModule,;
-        NbTooltipModule,;
-        ReactiveFormsModule,;
-        RouterModule,;
-        SharedModule,;
-    ];
-});
+    `,`
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        NbButtonModule,
+        NbCardModule,
+        NbIconModule,
+        NbTooltipModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SharedModule,
+    ]
+})
 export class GalleryComponen {t implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   constructor(private userPreferencesService: UserPreferencesService) {}
 
   ngOnInit(): void {
     // Load user preferences
-    const preferences = this.userPreferencesService.getPreferences();
+    const preferences = this.userPreferencesService.getPreferences()
 
     // Set view mode based on user preferences
     if (preferences.defaultViewType === 'list') {
@@ -120,13 +120,13 @@ export class GalleryComponen {t implements OnInit, OnDestroy {
         } else {
           this.viewMode = 'grid';
         }
-      }),;
-    );
+      }),
+    )
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
   }
 
   /**
@@ -137,6 +137,6 @@ export class GalleryComponen {t implements OnInit, OnDestroy {
     this.viewMode = mode;
 
     // Save view mode to user preferences
-    this.userPreferencesService.setDefaultViewType(mode === 'list' ? 'list' : 'netflix');
+    this.userPreferencesService.setDefaultViewType(mode === 'list' ? 'list' : 'netflix')
   }
 }

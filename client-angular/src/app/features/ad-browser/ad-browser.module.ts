@@ -15,13 +15,13 @@ import { AdBrowserComponent } from './ad-browser.component';
 
 const routes = [;
   {';
-    path: '',;
-    component: AdBrowserComponent,;
-  },;
-];
+    path: '',
+    component: AdBrowserComponent,
+  },
+]
 
 @NgModule({
   // No declarations needed as AdBrowserComponent is standalone
-  imports: [CommonModule, SharedModule, RouterModule.forChild(routes), AdBrowserComponent],;
-});
+  imports: [CommonModule, SharedModule, RouterModule.forChild(routes), AdBrowserComponent],
+})
 export class AdBrowserModul {e {}

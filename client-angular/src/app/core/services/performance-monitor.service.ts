@@ -10,25 +10,25 @@ import { PerformanceUtil } from '../utils/performance.util';
  * It also provides methods for optimizing performance.;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class PerformanceMonitorServic {e {
-  private performanceUtil = PerformanceUtil.getInstance();
+  private performanceUtil = PerformanceUtil.getInstance()
   private metricsSubject = new BehaviorSubject({
-    pageLoadTime: 0,;
-    firstContentfulPaint: 0,;
-    largestContentfulPaint: 0,;
-    firstInputDelay: 0,;
-    cumulativeLayoutShift: 0,;
-    memoryUsage: 0,;
-    apiResponseTimes: {},;
-    componentRenderTimes: {},;
-    resourceLoadTimes: {},;
-    longTasks: [],;
-  });
+    pageLoadTime: 0,
+    firstContentfulPaint: 0,
+    largestContentfulPaint: 0,
+    firstInputDelay: 0,
+    cumulativeLayoutShift: 0,
+    memoryUsage: 0,
+    apiResponseTimes: {},
+    componentRenderTimes: {},
+    resourceLoadTimes: {},
+    longTasks: [],
+  })
 
   constructor(private ngZone: NgZone) {
-    this.initializePerformanceMonitoring();
+    this.initializePerformanceMonitoring()
   }
 
   /**
@@ -36,7 +36,7 @@ export class PerformanceMonitorServic {e {
    * @returns An Observable of performance metrics;
    */
   public getMetrics(): Observable {
-    return this.metricsSubject.asObservable();
+    return this.metricsSubject.asObservable()
   }
 
   /**
@@ -46,7 +46,7 @@ export class PerformanceMonitorServic {e {
    * @returns The result of the callback;
    */
   public measureComponentRender(componentName: string, callback: () => T): T {
-    return this.performanceUtil.measureExecutionTime(() => callback(), `render:${componentName}`);`
+    return this.performanceUtil.measureExecutionTime(() => callback(), `render:${componentName}`)`
   }
 
   /**
@@ -56,7 +56,7 @@ export class PerformanceMonitorServic {e {
    * @returns A Promise that resolves to the result of the callback;
    */
   public async measureApiCall(apiName: string, callback: () => Promise): Promise {
-    return this.performanceUtil.measureAsyncExecutionTime(async () => callback(), `api:${apiName}`);`
+    return this.performanceUtil.measureAsyncExecutionTime(async () => callback(), `api:${apiName}`)`
   }
 
   /**
@@ -69,8 +69,8 @@ export class PerformanceMonitorServic {e {
       let result: ReturnType;
 
       this.ngZone.runOutsideAngular(() => {
-        result = fn(...args);
-      });
+        result = fn(...args)
+      })
 
       return result!;
     }) as T;
@@ -86,19 +86,19 @@ export class PerformanceMonitorServic {e {
       new Promise>((resolve, reject) => {
         this.ngZone.runOutsideAngular(async () => {
           try {
-            const result = await fn(...args);
+            const result = await fn(...args)
 
             // Run back inside Angular zone to trigger change detection
             this.ngZone.run(() => {
-              resolve(result);
-            });
+              resolve(result)
+            })
           } catch (error) {
             // Run back inside Angular zone to trigger change detection
             this.ngZone.run(() => {
-              reject(error);
-            });
+              reject(error)
+            })
           }
-        });
+        })
       })) as T;
   }
 
@@ -107,14 +107,14 @@ export class PerformanceMonitorServic {e {
    * @returns A map of performance metrics;
    */
   public getDetailedMetrics(): Map {
-    return this.performanceUtil.getMetrics();
+    return this.performanceUtil.getMetrics()
   }
 
   /**
    * Clears all performance metrics;
    */
   public clearMetrics(): void {
-    this.performanceUtil.clearMetrics();
+    this.performanceUtil.clearMetrics()
   }
 
   /**
@@ -127,20 +127,20 @@ export class PerformanceMonitorServic {e {
       if (window.performance && window.performance.timing) {
         window.addEventListener('load', () => {
           setTimeout(() => {
-            this.measurePageLoadTime();
-          }, 0);
-        });
+            this.measurePageLoadTime()
+          }, 0)
+        })
       }
 
       // Measure Web Vitals if available
-      this.measureWebVitals();
+      this.measureWebVitals()
 
       // Monitor memory usage
-      this.monitorMemoryUsage();
+      this.monitorMemoryUsage()
 
       // Monitor long tasks
-      this.monitorLongTasks();
-    });
+      this.monitorLongTasks()
+    })
   }
 
   /**
@@ -155,8 +155,8 @@ export class PerformanceMonitorServic {e {
       metrics.pageLoadTime = pageLoadTime;
 
       this.ngZone.run(() => {
-        this.metricsSubject.next({ ...metrics });
-      });
+        this.metricsSubject.next({ ...metrics })
+      })
     }
   }
 
@@ -170,9 +170,9 @@ export class PerformanceMonitorServic {e {
       metrics.firstContentfulPaint = entry.startTime;
 
       this.ngZone.run(() => {
-        this.metricsSubject.next({ ...metrics });
-      });
-    });
+        this.metricsSubject.next({ ...metrics })
+      })
+    })
 
     // Largest Contentful Paint (LCP)
     this.observePaintTiming('largest-contentful-paint', (entry) => {
@@ -180,9 +180,9 @@ export class PerformanceMonitorServic {e {
       metrics.largestContentfulPaint = entry.startTime;
 
       this.ngZone.run(() => {
-        this.metricsSubject.next({ ...metrics });
-      });
-    });
+        this.metricsSubject.next({ ...metrics })
+      })
+    })
 
     // First Input Delay (FID)
     this.observeFirstInputDelay((delay) => {
@@ -190,9 +190,9 @@ export class PerformanceMonitorServic {e {
       metrics.firstInputDelay = delay;
 
       this.ngZone.run(() => {
-        this.metricsSubject.next({ ...metrics });
-      });
-    });
+        this.metricsSubject.next({ ...metrics })
+      })
+    })
 
     // Cumulative Layout Shift (CLS)
     this.observeLayoutShift((cls) => {
@@ -200,9 +200,9 @@ export class PerformanceMonitorServic {e {
       metrics.cumulativeLayoutShift = cls;
 
       this.ngZone.run(() => {
-        this.metricsSubject.next({ ...metrics });
-      });
-    });
+        this.metricsSubject.next({ ...metrics })
+      })
+    })
   }
 
   /**
@@ -216,16 +216,16 @@ export class PerformanceMonitorServic {e {
         const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (entry.entryType === 'paint' && entry.name === entryType) {
-              callback(entry);
-              observer.disconnect();
+              callback(entry)
+              observer.disconnect()
               break;
             }
           }
-        });
+        })
 
-        observer.observe({ entryTypes: ['paint'] });
+        observer.observe({ entryTypes: ['paint'] })
       } catch (e) {
-        console.error(`Failed to observe ${entryType}:`, e);`
+        console.error(`Failed to observe ${entryType}:`, e)`
       }
     }
   }
@@ -242,16 +242,16 @@ export class PerformanceMonitorServic {e {
             if (entry.entryType === 'first-input') {
               // @ts-expect-error - TypeScript doesn't know about the processingStart property
               const delay = entry.processingStart - entry.startTime;
-              callback(delay);
-              observer.disconnect();
+              callback(delay)
+              observer.disconnect()
               break;
             }
           }
-        });
+        })
 
-        observer.observe({ type: 'first-input', buffered: true });
+        observer.observe({ type: 'first-input', buffered: true })
       } catch (e) {
-        console.error('Failed to observe first-input:', e);
+        console.error('Failed to observe first-input:', e)
       }
     }
   }
@@ -272,15 +272,15 @@ export class PerformanceMonitorServic {e {
               const layoutShiftEntry = entry as any;
               if (!layoutShiftEntry.hadRecentInput) {
                 cumulativeLayoutShift += layoutShiftEntry.value;
-                callback(cumulativeLayoutShift);
+                callback(cumulativeLayoutShift)
               }
             }
           }
-        });
+        })
 
-        observer.observe({ type: 'layout-shift', buffered: true });
+        observer.observe({ type: 'layout-shift', buffered: true })
       } catch (e) {
-        console.error('Failed to observe layout-shift:', e);
+        console.error('Failed to observe layout-shift:', e)
       }
     }
   }
@@ -298,16 +298,16 @@ export class PerformanceMonitorServic {e {
         const metrics = this.metricsSubject.value;
 
         // Convert from bytes to MB
-        metrics.memoryUsage = Math.round(memory.usedJSHeapSize / (1024 * 1024));
+        metrics.memoryUsage = Math.round(memory.usedJSHeapSize / (1024 * 1024))
 
         this.ngZone.run(() => {
-          this.metricsSubject.next({ ...metrics });
-        });
-      };
+          this.metricsSubject.next({ ...metrics })
+        })
+      }
 
       // Check memory usage every 10 seconds
-      setInterval(checkMemory, 10000);
-      checkMemory();
+      setInterval(checkMemory, 10000)
+      checkMemory()
     }
   }
 
@@ -318,39 +318,39 @@ export class PerformanceMonitorServic {e {
     if (window.PerformanceObserver) {
       try {
         const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
+          const entries = list.getEntries()
 
           if (entries.length > 0) {
             const metrics = this.metricsSubject.value;
 
             for (const entry of entries) {
               metrics.longTasks.push({
-                duration: entry.duration,;
-                startTime: entry.startTime,;
+                duration: entry.duration,
+                startTime: entry.startTime,
                 // Long task entries have additional properties not in the PerformanceEntry type
                 name: (() => {
                   const longTaskEntry = entry as any;
-                  return longTaskEntry.attribution && longTaskEntry.attribution[0];
+                  return longTaskEntry.attribution && longTaskEntry.attribution[0]
                     ? longTaskEntry.attribution[0].name;
                     : 'unknown';
-                })(),;
-              });
+                })(),
+              })
 
               // Keep only the last 50 long tasks
               if (metrics.longTasks.length > 50) {
-                metrics.longTasks.shift();
+                metrics.longTasks.shift()
               }
             }
 
             this.ngZone.run(() => {
-              this.metricsSubject.next({ ...metrics });
-            });
+              this.metricsSubject.next({ ...metrics })
+            })
           }
-        });
+        })
 
-        observer.observe({ entryTypes: ['longtask'] });
+        observer.observe({ entryTypes: ['longtask'] })
       } catch (e) {
-        console.error('Failed to observe longtask:', e);
+        console.error('Failed to observe longtask:', e)
       }
     }
   }
@@ -366,10 +366,10 @@ export interface PerformanceMetrics {
   firstInputDelay: number;
   cumulativeLayoutShift: number;
   memoryUsage: number;
-  apiResponseTimes: { [key: string]: number };
-  componentRenderTimes: { [key: string]: number };
-  resourceLoadTimes: { [key: string]: number };
-  longTasks: LongTask[];
+  apiResponseTimes: { [key: string]: number }
+  componentRenderTimes: { [key: string]: number }
+  resourceLoadTimes: { [key: string]: number }
+  longTasks: LongTask[]
 }
 
 /**

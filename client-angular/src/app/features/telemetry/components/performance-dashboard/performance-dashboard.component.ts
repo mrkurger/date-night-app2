@@ -19,7 +19,7 @@ import { AppSortComponent } from '../../../../shared/components/custom-nebular-c
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { NbDatepickerModule } from '@nebular/theme';
 import { TableModule } from 'primeng/table';
-  TelemetryService,;
+  TelemetryService,
   PerformanceTelemetry,';
 } from '../../../../core/services/telemetry.service';
 
@@ -40,17 +40,17 @@ interface PaginationChangeEvent {
  * - Performance metrics visualization;
  */
 @Component({
-  selector: 'app-performance-dashboard',;
+  selector: 'app-performance-dashboard',
   imports: [;
-    CommonModule,;
-    NebularModule,;
-    ReactiveFormsModule,;
-    AppSortComponent,;
-    AppSortHeaderComponent,;
-    NbDatepickerModule,,;
+    CommonModule,
+    NebularModule,
+    ReactiveFormsModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+    NbDatepickerModule,,
     TableModule;
-  ],;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `;`
     ;
       Performance Monitoring Dashboard;
@@ -79,7 +79,7 @@ interface PaginationChangeEvent {
             ;
 
             ;
-              Min Duration (ms);
+              Min Duration (ms)
               ;
             ;
 
@@ -111,7 +111,7 @@ interface PaginationChangeEvent {
         ;
           ;
             ;
-              {{ (performanceStats$ | async)?.totalRequests || 0 }};
+              {{ (performanceStats$ | async)?.totalRequests || 0 }}
               Total Requests;
             ;
           ;
@@ -174,12 +174,12 @@ interface PaginationChangeEvent {
                     ;
                     ;
                       ;
-                        Duration (ms);
+                        Duration (ms)
                       ;
                     ;
                     ;
                       ;
-                        TTFB (ms);
+                        TTFB (ms)
                       ;
                     ;
                     ;
@@ -192,14 +192,14 @@ interface PaginationChangeEvent {
                 ;
                 ;
                   ;
-                    {{ item.timestamp | date: 'medium' }};
-                    {{ item.method }};
-                    {{ item.url }};
+                    {{ item.timestamp | date: 'medium' }}
+                    {{ item.method }}
+                    {{ item.url }}
                     ;
                       {{ item.duration | number: '1.0-0' }}
                     ;
-                    {{ item.ttfb | number: '1.0-0' }};
-                    {{ formatBytes(item.responseSize) }};
+                    {{ item.ttfb | number: '1.0-0' }}
+                    {{ formatBytes(item.responseSize) }}
                     ;
                       ;
                         ;
@@ -214,7 +214,7 @@ interface PaginationChangeEvent {
               ;
                 Previous;
               ;
-              Page {{ pageIndex + 1 }};
+              Page {{ pageIndex + 1 }}
               = totalItems";
                 (click)="onPageChange({ page: pageIndex + 2, pageSize: pageSize })";
               >;
@@ -225,7 +225,7 @@ interface PaginationChangeEvent {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .dashboard-container {
@@ -238,7 +238,7 @@ interface PaginationChangeEvent {
 
       .filter-form {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
         gap: 1rem;
         padding: 1rem;
       }
@@ -251,7 +251,7 @@ interface PaginationChangeEvent {
 
       .performance-stats {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
         gap: 1rem;
         margin-bottom: 1.5rem;
       }
@@ -263,11 +263,11 @@ interface PaginationChangeEvent {
       .stat-value {
         font-size: 2rem;
         font-weight: 600;
-        color: var(--text-primary-color);
+        color: var(--text-primary-color)
       }
 
       .stat-label {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         margin-top: 0.5rem;
       }
 
@@ -278,15 +278,15 @@ interface PaginationChangeEvent {
       }
 
       .duration-normal {
-        color: var(--color-success-600);
+        color: var(--color-success-600)
       }
 
       .duration-warning {
-        color: var(--color-warning-600);
+        color: var(--color-warning-600)
       }
 
       .duration-critical {
-        color: var(--color-danger-600);
+        color: var(--color-danger-600)
       }
 
       table {
@@ -300,12 +300,12 @@ interface PaginationChangeEvent {
       td {
         padding: 0.75rem;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class PerformanceDashboardComponen {t implements OnInit {
   // Performance data
-  performanceData: PerformanceTelemetry[] = [];
+  performanceData: PerformanceTelemetry[] = []
   totalItems = 0;
   loading = true;
 
@@ -314,7 +314,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
   pageSize = 10;
 
   // Table columns
-  displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions'];
+  displayedColumns = ['timestamp', 'method', 'url', 'duration', 'ttfb', 'responseSize', 'actions']
 
   // Filter form
   filterForm: FormGroup;
@@ -327,22 +327,22 @@ export class PerformanceDashboardComponen {t implements OnInit {
   sortDirection: 'asc' | 'desc' | '' = 'desc';
 
   constructor(;
-    private telemetryService: TelemetryService,;
-    private fb: FormBuilder,;
+    private telemetryService: TelemetryService,
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
-      url: [''],;
-      method: [''],;
-      minDuration: [''],;
-      fromDate: [null],;
-      toDate: [null],;
-    });
+      url: [''],
+      method: [''],
+      minDuration: [''],
+      fromDate: [null],
+      toDate: [null],
+    })
 
-    this.performanceStats$ = this.getPerformanceStatistics();
+    this.performanceStats$ = this.getPerformanceStatistics()
   }
 
   ngOnInit(): void {
-    this.loadDashboardData();
+    this.loadDashboardData()
   }
 
   /**
@@ -350,27 +350,27 @@ export class PerformanceDashboardComponen {t implements OnInit {
    */
   loadDashboardData(): void {
     this.loading = true;
-    const filters = this.getFilters();
+    const filters = this.getFilters()
 
     this.telemetryService;
       .getPerformanceStatistics({
-        ...filters,;
-        page: this.pageIndex,;
-        pageSize: this.pageSize,;
-        sortField: this.sortField,;
-        sortDirection: this.sortDirection,;
-      });
+        ...filters,
+        page: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
+      })
       .pipe(;
         catchError((error) => {
-          console.error('Error loading performance data:', error);
-          return of({ data: [], total: 0 });
-        }),;
-      );
+          console.error('Error loading performance data:', error)
+          return of({ data: [], total: 0 })
+        }),
+      )
       .subscribe((response) => {
         this.performanceData = response.data;
         this.totalItems = response.total;
         this.loading = false;
-      });
+      })
   }
 
   /**
@@ -378,35 +378,35 @@ export class PerformanceDashboardComponen {t implements OnInit {
    */
   getPerformanceStatistics(): Observable {
     return this.filterForm.valueChanges.pipe(;
-      startWith(this.filterForm.value),;
+      startWith(this.filterForm.value),
       switchMap((filters) =>;
         this.telemetryService;
           .getPerformanceStatistics({
-            ...this.getFilters(),;
-            stats: true,;
-          });
+            ...this.getFilters(),
+            stats: true,
+          })
           .pipe(;
             map(;
               (data) =>;
                 data.statistics || {
-                  totalRequests: 0,;
-                  avgDuration: 0,;
-                  p95Duration: 0,;
-                  maxDuration: 0,;
-                },;
-            ),;
+                  totalRequests: 0,
+                  avgDuration: 0,
+                  p95Duration: 0,
+                  maxDuration: 0,
+                },
+            ),
             catchError((error) => {
-              console.error('Error loading performance stats:', error);
+              console.error('Error loading performance stats:', error)
               return of({
-                totalRequests: 0,;
-                avgDuration: 0,;
-                p95Duration: 0,;
-                maxDuration: 0,;
-              });
-            }),;
-          ),;
-      ),;
-    );
+                totalRequests: 0,
+                avgDuration: 0,
+                p95Duration: 0,
+                maxDuration: 0,
+              })
+            }),
+          ),
+      ),
+    )
   }
 
   /**
@@ -415,7 +415,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
   onPageChange(event: PaginationChangeEvent): void {
     this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
     this.pageSize = event.pageSize;
-    this.loadDashboardData();
+    this.loadDashboardData()
   }
 
   /**
@@ -423,7 +423,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
    */
   applyFilters(): void {
     this.pageIndex = 0; // Reset to first page when filtering
-    this.loadDashboardData();
+    this.loadDashboardData()
   }
 
   /**
@@ -431,14 +431,14 @@ export class PerformanceDashboardComponen {t implements OnInit {
    */
   resetFilters(): void {
     this.filterForm.reset({
-      url: '',;
-      method: '',;
-      minDuration: null,;
-      fromDate: null,;
-      toDate: null,;
-    });
+      url: '',
+      method: '',
+      minDuration: null,
+      fromDate: null,
+      toDate: null,
+    })
     this.pageIndex = 0;
-    this.loadDashboardData();
+    this.loadDashboardData()
   }
 
   /**
@@ -446,7 +446,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
    */
   getFilters(): any {
     const filters = this.filterForm.value;
-    const result: any = {};
+    const result: any = {}
 
     if (filters.url) {
       result.url = filters.url;
@@ -461,11 +461,11 @@ export class PerformanceDashboardComponen {t implements OnInit {
     }
 
     if (filters.fromDate) {
-      result.fromDate = filters.fromDate.toISOString();
+      result.fromDate = filters.fromDate.toISOString()
     }
 
     if (filters.toDate) {
-      result.toDate = filters.toDate.toISOString();
+      result.toDate = filters.toDate.toISOString()
     }
 
     return result;
@@ -484,10 +484,10 @@ export class PerformanceDashboardComponen {t implements OnInit {
     }
 
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   /**
@@ -509,13 +509,13 @@ export class PerformanceDashboardComponen {t implements OnInit {
   viewPerformanceDetails(item: PerformanceTelemetry): void {
     // This would typically open a dialog with detailed performance information
     // eslint-disable-next-line no-console
-    console.log('View performance details:', item);
+    console.log('View performance details:', item)
     // Implementation for performance details dialog would go here
   }
 
   onSortChange(event: AppSortEvent): void {
     this.sortField = event.active;
     this.sortDirection = event.direction;
-    this.loadDashboardData();
+    this.loadDashboardData()
   }
 }

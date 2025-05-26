@@ -6,9 +6,9 @@ import { User } from '../../../../core/models/user.model';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 
 @Component({';
-    selector: 'app-user-management',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [CommonModule, FormsModule],;
+    selector: 'app-user-management',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, FormsModule],
     template: `;`
     ;
       ;
@@ -38,8 +38,8 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
           ;
           ;
             ;
-              {{ user.username }};
-              {{ user.email }};
+              {{ user.username }}
+              {{ user.email }}
               ;
                 ;
                 ;
@@ -47,7 +47,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
               ;
                  ;
               ;
-              {{ user.lastLogin | date: 'short' }};
+              {{ user.lastLogin | date: 'short' }}
               ;
                 ;
                   ;
@@ -63,7 +63,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -94,24 +94,24 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
         display: flex;
         gap: 0.5rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class UserManagementComponen {t implements OnInit {
-  users: User[] = [];
-  filteredUsers: User[] = [];
+  users: User[] = []
+  filteredUsers: User[] = []
   loading = false;
   filterRole = 'all';
   searchTerm = '';
 
   constructor(;
-    private userService: UserService,;
-    private dialogService: NbDialogService,;
-    private toastrService: NbToastrService,;
+    private userService: UserService,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit() {
-    this.loadUsers();
+    this.loadUsers()
   }
 
   loadUsers() {
@@ -119,25 +119,25 @@ export class UserManagementComponen {t implements OnInit {
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
-        this.filterUsers();
+        this.filterUsers()
         this.loading = false;
-      },;
+      },
       error: (error) => {
-        this.toastrService.danger('Failed to load users', 'Error');
+        this.toastrService.danger('Failed to load users', 'Error')
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   filterUsers() {
     this.filteredUsers = this.users.filter((user) => {
-      const roleMatch = this.filterRole === 'all' || user.roles.includes(this.filterRole);
+      const roleMatch = this.filterRole === 'all' || user.roles.includes(this.filterRole)
       const searchMatch =;
         !this.searchTerm ||;
         user.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||;
-        user.email.toLowerCase().includes(this.searchTerm.toLowerCase());
+        user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
       return roleMatch && searchMatch;
-    });
+    })
   }
 
   getRoleStatus(role: string): string {
@@ -175,32 +175,32 @@ export class UserManagementComponen {t implements OnInit {
   banUser(user: User) {
     this.userService.banUser(user.id).subscribe({
       next: (updatedUser) => {
-        const index = this.users.findIndex((u) => u.id === updatedUser.id);
+        const index = this.users.findIndex((u) => u.id === updatedUser.id)
         if (index !== -1) {
           this.users[index] = updatedUser;
-          this.filterUsers();
+          this.filterUsers()
         }
-        this.toastrService.success('User banned successfully');
-      },;
+        this.toastrService.success('User banned successfully')
+      },
       error: (error) => {
-        this.toastrService.danger('Failed to ban user', 'Error');
-      },;
-    });
+        this.toastrService.danger('Failed to ban user', 'Error')
+      },
+    })
   }
 
   unbanUser(user: User) {
     this.userService.unbanUser(user.id).subscribe({
       next: (updatedUser) => {
-        const index = this.users.findIndex((u) => u.id === updatedUser.id);
+        const index = this.users.findIndex((u) => u.id === updatedUser.id)
         if (index !== -1) {
           this.users[index] = updatedUser;
-          this.filterUsers();
+          this.filterUsers()
         }
-        this.toastrService.success('User unbanned successfully');
-      },;
+        this.toastrService.success('User unbanned successfully')
+      },
       error: (error) => {
-        this.toastrService.danger('Failed to unban user', 'Error');
-      },;
-    });
+        this.toastrService.danger('Failed to unban user', 'Error')
+      },
+    })
   }
 }

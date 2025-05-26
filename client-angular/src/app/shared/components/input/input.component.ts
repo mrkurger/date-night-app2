@@ -10,19 +10,19 @@
 import {
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../icon/icon.component';
-  Component,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  forwardRef,;
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
   ChangeDetectionStrategy,';
 } from '@angular/core';
 
 import {
-  ControlValueAccessor,;
-  NG_VALUE_ACCESSOR,;
-  FormsModule,;
-  ReactiveFormsModule,;
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
 
 /**
@@ -32,20 +32,20 @@ import {
  * Supports different variants, sizes, and states.;
  */
 @Component({
-  selector: 'app-input',;
-  standalone: true,;
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconComponent],;
-  templateUrl: './input.component.html',;
-  styleUrls: ['./input.component.scss'],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
+  selector: 'app-input',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconComponent],
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,;
-      useExisting: forwardRef(() => InputComponent),;
-      multi: true,;
-    },;
-  ],;
-});
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true,
+    },
+  ],
+})
 export class InputComponen {t implements ControlValueAccessor {
   /**
    * The input type.;
@@ -159,22 +159,22 @@ export class InputComponen {t implements ControlValueAccessor {
   /**
    * Event emitted when the input value changes.;
    */
-  @Output() valueChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter()
 
   /**
    * Event emitted when the input is focused.;
    */
-  @Output() focused = new EventEmitter();
+  @Output() focused = new EventEmitter()
 
   /**
    * Event emitted when the input is blurred.;
    */
-  @Output() blurred = new EventEmitter();
+  @Output() blurred = new EventEmitter()
 
   /**
    * Event emitted when the input is clicked.;
    */
-  @Output() clicked = new EventEmitter();
+  @Output() clicked = new EventEmitter()
 
   /**
    * The input value.;
@@ -196,14 +196,14 @@ export class InputComponen {t implements ControlValueAccessor {
    */
   onChange = (_: unknown): void => {
     // Will be overridden by registerOnChange
-  };
+  }
 
   /**
    * Function to call when the input is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
-  };
+  }
 
   /**
    * Gets the CSS classes for the input container based on its properties.;
@@ -211,18 +211,18 @@ export class InputComponen {t implements ControlValueAccessor {
    */
   get containerClasses(): Record {
     return {
-      input: true,;
-      [`input--${this.variant}`]: true,;`
-      [`input--${this.size}`]: true,;`
-      'input--disabled': this.disabled,;
-      'input--readonly': this.readonly,;
-      'input--focused': this.isFocused,;
-      'input--error': !!this.errorMessage,;
-      'input--with-label': !!this.label,;
-      'input--with-icon-left': !!this.iconLeft,;
-      'input--with-icon-right': !!this.iconRight || this.type === 'password',;
-      'input--required': this.required,;
-    };
+      input: true,
+      [`input--${this.variant}`]: true,`
+      [`input--${this.size}`]: true,`
+      'input--disabled': this.disabled,
+      'input--readonly': this.readonly,
+      'input--focused': this.isFocused,
+      'input--error': !!this.errorMessage,
+      'input--with-label': !!this.label,
+      'input--with-icon-left': !!this.iconLeft,
+      'input--with-icon-right': !!this.iconRight || this.type === 'password',
+      'input--required': this.required,
+    }
   }
 
   /**
@@ -242,7 +242,7 @@ export class InputComponen {t implements ControlValueAccessor {
    */
   onFocus(event: FocusEvent): void {
     this.isFocused = true;
-    this.focused.emit(event);
+    this.focused.emit(event)
   }
 
   /**
@@ -251,8 +251,8 @@ export class InputComponen {t implements ControlValueAccessor {
    */
   onBlur(event: FocusEvent): void {
     this.isFocused = false;
-    this.onTouched();
-    this.blurred.emit(event);
+    this.onTouched()
+    this.blurred.emit(event)
   }
 
   /**
@@ -260,7 +260,7 @@ export class InputComponen {t implements ControlValueAccessor {
    * @param event The mouse event;
    */
   onClick(event: MouseEvent): void {
-    this.clicked.emit(event);
+    this.clicked.emit(event)
   }
 
   /**
@@ -270,8 +270,8 @@ export class InputComponen {t implements ControlValueAccessor {
   onInputChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.value = target.value;
-    this.onChange(this.value);
-    this.valueChange.emit(this.value);
+    this.onChange(this.value)
+    this.valueChange.emit(this.value)
   }
 
   /**

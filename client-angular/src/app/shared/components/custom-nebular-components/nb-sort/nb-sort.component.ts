@@ -5,32 +5,32 @@ import { AppSortEvent } from './nb-sort.module';
 
 // Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)
 @Component({';
-  selector: 'app-sort',;
-  standalone: true,;
-  template: ``,;`
-});
+  selector: 'app-sort',
+  standalone: true,
+  template: ``,`
+})
 export class AppSortComponen {t {
   @Input() active: string = '';
   @Input() direction: 'asc' | 'desc' | '' = '';
-  @Output() sortChange = new EventEmitter();
+  @Output() sortChange = new EventEmitter()
 
   sort(sortEvent: AppSortEvent): void {
     this.active = sortEvent.active;
     this.direction = sortEvent.direction;
-    this.sortChange.emit(sortEvent);
+    this.sortChange.emit(sortEvent)
   }
 }
 
 // Refactored: Custom sort header component (was /*DEPRECATED:NbSortHeaderComponent*/)
 @Component({
-  selector: 'app-sort-header',;
-  imports: [CommonModule],;
+  selector: 'app-sort-header',
+  imports: [CommonModule],
   template: `;`
     ;
       ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .app-sort-header {
@@ -47,9 +47,9 @@ export class AppSortComponen {t {
       .app-sort-header-sorted {
         font-weight: bold;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class AppSortHeaderComponen {t {
   @Input() appSortHeaderId!: string;
 
@@ -64,11 +64,11 @@ export class AppSortHeaderComponen {t {
   constructor(private sort: AppSortComponent) {}
 
   toggleSort(): void {
-    const newDirection = this.getNextSortDirection();
+    const newDirection = this.getNextSortDirection()
     this.sort.sort({
-      active: this.appSortHeaderId,;
-      direction: newDirection,;
-    });
+      active: this.appSortHeaderId,
+      direction: newDirection,
+    })
   }
 
   private getNextSortDirection(): 'asc' | 'desc' | '' {

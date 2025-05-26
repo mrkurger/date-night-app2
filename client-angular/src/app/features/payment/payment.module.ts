@@ -16,15 +16,15 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [;
   {';
-    path: '',;
-    component: PaymentComponent,;
-    canActivate: [AuthGuard],;
-  },;
-];
+    path: '',
+    component: PaymentComponent,
+    canActivate: [AuthGuard],
+  },
+]
 
 @NgModule({
-  declarations: [],;
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), PaymentComponent],;
-  exports: [],;
-});
+  declarations: [],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), PaymentComponent],
+  exports: [],
+})
 export class PaymentModul {e {}

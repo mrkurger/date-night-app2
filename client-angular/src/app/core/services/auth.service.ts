@@ -16,32 +16,32 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { NbRoleProvider } from '@nebular/security';
 import { Router } from '@angular/router';
-  User,;
-  LoginDTO,;
-  RegisterDTO,;
-  AuthResponse,;
-  NotificationSettings,;
+  User,
+  LoginDTO,
+  RegisterDTO,
+  AuthResponse,
+  NotificationSettings,
   PrivacySettings,';
 } from '../models/user.interface';
 
 import { FingerprintService } from './fingerprint.service'; // Import FingerprintService
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class AuthServic {e implements NbRoleProvider {
   private apiUrl = `${environment.apiUrl}/auth`;`
-  private currentUserSubject = new BehaviorSubject(null);
+  private currentUserSubject = new BehaviorSubject(null)
   private tokenExpirationTimer: ReturnType | null = null;
 
-  public currentUser$ = this.currentUserSubject.asObservable();
+  public currentUser$ = this.currentUserSubject.asObservable()
 
   constructor(;
-    private http: HttpClient,;
-    private router: Router,;
+    private http: HttpClient,
+    private router: Router,
     private fingerprintService: FingerprintService, // Inject FingerprintService
   ) {
-    this.checkAuthStatus();
+    this.checkAuthStatus()
   }
 
   /**
@@ -57,8 +57,8 @@ export class AuthServic {e implements NbRoleProvider {
         if (user.roles.includes('moderator')) return 'moderator';
         if (user.roles.includes('user')) return 'user';
         return 'guest';
-      }),;
-    );
+      }),
+    )
   }
 
   /**
@@ -66,12 +66,12 @@ export class AuthServic {e implements NbRoleProvider {
    */
   private checkAuthStatus(): void {
     this.http;
-      .get(`${this.apiUrl}/status`);`
+      .get(`${this.apiUrl}/status`)`
       .pipe(;
-        map((response) => response.user),;
-        catchError(() => of(null)),;
-      );
-      .subscribe((user) => this.currentUserSubject.next(user));
+        map((response) => response.user),
+        catchError(() => of(null)),
+      )
+      .subscribe((user) => this.currentUserSubject.next(user))
   }
 
   /**
@@ -80,34 +80,34 @@ export class AuthServic {e implements NbRoleProvider {
   login(credentials: LoginDTO): Observable {
     return new Observable((observer) => {
       this.fingerprintService;
-        .collectFingerprint();
+        .collectFingerprint()
         .then((fingerprint) => {
           const loginPayload = {
-            ...credentials,;
-            deviceFingerprint: fingerprint,;
-            userAgent: fingerprint['userAgent'],;
-          };
+            ...credentials,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          }
           this.http;
-            .post(`${this.apiUrl}/login`, loginPayload, { withCredentials: true });`
-            .pipe(tap((response) => this.handleAuthResponse(response)));
+            .post(`${this.apiUrl}/login`, loginPayload, { withCredentials: true })`
+            .pipe(tap((response) => this.handleAuthResponse(response)))
             .subscribe({
-              next: (response) => observer.next(response),;
-              error: (err) => observer.error(err),;
-              complete: () => observer.complete(),;
-            });
-        });
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            })
+        })
         .catch((err) => {
-          console.error('Error collecting fingerprint during login:', err);
+          console.error('Error collecting fingerprint during login:', err)
           this.http;
-            .post(`${this.apiUrl}/login`, credentials, { withCredentials: true });`
-            .pipe(tap((response) => this.handleAuthResponse(response)));
+            .post(`${this.apiUrl}/login`, credentials, { withCredentials: true })`
+            .pipe(tap((response) => this.handleAuthResponse(response)))
             .subscribe({
-              next: (response) => observer.next(response),;
-              error: (e) => observer.error(e),;
-              complete: () => observer.complete(),;
-            });
-        });
-    });
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            })
+        })
+    })
   }
 
   /**
@@ -116,36 +116,36 @@ export class AuthServic {e implements NbRoleProvider {
   register(userData: RegisterDTO): Observable {
     return new Observable((observer) => {
       this.fingerprintService;
-        .collectFingerprint();
+        .collectFingerprint()
         .then((fingerprint) => {
           const registerPayload = {
-            ...userData,;
-            deviceFingerprint: fingerprint,;
-            userAgent: fingerprint['userAgent'],;
-          };
+            ...userData,
+            deviceFingerprint: fingerprint,
+            userAgent: fingerprint['userAgent'],
+          }
           this.http;
             .post(`${this.apiUrl}/register`, registerPayload, {`
-              withCredentials: true,;
-            });
-            .pipe(tap((response) => this.handleAuthResponse(response)));
+              withCredentials: true,
+            })
+            .pipe(tap((response) => this.handleAuthResponse(response)))
             .subscribe({
-              next: (response) => observer.next(response),;
-              error: (err) => observer.error(err),;
-              complete: () => observer.complete(),;
-            });
-        });
+              next: (response) => observer.next(response),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            })
+        })
         .catch((err) => {
-          console.error('Error collecting fingerprint during registration:', err);
+          console.error('Error collecting fingerprint during registration:', err)
           this.http;
-            .post(`${this.apiUrl}/register`, userData, { withCredentials: true });`
-            .pipe(tap((response) => this.handleAuthResponse(response)));
+            .post(`${this.apiUrl}/register`, userData, { withCredentials: true })`
+            .pipe(tap((response) => this.handleAuthResponse(response)))
             .subscribe({
-              next: (response) => observer.next(response),;
-              error: (e) => observer.error(e),;
-              complete: () => observer.complete(),;
-            });
-        });
-    });
+              next: (response) => observer.next(response),
+              error: (e) => observer.error(e),
+              complete: () => observer.complete(),
+            })
+        })
+    })
   }
 
   /**
@@ -156,19 +156,19 @@ export class AuthServic {e implements NbRoleProvider {
     return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(;`
       tap(() => {
         if (this.tokenExpirationTimer) {
-          clearTimeout(this.tokenExpirationTimer);
+          clearTimeout(this.tokenExpirationTimer)
         }
-        this.currentUserSubject.next(null);
-        this.router.navigate(['/auth/login']);
-      }),;
+        this.currentUserSubject.next(null)
+        this.router.navigate(['/auth/login'])
+      }),
       catchError((err) => {
-        console.error('Logout error:', err);
+        console.error('Logout error:', err)
         // Still clear local state even if server request fails
-        this.currentUserSubject.next(null);
-        this.router.navigate(['/auth/login']);
-        return throwError(() => err);
-      }),;
-    );
+        this.currentUserSubject.next(null)
+        this.router.navigate(['/auth/login'])
+        return throwError(() => err)
+      }),
+    )
   }
 
   /**
@@ -178,7 +178,7 @@ export class AuthServic {e implements NbRoleProvider {
   handleOAuthCallback(): Observable {
     // No need to store token in localStorage anymore
     // Just validate the token that's in the cookie
-    return this.validateToken();
+    return this.validateToken()
   }
 
   /**
@@ -186,15 +186,15 @@ export class AuthServic {e implements NbRoleProvider {
    */
   refreshToken(): Observable {
     return this.http;
-      .post(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true });`
+      .post(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })`
       .pipe(;
-        tap((response) => this.handleAuthResponse(response)),;
+        tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
           // Don't call logout here to avoid infinite loop
-          this.currentUserSubject.next(null);
-          return throwError(() => error);
-        }),;
-      );
+          this.currentUserSubject.next(null)
+          return throwError(() => error)
+        }),
+      )
   }
 
   /**
@@ -202,7 +202,7 @@ export class AuthServic {e implements NbRoleProvider {
    * @returns Observable that emits true if user is authenticated, false otherwise;
    */
   isAuthenticated(): Observable {
-    return this.currentUserSubject.pipe(map((user) => !!user));
+    return this.currentUserSubject.pipe(map((user) => !!user))
   }
 
   /**
@@ -210,7 +210,7 @@ export class AuthServic {e implements NbRoleProvider {
    * @returns Observable that emits the current user or null;
    */
   getCurrentUser(): Observable {
-    return this.currentUserSubject.asObservable();
+    return this.currentUserSubject.asObservable()
   }
 
   /**
@@ -224,7 +224,7 @@ export class AuthServic {e implements NbRoleProvider {
   /**
    * Get stored token;
    *;
-   * Note: This method is kept for compatibility with existing code,;
+   * Note: This method is kept for compatibility with existing code,
    * but it will always return null since we're using HttpOnly cookies now.;
    * The auth interceptor has been updated to handle this.;
    */
@@ -245,16 +245,16 @@ export class AuthServic {e implements NbRoleProvider {
           if (user && user._id) {
             (user as any).id = user._id as string;
           }
-          this.currentUserSubject.next(user);
+          this.currentUserSubject.next(user)
           return user;
         }
-        throw new Error('Invalid token');
-      }),;
+        throw new Error('Invalid token')
+      }),
       catchError((error) =>;
         // Don't call logout here to avoid infinite loop
-        throwError(() => error),;
-      ),;
-    );
+        throwError(() => error),
+      ),
+    )
   }
 
   /**
@@ -269,13 +269,13 @@ export class AuthServic {e implements NbRoleProvider {
         response.user.id = response.user._id;
       }
 
-      this.currentUserSubject.next(response.user);
+      this.currentUserSubject.next(response.user)
 
       // Set auto refresh timer
       const expirationDuration = response.expiresIn;
         ? response.expiresIn * 1000;
         : 24 * 60 * 60 * 1000; // Default to 24 hours
-      this.setAutoRefresh(expirationDuration * 0.8); // Refresh at 80% of token lifetime
+      this.setAutoRefresh(expirationDuration * 0.8) // Refresh at 80% of token lifetime
     }
   }
 
@@ -284,7 +284,7 @@ export class AuthServic {e implements NbRoleProvider {
    */
   private setAutoRefresh(refreshDuration: number): void {
     if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
+      clearTimeout(this.tokenExpirationTimer)
     }
 
     this.tokenExpirationTimer = setTimeout(() => {
@@ -292,10 +292,10 @@ export class AuthServic {e implements NbRoleProvider {
       this.refreshToken().subscribe({
         error: () => {
           // If refresh fails, clear user state
-          this.currentUserSubject.next(null);
-        },;
-      });
-    }, refreshDuration);
+          this.currentUserSubject.next(null)
+        },
+      })
+    }, refreshDuration)
   }
 
   /**
@@ -304,7 +304,7 @@ export class AuthServic {e implements NbRoleProvider {
    */
   updateProfile(profileData: Partial): Observable {
     return this.http;
-      .put(`${this.apiUrl}/profile`, profileData, { withCredentials: true });`
+      .put(`${this.apiUrl}/profile`, profileData, { withCredentials: true })`
       .pipe(;
         tap((response) => {
           // Update the current user with new profile data
@@ -313,11 +313,11 @@ export class AuthServic {e implements NbRoleProvider {
             if (response.user && response.user._id) {
               response.user.id = response.user._id;
             }
-            this.currentUserSubject.next(response.user);
+            this.currentUserSubject.next(response.user)
           }
           return response;
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -329,8 +329,8 @@ export class AuthServic {e implements NbRoleProvider {
     newPassword: string;
   }): Observable {
     return this.http.put(`${this.apiUrl}/password`, passwordData, {`
-      withCredentials: true,;
-    });
+      withCredentials: true,
+    })
   }
 
   /**
@@ -338,16 +338,16 @@ export class AuthServic {e implements NbRoleProvider {
    * @param notificationSettings Notification preferences;
    */
   updateNotificationSettings(;
-    notificationSettings: NotificationSettings,;
+    notificationSettings: NotificationSettings,
   ): Observable {
     return this.http;
       .put(;
-        `${this.apiUrl}/notification-settings`,;`
-        notificationSettings,;
+        `${this.apiUrl}/notification-settings`,`
+        notificationSettings,
         {
-          withCredentials: true,;
-        },;
-      );
+          withCredentials: true,
+        },
+      )
       .pipe(;
         tap((response) => {
           // Update the current user with new notification settings
@@ -355,15 +355,15 @@ export class AuthServic {e implements NbRoleProvider {
             const currentUser = this.currentUserSubject.value;
             if (currentUser) {
               const updatedUser = {
-                ...currentUser,;
-                notificationSettings: response.user.notificationSettings || notificationSettings,;
-              };
-              this.currentUserSubject.next(updatedUser);
+                ...currentUser,
+                notificationSettings: response.user.notificationSettings || notificationSettings,
+              }
+              this.currentUserSubject.next(updatedUser)
             }
           }
           return response;
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -371,10 +371,10 @@ export class AuthServic {e implements NbRoleProvider {
    * @param privacySettings Privacy preferences;
    */
   updatePrivacySettings(;
-    privacySettings: PrivacySettings,;
+    privacySettings: PrivacySettings,
   ): Observable {
     return this.http;
-      .put(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true });`
+      .put(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })`
       .pipe(;
         tap((response) => {
           // Update the current user with new privacy settings
@@ -382,15 +382,15 @@ export class AuthServic {e implements NbRoleProvider {
             const currentUser = this.currentUserSubject.value;
             if (currentUser) {
               const updatedUser = {
-                ...currentUser,;
-                privacySettings: response.user.privacySettings || privacySettings,;
-              };
-              this.currentUserSubject.next(updatedUser);
+                ...currentUser,
+                privacySettings: response.user.privacySettings || privacySettings,
+              }
+              this.currentUserSubject.next(updatedUser)
             }
           }
           return response;
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -398,57 +398,57 @@ export class AuthServic {e implements NbRoleProvider {
    */
   deleteAccount(): Observable {
     return this.http;
-      .delete(`${this.apiUrl}/account`, { withCredentials: true });`
+      .delete(`${this.apiUrl}/account`, { withCredentials: true })`
       .pipe(;
         tap(() => {
           // Clear user state after successful deletion
-          this.currentUserSubject.next(null);
+          this.currentUserSubject.next(null)
           if (this.tokenExpirationTimer) {
-            clearTimeout(this.tokenExpirationTimer);
+            clearTimeout(this.tokenExpirationTimer)
           }
-        }),;
-      );
+        }),
+      )
   }
 
   signIn(email: string, password: string): Observable {
     return this.http.post(`${this.apiUrl}/signin`, { email, password }).pipe(;`
-      map((response) => response.user),;
-      tap((user) => this.currentUserSubject.next(user)),;
+      map((response) => response.user),
+      tap((user) => this.currentUserSubject.next(user)),
       catchError((error) => {
-        console.error('Sign in error:', error);
+        console.error('Sign in error:', error)
         throw error;
-      }),;
-    );
+      }),
+    )
   }
 
   signUp(email: string, password: string, displayName: string): Observable {
     return this.http;
       .post(`${this.apiUrl}/signup`, {`
-        email,;
-        password,;
-        displayName,;
-      });
+        email,
+        password,
+        displayName,
+      })
       .pipe(;
-        map((response) => response.user),;
-        tap((user) => this.currentUserSubject.next(user)),;
+        map((response) => response.user),
+        tap((user) => this.currentUserSubject.next(user)),
         catchError((error) => {
-          console.error('Sign up error:', error);
+          console.error('Sign up error:', error)
           throw error;
-        }),;
-      );
+        }),
+      )
   }
 
   signOut(): Observable {
     return this.http.post(`${this.apiUrl}/signout`, {}).pipe(;`
       tap(() => {
-        this.currentUserSubject.next(null);
-        this.router.navigate(['/auth/login']);
-      }),;
+        this.currentUserSubject.next(null)
+        this.router.navigate(['/auth/login'])
+      }),
       catchError((error) => {
-        console.error('Sign out error:', error);
+        console.error('Sign out error:', error)
         throw error;
-      }),;
-    );
+      }),
+    )
   }
 
   /**
@@ -456,7 +456,7 @@ export class AuthServic {e implements NbRoleProvider {
    * @param email User email;
    */
   requestPassword(email: string): Observable {
-    return this.http.post(`${this.apiUrl}/request-password`, { email });`
+    return this.http.post(`${this.apiUrl}/request-password`, { email })`
   }
 
   /**
@@ -465,6 +465,6 @@ export class AuthServic {e implements NbRoleProvider {
    * @param password New password;
    */
   resetPassword(token: string, password: string): Observable {
-    return this.http.post(`${this.apiUrl}/reset-password`, { token, password });`
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, password })`
   }
 }

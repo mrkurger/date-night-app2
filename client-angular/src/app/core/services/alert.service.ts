@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { TelemetrySocketService } from './telemetry-socket.service';
-  Alert,;
-  AlertEvent,;
-  AlertSeverity,;
-  AlertConditionType,;
-  AlertTimeWindow,;
+  Alert,
+  AlertEvent,
+  AlertSeverity,
+  AlertConditionType,
+  AlertTimeWindow,
   AlertChannel,';
 } from '../models/alert.model';
 
 export interface AlertResponse {
-  alerts: Alert[];
+  alerts: Alert[]
   total: number;
 }
 
@@ -20,55 +20,55 @@ export interface AlertResponse {
  * Service for managing custom alerts;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class AlertServic {e {
   private readonly apiUrl = '/api/alerts';
-  private readonly activeAlertsSubject = new BehaviorSubject([]);
-  public readonly activeAlerts$ = this.activeAlertsSubject.asObservable();
+  private readonly activeAlertsSubject = new BehaviorSubject([])
+  public readonly activeAlerts$ = this.activeAlertsSubject.asObservable()
 
   constructor(;
-    private http: HttpClient,;
-    private telemetrySocketService: TelemetrySocketService,;
+    private http: HttpClient,
+    private telemetrySocketService: TelemetrySocketService,
   ) {
-    this.setupWebSocketConnection();
+    this.setupWebSocketConnection()
   }
 
   getAlerts(page: number, pageSize: number): Observable {
     return this.http.get(`${this.apiUrl}`, {`
-      params: { page: page.toString(), pageSize: pageSize.toString() },;
-    });
+      params: { page: page.toString(), pageSize: pageSize.toString() },
+    })
   }
 
   getActiveAlerts(): Observable {
-    return this.http.get(`${this.apiUrl}/active`);`
+    return this.http.get(`${this.apiUrl}/active`)`
   }
 
   createAlert(alert: Omit): Observable {
-    return this.http.post(`${this.apiUrl}`, alert);`
+    return this.http.post(`${this.apiUrl}`, alert)`
   }
 
   updateAlert(id: string, update: Partial): Observable {
-    return this.http.patch(`${this.apiUrl}/${id}`, update);`
+    return this.http.patch(`${this.apiUrl}/${id}`, update)`
   }
 
   deleteAlert(id: string): Observable {
-    return this.http.delete(`${this.apiUrl}/${id}`);`
+    return this.http.delete(`${this.apiUrl}/${id}`)`
   }
 
   testAlert(id: string): Observable {
-    return this.http.post(`${this.apiUrl}/${id}/test`, {});`
+    return this.http.post(`${this.apiUrl}/${id}/test`, {})`
   }
 
   acknowledgeAlert(id: string): Observable {
-    return this.http.post(`${this.apiUrl}/${id}/acknowledge`, {});`
+    return this.http.post(`${this.apiUrl}/${id}/acknowledge`, {})`
   }
 
   /**
    * Get all alert definitions;
    */
   getAlerts(): Observable {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl)
   }
 
   /**
@@ -76,7 +76,7 @@ export class AlertServic {e {
    * @param id Alert ID;
    */
   getAlert(id: string): Observable {
-    return this.http.get(`${this.apiUrl}/${id}`);`
+    return this.http.get(`${this.apiUrl}/${id}`)`
   }
 
   /**
@@ -85,14 +85,14 @@ export class AlertServic {e {
    * @param enabled Whether the alert should be enabled;
    */
   toggleAlert(id: string, enabled: boolean): Observable {
-    return this.http.patch(`${this.apiUrl}/${id}/toggle`, { enabled });`
+    return this.http.patch(`${this.apiUrl}/${id}/toggle`, { enabled })`
   }
 
   /**
    * Get active alert events;
    */
   getActiveAlertEvents(): Observable {
-    return this.http.get(`${this.apiUrl}/events/active`);`
+    return this.http.get(`${this.apiUrl}/events/active`)`
   }
 
   /**
@@ -100,9 +100,9 @@ export class AlertServic {e {
    * @param filters Optional filters for the alert events;
    */
   getAlertEventHistory(;
-    filters?: Record,;
+    filters?: Record,
   ): Observable {
-    return this.http.get(`${this.apiUrl}/events/history`, { params: filters });`
+    return this.http.get(`${this.apiUrl}/events/history`, { params: filters })`
   }
 
   /**
@@ -115,73 +115,73 @@ export class AlertServic {e {
    * @returns Observable of the created alert;
    */
   createErrorCategoryAlert(;
-    category: ErrorCategory,;
-    name: string,;
-    description: string,;
-    threshold = 5,;
-    timeWindow = AlertTimeWindow.HOURS_1,;
+    category: ErrorCategory,
+    name: string,
+    description: string,
+    threshold = 5,
+    timeWindow = AlertTimeWindow.HOURS_1,
   ): Observable {
     const alert: Alert = {
-      name,;
-      description,;
-      enabled: true,;
-      severity: this.getSeverityForCategory(category),;
+      name,
+      description,
+      enabled: true,
+      severity: this.getSeverityForCategory(category),
       condition: {
-        type: AlertConditionType.ERROR_CATEGORY,;
-        threshold,;
-        timeWindow,;
-        errorCategory: category,;
-      },;
+        type: AlertConditionType.ERROR_CATEGORY,
+        threshold,
+        timeWindow,
+        errorCategory: category,
+      },
       notifications: [;
         {
-          channel: AlertChannel.UI,;
-        },;
+          channel: AlertChannel.UI,
+        },
         {
-          channel: AlertChannel.EMAIL,;
-          email: 'admin@example.com',;
-        },;
-      ],;
-    };
+          channel: AlertChannel.EMAIL,
+          email: 'admin@example.com',
+        },
+      ],
+    }
 
-    return this.createAlert(alert);
+    return this.createAlert(alert)
   }
 
   /**
    * Create an error rate alert;
-   * @param threshold Error rate threshold (percentage);
+   * @param threshold Error rate threshold (percentage)
    * @param name Alert name;
    * @param description Alert description;
    * @param timeWindow Time window for calculating error rate;
    * @returns Observable of the created alert;
    */
   createErrorRateAlert(;
-    threshold: number,;
-    name: string,;
-    description: string,;
-    timeWindow = AlertTimeWindow.MINUTES_15,;
+    threshold: number,
+    name: string,
+    description: string,
+    timeWindow = AlertTimeWindow.MINUTES_15,
   ): Observable {
     const alert: Alert = {
-      name,;
-      description,;
-      enabled: true,;
-      severity: AlertSeverity.WARNING,;
+      name,
+      description,
+      enabled: true,
+      severity: AlertSeverity.WARNING,
       condition: {
-        type: AlertConditionType.ERROR_RATE,;
-        threshold,;
-        timeWindow,;
-      },;
+        type: AlertConditionType.ERROR_RATE,
+        threshold,
+        timeWindow,
+      },
       notifications: [;
         {
-          channel: AlertChannel.UI,;
-        },;
+          channel: AlertChannel.UI,
+        },
         {
-          channel: AlertChannel.EMAIL,;
-          email: 'admin@example.com',;
-        },;
-      ],;
-    };
+          channel: AlertChannel.EMAIL,
+          email: 'admin@example.com',
+        },
+      ],
+    }
 
-    return this.createAlert(alert);
+    return this.createAlert(alert)
   }
 
   /**
@@ -194,35 +194,35 @@ export class AlertServic {e {
    * @returns Observable of the created alert;
    */
   createPerformanceAlert(;
-    threshold: number,;
-    name: string,;
-    description: string,;
-    endpoint?: string,;
-    timeWindow = AlertTimeWindow.MINUTES_30,;
+    threshold: number,
+    name: string,
+    description: string,
+    endpoint?: string,
+    timeWindow = AlertTimeWindow.MINUTES_30,
   ): Observable {
     const alert: Alert = {
-      name,;
-      description,;
-      enabled: true,;
-      severity: AlertSeverity.WARNING,;
+      name,
+      description,
+      enabled: true,
+      severity: AlertSeverity.WARNING,
       condition: {
-        type: AlertConditionType.PERFORMANCE_THRESHOLD,;
-        threshold,;
-        timeWindow,;
-        endpoint,;
-      },;
+        type: AlertConditionType.PERFORMANCE_THRESHOLD,
+        threshold,
+        timeWindow,
+        endpoint,
+      },
       notifications: [;
         {
-          channel: AlertChannel.UI,;
-        },;
+          channel: AlertChannel.UI,
+        },
         {
-          channel: AlertChannel.SLACK,;
+          channel: AlertChannel.SLACK,
           slackWebhook: 'https://hooks.slack.com/services/your-webhook-url',
-        },;
-      ],;
-    };
+        },
+      ],
+    }
 
-    return this.createAlert(alert);
+    return this.createAlert(alert)
   }
 
   /**
@@ -235,58 +235,58 @@ export class AlertServic {e {
    * @returns Observable of the created alert;
    */
   createErrorPatternAlert(;
-    pattern: string,;
-    name: string,;
-    description: string,;
-    threshold = 1,;
-    timeWindow = AlertTimeWindow.HOURS_24,;
+    pattern: string,
+    name: string,
+    description: string,
+    threshold = 1,
+    timeWindow = AlertTimeWindow.HOURS_24,
   ): Observable {
     const alert: Alert = {
-      name,;
-      description,;
-      enabled: true,;
-      severity: AlertSeverity.ERROR,;
+      name,
+      description,
+      enabled: true,
+      severity: AlertSeverity.ERROR,
       condition: {
-        type: AlertConditionType.ERROR_PATTERN,;
-        threshold,;
-        timeWindow,;
-        pattern,;
-      },;
+        type: AlertConditionType.ERROR_PATTERN,
+        threshold,
+        timeWindow,
+        pattern,
+      },
       notifications: [;
         {
-          channel: AlertChannel.UI,;
-        },;
+          channel: AlertChannel.UI,
+        },
         {
-          channel: AlertChannel.EMAIL,;
-          email: 'admin@example.com',;
-        },;
-      ],;
-    };
+          channel: AlertChannel.EMAIL,
+          email: 'admin@example.com',
+        },
+      ],
+    }
 
-    return this.createAlert(alert);
+    return this.createAlert(alert)
   }
 
   private setupWebSocketConnection(): void {
     // Monitor WebSocket connection status
     this.telemetrySocketService.connectionStatus$.subscribe((connected) => {
       if (connected) {
-        this.setupAlertEventListener();
+        this.setupAlertEventListener()
       }
-    });
+    })
 
     // Initial load of active alerts
-    this.loadActiveAlerts();
+    this.loadActiveAlerts()
   }
 
   private loadActiveAlerts(): void {
     this.getActiveAlerts().subscribe((alerts) => {
-      this.activeAlertsSubject.next(alerts);
-    });
+      this.activeAlertsSubject.next(alerts)
+    })
   }
 
   private setupAlertEventListener(): void {
     // Subscribe to alert events channel
-    this.telemetrySocketService.subscribe('alerts');
+    this.telemetrySocketService.subscribe('alerts')
 
     // Listen for alert events
     this.telemetrySocketService.alertEvents$.subscribe((event) => {
@@ -294,9 +294,9 @@ export class AlertServic {e {
 
       // Add the new alert if it's not already in the list
       if (!currentAlerts.some((alert) => alert.id === event.id)) {
-        this.activeAlertsSubject.next([...currentAlerts, event]);
+        this.activeAlertsSubject.next([...currentAlerts, event])
       }
-    });
+    })
   }
 
   /**

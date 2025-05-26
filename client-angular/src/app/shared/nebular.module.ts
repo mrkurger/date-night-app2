@@ -38,47 +38,47 @@ import { TooltipModule } from 'primeng/tooltip';
 // Import custom Nebular components
 
 // Array of all PrimeNG modules that need to be configured at root level
-const ROOT_PRIMENG_MODULES = [ToastModule];
+const ROOT_PRIMENG_MODULES = [ToastModule]
 
 // Array of feature PrimeNG modules that can be imported multiple times
 const FEATURE_PRIMENG_MODULES = [;
-  ButtonModule,;
-  CardModule,;
-  DialogModule,;
-  DropdownModule,;
-  InputTextModule,;
-  TableModule,;
-  TooltipModule,;
-];
+  ButtonModule,
+  CardModule,
+  DialogModule,
+  DropdownModule,
+  InputTextModule,
+  TableModule,
+  TooltipModule,
+]
 
 // Array of custom form components
 const FORM_COMPONENTS = [;
-  NbAdvancedFormComponent,;
-  NbFormArrayComponent,;
-  NbFormGroupComponent,;
-  NbFormValidationComponent,;
-  NbFormErrorComponent,;
-];
+  NbAdvancedFormComponent,
+  NbFormArrayComponent,
+  NbFormGroupComponent,
+  NbFormValidationComponent,
+  NbFormErrorComponent,
+]
 
 // Array of custom navigation components
 const NAVIGATION_COMPONENTS = [;
-  NbNavigationComponent,;
-  NbSideMenuComponent,;
-  NbTopMenuComponent,;
-  NbUserMenuComponent,;
-  NbSearchBarComponent,;
-  NbBreadcrumbsComponent,;
-  NbThemeToggleComponent,;
-];
+  NbNavigationComponent,
+  NbSideMenuComponent,
+  NbTopMenuComponent,
+  NbUserMenuComponent,
+  NbSearchBarComponent,
+  NbBreadcrumbsComponent,
+  NbThemeToggleComponent,
+]
 
 // Array of custom data table components
 const DATA_TABLE_COMPONENTS = [;
-  NbDataTableComponent,;
-  NbDataTableHeaderComponent,;
-  NbDataTablePaginatorComponent,;
-  NbDataTableFilterComponent,;
-  NbDataTableSortComponent,;
-];
+  NbDataTableComponent,
+  NbDataTableHeaderComponent,
+  NbDataTablePaginatorComponent,
+  NbDataTableFilterComponent,
+  NbDataTableSortComponent,
+]
 
 /**
  * NebularModule;
@@ -87,32 +87,32 @@ const DATA_TABLE_COMPONENTS = [;
  * needed throughout the application. It should be imported in the SharedModule.;
  */
 @NgModule({
-  declarations: [...FORM_COMPONENTS, ...NAVIGATION_COMPONENTS, ...DATA_TABLE_COMPONENTS],;
+  declarations: [...FORM_COMPONENTS, ...NAVIGATION_COMPONENTS, ...DATA_TABLE_COMPONENTS],
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    ...ROOT_PRIMENG_MODULES,;
-    ...FEATURE_PRIMENG_MODULES,;
-  ],;
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...ROOT_PRIMENG_MODULES,
+    ...FEATURE_PRIMENG_MODULES,
+  ],
   exports: [;
-    CommonModule,;
-    RouterModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    ...FEATURE_PRIMENG_MODULES,;
-    ...FORM_COMPONENTS,;
-    ...NAVIGATION_COMPONENTS,;
-    ...DATA_TABLE_COMPONENTS,;
-  ],;
-});
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...FEATURE_PRIMENG_MODULES,
+    ...FORM_COMPONENTS,
+    ...NAVIGATION_COMPONENTS,
+    ...DATA_TABLE_COMPONENTS,
+  ],
+})
 export class NebularModul {e {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: NebularModule,;
-      providers: [],;
-    };
+      ngModule: NebularModule,
+      providers: [],
+    }
   }
 }
 ';

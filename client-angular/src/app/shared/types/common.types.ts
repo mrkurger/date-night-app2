@@ -9,7 +9,7 @@ import { _Component } from '@angular/core';
  */
 export type Dictionary = {
   [key: string]: T;
-};
+}
 
 /**
  * Type for API responses;

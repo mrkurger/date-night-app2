@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
  * Supports various layouts including default, netflix, and tinder styles.;
  */
 @Component({';
-    selector: 'app-card',;
+    selector: 'app-card',
     template: `;`
     ;
       ;
@@ -32,15 +32,15 @@ import { CommonModule } from '@angular/common';
             ;
           ;
           ;
-            {{ title }};
-            {{ subtitle }};
+            {{ title }}
+            {{ subtitle }}
           ;
         ;
       ;
 
       ;
         ;
-        {{ description }};
+        {{ description }}
 
         ;
           ;
@@ -55,17 +55,17 @@ import { CommonModule } from '@angular/common';
         ;
       ;
     ;
-  `,;`
-    styleUrls: ['./app-card.component.scss'],;
+  `,`
+    styleUrls: ['./app-card.component.scss'],
     imports: [;
-        CommonModule,;
-        NbBadgeModule,;
-        NbButtonModule,;
-        NbCardModule,;
-        NbIconModule,;
+        CommonModule,
+        NbBadgeModule,
+        NbButtonModule,
+        NbCardModule,
+        NbIconModule,
         NbTooltipModule;
-    ];
-});
+    ]
+})
 export class CardModul {e {
   /**
    * The title of the card;
@@ -110,7 +110,7 @@ export class CardModul {e {
   /**
    * The tags to display on the card;
    */
-  @Input() tags: string[] = [];
+  @Input() tags: string[] = []
 
   /**
    * The maximum number of tags to display;
@@ -125,23 +125,23 @@ export class CardModul {e {
   /**
    * The actions available on the card;
    */
-  @Input() actions: Array = [];
+  @Input() actions: Array = []
 
   /**
    * Event emitted when the card is clicked;
    */
-  @Output() click = new EventEmitter();
+  @Output() click = new EventEmitter()
 
   /**
    * Event emitted when an action button is clicked;
    */
-  @Output() actionClick = new EventEmitter();
+  @Output() actionClick = new EventEmitter()
 
   /**
    * Handles the click event on the card;
    */
   handleClick(): void {
-    this.click.emit(this.itemId);
+    this.click.emit(this.itemId)
   }
 
   /**
@@ -150,11 +150,11 @@ export class CardModul {e {
    * @param actionId The ID of the action;
    */
   handleActionClick(event: Event, actionId: string): void {
-    event.stopPropagation();
+    event.stopPropagation()
     this.actionClick.emit({
-      id: actionId,;
-      itemId: this.itemId,;
-    });
+      id: actionId,
+      itemId: this.itemId,
+    })
   }
 
   /**
@@ -162,8 +162,8 @@ export class CardModul {e {
    */
   get visibleTags(): string[] {
     if (!this.tags) {
-      return [];
+      return []
     }
-    return this.tags.slice(0, this.maxTags);
+    return this.tags.slice(0, this.maxTags)
   }
 }

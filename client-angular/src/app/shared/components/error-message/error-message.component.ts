@@ -16,17 +16,17 @@ import { CommonModule } from '@angular/common';
 // ===================================================
 
 @Component({';
-  selector: 'app-error-message',;
-  standalone: true,;
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],;
+  selector: 'app-error-message',
+  standalone: true,
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],
   template: `;`
     ;
       ;
         ;
           ;
           ;
-            {{ title }};
-            {{ message }};
+            {{ title }}
+            {{ message }}
             ;
               ;
                 ;
@@ -37,7 +37,7 @@ import { CommonModule } from '@angular/common';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .error-container {
@@ -66,12 +66,12 @@ import { CommonModule } from '@angular/common';
       .error-actions {
         margin-top: 0.5rem;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ErrorMessageComponen {t {
   @Input() title = 'Error';
   @Input() message = 'An error occurred. Please try again later.';
   @Input() showRetry = true;
-  @Output() onRetry = new EventEmitter();
+  @Output() onRetry = new EventEmitter()
 }

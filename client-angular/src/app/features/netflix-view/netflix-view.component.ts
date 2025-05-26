@@ -33,14 +33,14 @@ import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
-  Component,;
-  OnInit,;
-  ElementRef,;
-  ViewChildren,;
-  QueryList,;
-  ViewChild,;
-  TemplateRef,;
-  Input,;
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChildren,
+  QueryList,
+  ViewChild,
+  TemplateRef,
+  Input,
   CUSTOM_ELEMENTS_SCHEMA,';
 } from '@angular/core';
 
@@ -52,47 +52,47 @@ import { ToastModule } from 'primeng/toast';
 // Layout Components
 
 interface GetAdsResponse {
-  ads: Ad[];
+  ads: Ad[]
   total: number;
   page: number;
   limit: number;
 }
 
 @Component({
-  selector: 'app-netflix-view',;
-  templateUrl: './netflix-view.component.html',;
-  styleUrls: ['./netflix-view.component.scss'],;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  standalone: true,;
+  selector: 'app-netflix-view',
+  templateUrl: './netflix-view.component.html',
+  styleUrls: ['./netflix-view.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  standalone: true,
   imports: [;
-    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule,; 
-    CommonModule,;
-    RouterModule,;
-    ReactiveFormsModule,;
-    MainLayoutComponent,;
+    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MainLayoutComponent,
     // PrimeNG Modules
-    CardModule,;
-    ButtonModule,;
-    InputTextModule,;
-    AvatarModule,;
-    BadgeModule,;
-    ProgressSpinnerModule,;
-    DialogModule,;
-    DropdownModule,;
-    InputSwitchModule,;
-    RippleModule,;
-    DataViewModule,;
-    TooltipModule,;
-    TagModule,,;
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    AvatarModule,
+    BadgeModule,
+    ProgressSpinnerModule,
+    DialogModule,
+    DropdownModule,
+    InputSwitchModule,
+    RippleModule,
+    DataViewModule,
+    TooltipModule,
+    TagModule,,
     ToastModule;
-  ],;
-});
+  ],
+})
 export class NetflixViewComponen {t implements OnInit {
   // Define categories for Netflix-style rows
-  categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
+  categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring']
 
   // Store ads by category
-  adsByCategory: { [key: string]: Ad[] } = {};
+  adsByCategory: { [key: string]: Ad[] } = {}
 
   // Component state
   loading = true;
@@ -105,34 +105,34 @@ export class NetflixViewComponen {t implements OnInit {
 
   // CardGrid configuration
   cardGridConfig = {
-    layout: 'netflix' as 'netflix' | 'grid' | 'masonry',;
-    gap: 16,;
-    animated: true,;
+    layout: 'netflix' as 'netflix' | 'grid' | 'masonry',
+    gap: 16,
+    animated: true,
     itemsPerRow: {
       xs: 2, // Extra small devices (phones)
       sm: 3, // Small devices (tablets)
       md: 4, // Medium devices (small laptops)
       lg: 5, // Large devices (desktops)
       xl: 6, // Extra large devices (large desktops)
-    },;
-  };
+    },
+  }
 
   // PrimeNG-specific properties
   showFiltersDialog = false; // For PrimeNG dialog visibility
 
   constructor(;
-    private adService: AdService,;
-    private notificationService: NotificationPrimeNGService,;
-    private chatService: ChatService,;
-    private authService: AuthService,;
-    private fb: FormBuilder,;
-    private router: Router,;
+    private adService: AdService,
+    private notificationService: NotificationPrimeNGService,
+    private chatService: ChatService,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
   ) {
     this.filterForm = this.fb.group({
-      category: [''],;
-      location: [''],;
-      touringOnly: [false],;
-    });
+      category: [''],
+      location: [''],
+      touringOnly: [false],
+    })
   }
 
   /**
@@ -142,12 +142,12 @@ export class NetflixViewComponen {t implements OnInit {
    */
   ngOnInit(): void {
     // Load ads for all categories
-    this.loadAds();
+    this.loadAds()
 
     // Subscribe to authentication state
     this.authService.currentUser$.subscribe((user) => {
       this.isAuthenticated = !!user;
-    });
+    })
   }
 
   loadAds(): void {
@@ -160,9 +160,9 @@ export class NetflixViewComponen {t implements OnInit {
         if (featuredAds && featuredAds.length > 0) {
           this.adsByCategory['Featured'] = featuredAds;
           // Set a featured ad for the hero section
-          this.featuredAd = featuredAds[0];
+          this.featuredAd = featuredAds[0]
         } else {
-          this.adsByCategory['Featured'] = [];
+          this.adsByCategory['Featured'] = []
         }
 
         // Then get trending ads
@@ -177,114 +177,114 @@ export class NetflixViewComponen {t implements OnInit {
                 if (allAds && allAds.length > 0) {
                   // If we don't have a featured ad yet, set one from all ads
                   if (!this.featuredAd && allAds.length > 0) {
-                    this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)];
+                    this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)]
                   }
 
                   // Set New Arrivals (sort by creation date)
-                  const newArrivals = [...allAds];
+                  const newArrivals = [...allAds]
                     .sort((a, b) => {
-                      const dateA = new Date(a.createdAt || 0);
-                      const dateB = new Date(b.createdAt || 0);
-                      return dateB.getTime() - dateA.getTime();
-                    });
-                    .slice(0, 10);
+                      const dateA = new Date(a.createdAt || 0)
+                      const dateB = new Date(b.createdAt || 0)
+                      return dateB.getTime() - dateA.getTime()
+                    })
+                    .slice(0, 10)
                   this.adsByCategory['New Arrivals'] = newArrivals;
 
                   // Set Nearby (for now, just random selection)
-                  this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
+                  this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10)
 
                   // Set Touring (filter by isTouring flag)
-                  const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
+                  const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10)
                   this.adsByCategory['Touring'] =;
                     touringAds.length > 0;
                       ? touringAds;
-                      : this.shuffleArray([...allAds]).slice(0, 10);
+                      : this.shuffleArray([...allAds]).slice(0, 10)
                 } else {
                   // If no ads found, set empty arrays for remaining categories
                   this.categories.forEach((category) => {
                     if (!this.adsByCategory[category]) {
-                      this.adsByCategory[category] = [];
+                      this.adsByCategory[category] = []
                     }
-                  });
+                  })
                 }
 
                 this.loading = false;
-              },;
+              },
               error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
-              },;
-            });
-          },;
+              },
+            })
+          },
           error: (err) => {
             this.error = 'Failed to load trending ads. Please try again.';
             this.loading = false;
-          },;
-        });
-      },;
+          },
+        })
+      },
       error: (err) => {
         this.error = 'Failed to load featured ads. Please try again.';
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   private loadTrendingAndRemainingAds(): void {
     this.adService.getTrendingAds().subscribe({
       next: (trendingAds) => {
         this.adsByCategory['Most Popular'] = trendingAds;
-        this.loadRemainingCategories();
-      },;
+        this.loadRemainingCategories()
+      },
       error: (err) => {
         this.error = 'Failed to load trending ads. Please try again.';
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   private loadRemainingCategories(existingAds?: Ad[]): void {
     this.adService.getAds().subscribe({
       next: (response: GetAdsResponse) => {
-        this.processAllAds(response.ads);
-      },;
+        this.processAllAds(response.ads)
+      },
       error: (err) => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   private processAllAds(allAds: Ad[]): void {
     if (allAds && allAds.length > 0) {
       // If we don't have a featured ad yet, set one from all ads
       if (!this.featuredAd && allAds.length > 0) {
-        this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)];
+        this.featuredAd = allAds[Math.floor(Math.random() * allAds.length)]
       }
 
       // Set New Arrivals (sort by creation date)
-      const newArrivals = [...allAds];
+      const newArrivals = [...allAds]
         .sort((a, b) => {
-          const dateA = new Date(a.createdAt || 0);
-          const dateB = new Date(b.createdAt || 0);
-          return dateB.getTime() - dateA.getTime();
-        });
-        .slice(0, 10);
+          const dateA = new Date(a.createdAt || 0)
+          const dateB = new Date(b.createdAt || 0)
+          return dateB.getTime() - dateA.getTime()
+        })
+        .slice(0, 10)
       this.adsByCategory['New Arrivals'] = newArrivals;
 
       // Set Nearby (for now, just random selection)
-      this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10);
+      this.adsByCategory['Nearby'] = this.shuffleArray([...allAds]).slice(0, 10)
 
       // Set Touring (filter by isTouring flag)
-      const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
+      const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10)
       this.adsByCategory['Touring'] =;
-        touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10);
+        touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10)
     } else {
       // If no ads found, set empty arrays for remaining categories
       this.categories.forEach((category) => {
         if (!this.adsByCategory[category]) {
-          this.adsByCategory[category] = [];
+          this.adsByCategory[category] = []
         }
-      });
+      })
     }
 
     this.loading = false;
@@ -296,10 +296,10 @@ export class NetflixViewComponen {t implements OnInit {
    * @returns A new shuffled array;
    */
   private shuffleArray(array: any[]): any[] {
-    const newArray = [...array];
+    const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      const j = Math.floor(Math.random() * (i + 1))
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray;
   }
@@ -310,7 +310,7 @@ export class NetflixViewComponen {t implements OnInit {
    */
   viewAdDetails(adId: string): void {
     // Navigate to ad details page using Angular Router
-    this.router.navigateByUrl(`/ad-details/${adId}`);`
+    this.router.navigateByUrl(`/ad-details/${adId}`)`
   }
 
   /**
@@ -319,24 +319,24 @@ export class NetflixViewComponen {t implements OnInit {
    * @param event Optional event to stop propagation;
    */
   likeAd(adId: string, event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
 
     // Check if user is authenticated
     if (!this.isAuthenticated) {
-      this.notificationService.error('Please log in to like ads');
+      this.notificationService.error('Please log in to like ads')
       return;
     }
 
     // Using recordSwipe with 'right' direction as a like action
     this.adService.recordSwipe(adId, 'right').subscribe({
       next: () => {
-        this.notificationService.success('Added to your favorites');
-      },;
+        this.notificationService.success('Added to your favorites')
+      },
       error: (err) => {
-        this.notificationService.error('Failed to like ad');
-        console.error('Error liking ad:', err);
-      },;
-    });
+        this.notificationService.error('Failed to like ad')
+        console.error('Error liking ad:', err)
+      },
+    })
   }
 
   /**
@@ -345,24 +345,24 @@ export class NetflixViewComponen {t implements OnInit {
    * @param event Optional event to stop propagation;
    */
   startChat(adId: string, event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
 
     // Check if user is authenticated
     if (!this.isAuthenticated) {
-      this.notificationService.error('Please log in to start a chat');
+      this.notificationService.error('Please log in to start a chat')
       return;
     }
 
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        this.router.navigateByUrl(`/chat/${room.id}`);`
-      },;
+        this.router.navigateByUrl(`/chat/${room.id}`)`
+      },
       error: (err) => {
-        this.notificationService.error('Failed to start chat');
-        console.error('Error starting chat:', err);
-      },;
-    });
+        this.notificationService.error('Failed to start chat')
+        console.error('Error starting chat:', err)
+      },
+    })
   }
 
   /**
@@ -373,16 +373,16 @@ export class NetflixViewComponen {t implements OnInit {
   onHeroAction(action: any, adId: string): void {
     switch (action.id) {
       case 'view':;
-        this.viewAdDetails(adId);
+        this.viewAdDetails(adId)
         break;
       case 'favorite':;
-        this.likeAd(adId);
+        this.likeAd(adId)
         break;
       case 'chat':;
-        this.startChat(adId);
+        this.startChat(adId)
         break;
       default:;
-        console.warn('Unknown action:', action.id);
+        console.warn('Unknown action:', action.id)
     }
   }
 
@@ -397,16 +397,16 @@ export class NetflixViewComponen {t implements OnInit {
 
     switch (event.id) {
       case 'view':;
-        this.viewAdDetails(targetAdId);
+        this.viewAdDetails(targetAdId)
         break;
       case 'favorite':;
-        this.likeAd(targetAdId);
+        this.likeAd(targetAdId)
         break;
       case 'chat':;
-        this.startChat(targetAdId);
+        this.startChat(targetAdId)
         break;
       default:;
-        console.warn('Unknown card action:', event.id);
+        console.warn('Unknown card action:', event.id)
     }
   }
 
@@ -492,10 +492,10 @@ export class NetflixViewComponen {t implements OnInit {
   applyFilters(): void {
     // TODO: Implement filter logic based on filterForm values
     // For now, just reload all ads
-    this.loadAds();
+    this.loadAds()
 
     // Show success notification
-    this.notificationService.success('Filters applied');
+    this.notificationService.success('Filters applied')
   }
 
   /**
@@ -510,19 +510,19 @@ export class NetflixViewComponen {t implements OnInit {
    */
   resetFilters(): void {
     this.filterForm.reset({
-      category: '',;
-      location: '',;
-      touringOnly: false,;
-    });
+      category: '',
+      location: '',
+      touringOnly: false,
+    })
 
     // Apply the reset filters
-    this.applyFilters();
+    this.applyFilters()
   }
 
   /**
    * Convert ad ID to string regardless of its type;
    */
   getAdIdAsString(adId: string | { city: string; county: string }): string {
-    return typeof adId === 'string' ? adId : JSON.stringify(adId);
+    return typeof adId === 'string' ? adId : JSON.stringify(adId)
   }
 }

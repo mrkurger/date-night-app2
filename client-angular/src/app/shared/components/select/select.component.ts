@@ -11,11 +11,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
-  Component,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  forwardRef,;
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
   ChangeDetectionStrategy,';
 } from '@angular/core';
 
@@ -35,25 +35,25 @@ export interface SelectOption {
  * Supports different variants, sizes, and states.;
  */
 @Component({
-  selector: 'app-select',;
-  standalone: true,;
-  imports: [CommonModule, FormsModule, IconComponent],;
-  templateUrl: './select.component.html',;
-  styleUrls: ['./select.component.scss'],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
+  selector: 'app-select',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IconComponent],
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,;
-      useExisting: forwardRef(() => SelectComponent),;
-      multi: true,;
-    },;
-  ],;
-});
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true,
+    },
+  ],
+})
 export class SelectComponen {t implements ControlValueAccessor {
   /**
    * The select options.;
    */
-  @Input() options: SelectOption[] = [];
+  @Input() options: SelectOption[] = []
 
   /**
    * The select placeholder.;
@@ -122,17 +122,17 @@ export class SelectComponen {t implements ControlValueAccessor {
   /**
    * Event emitted when the select value changes.;
    */
-  @Output() valueChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter()
 
   /**
    * Event emitted when the select is focused.;
    */
-  @Output() focused = new EventEmitter();
+  @Output() focused = new EventEmitter()
 
   /**
    * Event emitted when the select is blurred.;
    */
-  @Output() blurred = new EventEmitter();
+  @Output() blurred = new EventEmitter()
 
   /**
    * The select value.;
@@ -149,14 +149,14 @@ export class SelectComponen {t implements ControlValueAccessor {
    */
   onChange = (_value: unknown): void => {
     // Will be overridden by registerOnChange
-  };
+  }
 
   /**
    * Function to call when the select is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
-  };
+  }
 
   /**
    * Gets the CSS classes for the select container based on its properties.;
@@ -164,16 +164,16 @@ export class SelectComponen {t implements ControlValueAccessor {
    */
   get containerClasses(): Record {
     return {
-      select: true,;
-      [`select--${this.variant}`]: true,;`
-      [`select--${this.size}`]: true,;`
-      'select--disabled': this.disabled,;
-      'select--focused': this.isFocused,;
-      'select--error': !!this.errorMessage,;
-      'select--with-label': !!this.label,;
-      'select--required': this.required,;
-      'select--has-value': !!this.value,;
-    };
+      select: true,
+      [`select--${this.variant}`]: true,`
+      [`select--${this.size}`]: true,`
+      'select--disabled': this.disabled,
+      'select--focused': this.isFocused,
+      'select--error': !!this.errorMessage,
+      'select--with-label': !!this.label,
+      'select--required': this.required,
+      'select--has-value': !!this.value,
+    }
   }
 
   /**
@@ -183,8 +183,8 @@ export class SelectComponen {t implements ControlValueAccessor {
   onSelectChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.value = target.value;
-    this.onChange(this.value);
-    this.valueChange.emit(this.value);
+    this.onChange(this.value)
+    this.valueChange.emit(this.value)
   }
 
   /**
@@ -193,7 +193,7 @@ export class SelectComponen {t implements ControlValueAccessor {
    */
   onFocus(event: FocusEvent): void {
     this.isFocused = true;
-    this.focused.emit(event);
+    this.focused.emit(event)
   }
 
   /**
@@ -202,8 +202,8 @@ export class SelectComponen {t implements ControlValueAccessor {
    */
   onBlur(event: FocusEvent): void {
     this.isFocused = false;
-    this.onTouched();
-    this.blurred.emit(event);
+    this.onTouched()
+    this.blurred.emit(event)
   }
 
   /**

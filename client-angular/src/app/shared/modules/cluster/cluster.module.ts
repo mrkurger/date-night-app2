@@ -8,9 +8,9 @@ import { CommonModule } from '@angular/common';
  * to improve performance and usability when displaying many markers.;
  */
 @NgModule({
-  declarations: [],;
-  imports: [CommonModule],;
-  exports: [],;
-});
+  declarations: [],
+  imports: [CommonModule],
+  exports: [],
+})
 export class ClusterModul {e {}
 ';

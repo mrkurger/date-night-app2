@@ -24,19 +24,19 @@ import { InputTextModule } from 'primeng/inputtext';
 // ===================================================
 
 @Component({';
-    selector: 'app-login',;
-    templateUrl: './login.component.html',;
-    styleUrls: ['./login.component.scss', './social-login.scss'],;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss', './social-login.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [;
-    NebularModule, ReactiveFormsModule, RouterLink,;
-    CardModule,;
-    ButtonModule,;
-    ProgressSpinnerModule,;
-    MessageModule,;
+    NebularModule, ReactiveFormsModule, RouterLink,
+    CardModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    MessageModule,
     InputTextModule;
-  ];
-});
+  ]
+})
 export class LoginComponen {t implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
@@ -45,17 +45,17 @@ export class LoginComponen {t implements OnInit {
   hidePassword = true;
 
   constructor(;
-    private fb: FormBuilder,;
-    private userService: UserService,;
-    private authService: AuthService,;
-    private nbAuthService: NbAuthService,;
-    private router: Router,;
-    private route: ActivatedRoute,;
+    private fb: FormBuilder,
+    private userService: UserService,
+    private authService: AuthService,
+    private nbAuthService: NbAuthService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],;
-      password: ['', [Validators.required, Validators.minLength(6)]],;
-    });
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    })
   }
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class LoginComponen {t implements OnInit {
 
     // Redirect if already logged in
     if (this.userService.isAuthenticated()) {
-      this.router.navigate([this.returnUrl]);
+      this.router.navigate([this.returnUrl])
     }
   }
 
@@ -79,16 +79,16 @@ export class LoginComponen {t implements OnInit {
     const { email, password } = this.loginForm.value;
 
     this.userService;
-      .login({ email, password });
-      .pipe(finalize(() => (this.isLoading = false)));
+      .login({ email, password })
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: () => {
-          this.router.navigate([this.returnUrl]);
-        },;
+          this.router.navigate([this.returnUrl])
+        },
         error: (error) => {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
-        },;
-      });
+        },
+      })
   }
 
   socialLogin(provider: string): void {
@@ -98,21 +98,21 @@ export class LoginComponen {t implements OnInit {
       this.isLoading = false;
       if (result.isSuccess()) {
         // Only allow redirects to internal routes for security
-        const redirect = result.getRedirect();
+        const redirect = result.getRedirect()
         if (
           redirect &&;
           redirect.startsWith('/') &&;
           !redirect.startsWith('//') &&
-          !redirect.includes(':');
+          !redirect.includes(':')
         ) {
-          this.router.navigateByUrl(redirect);
+          this.router.navigateByUrl(redirect)
         } else {
-          this.router.navigateByUrl(this.returnUrl);
+          this.router.navigateByUrl(this.returnUrl)
         }
       } else {
         this.errorMessage =;
           result.getErrors()[0] || `Login with ${provider} failed. Please try again.`;`
       }
-    });
+    })
   }
 }

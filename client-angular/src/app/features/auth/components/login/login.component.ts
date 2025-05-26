@@ -6,13 +6,13 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
   NbTooltipModule,';
 } from '@nebular/theme';
 
@@ -27,21 +27,21 @@ import { CommonModule } from '@angular/common';
 // ===================================================
 
 @Component({
-  selector: 'app-login',;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [NebularModule, ReactiveFormsModule,;
-    CommonModule,;
-    RouterLink,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbInputModule,;
-    NbFormFieldModule,;
-    NbIconModule,;
-    NbSpinnerModule,;
-    NbAlertModule,;
-    NbTooltipModule,;
-  ],;
+  selector: 'app-login',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [NebularModule, ReactiveFormsModule,
+    CommonModule,
+    RouterLink,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+  ],
   template: `;`
     ;
       ;
@@ -83,7 +83,7 @@ import { CommonModule } from '@angular/common';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -96,22 +96,22 @@ import { CommonModule } from '@angular/common';
         align-items: center;
         min-height: 100vh;
         padding: 2rem;
-        background-color: var(--background-basic-color-2);
+        background-color: var(--background-basic-color-2)
       }
 
       nb-card {
         margin: 0;
         max-width: 400px;
         width: 100%;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
+        border-radius: var(--border-radius)
+        box-shadow: var(--shadow)
       }
 
       .title {
         margin: 0;
         text-align: center;
         font-weight: 600;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       nb-card-body {
@@ -133,7 +133,7 @@ import { CommonModule } from '@angular/common';
         text-align: center;
 
         a {
-          color: var(--text-primary-color);
+          color: var(--text-primary-color)
           text-decoration: none;
           font-weight: 500;
 
@@ -144,15 +144,15 @@ import { CommonModule } from '@angular/common';
       }
 
       nb-icon {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .error-icon nb-icon {
-        color: var(--color-danger-default);
+        color: var(--color-danger-default)
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class LoginComponen {t {
   loginForm: FormGroup;
   error = '';
@@ -160,14 +160,14 @@ export class LoginComponen {t {
   showPassword = false;
 
   constructor(;
-    private fb: FormBuilder,;
-    private auth: AuthService,;
-    private router: Router,;
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],;
-      password: ['', Validators.required],;
-    });
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    })
   }
 
   onSubmit(): void {
@@ -178,13 +178,13 @@ export class LoginComponen {t {
       this.auth.login(this.loginForm.value).subscribe({
         next: () => {
           this.isLoading = false;
-          this.router.navigate(['/ads']);
-        },;
+          this.router.navigate(['/ads'])
+        },
         error: (err) => {
           this.isLoading = false;
           this.error = err.error.message || 'Login failed';
-        },;
-      });
+        },
+      })
     }
   }
 }

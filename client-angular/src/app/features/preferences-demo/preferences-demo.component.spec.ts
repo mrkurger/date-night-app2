@@ -21,145 +21,145 @@ describe('PreferencesDemoComponent', () => {
   let preferencesSubject: BehaviorSubject;
 
   const MOCK_PREFERENCES: any = {
-    defaultViewType: 'netflix' as 'netflix' | 'tinder' | 'list',;
-    contentDensity: 'comfortable',;
-    cardSize: 'medium',;
-    savedFilters: {},;
-    recentlyViewed: [],;
-    favorites: [],;
-  };
+    defaultViewType: 'netflix' as 'netflix' | 'tinder' | 'list',
+    contentDensity: 'comfortable',
+    cardSize: 'medium',
+    savedFilters: {},
+    recentlyViewed: [],
+    favorites: [],
+  }
 
   beforeEach(async () => {
     // Create a mock preferences subject
-    preferencesSubject = new BehaviorSubject(MOCK_PREFERENCES);
+    preferencesSubject = new BehaviorSubject(MOCK_PREFERENCES)
 
     // Create a mock UserPreferencesService
     mockUserPreferencesService = jasmine.createSpyObj('UserPreferencesService', [;
-      'getPreferences',;
-      'setDefaultViewType',;
-      'setContentDensity',;
-      'setCardSize',;
-      'resetPreferences',;
-    ]);
+      'getPreferences',
+      'setDefaultViewType',
+      'setContentDensity',
+      'setCardSize',
+      'resetPreferences',
+    ])
 
     // Configure the mock service
-    mockUserPreferencesService.getPreferences.and.returnValue(MOCK_PREFERENCES);
-    mockUserPreferencesService.preferences$ = preferencesSubject.asObservable();
+    mockUserPreferencesService.getPreferences.and.returnValue(MOCK_PREFERENCES)
+    mockUserPreferencesService.preferences$ = preferencesSubject.asObservable()
 
     // Create getters for the options
     Object.defineProperty(mockUserPreferencesService, 'contentDensityOptions', {
       get: () => [;
-        { value: 'comfortable', label: 'Comfortable' },;
-        { value: 'compact', label: 'Compact' },;
-        { value: 'condensed', label: 'Condensed' },;
-      ],;
-    });
+        { value: 'comfortable', label: 'Comfortable' },
+        { value: 'compact', label: 'Compact' },
+        { value: 'condensed', label: 'Condensed' },
+      ],
+    })
 
     Object.defineProperty(mockUserPreferencesService, 'cardSizeOptions', {
       get: () => [;
-        { value: 'small', label: 'Small' },;
-        { value: 'medium', label: 'Medium' },;
-        { value: 'large', label: 'Large' },;
-      ],;
-    });
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'large', label: 'Large' },
+      ],
+    })
 
     await TestBed.configureTestingModule({
-      imports: [PreferencesDemoComponent],;
-      providers: [{ provide: UserPreferencesService, useValue: mockUserPreferencesService }],;
+      imports: [PreferencesDemoComponent],
+      providers: [{ provide: UserPreferencesService, useValue: mockUserPreferencesService }],
       schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements like mat-card
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(PreferencesDemoComponent);
+    fixture = TestBed.createComponent(PreferencesDemoComponent)
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should load initial preferences', () => {
-    expect(component.defaultViewType).toBe('netflix');
-    expect(component.contentDensity).toBe('comfortable');
-    expect(component.cardSize).toBe('medium');
-    expect(mockUserPreferencesService.getPreferences).toHaveBeenCalled();
-  });
+    expect(component.defaultViewType).toBe('netflix')
+    expect(component.contentDensity).toBe('comfortable')
+    expect(component.cardSize).toBe('medium')
+    expect(mockUserPreferencesService.getPreferences).toHaveBeenCalled()
+  })
 
   it('should update when preferences change', () => {
     // Simulate a preference change
     preferencesSubject.next({
-      ...MOCK_PREFERENCES,;
-      defaultViewType: 'tinder',;
-      contentDensity: 'compact',;
-      cardSize: 'large',;
-    });
+      ...MOCK_PREFERENCES,
+      defaultViewType: 'tinder',
+      contentDensity: 'compact',
+      cardSize: 'large',
+    })
 
     // Check that the component updated
-    expect(component.defaultViewType).toBe('tinder');
-    expect(component.contentDensity).toBe('compact');
-    expect(component.cardSize).toBe('large');
-  });
+    expect(component.defaultViewType).toBe('tinder')
+    expect(component.contentDensity).toBe('compact')
+    expect(component.cardSize).toBe('large')
+  })
 
   it('should call setDefaultViewType when view type changes', () => {
     // Arrange
     component.defaultViewType = 'tinder';
 
     // Act
-    component.onViewTypeChange();
+    component.onViewTypeChange()
 
     // Assert
-    expect(mockUserPreferencesService.setDefaultViewType).toHaveBeenCalledWith('tinder');
-  });
+    expect(mockUserPreferencesService.setDefaultViewType).toHaveBeenCalledWith('tinder')
+  })
 
   it('should call setContentDensity when content density changes', () => {
     // Arrange
     component.contentDensity = 'compact';
 
     // Act
-    component.onContentDensityChange();
+    component.onContentDensityChange()
 
     // Assert
-    expect(mockUserPreferencesService.setContentDensity).toHaveBeenCalledWith('compact');
-  });
+    expect(mockUserPreferencesService.setContentDensity).toHaveBeenCalledWith('compact')
+  })
 
   it('should call setCardSize when card size changes', () => {
     // Arrange
     component.cardSize = 'large';
 
     // Act
-    component.onCardSizeChange();
+    component.onCardSizeChange()
 
     // Assert
-    expect(mockUserPreferencesService.setCardSize).toHaveBeenCalledWith('large');
-  });
+    expect(mockUserPreferencesService.setCardSize).toHaveBeenCalledWith('large')
+  })
 
   it('should call resetPreferences when reset is clicked', () => {
     // Act
-    component.resetPreferences();
+    component.resetPreferences()
 
     // Assert
-    expect(mockUserPreferencesService.resetPreferences).toHaveBeenCalled();
-  });
+    expect(mockUserPreferencesService.resetPreferences).toHaveBeenCalled()
+  })
 
   it('should get content density label', () => {
     // Arrange
     component.contentDensity = 'compact';
 
     // Act
-    const label = component.getContentDensityLabel();
+    const label = component.getContentDensityLabel()
 
     // Assert
-    expect(label).toBe('Compact');
-  });
+    expect(label).toBe('Compact')
+  })
 
   it('should get card size label', () => {
     // Arrange
     component.cardSize = 'large';
 
     // Act
-    const label = component.getCardSizeLabel();
+    const label = component.getCardSizeLabel()
 
     // Assert
-    expect(label).toBe('Large');
-  });
-});
+    expect(label).toBe('Large')
+  })
+})

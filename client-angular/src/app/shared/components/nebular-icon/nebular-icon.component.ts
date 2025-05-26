@@ -2,12 +2,12 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({';
-  selector: 'app-primeng-icon',;
-  standalone: true,;
-  imports: [CommonModule],;
+  selector: 'app-primeng-icon',
+  standalone: true,
+  imports: [CommonModule],
   template: `;`
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -20,21 +20,21 @@ import { CommonModule } from '@angular/common';
       }
       @keyframes spin {
         from {
-          transform: rotate(0deg);
+          transform: rotate(0deg)
         }
         to {
-          transform: rotate(360deg);
+          transform: rotate(360deg)
         }
       }
-    `,;`
-  ],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+    `,`
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class PrimeNGIconComponen {t {
   /**
    * The name of the icon. Can be either:;
-   * 1. A Material icon name (e.g. 'favorite', 'delete') (DEPRECATED);
-   * 2. An Eva icon name (e.g. 'heart', 'trash-2');
+   * 1. A Material icon name (e.g. 'favorite', 'delete') (DEPRECATED)
+   * 2. An Eva icon name (e.g. 'heart', 'trash-2')
    */
   @Input() name: string = '';
 
@@ -55,15 +55,15 @@ export class PrimeNGIconComponen {t {
    */
   private convertSize(size: string): string {
     const sizeMap: { [key: string]: string } = {
-      small: '1rem',;
-      medium: '1.5rem',;
-      large: '2rem',;
-    };
+      small: '1rem',
+      medium: '1.5rem',
+      large: '2rem',
+    }
     return sizeMap[size] || '1.5rem';
   }
 
   /**
-   * Gets the icon name, converting from Material names if necessary (DEPRECATED);
+   * Gets the icon name, converting from Material names if necessary (DEPRECATED)
    */
   getIconName(): string {
     // Directly return the name for simplicity

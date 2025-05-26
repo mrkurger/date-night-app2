@@ -16,9 +16,9 @@ import { CommonModule } from '@angular/common';
 // ===================================================
 
 @Component({';
-  selector: 'app-image-gallery',;
-  standalone: true,;
-  imports: [CommonModule, NbIconModule, NbButtonModule],;
+  selector: 'app-image-gallery',
+  standalone: true,
+  imports: [CommonModule, NbIconModule, NbButtonModule],
   template: `;`
     ;
        0">;
@@ -42,7 +42,7 @@ import { CommonModule } from '@angular/common';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .gallery-container {
@@ -56,7 +56,7 @@ import { CommonModule } from '@angular/common';
         height: 0;
         padding-bottom: 75%;
         overflow: hidden;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
       }
       .main-image {
         position: absolute;
@@ -79,10 +79,10 @@ import { CommonModule } from '@angular/common';
         padding: 0 10px;
       }
       .nav-button {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: var(--text-control-color);
+        background-color: rgba(0, 0, 0, 0.5)
+        color: var(--text-control-color)
         &:hover:not(:disabled) {
-          background-color: rgba(0, 0, 0, 0.7);
+          background-color: rgba(0, 0, 0, 0.7)
         }
       }
       .gallery-thumbnails {
@@ -94,7 +94,7 @@ import { CommonModule } from '@angular/common';
       .thumbnail {
         width: 60px;
         height: 60px;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         overflow: hidden;
         cursor: pointer;
         opacity: 0.7;
@@ -102,7 +102,7 @@ import { CommonModule } from '@angular/common';
       }
       .thumbnail.active {
         opacity: 1;
-        border: 2px solid var(--color-primary-500);
+        border: 2px solid var(--color-primary-500)
       }
       .thumbnail img {
         width: 100%;
@@ -115,9 +115,9 @@ import { CommonModule } from '@angular/common';
         align-items: center;
         justify-content: center;
         height: 200px;
-        background-color: var(--background-basic-color-2);
-        border-radius: var(--border-radius);
-        color: var(--text-hint-color);
+        background-color: var(--background-basic-color-2)
+        border-radius: var(--border-radius)
+        color: var(--text-hint-color)
       }
       nb-icon {
         font-size: 48px;
@@ -125,25 +125,25 @@ import { CommonModule } from '@angular/common';
         width: 48px;
         margin-bottom: 16px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ImageGalleryComponen {t {
-  @Input() images: string[] = [];
+  @Input() images: string[] = []
   @Input() showThumbnails = true;
-  @Output() imageChange = new EventEmitter();
+  @Output() imageChange = new EventEmitter()
 
   currentIndex = 0;
 
   nextImage(): void {
     if (this.currentIndex  0) {
       this.currentIndex--;
-      this.imageChange.emit(this.currentIndex);
+      this.imageChange.emit(this.currentIndex)
     }
   }
 
   selectImage(index: number): void {
     this.currentIndex = index;
-    this.imageChange.emit(this.currentIndex);
+    this.imageChange.emit(this.currentIndex)
   }
 }

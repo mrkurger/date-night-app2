@@ -2,8 +2,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, of, map, catchError } from 'rxjs';
 import { MapMonitoringService } from './map-monitoring.service';
-  GeocodingService,;
-  EnhancedGeocodingResult,;
+  GeocodingService,
+  EnhancedGeocodingResult,
   ReverseGeocodingResult,';
 } from './geocoding.service';
 
@@ -15,20 +15,20 @@ export interface LocationVerificationResult {
   coordinates?: {
     latitude: number;
     longitude: number;
-  };
+  }
   error?: string;
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class LocationVerificationServic {e {
   private readonly CONFIDENCE_THRESHOLD = 0.8;
   private readonly MAX_DISTANCE_KM = 1; // Maximum distance for location match
 
   constructor(;
-    private geocodingService: GeocodingService,;
-    private mapMonitoringService: MapMonitoringService,;
+    private geocodingService: GeocodingService,
+    private mapMonitoringService: MapMonitoringService,
   ) {}
 
   /**
@@ -38,16 +38,16 @@ export class LocationVerificationServic {e {
    */
   verifyAddress(address: string): Observable {
     return this.geocodingService.enhancedGeocode(address).pipe(;
-      map((result) => this.processGeocodeResult(address, result)),;
+      map((result) => this.processGeocodeResult(address, result)),
       catchError((error) => {
-        console.error('Error verifying address:', error);
+        console.error('Error verifying address:', error)
         return of({
-          isValid: false,;
-          confidence: 0,;
-          error: 'Failed to verify address',;
-        });
-      }),;
-    );
+          isValid: false,
+          confidence: 0,
+          error: 'Failed to verify address',
+        })
+      }),
+    )
   }
 
   /**
@@ -58,68 +58,68 @@ export class LocationVerificationServic {e {
    * @returns Observable with verification result;
    */
   verifyCoordinates(;
-    latitude: number,;
-    longitude: number,;
-    claimedAddress?: string,;
+    latitude: number,
+    longitude: number,
+    claimedAddress?: string,
   ): Observable {
     return this.geocodingService.enhancedReverseGeocode(latitude, longitude).pipe(;
       map((result) => {
         if (!result) {
           return {
-            isValid: false,;
-            confidence: 0,;
-            error: 'Could not verify coordinates',;
-          };
+            isValid: false,
+            confidence: 0,
+            error: 'Could not verify coordinates',
+          }
         }
 
         // If there's a claimed address, verify it matches
         if (claimedAddress) {
-          return this.compareAddressWithReverse(claimedAddress, result);
+          return this.compareAddressWithReverse(claimedAddress, result)
         }
 
         // If no claimed address, just verify the coordinates are valid
         return {
-          isValid: true,;
-          confidence: 1,;
-          matchedAddress: result.formattedAddress,;
-          coordinates: { latitude, longitude },;
-        };
-      }),;
+          isValid: true,
+          confidence: 1,
+          matchedAddress: result.formattedAddress,
+          coordinates: { latitude, longitude },
+        }
+      }),
       catchError((error) => {
-        console.error('Error verifying coordinates:', error);
+        console.error('Error verifying coordinates:', error)
         return of({
-          isValid: false,;
-          confidence: 0,;
-          error: 'Failed to verify coordinates',;
-        });
-      }),;
-    );
+          isValid: false,
+          confidence: 0,
+          error: 'Failed to verify coordinates',
+        })
+      }),
+    )
   }
 
   /**
    * Compare a claimed address with reverse geocoding results;
    */
   private compareAddressWithReverse(;
-    claimedAddress: string,;
-    reverseResult: ReverseGeocodingResult,;
+    claimedAddress: string,
+    reverseResult: ReverseGeocodingResult,
   ): LocationVerificationResult {
     return {
-      isValid: true,;
-      confidence: this.calculateAddressConfidence(claimedAddress, reverseResult.formattedAddress),;
-      matchedAddress: reverseResult.formattedAddress,;
+      isValid: true,
+      confidence: this.calculateAddressConfidence(claimedAddress, reverseResult.formattedAddress),
+      matchedAddress: reverseResult.formattedAddress,
       coordinates: {
-        latitude: reverseResult.latitude,;
-        longitude: reverseResult.longitude,;
-      },;
+        latitude: reverseResult.latitude,
+        longitude: reverseResult.longitude,
+      },
       suggestion:;
-        this.calculateAddressConfidence(claimedAddress, reverseResult.formattedAddress) = this.CONFIDENCE_THRESHOLD,;
-      confidence,;
-      matchedAddress: result.formattedAddress,;
+        this.calculateAddressConfidence(claimedAddress, reverseResult.formattedAddress) = this.CONFIDENCE_THRESHOLD,
+      confidence,
+      matchedAddress: result.formattedAddress,
       coordinates: {
-        latitude: result.latitude,;
-        longitude: result.longitude,;
-      },;
-      suggestion: confidence  Array(str1.length + 1).fill(null));
+        latitude: result.latitude,
+        longitude: result.longitude,
+      },
+      suggestion: confidence  Array(str1.length + 1).fill(null))
 
     for (let i = 0; i <= str1.length; i++) {
       matrix[0][i] = i;
@@ -135,11 +135,11 @@ export class LocationVerificationServic {e {
           matrix[j - 1][i] + 1, // deletion
           matrix[j][i - 1] + 1, // insertion
           matrix[j - 1][i - 1] + substitutionCost, // substitution
-        );
+        )
       }
     }
 
-    return matrix[str2.length][str1.length];
+    return matrix[str2.length][str1.length]
   }
 
   /**
@@ -147,9 +147,9 @@ export class LocationVerificationServic {e {
    */
   private normalizeAddress(address: string): string {
     return address;
-      .toLowerCase();
+      .toLowerCase()
       .replace(/[^\w\s]/g, '') // Remove punctuation
       .replace(/\s+/g, ' ') // Normalize whitespace
-      .trim();
+      .trim()
   }
 }

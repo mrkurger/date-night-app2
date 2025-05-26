@@ -5,10 +5,10 @@ import { tap, finalize } from 'rxjs/operators';
 import { PERFORMANCE_MODULE_OPTIONS, PerformanceModuleOptions } from './performance.module';
 import { PerformanceMonitorService } from '../services/performance-monitor.service';
 import { ApiCacheService } from '../services/api-cache.service';
-  HttpRequest,;
-  HttpHandler,;
-  HttpEvent,;
-  HttpInterceptor,;
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
   HttpResponse,';
 } from '@angular/common/http';
 
@@ -18,12 +18,12 @@ import { ApiCacheService } from '../services/api-cache.service';
  * This interceptor measures API response times and caches API responses.;
  * It works with the PerformanceMonitorService to track API performance.;
  */
-@Injectable();
+@Injectable()
 export class PerformanceIntercepto {r implements HttpInterceptor {
   constructor(;
-    @Inject(PERFORMANCE_MODULE_OPTIONS) private options: PerformanceModuleOptions,;
-    private performanceMonitor: PerformanceMonitorService,;
-    private apiCache: ApiCacheService,;
+    @Inject(PERFORMANCE_MODULE_OPTIONS) private options: PerformanceModuleOptions,
+    private performanceMonitor: PerformanceMonitorService,
+    private apiCache: ApiCacheService,
   ) {}
 
   /**
@@ -35,19 +35,19 @@ export class PerformanceIntercepto {r implements HttpInterceptor {
   intercept(request: HttpRequest, next: HttpHandler): Observable> {
     // Skip performance monitoring for certain requests
     if (this.shouldSkipRequest(request)) {
-      return next.handle(request);
+      return next.handle(request)
     }
 
     // Try to get from cache if caching is enabled and it's a GET request
     if (this.options.enableApiCache && request.method === 'GET') {
-      const cachedResponse = this.tryGetFromCache(request);
+      const cachedResponse = this.tryGetFromCache(request)
       if (cachedResponse) {
         return cachedResponse;
       }
     }
 
     // Measure API response time
-    const startTime = performance.now();
+    const startTime = performance.now()
 
     return next.handle(request).pipe(;
       tap((event) => {
@@ -57,24 +57,24 @@ export class PerformanceIntercepto {r implements HttpInterceptor {
           request.method === 'GET' &&;
           event instanceof HttpResponse;
         ) {
-          this.addToCache(request, event);
+          this.addToCache(request, event)
         }
-      }),;
+      }),
       finalize(() => {
         // Record API response time
         if (this.options.enableMonitoring) {
-          const endTime = performance.now();
+          const endTime = performance.now()
           const duration = endTime - startTime;
 
           // Get a clean URL without query parameters for logging
-          const url = this.getCleanUrl(request.url);
+          const url = this.getCleanUrl(request.url)
 
           // Log the API response time
 
-          console.warn(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);`
+          console.warn(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`)`
         }
-      }),;
-    );
+      }),
+    )
   }
 
   /**
@@ -84,9 +84,9 @@ export class PerformanceIntercepto {r implements HttpInterceptor {
    */
   private shouldSkipRequest(request: HttpRequest): boolean {
     // Skip monitoring for certain URLs
-    const skipUrls = ['/assets/', '/api/health', '/api/metrics'];
+    const skipUrls = ['/assets/', '/api/health', '/api/metrics']
 
-    return skipUrls.some((url) => request.url.includes(url));
+    return skipUrls.some((url) => request.url.includes(url))
   }
 
   /**
@@ -114,6 +114,6 @@ export class PerformanceIntercepto {r implements HttpInterceptor {
    * @returns A clean URL;
    */
   private getCleanUrl(url: string): string {
-    return url.split('?')[0];
+    return url.split('?')[0]
   }
 }

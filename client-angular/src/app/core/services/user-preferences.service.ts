@@ -24,23 +24,23 @@ export interface CardSize {
 
 export interface UserPreferences {
   defaultViewType: 'netflix' | 'tinder' | 'list';
-  contentDensity: ContentDensity['value'];
-  cardSize: CardSize['value'];
+  contentDensity: ContentDensity['value']
+  cardSize: CardSize['value']
   savedFilters: {
     [key: string]: any;
-  };
-  recentlyViewed: string[];
-  favorites: string[];
+  }
+  recentlyViewed: string[]
+  favorites: string[]
 }
 
 const DEFAULT_PREFERENCES: UserPreferences = {
-  defaultViewType: 'netflix',;
-  contentDensity: 'comfortable',;
-  cardSize: 'medium',;
-  savedFilters: {},;
-  recentlyViewed: [],;
-  favorites: [],;
-};
+  defaultViewType: 'netflix',
+  contentDensity: 'comfortable',
+  cardSize: 'medium',
+  savedFilters: {},
+  recentlyViewed: [],
+  favorites: [],
+}
 
 const STORAGE_KEY = 'user_preferences';
 
@@ -49,33 +49,33 @@ const STORAGE_KEY = 'user_preferences';
  * Handles saving and retrieving user preferences for layout customization;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class UserPreferencesServic {e {
-  private preferencesSubject = new BehaviorSubject(this.getInitialPreferences());
+  private preferencesSubject = new BehaviorSubject(this.getInitialPreferences())
 
   /**
    * Observable that emits the current user preferences;
    */
-  public preferences$: Observable = this.preferencesSubject.asObservable();
+  public preferences$: Observable = this.preferencesSubject.asObservable()
 
   // Available content density options
   public readonly contentDensityOptions: ContentDensity[] = [;
-    { value: 'comfortable', label: 'Comfortable' },;
-    { value: 'compact', label: 'Compact' },;
-    { value: 'condensed', label: 'Condensed' },;
-  ];
+    { value: 'comfortable', label: 'Comfortable' },
+    { value: 'compact', label: 'Compact' },
+    { value: 'condensed', label: 'Condensed' },
+  ]
 
   // Available card size options
   public readonly cardSizeOptions: CardSize[] = [;
-    { value: 'small', label: 'Small' },;
-    { value: 'medium', label: 'Medium' },;
-    { value: 'large', label: 'Large' },;
-  ];
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' },
+  ]
 
   constructor() {
     // Initialize preferences
-    this.loadPreferences();
+    this.loadPreferences()
   }
 
   /**
@@ -92,12 +92,12 @@ export class UserPreferencesServic {e {
    */
   public updatePreferences(preferences: Partial): void {
     const updatedPreferences = {
-      ...this.preferencesSubject.value,;
-      ...preferences,;
-    };
+      ...this.preferencesSubject.value,
+      ...preferences,
+    }
 
-    this.preferencesSubject.next(updatedPreferences);
-    this.savePreferences(updatedPreferences);
+    this.preferencesSubject.next(updatedPreferences)
+    this.savePreferences(updatedPreferences)
   }
 
   /**
@@ -105,7 +105,7 @@ export class UserPreferencesServic {e {
    * @param viewType The view type to set as default;
    */
   public setDefaultViewType(viewType: 'netflix' | 'tinder' | 'list'): void {
-    this.updatePreferences({ defaultViewType: viewType });
+    this.updatePreferences({ defaultViewType: viewType })
   }
 
   /**
@@ -113,7 +113,7 @@ export class UserPreferencesServic {e {
    * @param density The content density to set;
    */
   public setContentDensity(density: ContentDensity['value']): void {
-    this.updatePreferences({ contentDensity: density });
+    this.updatePreferences({ contentDensity: density })
   }
 
   /**
@@ -121,7 +121,7 @@ export class UserPreferencesServic {e {
    * @param size The card size to set;
    */
   public setCardSize(size: CardSize['value']): void {
-    this.updatePreferences({ cardSize: size });
+    this.updatePreferences({ cardSize: size })
   }
 
   /**
@@ -131,11 +131,11 @@ export class UserPreferencesServic {e {
    */
   public saveFilter(name: string, filter: any): void {
     const savedFilters = {
-      ...this.preferencesSubject.value.savedFilters,;
-      [name]: filter,;
-    };
+      ...this.preferencesSubject.value.savedFilters,
+      [name]: filter,
+    }
 
-    this.updatePreferences({ savedFilters });
+    this.updatePreferences({ savedFilters })
   }
 
   /**
@@ -144,7 +144,7 @@ export class UserPreferencesServic {e {
    * @returns The saved filter or undefined if not found;
    */
   public getSavedFilter(name: string): any {
-    return this.preferencesSubject.value.savedFilters[name];
+    return this.preferencesSubject.value.savedFilters[name]
   }
 
   /**
@@ -152,30 +152,30 @@ export class UserPreferencesServic {e {
    * @param name The name of the filter to delete;
    */
   public deleteSavedFilter(name: string): void {
-    const savedFilters = { ...this.preferencesSubject.value.savedFilters };
-    delete savedFilters[name];
+    const savedFilters = { ...this.preferencesSubject.value.savedFilters }
+    delete savedFilters[name]
 
-    this.updatePreferences({ savedFilters });
+    this.updatePreferences({ savedFilters })
   }
 
   /**
    * Add an item to recently viewed;
    * @param id The ID of the item to add;
-   * @param maxItems Maximum number of items to keep (default: 10);
+   * @param maxItems Maximum number of items to keep (default: 10)
    */
   public addToRecentlyViewed(id: string, maxItems = 10): void {
     // Remove the item if it already exists
     const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(;
-      (item) => item !== id,;
-    );
+      (item) => item !== id,
+    )
 
     // Add the item to the beginning of the array
-    recentlyViewed.unshift(id);
+    recentlyViewed.unshift(id)
 
     // Limit the array to maxItems
-    const limitedRecentlyViewed = recentlyViewed.slice(0, maxItems);
+    const limitedRecentlyViewed = recentlyViewed.slice(0, maxItems)
 
-    this.updatePreferences({ recentlyViewed: limitedRecentlyViewed });
+    this.updatePreferences({ recentlyViewed: limitedRecentlyViewed })
   }
 
   /**
@@ -183,18 +183,18 @@ export class UserPreferencesServic {e {
    * @param id The ID of the item to toggle;
    */
   public toggleFavorite(id: string): void {
-    const favorites = [...this.preferencesSubject.value.favorites];
-    const index = favorites.indexOf(id);
+    const favorites = [...this.preferencesSubject.value.favorites]
+    const index = favorites.indexOf(id)
 
     if (index === -1) {
       // Add to favorites
-      favorites.push(id);
+      favorites.push(id)
     } else {
       // Remove from favorites
-      favorites.splice(index, 1);
+      favorites.splice(index, 1)
     }
 
-    this.updatePreferences({ favorites });
+    this.updatePreferences({ favorites })
   }
 
   /**
@@ -203,15 +203,15 @@ export class UserPreferencesServic {e {
    * @returns True if the item is in favorites, false otherwise;
    */
   public isFavorite(id: string): boolean {
-    return this.preferencesSubject.value.favorites.includes(id);
+    return this.preferencesSubject.value.favorites.includes(id)
   }
 
   /**
    * Reset preferences to defaults;
    */
   public resetPreferences(): void {
-    this.preferencesSubject.next({ ...DEFAULT_PREFERENCES });
-    this.savePreferences(DEFAULT_PREFERENCES);
+    this.preferencesSubject.next({ ...DEFAULT_PREFERENCES })
+    this.savePreferences(DEFAULT_PREFERENCES)
   }
 
   /**
@@ -220,24 +220,24 @@ export class UserPreferencesServic {e {
    */
   private getInitialPreferences(): UserPreferences {
     try {
-      const savedPreferences = localStorage.getItem(STORAGE_KEY);
+      const savedPreferences = localStorage.getItem(STORAGE_KEY)
 
       if (savedPreferences) {
-        return JSON.parse(savedPreferences);
+        return JSON.parse(savedPreferences)
       }
     } catch (error) {
-      console.error('Error loading preferences from localStorage:', error);
+      console.error('Error loading preferences from localStorage:', error)
     }
 
-    return { ...DEFAULT_PREFERENCES };
+    return { ...DEFAULT_PREFERENCES }
   }
 
   /**
    * Load preferences from localStorage;
    */
   private loadPreferences(): void {
-    const preferences = this.getInitialPreferences();
-    this.preferencesSubject.next(preferences);
+    const preferences = this.getInitialPreferences()
+    this.preferencesSubject.next(preferences)
   }
 
   /**
@@ -246,9 +246,9 @@ export class UserPreferencesServic {e {
    */
   private savePreferences(preferences: UserPreferences): void {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences))
     } catch (error) {
-      console.error('Error saving preferences to localStorage:', error);
+      console.error('Error saving preferences to localStorage:', error)
     }
   }
 }

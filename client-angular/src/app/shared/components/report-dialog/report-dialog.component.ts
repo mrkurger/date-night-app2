@@ -13,10 +13,10 @@ import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
 import { NebularModule } from '../../nebular.module';
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
-  FormBuilder,;
-  FormGroup,;
-  ReactiveFormsModule,;
-  Validators,;
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
   FormControl,';
 } from '@angular/forms';
 
@@ -31,12 +31,12 @@ export interface ReportDialogData {
 }
 
 @Component({
-  selector: 'app-report-dialog',;
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],;
+  selector: 'app-report-dialog',
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   template: `;`
     ;
       ;
-        {{ data?.title || 'Report Issue' }};
+        {{ data?.title || 'Report Issue' }}
         ;
           ;
         ;
@@ -81,7 +81,7 @@ export interface ReportDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .report-dialog {
@@ -111,43 +111,43 @@ export interface ReportDialogData {
       .text-right {
         text-align: right;
         font-size: 0.875rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .btn-loading {
         cursor: wait;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ReportDialogComponen {t implements OnInit {
   reportForm!: FormGroup;
   submitted = false;
   data: ReportDialogData;
 
   constructor(;
-    protected dialogRef: NbDialogRef,;
-    private fb: FormBuilder,;
-    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ReportDialogData,;
+    protected dialogRef: NbDialogRef,
+    private fb: FormBuilder,
+    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ReportDialogData,
   ) {
-    this.data = this.injectedData || {};
+    this.data = this.injectedData || {}
   }
 
   ngOnInit(): void {
     this.reportForm = this.fb.group({
-      reason: ['', Validators.required],;
-      details: ['', [Validators.required, Validators.maxLength(500)]],;
-      userId: [this.data?.userId],;
-      advertiserId: [this.data?.advertiserId],;
-      adId: [this.data?.adId],;
-      type: [this.data?.type],;
-      contentId: [this.data?.contentId],;
-    });
+      reason: ['', Validators.required],
+      details: ['', [Validators.required, Validators.maxLength(500)]],
+      userId: [this.data?.userId],
+      advertiserId: [this.data?.advertiserId],
+      adId: [this.data?.adId],
+      type: [this.data?.type],
+      contentId: [this.data?.contentId],
+    })
   }
 
   onSubmit(): void {
     this.submitted = true;
-    this.reportForm.markAllAsTouched();
+    this.reportForm.markAllAsTouched()
 
     if (this.reportForm.invalid) {
       this.submitted = false;
@@ -155,18 +155,18 @@ export class ReportDialogComponen {t implements OnInit {
     }
 
     const reportData = {
-      ...this.data,;
-      ...this.reportForm.value,;
-    };
+      ...this.data,
+      ...this.reportForm.value,
+    }
 
-    console.log('Submitting report:', reportData);
+    console.log('Submitting report:', reportData)
     setTimeout(() => {
-      this.dialogRef.close(reportData);
+      this.dialogRef.close(reportData)
       this.submitted = false;
-    }, 1000);
+    }, 1000)
   }
 
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

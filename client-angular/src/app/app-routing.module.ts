@@ -16,63 +16,63 @@ import { AdminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [;
   {';
-    path: 'auth',;
-    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),;
-  },;
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
+  },
   {
-    path: 'profile',;
-    loadChildren: () => import('./features/profile/profile.module').then((m) => m.ProfileModule),;
-    canActivate: [AuthGuard],;
-  },;
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then((m) => m.ProfileModule),
+    canActivate: [AuthGuard],
+  },
   {
-    path: 'ads',;
+    path: 'ads',
     loadChildren: () =>;
-      import('./features/ad-management/ad-management.module').then((m) => m.AdManagementModule),;
-    canActivate: [AuthGuard],;
-  },;
+      import('./features/ad-management/ad-management.module').then((m) => m.AdManagementModule),
+    canActivate: [AuthGuard],
+  },
   {
-    path: 'admin',;
-    component: AdminLayoutComponent,;
-    canActivate: [AdminGuard],;
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
     children: [;
       {
-        path: 'users',;
+        path: 'users',
         loadComponent: () =>;
           import('./features/admin/components/user-management/user-management.component').then(;
-            (m) => m.UserManagementComponent,;
-          ),;
-      },;
+            (m) => m.UserManagementComponent,
+          ),
+      },
       {
-        path: 'revenue',;
+        path: 'revenue',
         loadComponent: () =>;
           import('./features/admin/components/revenue-analytics/revenue-analytics.component').then(;
-            (m) => m.RevenueAnalyticsComponent,;
-          ),;
-      },;
+            (m) => m.RevenueAnalyticsComponent,
+          ),
+      },
       {
-        path: 'health',;
+        path: 'health',
         loadComponent: () =>;
           import('./features/admin/components/system-health/system-health.component').then(;
-            (m) => m.SystemHealthComponent,;
-          ),;
-      },;
+            (m) => m.SystemHealthComponent,
+          ),
+      },
       {
-        path: '',;
-        redirectTo: 'users',;
-        pathMatch: 'full',;
-      },;
-    ],;
-  },;
+        path: '',
+        redirectTo: 'users',
+        pathMatch: 'full',
+      },
+    ],
+  },
   {
-    path: '',;
-    redirectTo: '/browse',;
-    pathMatch: 'full',;
-  },;
+    path: '',
+    redirectTo: '/browse',
+    pathMatch: 'full',
+  },
   {
-    path: '**',;
-    redirectTo: '',;
-  },;
-];
+    path: '**',
+    redirectTo: '',
+  },
+]
 
 /**
  * @deprecated This module is being phased out in favor of the standalone component approach.;
@@ -84,10 +84,10 @@ const routes: Routes = [;
 @NgModule({
   imports: [;
     RouterModule.forRoot(routes, {
-      preloadingStrategy: SelectivePreloadingStrategy,;
-    }),;
-  ],;
-  exports: [RouterModule],;
-  providers: [SelectivePreloadingStrategy],;
-});
+      preloadingStrategy: SelectivePreloadingStrategy,
+    }),
+  ],
+  exports: [RouterModule],
+  providers: [SelectivePreloadingStrategy],
+})
 export class AppRoutingModul {e {}

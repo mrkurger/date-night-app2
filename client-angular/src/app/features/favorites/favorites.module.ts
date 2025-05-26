@@ -14,8 +14,8 @@ import { FavoritesPageComponent } from './favorites-page/favorites-page.componen
 // ===================================================
 
 @NgModule({
-  declarations: [],;
-  imports: [CommonModule, FavoritesRoutingModule, FavoritesListComponent, FavoritesPageComponent],;
-});
+  declarations: [],
+  imports: [CommonModule, FavoritesRoutingModule, FavoritesListComponent, FavoritesPageComponent],
+})
 export class FavoritesModul {e {}
 ';

@@ -19,10 +19,10 @@ import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
 
 // Mock component for nb-card
 @Component({
-    selector: 'nb-card',;
-    template: '{{ title }}',;
-    imports: [CommonModule];
-});
+    selector: 'nb-card',
+    template: '{{ title }}',
+    imports: [CommonModule]
+})
 class MockAppCardComponen {t {
   @Input() title = '';
   @Input() subtitle = '';
@@ -31,8 +31,8 @@ class MockAppCardComponen {t {
   @Input() avatarUrl = '';
   @Input() avatarName = '';
   @Input() isOnline = false;
-  @Input() tags: string[] = [];
-  @Input() actions: any[] = [];
+  @Input() tags: string[] = []
+  @Input() actions: any[] = []
   @Input() itemId = '';
   @Input() layout = '';
 }
@@ -41,22 +41,22 @@ class MockAppCardComponen {t {
 @Component({
     template: `;`
     ;
-      {{ item.title }};
+      {{ item.title }}
     ;
 
     ;
     ;
-  `,;`
-    imports: [CommonModule, CardGridComponent];
-});
+  `,`
+    imports: [CommonModule, CardGridComponent]
+})
 class TestHostComponen {t {
   @ViewChild('customTemplate') customTemplate!: TemplateRef;
 
   items: any[] = [;
-    { id: '1', title: 'Item 1', description: 'Description 1' },;
-    { id: '2', title: 'Item 2', description: 'Description 2' },;
-    { id: '3', title: 'Item 3', description: 'Description 3' },;
-  ];
+    { id: '1', title: 'Item 1', description: 'Description 1' },
+    { id: '2', title: 'Item 2', description: 'Description 2' },
+    { id: '3', title: 'Item 3', description: 'Description 3' },
+  ]
   columns: number | null = null;
   gap = 16;
   minItemWidth = 280;
@@ -81,132 +81,132 @@ describe('CardGridComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [;
-        CommonModule,;
-        CardGridComponent,;
-        MockAppCardComponent,;
-        SkeletonModule,;
-        TestHostComponent,;
-      ],;
-    }).compileComponents();
+        CommonModule,
+        CardGridComponent,
+        MockAppCardComponent,
+        SkeletonModule,
+        TestHostComponent,
+      ],
+    }).compileComponents()
 
-    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture = TestBed.createComponent(TestHostComponent)
     hostComponent = hostFixture.componentInstance;
     debugElement = hostFixture.debugElement;
-    hostFixture.detectChanges();
-  });
+    hostFixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(hostComponent).toBeTruthy();
-    const cardGridComponent = debugElement.query(By.directive(CardGridComponent));
-    expect(cardGridComponent).toBeTruthy();
-  });
+    expect(hostComponent).toBeTruthy()
+    const cardGridComponent = debugElement.query(By.directive(CardGridComponent))
+    expect(cardGridComponent).toBeTruthy()
+  })
 
   it('should initialize with default values', () => {
     const cardGridComponent = debugElement.query(By.directive(CardGridComponent)).componentInstance;
-    expect(cardGridComponent.items.length).toBe(3);
-    expect(cardGridComponent.columns).toBeNull();
-    expect(cardGridComponent.gap).toBe(16);
-    expect(cardGridComponent.minItemWidth).toBe(280);
-    expect(cardGridComponent.loading).toBeFalse();
-    expect(cardGridComponent.skeletonCount).toBe(6);
-    expect(cardGridComponent.animated).toBeTrue();
-    expect(cardGridComponent.layout).toBe('grid');
-  });
+    expect(cardGridComponent.items.length).toBe(3)
+    expect(cardGridComponent.columns).toBeNull()
+    expect(cardGridComponent.gap).toBe(16)
+    expect(cardGridComponent.minItemWidth).toBe(280)
+    expect(cardGridComponent.loading).toBeFalse()
+    expect(cardGridComponent.skeletonCount).toBe(6)
+    expect(cardGridComponent.animated).toBeTrue()
+    expect(cardGridComponent.layout).toBe('grid')
+  })
 
   it('should render grid layout correctly', () => {
     hostComponent.layout = 'grid';
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
-    const gridElement = debugElement.query(By.css('.nb-card-grid'));
-    expect(gridElement).toBeTruthy();
+    const gridElement = debugElement.query(By.css('.nb-card-grid'))
+    expect(gridElement).toBeTruthy()
 
     // Check if the grid style is applied correctly
     const gridStyles = gridElement.styles;
-    expect(gridStyles['display']).toBe('grid');
-    expect(gridStyles['grid-template-columns']).toContain('minmax');
-    expect(gridStyles['gap']).toBe('16px');
-  });
+    expect(gridStyles['display']).toBe('grid')
+    expect(gridStyles['grid-template-columns']).toContain('minmax')
+    expect(gridStyles['gap']).toBe('16px')
+  })
 
   it('should render masonry layout correctly', () => {
     hostComponent.layout = 'masonry';
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
-    const gridElement = debugElement.query(By.css('.nb-card-grid'));
-    expect(gridElement).toBeTruthy();
-    expect(gridElement.classes['nb-card-grid--masonry']).toBeTrue();
+    const gridElement = debugElement.query(By.css('.nb-card-grid'))
+    expect(gridElement).toBeTruthy()
+    expect(gridElement.classes['nb-card-grid--masonry']).toBeTrue()
 
     // Check if masonry items have the correct class
-    const masonryItems = debugElement.queryAll(By.css('.nb-card-grid__item--masonry'));
-    expect(masonryItems.length).toBe(3);
-  });
+    const masonryItems = debugElement.queryAll(By.css('.nb-card-grid__item--masonry'))
+    expect(masonryItems.length).toBe(3)
+  })
 
   it('should render netflix layout correctly', () => {
     hostComponent.layout = 'netflix';
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
-    const netflixGrid = debugElement.query(By.css('.nb-card-grid--netflix'));
-    expect(netflixGrid).toBeTruthy();
+    const netflixGrid = debugElement.query(By.css('.nb-card-grid--netflix'))
+    expect(netflixGrid).toBeTruthy()
 
-    const netflixRow = debugElement.query(By.css('.nb-card-grid__netflix-row'));
-    expect(netflixRow).toBeTruthy();
+    const netflixRow = debugElement.query(By.css('.nb-card-grid__netflix-row'))
+    expect(netflixRow).toBeTruthy()
 
-    const netflixItems = debugElement.queryAll(By.css('.nb-card-grid__item--netflix'));
-    expect(netflixItems.length).toBe(3);
-  });
+    const netflixItems = debugElement.queryAll(By.css('.nb-card-grid__item--netflix'))
+    expect(netflixItems.length).toBe(3)
+  })
 
   it('should handle item click event', () => {
     // Find the first grid item
-    const firstItem = debugElement.query(By.css('.nb-card-grid__item'));
-    expect(firstItem).toBeTruthy();
+    const firstItem = debugElement.query(By.css('.nb-card-grid__item'))
+    expect(firstItem).toBeTruthy()
 
     // Trigger click event
-    firstItem.triggerEventHandler('click', null);
-    hostFixture.detectChanges();
+    firstItem.triggerEventHandler('click', null)
+    hostFixture.detectChanges()
 
     // Check if the clicked item is correctly captured
-    expect(hostComponent.clickedItem).toBeTruthy();
-    expect(hostComponent.clickedItem.id).toBe('1');
-  });
+    expect(hostComponent.clickedItem).toBeTruthy()
+    expect(hostComponent.clickedItem.id).toBe('1')
+  })
 
   it('should display loading skeletons', () => {
     hostComponent.loading = true;
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
     // Check if skeleton loaders are displayed
-    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
-    expect(skeletonLoaders.length).toBe(6); // Default skeletonCount is 6
+    const skeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule))
+    expect(skeletonLoaders.length).toBe(6) // Default skeletonCount is 6
 
     // Change skeleton count
     hostComponent.skeletonCount = 3;
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
-    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule));
-    expect(updatedSkeletonLoaders.length).toBe(3);
-  });
+    const updatedSkeletonLoaders = debugElement.queryAll(By.directive(SkeletonModule))
+    expect(updatedSkeletonLoaders.length).toBe(3)
+  })
 
   it('should use custom item template', () => {
     hostComponent.useCustomTemplate = true;
-    hostFixture.detectChanges();
+    hostFixture.detectChanges()
 
     // Check if custom template is used
-    const customTemplateElements = debugElement.queryAll(By.css('.custom-template'));
-    expect(customTemplateElements.length).toBe(3);
+    const customTemplateElements = debugElement.queryAll(By.css('.custom-template'))
+    expect(customTemplateElements.length).toBe(3)
 
     // Verify content
-    expect(customTemplateElements[0].nativeElement.textContent).toContain('Item 1');
-    expect(customTemplateElements[1].nativeElement.textContent).toContain('Item 2');
-    expect(customTemplateElements[2].nativeElement.textContent).toContain('Item 3');
-  });
+    expect(customTemplateElements[0].nativeElement.textContent).toContain('Item 1')
+    expect(customTemplateElements[1].nativeElement.textContent).toContain('Item 2')
+    expect(customTemplateElements[2].nativeElement.textContent).toContain('Item 3')
+  })
 
   it('should handle empty items array', () => {
-    hostComponent.items = [];
-    hostFixture.detectChanges();
+    hostComponent.items = []
+    hostFixture.detectChanges()
 
     // Check if empty state is displayed
-    const emptyState = debugElement.query(By.css('.nb-card-grid__empty'));
-    expect(emptyState).toBeTruthy();
+    const emptyState = debugElement.query(By.css('.nb-card-grid__empty'))
+    expect(emptyState).toBeTruthy()
 
     // Verify empty state content
-    expect(emptyState.nativeElement.textContent).toContain('No items found');
-  });
-});
+    expect(emptyState.nativeElement.textContent).toContain('No items found')
+  })
+})

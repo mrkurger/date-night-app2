@@ -38,7 +38,6 @@
     "typescript-language-server": "4.3.4"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@angular/animations": "^19.2.11",
     "@angular/common": "^19.2.11",
     "@angular/compiler": "^19.2.11",
@@ -54,40 +53,6 @@
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@nebular/theme": "11.0.1",
-=======
-
-    "@angular/common": "19.2.11",
-    "@angular/compiler": "^19.2.11",
-    "@angular/core": "19.2.11",
-    "@angular/forms": "19.2.11",
-    "@angular/platform-browser": "19.2.11",
-    "@angular/router": "19.2.11",
-
-    "@angular/animations": "^18.2.13",
-    "@angular/common": "^18.2.13",
-    "@angular/compiler": "^18.2.13",
-    "@angular/core": "^18.2.13",
-    "@angular/forms": "^18.2.13",
-    "@angular/platform-browser": "^18.2.13",
-    "@angular/platform-browser-dynamic": "^18.2.13",
-    "@angular/router": "^18.2.13",
-    "@angular/service-worker": "^18.2.13",
-
-    "@fontsource/inter": "5.2.5",
-    "@fontsource/poppins": "5.2.6",
-
-
-
-
-    "@fortawesome/angular-fontawesome": "1.0.0",
-    "@fortawesome/fontawesome-svg-core": "6.7.2",
-    "@fortawesome/free-solid-svg-icons": "6.7.2",
-
-
-    "@nebular/theme": "11.0.1",
-
-
->>>>>>> d82ff4c98dc8d0f7717218891180e36e6d16a00b
     "@swimlane/ngx-charts": "22.0.0",
     "cheerio": "1.0.0-rc.12",
     "dotenv": "16.5.0",

@@ -20,12 +20,12 @@ import { CommonModule } from '@angular/common';
  * This component displays a loading indicator for content.;
  */
 @Component({
-    selector: 'nb-skeleton',;
+    selector: 'nb-skeleton',
     template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .skeleton-container {
@@ -35,13 +35,13 @@ import { CommonModule } from '@angular/common';
         align-items: center;
         justify-content: center;
       }
-    `,;`
-    ],;
+    `,`
+    ],
     imports: [;
-        CommonModule,;
+        CommonModule,
         NbSpinnerModule;
-    ];
-});
+    ]
+})
 export class SkeletonModul {e {
   @Input() type: 'small' | 'medium' | 'large' = 'medium';
   @Input() width?: string;
@@ -50,8 +50,8 @@ export class SkeletonModul {e {
   @Input() animated = true;
 
   getArray(): number[] {
-    return Array(this.count);
-      .fill(0);
-      .map((_, i) => i);
+    return Array(this.count)
+      .fill(0)
+      .map((_, i) => i)
   }
 }

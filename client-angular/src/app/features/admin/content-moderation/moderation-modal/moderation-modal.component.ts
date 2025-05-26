@@ -22,21 +22,21 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
  * Component for displaying and handling media moderation in a modal;
  */
 @Component({';
-  selector: 'app-moderation-modal',;
-  templateUrl: './moderation-modal.component.html',;
-  styleUrls: ['./moderation-modal.component.scss'],;
+  selector: 'app-moderation-modal',
+  templateUrl: './moderation-modal.component.html',
+  styleUrls: ['./moderation-modal.component.scss'],
   imports: [;
-    CommonModule, ReactiveFormsModule, ButtonModule, TextareaModule,;
-    InputTextModule,;
+    CommonModule, ReactiveFormsModule, ButtonModule, TextareaModule,
+    InputTextModule,
     InputTextareaModule;
-  ],;
-});
+  ],
+})
 export class ModerationModalComponen {t implements OnChanges {
   @Input() media: PendingMedia | null = null;
 
   @Input() form!: FormGroup;
-  @Output() onSubmit = new EventEmitter();
-  @Output() onClose = new EventEmitter();
+  @Output() onSubmit = new EventEmitter()
+  @Output() onClose = new EventEmitter()
 
   safeMediaUrl: SafeUrl | null = null;
   isFullscreen = false;
@@ -58,9 +58,9 @@ export class ModerationModalComponen {t implements OnChanges {
 
       // Validate URL before sanitizing
       if (this.contentSanitizer.isValidUrl(this.media.url)) {
-        this.safeMediaUrl = this.contentSanitizer.sanitizeUrl(this.media.url);
+        this.safeMediaUrl = this.contentSanitizer.sanitizeUrl(this.media.url)
       } else {
-        console.error('Invalid media URL:', this.media.url);
+        console.error('Invalid media URL:', this.media.url)
         this.mediaError = true;
       }
     }
@@ -78,7 +78,7 @@ export class ModerationModalComponen {t implements OnChanges {
    */
   validateAndSubmit(): void {
     if (this.form.valid) {
-      this.onSubmit.emit();
+      this.onSubmit.emit()
     }
   }
 

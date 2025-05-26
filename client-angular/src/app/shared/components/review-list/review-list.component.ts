@@ -24,19 +24,19 @@ import { DialogService } from '../../../core/services/dialog.service';
 // ===================================================
 
 @Component({';
-  selector: 'app-review-list',;
-  standalone: true,;
+  selector: 'app-review-list',
+  standalone: true,
   imports: [;
-    CommonModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbTagModule,;
-    NbTooltipModule,;
-    RouterModule,;
-    StarRatingComponent,;
-    TimeAgoPipe,;
-  ],;
+    CommonModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTagModule,
+    NbTooltipModule,
+    RouterModule,
+    StarRatingComponent,
+    TimeAgoPipe,
+  ],
   template: `;`
     ;
       ;
@@ -50,17 +50,17 @@ import { DialogService } from '../../../core/services/dialog.service';
         ;
           ;
           ;
-            {{ review.reviewer.username }};
+            {{ review.reviewer.username }}
           ;
           ;
             ;
-            {{ review.createdAt | timeAgo }};
+            {{ review.createdAt | timeAgo }}
           ;
         ;
 
         ;
-          {{ review.title }};
-          {{ review.content }};
+          {{ review.title }}
+          {{ review.content }}
 
           ;
             ;
@@ -91,14 +91,14 @@ import { DialogService } from '../../../core/services/dialog.service';
 
         ;
           Response from advertiser;
-          {{ review.advertiserResponse.content }};
-          {{ review.advertiserResponse.date | timeAgo }};
+          {{ review.advertiserResponse.content }}
+          {{ review.advertiserResponse.date | timeAgo }}
         ;
 
         ;
           ;
             ;
-            Helpful ({{ review.helpfulVotes }});
+            Helpful ({{ review.helpfulVotes }})
           ;
 
           ;
@@ -120,7 +120,7 @@ import { DialogService } from '../../../core/services/dialog.service';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .reviews-container {
@@ -136,7 +136,7 @@ import { DialogService } from '../../../core/services/dialog.service';
       .review-card {
         margin-bottom: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
       }
 
       .reviewer-avatar {
@@ -219,9 +219,9 @@ import { DialogService } from '../../../core/services/dialog.service';
         text-align: center;
         margin-top: 20px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ReviewListComponen {t implements OnInit {
   @Input() advertiserId = '';
   @Input() adId = '';
@@ -229,39 +229,39 @@ export class ReviewListComponen {t implements OnInit {
   @Input() showCategoryRatings = true;
   @Input() limit = 5;
 
-  reviews: Review[] = [];
+  reviews: Review[] = []
   loading = false;
   hasMoreReviews = false;
   page = 1;
-  helpfulMarked: string[] = [];
-  reportedReviews: string[] = [];
+  helpfulMarked: string[] = []
+  reportedReviews: string[] = []
   private currentUserId: string | null = null;
   private userSub: Subscription | null = null;
 
   constructor(;
-    private reviewService: ReviewService,;
-    private authService: AuthService,;
-    private notificationService: NotificationService,;
-    private dialogService: DialogService,;
+    private reviewService: ReviewService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private dialogService: DialogService,
   ) {}
 
   ngOnInit(): void {
-    this.loadReviews();
-    this.loadHelpfulMarked();
-    this.loadReportedReviews();
+    this.loadReviews()
+    this.loadHelpfulMarked()
+    this.loadReportedReviews()
     this.userSub = this.authService.currentUser$.subscribe((user) => {
       this.currentUserId = user ? user.id : null;
-    });
+    })
   }
 
   ngOnDestroy(): void {
     if (this.userSub) {
-      this.userSub.unsubscribe();
+      this.userSub.unsubscribe()
     }
   }
 
   get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
+    return this.authService.isAuthenticated()
   }
 
   loadReviews(): void {
@@ -269,9 +269,9 @@ export class ReviewListComponen {t implements OnInit {
 
     let request;
     if (this.advertiserId) {
-      request = this.reviewService.getReviewsByAdvertiser(this.advertiserId, this.page, this.limit);
+      request = this.reviewService.getReviewsByAdvertiser(this.advertiserId, this.page, this.limit)
     } else if (this.adId) {
-      request = this.reviewService.getReviewsByAd(this.adId, this.page, this.limit);
+      request = this.reviewService.getReviewsByAd(this.adId, this.page, this.limit)
     } else {
       this.loading = false;
       return;
@@ -282,112 +282,112 @@ export class ReviewListComponen {t implements OnInit {
         if (this.page === 1) {
           this.reviews = data.reviews;
         } else {
-          this.reviews = [...this.reviews, ...data.reviews];
+          this.reviews = [...this.reviews, ...data.reviews]
         }
         this.hasMoreReviews = data.totalPages > this.page;
         this.loading = false;
-      },;
+      },
       error: (error) => {
-        console.error('Error loading reviews:', error);
-        this.notificationService.error('Failed to load reviews');
+        console.error('Error loading reviews:', error)
+        this.notificationService.error('Failed to load reviews')
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   loadMoreReviews(): void {
     this.page++;
-    this.loadReviews();
+    this.loadReviews()
   }
 
   markHelpful(reviewId: string): void {
     if (!this.isAuthenticated) {
-      this.notificationService.info('Please log in to mark reviews as helpful');
+      this.notificationService.info('Please log in to mark reviews as helpful')
       return;
     }
 
     this.reviewService.markReviewHelpful(reviewId).subscribe({
       next: () => {
         // Update the review in the list
-        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);
+        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId)
         if (reviewIndex !== -1) {
           this.reviews[reviewIndex].helpfulVotes++;
         }
 
         // Add to local storage to prevent multiple votes
-        this.helpfulMarked.push(reviewId);
-        localStorage.setItem('helpfulReviews', JSON.stringify(this.helpfulMarked));
+        this.helpfulMarked.push(reviewId)
+        localStorage.setItem('helpfulReviews', JSON.stringify(this.helpfulMarked))
 
-        this.notificationService.success('Review marked as helpful');
-      },;
+        this.notificationService.success('Review marked as helpful')
+      },
       error: (error) => {
-        console.error('Error marking review as helpful:', error);
-        this.notificationService.error('Failed to mark review as helpful');
-      },;
-    });
+        console.error('Error marking review as helpful:', error)
+        this.notificationService.error('Failed to mark review as helpful')
+      },
+    })
   }
 
   openReportDialog(reviewId: string): void {
     if (!this.isAuthenticated) {
-      this.notificationService.info('Please log in to report reviews');
+      this.notificationService.info('Please log in to report reviews')
       return;
     }
 
     this.dialogService.reportReview(reviewId).subscribe((reason) => {
       if (reason) {
-        this.reportReview(reviewId, reason);
+        this.reportReview(reviewId, reason)
       }
-    });
+    })
   }
 
   reportReview(reviewId: string, reason: string): void {
     this.reviewService.reportReview(reviewId, reason).subscribe({
       next: () => {
         // Add to local storage to prevent multiple reports
-        this.reportedReviews.push(reviewId);
-        localStorage.setItem('reportedReviews', JSON.stringify(this.reportedReviews));
+        this.reportedReviews.push(reviewId)
+        localStorage.setItem('reportedReviews', JSON.stringify(this.reportedReviews))
 
-        this.notificationService.success('Review reported successfully');
-      },;
+        this.notificationService.success('Review reported successfully')
+      },
       error: (error) => {
-        console.error('Error reporting review:', error);
-        this.notificationService.error('Failed to report review');
-      },;
-    });
+        console.error('Error reporting review:', error)
+        this.notificationService.error('Failed to report review')
+      },
+    })
   }
 
   openResponseDialog(reviewId: string): void {
-    const review = this.reviews.find((r) => r._id === reviewId);
+    const review = this.reviews.find((r) => r._id === reviewId)
     if (!review) return;
 
     this.dialogService;
-      .respondToReview(reviewId, review.title, review.content);
+      .respondToReview(reviewId, review.title, review.content)
       .subscribe((response) => {
         if (response) {
-          this.respondToReview(reviewId,_response));
+          this.respondToReview(reviewId,_response))
         }
-      });
+      })
   }
 
   respondToReview(reviewId: string,_response: string): void {
     this.reviewService.respondToReview(reviewId,_response)).subscribe({
       next: () => {
         // Update the review in the list
-        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);
+        const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId)
         if (reviewIndex !== -1) {
           this.reviews[reviewIndex].advertiserResponse = {
-            content: response,;
-            date: new Date(),;
-          };
+            content: response,
+            date: new Date(),
+          }
         }
 
-        this.notificationService.success('Response added successfully');
-      },;
+        this.notificationService.success('Response added successfully')
+      },
       error: (error) => {
-        console.error('Error responding to review:', error);
-        this.notificationService.error('Failed to add response');
-      },;
-    });
+        console.error('Error responding to review:', error)
+        this.notificationService.error('Failed to add response')
+      },
+    })
   }
 
   canRespond(review: Review): boolean {
@@ -399,23 +399,23 @@ export class ReviewListComponen {t implements OnInit {
   }
 
   private loadHelpfulMarked(): void {
-    const stored = localStorage.getItem('helpfulReviews');
+    const stored = localStorage.getItem('helpfulReviews')
     if (stored) {
       try {
-        this.helpfulMarked = JSON.parse(stored);
+        this.helpfulMarked = JSON.parse(stored)
       } catch {
-        this.helpfulMarked = [];
+        this.helpfulMarked = []
       }
     }
   }
 
   private loadReportedReviews(): void {
-    const stored = localStorage.getItem('reportedReviews');
+    const stored = localStorage.getItem('reportedReviews')
     if (stored) {
       try {
-        this.reportedReviews = JSON.parse(stored);
+        this.reportedReviews = JSON.parse(stored)
       } catch {
-        this.reportedReviews = [];
+        this.reportedReviews = []
       }
     }
   }

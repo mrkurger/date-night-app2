@@ -12,11 +12,11 @@ interface Advertiser {
 }
 
 @Component({';
-    selector: 'app-alt-paid-placement-sidebar',;
-    imports: [NebularModule, CommonModule, NbCardModule],;
-    templateUrl: './alt-paid-placement-sidebar.component.html',;
-    styleUrls: ['./alt-paid-placement-sidebar.component.scss'];
-});
+    selector: 'app-alt-paid-placement-sidebar',
+    imports: [NebularModule, CommonModule, NbCardModule],
+    templateUrl: './alt-paid-placement-sidebar.component.html',
+    styleUrls: ['./alt-paid-placement-sidebar.component.scss']
+})
 export class AltPaidPlacementSidebarComponen {t {
-  @Input() ads: Advertiser[] = [];
+  @Input() ads: Advertiser[] = []
 }

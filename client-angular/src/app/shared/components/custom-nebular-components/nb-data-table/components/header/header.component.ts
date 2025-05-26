@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableColumn } from '../../nb-data-table.component';
 
 @Component({';
-    selector: 'nb-data-table-header',;
+    selector: 'nb-data-table-header',
     template: `;`
     ;
       ;
-        {{ title }};
+        {{ title }}
         ;
           ;
         ;
@@ -25,7 +25,7 @@ import { TableColumn } from '../../nb-data-table.component';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .header-container {
@@ -43,8 +43,8 @@ import { TableColumn } from '../../nb-data-table.component';
 
       .title {
         margin: 0;
-        color: nb-theme(text-basic-color);
-        font-weight: nb-theme(text-heading-5-font-weight);
+        color: nb-theme(text-basic-color)
+        font-weight: nb-theme(text-heading-5-font-weight)
       }
 
       .actions-section {
@@ -60,8 +60,8 @@ import { TableColumn } from '../../nb-data-table.component';
 
       .column-selector-title {
         margin: 0 0 1rem;
-        color: nb-theme(text-basic-color);
-        font-weight: nb-theme(text-heading-6-font-weight);
+        color: nb-theme(text-basic-color)
+        font-weight: nb-theme(text-heading-6-font-weight)
       }
 
       nb-checkbox {
@@ -72,37 +72,37 @@ import { TableColumn } from '../../nb-data-table.component';
           margin-bottom: 0;
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbDataTableHeaderComponen {t {
   @Input() title = '';
-  @Input() columns: TableColumn[] = [];
-  @Input() selectedColumns: TableColumn[] = [];
-  @Output() columnsChange = new EventEmitter[]>();
+  @Input() columns: TableColumn[] = []
+  @Input() selectedColumns: TableColumn[] = []
+  @Output() columnsChange = new EventEmitter[]>()
 
   isColumnSelected(column: TableColumn): boolean {
-    return this.selectedColumns.some((col) => col.prop === column.prop);
+    return this.selectedColumns.some((col) => col.prop === column.prop)
   }
 
   toggleColumn(column: TableColumn) {
-    const isSelected = this.isColumnSelected(column);
-    let newSelectedColumns: TableColumn[];
+    const isSelected = this.isColumnSelected(column)
+    let newSelectedColumns: TableColumn[]
 
     if (isSelected) {
-      newSelectedColumns = this.selectedColumns.filter((col) => col.prop !== column.prop);
+      newSelectedColumns = this.selectedColumns.filter((col) => col.prop !== column.prop)
     } else {
-      newSelectedColumns = [...this.selectedColumns, column];
+      newSelectedColumns = [...this.selectedColumns, column]
     }
 
     // Sort columns based on their original order
     newSelectedColumns.sort((a, b) => {
-      const aIndex = this.columns.findIndex((col) => col.prop === a.prop);
-      const bIndex = this.columns.findIndex((col) => col.prop === b.prop);
+      const aIndex = this.columns.findIndex((col) => col.prop === a.prop)
+      const bIndex = this.columns.findIndex((col) => col.prop === b.prop)
       return aIndex - bIndex;
-    });
+    })
 
-    this.columnsChange.emit(newSelectedColumns);
+    this.columnsChange.emit(newSelectedColumns)
   }
 }

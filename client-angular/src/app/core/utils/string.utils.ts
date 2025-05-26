@@ -7,7 +7,7 @@
  * Truncates a string to a specified length and adds an ellipsis if truncated;
  * @param text The string to truncate;
  * @param maxLength The maximum length of the string;
- * @param ellipsis The string to append if truncated (default: '...');
+ * @param ellipsis The string to append if truncated (default: '...')
  * @returns The truncated string;
  */
 export function truncate(text: string, maxLength: number, ellipsis = '...'): string {
@@ -15,8 +15,8 @@ export function truncate(text: string, maxLength: number, ellipsis = '...'): str
     return '';
   }
 
-  if (text.length  word.charAt(0).toUpperCase() + word.slice(1));
-    .join(' ');
+  if (text.length  word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }
 
 /**
@@ -30,9 +30,9 @@ export function camelToKebabCase(text: string): string {
   }
 
   return text;
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2');
-    .replace(/([A-Z])([A-Z])(?=[a-z])/g, '$1-$2');
-    .toLowerCase();
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z])(?=[a-z])/g, '$1-$2')
+    .toLowerCase()
 }
 
 /**
@@ -45,7 +45,7 @@ export function kebabToCamelCase(text: string): string {
     return '';
   }
 
-  return text.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  return text.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
 /**
@@ -59,7 +59,7 @@ export function stripHtml(html: string): string {
   }
 
   // Create a temporary element to parse the HTML
-  const tempElement = document.createElement('div');
+  const tempElement = document.createElement('div')
   tempElement.innerHTML = html;
   return tempElement.textContent || tempElement.innerText || '';
 }
@@ -67,45 +67,45 @@ export function stripHtml(html: string): string {
 /**
  * Formats a number as currency with the specified currency code;
  * @param amount The amount to format;
- * @param currencyCode The currency code (default: 'NOK');
- * @param locale The locale to use for formatting (default: 'nb-NO');
+ * @param currencyCode The currency code (default: 'NOK')
+ * @param locale The locale to use for formatting (default: 'nb-NO')
  * @returns The formatted currency string;
  */
 export function formatCurrency(amount: number, currencyCode = 'NOK', locale = 'nb-NO'): string {
   return new Intl.NumberFormat(locale, {
-    style: 'currency',;
-    currency: currencyCode,;
-  }).format(amount);
+    style: 'currency',
+    currency: currencyCode,
+  }).format(amount)
 }
 
 /**
  * Formats a date as a string using the specified format;
  * @param date The date to format;
- * @param locale The locale to use for formatting (default: 'nb-NO');
+ * @param locale The locale to use for formatting (default: 'nb-NO')
  * @param options The formatting options;
  * @returns The formatted date string;
  */
 export function formatDate(
-  date: Date | string | number,;
-  locale = 'nb-NO',;
+  date: Date | string | number,
+  locale = 'nb-NO',
   options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',;
-    month: 'long',;
-    day: 'numeric',;
-  },;
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  },
 ): string {
   if (!date) {
     return '';
   }
 
-  const dateObj = typeof date === 'object' ? date : new Date(date);
-  return new Intl.DateTimeFormat(locale, options).format(dateObj);
+  const dateObj = typeof date === 'object' ? date : new Date(date)
+  return new Intl.DateTimeFormat(locale, options).format(dateObj)
 }
 
 /**
- * Formats a date as a relative time string (e.g., "2 hours ago");
+ * Formats a date as a relative time string (e.g., "2 hours ago")
  * @param date The date to format;
- * @param locale The locale to use for formatting (default: 'nb-NO');
+ * @param locale The locale to use for formatting (default: 'nb-NO')
  * @returns The relative time string;
  */
 export function formatRelativeTime(date: Date | string | number, _locale = 'nb-NO'): string {
@@ -113,9 +113,9 @@ export function formatRelativeTime(date: Date | string | number, _locale = 'nb-N
     return '';
   }
 
-  const dateObj = typeof date === 'object' ? date : new Date(date);
-  const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000);
+  const dateObj = typeof date === 'object' ? date : new Date(date)
+  const now = new Date()
+  const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000)
 
   // Define time units in seconds
   const minute = 60;
@@ -129,9 +129,9 @@ export function formatRelativeTime(date: Date | string | number, _locale = 'nb-N
   if (diffInSeconds  (index  2) {
       // Handle special cases like co.uk, com.au, etc.
       if (parts[parts.length - 2] === 'co' || parts[parts.length - 2] === 'com') {
-        return parts.slice(-3).join('.');
+        return parts.slice(-3).join('.')
       }
-      return parts.slice(-2).join('.');
+      return parts.slice(-2).join('.')
     }
     return hostname;
   } catch (_error) {

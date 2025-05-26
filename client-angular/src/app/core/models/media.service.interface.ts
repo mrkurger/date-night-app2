@@ -4,10 +4,10 @@
 export interface IMediaService {
   getPendingModerationMedia(): Promise;
   moderateMedia(;
-    adId: string,;
-    mediaId: string,;
-    status: 'approved' | 'rejected',;
-    notes: string,;
+    adId: string,
+    mediaId: string,
+    status: 'approved' | 'rejected',
+    notes: string,
   ): Promise;
 }
 

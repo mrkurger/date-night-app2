@@ -10,7 +10,7 @@ export interface Favorite {
   dateAdded?: Date | string; // Alias for createdAt
   notes?: string;
   notificationsEnabled: boolean;
-  tags: string[];';
+  tags: string[]';
   priority: 'low' | 'normal' | 'high';
   lastViewed?: Date | string;
   lastNotified?: Date | string;
@@ -23,21 +23,21 @@ export interface FavoriteCreateData {
   adId: string;
   notes?: string;
   notificationsEnabled?: boolean;
-  tags?: string[];
+  tags?: string[]
   priority?: 'low' | 'normal' | 'high';
 }
 
 export interface FavoriteUpdateData {
   notes?: string;
   notificationsEnabled?: boolean;
-  tags?: string[];
+  tags?: string[]
   priority?: 'low' | 'normal' | 'high';
 }
 
 export interface FavoriteFilterOptions {
   sort?: string;
   search?: string;
-  tags?: string[];
+  tags?: string[]
   category?: string;
   county?: string;
   city?: string;

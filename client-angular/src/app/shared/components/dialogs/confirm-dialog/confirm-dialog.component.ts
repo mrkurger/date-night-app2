@@ -11,15 +11,15 @@ export interface ConfirmDialogData {
 }
 
 @Component({
-    selector: 'nb-confirm-dialog',;
-    imports: [CommonModule, NbCardModule, NbButtonModule],;
+    selector: 'nb-confirm-dialog',
+    imports: [CommonModule, NbCardModule, NbButtonModule],
     template: `;`
     ;
       ;
-        {{ data.title }};
+        {{ data.title }}
       ;
       ;
-        {{ data.message }};
+        {{ data.message }}
       ;
       ;
         ;
@@ -30,20 +30,20 @@ export interface ConfirmDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
-        font-weight: nb-theme(text-heading-4-font-weight);
-        color: nb-theme(text-basic-color);
+        font-weight: nb-theme(text-heading-4-font-weight)
+        color: nb-theme(text-basic-color)
       }
 
       .dialog-message {
         margin: 0;
-        color: nb-theme(text-basic-color);
-        font-size: nb-theme(text-paragraph-font-size);
+        color: nb-theme(text-basic-color)
+        font-size: nb-theme(text-paragraph-font-size)
       }
 
       .dialog-actions {
@@ -51,20 +51,20 @@ export interface ConfirmDialogData {
         justify-content: flex-end;
         gap: 1rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ConfirmDialogComponen {t {
   constructor(;
-    private dialogRef: NbDialogRef,;
-    @Inject('CONFIRM_DIALOG_DATA') public data: ConfirmDialogData,;
+    private dialogRef: NbDialogRef,
+    @Inject('CONFIRM_DIALOG_DATA') public data: ConfirmDialogData,
   ) {}
 
   confirm() {
-    this.dialogRef.close(true);
+    this.dialogRef.close(true)
   }
 
   cancel() {
-    this.dialogRef.close(false);
+    this.dialogRef.close(false)
   }
 }

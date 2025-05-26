@@ -4,37 +4,37 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({';
-    selector: 'app-toggle',;
-    imports: [CommonModule, NbToggleModule],;
+    selector: 'app-toggle',
+    imports: [CommonModule, NbToggleModule],
     template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
         display: inline-block;
       }
-    `,;`
-    ],;
+    `,`
+    ],
     providers: [;
         {
-            provide: NG_VALUE_ACCESSOR,;
-            useExisting: forwardRef(() => InputSwitchModule),;
-            multi: true,;
-        },;
-    ];
-});
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputSwitchModule),
+            multi: true,
+        },
+    ]
+})
 export class InputSwitchModul {e implements ControlValueAccessor {
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() labelPosition: 'start' | 'end' = 'end';
   @Input() disabled = false;
-  @Output() change = new EventEmitter();
+  @Output() change = new EventEmitter()
 
   value = false;
-  private onChange: (value: boolean) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: boolean) => void = () => {}
+  private onTouched: () => void = () => {}
 
   writeValue(value: boolean): void {
     this.value = value;
@@ -54,8 +54,8 @@ export class InputSwitchModul {e implements ControlValueAccessor {
 
   onToggleChange(checked: boolean): void {
     this.value = checked;
-    this.onChange(checked);
-    this.onTouched();
-    this.change.emit(checked);
+    this.onChange(checked)
+    this.onTouched()
+    this.change.emit(checked)
   }
 }

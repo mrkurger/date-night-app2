@@ -12,17 +12,17 @@ import { LoginComponent } from './login.component';
 import { UserService } from '@core/services/user.service';
 import { AuthResponse } from '@core/models/auth.model';
 import { createSpyObject } from '../../../testing/test-utils';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
   NbSelectModule';
 } from '@nebular/theme';
 
@@ -33,135 +33,135 @@ describe('LoginComponent', () => {
   let router: Router;
 
   const mockAuthResponse: AuthResponse = {
-    token: 'mock-token',;
-    refreshToken: 'mock-refresh-token',;
-    expiresIn: 3600,;
+    token: 'mock-token',
+    refreshToken: 'mock-refresh-token',
+    expiresIn: 3600,
     user: {
-      _id: '1',;
-      username: 'testuser',;
-      email: 'test@example.com',;
-      role: 'user',;
-      createdAt: new Date(),;
-      updatedAt: new Date(),;
-    },;
-  };
+      _id: '1',
+      username: 'testuser',
+      email: 'test@example.com',
+      role: 'user',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  }
 
   beforeEach(async () => {
     userService = createSpyObject({
-      login: of(mockAuthResponse),;
-      isAuthenticated: false,;
-    });
+      login: of(mockAuthResponse),
+      isAuthenticated: false,
+    })
 
     await TestBed.configureTestingModule({
       imports: [;
-        RouterTestingModule,;
-        ReactiveFormsModule,;
-        BrowserAnimationsModule,;
-        NbCardModule,;
-        NbFormFieldModule,;
-        NbInputModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbSpinnerModule,;
-        NbTooltipModule,;
-      ],;
-      declarations: [],;
-      providers: [{ provide: UserService, useValue: userService }],;
-    }).compileComponents();
+        RouterTestingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        NbCardModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbTooltipModule,
+      ],
+      declarations: [],
+      providers: [{ provide: UserService, useValue: userService }],
+    }).compileComponents()
 
-    router = TestBed.inject(Router);
-  });
+    router = TestBed.inject(Router)
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).not.toBeNull();
-  });
+    expect(component).not.toBeNull()
+  })
 
   it('should initialize the form with empty email and password', () => {
-    const emailControl = component.loginForm.get('email');
-    const passwordControl = component.loginForm.get('password');
-    expect(emailControl?.value).toBe('');
-    expect(passwordControl?.value).toBe('');
-  });
+    const emailControl = component.loginForm.get('email')
+    const passwordControl = component.loginForm.get('password')
+    expect(emailControl?.value).toBe('')
+    expect(passwordControl?.value).toBe('')
+  })
 
   it('should show validation errors when form is submitted with empty fields', () => {
-    component.onSubmit();
-    fixture.detectChanges();
+    component.onSubmit()
+    fixture.detectChanges()
 
-    const emailField = fixture.nativeElement.querySelector('input[type="email"]');
-    const passwordField = fixture.nativeElement.querySelector('input[type="password"]');
+    const emailField = fixture.nativeElement.querySelector('input[type="email"]')
+    const passwordField = fixture.nativeElement.querySelector('input[type="password"]')
 
-    expect(emailField.getAttribute('status')).toBe('danger');
-    expect(passwordField.getAttribute('status')).toBe('danger');
-  });
+    expect(emailField.getAttribute('status')).toBe('danger')
+    expect(passwordField.getAttribute('status')).toBe('danger')
+  })
 
   it('should call login service and navigate on successful login', () => {
     const testCredentials = {
-      email: 'test@example.com',;
-      password: 'password123',;
-    };
+      email: 'test@example.com',
+      password: 'password123',
+    }
 
-    userService.login.and.returnValue(of(mockAuthResponse));
-    const navigateSpy = spyOn(router, 'navigate');
+    userService.login.and.returnValue(of(mockAuthResponse))
+    const navigateSpy = spyOn(router, 'navigate')
 
-    component.loginForm.patchValue(testCredentials);
-    component.onSubmit();
+    component.loginForm.patchValue(testCredentials)
+    component.onSubmit()
 
-    expect(userService.login).toHaveBeenCalledWith(testCredentials);
-    expect(navigateSpy).toHaveBeenCalledWith(['/dashboard']);
-  });
+    expect(userService.login).toHaveBeenCalledWith(testCredentials)
+    expect(navigateSpy).toHaveBeenCalledWith(['/dashboard'])
+  })
 
   it('should show error message on login failure', () => {
     const errorMessage = 'Invalid credentials';
-    userService.login.and.returnValue(throwError(() => new Error(errorMessage)));
+    userService.login.and.returnValue(throwError(() => new Error(errorMessage)))
 
     component.loginForm.patchValue({
-      email: 'test@example.com',;
-      password: 'wrongpassword',;
-    });
-    component.onSubmit();
-    fixture.detectChanges();
+      email: 'test@example.com',
+      password: 'wrongpassword',
+    })
+    component.onSubmit()
+    fixture.detectChanges()
 
-    const errorElement = fixture.nativeElement.querySelector('.error-message');
-    expect(errorElement.textContent).toContain(errorMessage);
-  });
+    const errorElement = fixture.nativeElement.querySelector('.error-message')
+    expect(errorElement.textContent).toContain(errorMessage)
+  })
 
   it('should toggle password visibility', () => {
-    const passwordField = fixture.nativeElement.querySelector('input[formControlName="password"]');
-    const toggleButton = fixture.nativeElement.querySelector('nb-icon[nbPrefix]');
+    const passwordField = fixture.nativeElement.querySelector('input[formControlName="password"]')
+    const toggleButton = fixture.nativeElement.querySelector('nb-icon[nbPrefix]')
 
-    expect(passwordField.type).toBe('password');
-    toggleButton.click();
-    fixture.detectChanges();
-    expect(passwordField.type).toBe('text');
-  });
+    expect(passwordField.type).toBe('password')
+    toggleButton.click()
+    fixture.detectChanges()
+    expect(passwordField.type).toBe('text')
+  })
 
   it('should redirect to dashboard if already authenticated', () => {
-    userService.isAuthenticated.and.returnValue(true);
-    const navigateSpy = spyOn(router, 'navigate');
+    userService.isAuthenticated.and.returnValue(true)
+    const navigateSpy = spyOn(router, 'navigate')
 
-    component.ngOnInit();
+    component.ngOnInit()
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/dashboard']);
-  });
+    expect(navigateSpy).toHaveBeenCalledWith(['/dashboard'])
+  })
 
   it('should disable submit button while loading', () => {
-    userService.login.and.returnValue(of(mockAuthResponse));
+    userService.login.and.returnValue(of(mockAuthResponse))
 
     component.loginForm.patchValue({
-      email: 'test@example.com',;
-      password: 'password123',;
-    });
+      email: 'test@example.com',
+      password: 'password123',
+    })
 
-    component.onSubmit();
-    fixture.detectChanges();
+    component.onSubmit()
+    fixture.detectChanges()
 
-    const submitButton = fixture.nativeElement.querySelector('button[type="submit"]');
-    expect(submitButton.disabled).toBe(true);
-  });
-});
+    const submitButton = fixture.nativeElement.querySelector('button[type="submit"]')
+    expect(submitButton.disabled).toBe(true)
+  })
+})

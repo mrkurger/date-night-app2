@@ -12,11 +12,11 @@ import { NebularModule } from '../../shared/nebular.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-  Component,;
-  OnInit,;
-  Input,;
-  Output,;
-  EventEmitter,;
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
   CUSTOM_ELEMENTS_SCHEMA,';
 } from '@angular/core';
 
@@ -28,15 +28,15 @@ export interface ReviewData {
 }
 
 @Component({
-    selector: 'app-review-form',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    selector: 'app-review-form',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [;
-    CommonModule, ReactiveFormsModule, NebularModule,;
+    CommonModule, ReactiveFormsModule, NebularModule,
     ButtonModule;
-  ],;
+  ],
     template: `;`
     ;
-      {{ isEditMode ? 'Edit Your Review' : 'Write a Review' }};
+      {{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}
 
       ;
         ;
@@ -103,7 +103,7 @@ export interface ReviewData {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -112,13 +112,13 @@ export interface ReviewData {
 
       .review-form-container {
         padding: 2rem;
-        background-color: var(--background-basic-color-2);
-        border-radius: var(--border-radius);
+        background-color: var(--background-basic-color-2)
+        border-radius: var(--border-radius)
       }
 
       .form-title {
         margin-bottom: 2rem;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .form-group {
@@ -136,29 +136,29 @@ export interface ReviewData {
         min-width: auto;
 
         &.filled nb-icon {
-          color: var(--color-warning-500);
+          color: var(--color-warning-500)
         }
       }
 
       .validation-error {
-        color: var(--color-danger-default);
+        color: var(--color-danger-default)
         font-size: 0.875rem;
         margin-top: 0.25rem;
       }
 
       .char-count {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         font-size: 0.875rem;
         text-align: right;
         margin-top: 0.25rem;
 
         &.text-danger {
-          color: var(--color-danger-default);
+          color: var(--color-danger-default)
         }
       }
 
       .text-hint {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         font-size: 0.875rem;
         margin-left: 0.5rem;
       }
@@ -169,25 +169,25 @@ export interface ReviewData {
         justify-content: flex-end;
         margin-top: 2rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ReviewFormComponen {t implements OnInit {
   @Input() adId!: string;
   @Input() existingReview: any = null;
-  @Output() reviewSubmitted = new EventEmitter();
-  @Output() cancel = new EventEmitter();
+  @Output() reviewSubmitted = new EventEmitter()
+  @Output() cancel = new EventEmitter()
 
   reviewForm!: FormGroup;
   submitting = false;
-  ratingOptions = [1, 2, 3, 4, 5];
+  ratingOptions = [1, 2, 3, 4, 5]
   isEditMode = false;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.isEditMode = !!this.existingReview;
-    this.initForm();
+    this.initForm()
   }
 
   /**
@@ -196,16 +196,16 @@ export class ReviewFormComponen {t implements OnInit {
   private initForm(): void {
     this.reviewForm = this.fb.group({
       rating: [;
-        this.existingReview?.rating || 5,;
-        [Validators.required, Validators.min(1), Validators.max(5)],;
-      ],;
-      title: [this.existingReview?.title || '', [Validators.required, Validators.maxLength(100)]],;
+        this.existingReview?.rating || 5,
+        [Validators.required, Validators.min(1), Validators.max(5)],
+      ],
+      title: [this.existingReview?.title || '', [Validators.required, Validators.maxLength(100)]],
       content: [;
-        this.existingReview?.content || '',;
-        [Validators.required, Validators.minLength(10), Validators.maxLength(1000)],;
-      ],;
-      anonymous: [this.existingReview?.anonymous || false],;
-    });
+        this.existingReview?.content || '',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(1000)],
+      ],
+      anonymous: [this.existingReview?.anonymous || false],
+    })
   }
 
   /**
@@ -215,9 +215,9 @@ export class ReviewFormComponen {t implements OnInit {
     if (this.reviewForm.invalid) {
       // Mark all fields as touched to trigger validation messages
       Object.keys(this.reviewForm.controls).forEach((key) => {
-        const control = this.reviewForm.get(key);
-        control?.markAsTouched();
-      });
+        const control = this.reviewForm.get(key)
+        control?.markAsTouched()
+      })
       return;
     }
 
@@ -226,23 +226,23 @@ export class ReviewFormComponen {t implements OnInit {
 
     // Emit the review data to the parent component
     setTimeout(() => {
-      this.reviewSubmitted.emit(reviewData);
+      this.reviewSubmitted.emit(reviewData)
       this.submitting = false;
-    }, 500);
+    }, 500)
   }
 
   /**
    * Cancel the review form;
    */
   onCancel(): void {
-    this.cancel.emit();
+    this.cancel.emit()
   }
 
   /**
    * Set the rating value;
    */
   setRating(rating: number): void {
-    this.reviewForm.get('rating')?.setValue(rating);
+    this.reviewForm.get('rating')?.setValue(rating)
   }
 
   /**

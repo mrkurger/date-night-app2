@@ -25,7 +25,7 @@ export interface ReviewData {
     appearance: number;
     location: number;
     value: number;
-  };
+  }
 }
 
 export interface ReviewDialogData {
@@ -36,12 +36,12 @@ export interface ReviewDialogData {
 }
 
 @Component({';
-    selector: 'app-review-dialog',;
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],;
+    selector: 'app-review-dialog',
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
     template: `;`
     ;
       ;
-        {{ data.existingReview ? 'Edit Review' : 'Write a Review' }};
+        {{ data.existingReview ? 'Edit Review' : 'Write a Review' }}
         ;
           ;
         ;
@@ -51,7 +51,7 @@ export interface ReviewDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .review-dialog-container {
@@ -64,24 +64,24 @@ export interface ReviewDialogData {
         justify-content: space-between;
         align-items: center;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ReviewDialogComponen {t {
   constructor(;
-    private dialogRef: NbDialogRef,;
-    @Inject('REVIEW_DIALOG_DATA');
+    private dialogRef: NbDialogRef,
+    @Inject('REVIEW_DIALOG_DATA')
     public data: ReviewDialogData = {
-      advertiserId: '',;
-      advertiserName: '',;
-    },;
+      advertiserId: '',
+      advertiserName: '',
+    },
   ) {}
 
   onReviewSubmitted(review: ReviewData): void {
-    this.dialogRef.close(review);
+    this.dialogRef.close(review)
   }
 
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

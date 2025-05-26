@@ -2,7 +2,7 @@ import {
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-  PerformanceMonitorService,;
+  PerformanceMonitorService,
   PerformanceMetrics,';
 } from '../../services/performance-monitor.service';
 
@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
  * It can be used for debugging and monitoring performance issues.;
  */
 @Component({
-  selector: 'app-performance-monitor',;
-  standalone: true,;
-  imports: [CommonModule],;
+  selector: 'app-performance-monitor',
+  standalone: true,
+  imports: [CommonModule],
   template: `;`
     ;
       ;
@@ -66,7 +66,7 @@ import { Subscription } from 'rxjs';
           ;
           ;
             ;
-              {{ task.name }};
+              {{ task.name }}
               ;
                 {{ task.duration | number: '1.0-0' }} ms;
               ;
@@ -91,7 +91,7 @@ import { Subscription } from 'rxjs';
     ;
       📊;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -103,10 +103,10 @@ import { Subscription } from 'rxjs';
 
       .performance-monitor {
         width: 300px;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.8)
         color: white;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
         overflow: hidden;
         font-family: monospace;
         font-size: 12px;
@@ -117,8 +117,8 @@ import { Subscription } from 'rxjs';
         justify-content: space-between;
         align-items: center;
         padding: 8px 12px;
-        background-color: rgba(0, 0, 0, 0.3);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.3)
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1)
       }
 
       .performance-monitor__title {
@@ -143,14 +143,14 @@ import { Subscription } from 'rxjs';
 
       .performance-monitor__metrics {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)
         gap: 8px;
         margin-bottom: 12px;
       }
 
       .performance-monitor__metric {
         padding: 6px;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.1)
         border-radius: 4px;
       }
 
@@ -185,7 +185,7 @@ import { Subscription } from 'rxjs';
         display: flex;
         justify-content: space-between;
         padding: 4px 6px;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.1)
         border-radius: 4px;
         font-size: 10px;
       }
@@ -221,7 +221,7 @@ import { Subscription } from 'rxjs';
       }
 
       .performance-monitor__action {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2)
         border: none;
         color: white;
         padding: 4px 8px;
@@ -231,29 +231,29 @@ import { Subscription } from 'rxjs';
       }
 
       .performance-monitor__action:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.3)
       }
 
       .performance-monitor-toggle {
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.8)
         color: white;
         border: none;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)
       }
 
       .performance-monitor-toggle__icon {
         font-size: 16px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class PerformanceMonitorComponen {t implements OnInit, OnDestroy {
   metrics: PerformanceMetrics | null = null;
   isVisible = false;
@@ -265,7 +265,7 @@ export class PerformanceMonitorComponen {t implements OnInit, OnDestroy {
     // Subscribe to performance metrics
     this.subscription = this.performanceMonitor.getMetrics().subscribe((metrics) => {
       this.metrics = metrics;
-    });
+    })
 
     // Check if the component should be visible based on localStorage
     this.isVisible = localStorage.getItem('performance-monitor-visible') === 'true';
@@ -273,7 +273,7 @@ export class PerformanceMonitorComponen {t implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe()
     }
   }
 
@@ -282,13 +282,13 @@ export class PerformanceMonitorComponen {t implements OnInit, OnDestroy {
    */
   toggleVisibility(): void {
     this.isVisible = !this.isVisible;
-    localStorage.setItem('performance-monitor-visible', this.isVisible.toString());
+    localStorage.setItem('performance-monitor-visible', this.isVisible.toString())
   }
 
   /**
    * Clears all performance metrics;
    */
   clearMetrics(): void {
-    this.performanceMonitor.clearMetrics();
+    this.performanceMonitor.clearMetrics()
   }
 }

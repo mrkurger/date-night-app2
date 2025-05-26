@@ -10,9 +10,9 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
  * Features responsive grid layout, loading state, and customizable item templates.;
  */
 @Component({';
-  selector: 'app-card-grid',;
-  standalone: true,;
-  imports: [CommonModule, NbCardModule, NbSpinnerModule, LoadingSpinnerComponent],;
+  selector: 'app-card-grid',
+  standalone: true,
+  imports: [CommonModule, NbCardModule, NbSpinnerModule, LoadingSpinnerComponent],
   template: `;`
     ;
       ;
@@ -37,13 +37,13 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .card-grid {
         display: grid;
-        grid-template-columns: repeat(var(--columns, auto-fit), minmax(var(--min-item-width), 1fr));
-        gap: var(--grid-gap);
+        grid-template-columns: repeat(var(--columns, auto-fit), minmax(var(--min-item-width), 1fr))
+        gap: var(--grid-gap)
         width: 100%;
 
         // Layout variations
@@ -54,7 +54,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 
         &--netflix {
           grid-template-columns: 100%;
-          gap: nb-theme(spacing-lg);
+          gap: nb-theme(spacing-lg)
 
           .card-grid__item {
             display: flex;
@@ -69,9 +69,9 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
             }
 
             > * {
-              flex: 0 0 var(--min-item-width);
+              flex: 0 0 var(--min-item-width)
               scroll-snap-align: start;
-              margin-right: var(--grid-gap);
+              margin-right: var(--grid-gap)
 
               &:last-child {
                 margin-right: 0;
@@ -90,12 +90,12 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 
         &__item {
           transition:;
-            transform 0.2s ease-in-out,;
+            transform 0.2s ease-in-out,
             box-shadow 0.2s ease-in-out;
 
           &:hover {
-            transform: translateY(-4px);
-            box-shadow: nb-theme(shadow-lg);
+            transform: translateY(-4px)
+            box-shadow: nb-theme(shadow-lg)
           }
 
           &--animated {
@@ -107,11 +107,11 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(10px);
+          transform: translateY(10px)
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0)
         }
       }
 
@@ -127,11 +127,11 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
           --min-item-width: 200px;
         }
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class CardGridComponen {t {
-  @Input() items: any[] = [];
+  @Input() items: any[] = []
   @Input() columns: number | null = null;
   @Input() gap = 16;
   @Input() minItemWidth = 280;
@@ -140,7 +140,7 @@ export class CardGridComponen {t {
   @Input() animated = true;
   @Input() layout: 'grid' | 'masonry' | 'netflix' = 'grid';
 
-  @Output() itemClick = new EventEmitter();
+  @Output() itemClick = new EventEmitter()
 
   @ContentChild('itemTemplate') itemTemplate!: TemplateRef;
 
@@ -155,6 +155,6 @@ export class CardGridComponen {t {
    * Handle item click;
    */
   onItemClick(item: any): void {
-    this.itemClick.emit(item);
+    this.itemClick.emit(item)
   }
 }

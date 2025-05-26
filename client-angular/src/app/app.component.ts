@@ -15,64 +15,64 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 
 @Component({';
-  selector: 'app-root',;
+  selector: 'app-root',
   imports: [;
-    RouterModule,;
-    NavigationComponent,;
-    ButtonModule,;
-    CardModule,;
-    ProgressSpinnerModule,;
-    SidebarModule,;
-    MenuModule,;
-    AvatarModule,;
-    PanelModule,;
-    ToolbarModule,;
-    PanelMenuModule,;
-  ],;
+    RouterModule,
+    NavigationComponent,
+    ButtonModule,
+    CardModule,
+    ProgressSpinnerModule,
+    SidebarModule,
+    MenuModule,
+    AvatarModule,
+    PanelModule,
+    ToolbarModule,
+    PanelMenuModule,
+  ],
   template: `;`
     ;
       ;
     ;
-  `,;`
-  styleUrls: ['./app.component.scss'],;
-  standalone: true,;
-});
+  `,`
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+})
 export class AppComponen {t implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
 
   constructor(;
-    private themeService: ThemeService,;
-    private webSocketFallbackService: WebSocketFallbackService,;
+    private themeService: ThemeService,
+    private webSocketFallbackService: WebSocketFallbackService,
   ) {}
 
   ngOnInit() {
     // Initialize WebSocket fallback service
-    this.webSocketFallbackService.initialize();
+    this.webSocketFallbackService.initialize()
 
     // Subscribe to theme changes
     this.subscription = this.themeService.theme$.subscribe((theme) => {
       // Set data-theme attribute on document for PrimeNG theming
-      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-    });
+      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light')
+    })
 
     // Initialize theme from saved preference
-    const savedTheme = this.themeService.getCurrentTheme();
+    const savedTheme = this.themeService.getCurrentTheme()
     if (savedTheme === 'system') {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.themeService.setTheme(prefersDark ? 'dark' : 'default');
+      this.themeService.setTheme(prefersDark ? 'dark' : 'default')
     } else if (savedTheme) {
-      this.themeService.setTheme(savedTheme);
+      this.themeService.setTheme(savedTheme)
     } else {
-      this.themeService.setTheme('default');
+      this.themeService.setTheme('default')
     }
   }
 
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe()
     }
 
     // Restore original WebSocket
-    this.webSocketFallbackService.restoreOriginalWebSocket();
+    this.webSocketFallbackService.restoreOriginalWebSocket()
   }
 }

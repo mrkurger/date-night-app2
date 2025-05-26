@@ -5,23 +5,23 @@ import { NotificationMessage } from './notification.model';
 import { ButtonModule } from 'primeng/button';
 
 @Component({';
-    selector: 'app-notification',;
+    selector: 'app-notification',
     imports: [;
-    CommonModule, NebularModule,;
+    CommonModule, NebularModule,
     ButtonModule;
-  ],;
+  ],
     template: `;`
     ;
       ;
         ;
           ;
             ;
-            {{ notification.message }};
+            {{ notification.message }}
           ;
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .notifications-container {
@@ -34,12 +34,12 @@ import { ButtonModule } from 'primeng/button';
 
       .notification-card {
         margin-bottom: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
         transition: all 0.3s ease;
 
         &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+          transform: translateY(-2px)
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15)
         }
       }
 
@@ -56,22 +56,22 @@ import { ButtonModule } from 'primeng/button';
       nb-icon {
         font-size: 1.5rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class NotificationComponen {t implements OnDestroy {
-  @Input() notifications: NotificationMessage[] = [];
+  @Input() notifications: NotificationMessage[] = []
 
   // This property is used in tests
   get activeNotifications(): NotificationMessage[] {
     return this.notifications;
   }
 
-  private timeoutIds: number[] = [];
+  private timeoutIds: number[] = []
 
   ngOnDestroy(): void {
     // Clear any timeouts
-    this.timeoutIds.forEach((id) => clearTimeout(id));
+    this.timeoutIds.forEach((id) => clearTimeout(id))
   }
 
   getNotificationStatus(notification: NotificationMessage): string {

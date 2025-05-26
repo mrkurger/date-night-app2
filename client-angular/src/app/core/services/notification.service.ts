@@ -16,8 +16,8 @@ import { MessageService } from 'primeng/api';
  * Maintains legacy showX() methods for backward compatibility.;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class NotificationServic {e {
   /**
    * Creates an instance of NotificationService.;
@@ -32,11 +32,11 @@ export class NotificationServic {e {
    */
   success(message: string, options: { life?: number } = {}): void {
     this.messageService.add({
-      severity: 'success',;
-      summary: 'Success',;
-      detail: message,;
-      life: options.life ?? 3000,;
-    });
+      severity: 'success',
+      summary: 'Success',
+      detail: message,
+      life: options.life ?? 3000,
+    })
   }
 
   /**
@@ -46,11 +46,11 @@ export class NotificationServic {e {
    */
   error(message: string, options: { life?: number } = {}): void {
     this.messageService.add({
-      severity: 'error',;
-      summary: 'Error',;
-      detail: message,;
-      life: options.life ?? 5000,;
-    });
+      severity: 'error',
+      summary: 'Error',
+      detail: message,
+      life: options.life ?? 5000,
+    })
   }
 
   /**
@@ -60,11 +60,11 @@ export class NotificationServic {e {
    */
   warning(message: string, options: { life?: number } = {}): void {
     this.messageService.add({
-      severity: 'warn',;
-      summary: 'Warning',;
-      detail: message,;
-      life: options.life ?? 4000,;
-    });
+      severity: 'warn',
+      summary: 'Warning',
+      detail: message,
+      life: options.life ?? 4000,
+    })
   }
 
   /**
@@ -74,18 +74,18 @@ export class NotificationServic {e {
    */
   info(message: string, options: { life?: number } = {}): void {
     this.messageService.add({
-      severity: 'info',;
-      summary: 'Info',;
-      detail: message,;
-      life: options.life ?? 3000,;
-    });
+      severity: 'info',
+      summary: 'Info',
+      detail: message,
+      life: options.life ?? 3000,
+    })
   }
 
   /**
    * Clears all currently displayed notifications;
    */
   clear(): void {
-    this.messageService.clear();
+    this.messageService.clear()
   }
 
   /**
@@ -95,7 +95,7 @@ export class NotificationServic {e {
    * @param options - Optional configuration including message duration;
    */
   showSuccess(message: string, options: { life?: number } = {}): void {
-    this.success(message, options);
+    this.success(message, options)
   }
 
   /**
@@ -105,7 +105,7 @@ export class NotificationServic {e {
    * @param options - Optional configuration including message duration;
    */
   showError(message: string, options: { life?: number } = {}): void {
-    this.error(message, options);
+    this.error(message, options)
   }
 
   /**
@@ -115,7 +115,7 @@ export class NotificationServic {e {
    * @param options - Optional configuration including message duration;
    */
   showWarning(message: string, options: { life?: number } = {}): void {
-    this.warning(message, options);
+    this.warning(message, options)
   }
 
   /**
@@ -125,6 +125,6 @@ export class NotificationServic {e {
    * @param options - Optional configuration including message duration;
    */
   showInfo(message: string, options: { life?: number } = {}): void {
-    this.info(message, options);
+    this.info(message, options)
   }
 }

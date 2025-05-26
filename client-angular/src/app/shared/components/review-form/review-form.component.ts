@@ -24,18 +24,18 @@ export interface ReviewData {
     appearance: number;
     location: number;
     value: number;
-  };
+  }
   isAnonymous?: boolean;
   isVerifiedMeeting?: boolean;
   meetingDate?: string | null;
 }
 
 @Component({';
-  selector: 'app-review-form',;
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],;
+  selector: 'app-review-form',
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],
   template: `;`
     ;
-      Review {{ advertiserName }};
+      Review {{ advertiserName }}
       Edit Your Review;
 
       ;
@@ -87,7 +87,7 @@ export interface ReviewData {
           ;
 
           ;
-            Meeting Date (Optional);
+            Meeting Date (Optional)
             ;
           ;
         ;
@@ -99,7 +99,7 @@ export interface ReviewData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .review-form {
@@ -111,7 +111,7 @@ export interface ReviewData {
       }
       .category-ratings {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
         gap: 1rem;
         margin-bottom: 1.5rem;
       }
@@ -125,81 +125,81 @@ export interface ReviewData {
         margin-bottom: 0.5rem;
         font-weight: bold;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class ReviewFormComponen {t implements OnInit {
   @Input() advertiserId!: string;
   @Input() advertiserName!: string;
   @Input() adId?: string;
   @Input() existingReview?: ReviewData;
 
-  @Output() submitted = new EventEmitter();
-  @Output() cancelled = new EventEmitter();
+  @Output() submitted = new EventEmitter()
+  @Output() cancelled = new EventEmitter()
 
   reviewForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.initForm();
+    this.initForm()
   }
 
   initForm() {
     this.reviewForm = this.fb.group({
       title: [;
-        this.existingReview?.title || '',;
-        [Validators.required, Validators.minLength(3), Validators.maxLength(100)],;
-      ],;
+        this.existingReview?.title || '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
+      ],
       content: [;
-        this.existingReview?.content || '',;
-        [Validators.required, Validators.minLength(10), Validators.maxLength(2000)],;
-      ],;
+        this.existingReview?.content || '',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(2000)],
+      ],
       rating: [;
-        this.existingReview?.rating || 0,;
-        [Validators.required, Validators.min(1), Validators.max(5)],;
-      ],;
-      isAnonymous: [this.existingReview?.isAnonymous || false],;
+        this.existingReview?.rating || 0,
+        [Validators.required, Validators.min(1), Validators.max(5)],
+      ],
+      isAnonymous: [this.existingReview?.isAnonymous || false],
       categories: this.fb.group({
         communication: [;
-          this.existingReview?.categories?.communication || 0,;
-          [Validators.required, Validators.min(1), Validators.max(5)],;
-        ],;
+          this.existingReview?.categories?.communication || 0,
+          [Validators.required, Validators.min(1), Validators.max(5)],
+        ],
         appearance: [;
-          this.existingReview?.categories?.appearance || 0,;
-          [Validators.required, Validators.min(1), Validators.max(5)],;
-        ],;
+          this.existingReview?.categories?.appearance || 0,
+          [Validators.required, Validators.min(1), Validators.max(5)],
+        ],
         location: [;
-          this.existingReview?.categories?.location || 0,;
-          [Validators.required, Validators.min(1), Validators.max(5)],;
-        ],;
+          this.existingReview?.categories?.location || 0,
+          [Validators.required, Validators.min(1), Validators.max(5)],
+        ],
         value: [;
-          this.existingReview?.categories?.value || 0,;
-          [Validators.required, Validators.min(1), Validators.max(5)],;
-        ],;
-      }),;
-      isVerifiedMeeting: [this.existingReview?.isVerifiedMeeting || false],;
-      meetingDate: [this.existingReview?.meetingDate || null],;
-    });
+          this.existingReview?.categories?.value || 0,
+          [Validators.required, Validators.min(1), Validators.max(5)],
+        ],
+      }),
+      isVerifiedMeeting: [this.existingReview?.isVerifiedMeeting || false],
+      meetingDate: [this.existingReview?.meetingDate || null],
+    })
   }
 
   submitReview() {
-    this.reviewForm.markAllAsTouched();
+    this.reviewForm.markAllAsTouched()
     if (this.reviewForm.invalid) {
       return;
     }
 
     const reviewData: ReviewData = {
-      ...this.existingReview,;
-      ...this.reviewForm.value,;
-      advertiserId: this.advertiserId,;
-      adId: this.adId,;
-    };
+      ...this.existingReview,
+      ...this.reviewForm.value,
+      advertiserId: this.advertiserId,
+      adId: this.adId,
+    }
 
-    this.submitted.emit(reviewData);
+    this.submitted.emit(reviewData)
   }
 
   cancel() {
-    this.cancelled.emit();
+    this.cancelled.emit()
   }
 }

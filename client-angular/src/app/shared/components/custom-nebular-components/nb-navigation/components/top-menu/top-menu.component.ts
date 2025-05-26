@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({';
-    selector: 'nb-top-menu',;
+    selector: 'nb-top-menu',
     template: `;`
     ;
       ;
@@ -10,7 +10,7 @@ import { NbMenuItem } from '@nebular/theme';
           ;
           ;
             ;
-            {{ item.title }};
+            {{ item.title }}
             ;
             ;
           ;
@@ -19,14 +19,14 @@ import { NbMenuItem } from '@nebular/theme';
           ;
             ;
               ;
-              {{ item.title }};
+              {{ item.title }}
               ;
             ;
           ;
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .top-menu {
@@ -53,33 +53,33 @@ import { NbMenuItem } from '@nebular/theme';
           }
         }
 
-        a,;
+        a,
         .menu-trigger {
           display: flex;
           align-items: center;
           padding: 0.5rem 1rem;
-          color: nb-theme(text-basic-color);
+          color: nb-theme(text-basic-color)
           text-decoration: none;
-          border-radius: nb-theme(border-radius);
+          border-radius: nb-theme(border-radius)
           transition: background-color 0.2s;
 
           &:hover {
-            background-color: nb-theme(background-basic-hover-color);
+            background-color: nb-theme(background-basic-hover-color)
           }
 
           &.active {
-            background-color: nb-theme(color-primary-transparent-100);
-            color: nb-theme(color-primary-default);
+            background-color: nb-theme(color-primary-transparent-100)
+            color: nb-theme(color-primary-default)
 
             nb-icon {
-              color: nb-theme(color-primary-default);
+              color: nb-theme(color-primary-default)
             }
           }
         }
 
         nb-icon {
           margin-right: 0.5rem;
-          color: nb-theme(text-hint-color);
+          color: nb-theme(text-hint-color)
 
           &.expand-state {
             margin-right: 0;
@@ -89,9 +89,9 @@ import { NbMenuItem } from '@nebular/theme';
         }
 
         .menu-title {
-          font-size: nb-theme(text-button-font-size);
-          font-weight: nb-theme(text-button-font-weight);
-          line-height: nb-theme(text-button-line-height);
+          font-size: nb-theme(text-button-font-size)
+          font-weight: nb-theme(text-button-font-weight)
+          line-height: nb-theme(text-button-line-height)
         }
 
         nb-badge {
@@ -119,17 +119,17 @@ import { NbMenuItem } from '@nebular/theme';
           }
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbTopMenuComponen {t {
-  @Input() items: NbMenuItem[] = [];
-  @Output() itemClick = new EventEmitter();
+  @Input() items: NbMenuItem[] = []
+  @Output() itemClick = new EventEmitter()
 
   onItemClick(item: NbMenuItem) {
     if (!item.children?.length) {
-      this.itemClick.emit(item);
+      this.itemClick.emit(item)
     }
   }
 }

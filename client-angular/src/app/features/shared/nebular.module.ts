@@ -19,21 +19,21 @@ import { TooltipModule } from 'primeng/tooltip';
 /**
  * Core PrimeNG modules that need to be configured at the root level;
  */
-const ROOT_PRIMENG_MODULES: Array> = [];
+const ROOT_PRIMENG_MODULES: Array> = []
 
 /**
  * Feature PrimeNG modules that can be imported multiple times;
  */
 const FEATURE_PRIMENG_MODULES: Array> = [;
-  ButtonModule,;
-  CardModule,;
-  DialogModule,;
-  DropdownModule,;
-  InputTextModule,;
-  TableModule,;
-  TooltipModule,;
-  ToastModule,;
-];
+  ButtonModule,
+  CardModule,
+  DialogModule,
+  DropdownModule,
+  InputTextModule,
+  TableModule,
+  TooltipModule,
+  ToastModule,
+]
 
 /**
  * NebularModule;
@@ -43,13 +43,13 @@ const FEATURE_PRIMENG_MODULES: Array> = [;
  */
 @NgModule({
   imports: [;
-    CommonModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    ...ROOT_PRIMENG_MODULES,;
-    ...FEATURE_PRIMENG_MODULES,;
-  ],;
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...FEATURE_PRIMENG_MODULES],;
-});
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ...ROOT_PRIMENG_MODULES,
+    ...FEATURE_PRIMENG_MODULES,
+  ],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...FEATURE_PRIMENG_MODULES],
+})
 export class NebularModul {e {}
 ';

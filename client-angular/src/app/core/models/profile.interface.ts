@@ -7,7 +7,7 @@ export interface Profile extends User {
   location?: {
     city: string;
     country: string;
-  };
+  }
   preferences?: {
     emailNotifications: boolean;
     pushNotifications: boolean;';
@@ -15,7 +15,7 @@ export interface Profile extends User {
     language: string;
     notifications?: boolean;
     visibility?: 'public' | 'private';
-  };
+  }
 }
 
 export interface ProfileUpdateDTO {
@@ -25,7 +25,7 @@ export interface ProfileUpdateDTO {
   location?: {
     city: string;
     country: string;
-  };
+  }
   preferences?: {
     emailNotifications?: boolean;
     pushNotifications?: boolean;
@@ -33,5 +33,5 @@ export interface ProfileUpdateDTO {
     language?: string;
     notifications?: boolean;
     visibility?: 'public' | 'private';
-  };
+  }
 }

@@ -15,31 +15,31 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, FormsModule } from '@angul
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
 import { NebularModule } from '../../../app/shared/nebular.module';
 import { ErrorDetailsDialogComponent } from '../../shared/components/error-details-dialog/error-details-dialog.component';
-  NbCardModule,;
-  NbTabsetModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbSelectModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbDatepickerModule,;
-  NbSpinnerModule,;
-  NbTableModule,;
-  NbListModule,;
-  NbTreeGridModule,;
+  NbCardModule,
+  NbTabsetModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSelectModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbDatepickerModule,
+  NbSpinnerModule,
+  NbTableModule,
+  NbListModule,
+  NbTreeGridModule,
   NbDatepickerModule,';
 } from '@nebular/theme';
 
 import {
-  TelemetryService,;
-  ErrorTelemetry,;
-  ErrorStatistics,;
-  PerformanceStatistics,;
-  TelemetryFilters,;
+  TelemetryService,
+  ErrorTelemetry,
+  ErrorStatistics,
+  PerformanceStatistics,
+  TelemetryFilters,
 } from '../../core/services/telemetry.service';
 
 // Register Chart.js components
-Chart.register(...registerables);
+Chart.register(...registerables)
 
 /**
  * Valid date range options for filtering telemetry data;
@@ -72,31 +72,31 @@ type ErrorColumnKey =;
   | 'actions';
 
 /**
- * TelemetryDashboardComponent provides a comprehensive view of application telemetry data,;
+ * TelemetryDashboardComponent provides a comprehensive view of application telemetry data,
  * including error tracking and performance metrics. It supports filtering by date range;
  * and displays data through interactive charts and tables.;
  */
 @Component({
-  selector: 'app-telemetry-dashboard',;
+  selector: 'app-telemetry-dashboard',
   imports: [;
-    NebularModule,;
-    CommonModule,;
-    ReactiveFormsModule,;
-    FormsModule,;
-    NbCardModule,;
-    NbTabsetModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbSelectModule,;
-    NbInputModule,;
-    NbFormFieldModule,;
-    NbDatepickerModule,;
-    NbSpinnerModule,;
-    NbTableModule,;
-    NbListModule,;
-    NbTreeGridModule,;
-    ErrorDetailsDialogComponent,;
-  ],;
+    NebularModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbDatepickerModule,
+    NbSpinnerModule,
+    NbTableModule,
+    NbListModule,
+    NbTreeGridModule,
+    ErrorDetailsDialogComponent,
+  ],
   template: `;`
     ;
       Telemetry Dashboard;
@@ -229,7 +229,7 @@ type ErrorColumnKey =;
                       ;
                         ;
                       ;
-                      Page {{ currentPage }} of {{ totalPages }};
+                      Page {{ currentPage }} of {{ totalPages }}
                       ;
                         ;
                       ;
@@ -271,7 +271,7 @@ type ErrorColumnKey =;
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -284,7 +284,7 @@ type ErrorColumnKey =;
 
       h1 {
         margin-bottom: 2rem;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .filter-section {
@@ -313,7 +313,7 @@ type ErrorColumnKey =;
 
       .charts-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr))
         gap: 2rem;
         margin-bottom: 2rem;
       }
@@ -345,22 +345,22 @@ type ErrorColumnKey =;
       }
 
       nb-icon {
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
-  @ViewChild('errorsByTypeChart');
+  @ViewChild('errorsByTypeChart')
   private errorsByTypeChartRef!: ElementRef;
 
-  @ViewChild('errorsOverTimeChart');
+  @ViewChild('errorsOverTimeChart')
   private errorsOverTimeChartRef!: ElementRef;
 
-  @ViewChild('responseTimeByEndpointChart');
+  @ViewChild('responseTimeByEndpointChart')
   private responseTimeByEndpointChartRef!: ElementRef;
 
-  @ViewChild('responseTimeTrendsChart');
+  @ViewChild('responseTimeTrendsChart')
   private responseTimeTrendsChartRef!: ElementRef;
 
   // Form and loading state
@@ -369,32 +369,32 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
   protected isLoadingPerformance = true;
 
   // Data sources for tables
-  protected errorDataSource: Array = [];
-  protected performanceDataSource: PerformanceStatistics['byEndpoint'] = [];
+  protected errorDataSource: Array = []
+  protected performanceDataSource: PerformanceStatistics['byEndpoint'] = []
 
   // Table columns with typed arrays
   protected readonly errorColumns: ErrorColumnKey[] = [;
-    'timestamp',;
-    'type',;
-    'category',;
-    'statusCode',;
-    'url',;
-    'message',;
-    'actions',;
-  ];
+    'timestamp',
+    'type',
+    'category',
+    'statusCode',
+    'url',
+    'message',
+    'actions',
+  ]
 
   protected readonly performanceColumns: PerformanceColumnKey[] = [;
-    'url',;
-    'method',;
-    'avgDuration',;
-    'p95Duration',;
-    'count',;
-  ];
+    'url',
+    'method',
+    'avgDuration',
+    'p95Duration',
+    'count',
+  ]
 
   // Pagination state with reasonable defaults
   protected currentPage = 1;
   protected readonly defaultPageSize = 10;
-  protected readonly pageSizeOptions = [10, 25, 50];
+  protected readonly pageSizeOptions = [10, 25, 50]
   protected pageSize = this.defaultPageSize;
   protected totalPages = 1;
 
@@ -406,32 +406,32 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
 
   // Chart colors using CSS custom properties when possible
   private readonly chartColors = {
-    primary: 'var(--primary-500, #FF6384)',;
-    secondary: 'var(--info-500, #36A2EB)',;
-    tertiary: 'var(--warning-500, #FFCE56)',;
-    quaternary: 'var(--success-500, #4BC0C0)',;
-    quinary: 'var(--basic-600, #9966FF)',;
-    success: 'var(--success-500, #8AC249)',;
-    warning: 'var(--warning-500, #FF9F40)',;
-    danger: 'var(--danger-500, #EA5545)',;
-    info: 'var(--info-500, #46BFBD)',;
-    accent: 'var(--primary-300, #F46A9B)',;
-  };
+    primary: 'var(--primary-500, #FF6384)',
+    secondary: 'var(--info-500, #36A2EB)',
+    tertiary: 'var(--warning-500, #FFCE56)',
+    quaternary: 'var(--success-500, #4BC0C0)',
+    quinary: 'var(--basic-600, #9966FF)',
+    success: 'var(--success-500, #8AC249)',
+    warning: 'var(--warning-500, #FF9F40)',
+    danger: 'var(--danger-500, #EA5545)',
+    info: 'var(--info-500, #46BFBD)',
+    accent: 'var(--primary-300, #F46A9B)',
+  }
 
   constructor(;
-    private readonly telemetryService: TelemetryService,;
-    private readonly fb: FormBuilder,;
-    private readonly dialog: MatDialog,;
+    private readonly telemetryService: TelemetryService,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
   ) {
-    this.initializeForm();
+    this.initializeForm()
   }
 
   /**
    * On component initialization, load both error and performance data;
    */
   ngOnInit(): void {
-    this.loadErrorData();
-    this.loadPerformanceData();
+    this.loadErrorData()
+    this.loadPerformanceData()
   }
 
   /**
@@ -446,18 +446,18 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
    */
   private initializeForm(): void {
     this.filterForm = this.fb.group({
-      dateRange: ['last7days'],;
-      startDate: [null],;
-      endDate: [null],;
-    });
+      dateRange: ['last7days'],
+      startDate: [null],
+      endDate: [null],
+    })
   }
 
   /**
    * Apply the current filter settings and reload all data;
    */
   protected applyFilters(): void {
-    this.loadErrorData();
-    this.loadPerformanceData();
+    this.loadErrorData()
+    this.loadPerformanceData()
   }
 
   /**
@@ -467,7 +467,7 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
   protected onPageSizeChange(newSize: number): void {
     this.pageSize = newSize;
     this.currentPage = 1;
-    this.loadErrorData();
+    this.loadErrorData()
   }
 
   /**
@@ -476,7 +476,7 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
   protected previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.loadErrorData();
+      this.loadErrorData()
     }
   }
 
@@ -486,15 +486,15 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
   protected nextPage(): void {
     if (this.currentPage  {
         this.isLoadingErrors = false;
-        this.errorDataSource = data.errors.map((error) => ({ data: error }));
-        this.totalPages = Math.ceil(data.total / this.pageSize);
-        this.initErrorCharts(data);
-      },;
+        this.errorDataSource = data.errors.map((error) => ({ data: error }))
+        this.totalPages = Math.ceil(data.total / this.pageSize)
+        this.initErrorCharts(data)
+      },
       error: (err: Error) => {
-        console.error('Failed to load error data:', err);
+        console.error('Failed to load error data:', err)
         this.isLoadingErrors = false;
-      },;
-    });
+      },
+    })
   }
 
   /**
@@ -502,19 +502,19 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
    */
   private loadPerformanceData(): void {
     this.isLoadingPerformance = true;
-    const filters = this.getFiltersFromForm();
+    const filters = this.getFiltersFromForm()
 
     this.telemetryService.getPerformanceStatistics(filters).subscribe({
       next: (data: PerformanceStatistics) => {
         this.isLoadingPerformance = false;
         this.performanceDataSource = data.byEndpoint;
-        this.initPerformanceCharts(data);
-      },;
+        this.initPerformanceCharts(data)
+      },
       error: (err: Error) => {
-        console.error('Failed to load performance data:', err);
+        console.error('Failed to load performance data:', err)
         this.isLoadingPerformance = false;
-      },;
-    });
+      },
+    })
   }
 
   /**
@@ -523,86 +523,86 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
    */
   private initErrorCharts(data: ErrorStatistics): void {
     // Cleanup existing charts
-    this.destroyCharts(this.errorsByTypeChart, this.errorsOverTimeChart);
+    this.destroyCharts(this.errorsByTypeChart, this.errorsOverTimeChart)
 
     // Errors by Type chart
     if (data.statistics?.byCategory && this.errorsByTypeChartRef) {
       const byCategory = data.statistics.byCategory;
       const config: ChartConfiguration = {
-        type: 'pie',;
+        type: 'pie',
         data: {
-          labels: byCategory.map((item) => item.category),;
+          labels: byCategory.map((item) => item.category),
           datasets: [;
             {
-              data: byCategory.map((item) => item.count),;
-              backgroundColor: Object.values(this.chartColors),;
-            },;
-          ],;
-        },;
+              data: byCategory.map((item) => item.count),
+              backgroundColor: Object.values(this.chartColors),
+            },
+          ],
+        },
         options: {
-          responsive: true,;
-          maintainAspectRatio: false,;
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: {
-              position: 'right',;
-            },;
+              position: 'right',
+            },
             title: {
-              display: true,;
-              text: 'Errors by Category',;
-            },;
-          },;
-        },;
-      };
+              display: true,
+              text: 'Errors by Category',
+            },
+          },
+        },
+      }
 
-      this.errorsByTypeChart = new Chart(this.errorsByTypeChartRef.nativeElement, config);
+      this.errorsByTypeChart = new Chart(this.errorsByTypeChartRef.nativeElement, config)
     }
 
     // Errors Over Time chart
     if (data.statistics?.byDay && this.errorsOverTimeChartRef) {
       const byDay = data.statistics.byDay;
       const config: ChartConfiguration = {
-        type: 'line',;
+        type: 'line',
         data: {
-          labels: byDay.map((item) => item.date),;
+          labels: byDay.map((item) => item.date),
           datasets: [;
             {
-              label: 'Error Count',;
-              data: byDay.map((item) => item.count),;
-              borderColor: this.chartColors.primary,;
-              backgroundColor: 'rgba(255, 99, 132, 0.1)',;
-              fill: true,;
-              tension: 0.4,;
-            },;
-          ],;
-        },;
+              label: 'Error Count',
+              data: byDay.map((item) => item.count),
+              borderColor: this.chartColors.primary,
+              backgroundColor: 'rgba(255, 99, 132, 0.1)',
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
         options: {
-          responsive: true,;
-          maintainAspectRatio: false,;
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             title: {
-              display: true,;
-              text: 'Errors Over Time',;
-            },;
-          },;
+              display: true,
+              text: 'Errors Over Time',
+            },
+          },
           scales: {
             y: {
-              beginAtZero: true,;
+              beginAtZero: true,
               title: {
-                display: true,;
-                text: 'Error Count',;
-              },;
-            },;
+                display: true,
+                text: 'Error Count',
+              },
+            },
             x: {
               title: {
-                display: true,;
-                text: 'Date',;
-              },;
-            },;
-          },;
-        },;
-      };
+                display: true,
+                text: 'Date',
+              },
+            },
+          },
+        },
+      }
 
-      this.errorsOverTimeChart = new Chart(this.errorsOverTimeChartRef.nativeElement, config);
+      this.errorsOverTimeChart = new Chart(this.errorsOverTimeChartRef.nativeElement, config)
     }
   }
 
@@ -612,112 +612,112 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
    */
   private initPerformanceCharts(data: PerformanceStatistics): void {
     // Cleanup existing charts
-    this.destroyCharts(this.responseTimeByEndpointChart, this.responseTimeTrendsChart);
+    this.destroyCharts(this.responseTimeByEndpointChart, this.responseTimeTrendsChart)
 
     // Response Time by Endpoint chart
     if (data.byEndpoint && this.responseTimeByEndpointChartRef) {
       const config: ChartConfiguration = {
-        type: 'bar',;
+        type: 'bar',
         data: {
-          labels: data.byEndpoint.map((item) => item.url),;
+          labels: data.byEndpoint.map((item) => item.url),
           datasets: [;
             {
-              label: 'Average Duration (ms)',;
-              data: data.byEndpoint.map((item) => item.avgDuration),;
-              backgroundColor: 'rgba(54, 162, 235, 0.5)',;
-              borderColor: 'rgb(54, 162, 235)',;
-              borderWidth: 1,;
-            },;
+              label: 'Average Duration (ms)',
+              data: data.byEndpoint.map((item) => item.avgDuration),
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgb(54, 162, 235)',
+              borderWidth: 1,
+            },
             {
-              label: 'P95 Duration (ms)',;
-              data: data.byEndpoint.map((item) => item.p95Duration),;
-              backgroundColor: 'rgba(255, 159, 64, 0.5)',;
-              borderColor: 'rgb(255, 159, 64)',;
-              borderWidth: 1,;
-            },;
-          ],;
-        },;
+              label: 'P95 Duration (ms)',
+              data: data.byEndpoint.map((item) => item.p95Duration),
+              backgroundColor: 'rgba(255, 159, 64, 0.5)',
+              borderColor: 'rgb(255, 159, 64)',
+              borderWidth: 1,
+            },
+          ],
+        },
         options: {
-          responsive: true,;
-          maintainAspectRatio: false,;
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             title: {
-              display: true,;
-              text: 'Response Time by Endpoint',;
-            },;
-          },;
+              display: true,
+              text: 'Response Time by Endpoint',
+            },
+          },
           scales: {
             y: {
-              beginAtZero: true,;
+              beginAtZero: true,
               title: {
-                display: true,;
-                text: 'Duration (ms)',;
-              },;
-            },;
+                display: true,
+                text: 'Duration (ms)',
+              },
+            },
             x: {
               title: {
-                display: true,;
-                text: 'Endpoint',;
-              },;
-            },;
-          },;
-        },;
-      };
+                display: true,
+                text: 'Endpoint',
+              },
+            },
+          },
+        },
+      }
 
       this.responseTimeByEndpointChart = new Chart(;
-        this.responseTimeByEndpointChartRef.nativeElement,;
-        config,;
-      );
+        this.responseTimeByEndpointChartRef.nativeElement,
+        config,
+      )
     }
 
     // Response Time Trends chart
     if (data.byDate && this.responseTimeTrendsChartRef) {
       const config: ChartConfiguration = {
-        type: 'line',;
+        type: 'line',
         data: {
-          labels: data.byDate.map((item) => item.date),;
+          labels: data.byDate.map((item) => item.date),
           datasets: [;
             {
-              label: 'Average Response Time (ms)',;
-              data: data.byDate.map((item) => item.avgDuration),;
-              borderColor: this.chartColors.quaternary,;
-              backgroundColor: 'rgba(75, 192, 192, 0.1)',;
-              fill: true,;
-              tension: 0.4,;
-            },;
-          ],;
-        },;
+              label: 'Average Response Time (ms)',
+              data: data.byDate.map((item) => item.avgDuration),
+              borderColor: this.chartColors.quaternary,
+              backgroundColor: 'rgba(75, 192, 192, 0.1)',
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
         options: {
-          responsive: true,;
-          maintainAspectRatio: false,;
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             title: {
-              display: true,;
-              text: 'Response Time Trends',;
-            },;
-          },;
+              display: true,
+              text: 'Response Time Trends',
+            },
+          },
           scales: {
             y: {
-              beginAtZero: true,;
+              beginAtZero: true,
               title: {
-                display: true,;
-                text: 'Duration (ms)',;
-              },;
-            },;
+                display: true,
+                text: 'Duration (ms)',
+              },
+            },
             x: {
               title: {
-                display: true,;
-                text: 'Date',;
-              },;
-            },;
-          },;
-        },;
-      };
+                display: true,
+                text: 'Date',
+              },
+            },
+          },
+        },
+      }
 
       this.responseTimeTrendsChart = new Chart(;
-        this.responseTimeTrendsChartRef.nativeElement,;
-        config,;
-      );
+        this.responseTimeTrendsChartRef.nativeElement,
+        config,
+      )
     }
   }
 
@@ -728,9 +728,9 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
   private destroyCharts(...charts: (Chart | null)[]): void {
     charts.forEach((chart) => {
       if (chart) {
-        chart.destroy();
+        chart.destroy()
       }
-    });
+    })
   }
 
   /**
@@ -739,10 +739,10 @@ export class TelemetryDashboardComponen {t implements OnInit, AfterViewInit {
    */
   protected viewErrorDetails(error: ErrorTelemetry): void {
     this.dialog.open(ErrorDetailsDialogComponent, {
-      width: '800px',;
-      maxWidth: '95vw',;
-      maxHeight: '90vh',;
-      data: error,;
-    });
+      width: '800px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      data: error,
+    })
   }
 }

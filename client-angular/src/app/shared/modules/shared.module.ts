@@ -13,22 +13,22 @@ import { NbPaginatorComponent } from '../components/custom-nebular-components/nb
 // Import custom components
 
 // Create array of components and modules to import and export
-const COMPONENTS = [NbErrorComponent, NbPaginatorComponent];
+const COMPONENTS = [NbErrorComponent, NbPaginatorComponent]
 
 const MODULES = [;
-  CommonModule,;
-  RouterModule,;
-  FormsModule,;
-  ReactiveFormsModule,;
-  HttpClientModule,;
-  NebularSharedModule,;
-  PrimeNGModule,;
-];
+  CommonModule,
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
+  HttpClientModule,
+  NebularSharedModule,
+  PrimeNGModule,
+]
 
 @NgModule({
-  declarations: [...COMPONENTS],;
-  imports: [...MODULES],;
-  exports: [...MODULES, ...COMPONENTS],;
-});
+  declarations: [...COMPONENTS],
+  imports: [...MODULES],
+  exports: [...MODULES, ...COMPONENTS],
+})
 export class SharedModul {e {}
 ';

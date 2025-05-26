@@ -2,49 +2,49 @@ import {
 import { Injectable, Component, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-  NbDialogService,;
-  NbDialogRef,;
-  NbDialogConfig,;
-  NbCardModule,;
+  NbDialogService,
+  NbDialogRef,
+  NbDialogConfig,
+  NbCardModule,
   NbButtonModule,';
 } from '@nebular/theme';
 
 import {
-  ReviewDialogComponent,;
-  ReviewDialogData,;
+  ReviewDialogComponent,
+  ReviewDialogData,
 } from '../../shared/components/review-dialog/review-dialog.component';
 import {
-  ReportDialogComponent,;
-  ReportDialogData,;
+  ReportDialogComponent,
+  ReportDialogData,
 } from '../../shared/components/report-dialog/report-dialog.component';
 import {
-  ResponseDialogComponent,;
-  ResponseDialogData,;
+  ResponseDialogComponent,
+  ResponseDialogData,
 } from '../../shared/components/response-dialog/response-dialog.component';
 import {
-  FavoriteDialogComponent,;
-  FavoriteDialogData,;
-  FavoriteDialogResult,;
+  FavoriteDialogComponent,
+  FavoriteDialogData,
+  FavoriteDialogResult,
 } from '../../shared/components/favorite-dialog/favorite-dialog.component';
 import {
-  NotesDialogComponent,;
-  NotesDialogData,;
+  NotesDialogComponent,
+  NotesDialogData,
 } from '../../shared/components/notes-dialog/notes-dialog.component';
 import {
-  TagsDialogComponent,;
-  TagsDialogData,;
+  TagsDialogComponent,
+  TagsDialogData,
 } from '../../shared/components/tags-dialog/tags-dialog.component';
 import {
-  ConfirmDialogComponent,;
-  ConfirmDialogData,;
+  ConfirmDialogComponent,
+  ConfirmDialogData,
 } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import {
-  AlertDialogComponent,;
-  AlertDialogData,;
+  AlertDialogComponent,
+  AlertDialogData,
 } from '../../shared/components/dialogs/alert-dialog/alert-dialog.component';
 import {
-  PromptDialogComponent,;
-  PromptDialogData,;
+  PromptDialogComponent,
+  PromptDialogData,
 } from '../../shared/components/dialogs/prompt-dialog/prompt-dialog.component';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -67,18 +67,18 @@ interface DialogContext {
  * Service for managing dialog interactions throughout the application;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class DialogServic {e {
   private defaultConfig: Partial = {
-    closeOnBackdropClick: true,;
-    closeOnEsc: true,;
-    hasBackdrop: true,;
-    hasScroll: false,;
-    autoFocus: true,;
-    backdropClass: 'dialog-backdrop',;
-    dialogClass: 'dialog-container',;
-  };
+    closeOnBackdropClick: true,
+    closeOnEsc: true,
+    hasBackdrop: true,
+    hasScroll: false,
+    autoFocus: true,
+    backdropClass: 'dialog-backdrop',
+    dialogClass: 'dialog-container',
+  }
 
   constructor(private nbDialogService: NbDialogService) {}
 
@@ -87,8 +87,8 @@ export class DialogServic {e {
    */
   openReviewDialog(data: ReviewDialogData): Observable {
     return this.nbDialogService.open(ReviewDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -96,11 +96,11 @@ export class DialogServic {e {
    * Opens a dialog for reporting content;
    */
   reportReview(reviewId: string): Observable {
-    const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' };
+    const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' }
 
     return this.nbDialogService.open(ReportDialogComponent, {
-      ...this.defaultConfig,;
-      context: dialogData as any,;
+      ...this.defaultConfig,
+      context: dialogData as any,
     }).onClose;
   }
 
@@ -111,8 +111,8 @@ export class DialogServic {e {
    */
   openResponseDialog(data: ResponseDialogData): Observable {
     return this.nbDialogService.open(ResponseDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -121,8 +121,8 @@ export class DialogServic {e {
    */
   openFavoriteDialog(data: FavoriteDialogData): Observable {
     return this.nbDialogService.open(FavoriteDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -131,8 +131,8 @@ export class DialogServic {e {
    */
   openNotesDialog(data: NotesDialogData): Observable {
     return this.nbDialogService.open(NotesDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -141,8 +141,8 @@ export class DialogServic {e {
    */
   openTagsDialog(data: TagsDialogData): Observable {
     return this.nbDialogService.open(TagsDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -150,15 +150,15 @@ export class DialogServic {e {
    * Helper method to respond to a review;
    */
   respondToReview(;
-    reviewId: string,;
-    reviewTitle: string,;
-    reviewContent: string,;
+    reviewId: string,
+    reviewTitle: string,
+    reviewContent: string,
   ): Observable {
     return this.openResponseDialog({
-      title: 'Respond to Review',;
-      reviewTitle,;
-      reviewContent,;
-    });
+      title: 'Respond to Review',
+      reviewTitle,
+      reviewContent,
+    })
   }
 
   /**
@@ -166,30 +166,30 @@ export class DialogServic {e {
    */
   addToFavorites(adId: string, adTitle: string): Observable {
     return this.openFavoriteDialog({
-      adId,;
-      adTitle,;
-    });
+      adId,
+      adTitle,
+    })
   }
 
   /**
    * Helper method to edit a favorite;
    */
   editFavorite(;
-    adId: string,;
-    adTitle: string,;
-    notes?: string,;
-    tags?: string[],;
-    priority?: 'low' | 'normal' | 'high',;
-    notificationsEnabled?: boolean,;
+    adId: string,
+    adTitle: string,
+    notes?: string,
+    tags?: string[],
+    priority?: 'low' | 'normal' | 'high',
+    notificationsEnabled?: boolean,
   ): Observable {
     return this.openFavoriteDialog({
-      adId,;
-      adTitle,;
-      existingNotes: notes,;
-      existingTags: tags,;
-      existingPriority: priority,;
-      existingNotificationsEnabled: notificationsEnabled,;
-    });
+      adId,
+      adTitle,
+      existingNotes: notes,
+      existingTags: tags,
+      existingPriority: priority,
+      existingNotificationsEnabled: notificationsEnabled,
+    })
   }
 
   /**
@@ -200,10 +200,10 @@ export class DialogServic {e {
    */
   open(component: Type, config?: DialogConfig): NbDialogRef {
     return this.nbDialogService.open(component, {
-      ...this.defaultConfig,;
-      ...config,;
-      context: (config?.data || config?.context) as any,;
-    });
+      ...this.defaultConfig,
+      ...config,
+      context: (config?.data || config?.context) as any,
+    })
   }
 
   /**
@@ -216,23 +216,23 @@ export class DialogServic {e {
    * @returns Observable that resolves to true if confirmed, false if cancelled;
    */
   confirm(;
-    title: string,;
-    message: string,;
-    confirmText: string = 'Confirm',;
-    cancelText: string = 'Cancel',;
-    status: 'primary' | 'success' | 'warning' | 'danger' = 'primary',;
+    title: string,
+    message: string,
+    confirmText: string = 'Confirm',
+    cancelText: string = 'Cancel',
+    status: 'primary' | 'success' | 'warning' | 'danger' = 'primary',
   ): Observable {
     const data: ConfirmDialogData = {
-      title,;
-      message,;
-      confirmText,;
-      cancelText,;
-      status,;
-    };
+      title,
+      message,
+      confirmText,
+      cancelText,
+      status,
+    }
 
     return this.nbDialogService.open(ConfirmDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -240,19 +240,19 @@ export class DialogServic {e {
    * Show an alert dialog;
    * @param title Dialog title;
    * @param message Dialog message;
-   * @param buttonText Custom button text (default: 'OK');
+   * @param buttonText Custom button text (default: 'OK')
    * @returns Observable that resolves when the dialog is closed;
    */
   alert(title: string, message: string, buttonText: string = 'OK'): Observable {
     const data: AlertDialogData = {
-      title,;
-      message,;
-      buttonText,;
-    };
+      title,
+      message,
+      buttonText,
+    }
 
     return this.nbDialogService.open(AlertDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 
@@ -265,24 +265,24 @@ export class DialogServic {e {
    * @returns Observable that resolves to the input value or null if cancelled;
    */
   prompt(;
-    title: string,;
-    message: string,;
-    defaultValue: string = '',;
-    config?: DialogConfig,;
+    title: string,
+    message: string,
+    defaultValue: string = '',
+    config?: DialogConfig,
   ): Observable {
     const data: PromptDialogData = {
-      title,;
-      message,;
-      defaultValue,;
-      placeholder: (config?.data as PromptDialogData)?.placeholder || '',;
-      required: (config?.data as PromptDialogData)?.required || false,;
-      confirmText: config?.confirmText || 'OK',;
-      cancelText: config?.cancelText || 'Cancel',;
-    };
+      title,
+      message,
+      defaultValue,
+      placeholder: (config?.data as PromptDialogData)?.placeholder || '',
+      required: (config?.data as PromptDialogData)?.required || false,
+      confirmText: config?.confirmText || 'OK',
+      cancelText: config?.cancelText || 'Cancel',
+    }
 
     return this.nbDialogService.open(PromptDialogComponent, {
-      ...this.defaultConfig,;
-      context: data as any,;
+      ...this.defaultConfig,
+      context: data as any,
     }).onClose;
   }
 }

@@ -4,17 +4,17 @@ import { NebularModule } from '../../../app/shared/nebular.module';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { ThemeService } from '../../core/services/theme.service';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
   NbSelectModule,';
 } from '@nebular/theme';
 
@@ -25,9 +25,9 @@ import { ThemeService } from '../../core/services/theme.service';
  * It showcases hover effects, loading states, transitions, and feedback animations.;
  */
 @Component({
-    selector: 'app-micro-interactions-demo',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [NebularModule, CommonModule],;
+    selector: 'app-micro-interactions-demo',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule],
     template: `;`
     ;
       ;
@@ -78,9 +78,9 @@ import { ThemeService } from '../../core/services/theme.service';
             ;
               ;
                 ;
-                  {{ effect.name }};
-                  {{ effect.description }};
-                  {{ effect.code }};
+                  {{ effect.name }}
+                  {{ effect.description }}
+                  {{ effect.code }}
                 ;
               ;
             ;
@@ -138,8 +138,8 @@ import { ThemeService } from '../../core/services/theme.service';
             ;
               ;
                 ;
-                  {{ state.name }};
-                  {{ state.description }};
+                  {{ state.name }}
+                  {{ state.description }}
                   ;
                     
                       ;
@@ -179,9 +179,9 @@ import { ThemeService } from '../../core/services/theme.service';
             ;
               ;
                 ;
-                  {{ effect.name }};
-                  {{ effect.description }};
-                  {{ effect.code }};
+                  {{ effect.name }}
+                  {{ effect.description }}
+                  {{ effect.code }}
                 ;
               ;
             ;
@@ -203,8 +203,8 @@ import { ThemeService } from '../../core/services/theme.service';
             ;
               ;
                 ;
-                  {{ animation.name }};
-                  {{ animation.description }};
+                  {{ animation.name }}
+                  {{ animation.description }}
 
                   ;
                     
@@ -231,7 +231,7 @@ import { ThemeService } from '../../core/services/theme.service';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -245,28 +245,28 @@ import { ThemeService } from '../../core/services/theme.service';
       }
 
       header {
-        background-color: var(--background-basic-color-2);
+        background-color: var(--background-basic-color-2)
         padding: 3rem 0;
         margin-bottom: 2rem;
 
         h1 {
           margin: 0 0 1rem;
-          color: var(--text-basic-color);
+          color: var(--text-basic-color)
         }
 
         p {
-          color: var(--text-hint-color);
+          color: var(--text-hint-color)
           margin: 0 0 2rem;
         }
       }
 
-      .hover-grid,;
-      .loading-grid,;
-      .transition-grid,;
+      .hover-grid,
+      .loading-grid,
+      .transition-grid,
       .feedback-grid {
         display: grid;
         gap: 1.5rem;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
         margin-top: 2rem;
       }
 
@@ -279,8 +279,8 @@ import { ThemeService } from '../../core/services/theme.service';
       .skeleton {
         .skeleton-line {
           height: 1rem;
-          background-color: var(--background-basic-color-3);
-          border-radius: var(--border-radius);
+          background-color: var(--background-basic-color-3)
+          border-radius: var(--border-radius)
           margin-bottom: 0.5rem;
           animation: pulse 1.5s ease-in-out infinite;
 
@@ -301,7 +301,7 @@ import { ThemeService } from '../../core/services/theme.service';
       .pulse {
         width: 3rem;
         height: 3rem;
-        background-color: var(--color-primary-500);
+        background-color: var(--color-primary-500)
         border-radius: 50%;
         animation: pulse 1.5s ease-in-out infinite;
       }
@@ -323,29 +323,29 @@ import { ThemeService } from '../../core/services/theme.service';
       }
 
       @keyframes shake {
-        10%,;
+        10%,
         90% {
-          transform: translate3d(-1px, 0, 0);
+          transform: translate3d(-1px, 0, 0)
         }
-        20%,;
+        20%,
         80% {
-          transform: translate3d(2px, 0, 0);
+          transform: translate3d(2px, 0, 0)
         }
-        30%,;
-        50%,;
+        30%,
+        50%,
         70% {
-          transform: translate3d(-4px, 0, 0);
+          transform: translate3d(-4px, 0, 0)
         }
-        40%,;
+        40%,
         60% {
-          transform: translate3d(4px, 0, 0);
+          transform: translate3d(4px, 0, 0)
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class MicroInteractionsDemoComponen {t {
-  bem = new BemUtil('micro-demo');
+  bem = new BemUtil('micro-demo')
   isDarkMode$;
 
   constructor(private themeService: ThemeService) {
@@ -360,113 +360,113 @@ export class MicroInteractionsDemoComponen {t {
   // Hover effects
   hoverEffects = [;
     {
-      name: 'Scale',;
-      description: 'Slightly enlarges the element on hover',;
-      class: 'hover-scale',;
-      code: '@include mixins.hover-scale;',;
-    },;
+      name: 'Scale',
+      description: 'Slightly enlarges the element on hover',
+      class: 'hover-scale',
+      code: '@include mixins.hover-scale;',
+    },
     {
-      name: 'Lift',;
-      description: 'Adds a subtle lift effect with shadow',;
-      class: 'hover-lift',;
-      code: '@include mixins.hover-lift;',;
-    },;
+      name: 'Lift',
+      description: 'Adds a subtle lift effect with shadow',
+      class: 'hover-lift',
+      code: '@include mixins.hover-lift;',
+    },
     {
-      name: 'Color Shift',;
-      description: 'Smoothly transitions between colors',;
-      class: 'hover-color',;
-      code: '@include mixins.hover-color-shift(color, $color-dark-gray-2, $color-primary);',;
-    },;
+      name: 'Color Shift',
+      description: 'Smoothly transitions between colors',
+      class: 'hover-color',
+      code: '@include mixins.hover-color-shift(color, $color-dark-gray-2, $color-primary)',
+    },
     {
-      name: 'Border Highlight',;
-      description: 'Adds a colored border on hover',;
-      class: 'hover-border',;
-      code: '@include mixins.hover-border($color-primary);',;
-    },;
-  ];
+      name: 'Border Highlight',
+      description: 'Adds a colored border on hover',
+      class: 'hover-border',
+      code: '@include mixins.hover-border($color-primary)',
+    },
+  ]
 
   // Loading states
   loadingStates = [;
     {
-      name: 'Button Loading',;
-      description: 'Shows a spinner inside a button during loading',;
-      class: 'button-loading',;
-    },;
+      name: 'Button Loading',
+      description: 'Shows a spinner inside a button during loading',
+      class: 'button-loading',
+    },
     {
-      name: 'Skeleton Loader',;
-      description: 'Placeholder for content while loading',;
-      class: 'skeleton-loader',;
-    },;
+      name: 'Skeleton Loader',
+      description: 'Placeholder for content while loading',
+      class: 'skeleton-loader',
+    },
     {
-      name: 'Progress Bar',;
-      description: 'Shows progress for longer operations',;
-      class: 'progress-bar',;
-    },;
+      name: 'Progress Bar',
+      description: 'Shows progress for longer operations',
+      class: 'progress-bar',
+    },
     {
-      name: 'Pulse Loading',;
-      description: 'Subtle pulsing effect for loading states',;
-      class: 'pulse-loading',;
-    },;
-  ];
+      name: 'Pulse Loading',
+      description: 'Subtle pulsing effect for loading states',
+      class: 'pulse-loading',
+    },
+  ]
 
   // Transition effects
   transitionEffects = [;
     {
-      name: 'Fade In',;
-      description: 'Smoothly fades in content',;
-      class: 'fade-in',;
-      code: '@include mixins.fade-in;',;
-    },;
+      name: 'Fade In',
+      description: 'Smoothly fades in content',
+      class: 'fade-in',
+      code: '@include mixins.fade-in;',
+    },
     {
-      name: 'Slide In Top',;
-      description: 'Slides in from the top',;
-      class: 'slide-in-top',;
-      code: '@include mixins.slide-in-top;',;
-    },;
+      name: 'Slide In Top',
+      description: 'Slides in from the top',
+      class: 'slide-in-top',
+      code: '@include mixins.slide-in-top;',
+    },
     {
-      name: 'Slide In Bottom',;
-      description: 'Slides in from the bottom',;
-      class: 'slide-in-bottom',;
-      code: '@include mixins.slide-in-bottom;',;
-    },;
+      name: 'Slide In Bottom',
+      description: 'Slides in from the bottom',
+      class: 'slide-in-bottom',
+      code: '@include mixins.slide-in-bottom;',
+    },
     {
-      name: 'Scale In',;
-      description: 'Scales in from the center',;
-      class: 'scale-in',;
-      code: '@include mixins.scale-in;',;
-    },;
-  ];
+      name: 'Scale In',
+      description: 'Scales in from the center',
+      class: 'scale-in',
+      code: '@include mixins.scale-in;',
+    },
+  ]
 
   // Feedback animations
   feedbackAnimations = [;
     {
-      name: 'Success Animation',;
-      description: 'Indicates successful completion',;
-      class: 'success-animation',;
-    },;
+      name: 'Success Animation',
+      description: 'Indicates successful completion',
+      class: 'success-animation',
+    },
     {
-      name: 'Error Animation',;
-      description: 'Indicates an error or failure',;
-      class: 'error-animation',;
-    },;
+      name: 'Error Animation',
+      description: 'Indicates an error or failure',
+      class: 'error-animation',
+    },
     {
-      name: 'Click Ripple',;
-      description: 'Ripple effect on click',;
-      class: 'click-ripple',;
-      code: '@include mixins.click-ripple;',;
-    },;
+      name: 'Click Ripple',
+      description: 'Ripple effect on click',
+      class: 'click-ripple',
+      code: '@include mixins.click-ripple;',
+    },
     {
-      name: 'Shake Animation',;
-      description: 'Shakes to indicate invalid input',;
-      class: 'shake-animation',;
-    },;
-  ];
+      name: 'Shake Animation',
+      description: 'Shakes to indicate invalid input',
+      class: 'shake-animation',
+    },
+  ]
 
   /**
    * Toggles the theme between light and dark mode;
    */
   toggleTheme(): void {
-    this.themeService.toggleTheme();
+    this.themeService.toggleTheme()
   }
 
   /**
@@ -483,8 +483,8 @@ export class MicroInteractionsDemoComponen {t {
 
       setTimeout(() => {
         this.isSuccess = false;
-      }, 2000);
-    }, 2000);
+      }, 2000)
+    }, 2000)
   }
 
   /**
@@ -501,8 +501,8 @@ export class MicroInteractionsDemoComponen {t {
 
       setTimeout(() => {
         this.isError = false;
-      }, 2000);
-    }, 2000);
+      }, 2000)
+    }, 2000)
   }
 
   /**
@@ -511,11 +511,11 @@ export class MicroInteractionsDemoComponen {t {
    */
   simulateShake(element: any): void {
     if (element && element.nativeElement) {
-      element.nativeElement.classList.add('shake-active');
+      element.nativeElement.classList.add('shake-active')
 
       setTimeout(() => {
-        element.nativeElement.classList.remove('shake-active');
-      }, 500);
+        element.nativeElement.classList.remove('shake-active')
+      }, 500)
     }
   }
 }

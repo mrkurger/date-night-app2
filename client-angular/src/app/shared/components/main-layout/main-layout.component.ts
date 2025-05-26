@@ -32,26 +32,26 @@ import { Subscription } from 'rxjs';
 // ===================================================
 
 @Component({
-    selector: 'app-main-layout',;
-    templateUrl: './main-layout.component.html',;
-    styleUrls: ['./main-layout.component.scss'],;
-    imports: [CommonModule, RouterModule, ThemeToggleComponent];
-});
+    selector: 'app-main-layout',
+    templateUrl: './main-layout.component.html',
+    styleUrls: ['./main-layout.component.scss'],
+    imports: [CommonModule, RouterModule, ThemeToggleComponent]
+})
 export class MainLayoutComponen {t implements OnInit, OnDestroy {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 
   isAuthenticated = false;
   isMenuCollapsed = false;
-  premiumAds: Ad[] = [];
+  premiumAds: Ad[] = []
   loading = true;
   isDarkMode = false;
 
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   constructor(;
-    private authService: AuthService,;
-    private adService: AdService,;
-    private themeService: ThemeService,;
+    private authService: AuthService,
+    private adService: AdService,
+    private themeService: ThemeService,
   ) {}
 
   ngOnInit(): void {
@@ -59,23 +59,23 @@ export class MainLayoutComponen {t implements OnInit, OnDestroy {
     this.subscriptions.push(;
       this.authService.currentUser$.subscribe((user) => {
         this.isAuthenticated = !!user;
-      }),;
-    );
+      }),
+    )
 
     // Load premium ads for the sidebar
-    this.loadPremiumAds();
+    this.loadPremiumAds()
 
     // Subscribe to theme changes
     this.subscriptions.push(;
       this.themeService.isDarkMode$.subscribe((isDarkMode) => {
         this.isDarkMode = isDarkMode;
-      }),;
-    );
+      }),
+    )
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
   }
 
   loadPremiumAds(): void {
@@ -83,15 +83,15 @@ export class MainLayoutComponen {t implements OnInit, OnDestroy {
     this.subscriptions.push(;
       this.adService.getFeaturedAds().subscribe({
         next: (ads) => {
-          this.premiumAds = ads.slice(0, 5); // Show top 5 premium ads
+          this.premiumAds = ads.slice(0, 5) // Show top 5 premium ads
           this.loading = false;
-        },;
+        },
         error: (err) => {
-          console.error('Error loading premium ads:', err);
+          console.error('Error loading premium ads:', err)
           this.loading = false;
-        },;
-      }),;
-    );
+        },
+      }),
+    )
   }
 
   toggleMenu(): void {
@@ -120,10 +120,10 @@ export class MainLayoutComponen {t implements OnInit, OnDestroy {
    * Toggle between light and dark theme;
    * This method is kept for backward compatibility but is no longer needed;
    * as the ThemeToggleComponent now handles theme changes directly;
-   * @param value The new theme value (true for dark, false for light);
+   * @param value The new theme value (true for dark, false for light)
    * @deprecated Use ThemeToggleComponent instead;
    */
   onThemeChange(value: boolean): void {
-    this.themeService.setTheme(value ? 'dark' : 'light');
+    this.themeService.setTheme(value ? 'dark' : 'light')
   }
 }

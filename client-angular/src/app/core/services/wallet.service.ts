@@ -52,7 +52,7 @@ export interface PaymentMethod {
     lastFour: string;
     expiryMonth: number;
     expiryYear: number;
-  };
+  }
   bankDetails?: {
     bankName: string;
     lastFour: string;
@@ -62,13 +62,13 @@ export interface PaymentMethod {
     routingNumber?: string;
     accountHolder?: string;
     memoName?: string;
-  };
+  }
   cryptoDetails?: {
     currency: string;
     address?: string;
     network?: string;
     memo?: string;
-  };
+  }
 }
 
 export interface WalletSettings {
@@ -76,26 +76,26 @@ export interface WalletSettings {
     enabled: boolean;
     threshold: number;
     paymentMethodId: string;
-  };
+  }
   defaultCurrency: string;
   notificationPreferences: {
     email: {
       deposit: boolean;
       withdrawal: boolean;
       payment: boolean;
-    };
+    }
     push: {
       deposit: boolean;
       withdrawal: boolean;
       payment: boolean;
-    };
-  };
+    }
+  }
 }
 
 export interface Wallet {
   _id: string;
-  balances: WalletBalance[];
-  paymentMethods: PaymentMethod[];
+  balances: WalletBalance[]
+  paymentMethods: PaymentMethod[]
   settings: WalletSettings;
 }
 
@@ -108,13 +108,13 @@ export interface TransactionFilters {
 }
 
 export interface TransactionResponse {
-  transactions: WalletTransaction[];
+  transactions: WalletTransaction[]
   pagination: {
     page: number;
     limit: number;
     total: number;
     pages: number;
-  };
+  }
 }
 
 export interface CryptoDepositAddress {
@@ -145,19 +145,19 @@ export interface DepositResult {
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class WalletServic {e {
   private apiUrl = `${environment.apiUrl}/wallet`;`
-  private walletSubject = new BehaviorSubject(null);
-  private balancesSubject = new BehaviorSubject([]);
+  private walletSubject = new BehaviorSubject(null)
+  private balancesSubject = new BehaviorSubject([])
 
-  wallet$ = this.walletSubject.asObservable();
-  balances$ = this.balancesSubject.asObservable();
+  wallet$ = this.walletSubject.asObservable()
+  balances$ = this.balancesSubject.asObservable()
 
   // Supported currencies
-  readonly SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP'];
-  readonly SUPPORTED_CRYPTOCURRENCIES = ['BTC', 'ETH', 'USDT', 'USDC'];
+  readonly SUPPORTED_CURRENCIES = ['NOK', 'USD', 'EUR', 'GBP']
+  readonly SUPPORTED_CRYPTOCURRENCIES = ['BTC', 'ETH', 'USDT', 'USDC']
 
   constructor(private http: HttpClient) {}
 
@@ -166,12 +166,12 @@ export class WalletServic {e {
    */
   getWallet(): Observable {
     return this.http.get(`${this.apiUrl}`).pipe(;`
-      map((response) => response.data.wallet),;
+      map((response) => response.data.wallet),
       tap((wallet) => {
-        this.walletSubject.next(wallet);
-        this.balancesSubject.next(wallet.balances);
-      }),;
-    );
+        this.walletSubject.next(wallet)
+        this.balancesSubject.next(wallet.balances)
+      }),
+    )
   }
 
   /**
@@ -185,15 +185,15 @@ export class WalletServic {e {
     }
 
     return this.http;
-      .get(url);
+      .get(url)
       .pipe(;
-        map((response) => response.data.balance),;
+        map((response) => response.data.balance),
         tap((balance) => {
           if (Array.isArray(balance)) {
-            this.balancesSubject.next(balance);
+            this.balancesSubject.next(balance)
           }
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -203,9 +203,9 @@ export class WalletServic {e {
    * @param limit Items per page;
    */
   getWalletTransactions(;
-    filters?: TransactionFilters,;
-    page = 1,;
-    limit = 20,;
+    filters?: TransactionFilters,
+    page = 1,
+    limit = 20,
   ): Observable {
     let url = `${this.apiUrl}/transactions?page=${page}&limit=${limit}`;`
 
@@ -218,22 +218,22 @@ export class WalletServic {e {
     }
 
     return this.http;
-      .get(url);
-      .pipe(map((response) => response.data));
+      .get(url)
+      .pipe(map((response) => response.data))
   }
 
   /**
    * Get wallet payment methods;
    */
   getWalletPaymentMethods(): Observable {
-    return this.http.get(`${this.apiUrl}/payment-methods`);`
+    return this.http.get(`${this.apiUrl}/payment-methods`)`
   }
 
   /**
-   * Get payment methods (new method - compatible with component);
+   * Get payment methods (new method - compatible with component)
    */
   getPaymentMethods(): Observable {
-    return this.getWalletPaymentMethods();
+    return this.getWalletPaymentMethods()
   }
 
   /**
@@ -242,11 +242,11 @@ export class WalletServic {e {
    */
   addPaymentMethod(paymentMethodData: Partial): Observable {
     return this.http;
-      .post(`${this.apiUrl}/payment-methods`, paymentMethodData);`
+      .post(`${this.apiUrl}/payment-methods`, paymentMethodData)`
       .pipe(;
-        map((response) => response.data.paymentMethod),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.paymentMethod),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -255,11 +255,11 @@ export class WalletServic {e {
    */
   removePaymentMethod(paymentMethodId: string): Observable {
     return this.http;
-      .delete(`${this.apiUrl}/payment-methods/${paymentMethodId}`);`
+      .delete(`${this.apiUrl}/payment-methods/${paymentMethodId}`)`
       .pipe(;
-        map(() => undefined),;
-        tap(() => this.refreshWallet()),;
-      );
+        map(() => undefined),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -268,32 +268,32 @@ export class WalletServic {e {
    */
   setDefaultPaymentMethod(paymentMethodId: string): Observable {
     return this.http;
-      .patch(`${this.apiUrl}/payment-methods/${paymentMethodId}/default`, {});`
+      .patch(`${this.apiUrl}/payment-methods/${paymentMethodId}/default`, {})`
       .pipe(;
-        map((response) => response.data.paymentMethod),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.paymentMethod),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
    * Deposit funds with Stripe;
-   * @param amount Amount in smallest currency unit (e.g., cents);
+   * @param amount Amount in smallest currency unit (e.g., cents)
    * @param currency Currency code;
    * @param paymentMethodId Stripe payment method ID;
    * @param description Optional description;
    */
   depositFundsWithStripe(;
-    amount: number,;
-    currency: string,;
-    paymentMethodId: string,;
-    description?: string,;
+    amount: number,
+    currency: string,
+    paymentMethodId: string,
+    description?: string,
   ): Observable {
     return this.http;
-      .post(`${this.apiUrl}/deposit/stripe`, { amount, currency, paymentMethodId, description });`
+      .post(`${this.apiUrl}/deposit/stripe`, { amount, currency, paymentMethodId, description })`
       .pipe(;
-        map((response) => response.data),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -302,29 +302,29 @@ export class WalletServic {e {
    */
   getCryptoDepositAddress(currency: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/deposit/crypto/${currency}`);`
-      .pipe(map((response) => response.data));
+      .get(`${this.apiUrl}/deposit/crypto/${currency}`)`
+      .pipe(map((response) => response.data))
   }
 
   /**
    * Withdraw funds;
-   * @param amount Amount in smallest currency unit (e.g., cents);
+   * @param amount Amount in smallest currency unit (e.g., cents)
    * @param currency Currency code;
    * @param paymentMethodId Payment method ID;
    * @param description Optional description;
    */
   withdrawFunds(;
-    amount: number,;
-    currency: string,;
-    paymentMethodId: string,;
-    description?: string,;
+    amount: number,
+    currency: string,
+    paymentMethodId: string,
+    description?: string,
   ): Observable {
     return this.http;
-      .post(`${this.apiUrl}/withdraw`, { amount, currency, paymentMethodId, description });`
+      .post(`${this.apiUrl}/withdraw`, { amount, currency, paymentMethodId, description })`
       .pipe(;
-        map((response) => response.data.transaction),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -337,26 +337,26 @@ export class WalletServic {e {
    * @param description Optional description;
    */
   withdrawCrypto(;
-    amount: number,;
-    currency: string,;
-    address: string,;
-    network: string,;
-    memo?: string,;
-    description?: string,;
+    amount: number,
+    currency: string,
+    address: string,
+    network: string,
+    memo?: string,
+    description?: string,
   ): Observable {
     return this.http;
       .post(`${this.apiUrl}/withdraw/crypto`, {`
-        amount,;
-        currency,;
-        address,;
-        network,;
-        memo,;
-        description,;
-      });
+        amount,
+        currency,
+        address,
+        network,
+        memo,
+        description,
+      })
       .pipe(;
-        map((response) => response.data.transaction),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -367,17 +367,17 @@ export class WalletServic {e {
    * @param description Optional description;
    */
   transferFunds(;
-    recipientUserId: string,;
-    amount: number,;
-    currency: string,;
-    description?: string,;
+    recipientUserId: string,
+    amount: number,
+    currency: string,
+    description?: string,
   ): Observable {
     return this.http;
-      .post(`${this.apiUrl}/transfer`, { recipientUserId, amount, currency, description });`
+      .post(`${this.apiUrl}/transfer`, { recipientUserId, amount, currency, description })`
       .pipe(;
-        map((response) => response.data.transaction),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.transaction),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -386,11 +386,11 @@ export class WalletServic {e {
    */
   updateWalletSettings(settings: Partial): Observable {
     return this.http;
-      .patch(`${this.apiUrl}/settings`, settings);`
+      .patch(`${this.apiUrl}/settings`, settings)`
       .pipe(;
-        map((response) => response.data.settings),;
-        tap(() => this.refreshWallet()),;
-      );
+        map((response) => response.data.settings),
+        tap(() => this.refreshWallet()),
+      )
   }
 
   /**
@@ -400,20 +400,20 @@ export class WalletServic {e {
    */
   getExchangeRates(fromCurrency: string, toCurrency: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/exchange-rates?fromCurrency=${fromCurrency}&toCurrency=${toCurrency}`);`
-      .pipe(map((response) => response.data));
+      .get(`${this.apiUrl}/exchange-rates?fromCurrency=${fromCurrency}&toCurrency=${toCurrency}`)`
+      .pipe(map((response) => response.data))
   }
 
   /**
    * Format currency amount for display;
-   * @param amount Amount in smallest currency unit (e.g., cents);
+   * @param amount Amount in smallest currency unit (e.g., cents)
    * @param currency Currency code;
    */
   formatCurrency(amount: number, currency: string): string {
     // For cryptocurrencies, use different formatting
     if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency.toUpperCase())) {
       // Ensure currency is uppercase for comparison
-      const majorAmount = this.convertToMajorUnit(amount, currency);
+      const majorAmount = this.convertToMajorUnit(amount, currency)
       // Format based on cryptocurrency
       switch (currency.toUpperCase()) {
         case 'BTC':;
@@ -432,11 +432,11 @@ export class WalletServic {e {
     // For fiat currencies, use Intl.NumberFormat
     // Amount is expected to be in smallest unit (e.g. cents)
     return new Intl.NumberFormat('no-NO', {
-      style: 'currency',;
-      currency: currency,;
-      minimumFractionDigits: 2,;
-      maximumFractionDigits: 2,;
-    }).format(this.convertToMajorUnit(amount, currency));
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(this.convertToMajorUnit(amount, currency))
   }
 
   /**
@@ -445,7 +445,7 @@ export class WalletServic {e {
    * @param currency Currency code.;
    */
   convertToMajorUnit(amount: number, currency: string): number {
-    currency = currency.toUpperCase();
+    currency = currency.toUpperCase()
     if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
       switch (currency) {
         case 'BTC':;
@@ -471,23 +471,23 @@ export class WalletServic {e {
    * @param currency Currency code.;
    */
   convertToSmallestUnit(amount: number, currency: string): number {
-    currency = currency.toUpperCase();
+    currency = currency.toUpperCase()
     if (this.SUPPORTED_CRYPTOCURRENCIES.includes(currency)) {
       switch (currency) {
         case 'BTC':;
-          return Math.round(amount * 100000000); // 1 BTC = 100,000,000 satoshis
+          return Math.round(amount * 100000000) // 1 BTC = 100,000,000 satoshis
         case 'ETH':;
-          return Math.round(amount * 1000000000000000000); // 1 ETH = 10^18 wei
+          return Math.round(amount * 1000000000000000000) // 1 ETH = 10^18 wei
         case 'USDT':;
         case 'USDC':;
-          return Math.round(amount * 1000000); // Typically 6 decimals
+          return Math.round(amount * 1000000) // Typically 6 decimals
         // Add other cryptocurrencies and their smallest unit factor
         default:;
-          return Math.round(amount * 100); // Default assumption
+          return Math.round(amount * 100) // Default assumption
       }
     } else {
       // Assuming fiat currencies have 2 decimal places (e.g. dollars to cents)
-      return Math.round(amount * 100);
+      return Math.round(amount * 100)
     }
   }
 
@@ -496,8 +496,8 @@ export class WalletServic {e {
    */
   getStoredPaymentMethods(): Observable {
     return this.http;
-      .get(`${this.apiUrl}/payment-methods`);`
-      .pipe(map((response) => response.data));
+      .get(`${this.apiUrl}/payment-methods`)`
+      .pipe(map((response) => response.data))
   }
 
   /**
@@ -505,8 +505,8 @@ export class WalletServic {e {
    */
   processDeposit(data: DepositRequest): Observable {
     return this.http;
-      .post(`${this.apiUrl}/deposit`, data);`
-      .pipe(map((response) => response.data));
+      .post(`${this.apiUrl}/deposit`, data)`
+      .pipe(map((response) => response.data))
   }
 
   /**
@@ -520,14 +520,14 @@ export class WalletServic {e {
     memo?: string;
   }): Observable {
     return this.http;
-      .post(`${this.apiUrl}/withdraw`, data);`
-      .pipe(map((response) => response.data.transaction));
+      .post(`${this.apiUrl}/withdraw`, data)`
+      .pipe(map((response) => response.data.transaction))
   }
 
   /**
    * Refresh wallet data;
    */
   private refreshWallet(): void {
-    this.getWallet().subscribe();
+    this.getWallet().subscribe()
   }
 }

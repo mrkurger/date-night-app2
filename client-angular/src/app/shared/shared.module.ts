@@ -30,64 +30,64 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 // Font Awesome for icons (replacement for Eva Icons)
 
 const PRIMENG_MODULES = [;
-  CardModule,;
-  ButtonModule,;
-  InputTextModule,;
-  InputGroupModule,;
-  DropdownModule,;
-  TagModule,;
-  ListboxModule,;
-  BadgeModule,;
-  MessageModule,;
-  CheckboxModule,;
-  RadioButtonModule,;
-  CalendarModule,;
-  ContextMenuModule,;
-  TableModule,;
-  TabViewModule,;
-  AccordionModule,;
-  TreeTableModule,;
-  TooltipModule,;
-  ToggleButtonModule,;
-  PaginatorModule,;
-  DialogModule,;
-  ProgressSpinnerModule,;
-  AutoCompleteModule,;
-  FontAwesomeModule,;
-];
+  CardModule,
+  ButtonModule,
+  InputTextModule,
+  InputGroupModule,
+  DropdownModule,
+  TagModule,
+  ListboxModule,
+  BadgeModule,
+  MessageModule,
+  CheckboxModule,
+  RadioButtonModule,
+  CalendarModule,
+  ContextMenuModule,
+  TableModule,
+  TabViewModule,
+  AccordionModule,
+  TreeTableModule,
+  TooltipModule,
+  ToggleButtonModule,
+  PaginatorModule,
+  DialogModule,
+  ProgressSpinnerModule,
+  AutoCompleteModule,
+  FontAwesomeModule,
+]
 
 const PRIMENG_MODULES = [;
-  CardModule,;
-  ButtonModule,;
-  InputTextModule,;
-  InputGroupModule,;
-  DropdownModule,;
-  TagModule,;
-  ListboxModule,;
-  BadgeModule,;
-  MessageModule,;
-  CheckboxModule,;
-  RadioButtonModule,;
-  CalendarModule,;
-  ContextMenuModule,;
-  TableModule,;
-  TabViewModule,;
-  AccordionModule,;
-  TreeTableModule,;
-  TooltipModule,;
-  ToggleButtonModule,;
-  PaginatorModule,;
-  DialogModule,;
-  ProgressSpinnerModule,;
-  AutoCompleteModule,;
-  FontAwesomeModule,;
-];
+  CardModule,
+  ButtonModule,
+  InputTextModule,
+  InputGroupModule,
+  DropdownModule,
+  TagModule,
+  ListboxModule,
+  BadgeModule,
+  MessageModule,
+  CheckboxModule,
+  RadioButtonModule,
+  CalendarModule,
+  ContextMenuModule,
+  TableModule,
+  TabViewModule,
+  AccordionModule,
+  TreeTableModule,
+  TooltipModule,
+  ToggleButtonModule,
+  PaginatorModule,
+  DialogModule,
+  ProgressSpinnerModule,
+  AutoCompleteModule,
+  FontAwesomeModule,
+]
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
-});
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
+})
 export class SharedModul {e {}
 ';

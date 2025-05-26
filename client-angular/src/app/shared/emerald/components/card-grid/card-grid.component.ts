@@ -29,7 +29,7 @@ import { AvatarModule } from 'primeng/avatar';
  * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/CardGrid
  */
 @Component({';
-    selector: 'nb-card-grid',;
+    selector: 'nb-card-grid',
     template: `;`
     ;
       ;
@@ -45,13 +45,13 @@ import { AvatarModule } from 'primeng/avatar';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .card-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(var(--min-item-width, 280px), 1fr));
-        gap: var(--grid-gap, 1rem);
+        grid-template-columns: repeat(auto-fit, minmax(var(--min-item-width, 280px), 1fr))
+        gap: var(--grid-gap, 1rem)
         width: 100%;
       }
 
@@ -67,7 +67,7 @@ import { AvatarModule } from 'primeng/avatar';
         transition: transform 0.2s ease-in-out;
 
         &:hover {
-          transform: translateY(-4px);
+          transform: translateY(-4px)
         }
 
         &--animated {
@@ -78,30 +78,30 @@ import { AvatarModule } from 'primeng/avatar';
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(10px);
+          transform: translateY(10px)
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0)
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     imports: [;
-    CommonModule,;
-        NbCardModule,;
-        NbSpinnerModule,;
-        SkeletonModule,;
-        CardModule,;
-    BadgeModule,;
+    CommonModule,
+        NbCardModule,
+        NbSpinnerModule,
+        SkeletonModule,
+        CardModule,
+    BadgeModule,
     AvatarModule;
-  ];
-});
+  ]
+})
 export class CardGridComponen {t {
   /**
    * The items to display in the grid;
    */
-  @Input() items: any[] = [];
+  @Input() items: any[] = []
 
   /**
    * The number of columns in the grid;
@@ -146,7 +146,7 @@ export class CardGridComponen {t {
   /**
    * Emitted when an item is clicked;
    */
-  @Output() itemClick = new EventEmitter();
+  @Output() itemClick = new EventEmitter()
 
   /**
    * Custom template for rendering grid items;
@@ -158,9 +158,9 @@ export class CardGridComponen {t {
    */
   getGridStyle() {
     const styles: any = {
-      '--grid-gap': `${this.gap}px`,;`
-      '--min-item-width': `${this.minItemWidth}px`,;`
-    };
+      '--grid-gap': `${this.gap}px`,`
+      '--min-item-width': `${this.minItemWidth}px`,`
+    }
 
     if (this.columns) {
       styles['grid-template-columns'] = `repeat(${this.columns}, 1fr)`;`
@@ -173,16 +173,16 @@ export class CardGridComponen {t {
    * Handle item click;
    */
   onItemClick(item: any): void {
-    this.itemClick.emit(item);
+    this.itemClick.emit(item)
   }
 
   /**
    * Get skeleton array for loading state;
    */
   getSkeletonArray(): number[] {
-    return Array(this.skeletonCount);
-      .fill(0);
-      .map((_, i) => i);
+    return Array(this.skeletonCount)
+      .fill(0)
+      .map((_, i) => i)
   }
 
   /**
@@ -199,7 +199,7 @@ export class CardGridComponen {t {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleCardClick(_id: string): void {
     // Prevent double click handling
-    event?.stopPropagation();
+    event?.stopPropagation()
     // Implementation can be added here when needed
   }
 

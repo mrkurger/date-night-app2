@@ -12,21 +12,21 @@ import { NebularModule } from './shared/nebular.module';
 // App imports
 
 @NgModule({
-  declarations: [AppComponent],;
+  declarations: [AppComponent],
   imports: [;
-    BrowserModule,;
-    BrowserAnimationsModule,;
-    HttpClientModule,;
-    RouterModule,;
-    AppRoutingModule,;
-    CoreModule,;
-    SharedModule,;
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
+    AppRoutingModule,
+    CoreModule,
+    SharedModule,
 
     // Nebular Modules
-    NebularModule.forRoot(),;
-  ],;
-  providers: [],;
-  bootstrap: [AppComponent],;
-});
+    NebularModule.forRoot(),
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
 export class AppModul {e {}
 ';

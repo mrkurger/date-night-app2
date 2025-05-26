@@ -27,16 +27,16 @@ export interface Review {
     _id: string;
     username: string;
     profileImage?: string;
-  };
+  }
   advertiser: {
     _id: string;
     username: string;
     profileImage?: string;
-  };
+  }
   ad?: {
     _id: string;
     title: string;
-  };
+  }
   rating: number;
   title: string;
   content: string;
@@ -45,36 +45,36 @@ export interface Review {
     appearance?: number;
     location?: number;
     value?: number;
-  };';
+  }';
   status: 'pending' | 'approved' | 'rejected';
   isVerifiedMeeting?: boolean;
   meetingDate?: string;
   advertiserResponse?: {
     content: string;
     date: string;
-  };
+  }
   helpfulVotes: number;
   createdAt: string;
   updatedAt: string;
 }
 
 @Component({
-  selector: 'app-review-display',;
-  standalone: true,;
+  selector: 'app-review-display',
+  standalone: true,
   imports: [;
-    CommonModule,;
-    StarRatingComponent,;
-    TimeAgoPipe,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbCardModule,;
-    NbTooltipModule,;
-    NbBadgeModule,,;
+    CommonModule,
+    StarRatingComponent,
+    TimeAgoPipe,
+    NbButtonModule,
+    NbIconModule,
+    NbCardModule,
+    NbTooltipModule,
+    NbBadgeModule,,
     DividerModule;
-  ],;
-  templateUrl: './review-display.component.html',;
-  styleUrls: ['./review-display.component.scss'],;
-});
+  ],
+  templateUrl: './review-display.component.html',
+  styleUrls: ['./review-display.component.scss'],
+})
 export class ReviewDisplayComponen {t {
   @Input() review!: Review;
 
@@ -83,11 +83,11 @@ export class ReviewDisplayComponen {t {
   @Input() showAdvertiserInfo = true;
   @Input() showActions = true;
 
-  @Output() markHelpful = new EventEmitter();
-  @Output() reportReview = new EventEmitter();
-  @Output() respondToReview = new EventEmitter();
-  @Output() editReview = new EventEmitter();
-  @Output() deleteReview = new EventEmitter();
+  @Output() markHelpful = new EventEmitter()
+  @Output() reportReview = new EventEmitter()
+  @Output() respondToReview = new EventEmitter()
+  @Output() editReview = new EventEmitter()
+  @Output() deleteReview = new EventEmitter()
 
   /**
    * Get the average category rating;
@@ -99,17 +99,17 @@ export class ReviewDisplayComponen {t {
 
     const categories = this.review.categories;
     const values = [;
-      categories.communication,;
-      categories.appearance,;
-      categories.location,;
-      categories.value,;
-    ].filter((val) => val !== undefined && val > 0) as number[];
+      categories.communication,
+      categories.appearance,
+      categories.location,
+      categories.value,
+    ].filter((val) => val !== undefined && val > 0) as number[]
 
     if (values.length === 0) {
       return this.review.rating;
     }
 
-    const sum = values.reduce((total, val) => total + val, 0);
+    const sum = values.reduce((total, val) => total + val, 0)
     return sum / values.length;
   }
 
@@ -121,7 +121,7 @@ export class ReviewDisplayComponen {t {
       this.review.categories &&;
       this.review.categories[category as keyof typeof this.review.categories] &&;
       this.review.categories[category as keyof typeof this.review.categories]! > 0;
-    );
+    )
   }
 
   /**
@@ -139,34 +139,34 @@ export class ReviewDisplayComponen {t {
    * Handle mark as helpful action;
    */
   onMarkHelpful(): void {
-    this.markHelpful.emit(this.review._id);
+    this.markHelpful.emit(this.review._id)
   }
 
   /**
    * Handle report review action;
    */
   onReportReview(): void {
-    this.reportReview.emit(this.review._id);
+    this.reportReview.emit(this.review._id)
   }
 
   /**
    * Handle respond to review action;
    */
   onRespondToReview(): void {
-    this.respondToReview.emit(this.review._id);
+    this.respondToReview.emit(this.review._id)
   }
 
   /**
    * Handle edit review action;
    */
   onEditReview(): void {
-    this.editReview.emit(this.review._id);
+    this.editReview.emit(this.review._id)
   }
 
   /**
    * Handle delete review action;
    */
   onDeleteReview(): void {
-    this.deleteReview.emit(this.review._id);
+    this.deleteReview.emit(this.review._id)
   }
 }

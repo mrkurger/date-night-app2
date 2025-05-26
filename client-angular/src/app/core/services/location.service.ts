@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-  NORWAY_COUNTIES,;
-  NorwayCounty,;
-  NorwayCity,;
-  getAllCounties,;
-  getCitiesByCounty,;
+  NORWAY_COUNTIES,
+  NorwayCounty,
+  NorwayCity,
+  getAllCounties,
+  getCitiesByCounty,
   getCityCoordinates,';
 } from '../constants/norway-locations';
 
@@ -17,8 +17,8 @@ import { environment } from '../../../environments/environment';
  * Provides methods for retrieving counties, cities, and coordinates;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class LocationServic {e {
   private readonly apiUrl = environment.apiUrl + '/locations';
 
@@ -30,8 +30,8 @@ export class LocationServic {e {
   getCounties(): Observable {
     // First try to get from API, fall back to local constants if API fails
     return this.http;
-      .get(`${this.apiUrl}/counties`);`
-      .pipe(catchError(() => of(getAllCounties())));
+      .get(`${this.apiUrl}/counties`)`
+      .pipe(catchError(() => of(getAllCounties())))
   }
 
   /**
@@ -40,8 +40,8 @@ export class LocationServic {e {
    */
   getCitiesByCounty(countyName: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/counties/${countyName}/cities`);`
-      .pipe(catchError(() => of(getCitiesByCounty(countyName))));
+      .get(`${this.apiUrl}/counties/${countyName}/cities`)`
+      .pipe(catchError(() => of(getCitiesByCounty(countyName))))
   }
 
   /**
@@ -50,10 +50,10 @@ export class LocationServic {e {
   getAllCities(): Observable {
     return this.http.get(`${this.apiUrl}/cities`).pipe(;`
       catchError(() => {
-        const cities = NORWAY_COUNTIES.flatMap((county) => county.cities.map((city) => city.name));
-        return of(cities);
-      }),;
-    );
+        const cities = NORWAY_COUNTIES.flatMap((county) => county.cities.map((city) => city.name))
+        return of(cities)
+      }),
+    )
   }
 
   /**
@@ -62,11 +62,11 @@ export class LocationServic {e {
    */
   getCityCoordinates(cityName: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/cities/${cityName}/coordinates`);`
+      .get(`${this.apiUrl}/cities/${cityName}/coordinates`)`
       .pipe(;
-        map((response) => response.coordinates),;
-        catchError(() => of(getCityCoordinates(cityName))),;
-      );
+        map((response) => response.coordinates),
+        catchError(() => of(getCityCoordinates(cityName))),
+      )
   }
 
   /**
@@ -75,20 +75,20 @@ export class LocationServic {e {
   getCurrentLocation(): Observable {
     return new Observable((observer) => {
       if (!navigator.geolocation) {
-        observer.error('Geolocation is not supported by your browser');
+        observer.error('Geolocation is not supported by your browser')
       } else {
         navigator.geolocation.getCurrentPosition(;
           (position) => {
-            observer.next(position);
-            observer.complete();
-          },;
+            observer.next(position)
+            observer.complete()
+          },
           (error) => {
-            observer.error(error);
-          },;
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },;
-        );
+            observer.error(error)
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
+        )
       }
-    });
+    })
   }
 
   /**
@@ -97,11 +97,11 @@ export class LocationServic {e {
    * @param longitude The longitude;
    */
   findNearestCity(;
-    latitude: number,;
-    longitude: number,;
+    latitude: number,
+    longitude: number,
   ): Observable {
     return this.http;
-      .get(`${this.apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`);`
+      .get(`${this.apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`)`
       .pipe(;
         catchError(() => {
           // Calculate nearest city locally if API fails
@@ -113,7 +113,7 @@ export class LocationServic {e {
             county.cities.forEach((city) => {
               if (city.coordinates) {
                 const [cityLong, cityLat] = city.coordinates;
-                const distance = this.calculateDistance(latitude, longitude, cityLat, cityLong);
+                const distance = this.calculateDistance(latitude, longitude, cityLat, cityLong)
 
                 if (distance < minDistance) {
                   minDistance = distance;
@@ -121,16 +121,16 @@ export class LocationServic {e {
                   nearestCounty = county.name;
                 }
               }
-            });
-          });
+            })
+          })
 
           return of({
-            city: nearestCity,;
-            county: nearestCounty,;
-            distance: minDistance,;
-          });
-        }),;
-      );
+            city: nearestCity,
+            county: nearestCounty,
+            distance: minDistance,
+          })
+        }),
+      )
   }
 
   /**
@@ -143,15 +143,15 @@ export class LocationServic {e {
    */
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371; // Radius of the earth in km
-    const dLat = this.deg2rad(lat2 - lat1);
-    const dLon = this.deg2rad(lon2 - lon1);
+    const dLat = this.deg2rad(lat2 - lat1)
+    const dLon = this.deg2rad(lon2 - lon1)
     const a =;
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +;
       Math.cos(this.deg2rad(lat1)) *;
         Math.cos(this.deg2rad(lat2)) *;
         Math.sin(dLon / 2) *;
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Math.sin(dLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     const distance = R * c; // Distance in km
     return distance;
   }
@@ -162,6 +162,6 @@ export class LocationServic {e {
    * @returns Radians;
    */
   private deg2rad(deg: number): number {
-    return deg * (Math.PI / 180);
+    return deg * (Math.PI / 180)
   }
 }

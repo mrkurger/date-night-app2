@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
 
 @Component({';
-    selector: 'app-error-details-dialog',;
-    imports: [CommonModule],;
+    selector: 'app-error-details-dialog',
+    imports: [CommonModule],
     template: `;`
     ;
       Error Details;
@@ -13,31 +13,31 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
         ;
           ;
             Type:;
-            {{ data.type }};
+            {{ data.type }}
           ;
           ;
             Category:;
-            {{ data.category }};
+            {{ data.category }}
           ;
           ;
             Status Code:;
-            {{ data.statusCode }};
+            {{ data.statusCode }}
           ;
           ;
             URL:;
-            {{ data.url }};
+            {{ data.url }}
           ;
           ;
             Timestamp:;
-            {{ data.timestamp | date: 'medium' }};
+            {{ data.timestamp | date: 'medium' }}
           ;
           ;
             Message:;
-            {{ data.message }};
+            {{ data.message }}
           ;
           ;
             Stack Trace:;
-            {{ data.stackTrace }};
+            {{ data.stackTrace }}
           ;
         ;
       ;
@@ -45,7 +45,7 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
         Close;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -58,18 +58,18 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
 
       h2 {
         margin: 0 0 1.5rem;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .error-details {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)
         gap: 1rem;
       }
 
       .detail-row {
         padding: 0.5rem;
-        background: var(--background-basic-color-2);
+        background: var(--background-basic-color-2)
         border-radius: 4px;
       }
 
@@ -80,13 +80,13 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
       .detail-row strong {
         display: block;
         margin-bottom: 0.25rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .detail-row pre {
         margin: 0.5rem 0 0;
         padding: 0.5rem;
-        background: var(--background-basic-color-3);
+        background: var(--background-basic-color-3)
         border-radius: 4px;
         overflow: auto;
         max-height: 200px;
@@ -96,12 +96,12 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
         margin-top: 1.5rem;
         padding: 0;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ErrorDetailsDialogComponen {t {
   constructor(;
-    public dialogRef: MatDialogRef,;
-    @Inject(MAT_DIALOG_DATA) public data: ErrorTelemetry,;
+    public dialogRef: MatDialogRef,
+    @Inject(MAT_DIALOG_DATA) public data: ErrorTelemetry,
   ) {}
 }

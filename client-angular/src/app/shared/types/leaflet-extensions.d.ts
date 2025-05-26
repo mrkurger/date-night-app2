@@ -29,7 +29,7 @@ declare module 'leaflet' {
     max?: number;
     radius?: number;
     blur?: number;
-    gradient?: { [key: number]: string };
+    gradient?: { [key: number]: string }
   }
 
   namespace Control {
@@ -47,7 +47,7 @@ declare module 'leaflet' {
     }
 
     class Searc {h extends L.Control {
-      constructor(options?: SearchOptions);
+      constructor(options?: SearchOptions)
       setLayer(layer: L.LayerGroup): this;
       showAlert(text: string): this;
       setError(text: string): this;

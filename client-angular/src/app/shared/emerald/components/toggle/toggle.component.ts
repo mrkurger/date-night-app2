@@ -10,22 +10,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * This component displays a toggle switch for boolean values.;
  */
 @Component({
-  selector: 'app-toggle',;
-  templateUrl: './toggle.component.html',;
-  styleUrls: ['./toggle.component.scss'],;
-  standalone: true,;
+  selector: 'app-toggle',
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
+  standalone: true,
   imports: [;
-    CommonModule,;
+    CommonModule,
     NbToggleModule;
-  ],;
+  ],
   providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,;
-      useExisting: forwardRef(() => InputSwitchModule),;
-      multi: true,;
-    },;
-  ],;
-});
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputSwitchModule),
+      multi: true,
+    },
+  ],
+})
 export class InputSwitchModul {e implements ControlValueAccessor {
   @Input() label?: string;
   @Input() labelPosition: 'left' | 'right' = 'right';
@@ -35,13 +35,13 @@ export class InputSwitchModul {e implements ControlValueAccessor {
   @Input() required = false;
   @Input() ariaLabel?: string;
 
-  @Output() change = new EventEmitter();
+  @Output() change = new EventEmitter()
 
   value = false;
 
   // ControlValueAccessor methods
-  onChange = (value: any): void => {};
-  onTouched = (value: any): void => {};
+  onChange = (value: any): void => {}
+  onTouched = (value: any): void => {}
 
   /**
    * Toggle the value;
@@ -50,9 +50,9 @@ export class InputSwitchModul {e implements ControlValueAccessor {
     if (this.disabled) return;
 
     this.value = checked;
-    this.onChange(this.value);
-    this.onTouched(this.value);
-    this.change.emit(this.value);
+    this.onChange(this.value)
+    this.onTouched(this.value)
+    this.change.emit(this.value)
   }
 
   /**

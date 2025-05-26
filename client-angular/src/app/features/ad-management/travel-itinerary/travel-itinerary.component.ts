@@ -9,17 +9,17 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 
 @Component({';
-  selector: 'app-travel-itinerary',;
-  templateUrl: './travel-itinerary.component.html',;
-  styleUrls: ['./travel-itinerary.component.scss'],;
-  standalone: true,;
+  selector: 'app-travel-itinerary',
+  templateUrl: './travel-itinerary.component.html',
+  styleUrls: ['./travel-itinerary.component.scss'],
+  standalone: true,
   imports: [;
-    CommonModule, ReactiveFormsModule, NebularModule, MapComponent,;
-    CardModule,;
-    ButtonModule,;
+    CommonModule, ReactiveFormsModule, NebularModule, MapComponent,
+    CardModule,
+    ButtonModule,
     CalendarModule;
-  ],;
-});
+  ],
+})
 export class TravelItineraryComponen {t implements OnInit {
   travelForm: FormGroup;
   showMap = false;
@@ -28,16 +28,16 @@ export class TravelItineraryComponen {t implements OnInit {
   mapZoom = 13;
 
   constructor(;
-    private fb: FormBuilder,;
-    private router: Router,;
+    private fb: FormBuilder,
+    private router: Router,
   ) {
     this.travelForm = this.fb.group({
-      destination: ['', Validators.required],;
-      startDate: [new Date(), Validators.required],;
-      endDate: [new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), Validators.required],;
-      travelers: [2, [Validators.required, Validators.min(1)]],;
-      budget: [1000],;
-    });
+      destination: ['', Validators.required],
+      startDate: [new Date(), Validators.required],
+      endDate: [new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), Validators.required],
+      travelers: [2, [Validators.required, Validators.min(1)]],
+      budget: [1000],
+    })
   }
 
   ngOnInit(): void {
@@ -50,27 +50,27 @@ export class TravelItineraryComponen {t implements OnInit {
       } else {
         this.showMap = false;
       }
-    });
+    })
   }
 
   onSubmit(): void {
     if (this.travelForm.valid) {
       // Process the form data
       // eslint-disable-next-line no-console
-      console.log('Form submitted', this.travelForm.value);
+      console.log('Form submitted', this.travelForm.value)
 
       // Navigate back to the list
-      this.router.navigate(['/ad-management/list']);
+      this.router.navigate(['/ad-management/list'])
     } else {
       // Mark all fields as touched to trigger validation
       Object.keys(this.travelForm.controls).forEach((key) => {
-        const control = this.travelForm.get(key);
-        control?.markAsTouched();
-      });
+        const control = this.travelForm.get(key)
+        control?.markAsTouched()
+      })
     }
   }
 
   onCancel(): void {
-    this.router.navigate(['/ad-management/list']);
+    this.router.navigate(['/ad-management/list'])
   }
 }

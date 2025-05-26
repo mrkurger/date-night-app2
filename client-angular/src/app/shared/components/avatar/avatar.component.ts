@@ -18,27 +18,27 @@ export interface AvatarMenuItem extends MenuItem {
  * Features user image, name, online status, and optional context menu.;
  */
 @Component({';
-  selector: 'app-avatar',;
-  standalone: true,;
-  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem,; 
-    CommonModule,;
-    RouterModule,;
-    AvatarModule,;
-    BadgeModule,;
-    ContextMenuModule,;
-    TieredMenuModule,;
-  ],;
+  selector: 'app-avatar',
+  standalone: true,
+  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem, 
+    CommonModule,
+    RouterModule,
+    AvatarModule,
+    BadgeModule,
+    ContextMenuModule,
+    TieredMenuModule,
+  ],
   template: `;`
     ;
       ;
       ;
       ;
-        {{ name }};
-        {{ title }};
+        {{ name }}
+        {{ title }}
       ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .avatar-container {
@@ -65,13 +65,13 @@ export interface AvatarMenuItem extends MenuItem {
         border: 2px solid white;
       }
       .online-status-badge.offline {
-        background-color: var(--p-gray-400);
+        background-color: var(--p-gray-400)
       }
       .online-status-badge.p-badge-success {
-        background-color: var(--p-green-500);
+        background-color: var(--p-green-500)
       }
       .online-status-badge.p-badge-danger {
-        background-color: var(--p-red-500);
+        background-color: var(--p-red-500)
       }
 
       .avatar-info {
@@ -86,7 +86,7 @@ export interface AvatarMenuItem extends MenuItem {
 
       .avatar-title {
         font-size: 0.9em;
-        color: var(--p-text-secondary-color);
+        color: var(--p-text-secondary-color)
       }
 
       .avatar--tiny .user-avatar {
@@ -103,9 +103,9 @@ export interface AvatarMenuItem extends MenuItem {
 
       .avatar--small .user-avatar {
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class AvatarModul {e {
   @Input() imageUrl: string | undefined = '/assets/img/default-profile.jpg';
   @Input() name = '';
@@ -116,36 +116,36 @@ export class AvatarModul {e {
   @Input() showName = true;
   @Input() showTitle = false;
 
-  private _menuItems: AvatarMenuItem[] = [];
-  @Input();
+  private _menuItems: AvatarMenuItem[] = []
+  @Input()
   set menuItems(items: AvatarMenuItem[]) {
     this._menuItems = items;
-    this.processedMenuItems = this.processMenuItems(items);
+    this.processedMenuItems = this.processMenuItems(items)
   }
   get menuItems(): AvatarMenuItem[] {
     return this._menuItems;
   }
 
-  processedMenuItems: MenuItem[] = [];
+  processedMenuItems: MenuItem[] = []
 
-  @Output() menuItemClick = new EventEmitter();
+  @Output() menuItemClick = new EventEmitter()
 
   constructor() {}
 
   processMenuItems(items: AvatarMenuItem[]): MenuItem[] {
-    if (!items) return [];
+    if (!items) return []
     return items.map((item) => ({
-      ...item,;
+      ...item,
       command: (event?: { originalEvent?: Event; item?: MenuItem }) => {
         if (event && event.item) {
-          this.menuItemClick.emit(event.item as AvatarMenuItem);
+          this.menuItemClick.emit(event.item as AvatarMenuItem)
         }
-      },;
-    }));
+      },
+    }))
   }
 
   mapNebularSizeToPrimeNG(;
-    nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',;
+    nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',
   ): 'normal' | 'large' | 'xlarge' {
     switch (nebSize) {
       case 'tiny':;
@@ -166,11 +166,11 @@ export class AvatarModul {e {
 
   getInitials(): string {
     if (!this.name) return '';
-    const nameParts = this.name.trim().split(/\s+/);
+    const nameParts = this.name.trim().split(/\s+/)
     if (nameParts.length === 0 || nameParts[0] === '') return '';
     if (nameParts.length === 1) {
-      return nameParts[0].charAt(0).toUpperCase();
+      return nameParts[0].charAt(0).toUpperCase()
     }
-    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase()
   }
 }

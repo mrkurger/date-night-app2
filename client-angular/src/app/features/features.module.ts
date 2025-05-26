@@ -21,19 +21,19 @@ import { AdDetailsComponent } from './ad-details/ad-details.component';
 
 @NgModule({
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    ProfileComponent,;
-    GalleryComponent,;
-    TinderComponent,;
-    AdDetailsComponent,;
-    ,;
-    ,;
-    ,;
-    ChatComponent,;
-    NebularModule,;
-  ],;
-  declarations: [],;
-});
+    CommonModule,
+    RouterModule,
+    ProfileComponent,
+    GalleryComponent,
+    TinderComponent,
+    AdDetailsComponent,
+    ,
+    ,
+    ,
+    ChatComponent,
+    NebularModule,
+  ],
+  declarations: [],
+})
 export class FeaturesModul {e {}
 ';

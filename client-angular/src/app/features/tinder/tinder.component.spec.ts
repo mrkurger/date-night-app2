@@ -35,10 +35,10 @@ import { InputSwitchModule } from '../../shared/components/toggle/toggle.compone
 
 // Mock MainLayoutComponent
 @Component({';
-    selector: 'app-main-layout',;
-    template: '',;
-    imports: [CommonModule, ReactiveFormsModule, FormsModule];
-});
+    selector: 'app-main-layout',
+    template: '',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
+})
 class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'tinder';
 }
@@ -46,84 +46,84 @@ class MockMainLayoutComponen {t {
 // Mock data
 const mockAds: Ad[] = [;
   {
-    _id: 'ad1',;
-    title: 'Test Ad 1',;
-    description: 'Test description 1',;
-    price: 100,;
+    _id: 'ad1',
+    title: 'Test Ad 1',
+    description: 'Test description 1',
+    price: 100,
     location: {
-      city: 'Oslo',;
-      county: 'Oslo',;
-    },;
-    category: 'Dinner',;
-    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],;
-    images: ['/assets/images/test-image-1.jpg'],;
+      city: 'Oslo',
+      county: 'Oslo',
+    },
+    category: 'Dinner',
+    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],
+    images: ['/assets/images/test-image-1.jpg'],
     advertiser: {
-      _id: 'user1',;
-      username: 'Test User 1',;
-      profileImage: '/assets/images/default-profile.jpg',;
-    },;
-    userId: 'user1',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: false,;
-    isTouring: false,;
-    viewCount: 0,;
-    clickCount: 0,;
-    inquiryCount: 0,;
-    createdAt: new Date().toISOString(),;
-    updatedAt: new Date().toISOString(),;
-    tags: ['tag1', 'tag2'],;
-  },;
+      _id: 'user1',
+      username: 'Test User 1',
+      profileImage: '/assets/images/default-profile.jpg',
+    },
+    userId: 'user1',
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 0,
+    clickCount: 0,
+    inquiryCount: 0,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    tags: ['tag1', 'tag2'],
+  },
   {
-    _id: 'ad2',;
-    title: 'Test Ad 2',;
-    description: 'Test description 2',;
-    price: 200,;
+    _id: 'ad2',
+    title: 'Test Ad 2',
+    description: 'Test description 2',
+    price: 200,
     location: {
-      city: 'Bergen',;
-      county: 'Vestland',;
-    },;
-    category: 'Activity',;
-    media: [{ url: '/assets/images/test-image-2.jpg', type: 'image' }],;
-    images: ['/assets/images/test-image-2.jpg'],;
+      city: 'Bergen',
+      county: 'Vestland',
+    },
+    category: 'Activity',
+    media: [{ url: '/assets/images/test-image-2.jpg', type: 'image' }],
+    images: ['/assets/images/test-image-2.jpg'],
     advertiser: {
-      _id: 'user2',;
-      username: 'Test User 2',;
-      profileImage: '/assets/images/default-profile.jpg',;
-    },;
-    userId: 'user2',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: false,;
-    isTouring: false,;
-    viewCount: 0,;
-    clickCount: 0,;
-    inquiryCount: 0,;
-    createdAt: new Date().toISOString(),;
-    updatedAt: new Date().toISOString(),;
-    tags: ['tag3', 'tag4'],;
-  },;
-];
+      _id: 'user2',
+      username: 'Test User 2',
+      profileImage: '/assets/images/default-profile.jpg',
+    },
+    userId: 'user2',
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 0,
+    clickCount: 0,
+    inquiryCount: 0,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    tags: ['tag3', 'tag4'],
+  },
+]
 
 // Mock services
 class MockAdServic {e {
   getAds() {
-    return of({ ads: mockAds, total: mockAds.length } as GetAdsResponse);
+    return of({ ads: mockAds, total: mockAds.length } as GetAdsResponse)
   }
   recordSwipe() {
-    return of(undefined);
+    return of(undefined)
   }
   likeAd() {
-    return of(undefined);
+    return of(undefined)
   }
   dislikeAd() {
-    return of(undefined);
+    return of(undefined)
   }
   superlikeAd() {
-    return of(undefined);
+    return of(undefined)
   }
   getCounties() {
-    return of(['Oslo', 'Vestland']);
+    return of(['Oslo', 'Vestland'])
   }
 }
 
@@ -134,12 +134,12 @@ class MockNotificationServic {e {
 
 class MockChatServic {e {
   startChat() {
-    return of(undefined);
+    return of(undefined)
   }
 }
 
 class MockAuthServic {e {
-  currentUser$ = of(null);
+  currentUser$ = of(null)
 }
 
 describe('TinderComponent', () => {
@@ -154,67 +154,67 @@ describe('TinderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [;
-        RouterTestingModule,;
-        ReactiveFormsModule,;
-        FormsModule,;
-        TinderComponent,;
-        TinderCardComponent,;
-        ButtonModule,;
-        SkeletonModule,;
-        InputSwitchModule,;
-      ],;
-      declarations: [MockMainLayoutComponent],;
+        RouterTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        TinderComponent,
+        TinderCardComponent,
+        ButtonModule,
+        SkeletonModule,
+        InputSwitchModule,
+      ],
+      declarations: [MockMainLayoutComponent],
       providers: [;
-        { provide: AdService, useClass: MockAdService },;
-        { provide: NotificationService, useClass: MockNotificationService },;
-        { provide: ChatService, useClass: MockChatService },;
-        { provide: AuthService, useClass: MockAuthService },;
-      ],;
-    }).compileComponents();
+        { provide: AdService, useClass: MockAdService },
+        { provide: NotificationService, useClass: MockNotificationService },
+        { provide: ChatService, useClass: MockChatService },
+        { provide: AuthService, useClass: MockAuthService },
+      ],
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(TinderComponent);
+    fixture = TestBed.createComponent(TinderComponent)
     component = fixture.componentInstance;
-    adService = TestBed.inject(AdService);
-    notificationService = TestBed.inject(NotificationService);
-    chatService = TestBed.inject(ChatService);
-    authService = TestBed.inject(AuthService);
-    router = TestBed.inject(Router);
+    adService = TestBed.inject(AdService)
+    notificationService = TestBed.inject(NotificationService)
+    chatService = TestBed.inject(ChatService)
+    authService = TestBed.inject(AuthService)
+    router = TestBed.inject(Router)
 
     // Spy on router navigation
-    spyOn(router, 'navigateByUrl').and.stub();
-  });
+    spyOn(router, 'navigateByUrl').and.stub()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should load ads on init', fakeAsync(() => {
-    spyOn(adService, 'getAds').and.returnValue(of({ ads: mockAds, total: mockAds.length }));
-    component.ngOnInit();
-    tick();
+    spyOn(adService, 'getAds').and.returnValue(of({ ads: mockAds, total: mockAds.length }))
+    component.ngOnInit()
+    tick()
 
-    expect(component.ads).toEqual(mockAds);
-    expect(component.currentAd).toEqual(mockAds[0]);
-    expect(component.nextAd).toEqual(mockAds[1]);
-    expect(component.loading).toBeFalsy();
-  }));
+    expect(component.ads).toEqual(mockAds)
+    expect(component.currentAd).toEqual(mockAds[0])
+    expect(component.nextAd).toEqual(mockAds[1])
+    expect(component.loading).toBeFalsy()
+  }))
 
   it('should handle like action', fakeAsync(() => {
-    spyOn(adService, 'likeAd').and.returnValue(of(undefined));
-    spyOn(notificationService, 'success');
-    component.ads = [...mockAds];
-    component.currentAd = mockAds[0];
-    component.nextAd = mockAds[1];
+    spyOn(adService, 'likeAd').and.returnValue(of(undefined))
+    spyOn(notificationService, 'success')
+    component.ads = [...mockAds]
+    component.currentAd = mockAds[0]
+    component.nextAd = mockAds[1]
 
     const adId = typeof mockAds[0]._id === 'string' ? mockAds[0]._id : mockAds[0]._id.city;
-    component.onCardAction({ action: 'like', itemId: adId });
-    tick(300);
+    component.onCardAction({ action: 'like', itemId: adId })
+    tick(300)
 
-    expect(adService.likeAd).toHaveBeenCalledWith(adId);
-    expect(notificationService.success).toHaveBeenCalled();
-    expect(component.currentAd).toEqual(mockAds[1]);
-    expect(component.nextAd).toBeNull();
-  }));
+    expect(adService.likeAd).toHaveBeenCalledWith(adId)
+    expect(notificationService.success).toHaveBeenCalled()
+    expect(component.currentAd).toEqual(mockAds[1])
+    expect(component.nextAd).toBeNull()
+  }))
 
   // Add more tests as needed...
-});
+})

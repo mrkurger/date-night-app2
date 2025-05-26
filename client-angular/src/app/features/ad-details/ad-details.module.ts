@@ -13,9 +13,9 @@ import { AdDetailsComponent } from './ad-details.component';
 // ===================================================
 
 ';
-const routes: Routes = [{ path: '', component: AdDetailsComponent }];
+const routes: Routes = [{ path: '', component: AdDetailsComponent }]
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), AdDetailsComponent],;
-});
+  imports: [CommonModule, RouterModule.forChild(routes), AdDetailsComponent],
+})
 export class AdDetailsModul {e {}

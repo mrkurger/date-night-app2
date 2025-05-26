@@ -15,13 +15,13 @@ import { TouringComponent } from './touring.component';
 
 const routes: Routes = [;
   {';
-    path: '',;
-    component: TouringComponent,;
-  },;
-];
+    path: '',
+    component: TouringComponent,
+  },
+]
 
 @NgModule({
-  declarations: [],;
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), TouringComponent],;
-});
+  declarations: [],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), TouringComponent],
+})
 export class TouringModul {e {}

@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class SafetyServic {e {
   private apiUrl = `${environment.apiUrl}/safety`;`
 
@@ -16,7 +16,7 @@ export class SafetyServic {e {
    * @param checkinData Check-in data;
    */
   createSafetyCheckin(checkinData: any): Observable {
-    return this.http.post(`${this.apiUrl}/checkin`, checkinData);`
+    return this.http.post(`${this.apiUrl}/checkin`, checkinData)`
   }
 
   /**
@@ -30,7 +30,7 @@ export class SafetyServic {e {
     if (status) {
       url += `&status=${status}`;`
     }
-    return this.http.get(url);
+    return this.http.get(url)
   }
 
   /**
@@ -38,7 +38,7 @@ export class SafetyServic {e {
    * @param checkinId Check-in ID;
    */
   getSafetyCheckin(checkinId: string): Observable {
-    return this.http.get(`${this.apiUrl}/checkin/${checkinId}`);`
+    return this.http.get(`${this.apiUrl}/checkin/${checkinId}`)`
   }
 
   /**
@@ -47,7 +47,7 @@ export class SafetyServic {e {
    * @param updates Updated check-in data;
    */
   updateSafetyCheckin(checkinId: string, updates: any): Observable {
-    return this.http.put(`${this.apiUrl}/checkin/${checkinId}`, updates);`
+    return this.http.put(`${this.apiUrl}/checkin/${checkinId}`, updates)`
   }
 
   /**
@@ -55,7 +55,7 @@ export class SafetyServic {e {
    * @param checkinId Check-in ID;
    */
   startSafetyCheckin(checkinId: string): Observable {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/start`, {});`
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/start`, {})`
   }
 
   /**
@@ -63,24 +63,24 @@ export class SafetyServic {e {
    * @param checkinId Check-in ID;
    */
   completeSafetyCheckin(checkinId: string): Observable {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/complete`, {});`
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/complete`, {})`
   }
 
   /**
    * Record a check-in response;
    * @param checkinId Check-in ID;
-   * @param response Response type (safe, need_more_time, distress);
-   * @param coordinates Optional coordinates [longitude, latitude];
+   * @param response Response type (safe, need_more_time, distress)
+   * @param coordinates Optional coordinates [longitude, latitude]
    */
   recordCheckInResponse(;
-    checkinId: string,;
-    response: 'safe' | 'need_more_time' | 'distress',;
-    coordinates?: [number, number],;
+    checkinId: string,
+    response: 'safe' | 'need_more_time' | 'distress',
+    coordinates?: [number, number],
   ): Observable {
     return this.http.post(`${this.apiUrl}/checkin/${checkinId}/respond`, {`
-      response,;
-      coordinates,;
-    });
+      response,
+      coordinates,
+    })
   }
 
   /**
@@ -89,7 +89,7 @@ export class SafetyServic {e {
    * @param code Safety or distress code;
    */
   verifyWithSafetyCode(checkinId: string, code: string): Observable {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/verify`, { code });`
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/verify`, { code })`
   }
 
   /**
@@ -98,7 +98,7 @@ export class SafetyServic {e {
    * @param contactData Contact data;
    */
   addEmergencyContact(checkinId: string, contactData: any): Observable {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/emergency-contact`, contactData);`
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/emergency-contact`, contactData)`
   }
 
   /**
@@ -107,14 +107,14 @@ export class SafetyServic {e {
    * @param contactId Contact ID;
    */
   removeEmergencyContact(checkinId: string, contactId: string): Observable {
-    return this.http.delete(`${this.apiUrl}/checkin/${checkinId}/emergency-contact/${contactId}`);`
+    return this.http.delete(`${this.apiUrl}/checkin/${checkinId}/emergency-contact/${contactId}`)`
   }
 
   /**
    * Get user's safety settings;
    */
   getUserSafetySettings(): Observable {
-    return this.http.get(`${this.apiUrl}/settings`);`
+    return this.http.get(`${this.apiUrl}/settings`)`
   }
 
   /**
@@ -122,13 +122,13 @@ export class SafetyServic {e {
    * @param settings Updated safety settings;
    */
   updateSafetySettings(settings: any): Observable {
-    return this.http.put(`${this.apiUrl}/settings`, settings);`
+    return this.http.put(`${this.apiUrl}/settings`, settings)`
   }
 
   /**
    * Admin: Get check-ins requiring attention;
    */
   getCheckinsRequiringAttention(): Observable {
-    return this.http.get(`${this.apiUrl}/admin/attention-required`);`
+    return this.http.get(`${this.apiUrl}/admin/attention-required`)`
   }
 }

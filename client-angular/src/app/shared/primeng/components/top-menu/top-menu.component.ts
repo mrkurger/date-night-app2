@@ -4,7 +4,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/menuitem';
 
 @Component({';
-  selector: 'p-top-menu',;
+  selector: 'p-top-menu',
   template: `;`
     ;
       ;
@@ -15,7 +15,7 @@ import { MenuItem } from 'primeng/menuitem';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -25,7 +25,7 @@ import { MenuItem } from 'primeng/menuitem';
       :host ::ng-deep {
         .p-menubar {
           padding: 0.5rem;
-          background: var(--surface-card);
+          background: var(--surface-card)
           border: none;
           border-radius: 0;
 
@@ -37,52 +37,52 @@ import { MenuItem } from 'primeng/menuitem';
             padding: 0.75rem 1rem;
 
             .p-menuitem-icon {
-              color: var(--text-color-secondary);
+              color: var(--text-color-secondary)
               margin-right: 0.5rem;
             }
 
             .p-menuitem-text {
-              color: var(--text-color);
+              color: var(--text-color)
             }
 
             &:hover {
-              background: var(--surface-hover);
+              background: var(--surface-hover)
             }
 
             &.p-menuitem-link-active {
-              background: var(--primary-color);
-              color: var(--primary-color-text);
+              background: var(--primary-color)
+              color: var(--primary-color-text)
 
-              .p-menuitem-icon,;
+              .p-menuitem-icon,
               .p-menuitem-text {
-                color: var(--primary-color-text);
+                color: var(--primary-color-text)
               }
             }
           }
 
           .p-submenu-list {
             padding: 0.5rem;
-            background: var(--surface-overlay);
-            border: 1px solid var(--surface-border);
-            box-shadow: var(--overlay-shadow);
+            background: var(--surface-overlay)
+            border: 1px solid var(--surface-border)
+            box-shadow: var(--overlay-shadow)
           }
         }
       }
-    `,;`
-  ],;
-  standalone: true,;
-  imports: [MenuItem, CommonModule, MenubarModule],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+    `,`
+  ],
+  standalone: true,
+  imports: [MenuItem, CommonModule, MenubarModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class TopMenuComponen {t {
-  @Input() menuItems: MenuItem[] = [];
-  @Input() style: { [key: string]: string } = {};
+  @Input() menuItems: MenuItem[] = []
+  @Input() style: { [key: string]: string } = {}
   @Input() startTemplate = false;
   @Input() endTemplate = false;
 
-  @Output() menuItemClick = new EventEmitter();
+  @Output() menuItemClick = new EventEmitter()
 
   onMenuItemClick(event: { item: MenuItem }) {
-    this.menuItemClick.emit(event.item);
+    this.menuItemClick.emit(event.item)
   }
 }

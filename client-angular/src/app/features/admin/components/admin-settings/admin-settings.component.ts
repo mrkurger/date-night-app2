@@ -11,32 +11,32 @@ interface AppSettings {
     maintenanceMode: boolean;
     allowRegistration: boolean;
     defaultUserRole: string;
-  };
+  }
   security: {
     maxLoginAttempts: number;
     passwordMinLength: number;
     requireEmailVerification: boolean;
     twoFactorEnabled: boolean;
     sessionTimeout: number;
-  };
+  }
   content: {
     maxImageSize: number;
-    allowedFileTypes: string[];
+    allowedFileTypes: string[]
     autoModeration: boolean;
     profanityFilter: boolean;
-  };
+  }
   notifications: {
     emailNotifications: boolean;
     pushNotifications: boolean;
     adminAlerts: boolean;
     moderatorAlerts: boolean;
-  };
+  }
 }
 
 @Component({';
-    selector: 'app-admin-settings',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [CommonModule, ReactiveFormsModule, NebularModule],;
+    selector: 'app-admin-settings',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, ReactiveFormsModule, NebularModule],
     template: `;`
     ;
       ;
@@ -105,7 +105,7 @@ interface AppSettings {
                   ;
 
                   ;
-                    Session Timeout (minutes);
+                    Session Timeout (minutes)
                     ;
                   ;
                 ;
@@ -116,7 +116,7 @@ interface AppSettings {
                 Content Settings;
                 ;
                   ;
-                    Max Image Size (MB);
+                    Max Image Size (MB)
                     ;
                   ;
 
@@ -175,7 +175,7 @@ interface AppSettings {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -207,48 +207,48 @@ interface AppSettings {
       nb-accordion-item {
         margin-bottom: 1rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class AdminSettingsComponen {t implements OnInit {
   settingsForm: FormGroup;
   loading = false;
 
   constructor(;
-    private fb: FormBuilder,;
-    private toastrService: NbToastrService,;
+    private fb: FormBuilder,
+    private toastrService: NbToastrService,
   ) {
     this.settingsForm = this.fb.group({
       // General Settings
-      siteName: ['', Validators.required],;
-      siteDescription: [''],;
-      maintenanceMode: [false],;
-      allowRegistration: [true],;
-      defaultUserRole: ['user'],;
+      siteName: ['', Validators.required],
+      siteDescription: [''],
+      maintenanceMode: [false],
+      allowRegistration: [true],
+      defaultUserRole: ['user'],
 
       // Security Settings
-      maxLoginAttempts: [5, [Validators.required, Validators.min(1)]],;
-      passwordMinLength: [8, [Validators.required, Validators.min(6)]],;
-      requireEmailVerification: [true],;
-      twoFactorEnabled: [false],;
-      sessionTimeout: [60, [Validators.required, Validators.min(5)]],;
+      maxLoginAttempts: [5, [Validators.required, Validators.min(1)]],
+      passwordMinLength: [8, [Validators.required, Validators.min(6)]],
+      requireEmailVerification: [true],
+      twoFactorEnabled: [false],
+      sessionTimeout: [60, [Validators.required, Validators.min(5)]],
 
       // Content Settings
-      maxImageSize: [5, [Validators.required, Validators.min(1)]],;
-      allowedFileTypes: [['image/jpeg', 'image/png']],;
-      autoModeration: [true],;
-      profanityFilter: [true],;
+      maxImageSize: [5, [Validators.required, Validators.min(1)]],
+      allowedFileTypes: [['image/jpeg', 'image/png']],
+      autoModeration: [true],
+      profanityFilter: [true],
 
       // Notification Settings
-      emailNotifications: [true],;
-      pushNotifications: [true],;
-      adminAlerts: [true],;
-      moderatorAlerts: [true],;
-    });
+      emailNotifications: [true],
+      pushNotifications: [true],
+      adminAlerts: [true],
+      moderatorAlerts: [true],
+    })
   }
 
   ngOnInit() {
-    this.loadSettings();
+    this.loadSettings()
   }
 
   loadSettings() {
@@ -257,62 +257,62 @@ export class AdminSettingsComponen {t implements OnInit {
     setTimeout(() => {
       const settings: AppSettings = {
         general: {
-          siteName: 'Date Night App',;
-          siteDescription: 'Find your perfect date night experience',;
-          maintenanceMode: false,;
-          allowRegistration: true,;
-          defaultUserRole: 'user',;
-        },;
+          siteName: 'Date Night App',
+          siteDescription: 'Find your perfect date night experience',
+          maintenanceMode: false,
+          allowRegistration: true,
+          defaultUserRole: 'user',
+        },
         security: {
-          maxLoginAttempts: 5,;
-          passwordMinLength: 8,;
-          requireEmailVerification: true,;
-          twoFactorEnabled: false,;
-          sessionTimeout: 60,;
-        },;
+          maxLoginAttempts: 5,
+          passwordMinLength: 8,
+          requireEmailVerification: true,
+          twoFactorEnabled: false,
+          sessionTimeout: 60,
+        },
         content: {
-          maxImageSize: 5,;
-          allowedFileTypes: ['image/jpeg', 'image/png'],;
-          autoModeration: true,;
-          profanityFilter: true,;
-        },;
+          maxImageSize: 5,
+          allowedFileTypes: ['image/jpeg', 'image/png'],
+          autoModeration: true,
+          profanityFilter: true,
+        },
         notifications: {
-          emailNotifications: true,;
-          pushNotifications: true,;
-          adminAlerts: true,;
-          moderatorAlerts: true,;
-        },;
-      };
+          emailNotifications: true,
+          pushNotifications: true,
+          adminAlerts: true,
+          moderatorAlerts: true,
+        },
+      }
 
       this.settingsForm.patchValue({
-        ...settings.general,;
-        ...settings.security,;
-        ...settings.content,;
-        ...settings.notifications,;
-      });
+        ...settings.general,
+        ...settings.security,
+        ...settings.content,
+        ...settings.notifications,
+      })
 
       this.loading = false;
-    }, 1000);
+    }, 1000)
   }
 
   saveSettings() {
     if (this.settingsForm.invalid) {
-      this.toastrService.warning('Please fix form errors before saving');
+      this.toastrService.warning('Please fix form errors before saving')
       return;
     }
 
     this.loading = true;
     // TODO: Replace with actual API call
     setTimeout(() => {
-      this.toastrService.success('Settings saved successfully');
+      this.toastrService.success('Settings saved successfully')
       this.loading = false;
-    }, 1000);
+    }, 1000)
   }
 
   resetSettings() {
     if (confirm('Are you sure you want to reset all settings to their defaults?')) {
-      this.loadSettings();
-      this.toastrService.info('Settings reset to defaults');
+      this.loadSettings()
+      this.toastrService.info('Settings reset to defaults')
     }
   }
 }

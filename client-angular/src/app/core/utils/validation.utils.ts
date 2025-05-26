@@ -26,8 +26,8 @@ export function isValidEmail(email: string): boolean {
 
   // RFC 5322 compliant email regex
   const emailRegex =;
-    /^(([^()[\]\\.,;:\s@"]+(\.[^()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2}))$/;
-  return emailRegex.test(email.toLowerCase());
+    /^(([^()[\]\\.,:\s@"]+(\.[^()[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2}))$/;
+  return emailRegex.test(email.toLowerCase())
 }
 
 /**
@@ -48,21 +48,21 @@ export function isValidUrl(url: string): boolean {
 
     // Reject potentially dangerous protocols that could lead to XSS attacks
     const dangerousProtocols = [;
-      'javascript:',;
-      'data:',;
-      'vbscript:',;
-      'file:',;
-      'about:',;
-      'blob:',;
-      'ftp:',;
-      'ws:',;
-      'wss:',;
-      'mailto:',;
-      'tel:',;
-      'sms:',;
-    ];
+      'javascript:',
+      'data:',
+      'vbscript:',
+      'file:',
+      'about:',
+      'blob:',
+      'ftp:',
+      'ws:',
+      'wss:',
+      'mailto:',
+      'tel:',
+      'sms:',
+    ]
 
-    const lowercaseUrl = url.toLowerCase();
+    const lowercaseUrl = url.toLowerCase()
     for (const protocol of dangerousProtocols) {
       if (lowercaseUrl.startsWith(protocol)) {
         return false;
@@ -70,7 +70,7 @@ export function isValidUrl(url: string): boolean {
     }
 
     // Otherwise, try to create a URL object
-    new URL(url);
+    new URL(url)
     return true;
   } catch {
     // Removed unused 'error' variable
@@ -90,7 +90,7 @@ export function isValidNorwegianPhone(phone: string): boolean {
 
   // Norwegian phone numbers are 8 digits, optionally with country code
   const phoneRegex = /^(\+47)?[2-9]\d{7}$/;
-  return phoneRegex.test(phone.replace(/\s+/g, ''));
+  return phoneRegex.test(phone.replace(/\s+/g, ''))
 }
 
 /**
@@ -100,25 +100,25 @@ export function isValidNorwegianPhone(phone: string): boolean {
  * @returns Boolean indicating if the password meets the requirements;
  */
 export function isValidPassword(
-  password: string,;
+  password: string,
   options: {
     minLength?: number;
     requireUppercase?: boolean;
     requireLowercase?: boolean;
     requireNumbers?: boolean;
     requireSpecialChars?: boolean;
-  } = {},;
+  } = {},
 ): boolean {
   if (!password) {
     return false;
   }
 
   const {
-    minLength = 8,;
-    requireUppercase = true,;
-    requireLowercase = true,;
-    requireNumbers = true,;
-    requireSpecialChars = true,;
+    minLength = 8,
+    requireUppercase = true,
+    requireLowercase = true,
+    requireNumbers = true,
+    requireSpecialChars = true,
   } = options;
 
   // Check minimum length
@@ -137,17 +137,17 @@ export function isValidPassword(
  * @returns A validator function that can be used in form validation
  */
 export function matchingFieldsValidator(
-  controlName: string,;
-  matchingControlName: string,;
-  errorKey = 'fieldsMismatch',;
+  controlName: string,
+  matchingControlName: string,
+  errorKey = 'fieldsMismatch',
 ): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     if (!(formGroup instanceof FormGroup)) {
       return null;
     }
 
-    const control = formGroup.get(controlName);
-    const matchingControl = formGroup.get(matchingControlName);
+    const control = formGroup.get(controlName)
+    const matchingControl = formGroup.get(matchingControlName)
 
     if (!control || !matchingControl) {
       return null;
@@ -160,19 +160,19 @@ export function matchingFieldsValidator(
 
     // Check if the fields match
     if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ [errorKey]: true });
-      return { [errorKey]: true };
+      matchingControl.setErrors({ [errorKey]: true })
+      return { [errorKey]: true }
     } else {
       // Clear the error if they do match
       if (matchingControl.errors) {
-        delete matchingControl.errors[errorKey];
+        delete matchingControl.errors[errorKey]
         if (!Object.keys(matchingControl.errors).length) {
-          matchingControl.setErrors(null);
+          matchingControl.setErrors(null)
         }
       }
       return null;
     }
-  };
+  }
 }
 
 /**
@@ -182,14 +182,14 @@ export function matchingFieldsValidator(
  * @returns A validator function that can be used in form validation
  */
 export function passwordMatchValidator(
-  passwordControlName = 'password',;
-  confirmPasswordControlName = 'confirmPassword',;
+  passwordControlName = 'password',
+  confirmPasswordControlName = 'confirmPassword',
 ): ValidatorFn {
   return matchingFieldsValidator(;
-    passwordControlName,;
-    confirmPasswordControlName,;
-    'passwordMismatch',;
-  );
+    passwordControlName,
+    confirmPasswordControlName,
+    'passwordMismatch',
+  )
 }
 
 /**
@@ -204,11 +204,11 @@ export function isValidNorwegianPostalCode(postalCode: string): boolean {
 
   // Norwegian postal codes are 4 digits
   const postalCodeRegex = /^\d{4}$/;
-  return postalCodeRegex.test(postalCode.trim());
+  return postalCodeRegex.test(postalCode.trim())
 }
 
 /**
- * Validates if a string is a valid date in ISO format (YYYY-MM-DD);
+ * Validates if a string is a valid date in ISO format (YYYY-MM-DD)
  * @param dateString The date string to validate;
  * @returns Boolean indicating if the date is valid;
  */
@@ -224,8 +224,8 @@ export function isValidISODate(dateString: string): boolean {
   }
 
   // Check if it's a valid date
-  const date = new Date(dateString);
-  return !Number.isNaN(date.getTime());
+  const date = new Date(dateString)
+  return !Number.isNaN(date.getTime())
 }
 
 /**
@@ -237,7 +237,7 @@ export function isValidISODate(dateString: string): boolean {
  */
 export function isInRange(value: number, min: number, max: number): boolean {
   return value >= min && value = 0; i--) {
-    let digit = parseInt(sanitizedNumber.charAt(i), 10); // Add radix 10
+    let digit = parseInt(sanitizedNumber.charAt(i), 10) // Add radix 10
 
     if (shouldDouble) {
       digit *= 2;

@@ -23,9 +23,9 @@ import { QRCodeComponent } from 'angularx-qrcode';
  * This module is kept for backward compatibility.;
  */
 @NgModule({
-  declarations: [],;
-  imports: [CommonModule, QRCodeComponent],;
+  declarations: [],
+  imports: [CommonModule, QRCodeComponent],
   // No exports needed for standalone components - they are imported directly where needed
-});
+})
 export class QRCodeModul {e {}
 ';

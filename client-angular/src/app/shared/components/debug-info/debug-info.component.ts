@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../../../app/shared/nebular.module';
 import { environment } from '../../../../environments/environment';
-  ,;
-  ,;
-  ,;
-  ,;
+  ,
+  ,
+  ,
+  ,
   ,';
 } from '@nebular/theme';
 // ===================================================
@@ -20,9 +20,9 @@ import { environment } from '../../../../environments/environment';
 // ===================================================
 
 @Component({
-    selector: 'app-debug-info',;
-    imports: [CommonModule,;
-        NebularModule],;
+    selector: 'app-debug-info',
+    imports: [CommonModule,
+        NebularModule],
     template: `;`
     ;
       ;
@@ -55,7 +55,7 @@ import { environment } from '../../../../environments/environment';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .debug-info {
@@ -65,7 +65,7 @@ import { environment } from '../../../../environments/environment';
         z-index: 1000;
         width: 400px;
         opacity: 0.9;
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px)
 
         nb-card-header {
           display: flex;
@@ -77,16 +77,16 @@ import { environment } from '../../../../environments/environment';
           display: flex;
           justify-content: space-between;
           padding: 8px;
-          border-bottom: 1px solid nb-theme(border-basic-color-3);
+          border-bottom: 1px solid nb-theme(border-basic-color-3)
 
           &:last-child {
             border-bottom: none;
           }
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class DebugInfoComponen {t implements OnInit {
   showDebugInfo = !environment.production;
   environment = environment.production ? 'Production' : 'Development';
@@ -96,17 +96,17 @@ export class DebugInfoComponen {t implements OnInit {
   userAgent = navigator.userAgent;
   screenSize = `${window.innerWidth}x${window.innerHeight}`;`
   memoryUsage = 'N/A';
-  performanceMetrics: Array = [];
+  performanceMetrics: Array = []
 
   ngOnInit() {
-    this.updatePerformanceMetrics();
-    this.updateMemoryUsage();
+    this.updatePerformanceMetrics()
+    this.updateMemoryUsage()
 
     // Update metrics periodically
     setInterval(() => {
-      this.updatePerformanceMetrics();
-      this.updateMemoryUsage();
-    }, 5000);
+      this.updatePerformanceMetrics()
+      this.updateMemoryUsage()
+    }, 5000)
   }
 
   toggleDebugInfo() {
@@ -116,32 +116,32 @@ export class DebugInfoComponen {t implements OnInit {
   private updatePerformanceMetrics() {
     if (window.performance) {
       const navigation = performance.getEntriesByType(;
-        'navigation',;
+        'navigation',
       )[0] as PerformanceNavigationTiming;
-      const paint = performance.getEntriesByType('paint');
+      const paint = performance.getEntriesByType('paint')
 
       this.performanceMetrics = [;
         {
-          name: 'Page Load',;
-          value: `${Math.round(navigation.loadEventEnd - navigation.startTime)}ms`,;`
-        },;
+          name: 'Page Load',
+          value: `${Math.round(navigation.loadEventEnd - navigation.startTime)}ms`,`
+        },
         {
-          name: 'First Paint',;
-          value: `${Math.round(paint[0]?.startTime || 0)}ms`,;`
-        },;
+          name: 'First Paint',
+          value: `${Math.round(paint[0]?.startTime || 0)}ms`,`
+        },
         {
-          name: 'First Contentful Paint',;
-          value: `${Math.round(paint[1]?.startTime || 0)}ms`,;`
-        },;
+          name: 'First Contentful Paint',
+          value: `${Math.round(paint[1]?.startTime || 0)}ms`,`
+        },
         {
-          name: 'DOM Interactive',;
-          value: `${Math.round(navigation.domInteractive - navigation.startTime)}ms`,;`
-        },;
+          name: 'DOM Interactive',
+          value: `${Math.round(navigation.domInteractive - navigation.startTime)}ms`,`
+        },
         {
-          name: 'DOM Complete',;
-          value: `${Math.round(navigation.domComplete - navigation.startTime)}ms`,;`
-        },;
-      ];
+          name: 'DOM Complete',
+          value: `${Math.round(navigation.domComplete - navigation.startTime)}ms`,`
+        },
+      ]
     }
   }
 

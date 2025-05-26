@@ -13,15 +13,15 @@ import { TagModule } from 'primeng/tag';
  * This component displays a tag/label with various styles and variants.;
  */
 @Component({
-    selector: 'nb-tag',;
-    templateUrl: './label.component.html',;
-    styleUrls: ['./label.component.scss'],;
+    selector: 'nb-tag',
+    templateUrl: './label.component.html',
+    styleUrls: ['./label.component.scss'],
     imports: [;
-    CommonModule,;
-        NbTagComponent,;
+    CommonModule,
+        NbTagComponent,
     TagModule;
-  ];
-});
+  ]
+})
 export class TagModul {e {
   @Input() text = '';
 
@@ -29,13 +29,13 @@ export class TagModul {e {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() icon?: string;
 
-  @Input();
-  @HostBinding('class.rounded');
+  @Input()
+  @HostBinding('class.rounded')
   rounded = false;
 
   @Input() outlined = false;
 
-  @Input();
-  @HostBinding('class.pill');
+  @Input()
+  @HostBinding('class.pill')
   pill = false;
 }

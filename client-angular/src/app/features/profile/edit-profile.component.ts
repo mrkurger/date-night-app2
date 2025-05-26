@@ -14,32 +14,32 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputTextModule } from 'primeng/inputtext';
-  NbCardModule,;
-  NbFormFieldModule,;
-  NbInputModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
   NbLayoutModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-edit-profile',;
+    selector: 'app-edit-profile',
     imports: [;
-    NebularModule, CommonModule,;
-        ReactiveFormsModule,;
-        NbCardModule,;
-        NbFormFieldModule,;
-        NbInputModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbSpinnerModule,;
-        NbLayoutModule,,;
-    ProgressSpinnerModule,;
+    NebularModule, CommonModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbFormFieldModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbLayoutModule,,
+    ProgressSpinnerModule,
     InputTextModule;
-  ],;
-    providers: [UserService, AuthService, NotificationService],;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  ],
+    providers: [UserService, AuthService, NotificationService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     template: `;`
     ;
       ;
@@ -105,7 +105,7 @@ import { InputTextModule } from 'primeng/inputtext';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       @use '@nebular/theme/styles/theming' as *;
@@ -116,12 +116,12 @@ import { InputTextModule } from 'primeng/inputtext';
 
         nb-card-header h2 {
           margin: 0;
-          font-size: nb-theme(card-header-font-size);
-          font-weight: nb-theme(card-header-font-weight);
+          font-size: nb-theme(card-header-font-size)
+          font-weight: nb-theme(card-header-font-weight)
         }
 
         nb-card-body {
-          padding: nb-theme(card-padding);
+          padding: nb-theme(card-padding)
         }
 
         form {
@@ -134,12 +134,12 @@ import { InputTextModule } from 'primeng/inputtext';
           label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: nb-theme(label-text-font-weight);
+            font-weight: nb-theme(label-text-font-weight)
           }
           .caption.status-danger {
             display: block; /* Ensure it takes space */
             margin-top: 0.25rem;
-            color: nb-theme(text-danger-color);
+            color: nb-theme(text-danger-color)
           }
         }
 
@@ -164,32 +164,32 @@ import { InputTextModule } from 'primeng/inputtext';
           }
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class EditProfileComponen {t implements OnInit {
   profileForm: FormGroup;
   loading = false;
   submitted = false;
 
   constructor(;
-    private formBuilder: FormBuilder,;
-    private router: Router,;
-    private userService: UserService,;
-    private authService: AuthService,;
-    private notificationService: NotificationService,;
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
-      username: ['', Validators.required],;
-      email: ['', [Validators.required, Validators.email]],;
-      bio: [''],;
-      location: [''],;
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      bio: [''],
+      location: [''],
       website: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')],
-      phone: [''],;
-    });
-    this.loadUserData();
+      phone: [''],
+    })
+    this.loadUserData()
   }
 
   // Convenience getter for easy access to form fields
@@ -198,33 +198,33 @@ export class EditProfileComponen {t implements OnInit {
   }
 
   loadUserData(): void {
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUserId()
     if (userId) {
       this.authService.currentUser$.pipe(take(1)).subscribe((currentUserObject) => {
         if (currentUserObject) {
           this.profileForm.patchValue({
-            username: currentUserObject.username || '',;
-            email: currentUserObject.email || '',;
-            bio: currentUserObject.profile?.bio || '',;
-            location: currentUserObject.profile?.location?.city || '',;
-          });
+            username: currentUserObject.username || '',
+            email: currentUserObject.email || '',
+            bio: currentUserObject.profile?.bio || '',
+            location: currentUserObject.profile?.location?.city || '',
+          })
           this.userService.getUserProfile(userId).subscribe({
             next: (userProfileData) => {
               this.profileForm.patchValue({
-                bio: userProfileData.bio || this.profileForm.value.bio,;
-                location: userProfileData.location?.city || this.profileForm.value.location,;
-              });
-            },;
+                bio: userProfileData.bio || this.profileForm.value.bio,
+                location: userProfileData.location?.city || this.profileForm.value.location,
+              })
+            },
             error: (error) => {
-              this.notificationService.error('Failed to load detailed user profile data');
-              console.error('Error loading detailed user profile data:', error);
-            },;
-          });
+              this.notificationService.error('Failed to load detailed user profile data')
+              console.error('Error loading detailed user profile data:', error)
+            },
+          })
         }
-      });
+      })
     } else {
-      this.notificationService.error('User not authenticated. Cannot load profile.');
-      this.router.navigate(['/auth/login']);
+      this.notificationService.error('User not authenticated. Cannot load profile.')
+      this.router.navigate(['/auth/login'])
     }
   }
 
@@ -235,27 +235,27 @@ export class EditProfileComponen {t implements OnInit {
     }
 
     this.loading = true;
-    const userId = this.authService.getCurrentUserId();
+    const userId = this.authService.getCurrentUserId()
     if (userId) {
       this.userService.updateUserProfile(userId, this.profileForm.value).subscribe({
         next: () => {
           this.loading = false;
-          this.notificationService.success('Profile updated successfully');
-          this.router.navigate(['/profile']);
-        },;
+          this.notificationService.success('Profile updated successfully')
+          this.router.navigate(['/profile'])
+        },
         error: (error) => {
           this.loading = false;
-          this.notificationService.error(error.error?.message || 'Failed to update profile');
-          console.error('Error updating profile:', error);
-        },;
-      });
+          this.notificationService.error(error.error?.message || 'Failed to update profile')
+          console.error('Error updating profile:', error)
+        },
+      })
     } else {
       this.loading = false;
-      this.notificationService.error('User not authenticated. Cannot update profile.');
+      this.notificationService.error('User not authenticated. Cannot update profile.')
     }
   }
 
   cancel(): void {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile'])
   }
 }

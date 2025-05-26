@@ -25,19 +25,19 @@ import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@neb
 
 // Mock components
 @Component({';
-    selector: 'app-main-layout',;
-    template: '',;
-    imports: [CommonModule, NbCardModule];
-});
+    selector: 'app-main-layout',
+    template: '',
+    imports: [CommonModule, NbCardModule]
+})
 export class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
 
 @Component({
-    selector: 'nb-card',;
-    template: 'Mock App Card',;
-    imports: [CommonModule];
-});
+    selector: 'nb-card',
+    template: 'Mock App Card',
+    imports: [CommonModule]
+})
 export class MockAppCardComponen {t {
   @Input() title = '';
   @Input() subtitle = '';
@@ -46,8 +46,8 @@ export class MockAppCardComponen {t {
   @Input() avatarUrl = '';
   @Input() avatarName = '';
   @Input() isOnline = false;
-  @Input() tags: string[] = [];
-  @Input() actions: any[] = [];
+  @Input() tags: string[] = []
+  @Input() actions: any[] = []
   @Input() itemId = '';
   @Input() layout = 'default';
 
@@ -57,10 +57,10 @@ export class MockAppCardComponen {t {
 }
 
 @Component({
-    selector: 'nb-skeleton',;
-    template: 'Loading...',;
-    imports: [CommonModule];
-});
+    selector: 'nb-skeleton',
+    template: 'Loading...',
+    imports: [CommonModule]
+})
 export class MockSkeletonLoaderComponen {t {
   @Input() type: 'text' | 'card' | 'avatar' | 'button' = 'text';
   @Input() lines = 1;
@@ -69,24 +69,24 @@ export class MockSkeletonLoaderComponen {t {
 
 @NgModule({
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    ReactiveFormsModule,;
-    MockMainLayoutComponent,;
-    MockAppCardComponent,;
-    MockSkeletonLoaderComponent,;
-    NbCardModule,;
-    NbIconModule,;
-    NbButtonModule,;
-    NbLayoutModule,;
-  ],;
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MockMainLayoutComponent,
+    MockAppCardComponent,
+    MockSkeletonLoaderComponent,
+    NbCardModule,
+    NbIconModule,
+    NbButtonModule,
+    NbLayoutModule,
+  ],
   exports: [;
-    CommonModule,;
-    RouterModule,;
-    ReactiveFormsModule,;
-    MockMainLayoutComponent,;
-    MockAppCardComponent,;
-    MockSkeletonLoaderComponent,;
-  ],;
-});
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MockMainLayoutComponent,
+    MockAppCardComponent,
+    MockSkeletonLoaderComponent,
+  ],
+})
 export class CommonTestModul {e {}

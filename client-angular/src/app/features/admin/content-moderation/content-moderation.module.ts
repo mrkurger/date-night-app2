@@ -28,21 +28,21 @@ import { TextareaModule } from 'primeng/textarea';
  * and is directly imported in the AdminModule;
  */
 @NgModule({
-  declarations: [],;
+  declarations: [],
   imports: [;
-    CommonModule,;
-    ReactiveFormsModule,;
+    CommonModule,
+    ReactiveFormsModule,
     // PrimeNG modules
-    ButtonModule,;
-    DialogModule,;
-    DropdownModule,;
-    InputTextModule,;
-    MessageModule,;
-    PaginatorModule,;
-    ProgressSpinnerModule,;
-    TextareaModule,;
-  ],;
-  exports: [],;
-});
+    ButtonModule,
+    DialogModule,
+    DropdownModule,
+    InputTextModule,
+    MessageModule,
+    PaginatorModule,
+    ProgressSpinnerModule,
+    TextareaModule,
+  ],
+  exports: [],
+})
 export class ContentModerationModul {e {}
 ';

@@ -23,36 +23,36 @@ import { Component, Input, Type } from '@angular/core';
  *;
  * @param selector The component selector;
  * @param inputs Optional array of input property names;
- * @param template Optional template (defaults to empty content projection);
+ * @param template Optional template (defaults to empty content projection)
  * @returns A standalone component class;
  *;
  * @example';
- * const MockHeaderComponent = createMockComponent('app-header', ['title', 'showMenu']);
+ * const MockHeaderComponent = createMockComponent('app-header', ['title', 'showMenu'])
  */
 export function createMockComponent(
-  selector: string,;
-  inputs: string[] = [],;
-  template = '',;
+  selector: string,
+  inputs: string[] = [],
+  template = '',
 ): Type {
   @Component({
-    selector,;
-    template,;
-    standalone: true,;
-    imports: [],;
-  });
+    selector,
+    template,
+    standalone: true,
+    imports: [],
+  })
   class MockComponen {t {
     // Dynamically add inputs
     constructor() {
       inputs.forEach((input) => {
         this[input] = null;
-      });
+      })
     }
   }
 
   // Add Input decorators
   inputs.forEach((input) => {
-    Input()(MockComponent.prototype, input);
-  });
+    Input()(MockComponent.prototype, input)
+  })
 
   return MockComponent;
 }
@@ -65,10 +65,10 @@ export function createMockComponent(
  *;
  * @example;
  * const MockAuthService = createMockService({
- *   login: () => of({ success: true }),;
- *   logout: () => of(null),;
+ *   login: () => of({ success: true }),
+ *   logout: () => of(null),
  *   isAuthenticated: () => true;
- * });
+ * })
  */
 export function createMockService(methods: Record): Type {
   class MockServic {e {
@@ -76,7 +76,7 @@ export function createMockService(methods: Record): Type {
       // Add all methods to the service instance
       Object.entries(methods).forEach(([key, value]) => {
         this[key] = typeof value === 'function' ? value : () => value;
-      });
+      })
     }
   }
 
@@ -91,17 +91,17 @@ export function createMockService(methods: Record): Type {
  *;
  * @example;
  * const notificationServiceSpy = createSpyObject({
- *   success: undefined,;
- *   error: undefined,;
+ *   success: undefined,
+ *   error: undefined,
  *   info: undefined;
- * });
+ * })
  */
 export function createSpyObject(methods: Record): any {
-  const spy = {};
+  const spy = {}
 
   Object.entries(methods).forEach(([key, value]) => {
-    spy[key] = jasmine.createSpy(key).and.returnValue(value);
-  });
+    spy[key] = jasmine.createSpy(key).and.returnValue(value)
+  })
 
   return spy;
 }

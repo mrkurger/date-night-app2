@@ -5,11 +5,11 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-  Component,;
-  OnInit,;
-  Input,;
-  Output,;
-  EventEmitter,;
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
   CUSTOM_ELEMENTS_SCHEMA,';
 } from '@angular/core';
 
@@ -31,13 +31,13 @@ export interface Review {
 }
 
 @Component({
-    selector: 'app-reviews-list',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    selector: 'app-reviews-list',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [;
-    CommonModule, RouterModule, NebularModule,;
-    ButtonModule,;
+    CommonModule, RouterModule, NebularModule,
+    ButtonModule,
     MenuModule;
-  ],;
+  ],
     template: `;`
     ;
       ;
@@ -61,7 +61,7 @@ export interface Review {
               ;
                 ;
                 ;
-                {{ formatDate(review.createdAt) }};
+                {{ formatDate(review.createdAt) }}
               ;
 
               ;
@@ -83,8 +83,8 @@ export interface Review {
                 ;
               ;
 
-              {{ review.title }};
-              {{ review.content }};
+              {{ review.title }}
+              {{ review.content }}
 
               ;
               ;
@@ -101,7 +101,7 @@ export interface Review {
                 ;
                 ;
                   ;
-                  Not Helpful ({{ review.unhelpful }});
+                  Not Helpful ({{ review.unhelpful }})
                 ;
               ;
             ;
@@ -133,7 +133,7 @@ export interface Review {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -159,17 +159,17 @@ export interface Review {
 
         .empty-icon {
           font-size: 3rem;
-          color: var(--text-hint-color);
+          color: var(--text-hint-color)
           margin-bottom: 1rem;
         }
 
         h3 {
           margin-bottom: 0.5rem;
-          color: var(--text-basic-color);
+          color: var(--text-basic-color)
         }
 
         p {
-          color: var(--text-hint-color);
+          color: var(--text-hint-color)
         }
       }
 
@@ -192,7 +192,7 @@ export interface Review {
       }
 
       .review-date {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         font-size: 0.875rem;
       }
 
@@ -211,11 +211,11 @@ export interface Review {
 
         .review-title {
           margin-bottom: 0.5rem;
-          color: var(--text-basic-color);
+          color: var(--text-basic-color)
         }
 
         .review-text {
-          color: var(--text-basic-color);
+          color: var(--text-basic-color)
           margin-bottom: 1.5rem;
         }
       }
@@ -227,7 +227,7 @@ export interface Review {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          color: var(--text-primary-color);
+          color: var(--text-primary-color)
           text-decoration: none;
 
           &:hover {
@@ -254,14 +254,14 @@ export interface Review {
       }
 
       .ellipsis {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         padding: 0 0.5rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ReviewsListComponen {t implements OnInit {
-  @Input() reviews: Review[] = [];
+  @Input() reviews: Review[] = []
   @Input() loading = false;
   @Input() showAdInfo = false;
   @Input() canManage = false;
@@ -270,21 +270,21 @@ export class ReviewsListComponen {t implements OnInit {
   @Input() currentPage = 1;
   @Input() pageSize = 10;
 
-  @Output() pageChange = new EventEmitter();
-  @Output() editReview = new EventEmitter();
-  @Output() deleteReview = new EventEmitter();
-  @Output() reactionChange = new EventEmitter();
+  @Output() pageChange = new EventEmitter()
+  @Output() editReview = new EventEmitter()
+  @Output() deleteReview = new EventEmitter()
+  @Output() reactionChange = new EventEmitter()
 
   currentUserId: string | null = null;
   reviewActions = [;
-    { title: 'Edit Review', icon: 'edit-outline', action: 'edit' },;
-    { title: 'Delete Review', icon: 'trash-2-outline', action: 'delete' },;
-  ];
+    { title: 'Edit Review', icon: 'edit-outline', action: 'edit' },
+    { title: 'Delete Review', icon: 'trash-2-outline', action: 'delete' },
+  ]
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
+    const currentUser = this.authService.getCurrentUser()
     this.currentUserId = currentUser?.id || null;
   }
 
@@ -292,14 +292,14 @@ export class ReviewsListComponen {t implements OnInit {
    * Get the total number of pages;
    */
   get totalPages(): number {
-    return Math.ceil(this.totalReviews / this.pageSize);
+    return Math.ceil(this.totalReviews / this.pageSize)
   }
 
   /**
    * Get an array of page numbers for pagination;
    */
   get pageNumbers(): number[] {
-    const pages = [];
+    const pages = []
     const maxVisiblePages = 5;
 
     if (this.totalPages = this.totalPages - 1) {
@@ -308,24 +308,24 @@ export class ReviewsListComponen {t implements OnInit {
 
       // Add ellipsis if needed
       if (start > 2) {
-        pages.push(-1); // -1 represents ellipsis
+        pages.push(-1) // -1 represents ellipsis
       }
 
       // Add middle pages
-      for (let i = start; i  0 && page  r._id === reviewId);
+      for (let i = start; i  0 && page  r._id === reviewId)
     if (!review) return;
 
     // Toggle the reaction
     const newReaction = review.userReaction === reaction ? null : reaction;
-    this.reactionChange.emit({ reviewId, reaction: newReaction });
+    this.reactionChange.emit({ reviewId, reaction: newReaction })
   }
 
   /**
    * Get star array for rating display;
    */
   getStars(rating: number): number[] {
-    return Array(5);
-      .fill(0);
-      .map((_, i) => (i < rating ? 1 : 0));
+    return Array(5)
+      .fill(0)
+      .map((_, i) => (i < rating ? 1 : 0))
   }
 }

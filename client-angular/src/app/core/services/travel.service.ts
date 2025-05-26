@@ -11,9 +11,9 @@ export interface TravelItinerary {
     country?: string;
     location?: {
       type: string;
-      coordinates: [number, number]; // [longitude, latitude]
-    };
-  };
+      coordinates: [number, number] // [longitude, latitude]
+    }
+  }
   arrivalDate: Date;
   departureDate: Date;
   accommodation?: {
@@ -21,10 +21,10 @@ export interface TravelItinerary {
     address?: string;
     location?: {
       type: string;
-      coordinates: [number, number];
-    };
+      coordinates: [number, number]
+    }
     showAccommodation?: boolean;
-  };
+  }
   availability?: Array;
   notes?: string;';
   status: 'planned' | 'active' | 'completed' | 'cancelled';
@@ -37,22 +37,22 @@ export interface TouringAd {
     _id: string;
     username: string;
     profileImage?: string;
-  };
+  }
   category: string;
   county: string;
   city: string;
   profileImage: string;
-  travelItinerary: TravelItinerary[];
+  travelItinerary: TravelItinerary[]
   isTouring: boolean;
   currentLocation?: {
     type: string;
-    coordinates: [number, number];
-  };
+    coordinates: [number, number]
+  }
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class TravelServic {e {
   private apiUrl = `${environment.apiUrl}/travel`;`
 
@@ -64,7 +64,7 @@ export class TravelServic {e {
    * @returns Observable of travel itineraries;
    */
   getItineraries(adId: string): Observable {
-    return this.http.get(`${this.apiUrl}/ad/${adId}`);`
+    return this.http.get(`${this.apiUrl}/ad/${adId}`)`
   }
 
   /**
@@ -74,7 +74,7 @@ export class TravelServic {e {
    * @returns Observable of created itinerary;
    */
   addItinerary(adId: string, itinerary: TravelItinerary): Observable {
-    return this.http.post(`${this.apiUrl}/ad/${adId}`, itinerary);`
+    return this.http.post(`${this.apiUrl}/ad/${adId}`, itinerary)`
   }
 
   /**
@@ -85,14 +85,14 @@ export class TravelServic {e {
    * @returns Observable of updated itinerary;
    */
   updateItinerary(;
-    adId: string,;
-    itineraryId: string,;
-    updates: Partial,;
+    adId: string,
+    itineraryId: string,
+    updates: Partial,
   ): Observable {
     return this.http.put(;
-      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,;`
-      updates,;
-    );
+      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,`
+      updates,
+    )
   }
 
   /**
@@ -102,12 +102,12 @@ export class TravelServic {e {
    * @returns Observable of operation result;
    */
   cancelItinerary(;
-    adId: string,;
-    itineraryId: string,;
+    adId: string,
+    itineraryId: string,
   ): Observable {
     return this.http.delete(;
-      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,;`
-    );
+      `${this.apiUrl}/ad/${adId}/itinerary/${itineraryId}`,`
+    )
   }
 
   /**
@@ -118,11 +118,11 @@ export class TravelServic {e {
    * @returns Observable of updated location;
    */
   updateLocation(;
-    adId: string,;
-    longitude: number,;
-    latitude: number,;
+    adId: string,
+    longitude: number,
+    latitude: number,
   ): Observable {
-    return this.http.put(`${this.apiUrl}/ad/${adId}/location`, { longitude, latitude });`
+    return this.http.put(`${this.apiUrl}/ad/${adId}/location`, { longitude, latitude })`
   }
 
   /**
@@ -131,65 +131,65 @@ export class TravelServic {e {
    */
   getTouringAdvertisers(): Observable {
     return this.http.get(;
-      `${this.apiUrl}/touring`,;`
-    );
+      `${this.apiUrl}/touring`,`
+    )
   }
 
   /**
    * Get upcoming tours;
    * @param city Optional city filter;
    * @param county Optional county filter;
-   * @param days Days ahead to look (default: 30);
+   * @param days Days ahead to look (default: 30)
    * @returns Observable of upcoming tours;
    */
   getUpcomingTours(;
-    city?: string,;
-    county?: string,;
-    days?: number,;
+    city?: string,
+    county?: string,
+    days?: number,
   ): Observable {
-    let params = new HttpParams();
+    let params = new HttpParams()
 
     if (city) {
-      params = params.set('city', city);
+      params = params.set('city', city)
     }
 
     if (county) {
-      params = params.set('county', county);
+      params = params.set('county', county)
     }
 
     if (days) {
-      params = params.set('days', days.toString());
+      params = params.set('days', days.toString())
     }
 
     return this.http.get(;
-      `${this.apiUrl}/upcoming`,;`
-      { params },;
-    );
+      `${this.apiUrl}/upcoming`,`
+      { params },
+    )
   }
 
   /**
-   * Get ads by location (including touring advertisers);
+   * Get ads by location (including touring advertisers)
    * @param longitude Longitude;
    * @param latitude Latitude;
-   * @param distance Max distance in meters (default: 10000);
+   * @param distance Max distance in meters (default: 10000)
    * @returns Observable of ads;
    */
   getAdsByLocation(;
-    longitude: number,;
-    latitude: number,;
-    distance?: number,;
+    longitude: number,
+    latitude: number,
+    distance?: number,
   ): Observable {
-    let params = new HttpParams();
-      .set('longitude', longitude.toString());
-      .set('latitude', latitude.toString());
+    let params = new HttpParams()
+      .set('longitude', longitude.toString())
+      .set('latitude', latitude.toString())
 
     if (distance) {
-      params = params.set('distance', distance.toString());
+      params = params.set('distance', distance.toString())
     }
 
     return this.http.get(;
-      `${this.apiUrl}/location`,;`
-      { params },;
-    );
+      `${this.apiUrl}/location`,`
+      { params },
+    )
   }
 }

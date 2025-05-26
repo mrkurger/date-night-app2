@@ -9,10 +9,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * with error messages.;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class WebSocketFallbackServic {e {
-  private connectionStatus = new BehaviorSubject(false);
+  private connectionStatus = new BehaviorSubject(false)
   private maxReconnectAttempts = 3;
   private reconnectAttempts = 0;
   private reconnectTimeout: any = null;
@@ -25,8 +25,8 @@ export class WebSocketFallbackServic {e {
   public initialize(): void {
     // Only apply in development mode
     if (window.location.hostname === 'localhost') {
-      console.log('WebSocket fallback service initialized');
-      this.setupWebSocketFallback();
+      console.log('WebSocket fallback service initialized')
+      this.setupWebSocketFallback()
     }
   }
 
@@ -34,7 +34,7 @@ export class WebSocketFallbackServic {e {
    * Get the current connection status as an Observable;
    */
   public getConnectionStatus(): Observable {
-    return this.connectionStatus.asObservable();
+    return this.connectionStatus.asObservable()
   }
 
   /**
@@ -47,17 +47,17 @@ export class WebSocketFallbackServic {e {
 
     // Override the WebSocket constructor
     (window as any).WebSocket = function (url: string, protocols?: string | string[]) {
-      const instance = new (window as any).originalWebSocket(url, protocols);
+      const instance = new (window as any).originalWebSocket(url, protocols)
 
       // Handle connection errors
       instance.addEventListener('error', (event: Event) => {
         if (url.includes('localhost:4201')) {
-          console.warn('Development server WebSocket connection failed. Live reload may not work.');
+          console.warn('Development server WebSocket connection failed. Live reload may not work.')
         }
-      });
+      })
 
       return instance;
-    };
+    }
 
     // Restore the original properties and methods
     (window as any).WebSocket.prototype = this.originalWebSocket.prototype;

@@ -13,7 +13,7 @@ export interface UserData {
 }
 
 @Component({';
-  selector: 'p-user-menu',;
+  selector: 'p-user-menu',
   template: `;`
     ;
       ;
@@ -21,14 +21,14 @@ export interface UserData {
           ;
         ;
         ;
-          {{ userData?.name }};
-          {{ userData.title }};
+          {{ userData?.name }}
+          {{ userData.title }}
         ;
       ;
 
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     \`;`
       .user-menu {
@@ -41,12 +41,12 @@ export interface UserData {
         align-items: center;
         gap: 0.75rem;
         padding: 0.5rem;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         cursor: pointer;
         transition: background-color 0.2s;
 
         &:hover {
-          background-color: var(--surface-hover);
+          background-color: var(--surface-hover)
         }
       }
 
@@ -57,12 +57,12 @@ export interface UserData {
 
       .user-name {
         font-weight: 600;
-        color: var(--text-color);
+        color: var(--text-color)
       }
 
       .user-title {
         font-size: 0.875rem;
-        color: var(--text-color-secondary);
+        color: var(--text-color-secondary)
       }
 
       .user-badge {
@@ -77,36 +77,36 @@ export interface UserData {
         }
       }
     \`;`
-  ],;
-  standalone: true,;
-  imports: [BadgeModule, MenuItem, MenuModule, AvatarModule,; 
-    CommonModule,;
-    AvatarModule,;
-    MenuModule,;
+  ],
+  standalone: true,
+  imports: [BadgeModule, MenuItem, MenuModule, AvatarModule, 
+    CommonModule,
+    AvatarModule,
+    MenuModule,
     BadgeModule;
-  ],;
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush;
-});
+})
 export class UserMenuComponen {t {
   @Input() userData?: UserData;
-  @Input() menuItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
   @Input() compact = false;
 
-  @Output() itemClick = new EventEmitter();
+  @Output() itemClick = new EventEmitter()
 
   getUserInitials(): string {
     if (!this.userData?.name) return '';
     return this.userData.name;
-      .split(' ');
-      .map(n => n[0]);
-      .join('');
-      .toUpperCase();
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
   }
 
   onMenuClick(event: any) {
     const menuItem = event.item as MenuItem;
     if (menuItem && !menuItem.items) {
-      this.itemClick.emit(menuItem);
+      this.itemClick.emit(menuItem)
     }
   }
 }

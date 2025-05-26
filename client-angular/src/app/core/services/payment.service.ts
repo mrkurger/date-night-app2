@@ -62,18 +62,18 @@ export interface PaymentMethod {
     last4: string;
     exp_month: number;
     exp_year: number;
-  };
+  }
 }
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class PaymentServic {e {
   private apiUrl = `${environment.apiUrl}/payments`;`
   private stripe: any;
 
   constructor(private http: HttpClient) {
-    this.initStripe();
+    this.initStripe()
   }
 
   /**
@@ -81,17 +81,17 @@ export class PaymentServic {e {
    */
   private async initStripe(): Promise {
     if (!window.Stripe) {
-      const script = document.createElement('script');
+      const script = document.createElement('script')
       script.src = 'https://js.stripe.com/v3/';
       script.async = true;
-      document.body.appendChild(script);
+      document.body.appendChild(script)
 
       await new Promise((resolve) => {
-        script.onload = () => resolve();
-      });
+        script.onload = () => resolve()
+      })
     }
 
-    this.stripe = window.Stripe(environment.stripePublicKey);
+    this.stripe = window.Stripe(environment.stripePublicKey)
   }
 
   /**
@@ -99,34 +99,34 @@ export class PaymentServic {e {
    */
   getStripe(): any {
     if (!this.stripe) {
-      throw new Error('Stripe has not been initialized');
+      throw new Error('Stripe has not been initialized')
     }
     return this.stripe;
   }
 
   /**
    * Create a payment intent;
-   * @param amount Amount in smallest currency unit (e.g., cents);
-   * @param currency Currency code (e.g., 'usd', 'nok');
+   * @param amount Amount in smallest currency unit (e.g., cents)
+   * @param currency Currency code (e.g., 'usd', 'nok')
    * @param metadata Additional metadata for the payment;
    */
   createPaymentIntent(;
-    amount: number,;
-    currency = 'nok',;
-    metadata: any = {},;
+    amount: number,
+    currency = 'nok',
+    metadata: any = {},
   ): Observable {
     return this.http.post(`${this.apiUrl}/create-payment-intent`, {`
-      amount,;
-      currency,;
-      metadata,;
-    });
+      amount,
+      currency,
+      metadata,
+    })
   }
 
   /**
    * Get subscription prices;
    */
   getSubscriptionPrices(): Observable {
-    return this.http.get(`${this.apiUrl}/subscription-prices`);`
+    return this.http.get(`${this.apiUrl}/subscription-prices`)`
   }
 
   /**
@@ -136,16 +136,16 @@ export class PaymentServic {e {
    */
   createSubscription(priceId: string, paymentMethodId: string): Observable {
     return this.http.post(`${this.apiUrl}/create-subscription`, {`
-      priceId,;
-      paymentMethodId,;
-    });
+      priceId,
+      paymentMethodId,
+    })
   }
 
   /**
    * Cancel a subscription;
    */
   cancelSubscription(): Observable {
-    return this.http.post(`${this.apiUrl}/cancel-subscription`, {});`
+    return this.http.post(`${this.apiUrl}/cancel-subscription`, {})`
   }
 
   /**
@@ -156,10 +156,10 @@ export class PaymentServic {e {
    */
   boostAd(adId: string, days = 7, paymentMethodId: string): Observable {
     return this.http.post(`${this.apiUrl}/boost-ad`, {`
-      adId,;
-      days,;
-      paymentMethodId,;
-    });
+      adId,
+      days,
+      paymentMethodId,
+    })
   }
 
   /**
@@ -169,9 +169,9 @@ export class PaymentServic {e {
    */
   featureAd(adId: string, paymentMethodId: string): Observable {
     return this.http.post(`${this.apiUrl}/feature-ad`, {`
-      adId,;
-      paymentMethodId,;
-    });
+      adId,
+      paymentMethodId,
+    })
   }
 
   /**
@@ -179,8 +179,8 @@ export class PaymentServic {e {
    */
   async createSetupIntent(): Promise {
     const response = await this.http;
-      .post(`${this.apiUrl}/create-setup-intent`, {});`
-      .toPromise();
+      .post(`${this.apiUrl}/create-setup-intent`, {})`
+      .toPromise()
     return response.clientSecret;
   }
 
@@ -189,25 +189,25 @@ export class PaymentServic {e {
    * @param elementId HTML element ID to mount the card element;
    */
   createCardElement(elementId: string): any {
-    const elements = this.getStripe().elements();
+    const elements = this.getStripe().elements()
     const style = {
       base: {
-        color: '#32325d',;
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',;
-        fontSmoothing: 'antialiased',;
-        fontSize: '16px',;
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
         '::placeholder': {
-          color: '#aab7c4',;
-        },;
-      },;
+          color: '#aab7c4',
+        },
+      },
       invalid: {
-        color: '#fa755a',;
-        iconColor: '#fa755a',;
-      },;
-    };
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    }
 
-    const cardElement = elements.create('card', { style });
-    cardElement.mount(`#${elementId}`);`
+    const cardElement = elements.create('card', { style })
+    cardElement.mount(`#${elementId}`)`
     return cardElement;
   }
 
@@ -219,15 +219,15 @@ export class PaymentServic {e {
   async confirmCardSetup(clientSecret: string, cardElement: any): Promise {
     const result = await this.getStripe().confirmCardSetup(clientSecret, {
       payment_method: {
-        card: cardElement,;
+        card: cardElement,
         billing_details: {
           // You can add billing details here if needed
-        },;
-      },;
-    });
+        },
+      },
+    })
 
     if (result.error) {
-      throw new Error(result.error.message);
+      throw new Error(result.error.message)
     }
 
     return result.setupIntent.payment_method;
@@ -235,14 +235,14 @@ export class PaymentServic {e {
 
   /**
    * Format currency amount for display;
-   * @param amount Amount in smallest currency unit (e.g., cents);
-   * @param currency Currency code (e.g., 'usd', 'nok');
+   * @param amount Amount in smallest currency unit (e.g., cents)
+   * @param currency Currency code (e.g., 'usd', 'nok')
    */
   formatCurrency(amount: number, currency = 'nok'): string {
     return new Intl.NumberFormat('no-NO', {
-      style: 'currency',;
-      currency: currency.toUpperCase(),;
-      minimumFractionDigits: 0,;
-    }).format(amount / 100);
+      style: 'currency',
+      currency: currency.toUpperCase(),
+      minimumFractionDigits: 0,
+    }).format(amount / 100)
   }
 }

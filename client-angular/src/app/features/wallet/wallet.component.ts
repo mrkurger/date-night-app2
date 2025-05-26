@@ -12,88 +12,88 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 // PrimeNG imports
 @Component({';
-  selector: 'app-wallet',;
-  templateUrl: './wallet.component.html',;
-  styleUrls: ['./wallet.component.scss'],;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  standalone: true,;
-  imports: [ProgressSpinnerModule, SelectButtonModule, TagModule, BadgeModule, ListboxModule, InputTextModule, ButtonModule, CardModule,; 
-    CommonModule,;
-    RouterModule,;
-    CardModule,;
-    ButtonModule,;
-    InputTextModule,;
-    ListboxModule,;
-    BadgeModule,;
-    TagModule,;
-    SelectButtonModule,;
-    ProgressSpinnerModule,;
-  ],;
-});
+  selector: 'app-wallet',
+  templateUrl: './wallet.component.html',
+  styleUrls: ['./wallet.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  standalone: true,
+  imports: [ProgressSpinnerModule, SelectButtonModule, TagModule, BadgeModule, ListboxModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
+    RouterModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    ListboxModule,
+    BadgeModule,
+    TagModule,
+    SelectButtonModule,
+    ProgressSpinnerModule,
+  ],
+})
 export class WalletComponen {t {
   // Simplified component for demonstration
   balance = 1000;
   transactions = [;
     {
-      _id: '1',;
-      type: 'deposit',;
-      amount: 500,;
-      status: 'completed',;
-      createdAt: new Date().toISOString(),;
-    },;
+      _id: '1',
+      type: 'deposit',
+      amount: 500,
+      status: 'completed',
+      createdAt: new Date().toISOString(),
+    },
     {
-      _id: '2',;
-      type: 'withdrawal',;
-      amount: -200,;
-      status: 'pending',;
-      createdAt: new Date().toISOString(),;
-    },;
-  ];
+      _id: '2',
+      type: 'withdrawal',
+      amount: -200,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    },
+  ]
   paymentMethods = [;
     {
-      id: '1',;
-      name: 'Visa Card',;
-      type: 'credit_card',;
-      isDefault: true,;
+      id: '1',
+      name: 'Visa Card',
+      type: 'credit_card',
+      isDefault: true,
       cardDetails: {
-        brand: 'visa',;
-        last4: '4242',;
-        expiryMonth: 12,;
-        expiryYear: 2025,;
-      },;
-    },;
-  ];
+        brand: 'visa',
+        last4: '4242',
+        expiryMonth: 12,
+        expiryYear: 2025,
+      },
+    },
+  ]
   loading = false;
   _error: string | null = null;
   loading = false;
   _error: string | null = null;
 
   openTransactionDetails(transaction: any): void {
-    console.log('Transaction details:', transaction);
+    console.log('Transaction details:', transaction)
   }
 
   openDepositDialog(): void {
-    console.log('Open deposit dialog');
+    console.log('Open deposit dialog')
   }
 
   openWithdrawDialog(): void {
-    console.log('Open withdraw dialog');
+    console.log('Open withdraw dialog')
   }
 
   openTransferDialog(): void {
-    console.log('Open transfer dialog');
+    console.log('Open transfer dialog')
   }
 
   openAddPaymentMethodDialog(): void {
-    console.log('Open add payment method dialog');
+    console.log('Open add payment method dialog')
   }
 
   removePaymentMethod(paymentMethod: any): void {
-    console.log('Remove payment method:', paymentMethod);
+    console.log('Remove payment method:', paymentMethod)
   }
 
   setDefaultPaymentMethod(paymentMethod: any): void {
-    console.log('Set default payment method:', paymentMethod);
+    console.log('Set default payment method:', paymentMethod)
   }
 
   getTransactionStatusClass(status: string): string {
@@ -208,18 +208,18 @@ export class WalletComponen {t {
 
   formatCurrency(amount: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',;
-      currency: 'USD',;
-    }).format(amount);
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount)
   }
 
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',;
-      month: 'short',;
-      day: 'numeric',;
-      hour: '2-digit',;
-      minute: '2-digit',;
-    });
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
   }
 }

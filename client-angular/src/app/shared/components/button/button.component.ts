@@ -20,18 +20,18 @@ import { IconComponent } from '../icon/icon.component';
  * Uses Nebular's button system with custom styling.;
  */
 @Component({
-  selector: 'app-button',;
-  standalone: true,;
+  selector: 'app-button',
+  standalone: true,
   imports: [;
-    CommonModule,;
-    NbButtonModule,;
-    NbIconModule,;
+    CommonModule,
+    NbButtonModule,
+    NbIconModule,
     IconComponent;
-  ],;
-  templateUrl: './button.component.html',;
-  styleUrls: ['./button.component.scss'],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+  ],
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class ButtonComponen {t {
   /**
    * The button status determines its visual style.;
@@ -90,7 +90,7 @@ export class ButtonComponen {t {
   /**
    * Event emitted when the button is clicked.;
    */
-  @Output() buttonClick = new EventEmitter();
+  @Output() buttonClick = new EventEmitter()
 
   /**
    * Handles the button click event.;
@@ -98,11 +98,11 @@ export class ButtonComponen {t {
    */
   onClick(event: MouseEvent): void {
     if (this.disabled || this.loading) {
-      event.preventDefault();
-      event.stopPropagation();
+      event.preventDefault()
+      event.stopPropagation()
       return;
     }
-    this.buttonClick.emit(event);
+    this.buttonClick.emit(event)
   }
 
   /**
@@ -110,11 +110,11 @@ export class ButtonComponen {t {
    */
   get buttonClasses(): Record {
     return {
-      [`size-${this.size}`]: true,;`
-      'full-width': this.fullWidth,;
-      'is-loading': this.loading,;
-      [`appearance-${this.appearance}`]: true,;`
-      [`status-${this.status}`]: true,;`
-    };
+      [`size-${this.size}`]: true,`
+      'full-width': this.fullWidth,
+      'is-loading': this.loading,
+      [`appearance-${this.appearance}`]: true,`
+      [`status-${this.status}`]: true,`
+    }
   }
 }

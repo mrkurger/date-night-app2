@@ -1,4 +1,4 @@
-/// 
+///
 
 interface StringMatching extends jasmine.AsymmetricMatcher {
   asymmetricMatch(other: string): boolean;
@@ -50,9 +50,9 @@ declare namespace jasmine {
   }
 
   function createSpyObj(
-    baseName: string,;
-    methodNames: Array | { [key: string]: any },;
-    propertyNames?: Array,;
+    baseName: string,
+    methodNames: Array | { [key: string]: any },
+    propertyNames?: Array,
   ): SpyObj;
 
   function any(classToMatch: any): AsymmetricMatcher;

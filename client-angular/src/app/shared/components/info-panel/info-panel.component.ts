@@ -16,24 +16,24 @@ export interface InfoPanelItem {
  * Features title, subtitle, and various item types with icons and status indicators.;
  */
 @Component({
-  selector: 'app-info-panel',;
-  standalone: true,;
+  selector: 'app-info-panel',
+  standalone: true,
   imports: [;
-    CommonModule,;
-    NbCardModule,;
-    NbIconModule,;
-    NbBadgeModule,;
-    NbProgressBarModule,;
-    NbAccordionModule,;
-  ],;
+    CommonModule,
+    NbCardModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbProgressBarModule,
+    NbAccordionModule,
+  ],
   template: `;`
     ;
       ;
         ;
           ;
             ;
-              {{ title }};
-              {{ subtitle }};
+              {{ title }}
+              {{ subtitle }}
             ;
           ;
           ;
@@ -45,7 +45,7 @@ export interface InfoPanelItem {
                 ;
                 ;
                   ;
-                  {{ item.value }};
+                  {{ item.value }}
 
                   ;
                   ;
@@ -65,8 +65,8 @@ export interface InfoPanelItem {
       ;
         ;
           ;
-            {{ title }};
-            {{ subtitle }};
+            {{ title }}
+            {{ subtitle }}
           ;
         ;
         ;
@@ -78,7 +78,7 @@ export interface InfoPanelItem {
               ;
               ;
                 ;
-                {{ item.value }};
+                {{ item.value }}
 
                 ;
                 ;
@@ -94,43 +94,43 @@ export interface InfoPanelItem {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .info-panel {
         &--bordered {
-          border: 1px solid nb-theme(border-basic-color-3);
+          border: 1px solid nb-theme(border-basic-color-3)
         }
 
         &--shadowed {
-          box-shadow: nb-theme(shadow);
+          box-shadow: nb-theme(shadow)
         }
 
         &__header {
           display: flex;
           flex-direction: column;
-          gap: nb-theme(spacing-2);
+          gap: nb-theme(spacing-2)
         }
 
         &__title {
           margin: 0;
-          color: nb-theme(text-basic-color);
-          font-size: nb-theme(text-heading-6-font-size);
-          font-weight: nb-theme(text-heading-6-font-weight);
-          line-height: nb-theme(text-heading-6-line-height);
+          color: nb-theme(text-basic-color)
+          font-size: nb-theme(text-heading-6-font-size)
+          font-weight: nb-theme(text-heading-6-font-weight)
+          line-height: nb-theme(text-heading-6-line-height)
         }
 
         &__subtitle {
           margin: 0;
-          color: nb-theme(text-hint-color);
-          font-size: nb-theme(text-subtitle-2-font-size);
-          line-height: nb-theme(text-subtitle-2-line-height);
+          color: nb-theme(text-hint-color)
+          font-size: nb-theme(text-subtitle-2-font-size)
+          line-height: nb-theme(text-subtitle-2-line-height)
         }
 
         &__content {
           display: flex;
           flex-direction: column;
-          gap: nb-theme(spacing-3);
+          gap: nb-theme(spacing-3)
         }
 
         &__item {
@@ -138,7 +138,7 @@ export interface InfoPanelItem {
           justify-content: space-between;
           align-items: center;
           padding: nb-theme(spacing-2) 0;
-          border-bottom: 1px solid nb-theme(border-basic-color-3);
+          border-bottom: 1px solid nb-theme(border-basic-color-3)
 
           &:last-child {
             border-bottom: none;
@@ -148,8 +148,8 @@ export interface InfoPanelItem {
           &-label {
             display: flex;
             align-items: center;
-            gap: nb-theme(spacing-2);
-            color: nb-theme(text-hint-color);
+            gap: nb-theme(spacing-2)
+            color: nb-theme(text-hint-color)
 
             nb-icon {
               font-size: 1.25rem;
@@ -159,8 +159,8 @@ export interface InfoPanelItem {
           &-value {
             display: flex;
             align-items: center;
-            gap: nb-theme(spacing-2);
-            color: nb-theme(text-basic-color);
+            gap: nb-theme(spacing-2)
+            color: nb-theme(text-basic-color)
 
             nb-progress-bar {
               width: 100px;
@@ -175,21 +175,21 @@ export interface InfoPanelItem {
         // Dark theme adjustments
         :host-context([data-theme='dark']) & {
           &--bordered {
-            border-color: nb-theme(border-basic-color-4);
+            border-color: nb-theme(border-basic-color-4)
           }
 
           &__item {
-            border-color: nb-theme(border-basic-color-4);
+            border-color: nb-theme(border-basic-color-4)
           }
         }
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class PanelModul {e {
   @Input() title = '';
   @Input() subtitle?: string;
-  @Input() items: InfoPanelItem[] = [];
+  @Input() items: InfoPanelItem[] = []
   @Input() variant: 'default' | 'bordered' | 'shadowed' = 'default';
   @Input() collapsible = false;
   @Input() initiallyCollapsed = false;

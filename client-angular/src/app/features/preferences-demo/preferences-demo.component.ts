@@ -8,17 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
 import { Subscription } from 'rxjs';
 import { Ad } from '../../core/models/ad.interface';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
   NbSelectModule,';
 } from '@nebular/theme';
 
@@ -32,164 +32,164 @@ import { Ad } from '../../core/models/ad.interface';
 // ===================================================
 
 import {
-  UserPreferencesService,;
-  ContentDensity,;
-  CardSize,;
+  UserPreferencesService,
+  ContentDensity,
+  CardSize,
 } from '../../core/services/user-preferences.service';
 
 // Mock data for demonstration
 const MOCK_ADS: Ad[] = [;
   {
-    _id: '1',;
-    title: 'Professional Photographer',;
+    _id: '1',
+    title: 'Professional Photographer',
     description:;
-      'Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.',;
-    category: 'Photography',;
-    price: 200,;
-    location: { city: 'New York', county: 'NY' },;
-    images: ['/assets/img/sample/photo1.jpg', '/assets/img/sample/photo2.jpg'],;
+      'Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.',
+    category: 'Photography',
+    price: 200,
+    location: { city: 'New York', county: 'NY' },
+    images: ['/assets/img/sample/photo1.jpg', '/assets/img/sample/photo2.jpg'],
     media: [;
-      { type: 'image', url: '/assets/img/sample/photo1.jpg' },;
-      { type: 'image', url: '/assets/img/sample/photo2.jpg' },;
-    ],;
+      { type: 'image', url: '/assets/img/sample/photo1.jpg' },
+      { type: 'image', url: '/assets/img/sample/photo2.jpg' },
+    ],
     advertiser: {
-      _id: 'user123',;
-      username: 'John Smith',;
-    },;
-    userId: 'user123',;
-    isActive: true,;
-    isFeatured: true,;
-    isTrending: false,;
-    isTouring: false,;
-    viewCount: 245,;
-    clickCount: 32,;
-    inquiryCount: 8,;
-    createdAt: '2023-04-15T10:30:00Z',;
-    updatedAt: '2023-04-15T10:30:00Z',;
-  },;
+      _id: 'user123',
+      username: 'John Smith',
+    },
+    userId: 'user123',
+    isActive: true,
+    isFeatured: true,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 245,
+    clickCount: 32,
+    inquiryCount: 8,
+    createdAt: '2023-04-15T10:30:00Z',
+    updatedAt: '2023-04-15T10:30:00Z',
+  },
   {
-    _id: '2',;
-    title: 'Makeup Artist',;
+    _id: '2',
+    title: 'Makeup Artist',
     description:;
-      'Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.',;
-    category: 'Beauty',;
-    price: 150,;
+      'Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.',
+    category: 'Beauty',
+    price: 150,
     location: {
-      city: 'Los Angeles',;
-      county: 'CA',;
-    },;
+      city: 'Los Angeles',
+      county: 'CA',
+    },
     images: [;
-      { url: '/assets/img/sample/makeup1.jpg', type: 'image' },;
-      { url: '/assets/img/sample/makeup2.jpg', type: 'image' },;
-    ],;
+      { url: '/assets/img/sample/makeup1.jpg', type: 'image' },
+      { url: '/assets/img/sample/makeup2.jpg', type: 'image' },
+    ],
     media: [;
-      { type: 'image', url: '/assets/img/sample/makeup1.jpg' },;
-      { type: 'image', url: '/assets/img/sample/makeup2.jpg' },;
-    ],;
+      { type: 'image', url: '/assets/img/sample/makeup1.jpg' },
+      { type: 'image', url: '/assets/img/sample/makeup2.jpg' },
+    ],
     advertiser: {
-      _id: 'user456',;
-      username: 'Sarah Johnson',;
-    },;
-    userId: 'user456',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: true,;
-    isTouring: false,;
-    viewCount: 189,;
-    clickCount: 27,;
-    inquiryCount: 5,;
-    createdAt: '2023-04-10T14:20:00Z',;
-    updatedAt: '2023-04-10T14:20:00Z',;
-  },;
+      _id: 'user456',
+      username: 'Sarah Johnson',
+    },
+    userId: 'user456',
+    isActive: true,
+    isFeatured: false,
+    isTrending: true,
+    isTouring: false,
+    viewCount: 189,
+    clickCount: 27,
+    inquiryCount: 5,
+    createdAt: '2023-04-10T14:20:00Z',
+    updatedAt: '2023-04-10T14:20:00Z',
+  },
   {
-    _id: '3',;
-    title: 'Live Band for Events',;
+    _id: '3',
+    title: 'Live Band for Events',
     description:;
-      'Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&B.',;
-    category: 'Music',;
-    price: 800,;
+      'Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&B.',
+    category: 'Music',
+    price: 800,
     location: {
-      city: 'Chicago',;
-      county: 'IL',;
-    },;
+      city: 'Chicago',
+      county: 'IL',
+    },
     images: [;
-      { url: '/assets/img/sample/band1.jpg', type: 'image' },;
-      { url: '/assets/img/sample/band2.jpg', type: 'image' },;
-    ],;
+      { url: '/assets/img/sample/band1.jpg', type: 'image' },
+      { url: '/assets/img/sample/band2.jpg', type: 'image' },
+    ],
     media: [;
-      { type: 'image', url: '/assets/img/sample/band1.jpg' },;
-      { type: 'image', url: '/assets/img/sample/band2.jpg' },;
-    ],;
+      { type: 'image', url: '/assets/img/sample/band1.jpg' },
+      { type: 'image', url: '/assets/img/sample/band2.jpg' },
+    ],
     advertiser: {
-      _id: 'user789',;
-      username: 'The Harmonics',;
-    },;
-    userId: 'user789',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: false,;
-    isTouring: true,;
-    viewCount: 312,;
-    clickCount: 45,;
-    inquiryCount: 12,;
-    createdAt: '2023-04-05T09:15:00Z',;
-    updatedAt: '2023-04-05T09:15:00Z',;
+      _id: 'user789',
+      username: 'The Harmonics',
+    },
+    userId: 'user789',
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: true,
+    viewCount: 312,
+    clickCount: 45,
+    inquiryCount: 12,
+    createdAt: '2023-04-05T09:15:00Z',
+    updatedAt: '2023-04-05T09:15:00Z',
     tourDates: {
-      start: '2023-05-01T00:00:00Z',;
-      end: '2023-07-31T00:00:00Z',;
-      cities: ['Chicago, IL', 'Detroit, MI', 'Cleveland, OH', 'Indianapolis, IN'],;
-    },;
-  },;
+      start: '2023-05-01T00:00:00Z',
+      end: '2023-07-31T00:00:00Z',
+      cities: ['Chicago, IL', 'Detroit, MI', 'Cleveland, OH', 'Indianapolis, IN'],
+    },
+  },
   {
-    _id: '4',;
-    title: 'Event Planner',;
+    _id: '4',
+    title: 'Event Planner',
     description:;
-      'Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.',;
-    category: 'Events',;
-    price: 500,;
+      'Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.',
+    category: 'Events',
+    price: 500,
     location: {
-      city: 'Miami',;
-      county: 'FL',;
-    },;
+      city: 'Miami',
+      county: 'FL',
+    },
     images: [;
-      { url: '/assets/img/sample/event1.jpg', type: 'image' },;
-      { url: '/assets/img/sample/event2.jpg', type: 'image' },;
-    ],;
+      { url: '/assets/img/sample/event1.jpg', type: 'image' },
+      { url: '/assets/img/sample/event2.jpg', type: 'image' },
+    ],
     media: [;
-      { type: 'image', url: '/assets/img/sample/event1.jpg' },;
-      { type: 'image', url: '/assets/img/sample/event2.jpg' },;
-    ],;
+      { type: 'image', url: '/assets/img/sample/event1.jpg' },
+      { type: 'image', url: '/assets/img/sample/event2.jpg' },
+    ],
     advertiser: {
-      _id: 'user101',;
-      username: 'Elegant Events',;
-    },;
-    userId: 'user101',;
-    isActive: true,;
-    isFeatured: true,;
-    isTrending: true,;
-    isTouring: false,;
-    viewCount: 278,;
-    clickCount: 39,;
-    inquiryCount: 15,;
-    createdAt: '2023-04-12T11:45:00Z',;
-    updatedAt: '2023-04-12T11:45:00Z',;
-  },;
-];
+      _id: 'user101',
+      username: 'Elegant Events',
+    },
+    userId: 'user101',
+    isActive: true,
+    isFeatured: true,
+    isTrending: true,
+    isTouring: false,
+    viewCount: 278,
+    clickCount: 39,
+    inquiryCount: 15,
+    createdAt: '2023-04-12T11:45:00Z',
+    updatedAt: '2023-04-12T11:45:00Z',
+  },
+]
 
 @Component({
-    selector: 'app-preferences-demo',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [NebularModule, CommonModule,;
-        FormsModule,;
-        ReactiveFormsModule,;
-        NbCardModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbSelectModule,;
-        NbFormFieldModule,;
-        NbLayoutModule,;
-        AdCardComponent,;
-    ],;
+    selector: 'app-preferences-demo',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NebularModule, CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSelectModule,
+        NbFormFieldModule,
+        NbLayoutModule,
+        AdCardComponent,
+    ],
     template: `;`
     ;
       ;
@@ -229,7 +229,7 @@ const MOCK_ADS: Ad[] = [;
             ;
               ;
                 Current Settings:;
-                {{ getContentDensityLabel() }} density,;
+                {{ getContentDensityLabel() }} density,
                 {{ getCardSizeLabel() }} cards;
               ;
             ;
@@ -255,7 +255,7 @@ const MOCK_ADS: Ad[] = [;
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -271,7 +271,7 @@ const MOCK_ADS: Ad[] = [;
       }
 
       .subtitle {
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         margin: 0;
       }
 
@@ -283,12 +283,12 @@ const MOCK_ADS: Ad[] = [;
 
       .settings-info {
         padding: 1rem;
-        background-color: var(--background-basic-color-2);
-        border-radius: var(--border-radius);
-        color: var(--text-basic-color);
+        background-color: var(--background-basic-color-2)
+        border-radius: var(--border-radius)
+        color: var(--text-basic-color)
 
         .setting-value {
-          color: var(--text-primary-color);
+          color: var(--text-primary-color)
           font-weight: 600;
         }
       }
@@ -310,20 +310,20 @@ const MOCK_ADS: Ad[] = [;
         }
 
         &.small {
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
         }
 
         &.medium {
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
         }
 
         &.large {
-          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
   // User preferences
   defaultViewType: 'netflix' | 'tinder' | 'list' = 'netflix';
@@ -331,13 +331,13 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
   cardSize: CardSize['value'] = 'medium';
 
   // Options for select inputs
-  contentDensityOptions: ContentDensity[] = [];
-  cardSizeOptions: CardSize[] = [];
+  contentDensityOptions: ContentDensity[] = []
+  cardSizeOptions: CardSize[] = []
 
   // Mock data
   mockAds = MOCK_ADS;
 
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   constructor(private userPreferencesService: UserPreferencesService) {
     this.contentDensityOptions = this.userPreferencesService.contentDensityOptions;
@@ -346,7 +346,7 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Load initial preferences
-    const preferences = this.userPreferencesService.getPreferences();
+    const preferences = this.userPreferencesService.getPreferences()
     this.defaultViewType = preferences.defaultViewType;
     this.contentDensity = preferences.contentDensity;
     this.cardSize = preferences.cardSize;
@@ -357,48 +357,48 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
         this.defaultViewType = prefs.defaultViewType;
         this.contentDensity = prefs.contentDensity;
         this.cardSize = prefs.cardSize;
-      }),;
-    );
+      }),
+    )
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
   }
 
   /**
    * Handle view type change;
    */
   onViewTypeChange(): void {
-    this.userPreferencesService.setDefaultViewType(this.defaultViewType);
+    this.userPreferencesService.setDefaultViewType(this.defaultViewType)
   }
 
   /**
    * Handle content density change;
    */
   onContentDensityChange(): void {
-    this.userPreferencesService.setContentDensity(this.contentDensity);
+    this.userPreferencesService.setContentDensity(this.contentDensity)
   }
 
   /**
    * Handle card size change;
    */
   onCardSizeChange(): void {
-    this.userPreferencesService.setCardSize(this.cardSize);
+    this.userPreferencesService.setCardSize(this.cardSize)
   }
 
   /**
    * Reset preferences to defaults;
    */
   resetPreferences(): void {
-    this.userPreferencesService.resetPreferences();
+    this.userPreferencesService.resetPreferences()
   }
 
   /**
    * Get the label for the current content density;
    */
   getContentDensityLabel(): string {
-    const option = this.contentDensityOptions.find((opt) => opt.value === this.contentDensity);
+    const option = this.contentDensityOptions.find((opt) => opt.value === this.contentDensity)
     return option ? option.label : '';
   }
 
@@ -406,7 +406,7 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
    * Get the label for the current card size;
    */
   getCardSizeLabel(): string {
-    const option = this.cardSizeOptions.find((opt) => opt.value === this.cardSize);
+    const option = this.cardSizeOptions.find((opt) => opt.value === this.cardSize)
     return option ? option.label : '';
   }
 
@@ -415,7 +415,7 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
    */
   onViewDetails(adId: string): void {
     // eslint-disable-next-line no-console
-    console.log('View details for ad:', adId);
+    console.log('View details for ad:', adId)
   }
 
   /**
@@ -423,7 +423,7 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
    */
   onLike(adId: string): void {
     // eslint-disable-next-line no-console
-    console.log('Like ad:', adId);
+    console.log('Like ad:', adId)
   }
 
   /**
@@ -431,6 +431,6 @@ export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
    */
   onChat(adId: string): void {
     // eslint-disable-next-line no-console
-    console.log('Chat about ad:', adId);
+    console.log('Chat about ad:', adId)
   }
 }

@@ -49,51 +49,51 @@ import { ConfirmationService } from 'primeng/confirmationservice';
 
 // PrimeNG Modules
 const PRIMENG_MODULES = [;
-  CardModule,;
-  ButtonModule,;
-  InputTextModule,;
-  InputGroupModule,;
-  DropdownModule,;
-  TagModule,;
-  ListboxModule,;
-  BadgeModule,;
-  MessageModule,;
-  CheckboxModule,;
-  RadioButtonModule,;
-  CalendarModule,;
-  ContextMenuModule,;
-  TableModule,;
-  TabViewModule,;
-  AccordionModule,;
-  TreeTableModule,;
-  TooltipModule,;
-  ToggleButtonModule,;
-  PaginatorModule,;
-  DialogModule,;
-  ProgressSpinnerModule,;
-  AutoCompleteModule,;
-  ChipModule,;
-  MenuModule,;
-  TieredMenuModule,;
-  ToolbarModule,;
-  PanelModule,;
-  RippleModule,;
-  ScrollerModule,;
-  DividerModule,;
-  MultiSelectModule,;
-  ToastModule,;
-  ConfirmDialogModule,;
-  AvatarModule,;
-  MessagesModule,;
-  TextareaModule,;
-  InputSwitchModule,;
-  OverlayPanelModule,;
-];
+  CardModule,
+  ButtonModule,
+  InputTextModule,
+  InputGroupModule,
+  DropdownModule,
+  TagModule,
+  ListboxModule,
+  BadgeModule,
+  MessageModule,
+  CheckboxModule,
+  RadioButtonModule,
+  CalendarModule,
+  ContextMenuModule,
+  TableModule,
+  TabViewModule,
+  AccordionModule,
+  TreeTableModule,
+  TooltipModule,
+  ToggleButtonModule,
+  PaginatorModule,
+  DialogModule,
+  ProgressSpinnerModule,
+  AutoCompleteModule,
+  ChipModule,
+  MenuModule,
+  TieredMenuModule,
+  ToolbarModule,
+  PanelModule,
+  RippleModule,
+  ScrollerModule,
+  DividerModule,
+  MultiSelectModule,
+  ToastModule,
+  ConfirmDialogModule,
+  AvatarModule,
+  MessagesModule,
+  TextareaModule,
+  InputSwitchModule,
+  OverlayPanelModule,
+]
 
 @NgModule({
-  imports: [...PRIMENG_MODULES],;
-  exports: [...PRIMENG_MODULES],;
+  imports: [...PRIMENG_MODULES],
+  exports: [...PRIMENG_MODULES],
   providers: [MessageService, ConfirmationService], // Add PrimeNG services
-});
+})
 export class PrimeNGModul {e {}
 ';

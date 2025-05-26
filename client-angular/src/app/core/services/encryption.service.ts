@@ -33,16 +33,16 @@ export interface EncryptedAttachmentData {
     size: number;
     iv: Uint8Array;
     authTag: Uint8Array;
-  }; // Add metadata property for compatibility
+  } // Add metadata property for compatibility
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class EncryptionServic {e {
   private initialized = false;
-  private roomKeys = new Map();
-  private messageExpirySettings = new Map();
+  private roomKeys = new Map()
+  private messageExpirySettings = new Map()
 
   constructor() {}
 
@@ -66,7 +66,7 @@ export class EncryptionServic {e {
    */
   getMessageExpirySettings(roomId: string): any {
     // stub: return default settings
-    return { enabled: false };
+    return { enabled: false }
   }
 
   /**
@@ -81,7 +81,7 @@ export class EncryptionServic {e {
    */
   async encryptFile(roomId: string, file: File): Promise {
     // stub: return empty data
-    return { data: new ArrayBuffer(0), iv: new Uint8Array(), authTag: new Uint8Array() };
+    return { data: new ArrayBuffer(0), iv: new Uint8Array(), authTag: new Uint8Array() }
   }
 
   /**
@@ -89,10 +89,10 @@ export class EncryptionServic {e {
    */
   async decryptFile(roomId: string, response: any, options?: any): Promise {
     // Convert Blob to File with all required properties
-    const blob = new Blob([response.data], { type: response.metadata.originalType });
+    const blob = new Blob([response.data], { type: response.metadata.originalType })
     const file = new File([blob], response.metadata.originalName, {
-      type: response.metadata.originalType,;
-    });
+      type: response.metadata.originalType,
+    })
     return file;
   }
 
@@ -126,9 +126,9 @@ export class EncryptionServic {e {
   setupRoomEncryption(roomId: string): Observable {
     // stub implementation
     return new Observable((observer) => {
-      observer.next(null);
-      observer.complete();
-    });
+      observer.next(null)
+      observer.complete()
+    })
   }
 
   /**
@@ -146,8 +146,8 @@ export class EncryptionServic {e {
   rotateRoomKey(roomId: string): Observable {
     // stub implementation
     return new Observable((observer) => {
-      observer.next();
-      observer.complete();
-    });
+      observer.next()
+      observer.complete()
+    })
   }
 }

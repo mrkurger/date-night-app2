@@ -5,9 +5,9 @@ import { environment } from '../../../environments/environment';
 import { CryptoWallet, CryptoTransaction, WithdrawalRequest } from './models/crypto.models';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class CryptoWalletServic {e {
   private apiUrl = `${environment.apiUrl}/wallet/crypto`;`
-  private cryptoWalletsSubject = new BehaviorSubject([]);
+  private cryptoWalletsSubject = new BehaviorSubject([])
 }

@@ -6,28 +6,28 @@ import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { SearchService, SearchResult } from '../../services/search.service';
-  NbDialogRef,;
-  NbCardModule,;
-  NbInputModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
+  NbDialogRef,
+  NbCardModule,
+  NbInputModule,
+  NbButtonModule,
+  NbIconModule,
+  NbSpinnerModule,
   NbListModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-search-dialog',;
+    selector: 'app-search-dialog',
     imports: [;
-        CommonModule,;
-        RouterModule,;
-        FormsModule,;
-        NbCardModule,;
-        NbInputModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbSpinnerModule,;
-        NbListModule,;
-    ],;
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        NbCardModule,
+        NbInputModule,
+        NbButtonModule,
+        NbIconModule,
+        NbSpinnerModule,
+        NbListModule,
+    ],
     template: `;`
     ;
       ;
@@ -50,11 +50,11 @@ import { SearchService, SearchResult } from '../../services/search.service';
           ;
             ;
             ;
-              {{ result.title }};
+              {{ result.title }}
               ;
                 {{ result.description }}
               ;
-              {{ formatType(result.type) }};
+              {{ formatType(result.type) }}
             ;
             ;
           ;
@@ -75,7 +75,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -87,7 +87,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         align-items: center;
         gap: 1rem;
         padding: 1rem;
-        border-bottom: 1px solid nb-theme(divider-color);
+        border-bottom: 1px solid nb-theme(divider-color)
       }
 
       .search-input-container {
@@ -97,7 +97,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         gap: 0.5rem;
 
         nb-icon {
-          color: nb-theme(text-hint-color);
+          color: nb-theme(text-hint-color)
         }
 
         input {
@@ -119,7 +119,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         justify-content: center;
         gap: 1rem;
         padding: 2rem;
-        color: nb-theme(text-hint-color);
+        color: nb-theme(text-hint-color)
       }
 
       .search-result {
@@ -130,18 +130,18 @@ import { SearchService, SearchResult } from '../../services/search.service';
         cursor: pointer;
         transition: all 0.2s;
 
-        &:hover,;
+        &:hover,
         &.selected {
-          background-color: nb-theme(background-basic-hover-color);
-          transform: translateX(4px);
+          background-color: nb-theme(background-basic-hover-color)
+          transform: translateX(4px)
         }
 
         &.selected {
-          border-left: 2px solid nb-theme(color-primary-default);
+          border-left: 2px solid nb-theme(color-primary-default)
         }
 
         nb-icon {
-          color: nb-theme(text-hint-color);
+          color: nb-theme(text-hint-color)
           font-size: 1.25rem;
 
           &:last-child {
@@ -152,7 +152,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
           }
         }
 
-        &:hover,;
+        &:hover,
         &.selected {
           nb-icon:last-child {
             opacity: 1;
@@ -166,13 +166,13 @@ import { SearchService, SearchResult } from '../../services/search.service';
       }
 
       .result-title {
-        color: nb-theme(text-basic-color);
-        font-weight: nb-theme(text-subtitle-font-weight);
+        color: nb-theme(text-basic-color)
+        font-weight: nb-theme(text-subtitle-font-weight)
         margin-bottom: 0.25rem;
       }
 
       .result-description {
-        color: nb-theme(text-hint-color);
+        color: nb-theme(text-hint-color)
         font-size: 0.875rem;
         white-space: nowrap;
         overflow: hidden;
@@ -181,13 +181,13 @@ import { SearchService, SearchResult } from '../../services/search.service';
       }
 
       .result-type {
-        color: nb-theme(text-hint-color);
+        color: nb-theme(text-hint-color)
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
 
-      .no-results,;
+      .no-results,
       .empty-state {
         display: flex;
         flex-direction: column;
@@ -195,7 +195,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         justify-content: center;
         gap: 0.5rem;
         padding: 3rem;
-        color: nb-theme(text-hint-color);
+        color: nb-theme(text-hint-color)
         text-align: center;
 
         nb-icon {
@@ -214,79 +214,79 @@ import { SearchService, SearchResult } from '../../services/search.service';
           padding: 0.2rem 0.4rem;
           font-size: 0.75rem;
           font-family: monospace;
-          color: nb-theme(text-basic-color);
-          background: nb-theme(background-basic-color-2);
-          border: 1px solid nb-theme(border-basic-color-3);
+          color: nb-theme(text-basic-color)
+          background: nb-theme(background-basic-color-2)
+          border: 1px solid nb-theme(border-basic-color-3)
           border-radius: 3px;
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class SearchDialogComponen {t implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
+  private destroy$ = new Subject()
   searchQuery = '';
-  results: SearchResult[] = [];
+  results: SearchResult[] = []
   isLoading = false;
   selectedIndex = -1;
 
   constructor(;
-    private dialogRef: NbDialogRef,;
-    private searchService: SearchService,;
+    private dialogRef: NbDialogRef,
+    private searchService: SearchService,
   ) {}
 
   ngOnInit() {
     // Subscribe to search query changes
-    this.onSearchChange(this.searchQuery);
+    this.onSearchChange(this.searchQuery)
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   onSearchChange(query: string) {
     if (!query) {
-      this.results = [];
+      this.results = []
       this.selectedIndex = -1;
       return;
     }
 
     this.isLoading = true;
     this.searchService;
-      .search(query);
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$));
+      .search(query)
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((results) => {
         this.results = results;
         this.isLoading = false;
         this.selectedIndex = results.length > 0 ? 0 : -1;
-      });
+      })
   }
 
   onArrowDown(event: KeyboardEvent) {
-    event.preventDefault();
+    event.preventDefault()
     if (this.results.length > 0) {
       this.selectedIndex = (this.selectedIndex + 1) % this.results.length;
-      this.scrollSelectedIntoView();
+      this.scrollSelectedIntoView()
     }
   }
 
   onArrowUp(event: KeyboardEvent) {
-    event.preventDefault();
+    event.preventDefault()
     if (this.results.length > 0) {
       this.selectedIndex =;
         this.selectedIndex = 0 && this.results[this.selectedIndex]) {
-      this.selectResult(this.results[this.selectedIndex]);
+      this.selectResult(this.results[this.selectedIndex])
     }
   }
 
   selectResult(result: SearchResult) {
-    this.dialogRef.close(result);
+    this.dialogRef.close(result)
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   getDefaultIcon(type: string): string {
@@ -305,22 +305,22 @@ export class SearchDialogComponen {t implements OnInit, OnDestroy {
   }
 
   formatType(type: string): string {
-    return type.charAt(0).toUpperCase() + type.slice(1);
+    return type.charAt(0).toUpperCase() + type.slice(1)
   }
 
   private scrollSelectedIntoView() {
     setTimeout(() => {
-      const selectedElement = document.querySelector('.search-result.selected');
+      const selectedElement = document.querySelector('.search-result.selected')
       if (selectedElement) {
-        selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
       }
-    });
+    })
   }
 
-  @HostListener('window:keydown.alt.k', ['$event']);
-  @HostListener('window:keydown.meta.k', ['$event']);
+  @HostListener('window:keydown.alt.k', ['$event'])
+  @HostListener('window:keydown.meta.k', ['$event'])
   onSearchHotkey(event: KeyboardEvent) {
-    event.preventDefault();
-    this.close();
+    event.preventDefault()
+    this.close()
   }
 }

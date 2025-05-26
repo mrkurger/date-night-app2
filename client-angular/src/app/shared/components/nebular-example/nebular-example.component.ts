@@ -11,16 +11,16 @@ import { MessagesModule } from 'primeng/messages';
  * with the DateNight.io design system.;
  */
 @Component({';
-  selector: 'app-nebular-example',;
-  standalone: true,;
-  imports: [MessagesModule, MessageModule, ButtonModule,; 
-    CommonModule,;
-    FormsModule,;
-    ButtonModule,;
-    MessageModule,;
-    MessagesModule,;
-    StarRatingComponent,;
-  ],;
+  selector: 'app-nebular-example',
+  standalone: true,
+  imports: [MessagesModule, MessageModule, ButtonModule, 
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    MessageModule,
+    MessagesModule,
+    StarRatingComponent,
+  ],
   template: `;`
     ;
       ;
@@ -97,7 +97,7 @@ import { MessagesModule } from 'primeng/messages';
           ;
             ;
               ;
-                {{ card.title }};
+                {{ card.title }}
                 ;
               ;
             ;
@@ -110,9 +110,9 @@ import { MessagesModule } from 'primeng/messages';
                 ;
                 ;
                   ;
-                  ({{ card.reviews }} reviews);
+                  ({{ card.reviews }} reviews)
                 ;
-                {{ card.price }};
+                {{ card.price }}
               ;
             ;
             ;
@@ -154,41 +154,41 @@ import { MessagesModule } from 'primeng/messages';
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .nebular-example {
-        padding: var(--padding-lg);
+        padding: var(--padding-lg)
 
         h2 {
           margin: 0;
-          color: var(--text-basic-color);
+          color: var(--text-basic-color)
         }
 
         h3 {
-          margin-bottom: var(--margin-md);
-          color: var(--text-basic-color);
+          margin-bottom: var(--margin-md)
+          color: var(--text-basic-color)
         }
 
         .example-section {
-          margin-bottom: var(--margin-xl);
+          margin-bottom: var(--margin-xl)
         }
 
         // Button examples
         .button-examples {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--spacing);
+          gap: var(--spacing)
         }
 
         // Alert examples
         .alert-examples {
           display: flex;
           flex-direction: column;
-          gap: var(--spacing);
+          gap: var(--spacing)
 
           nb-icon {
-            margin-right: var(--spacing-xs);
+            margin-right: var(--spacing-xs)
           }
         }
 
@@ -196,15 +196,15 @@ import { MessagesModule } from 'primeng/messages';
         .tag-examples {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--spacing);
+          gap: var(--spacing)
           align-items: center;
         }
 
         // Card grid
         .card-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: var(--spacing-lg);
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+          gap: var(--spacing-lg)
         }
 
         // Service card styling
@@ -212,7 +212,7 @@ import { MessagesModule } from 'primeng/messages';
           transition: transform 0.2s ease;
 
           &:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px)
           }
 
           .card-header-content {
@@ -222,7 +222,7 @@ import { MessagesModule } from 'primeng/messages';
 
             h5 {
               margin: 0;
-              color: var(--text-basic-color);
+              color: var(--text-basic-color)
             }
           }
 
@@ -230,17 +230,17 @@ import { MessagesModule } from 'primeng/messages';
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: var(--border-radius);
-            margin-bottom: var(--margin);
+            border-radius: var(--border-radius)
+            margin-bottom: var(--margin)
           }
 
           .card-details {
             .location {
               display: flex;
               align-items: center;
-              gap: var(--spacing-xs);
-              color: var(--text-hint-color);
-              margin-bottom: var(--margin-sm);
+              gap: var(--spacing-xs)
+              color: var(--text-hint-color)
+              margin-bottom: var(--margin-sm)
 
               nb-icon {
                 font-size: 1rem;
@@ -250,18 +250,18 @@ import { MessagesModule } from 'primeng/messages';
             .rating-row {
               display: flex;
               align-items: center;
-              gap: var(--spacing-sm);
-              margin-bottom: var(--margin-sm);
+              gap: var(--spacing-sm)
+              margin-bottom: var(--margin-sm)
 
               .reviews {
-                color: var(--text-hint-color);
+                color: var(--text-hint-color)
                 font-size: 0.875rem;
               }
             }
 
             .price {
               font-weight: bold;
-              color: var(--text-basic-color);
+              color: var(--text-basic-color)
               margin: 0;
             }
           }
@@ -275,18 +275,18 @@ import { MessagesModule } from 'primeng/messages';
 
         // Form styling
         nb-form-field {
-          margin-bottom: var(--margin);
+          margin-bottom: var(--margin)
 
           label {
             display: block;
-            margin-bottom: var(--margin-xs);
-            color: var(--text-basic-color);
+            margin-bottom: var(--margin-xs)
+            color: var(--text-basic-color)
           }
         }
 
         // Utility classes
         .mt-3 {
-          margin-top: var(--margin);
+          margin-top: var(--margin)
         }
 
         // Responsive adjustments
@@ -295,65 +295,65 @@ import { MessagesModule } from 'primeng/messages';
             grid-template-columns: 1fr;
           }
 
-          .button-examples,;
+          .button-examples,
           .tag-examples {
             flex-wrap: wrap;
           }
         }
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class NebularExampleComponen {t {
   // Sample data for the component
   cards = [;
     {
-      title: 'Professional Massage',;
-      location: 'Oslo, Norway',;
-      rating: 4.5,;
-      reviews: 24,;
-      price: '1500 NOK',;
+      title: 'Professional Massage',
+      location: 'Oslo, Norway',
+      rating: 4.5,
+      reviews: 24,
+      price: '1500 NOK',
       image: 'https://via.placeholder.com/300x200',
-      isOnline: true,;
-    },;
+      isOnline: true,
+    },
     {
-      title: 'Elegant Escort',;
-      location: 'Stockholm, Sweden',;
-      rating: 4.2,;
-      reviews: 18,;
-      price: '2500 SEK',;
+      title: 'Elegant Escort',
+      location: 'Stockholm, Sweden',
+      rating: 4.2,
+      reviews: 18,
+      price: '2500 SEK',
       image: 'https://via.placeholder.com/300x200',
-      isOnline: false,;
-    },;
+      isOnline: false,
+    },
     {
-      title: 'Exotic Dance',;
-      location: 'Copenhagen, Denmark',;
-      rating: 4.8,;
-      reviews: 32,;
-      price: '2000 DKK',;
+      title: 'Exotic Dance',
+      location: 'Copenhagen, Denmark',
+      rating: 4.8,
+      reviews: 32,
+      price: '2000 DKK',
       image: 'https://via.placeholder.com/300x200',
-      isOnline: true,;
-    },;
-  ];
+      isOnline: true,
+    },
+  ]
 
   // Form data
   formData = {
-    name: '',;
-    email: '',;
-    message: '',;
-  };
+    name: '',
+    email: '',
+    message: '',
+  }
 
   // Methods
   onSubmit(): void {
     // eslint-disable-next-line no-console
-    console.log('Form submitted:', this.formData);
+    console.log('Form submitted:', this.formData)
     // Reset form
     this.formData = {
-      name: '',;
-      email: '',;
-      message: '',;
-    };
+      name: '',
+      email: '',
+      message: '',
+    }
     // Show success message using Nebular's toastr service in a real app
-    alert('Form submitted successfully!');
+    alert('Form submitted successfully!')
   }
 }

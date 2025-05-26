@@ -30,110 +30,110 @@ describe('CardModule (Unit Tests)', () => {
 
   // Mock ad data for testing
   const mockAd: Ad = {
-    _id: 'ad123',;
-    title: 'Test Ad',;
-    description: 'This is a test ad description',;
-    category: 'test',;
-    price: 1234.56,;
-    location: { city: 'Test Location', county: 'Test County' },;
-    advertiser: 'Test Advertiser',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: false,;
-    isTouring: false,;
-    viewCount: 0,;
-    clickCount: 0,;
-    inquiryCount: 0,;
-    tags: ['tag1', 'tag2', 'tag3'],;
+    _id: 'ad123',
+    title: 'Test Ad',
+    description: 'This is a test ad description',
+    category: 'test',
+    price: 1234.56,
+    location: { city: 'Test Location', county: 'Test County' },
+    advertiser: 'Test Advertiser',
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    isTouring: false,
+    viewCount: 0,
+    clickCount: 0,
+    inquiryCount: 0,
+    tags: ['tag1', 'tag2', 'tag3'],
     media: [;
       { url: 'https://example.com/image1.jpg', type: 'image' },
       { url: 'https://example.com/image2.jpg', type: 'image' },
-    ],;
+    ],
     images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-    createdAt: new Date().toISOString(),;
-    updatedAt: new Date().toISOString(),;
-    userId: 'user123',;
-  };
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    userId: 'user123',
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CardModule],;
-    }).compileComponents();
+      imports: [CommonModule, CardModule],
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(CardModule);
+    fixture = TestBed.createComponent(CardModule)
     component = fixture.componentInstance;
-    component.ad = { ...mockAd };
-    fixture.detectChanges();
-  });
+    component.ad = { ...mockAd }
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   // Test: Get primary image from ad
   it('should get primary image from ad', () => {
     // Test with media array
-    component.ad = { ...mockAd };
-    expect(component.getPrimaryImage()).toBe('https://example.com/image1.jpg');
+    component.ad = { ...mockAd }
+    expect(component.getPrimaryImage()).toBe('https://example.com/image1.jpg')
 
     // Test with only images array
-    component.ad = { ...mockAd, media: [] };
-    expect(component.getPrimaryImage()).toBe('https://example.com/image1.jpg');
+    component.ad = { ...mockAd, media: [] }
+    expect(component.getPrimaryImage()).toBe('https://example.com/image1.jpg')
 
     // Test with no images
-    component.ad = { ...mockAd, media: [], images: [] };
-    expect(component.getPrimaryImage()).toBe('/assets/img/default-profile.jpg');
-  });
+    component.ad = { ...mockAd, media: [], images: [] }
+    expect(component.getPrimaryImage()).toBe('/assets/img/default-profile.jpg')
+  })
 
   // Test: Get media count with media
   it('should get media count with media array', () => {
-    component.ad = { ...mockAd };
-    expect(component.getMediaCount()).toBe(2);
-  });
+    component.ad = { ...mockAd }
+    expect(component.getMediaCount()).toBe(2)
+  })
 
   // Test: Get media count with images
   it('should get media count with images array', () => {
-    component.ad = { ...mockAd, media: [] };
-    expect(component.getMediaCount()).toBe(2);
-  });
+    component.ad = { ...mockAd, media: [] }
+    expect(component.getMediaCount()).toBe(2)
+  })
 
   // Test: Get media count with no media
   it('should return 0 for media count when no media or images', () => {
-    component.ad = { ...mockAd, media: [], images: [] };
-    expect(component.getMediaCount()).toBe(0);
-  });
+    component.ad = { ...mockAd, media: [], images: [] }
+    expect(component.getMediaCount()).toBe(0)
+  })
 
   // Test: Handle image loading error
   it('should handle image loading error', () => {
     const mockEvent = { target: { src: 'invalid-url' } } as unknown as Event;
-    component.onImageError(mockEvent);
+    component.onImageError(mockEvent)
 
-    expect((mockEvent.target as HTMLImageElement).src).toBe('/assets/img/default-profile.jpg');
-  });
+    expect((mockEvent.target as HTMLImageElement).src).toBe('/assets/img/default-profile.jpg')
+  })
 
   // Test: Format price with decimals
   it('should format price with decimals', () => {
-    expect(component.formatPrice(1234.56)).toBe('$1,235');
-    expect(component.formatPrice(1000)).toBe('$1,000');
-    expect(component.formatPrice(99.99)).toBe('$100');
-  });
+    expect(component.formatPrice(1234.56)).toBe('$1,235')
+    expect(component.formatPrice(1000)).toBe('$1,000')
+    expect(component.formatPrice(99.99)).toBe('$100')
+  })
 
   // Test: Truncate long description
   it('should truncate long description', () => {
     const longDescription =;
       'This is a very long description that should be truncated when displayed on the card.';
-    component.ad = { ...mockAd, description: longDescription };
+    component.ad = { ...mockAd, description: longDescription }
 
-    expect(component.getTruncatedDescription(20)).toBe('This is a very long d...');
-    expect(component.getTruncatedDescription(10)).toBe('This is a ...');
-  });
+    expect(component.getTruncatedDescription(20)).toBe('This is a very long d...')
+    expect(component.getTruncatedDescription(10)).toBe('This is a ...')
+  })
 
   // Test: Handle empty description
   it('should handle empty description', () => {
-    component.ad = { ...mockAd, description: '' };
-    expect(component.getTruncatedDescription(20)).toBe('');
+    component.ad = { ...mockAd, description: '' }
+    expect(component.getTruncatedDescription(20)).toBe('')
 
-    component.ad = { ...mockAd, description: undefined };
-    expect(component.getTruncatedDescription(20)).toBe('');
-  });
-});
+    component.ad = { ...mockAd, description: undefined }
+    expect(component.getTruncatedDescription(20)).toBe('')
+  })
+})

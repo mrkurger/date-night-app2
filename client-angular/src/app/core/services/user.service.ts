@@ -23,31 +23,31 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class UserServic {e {
   private readonly apiUrl = environment.apiUrl + '/users';
   private readonly authUrl = environment.apiUrl + '/auth';
-  private currentUserSubject = new BehaviorSubject(null);
-  private authStatusSubject = new BehaviorSubject(this.hasValidToken());
+  private currentUserSubject = new BehaviorSubject(null)
+  private authStatusSubject = new BehaviorSubject(this.hasValidToken())
 
   constructor(private http: HttpClient) {
     // Initialize current user if authenticated (token is now in HttpOnly cookie)
-    this.getCurrentUser().subscribe();
+    this.getCurrentUser().subscribe()
   }
 
   /**
    * Get the current authentication status as an observable;
    */
   get authStatus$(): Observable {
-    return this.authStatusSubject.asObservable();
+    return this.authStatusSubject.asObservable()
   }
 
   /**
    * Get the current user as an observable;
    */
   get currentUser$(): Observable {
-    return this.currentUserSubject.asObservable();
+    return this.currentUserSubject.asObservable()
   }
 
   /**
@@ -61,7 +61,7 @@ export class UserServic {e {
    * Check if user is authenticated;
    */
   isAuthenticated(): boolean {
-    return this.hasValidToken();
+    return this.hasValidToken()
   }
 
   /**
@@ -70,9 +70,9 @@ export class UserServic {e {
    */
   login(credentials: LoginCredentials): Observable {
     return this.http.post(`${this.authUrl}/login`, credentials).pipe(;`
-      tap((response) => this.handleAuthentication(response)),;
-      catchError(this.handleError),;
-    );
+      tap((response) => this.handleAuthentication(response)),
+      catchError(this.handleError),
+    )
   }
 
   /**
@@ -81,9 +81,9 @@ export class UserServic {e {
    */
   register(userData: RegisterData): Observable {
     return this.http.post(`${this.authUrl}/register`, userData).pipe(;`
-      tap((response) => this.handleAuthentication(response)),;
-      catchError(this.handleError),;
-    );
+      tap((response) => this.handleAuthentication(response)),
+      catchError(this.handleError),
+    )
   }
 
   /**
@@ -91,8 +91,8 @@ export class UserServic {e {
    */
   logout(): void {
     // No need to remove token from localStorage; token is in HttpOnly cookie
-    this.currentUserSubject.next(null);
-    this.authStatusSubject.next(false);
+    this.currentUserSubject.next(null)
+    this.authStatusSubject.next(false)
   }
 
   /**
@@ -101,12 +101,12 @@ export class UserServic {e {
    */
   getUserProfile(userId: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/${userId}`);`
-      .pipe(catchError(this.handleError));
+      .get(`${this.apiUrl}/${userId}`)`
+      .pipe(catchError(this.handleError))
   }
 
   /**
-   * Update user profile with form data (supports file uploads);
+   * Update user profile with form data (supports file uploads)
    * @param formData Form data with profile updates;
    */
   updateProfile(formData: FormData): Observable {
@@ -114,11 +114,11 @@ export class UserServic {e {
       tap((user) => {
         // Update current user if it's the logged-in user
         if (this.currentUser && this.currentUser._id === user._id) {
-          this.currentUserSubject.next(user);
+          this.currentUserSubject.next(user)
         }
-      }),;
-      catchError(this.handleError),;
-    );
+      }),
+      catchError(this.handleError),
+    )
   }
 
   /**
@@ -128,8 +128,8 @@ export class UserServic {e {
    */
   updateUserProfile(userId: string, userData: Partial): Observable {
     return this.http;
-      .put(`${this.apiUrl}/${userId}`, userData);`
-      .pipe(catchError(this.handleError));
+      .put(`${this.apiUrl}/${userId}`, userData)`
+      .pipe(catchError(this.handleError))
   }
 
   /**
@@ -138,32 +138,32 @@ export class UserServic {e {
    */
   getPublicProfile(userId: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/${userId}/public`);`
-      .pipe(catchError(this.handleError));
+      .get(`${this.apiUrl}/${userId}/public`)`
+      .pipe(catchError(this.handleError))
   }
 
   checkFavorite(adId: string): Observable {
     return this.http;
-      .get(`${this.apiUrl}/favorites/check/${adId}`);`
-      .pipe(catchError(this.handleError));
+      .get(`${this.apiUrl}/favorites/check/${adId}`)`
+      .pipe(catchError(this.handleError))
   }
 
   addFavorite(adId: string | { city: string; county: string }): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
     return this.http;
-      .post(`${this.apiUrl}/favorites/${adIdStr}`, {});`
-      .pipe(catchError(this.handleError));
+      .post(`${this.apiUrl}/favorites/${adIdStr}`, {})`
+      .pipe(catchError(this.handleError))
   }
 
   removeFavorite(adId: string | { city: string; county: string }): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
     return this.http;
-      .delete(`${this.apiUrl}/favorites/${adIdStr}`);`
-      .pipe(catchError(this.handleError));
+      .delete(`${this.apiUrl}/favorites/${adIdStr}`)`
+      .pipe(catchError(this.handleError))
   }
 
   getFavorites(): Observable {
-    return this.http.get(`${this.apiUrl}/favorites`).pipe(catchError(this.handleError));`
+    return this.http.get(`${this.apiUrl}/favorites`).pipe(catchError(this.handleError))`
   }
 
   /**
@@ -174,9 +174,9 @@ export class UserServic {e {
   searchUsers(query: string): Observable {
     return this.http;
       .get(`${this.apiUrl}/search`, {`
-        params: { q: query },;
-      });
-      .pipe(catchError(this.handleError));
+        params: { q: query },
+      })
+      .pipe(catchError(this.handleError))
   }
 
   private hasValidToken(): boolean {
@@ -195,14 +195,14 @@ export class UserServic {e {
   getCurrentUser(): Observable {
     return this.http.get(`${this.authUrl}/me`).pipe(;`
       tap((user) => {
-        this.currentUserSubject.next(user);
-        this.authStatusSubject.next(true);
-      }),;
+        this.currentUserSubject.next(user)
+        this.authStatusSubject.next(true)
+      }),
       catchError((error) => {
-        this.logout();
-        return throwError(() => error);
-      }),;
-    );
+        this.logout()
+        return throwError(() => error)
+      }),
+    )
   }
 
   private handleAuthentication(response: AuthResponse): void {
@@ -216,8 +216,8 @@ export class UserServic {e {
       }
       // Only set if user has required User properties
       if (user.id && user.username && user.email) {
-        this.currentUserSubject.next(user as User);
-        this.authStatusSubject.next(true);
+        this.currentUserSubject.next(user as User)
+        this.authStatusSubject.next(true)
       }
     }
   }
@@ -231,53 +231,53 @@ export class UserServic {e {
       // Server-side error
       errorMessage = error.error?.message || error.message;
     }
-    return throwError(() => new Error(errorMessage));
+    return throwError(() => new Error(errorMessage))
   }
 
   getUsers(): Observable {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl)
   }
 
   getUser(id: string): Observable {
-    return this.http.get(`${this.apiUrl}/${id}`);`
+    return this.http.get(`${this.apiUrl}/${id}`)`
   }
 
   createUser(user: Partial): Observable {
-    return this.http.post(this.apiUrl, user);
+    return this.http.post(this.apiUrl, user)
   }
 
   updateUser(id: string, updates: Partial): Observable {
-    return this.http.patch(`${this.apiUrl}/${id}`, updates);`
+    return this.http.patch(`${this.apiUrl}/${id}`, updates)`
   }
 
   deleteUser(id: string): Observable {
-    return this.http.delete(`${this.apiUrl}/${id}`);`
+    return this.http.delete(`${this.apiUrl}/${id}`)`
   }
 
   banUser(id: string): Observable {
-    return this.updateUser(id, { status: 'banned' });
+    return this.updateUser(id, { status: 'banned' })
   }
 
   unbanUser(id: string): Observable {
-    return this.updateUser(id, { status: 'active' });
+    return this.updateUser(id, { status: 'active' })
   }
 
   getUserStats(): Observable {
     return this.getUsers().pipe(;
       map((users) => ({
-        total: users.length,;
-        active: users.filter((u) => u.status === 'active').length,;
-        banned: users.filter((u) => u.status === 'banned').length,;
-        suspended: users.filter((u) => u.status === 'suspended').length,;
-      })),;
-    );
+        total: users.length,
+        active: users.filter((u) => u.status === 'active').length,
+        banned: users.filter((u) => u.status === 'banned').length,
+        suspended: users.filter((u) => u.status === 'suspended').length,
+      })),
+    )
   }
 
   getUsersByRole(role: string): Observable {
-    return this.http.get(`${this.apiUrl}/by-role/${role}`);`
+    return this.http.get(`${this.apiUrl}/by-role/${role}`)`
   }
 
   updateUserRole(userId: string, role: string): Observable {
-    return this.http.patch(`${this.apiUrl}/${userId}/role`, { role });`
+    return this.http.patch(`${this.apiUrl}/${userId}/role`, { role })`
   }
 }

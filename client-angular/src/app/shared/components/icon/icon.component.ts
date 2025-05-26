@@ -9,12 +9,12 @@ import { IconService } from '../../../core/services/icon.service';
  * Supports different sizes and colors from the DateNight.io design system.;
  */
 @Component({';
-  selector: 'app-icon',;
-  standalone: true,;
-  imports: [CommonModule],;
+  selector: 'app-icon',
+  standalone: true,
+  imports: [CommonModule],
   template: `;`
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -26,9 +26,9 @@ import { IconService } from '../../../core/services/icon.service';
         line-height: 1;
         cursor: inherit;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class IconComponen {t implements OnInit {
   @Input() name!: string;
   @Input() filled: boolean = true;
@@ -40,6 +40,6 @@ export class IconComponen {t implements OnInit {
   constructor(private iconService: IconService) {}
 
   ngOnInit() {
-    this.iconClass = this.iconService.getIconName(this.name, this.filled);
+    this.iconClass = this.iconService.getIconName(this.name, this.filled)
   }
 }

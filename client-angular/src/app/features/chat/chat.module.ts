@@ -20,9 +20,9 @@ import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
 // ===================================================
 
 @NgModule({
-  declarations: [],;
-  imports: [SharedModule, ChatRoutingModule],;
-  providers: [LinkifyPipe],;
-});
+  declarations: [],
+  imports: [SharedModule, ChatRoutingModule],
+  providers: [LinkifyPipe],
+})
 export class ChatModul {e {}
 ';

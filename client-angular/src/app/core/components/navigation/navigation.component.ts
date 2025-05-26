@@ -26,45 +26,45 @@ import { MenuItem } from 'primeng/menuitem';
 import { PanelModule } from 'primeng/panel';
 
 @Component({';
-  selector: 'app-navigation',;
+  selector: 'app-navigation',
   standalone: true, // Ensure this component is standalone
   imports: [;
-    MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule,; 
-    CommonModule,;
-    RouterModule,;
-    BreadcrumbsComponent,;
-    ThemeToggleComponent,;
+    MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
+    CommonModule,
+    RouterModule,
+    BreadcrumbsComponent,
+    ThemeToggleComponent,
     // PrimeNG Modules
-    SidebarModule,;
-    PanelMenuModule,;
-    ToolbarModule,;
-    ButtonModule,;
-    AvatarModule,;
-    MenuModule,;
-    TooltipModule,,;
+    SidebarModule,
+    PanelMenuModule,
+    ToolbarModule,
+    ButtonModule,
+    AvatarModule,
+    MenuModule,
+    TooltipModule,,
     PanelModule;
-  ],;
-  templateUrl: './navigation.component.html',;
-  styleUrls: ['./navigation.component.scss'],;
-});
+  ],
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss'],
+})
 export class NavigationComponen {t implements OnInit, OnDestroy {
-  @Input() items: MenuItem[] = []; // Changed from NbMenuItem[] to PrimeNG MenuItem[]
+  @Input() items: MenuItem[] = [] // Changed from NbMenuItem[] to PrimeNG MenuItem[]
 
   sidebarVisible = true; // Replaces sidebarState
   currentUser: User | null = null;
   userName: string | undefined = 'Guest';
   userAvatar: string | undefined;
-  userMenuItems: MenuItem[] = []; // For PrimeNG user menu
-  currentYear: number = new Date().getFullYear();
+  userMenuItems: MenuItem[] = [] // For PrimeNG user menu
+  currentYear: number = new Date().getFullYear()
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject()
 
   constructor(;
-    private authService: AuthService,;
-    private router: Router,;
+    private authService: AuthService,
+    private router: Router,
     private themeService: ThemeService, // Keep if theme toggle or logic relies on it
     private notificationService: NotificationService, // Keep if used
-    private cdr: ChangeDetectorRef,;
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -72,33 +72,33 @@ export class NavigationComponen {t implements OnInit, OnDestroy {
       this.currentUser = user;
       this.userName = user?.username || 'Guest';
       this.userAvatar = user?.profile?.avatar; // Corrected from avatarUrl to avatar
-      this.cdr.detectChanges();
-      this.updateUserMenuItems();
-    });
+      this.cdr.detectChanges()
+      this.updateUserMenuItems()
+    })
 
     // Example menu items - replace with your actual logic for generating menu items
     this.items = [;
-      { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },;
-      { label: 'Ads', icon: 'pi pi-list', routerLink: ['/ads'] },;
+      { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
+      { label: 'Ads', icon: 'pi pi-list', routerLink: ['/ads'] },
       // Add more items as needed
-    ];
+    ]
 
-    this.updateUserMenuItems(); // Initialize user menu items
+    this.updateUserMenuItems() // Initialize user menu items
   }
 
   updateUserMenuItems(): void {
     if (this.currentUser) {
       this.userMenuItems = [;
         { label: 'Profile', icon: 'pi pi-user', routerLink: ['/profile', this.currentUser.id] }, // Corrected from _id to id
-        { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },;
-        { separator: true },;
-        { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },;
-      ];
+        { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
+        { separator: true },
+        { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
+      ]
     } else {
       this.userMenuItems = [;
-        { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/auth/login'] },;
-        { label: 'Register', icon: 'pi pi-user-plus', routerLink: ['/auth/register'] },;
-      ];
+        { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/auth/login'] },
+        { label: 'Register', icon: 'pi pi-user-plus', routerLink: ['/auth/register'] },
+      ]
     }
   }
 
@@ -119,25 +119,25 @@ export class NavigationComponen {t implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout(); // Assuming logout method exists
-    this.router.navigate(['/auth/login']);
+    this.authService.logout() // Assuming logout method exists
+    this.router.navigate(['/auth/login'])
   }
 
   // Placeholder for methods that might be called from the template
   openSearch(): void {
-    console.log('Open search clicked');
+    console.log('Open search clicked')
     // Implement search functionality, perhaps opening a dialog or navigating
-    this.notificationService.showInfo('Search functionality not yet implemented.');
+    this.notificationService.showInfo('Search functionality not yet implemented.')
   }
 
   openKeyboardShortcuts(): void {
-    console.log('Open keyboard shortcuts clicked');
+    console.log('Open keyboard shortcuts clicked')
     // Implement keyboard shortcuts display, perhaps a dialog
-    this.notificationService.showInfo('Keyboard shortcuts not yet implemented.');
+    this.notificationService.showInfo('Keyboard shortcuts not yet implemented.')
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

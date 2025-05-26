@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({';
-    selector: 'nb-data-table-paginator',;
+    selector: 'nb-data-table-paginator',
     template: `;`
     ;
       ;
@@ -45,7 +45,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .paginator-container {
@@ -61,14 +61,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         gap: 0.5rem;
 
         :is(-label) {
-          color: nb-theme(text-hint-color);
-          font-size: nb-theme(text-caption-font-size);
+          color: nb-theme(text-hint-color)
+          font-size: nb-theme(text-caption-font-size)
         }
       }
 
       .page-info {
-        color: nb-theme(text-hint-color);
-        font-size: nb-theme(text-caption-font-size);
+        color: nb-theme(text-hint-color)
+        font-size: nb-theme(text-caption-font-size)
       }
 
       .page-navigation {
@@ -97,53 +97,53 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       nb-icon + nb-icon {
         margin-left: -0.5rem;
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbDataTablePaginatorComponen {t {
   @Input() page = 1;
   @Input() pageSize = 10;
   @Input() total = 0;
-  @Input() pageSizes = [5, 10, 20, 50, 100];
+  @Input() pageSizes = [5, 10, 20, 50, 100]
 
-  @Output() pageChange = new EventEmitter();
-  @Output() pageSizeChange = new EventEmitter();
+  @Output() pageChange = new EventEmitter()
+  @Output() pageSizeChange = new EventEmitter()
 
   get totalPages(): number {
-    return Math.ceil(this.total / this.pageSize);
+    return Math.ceil(this.total / this.pageSize)
   }
 
   getPageInfo(): string {
     const start = (this.page - 1) * this.pageSize + 1;
-    const end = Math.min(this.page * this.pageSize, this.total);
+    const end = Math.min(this.page * this.pageSize, this.total)
     return `${start}-${end} of ${this.total}`;`
   }
 
   getVisiblePages(): number[] {
     const delta = 2;
-    const range: number[] = [];
-    const rangeWithDots: number[] = [];
+    const range: number[] = []
+    const rangeWithDots: number[] = []
     let l: number;
 
-    range.push(1);
+    range.push(1)
 
     for (let i = this.page - delta; i  1) {
-        range.push(i);
+        range.push(i)
       }
     }
 
-    range.push(this.totalPages);
+    range.push(this.totalPages)
 
     for (const i of range) {
       if (l) {
         if (i - l === 2) {
-          rangeWithDots.push(l + 1);
+          rangeWithDots.push(l + 1)
         } else if (i - l !== 1) {
-          rangeWithDots.push(-1); // Represents dots
+          rangeWithDots.push(-1) // Represents dots
         }
       }
-      rangeWithDots.push(i);
+      rangeWithDots.push(i)
       l = i;
     }
 
@@ -153,16 +153,16 @@ export class NbDataTablePaginatorComponen {t {
   onPageChange(page: number) {
     if (page !== this.page && page > 0 && page <= this.totalPages) {
       this.page = page;
-      this.pageChange.emit(page);
+      this.pageChange.emit(page)
     }
   }
 
   onPageSizeChange(pageSize: number) {
     if (pageSize !== this.pageSize) {
       this.pageSize = pageSize;
-      this.pageSizeChange.emit(pageSize);
+      this.pageSizeChange.emit(pageSize)
       // Reset to first page when changing page size
-      this.onPageChange(1);
+      this.onPageChange(1)
     }
   }
 }

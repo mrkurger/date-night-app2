@@ -12,13 +12,13 @@
 import {
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbButtonModule, NbIconModule, NbTagModule } from '@nebular/theme';
-  Component,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  ElementRef,;
-  ViewChild,;
-  AfterViewInit,;
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
   OnDestroy,';
 } from '@angular/core';
 
@@ -38,8 +38,8 @@ export interface TinderCardAction {
 export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
 @Component({
-    selector: 'nb-tinder-card',;
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],;
+    selector: 'nb-tinder-card',
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
     template: `;`
     ;
       ;
@@ -75,11 +75,11 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
       ;
         ;
-          {{ title }};
-          {{ age }};
+          {{ title }}
+          {{ age }}
         ;
-        {{ subtitle }};
-        {{ description }};
+        {{ subtitle }}
+        {{ description }}
         ;
           ;
         ;
@@ -94,7 +94,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -107,7 +107,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
       .tinder-card {
         position: relative;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         overflow: hidden;
         transition: transform 0.3s ease;
         transform-origin: center center;
@@ -131,11 +131,11 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         }
       }
 
-      .like-indicator,;
+      .like-indicator,
       .dislike-indicator {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%)
         z-index: 2;
         display: flex;
         flex-direction: column;
@@ -157,12 +157,12 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
       .like-indicator {
         right: 24px;
-        color: var(--color-success-500);
+        color: var(--color-success-500)
       }
 
       .dislike-indicator {
         left: 24px;
-        color: var(--color-danger-500);
+        color: var(--color-danger-500)
       }
 
       .media-container {
@@ -204,21 +204,21 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.5)
         cursor: pointer;
         transition: all 0.3s ease;
 
         &.active {
-          background-color: var(--color-primary-500);
-          transform: scale(1.2);
+          background-color: var(--color-primary-500)
+          transform: scale(1.2)
         }
       }
 
       .media-nav-button {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
+        transform: translateY(-50%)
+        background-color: rgba(0, 0, 0, 0.5)
         border-radius: 50%;
         padding: 8px;
 
@@ -250,24 +250,24 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         margin: 0;
         font-size: 24px;
         font-weight: bold;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .age {
         font-size: 20px;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .subtitle {
         font-size: 16px;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         margin-bottom: 12px;
       }
 
       .description {
         font-size: 14px;
         line-height: 1.5;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
         margin-bottom: 16px;
       }
 
@@ -281,7 +281,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         display: flex;
         justify-content: space-around;
         padding: 16px;
-        background-color: var(--background-basic-color-1);
+        background-color: var(--background-basic-color-1)
 
         button {
           width: 48px;
@@ -296,20 +296,20 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
           }
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
-  @Input() media: TinderCardMedia[] = [];
+  @Input() media: TinderCardMedia[] = []
   @Input() title = '';
   @Input() age?: number;
   @Input() subtitle?: string;
   @Input() description?: string;
-  @Input() tags: string[] = [];
+  @Input() tags: string[] = []
 
-  @Output() like = new EventEmitter();
-  @Output() dislike = new EventEmitter();
-  @Output() superlike = new EventEmitter();
+  @Output() like = new EventEmitter()
+  @Output() dislike = new EventEmitter()
+  @Output() superlike = new EventEmitter()
 
   @ViewChild('card') cardElement!: ElementRef;
 
@@ -319,8 +319,8 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   isDisliked = false;
   showLikeIndicator = false;
   showDislikeIndicator = false;
-  cardStyle: any = {};
-  mediaStyle: any = {};
+  cardStyle: any = {}
+  mediaStyle: any = {}
 
   private startX = 0;
   private startY = 0;
@@ -331,35 +331,35 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   private swipeThreshold = 100;
 
   get currentMedia(): TinderCardMedia {
-    return this.media[this.currentMediaIndex];
+    return this.media[this.currentMediaIndex]
   }
 
   ngAfterViewInit(): void {
-    this.setupTouchEvents();
+    this.setupTouchEvents()
   }
 
   ngOnDestroy(): void {
-    this.removeTouchEvents();
+    this.removeTouchEvents()
   }
 
   private setupTouchEvents(): void {
     const element = this.cardElement.nativeElement;
-    element.addEventListener('mousedown', this.dragStart.bind(this));
-    element.addEventListener('mousemove', this.drag.bind(this));
-    element.addEventListener('mouseup', this.dragEnd.bind(this));
-    element.addEventListener('touchstart', this.dragStart.bind(this));
-    element.addEventListener('touchmove', this.drag.bind(this));
-    element.addEventListener('touchend', this.dragEnd.bind(this));
+    element.addEventListener('mousedown', this.dragStart.bind(this))
+    element.addEventListener('mousemove', this.drag.bind(this))
+    element.addEventListener('mouseup', this.dragEnd.bind(this))
+    element.addEventListener('touchstart', this.dragStart.bind(this))
+    element.addEventListener('touchmove', this.drag.bind(this))
+    element.addEventListener('touchend', this.dragEnd.bind(this))
   }
 
   private removeTouchEvents(): void {
     const element = this.cardElement.nativeElement;
-    element.removeEventListener('mousedown', this.dragStart.bind(this));
-    element.removeEventListener('mousemove', this.drag.bind(this));
-    element.removeEventListener('mouseup', this.dragEnd.bind(this));
-    element.removeEventListener('touchstart', this.dragStart.bind(this));
-    element.removeEventListener('touchmove', this.drag.bind(this));
-    element.removeEventListener('touchend', this.dragEnd.bind(this));
+    element.removeEventListener('mousedown', this.dragStart.bind(this))
+    element.removeEventListener('mousemove', this.drag.bind(this))
+    element.removeEventListener('mouseup', this.dragEnd.bind(this))
+    element.removeEventListener('touchstart', this.dragStart.bind(this))
+    element.removeEventListener('touchmove', this.drag.bind(this))
+    element.removeEventListener('touchend', this.dragEnd.bind(this))
   }
 
   private dragStart(e: MouseEvent | TouchEvent): void {
@@ -379,7 +379,7 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   private drag(e: MouseEvent | TouchEvent): void {
     if (!this.isSwiping) return;
 
-    e.preventDefault();
+    e.preventDefault()
 
     let currentX: number;
     let currentY: number;
@@ -397,22 +397,22 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
 
     const rotate = this.xOffset * 0.1;
     this.cardStyle = {
-      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,;`
-    };
+      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,`
+    }
 
     this.showLikeIndicator = this.xOffset > this.swipeThreshold;
     this.showDislikeIndicator = this.xOffset  this.swipeThreshold) {
-      this.onLike();
-    } else if (this.xOffset  this.like.emit(), 300);
+      this.onLike()
+    } else if (this.xOffset  this.like.emit(), 300)
   }
 
   onDislike(): void {
     this.isDisliked = true;
     this.cardStyle = {
-      transform: 'translate(-150%, 0) rotate(-40deg)',;
-      transition: 'transform 0.3s ease',;
-    };
-    setTimeout(() => this.dislike.emit(), 300);
+      transform: 'translate(-150%, 0) rotate(-40deg)',
+      transition: 'transform 0.3s ease',
+    }
+    setTimeout(() => this.dislike.emit(), 300)
   }
 
   setMediaIndex(index: number): void {

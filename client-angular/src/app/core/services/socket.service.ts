@@ -5,8 +5,8 @@ import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class SocketServic {e {
   private socket: Socket | null = null;
   private connected = false;
@@ -14,11 +14,11 @@ export class SocketServic {e {
   constructor(private authService: AuthService) {
     this.authService.currentUser$.subscribe((user) => {
       if (user) {
-        this.connect();
+        this.connect()
       } else {
-        this.disconnect();
+        this.disconnect()
       }
-    });
+    })
   }
 
   /**
@@ -29,37 +29,37 @@ export class SocketServic {e {
       return;
     }
 
-    const token = this.authService.getToken();
+    const token = this.authService.getToken()
 
     if (!token) {
-      console.error('Cannot connect to socket: No authentication token');
+      console.error('Cannot connect to socket: No authentication token')
       return;
     }
 
     this.socket = io(environment.apiUrl, {
       auth: {
-        token,;
-      },;
-      transports: ['websocket'],;
-      reconnection: true,;
-      reconnectionAttempts: 5,;
-      reconnectionDelay: 1000,;
-    });
+        token,
+      },
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+    })
 
     this.socket.on('connect', () => {
-      console.log('Socket connected');
+      console.log('Socket connected')
       this.connected = true;
-    });
+    })
 
     this.socket.on('disconnect', () => {
-      console.log('Socket disconnected');
+      console.log('Socket disconnected')
       this.connected = false;
-    });
+    })
 
     this.socket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
+      console.error('Socket connection error:', error)
       this.connected = false;
-    });
+    })
   }
 
   /**
@@ -67,7 +67,7 @@ export class SocketServic {e {
    */
   disconnect(): void {
     if (this.socket) {
-      this.socket.disconnect();
+      this.socket.disconnect()
       this.socket = null;
       this.connected = false;
     }
@@ -88,20 +88,20 @@ export class SocketServic {e {
   on(eventName: string): Observable {
     return new Observable((observer) => {
       if (!this.socket) {
-        observer.error('Socket not connected');
+        observer.error('Socket not connected')
         return;
       }
 
       this.socket.on(eventName, (data: T) => {
-        observer.next(data);
-      });
+        observer.next(data)
+      })
 
       return () => {
         if (this.socket) {
-          this.socket.off(eventName);
+          this.socket.off(eventName)
         }
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -111,11 +111,11 @@ export class SocketServic {e {
    */
   emit(eventName: string, data?: any): void {
     if (!this.socket) {
-      console.error('Cannot emit event: Socket not connected');
+      console.error('Cannot emit event: Socket not connected')
       return;
     }
 
-    this.socket.emit(eventName, data);
+    this.socket.emit(eventName, data)
   }
 
   /**
@@ -123,7 +123,7 @@ export class SocketServic {e {
    * @param roomId Room ID;
    */
   joinChatRoom(roomId: string): void {
-    this.emit('chat:join', roomId);
+    this.emit('chat:join', roomId)
   }
 
   /**
@@ -131,7 +131,7 @@ export class SocketServic {e {
    * @param roomId Room ID;
    */
   leaveChatRoom(roomId: string): void {
-    this.emit('chat:leave', roomId);
+    this.emit('chat:leave', roomId)
   }
 
   /**
@@ -142,10 +142,10 @@ export class SocketServic {e {
    */
   sendChatMessage(roomId: string, message: string, recipientId?: string): void {
     this.emit('chat:message', {
-      roomId,;
-      message,;
-      recipientId,;
-    });
+      roomId,
+      message,
+      recipientId,
+    })
   }
 
   /**
@@ -155,9 +155,9 @@ export class SocketServic {e {
    */
   sendTypingIndicator(roomId: string, isTyping: boolean): void {
     this.emit('chat:typing', {
-      roomId,;
-      isTyping,;
-    });
+      roomId,
+      isTyping,
+    })
   }
 
   /**
@@ -165,7 +165,7 @@ export class SocketServic {e {
    * @param notificationId Notification ID;
    */
   markNotificationRead(notificationId: string): void {
-    this.emit('notification:read', notificationId);
+    this.emit('notification:read', notificationId)
   }
 
   /**
@@ -176,10 +176,10 @@ export class SocketServic {e {
   private handleEvent(event: string): Observable {
     return new Observable((observer) => {
       if (!this.socket) {
-        observer.error('Socket not connected');
+        observer.error('Socket not connected')
         return; // Add proper return value
       }
       // Additional event handling logic can be added here
-    });
+    })
   }
 }

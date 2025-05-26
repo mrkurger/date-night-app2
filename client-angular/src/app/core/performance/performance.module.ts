@@ -10,22 +10,22 @@ import { PerformanceInterceptor } from './performance.interceptor';
  * Performance Module;
  *;
  * This module provides performance optimization tools for the application.;
- * It includes services for monitoring performance, caching API requests,;
+ * It includes services for monitoring performance, caching API requests,
  * and directives for lazy loading images.;
  *;
  * Usage:;
  * ```typescript;`
  * @NgModule({
  *   imports: [*     PerformanceModule.forRoot({
- *       enableMonitoring: true];
- * });
+ *       enableMonitoring: true]
+ * })
  * export class AppModule { }
  * ```;`
  */
 @NgModule({
-  imports: [CommonModule, LazyImageDirective],;
-  exports: [LazyImageDirective],;
-});
+  imports: [CommonModule, LazyImageDirective],
+  exports: [LazyImageDirective],
+})
 export class PerformanceModul {e {
   /**
    * Configures the PerformanceModule with the provided options;
@@ -34,28 +34,28 @@ export class PerformanceModul {e {
    */
   static forRoot(options: PerformanceModuleOptions = {}): ModuleWithProviders {
     return {
-      ngModule: PerformanceModule,;
+      ngModule: PerformanceModule,
       providers: [;
-        PerformanceMonitorService,;
-        ApiCacheService,;
+        PerformanceMonitorService,
+        ApiCacheService,
         {
-          provide: PERFORMANCE_MODULE_OPTIONS,;
+          provide: PERFORMANCE_MODULE_OPTIONS,
           useValue: {
-            enableMonitoring: options.enableMonitoring ?? true,;
-            enableApiCache: options.enableApiCache ?? true,;
+            enableMonitoring: options.enableMonitoring ?? true,
+            enableApiCache: options.enableApiCache ?? true,
             apiCacheMaxAge: options.apiCacheMaxAge ?? 5 * 60 * 1000, // 5 minutes
-            monitorLongTasks: options.monitorLongTasks ?? true,;
-            monitorMemoryUsage: options.monitorMemoryUsage ?? true,;
-            monitorWebVitals: options.monitorWebVitals ?? true,;
-          },;
-        },;
+            monitorLongTasks: options.monitorLongTasks ?? true,
+            monitorMemoryUsage: options.monitorMemoryUsage ?? true,
+            monitorWebVitals: options.monitorWebVitals ?? true,
+          },
+        },
         {
-          provide: HTTP_INTERCEPTORS,;
-          useClass: PerformanceInterceptor,;
-          multi: true,;
-        },;
-      ],;
-    };
+          provide: HTTP_INTERCEPTORS,
+          useClass: PerformanceInterceptor,
+          multi: true,
+        },
+      ],
+    }
   }
 }
 

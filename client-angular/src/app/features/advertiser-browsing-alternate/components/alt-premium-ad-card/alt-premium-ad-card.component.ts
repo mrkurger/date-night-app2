@@ -12,7 +12,7 @@ interface Advertiser {
   age?: number;
   location?: string;
   description?: string;
-  tags?: string[];
+  tags?: string[]
   image?: string;
   rating?: number;
   isVip?: boolean;
@@ -21,12 +21,12 @@ interface Advertiser {
 }
 
 @Component({';
-  selector: 'app-alt-premium-ad-card',;
-  standalone: true,;
-  imports: [CommonModule, RouterModule, CardModule, ButtonModule, BadgeModule, TagModule],;
-  templateUrl: './alt-premium-ad-card.component.html',;
-  styleUrls: ['./alt-premium-ad-card.component.scss'],;
-});
+  selector: 'app-alt-premium-ad-card',
+  standalone: true,
+  imports: [CommonModule, RouterModule, CardModule, ButtonModule, BadgeModule, TagModule],
+  templateUrl: './alt-premium-ad-card.component.html',
+  styleUrls: ['./alt-premium-ad-card.component.scss'],
+})
 export class AltPremiumAdCardComponen {t {
   @Input() ad!: Advertiser;
   isHovered = false;

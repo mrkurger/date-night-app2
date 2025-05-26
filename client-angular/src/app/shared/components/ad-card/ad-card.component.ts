@@ -17,7 +17,7 @@ import { ButtonModule } from 'primeng/button';
 // ===================================================
 
 @Component({';
-    selector: 'app-ad-card',;
+    selector: 'app-ad-card',
     template: `;`
     ;
       ;
@@ -27,20 +27,20 @@ import { ButtonModule } from 'primeng/button';
             ;
             ;
           ;
-          {{ ad?.price | currency }};
+          {{ ad?.price | currency }}
         ;
       ;
       ;
         ;
           ;
           ;
-           1" class="image-count">+{{ getImageCount() - 1 }};
+           1" class="image-count">+{{ getImageCount() - 1 }}
         ;
-        {{ ad?.title }};
-        {{ ad?.description }};
+        {{ ad?.title }}
+        {{ ad?.description }}
         ;
           ;
-          {{ ad?.location }};
+          {{ ad?.location }}
         ;
       ;
       ;
@@ -54,7 +54,7 @@ import { ButtonModule } from 'primeng/button';
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -67,7 +67,7 @@ import { ButtonModule } from 'primeng/button';
       }
 
       .ad-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-4px)
       }
 
       /* Header styles */
@@ -84,7 +84,7 @@ import { ButtonModule } from 'primeng/button';
 
       .ad-price {
         font-weight: 600;
-        color: var(--text-primary-color);
+        color: var(--text-primary-color)
       }
 
       /* Image styles */
@@ -95,7 +95,7 @@ import { ButtonModule } from 'primeng/button';
         margin-bottom: 1rem;
       }
 
-      .primary-image,;
+      .primary-image,
       .secondary-image {
         width: 100%;
         height: 100%;
@@ -118,31 +118,31 @@ import { ButtonModule } from 'primeng/button';
         position: absolute;
         bottom: 0.5rem;
         right: 0.5rem;
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.7)
         color: white;
         padding: 0.25rem 0.5rem;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         font-size: 0.875rem;
       }
 
       /* Content styles */
       .ad-title {
         margin: 0 0 0.5rem;
-        font-size: var(--text-heading-6-font-size);
-        color: var(--text-basic-color);
+        font-size: var(--text-heading-6-font-size)
+        color: var(--text-basic-color)
       }
 
       .ad-description {
         margin: 0 0 1rem;
-        font-size: var(--text-paragraph-font-size);
-        color: var(--text-hint-color);
+        font-size: var(--text-paragraph-font-size)
+        color: var(--text-hint-color)
       }
 
       .ad-location {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         font-size: 0.875rem;
       }
 
@@ -184,13 +184,13 @@ import { ButtonModule } from 'primeng/button';
           margin-bottom: 1.5rem;
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     imports: [;
-    CommonModule, RouterModule, NebularModule,;
+    CommonModule, RouterModule, NebularModule,
     ButtonModule;
-  ];
-});
+  ]
+})
 export class AdCardComponen {t implements OnInit, OnDestroy {
   @Input() ad!: Ad;
 
@@ -208,19 +208,19 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() density: 'compact' | 'comfortable' | 'spacious' = 'comfortable';
 
-  @Output() viewDetails = new EventEmitter();
-  @Output() like = new EventEmitter();
-  @Output() chat = new EventEmitter();
-  @Output() share = new EventEmitter();
+  @Output() viewDetails = new EventEmitter()
+  @Output() like = new EventEmitter()
+  @Output() chat = new EventEmitter()
+  @Output() share = new EventEmitter()
 
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   constructor(private userPreferencesService: UserPreferencesService) {}
 
   ngOnInit(): void {
     // Load initial preferences if not provided as inputs
     if (!this.cardSize || !this.contentDensity) {
-      const preferences = this.userPreferencesService.getPreferences();
+      const preferences = this.userPreferencesService.getPreferences()
       if (!this.cardSize) this.cardSize = preferences.cardSize;
       if (!this.contentDensity) this.contentDensity = preferences.contentDensity;
 
@@ -229,14 +229,14 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
         this.userPreferencesService.preferences$.subscribe((prefs) => {
           if (!this.cardSize) this.cardSize = prefs.cardSize;
           if (!this.contentDensity) this.contentDensity = prefs.contentDensity;
-        }),;
-      );
+        }),
+      )
     }
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
   }
 
   /**
@@ -253,7 +253,7 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
     }
 
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image');
+      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image')
       if (image && 'url' in image) {
         return image.url;
       }
@@ -276,7 +276,7 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
     }
 
     if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 1) {
-      const images = this.ad.media.filter((m) => 'type' in m && m.type === 'image');
+      const images = this.ad.media.filter((m) => 'type' in m && m.type === 'image')
       if (images.length > 1 && 'url' in images[1]) {
         return images[1].url;
       }
@@ -313,10 +313,10 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
    */
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',;
-      currency: 'USD',;
-      minimumFractionDigits: 0,;
-    }).format(price);
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+    }).format(price)
   }
 
   /**
@@ -353,15 +353,15 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
   getTimeSince(): string {
     if (!this.ad.createdAt) return '';
 
-    const now = new Date();
-    const created = new Date(this.ad.createdAt);
-    const diffMs = now.getTime() - created.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const now = new Date()
+    const created = new Date(this.ad.createdAt)
+    const diffMs = now.getTime() - created.getTime()
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffDays === 0) {
-      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
       if (diffHours === 0) {
-        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        const diffMinutes = Math.floor(diffMs / (1000 * 60))
         return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;`
       }
       return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;`
@@ -372,11 +372,11 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
     }
 
     if (diffDays < 30) {
-      const diffWeeks = Math.floor(diffDays / 7);
+      const diffWeeks = Math.floor(diffDays / 7)
       return `${diffWeeks} week${diffWeeks !== 1 ? 's' : ''} ago`;`
     }
 
-    const diffMonths = Math.floor(diffDays / 30);
+    const diffMonths = Math.floor(diffDays / 30)
     return `${diffMonths} month${diffMonths !== 1 ? 's' : ''} ago`;`
   }
 
@@ -385,37 +385,37 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
    */
   onViewDetails(): void {
     // Convert complex _id to string if needed
-    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-    this.viewDetails.emit(adId);
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id)
+    this.viewDetails.emit(adId)
   }
 
   /**
    * Handle like click;
    */
   onLike(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     // Convert complex _id to string if needed
-    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-    this.like.emit(adId);
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id)
+    this.like.emit(adId)
   }
 
   /**
    * Handle chat click;
    */
   onChat(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     // Convert complex _id to string if needed
-    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-    this.chat.emit(adId);
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id)
+    this.chat.emit(adId)
   }
 
   /**
    * Handle share click;
    */
   onShare(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
     // Convert complex _id to string if needed
-    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id);
-    this.share.emit(adId);
+    const adId = typeof this.ad._id === 'string' ? this.ad._id : JSON.stringify(this.ad._id)
+    this.share.emit(adId)
   }
 }

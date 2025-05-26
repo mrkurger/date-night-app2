@@ -14,12 +14,12 @@ import { environment } from '../../../environments/environment';
  * Logging levels;
  */
 export enum LogLevel {
-  DEBUG = 0,;
-  INFO = 1,;
-  WARN = 2,;
-  ERROR = 3,;
-  PERFORMANCE = 4,;
-  INTERACTION = 5,;
+  DEBUG = 0,
+  INFO = 1,
+  WARN = 2,
+  ERROR = 3,
+  PERFORMANCE = 4,
+  INTERACTION = 5,
 }
 
 /**
@@ -37,8 +37,8 @@ export enum LogLevel {
  * In development, all log levels are enabled.;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class LoggingServic {e {
   private currentLogLevel: LogLevel = environment.production ? LogLevel.WARN : LogLevel.DEBUG;
 
@@ -46,14 +46,14 @@ export class LoggingServic {e {
   private enableRemoteLogging: boolean = environment.production;
 
   // Queue for batching logs
-  private logQueue: any[] = [];
+  private logQueue: any[] = []
   private queueTimer: any = null;
   private readonly QUEUE_FLUSH_INTERVAL = 10000; // 10 seconds
 
   constructor() {
     // Set up queue flushing
     if (this.enableRemoteLogging) {
-      this.queueTimer = setInterval(() => this.flushLogQueue(), this.QUEUE_FLUSH_INTERVAL);
+      this.queueTimer = setInterval(() => this.flushLogQueue(), this.QUEUE_FLUSH_INTERVAL)
     }
   }
 
@@ -63,7 +63,7 @@ export class LoggingServic {e {
    * @param data - Optional data to include;
    */
   logDebug(message: string, data?: any): void {
-    this.log(LogLevel.DEBUG, message, data);
+    this.log(LogLevel.DEBUG, message, data)
   }
 
   /**
@@ -72,7 +72,7 @@ export class LoggingServic {e {
    * @param data - Optional data to include;
    */
   logInfo(message: string, data?: any): void {
-    this.log(LogLevel.INFO, message, data);
+    this.log(LogLevel.INFO, message, data)
   }
 
   /**
@@ -81,7 +81,7 @@ export class LoggingServic {e {
    * @param data - Optional data to include;
    */
   logWarning(message: string, data?: any): void {
-    this.log(LogLevel.WARN, message, data);
+    this.log(LogLevel.WARN, message, data)
   }
 
   /**
@@ -91,7 +91,7 @@ export class LoggingServic {e {
    * @param details - Error details;
    */
   logError(source: string, errorType: string, details?: any): void {
-    this.log(LogLevel.ERROR, `${source} - ${errorType}`, details);`
+    this.log(LogLevel.ERROR, `${source} - ${errorType}`, details)`
   }
 
   /**
@@ -101,7 +101,7 @@ export class LoggingServic {e {
    * @param details - Optional additional details;
    */
   logPerformance(operation: string, timeMs: number, details?: any): void {
-    this.log(LogLevel.PERFORMANCE, `Performance: ${operation}`, { timeMs, ...details });`
+    this.log(LogLevel.PERFORMANCE, `Performance: ${operation}`, { timeMs, ...details })`
   }
 
   /**
@@ -111,7 +111,7 @@ export class LoggingServic {e {
    * @param details - Optional additional details;
    */
   logInteraction(component: string, action: string, details?: any): void {
-    this.log(LogLevel.INTERACTION, `Interaction: ${component} - ${action}`, details);`
+    this.log(LogLevel.INTERACTION, `Interaction: ${component} - ${action}`, details)`
   }
 
   /**
@@ -130,9 +130,9 @@ export class LoggingServic {e {
     this.enableRemoteLogging = enable;
 
     if (enable && !this.queueTimer) {
-      this.queueTimer = setInterval(() => this.flushLogQueue(), this.QUEUE_FLUSH_INTERVAL);
+      this.queueTimer = setInterval(() => this.flushLogQueue(), this.QUEUE_FLUSH_INTERVAL)
     } else if (!enable && this.queueTimer) {
-      clearInterval(this.queueTimer);
+      clearInterval(this.queueTimer)
       this.queueTimer = null;
     }
   }
@@ -149,26 +149,26 @@ export class LoggingServic {e {
       return;
     }
 
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toISOString()
     const logEntry = {
-      timestamp,;
-      level: LogLevel[level],;
-      message,;
-      data,;
-    };
+      timestamp,
+      level: LogLevel[level],
+      message,
+      data,
+    }
 
     // Always log to console in development
     if (!environment.production) {
-      this.logToConsole(level, message, data);
+      this.logToConsole(level, message, data)
     }
 
     // Queue for remote logging if enabled
     if (this.enableRemoteLogging) {
-      this.logQueue.push(logEntry);
+      this.logQueue.push(logEntry)
 
       // Flush immediately for errors
       if (level === LogLevel.ERROR) {
-        this.flushLogQueue();
+        this.flushLogQueue()
       }
     }
   }
@@ -180,27 +180,27 @@ export class LoggingServic {e {
    * @param data - Optional data to include;
    */
   private logToConsole(level: LogLevel, message: string, data?: any): void {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toISOString()
     const prefix = `[${timestamp}] [${LogLevel[level]}]`;`
 
     switch (level) {
       case LogLevel.DEBUG:;
-        console.debug(prefix, message, data || '');
+        console.debug(prefix, message, data || '')
         break;
       case LogLevel.INFO:;
-        console.info(prefix, message, data || '');
+        console.info(prefix, message, data || '')
         break;
       case LogLevel.WARN:;
-        console.warn(prefix, message, data || '');
+        console.warn(prefix, message, data || '')
         break;
       case LogLevel.ERROR:;
-        console.error(prefix, message, data || '');
+        console.error(prefix, message, data || '')
         break;
       case LogLevel.PERFORMANCE:;
-        console.info(`${prefix} 📊`, message, data || '');`
+        console.info(`${prefix} 📊`, message, data || '')`
         break;
       case LogLevel.INTERACTION:;
-        console.info(`${prefix} 👆`, message, data || '');`
+        console.info(`${prefix} 👆`, message, data || '')`
         break;
     }
   }
@@ -213,14 +213,14 @@ export class LoggingServic {e {
       return;
     }
 
-    const logsToSend = [...this.logQueue];
-    this.logQueue = [];
+    const logsToSend = [...this.logQueue]
+    this.logQueue = []
 
     // In a real application, this would send logs to a remote service
     // For now, we'll just log to console in production
     if (environment.production) {
-      console.log(`Sending ${logsToSend.length} logs to remote service`);`
-      // this.httpClient.post('/api/logs', logsToSend).subscribe();
+      console.log(`Sending ${logsToSend.length} logs to remote service`)`
+      // this.httpClient.post('/api/logs', logsToSend).subscribe()
     }
   }
 }

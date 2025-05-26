@@ -2,13 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbSortDirection, NbSortRequest } from '@nebular/theme';
 
 @Component({';
-    selector: 'nb-data-table-sort',;
+    selector: 'nb-data-table-sort',
     template: `;`
     ;
-      {{ title }};
+      {{ title }}
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .sort-header {
@@ -20,11 +20,11 @@ import { NbSortDirection, NbSortRequest } from '@nebular/theme';
         transition: color 0.2s;
 
         &:hover {
-          color: nb-theme(text-primary-color);
+          color: nb-theme(text-primary-color)
         }
 
         &.active {
-          color: nb-theme(text-primary-color);
+          color: nb-theme(text-primary-color)
         }
       }
 
@@ -41,32 +41,32 @@ import { NbSortDirection, NbSortRequest } from '@nebular/theme';
           opacity: 1;
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbDataTableSortComponen {t {
   @Input() title = '';
   @Input() column = '';
   @Input() direction: NbSortDirection = NbSortDirection.NONE;
   @Input() isActive = false;
 
-  @Output() sort = new EventEmitter();
+  @Output() sort = new EventEmitter()
 
   toggleSort() {
     const directions: NbSortDirection[] = [;
-      NbSortDirection.NONE,;
-      'asc' as NbSortDirection,;
-      'desc' as NbSortDirection,;
-    ];
-    const currentIndex = directions.indexOf(this.direction);
+      NbSortDirection.NONE,
+      'asc' as NbSortDirection,
+      'desc' as NbSortDirection,
+    ]
+    const currentIndex = directions.indexOf(this.direction)
     const nextIndex = (currentIndex + 1) % directions.length;
-    this.direction = directions[nextIndex];
+    this.direction = directions[nextIndex]
 
     this.sort.emit({
-      column: this.column,;
-      direction: this.direction,;
-    });
+      column: this.column,
+      direction: this.direction,
+    })
   }
 
   getSortIcon(): string {

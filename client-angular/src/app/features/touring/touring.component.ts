@@ -19,88 +19,88 @@ import { RouterModule } from '@angular/router';
 // ===================================================
 
 @Component({';
-    selector: 'app-touring',;
-    templateUrl: './touring.component.html',;
-    styleUrls: ['./touring.component.scss'],;
-    imports: [CommonModule, ReactiveFormsModule, RouterModule];
-});
+    selector: 'app-touring',
+    templateUrl: './touring.component.html',
+    styleUrls: ['./touring.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule]
+})
 export class TouringComponen {t implements OnInit {
-  touringAds: TouringAd[] = [];
-  upcomingTours: TouringAd[] = [];
+  touringAds: TouringAd[] = []
+  upcomingTours: TouringAd[] = []
   loading = false;
   filterForm: FormGroup;
 
   // Norwegian counties for filter
   counties = [;
-    'Agder',;
-    'Innlandet',;
-    'Møre og Romsdal',;
-    'Nordland',;
-    'Oslo',;
-    'Rogaland',;
-    'Troms og Finnmark',;
-    'Trøndelag',;
-    'Vestfold og Telemark',;
-    'Vestland',;
-    'Viken',;
-  ];
+    'Agder',
+    'Innlandet',
+    'Møre og Romsdal',
+    'Nordland',
+    'Oslo',
+    'Rogaland',
+    'Troms og Finnmark',
+    'Trøndelag',
+    'Vestfold og Telemark',
+    'Vestland',
+    'Viken',
+  ]
 
   // Major cities for filter
   cities = [;
-    'Oslo',;
-    'Bergen',;
-    'Trondheim',;
-    'Stavanger',;
-    'Drammen',;
-    'Fredrikstad',;
-    'Kristiansand',;
-    'Sandnes',;
-    'Tromsø',;
-    'Ålesund',;
-  ];
+    'Oslo',
+    'Bergen',
+    'Trondheim',
+    'Stavanger',
+    'Drammen',
+    'Fredrikstad',
+    'Kristiansand',
+    'Sandnes',
+    'Tromsø',
+    'Ålesund',
+  ]
 
   constructor(;
-    private travelService: TravelService,;
-    private notificationService: NotificationService,;
-    private fb: FormBuilder,;
+    private travelService: TravelService,
+    private notificationService: NotificationService,
+    private fb: FormBuilder,
   ) {
     this.filterForm = this.fb.group({
-      county: [''],;
-      city: [''],;
-      days: [30],;
-    });
+      county: [''],
+      city: [''],
+      days: [30],
+    })
   }
 
   ngOnInit(): void {
-    this.loadTouringAdvertisers();
-    this.loadUpcomingTours();
+    this.loadTouringAdvertisers()
+    this.loadUpcomingTours()
 
     // Subscribe to filter changes
     this.filterForm.valueChanges.subscribe(() => {
-      this.loadUpcomingTours();
-    });
+      this.loadUpcomingTours()
+    })
   }
 
   loadTouringAdvertisers(): void {
     this.loading = true;
 
     this.travelService;
-      .getTouringAdvertisers();
+      .getTouringAdvertisers()
       .pipe(;
         catchError((error) => {
-          this.notificationService.error('Failed to load touring advertisers');
-          console.error('Error loading touring advertisers:', error);
-          return of({ success: false, count: 0,_data: [] });
-        }),;
+          this.notificationService.error('Failed to load touring advertisers')
+          console.error('Error loading touring advertisers:', error)
+          return of({ success: false, count: 0,_data: [] })
+        }),
         finalize(() => {
           this.loading = false;
-        }),;
-      );
+        }),
+      )
       .subscribe((response) => {
         if (response.success) {
           this.touringAds = response.data;
         }
-      });
+      })
   }
 
   loadUpcomingTours(): void {
@@ -109,34 +109,34 @@ export class TouringComponen {t implements OnInit {
     this.loading = true;
 
     this.travelService;
-      .getUpcomingTours(city, county, days);
+      .getUpcomingTours(city, county, days)
       .pipe(;
         catchError((error) => {
-          this.notificationService.error('Failed to load upcoming tours');
-          console.error('Error loading upcoming tours:', error);
-          return of({ success: false, count: 0,_data: [] });
-        }),;
+          this.notificationService.error('Failed to load upcoming tours')
+          console.error('Error loading upcoming tours:', error)
+          return of({ success: false, count: 0,_data: [] })
+        }),
         finalize(() => {
           this.loading = false;
-        }),;
-      );
+        }),
+      )
       .subscribe((response) => {
         if (response.success) {
           this.upcomingTours = response.data;
         }
-      });
+      })
   }
 
   resetFilters(): void {
     this.filterForm.reset({
-      county: '',;
-      city: '',;
-      days: 30,;
-    });
+      county: '',
+      city: '',
+      days: 30,
+    })
   }
 
   // Format date for display
   formatDate(date: string | Date): string {
-    return new Date(date).toLocaleDateString();
+    return new Date(date).toLocaleDateString()
   }
 }

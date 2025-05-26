@@ -37,20 +37,20 @@ export interface ICheckboxChangeEvent {
  * ```;`
  */
 @Component({
-  selector: 'app-checkbox',;
-  standalone: true,;
-  imports: [CommonModule, FormsModule, IconComponent],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
+  selector: 'app-checkbox',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,;
-      useExisting: forwardRef(() => CheckboxComponent),;
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CheckboxComponent),
       multi: true;
     }
-  ],;
-  templateUrl: './checkbox.component.html',;
-  styleUrls: ['./checkbox.component.scss'],;
-});
+  ],
+  templateUrl: './checkbox.component.html',
+  styleUrls: ['./checkbox.component.scss'],
+})
 export class CheckboxComponen {t implements ControlValueAccessor {
   /**
    * The checkbox label.;
@@ -114,7 +114,7 @@ export class CheckboxComponen {t implements ControlValueAccessor {
   /**
    * Event emitted when the checkbox value changes.;
    */
-  @Output() valueChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter()
 
   /**
    * The @Input() checkbox checked state.;
@@ -131,14 +131,14 @@ export class CheckboxComponen {t implements ControlValueAccessor {
    */
   onChange = (value: unknown): void => {
     // Will be overridden by registerOnChange
-  };
+  }
 
   /**
    * Function to call when the checkbox is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
-  };
+  }
 
   /**
    * Gets the CSS classes for the checkbox container based on its properties.;
@@ -146,14 +146,14 @@ export class CheckboxComponen {t implements ControlValueAccessor {
    */
   get containerClasses(): Record {
     return {
-      checkbox: true,;
-      [`checkbox--${this.size}`]: true,;`
-      'checkbox--disabled': this.disabled,;
-      'checkbox--checked': this.checked,;
-      'checkbox--focused': this.isFocused,;
-      'checkbox--error': !!this.errorMessage,;
-      'checkbox--required': this.required,;
-    };
+      checkbox: true,
+      [`checkbox--${this.size}`]: true,`
+      'checkbox--disabled': this.disabled,
+      'checkbox--checked': this.checked,
+      'checkbox--focused': this.isFocused,
+      'checkbox--error': !!this.errorMessage,
+      'checkbox--required': this.required,
+    }
   }
 
   /**
@@ -165,8 +165,8 @@ export class CheckboxComponen {t implements ControlValueAccessor {
 
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
-    this.onChange(this.checked);
-    this.valueChange.emit(this.checked);
+    this.onChange(this.checked)
+    this.valueChange.emit(this.checked)
   }
 
   /**
@@ -181,7 +181,7 @@ export class CheckboxComponen {t implements ControlValueAccessor {
    */
   onBlur(): void {
     this.isFocused = false;
-    this.onTouched();
+    this.onTouched()
   }
 
   /**

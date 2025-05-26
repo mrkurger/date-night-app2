@@ -16,30 +16,30 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
-  Component,;
-  OnInit,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  ElementRef,;
-  ViewChild,;
-  AfterViewInit,;
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
   OnDestroy,';
 } from '@angular/core';
 
 import {
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
-  NbSelectModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
 } from '@nebular/theme';
 
 // Import Hammer types
@@ -52,26 +52,26 @@ interface HammerManager {
 }
 
 @Component({
-  selector: 'app-tinder-card',;
-  templateUrl: './tinder-card.component.html',;
-  styleUrls: ['./tinder-card.component.scss'],;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [NebularModule, CommonModule,;
-    RouterModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbBadgeModule,;
-    NbTagModule,;
-  ],;
-});
+  selector: 'app-tinder-card',
+  templateUrl: './tinder-card.component.html',
+  styleUrls: ['./tinder-card.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [NebularModule, CommonModule,
+    RouterModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbTagModule,
+  ],
+})
 export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;
 
-  @Output() swiped = new EventEmitter();
-  @Output() viewDetails = new EventEmitter();
-  @Output() startChat = new EventEmitter();
+  @Output() swiped = new EventEmitter()
+  @Output() viewDetails = new EventEmitter()
+  @Output() startChat = new EventEmitter()
 
   @ViewChild('card') cardElement!: ElementRef;
 
@@ -87,7 +87,7 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize card position and gesture handling
-    this.initializeGestureHandling();
+    this.initializeGestureHandling()
   }
 
   private initializeGestureHandling(): void {
@@ -96,27 +96,27 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.initializeSwipeGesture();
+    this.initializeSwipeGesture()
   }
 
   ngOnDestroy(): void {
     if (this.hammerManager) {
-      this.hammerManager.destroy();
+      this.hammerManager.destroy()
     }
   }
 
   private initializeSwipeGesture(): void {
     // Check if Hammer is available (should be imported in angular.json)
     if (typeof Hammer !== 'undefined') {
-      const hammer = new Hammer(this.cardElement.nativeElement);
-      hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+      const hammer = new Hammer(this.cardElement.nativeElement)
+      hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL })
 
       hammer.on('panstart', (event) => {
         this.isDragging = true;
         this.cardState = 'swiping';
         this.initialX = event.center.x;
         this.initialY = event.center.y;
-      });
+      })
 
       hammer.on('panmove', (event) => {
         if (!this.isDragging) return;
@@ -130,7 +130,7 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
 
         // Show like/dislike indicators based on drag direction
         if (deltaX > 50) {
-          this.showLikeIndicator();
+          this.showLikeIndicator()
         } else if (deltaX  {
         if (!this.isDragging) return;
         this.isDragging = false;
@@ -139,13 +139,13 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
         const threshold = 100; // Minimum distance to trigger a swipe
 
         if (deltaX > threshold) {
-          this.onSwipe('right');
+          this.onSwipe('right')
         } else if (deltaX  {
         this.isDragging = true;
         this.cardState = 'swiping';
         this.initialX = e.clientX;
         this.initialY = e.clientY;
-      };
+      }
 
       const onMouseMove = (e: MouseEvent) => {
         if (!this.isDragging) return;
@@ -157,7 +157,7 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
         card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;`
 
         if (deltaX > 50) {
-          this.showLikeIndicator();
+          this.showLikeIndicator()
         } else if (deltaX  {
         if (!this.isDragging) return;
         this.isDragging = false;
@@ -166,12 +166,12 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
         const threshold = 100;
 
         if (deltaX > threshold) {
-          this.onSwipe('right');
+          this.onSwipe('right')
         } else if (deltaX  {
-          card.removeEventListener('mousedown', onMouseDown);
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
-        },;
+          card.removeEventListener('mousedown', onMouseDown)
+          document.removeEventListener('mousemove', onMouseMove)
+          document.removeEventListener('mouseup', onMouseUp)
+        },
       } as any;
     }
   }
@@ -181,20 +181,20 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
 
     // Emit the swipe event after animation completes
     setTimeout(() => {
-      this.swiped.emit({ direction, adId: this.ad._id });
-    }, 300);
+      this.swiped.emit({ direction, adId: this.ad._id })
+    }, 300)
   }
 
   resetCard(): void {
     const card = this.cardElement.nativeElement;
     card.style.transform = '';
     this.cardState = 'default';
-    this.resetIndicators();
+    this.resetIndicators()
   }
 
   showLikeIndicator(): void {
-    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator');
-    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator');
+    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator')
+    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator')
 
     if (likeIndicator && dislikeIndicator) {
       likeIndicator.style.opacity = '1';
@@ -205,8 +205,8 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showDislikeIndicator(): void {
-    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator');
-    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator');
+    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator')
+    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator')
 
     if (likeIndicator && dislikeIndicator) {
       likeIndicator.style.opacity = '0';
@@ -217,8 +217,8 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetIndicators(): void {
-    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator');
-    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator');
+    const likeIndicator = this.cardElement.nativeElement.querySelector('.like-indicator')
+    const dislikeIndicator = this.cardElement.nativeElement.querySelector('.dislike-indicator')
 
     if (likeIndicator && dislikeIndicator) {
       likeIndicator.style.opacity = '0';
@@ -250,7 +250,7 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
 
   isCurrentMediaVideo(): boolean {
     if (this.ad.media && this.ad.media.length > 0) {
-      const media = this.ad.media[this.currentMediaIndex];
+      const media = this.ad.media[this.currentMediaIndex]
       return media.type === 'video';
     }
     return false;
@@ -258,20 +258,20 @@ export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
 
   getMediaDots(): number[] {
     if (this.ad.media && this.ad.media.length > 0) {
-      return Array(this.ad.media.length);
-        .fill(0);
-        .map((_, i) => i);
+      return Array(this.ad.media.length)
+        .fill(0)
+        .map((_, i) => i)
     }
-    return [];
+    return []
   }
 
   onViewDetails(event: Event): void {
-    event.stopPropagation();
-    this.viewDetails.emit(this.ad._id);
+    event.stopPropagation()
+    this.viewDetails.emit(this.ad._id)
   }
 
   onStartChat(event: Event): void {
-    event.stopPropagation();
-    this.startChat.emit(this.ad._id);
+    event.stopPropagation()
+    this.startChat.emit(this.ad._id)
   }
 }

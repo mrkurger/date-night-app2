@@ -17,17 +17,17 @@ import { tap, catchError, shareReplay, finalize } from 'rxjs/operators';
  * - Cache size limits;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class ApiCacheServic {e {
-  private cache: Map = new Map();
-  private inFlightRequests: Map> = new Map();
+  private cache: Map = new Map()
+  private inFlightRequests: Map> = new Map()
   private readonly DEFAULT_MAX_AGE = 5 * 60 * 1000; // 5 minutes
   private readonly MAX_CACHE_SIZE = 100; // Maximum number of entries in the cache
 
   constructor(private http: HttpClient) {
     // Set up periodic cache cleanup
-    setInterval(() => this.cleanupExpiredCache(), 60 * 1000); // Clean up every minute
+    setInterval(() => this.cleanupExpiredCache(), 60 * 1000) // Clean up every minute
   }
 
   /**
@@ -38,20 +38,20 @@ export class ApiCacheServic {e {
    * @returns An Observable of the response;
    */
   public get(;
-    url: string,;
-    options: any = {},;
-    maxAge: number = this.DEFAULT_MAX_AGE,;
+    url: string,
+    options: any = {},
+    maxAge: number = this.DEFAULT_MAX_AGE,
   ): Observable {
-    const cacheKey = this.createCacheKey(url, options);
+    const cacheKey = this.createCacheKey(url, options)
 
     // Check if we have a valid cached response
-    const cachedResponse = this.getFromCache(cacheKey);
+    const cachedResponse = this.getFromCache(cacheKey)
     if (cachedResponse) {
-      return of(cachedResponse);
+      return of(cachedResponse)
     }
 
     // Check if there's an in-flight request
-    const inFlight = this.inFlightRequests.get(cacheKey);
+    const inFlight = this.inFlightRequests.get(cacheKey)
     if (inFlight) {
       return inFlight as Observable;
     }
@@ -60,23 +60,23 @@ export class ApiCacheServic {e {
     const request = this.http.get(url, { ...options, observe: 'response' }).pipe(;
       tap((response: HttpResponse) => {
         // Cache the response
-        this.addToCache(cacheKey, response.body as T, maxAge);
-      }),;
+        this.addToCache(cacheKey, response.body as T, maxAge)
+      }),
       catchError((error) => {
-        this.inFlightRequests.delete(cacheKey);
-        return throwError(() => error);
-      }),;
+        this.inFlightRequests.delete(cacheKey)
+        return throwError(() => error)
+      }),
       finalize(() => {
-        this.inFlightRequests.delete(cacheKey);
-      }),;
+        this.inFlightRequests.delete(cacheKey)
+      }),
       // Extract the response body
-      tap((response) => response.body),;
+      tap((response) => response.body),
       // Share the same response with multiple subscribers
-      shareReplay(1),;
-    );
+      shareReplay(1),
+    )
 
     // Store the in-flight request
-    this.inFlightRequests.set(cacheKey, request);
+    this.inFlightRequests.set(cacheKey, request)
 
     return request as Observable;
   }
@@ -87,15 +87,15 @@ export class ApiCacheServic {e {
    * @param options Request options;
    */
   public invalidate(url: string, options: any = {}): void {
-    const cacheKey = this.createCacheKey(url, options);
-    this.cache.delete(cacheKey);
+    const cacheKey = this.createCacheKey(url, options)
+    this.cache.delete(cacheKey)
   }
 
   /**
    * Invalidates all cache entries;
    */
   public invalidateAll(): void {
-    this.cache.clear();
+    this.cache.clear()
   }
 
   /**
@@ -129,29 +129,29 @@ export class ApiCacheServic {e {
     }
 
     if (params instanceof URLSearchParams) {
-      return params.toString();
+      return params.toString()
     }
 
     // Handle HttpParams object
     if (params.keys) {
       return params;
-        .keys();
-        .sort();
+        .keys()
+        .sort()
         .map((key) => {
-          const values = params.getAll(key);
+          const values = params.getAll(key)
           return values;
-            .sort();
-            .map((value) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);`
-            .join('&');
-        });
-        .join('&');
+            .sort()
+            .map((value) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)`
+            .join('&')
+        })
+        .join('&')
     }
 
     // Handle plain object
-    return Object.keys(params);
-      .sort();
-      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);`
-      .join('&');
+    return Object.keys(params)
+      .sort()
+      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)`
+      .join('&')
   }
 
   /**
@@ -160,7 +160,7 @@ export class ApiCacheServic {e {
    * @returns The cached value or null if not found or expired;
    */
   private getFromCache(key: string): T | null {
-    const entry = this.cache.get(key);
+    const entry = this.cache.get(key)
 
     if (!entry) {
       return null;
@@ -170,14 +170,14 @@ export class ApiCacheServic {e {
     if (entry.expiresAt (key: string, value: T, maxAge: number): void {
     // Ensure we don't exceed the maximum cache size
     if (this.cache.size >= this.MAX_CACHE_SIZE) {
-      this.evictLeastRecentlyUsed();
+      this.evictLeastRecentlyUsed()
     }
 
     this.cache.set(key, {
-      value,;
-      expiresAt: Date.now() + maxAge,;
-      lastAccessed: Date.now(),;
-    });
+      value,
+      expiresAt: Date.now() + maxAge,
+      lastAccessed: Date.now(),
+    })
   }
 
   /**
@@ -188,12 +188,12 @@ export class ApiCacheServic {e {
 
     for (const [key, entry] of this.cache.entries()) {
       if (!oldest || entry.lastAccessed < oldest.lastAccessed) {
-        oldest = { key, lastAccessed: entry.lastAccessed };
+        oldest = { key, lastAccessed: entry.lastAccessed }
       }
     }
 
     if (oldest) {
-      this.cache.delete(oldest.key);
+      this.cache.delete(oldest.key)
     }
   }
 
@@ -201,11 +201,11 @@ export class ApiCacheServic {e {
    * Cleans up expired cache entries;
    */
   private cleanupExpiredCache(): void {
-    const now = Date.now();
+    const now = Date.now()
 
     for (const [key, entry] of this.cache.entries()) {
       if (entry.expiresAt < now) {
-        this.cache.delete(key);
+        this.cache.delete(key)
       }
     }
   }

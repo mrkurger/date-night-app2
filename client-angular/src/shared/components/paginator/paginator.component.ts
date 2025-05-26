@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '
 import { CommonModule } from '@angular/common';
 
 @Component({';
-  selector: 'nb-paginator',;
-  standalone: true,;
-  imports: [CommonModule],;
+  selector: 'nb-paginator',
+  standalone: true,
+  imports: [CommonModule],
   template: `;`
     ;
       ;
@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
         Next;
       ;
     ;
-  `,;`
+  `,`
   styles: `;`
     .paginator-container {
       display: flex;
@@ -26,30 +26,30 @@ import { CommonModule } from '@angular/common';
     .page-info {
       margin: 0 1rem;
     }
-  `,;`
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-});
+  `,`
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
 export class NbPaginatorComponen {t {
   @Input() pageSize: number = 10;
   @Input() total: number = 0;
   @Input() page: number = 1;
-  @Output() pageChange = new EventEmitter();
+  @Output() pageChange = new EventEmitter()
 
   totalPages(): number {
-    return Math.ceil(this.total / this.pageSize);
+    return Math.ceil(this.total / this.pageSize)
   }
 
   onPrevious(): void {
     if (this.page > 1) {
       this.page--;
-      this.pageChange.emit(this.page);
+      this.pageChange.emit(this.page)
     }
   }
 
   onNext(): void {
     if (this.page < this.totalPages()) {
       this.page++;
-      this.pageChange.emit(this.page);
+      this.pageChange.emit(this.page)
     }
   }
 }

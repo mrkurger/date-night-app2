@@ -5,12 +5,12 @@ import { StyleGuideComponent } from './style-guide.component';
 
 const routes: Routes = [;
   {';
-    path: '',;
-    component: StyleGuideComponent,;
-  },;
-];
+    path: '',
+    component: StyleGuideComponent,
+  },
+]
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), StyleGuideComponent],;
-});
+  imports: [CommonModule, RouterModule.forChild(routes), StyleGuideComponent],
+})
 export class StyleGuideModul {e {}

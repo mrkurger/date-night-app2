@@ -25,36 +25,36 @@ export interface OnboardingStep {
 }
 
 @Component({';
-  selector: 'app-onboarding',;
-  templateUrl: './onboarding.component.html',;
-  styleUrls: ['./onboarding.component.scss'],;
-  standalone: true,;
+  selector: 'app-onboarding',
+  templateUrl: './onboarding.component.html',
+  styleUrls: ['./onboarding.component.scss'],
+  standalone: true,
   imports: [;
-    CommonModule,;
-    FormsModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbProgressBarModule,;
-    RouterModule,;
-  ],;
-});
+    CommonModule,
+    FormsModule,
+    NbButtonModule,
+    NbIconModule,
+    NbProgressBarModule,
+    RouterModule,
+  ],
+})
 export class OnboardingComponen {t implements OnInit {
-  @Input() steps: OnboardingStep[] = [];
+  @Input() steps: OnboardingStep[] = []
   @Input() showSkip = true;
   @Input() showProgress = true;
   @Input() showDots = true;
   @Input() autoShowOnFirstVisit = false;
   @Input() storageKey = 'onboarding-completed';
 
-  @Output() complete = new EventEmitter();
-  @Output() skip = new EventEmitter();
-  @Output() stepChange = new EventEmitter();
+  @Output() complete = new EventEmitter()
+  @Output() skip = new EventEmitter()
+  @Output() stepChange = new EventEmitter()
 
   currentStepIndex = 0;
   isVisible = false;
 
   get currentStep(): OnboardingStep {
-    return this.steps[this.currentStepIndex];
+    return this.steps[this.currentStepIndex]
   }
 
   get progress(): number {
@@ -65,7 +65,7 @@ export class OnboardingComponen {t implements OnInit {
     if (this.autoShowOnFirstVisit) {
       const hasCompletedOnboarding = localStorage.getItem(this.storageKey) === 'true';
       if (!hasCompletedOnboarding) {
-        this.show();
+        this.show()
       }
     }
   }
@@ -73,7 +73,7 @@ export class OnboardingComponen {t implements OnInit {
   show(): void {
     this.isVisible = true;
     this.currentStepIndex = 0;
-    this.stepChange.emit(this.currentStepIndex);
+    this.stepChange.emit(this.currentStepIndex)
   }
 
   hide(): void {
@@ -83,33 +83,33 @@ export class OnboardingComponen {t implements OnInit {
   nextStep(): void {
     if (this.currentStepIndex  0) {
       this.currentStepIndex--;
-      this.stepChange.emit(this.currentStepIndex);
+      this.stepChange.emit(this.currentStepIndex)
     }
   }
 
   goToStep(index: number): void {
     if (index >= 0 && index < this.steps.length) {
       this.currentStepIndex = index;
-      this.stepChange.emit(this.currentStepIndex);
+      this.stepChange.emit(this.currentStepIndex)
     }
   }
 
   completeOnboarding(): void {
-    localStorage.setItem(this.storageKey, 'true');
-    this.hide();
-    this.complete.emit();
+    localStorage.setItem(this.storageKey, 'true')
+    this.hide()
+    this.complete.emit()
   }
 
   skipOnboarding(): void {
-    localStorage.setItem(this.storageKey, 'true');
-    this.hide();
-    this.skip.emit();
+    localStorage.setItem(this.storageKey, 'true')
+    this.hide()
+    this.skip.emit()
   }
 
   handleCtaClick(): void {
     if (this.currentStep.ctaAction) {
-      this.currentStep.ctaAction();
+      this.currentStep.ctaAction()
     }
-    this.nextStep();
+    this.nextStep()
   }
 }

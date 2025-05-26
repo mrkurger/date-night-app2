@@ -48,11 +48,11 @@ export function cspInterceptorFactory() {
 }
 
 export function authInterceptorFactory(
-  _authService: AuthService,;
+  _authService: AuthService,
 
-  _userService: UserService,;
+  _userService: UserService,
 
-  _router: Router,;
+  _router: Router,
 ) {
   // These services are injected but not directly used in the factory
   // They are needed for the interceptor to work properly
@@ -66,24 +66,24 @@ export function csrfInterceptorFactory(_csrfService: CsrfService) {
 }
 
 export function httpErrorInterceptorFactory() {
-  const interceptor = new HttpErrorInterceptor();
+  const interceptor = new HttpErrorInterceptor()
 
   // Configure the interceptor with default settings
   interceptor.configure({
-    showNotifications: true,;
-    retryFailedRequests: true,;
-    maxRetryAttempts: 2,;
-    retryDelay: 1000,;
-    redirectToLogin: true,;
-    logErrors: true,;
-    includeRequestDetails: false,;
-    trackErrors: true,;
-    trackPerformance: false,;
-    groupSimilarErrors: true,;
-    retryJitter: 200,;
+    showNotifications: true,
+    retryFailedRequests: true,
+    maxRetryAttempts: 2,
+    retryDelay: 1000,
+    redirectToLogin: true,
+    logErrors: true,
+    includeRequestDetails: false,
+    trackErrors: true,
+    trackPerformance: false,
+    groupSimilarErrors: true,
+    retryJitter: 200,
     sanitizeSensitiveData: true,';
-    skipUrls: ['/assets/', '/api/health'],;
-  });
+    skipUrls: ['/assets/', '/api/health'],
+  })
 
   return interceptor;
 }
@@ -92,92 +92,92 @@ export function httpErrorInterceptorFactory() {
 const securityConfig = {
   accessControl: {
     guest: {
-      view: ['public-content', 'auth-pages'],;
-      create: [],;
-      edit: [],;
-      delete: [],;
-    },;
+      view: ['public-content', 'auth-pages'],
+      create: [],
+      edit: [],
+      delete: [],
+    },
     user: {
-      parent: 'guest',;
-      view: ['user-profile', 'matches', 'messages'],;
-      create: ['profile', 'messages'],;
-      edit: ['own-profile', 'own-messages'],;
-      delete: ['own-profile', 'own-messages'],;
-    },;
+      parent: 'guest',
+      view: ['user-profile', 'matches', 'messages'],
+      create: ['profile', 'messages'],
+      edit: ['own-profile', 'own-messages'],
+      delete: ['own-profile', 'own-messages'],
+    },
     moderator: {
-      parent: 'user',;
-      view: ['reported-content', 'user-reports'],;
-      create: ['moderation-notes'],;
-      edit: ['user-status', 'content-status'],;
-      delete: ['reported-content'],;
-    },;
+      parent: 'user',
+      view: ['reported-content', 'user-reports'],
+      create: ['moderation-notes'],
+      edit: ['user-status', 'content-status'],
+      delete: ['reported-content'],
+    },
     admin: {
-      parent: 'moderator',;
-      view: ['*'],;
-      create: ['*'],;
-      edit: ['*'],;
-      delete: ['*'],;
-    },;
-  },;
-};
+      parent: 'moderator',
+      view: ['*'],
+      create: ['*'],
+      edit: ['*'],
+      delete: ['*'],
+    },
+  },
+}
 
 /**
  * Core Module;
  *;
  * This module provides all core services and interceptors for the application.;
- * Most services are already provided with `providedIn: 'root'` in their definitions,;`
+ * Most services are already provided with `providedIn: 'root'` in their definitions,`
  * but they are listed here for documentation and clarity.;
  *;
  * Note: Order matters for interceptors - they are applied in the order listed.;
  */
 @NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [;
         // Core Services
-        AuthService,;
-        UserService,;
-        CsrfService,;
-        NotificationService,;
-        TelemetryService,;
+        AuthService,
+        UserService,
+        CsrfService,
+        NotificationService,
+        TelemetryService,
         // Feature Services
-        EncryptionService,;
-        FavoriteService,;
-        GeocodingService,;
-        LocationService,;
-        TravelService,;
-        MapMonitoringService,;
+        EncryptionService,
+        FavoriteService,
+        GeocodingService,
+        LocationService,
+        TravelService,
+        MapMonitoringService,
         // Utility Services
-        CachingService,;
-        ContentSanitizerService,;
-        CryptoService,;
-        MediaService,;
-        ProfileService,;
-        SafetyService,;
-        VerificationService,;
+        CachingService,
+        ContentSanitizerService,
+        CryptoService,
+        MediaService,
+        ProfileService,
+        SafetyService,
+        VerificationService,
         // HTTP Interceptors
-        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },;
+        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
         {
-            provide: HTTP_INTERCEPTORS,;
-            useFactory: authInterceptorFactory,;
-            deps: [AuthService, UserService, Router],;
-            multi: true,;
-        },;
+            provide: HTTP_INTERCEPTORS,
+            useFactory: authInterceptorFactory,
+            deps: [AuthService, UserService, Router],
+            multi: true,
+        },
         {
-            provide: HTTP_INTERCEPTORS,;
-            useFactory: csrfInterceptorFactory,;
-            deps: [CsrfService],;
-            multi: true,;
-        },;
+            provide: HTTP_INTERCEPTORS,
+            useFactory: csrfInterceptorFactory,
+            deps: [CsrfService],
+            multi: true,
+        },
         {
-            provide: HTTP_INTERCEPTORS,;
-            useFactory: httpErrorInterceptorFactory,;
-            deps: [Router, NotificationService, TelemetryService, AuthService],;
-            multi: true,;
-        },;
+            provide: HTTP_INTERCEPTORS,
+            useFactory: httpErrorInterceptorFactory,
+            deps: [Router, NotificationService, TelemetryService, AuthService],
+            multi: true,
+        },
         // Security Providers
         {
-            provide: NbRoleProvider,;
-            useClass: AuthService,;
-        },;
-        NbAclService,;
-        provideHttpClient(withInterceptorsFromDi()),;
-    ] });
+            provide: NbRoleProvider,
+            useClass: AuthService,
+        },
+        NbAclService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class CoreModul {e {}

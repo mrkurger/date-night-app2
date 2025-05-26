@@ -14,9 +14,9 @@ export interface NotesDialogData {
 }
 
 @Component({';
-  selector: 'app-notes-dialog',;
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],;
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],;
+  selector: 'app-notes-dialog',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
   template: `;`
     ;
       ;
@@ -49,7 +49,7 @@ export interface NotesDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host ::ng-deep .p-dialog .p-dialog-content {
@@ -84,9 +84,9 @@ export interface NotesDialogData {
       :host ::ng-deep textarea.p-inputtextarea {
         min-height: 120px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class NotesDialogComponen {t implements OnInit {
   notes: string = '';
   data: NotesDialogData;
@@ -94,13 +94,13 @@ export class NotesDialogComponen {t implements OnInit {
   visible: boolean = true;
 
   constructor(;
-    private dialogRef: DynamicDialogRef,;
-    private config: DynamicDialogConfig,;
-    private dialogRef: DynamicDialogRef,;
-    private config: DynamicDialogConfig,;
+    private dialogRef: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private dialogRef: DynamicDialogRef,
+    private config: DynamicDialogConfig,
   ) {
-    this.data = this.config.data || {};
-    this.data = this.config.data || {};
+    this.data = this.config.data || {}
+    this.data = this.config.data || {}
   }
 
   ngOnInit() {
@@ -108,10 +108,10 @@ export class NotesDialogComponen {t implements OnInit {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   onSave(): void {
-    this.dialogRef.close(this.notes);
+    this.dialogRef.close(this.notes)
   }
 }

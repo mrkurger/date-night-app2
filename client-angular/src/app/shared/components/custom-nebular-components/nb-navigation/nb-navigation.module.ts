@@ -9,44 +9,44 @@ import { NbUserMenuComponent } from './components/user-menu/user-menu.component'
 import { NbSearchBarComponent } from './components/search-bar/search-bar.component';
 import { NbBreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { NbThemeToggleComponent } from '../nb-theme-toggle/nb-theme-toggle.component';
-  NbMenuModule,;
-  NbLayoutModule,;
-  NbSidebarModule,;
-  NbIconModule,;
-  NbButtonModule,;
-  NbContextMenuModule,;
-  NbUserModule,;
-  NbSearchModule,;
-  NbBadgeModule,;
+  NbMenuModule,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbIconModule,
+  NbButtonModule,
+  NbContextMenuModule,
+  NbUserModule,
+  NbSearchModule,
+  NbBadgeModule,
   NbTooltipModule,';
 } from '@nebular/theme';
 
 const COMPONENTS = [;
-  NbNavigationComponent,;
-  NbSideMenuComponent,;
-  NbTopMenuComponent,;
-  NbUserMenuComponent,;
-  NbSearchBarComponent,;
-  NbBreadcrumbsComponent,;
-  NbThemeToggleComponent,;
-];
+  NbNavigationComponent,
+  NbSideMenuComponent,
+  NbTopMenuComponent,
+  NbUserMenuComponent,
+  NbSearchBarComponent,
+  NbBreadcrumbsComponent,
+  NbThemeToggleComponent,
+]
 
 @NgModule({
-  declarations: [...COMPONENTS],;
+  declarations: [...COMPONENTS],
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    NbMenuModule,;
-    NbLayoutModule,;
-    NbSidebarModule,;
-    NbIconModule,;
-    NbButtonModule,;
-    NbContextMenuModule,;
-    NbUserModule,;
-    NbSearchModule,;
-    NbBadgeModule,;
-    NbTooltipModule,;
-  ],;
-  exports: [...COMPONENTS],;
-});
+    CommonModule,
+    RouterModule,
+    NbMenuModule,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbIconModule,
+    NbButtonModule,
+    NbContextMenuModule,
+    NbUserModule,
+    NbSearchModule,
+    NbBadgeModule,
+    NbTooltipModule,
+  ],
+  exports: [...COMPONENTS],
+})
 export class NbNavigationModul {e {}

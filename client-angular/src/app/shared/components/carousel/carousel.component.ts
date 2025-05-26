@@ -11,9 +11,9 @@ export interface CarouselItem {
 }
 
 @Component({';
-  selector: 'app-carousel',;
-  standalone: true,;
-  imports: [CommonModule, NbButtonModule, NbIconModule],;
+  selector: 'app-carousel',
+  standalone: true,
+  imports: [CommonModule, NbButtonModule, NbIconModule],
   template: `;`
     ;
       ;
@@ -22,8 +22,8 @@ export interface CarouselItem {
             ;
 
             ;
-              {{ item.title }};
-              {{ item.description }};
+              {{ item.title }}
+              {{ item.description }}
             ;
           ;
         ;
@@ -41,7 +41,7 @@ export interface CarouselItem {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -53,7 +53,7 @@ export interface CarouselItem {
         width: 100%;
         height: 100%;
         overflow: hidden;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
       }
 
       .carousel--fullscreen {
@@ -63,7 +63,7 @@ export interface CarouselItem {
         width: 100vw;
         height: 100vh;
         z-index: 1000;
-        background: var(--background-basic-color-1);
+        background: var(--background-basic-color-1)
       }
 
       .carousel__container {
@@ -104,26 +104,26 @@ export interface CarouselItem {
         bottom: 0;
         left: 0;
         right: 0;
-        padding: var(--card-padding);
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        padding: var(--card-padding)
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent)
         color: white;
       }
 
       .carousel__title {
-        margin: 0 0 var(--spacing);
-        font-size: var(--text-heading-6-font-size);
+        margin: 0 0 var(--spacing)
+        font-size: var(--text-heading-6-font-size)
       }
 
       .carousel__description {
         margin: 0;
-        font-size: var(--text-caption-font-size);
+        font-size: var(--text-caption-font-size)
         opacity: 0.9;
       }
 
       .carousel__nav {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%)
         z-index: 2;
         background: rgba(255, 255, 255, 0.1) !important;
         border-radius: 50% !important;
@@ -148,21 +148,21 @@ export interface CarouselItem {
         }
 
         &--prev {
-          left: var(--spacing);
+          left: var(--spacing)
         }
 
         &--next {
-          right: var(--spacing);
+          right: var(--spacing)
         }
       }
 
       .carousel__indicators {
         position: absolute;
-        bottom: var(--spacing);
+        bottom: var(--spacing)
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%)
         display: flex;
-        gap: var(--spacing-xs);
+        gap: var(--spacing-xs)
         z-index: 2;
       }
 
@@ -170,7 +170,7 @@ export interface CarouselItem {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.5)
         border: none;
         padding: 0;
         cursor: pointer;
@@ -178,79 +178,79 @@ export interface CarouselItem {
 
         &--active {
           background: white;
-          transform: scale(1.2);
+          transform: scale(1.2)
         }
 
         &:hover:not(&--active) {
-          background: rgba(255, 255, 255, 0.7);
+          background: rgba(255, 255, 255, 0.7)
         }
       }
-    `,;`
-  ],;
+    `,`
+  ],
   animations: [;
     trigger('slideAnimation', [;
       transition('void => active', [;
-        style({ opacity: 0, transform: 'scale(1.1)' }),;
-        animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),;
-      ]),;
+        style({ opacity: 0, transform: 'scale(1.1)' }),
+        animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
       transition('active => void', [;
-        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.9)' })),;
-      ]),;
-    ]),;
-  ],;
-});
+        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.9)' })),
+      ]),
+    ]),
+  ],
+})
 export class CarouselModul {e {
-  @Input() items: CarouselItem[] = [];
+  @Input() items: CarouselItem[] = []
   @Input() loop = true;
   @Input() autoplay = false;
   @Input() autoplayInterval = 5000;
   @Input() showIndicators = true;
   @Input() fullscreen = false;
-  @Output() slideChange = new EventEmitter();
+  @Output() slideChange = new EventEmitter()
 
   currentIndex = 0;
   private autoplayTimer: any;
 
   ngOnInit() {
     if (this.autoplay) {
-      this.startAutoplay();
+      this.startAutoplay()
     }
   }
 
   ngOnDestroy() {
-    this.stopAutoplay();
+    this.stopAutoplay()
   }
 
   next() {
     if (this.currentIndex  0) {
-      this.goToSlide(this.currentIndex - 1);
+      this.goToSlide(this.currentIndex - 1)
     } else if (this.loop) {
-      this.goToSlide(this.items.length - 1);
+      this.goToSlide(this.items.length - 1)
     }
   }
 
   goToSlide(index: number) {
     this.currentIndex = index;
-    this.slideChange.emit(index);
-    this.resetAutoplay();
+    this.slideChange.emit(index)
+    this.resetAutoplay()
   }
 
   private startAutoplay() {
     this.autoplayTimer = setInterval(() => {
-      this.next();
-    }, this.autoplayInterval);
+      this.next()
+    }, this.autoplayInterval)
   }
 
   private stopAutoplay() {
     if (this.autoplayTimer) {
-      clearInterval(this.autoplayTimer);
+      clearInterval(this.autoplayTimer)
     }
   }
 
   private resetAutoplay() {
     if (this.autoplay) {
-      this.stopAutoplay();
-      this.startAutoplay();
+      this.stopAutoplay()
+      this.startAutoplay()
     }
   }
 }

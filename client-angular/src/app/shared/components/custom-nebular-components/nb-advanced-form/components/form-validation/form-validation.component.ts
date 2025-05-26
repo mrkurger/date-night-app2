@@ -2,16 +2,16 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({';
-    selector: 'nb-form-validation',;
+    selector: 'nb-form-validation',
     template: `;`
     ;
       ;
         ;
-          {{ error }};
+          {{ error }}
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .validation-messages {
@@ -30,31 +30,31 @@ import { AbstractControl } from '@angular/forms';
           }
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbFormValidationComponen {t {
   @Input() control!: AbstractControl;
   @Input() errorMessages: { [key: string]: string } = {
-    required: 'This field is required',;
-    email: 'Please enter a valid email address',;
-    min: 'Value is too small',;
-    max: 'Value is too large',;
-    minlength: 'Value is too short',;
-    maxlength: 'Value is too long',;
-    pattern: 'Invalid format',;
-  };
+    required: 'This field is required',
+    email: 'Please enter a valid email address',
+    min: 'Value is too small',
+    max: 'Value is too large',
+    minlength: 'Value is too short',
+    maxlength: 'Value is too long',
+    pattern: 'Invalid format',
+  }
 
   get shouldShowErrors(): boolean {
-    return this.control && this.control.invalid && (this.control.dirty || this.control.touched);
+    return this.control && this.control.invalid && (this.control.dirty || this.control.touched)
   }
 
   getErrors(): string[] {
-    if (!this.control || !this.control.errors) return [];
+    if (!this.control || !this.control.errors) return []
 
     return Object.keys(this.control.errors).map(;
-      (key) => this.errorMessages[key] || `Invalid value: ${key}`,;`
-    );
+      (key) => this.errorMessages[key] || `Invalid value: ${key}`,`
+    )
   }
 }

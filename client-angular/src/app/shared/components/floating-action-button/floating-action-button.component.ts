@@ -13,13 +13,13 @@ export interface FabMenuItem extends NbMenuItem {
  * Features icon, tooltip, and optional context menu.;
  */
 @Component({';
-    selector: 'app-fab',;
-    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],;
+    selector: 'app-fab',
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
     template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -34,18 +34,18 @@ export interface FabMenuItem extends NbMenuItem {
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: nb-theme(shadow-lg);
+        box-shadow: nb-theme(shadow-lg)
         transition:;
-          transform 0.2s ease,;
+          transform 0.2s ease,
           box-shadow 0.2s ease;
 
         &:hover {
-          transform: scale(1.05);
-          box-shadow: nb-theme(shadow-xl);
+          transform: scale(1.05)
+          box-shadow: nb-theme(shadow-xl)
         }
 
         &:active {
-          transform: scale(0.95);
+          transform: scale(0.95)
         }
 
         nb-icon {
@@ -76,14 +76,14 @@ export interface FabMenuItem extends NbMenuItem {
         &--center {
           bottom: 2rem;
           left: 50%;
-          transform: translateX(-50%);
+          transform: translateX(-50%)
 
           &:hover {
-            transform: translateX(-50%) scale(1.05);
+            transform: translateX(-50%) scale(1.05)
           }
 
           &:active {
-            transform: translateX(-50%) scale(0.95);
+            transform: translateX(-50%) scale(0.95)
           }
         }
       }
@@ -106,9 +106,9 @@ export interface FabMenuItem extends NbMenuItem {
           font-size: 2rem;
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class ButtonModul {e {
   @Input() icon = 'plus-outline';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
@@ -117,30 +117,30 @@ export class ButtonModul {e {
     'bottom-right';
   @Input() tooltipText = '';
   @Input() disabled = false;
-  @Input() items: FabMenuItem[] = [];
+  @Input() items: FabMenuItem[] = []
 
-  @Output() buttonClick = new EventEmitter();
-  @Output() menuItemClick = new EventEmitter();
+  @Output() buttonClick = new EventEmitter()
+  @Output() menuItemClick = new EventEmitter()
 
-  readonly menuTag = 'fab-menu-' + Math.random().toString(36).substring(7);
+  readonly menuTag = 'fab-menu-' + Math.random().toString(36).substring(7)
 
   constructor(private nbMenuService: NbMenuService) {
     // Subscribe to menu item clicks
     this.nbMenuService.onItemClick().subscribe((event) => {
       if (event.tag === this.menuTag && event.item) {
-        this.menuItemClick.emit(event.item as FabMenuItem);
+        this.menuItemClick.emit(event.item as FabMenuItem)
       }
-    });
+    })
   }
 
   onClick(event: Event): void {
     if (!this.items.length) {
-      event.stopPropagation();
-      this.buttonClick.emit();
+      event.stopPropagation()
+      this.buttonClick.emit()
     }
   }
 
-  @HostListener('document:click');
+  @HostListener('document:click')
   onDocumentClick(): void {
     // Close the menu when clicking outside
     // The menu will close automatically when clicking outside

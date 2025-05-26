@@ -25,35 +25,35 @@ import { StarRatingComponent } from '../components/star-rating/star-rating.compo
  * Review Module;
  *;
  * This module bundles all review-related components for easier importing;
- * in feature modules. It includes components for displaying, creating,;
+ * in feature modules. It includes components for displaying, creating,
  * and interacting with reviews.;
  */
 @NgModule({
   imports: [;
-    CommonModule,;
-    ReactiveFormsModule,;
-    ReviewListComponent,;
-    ReviewSummaryComponent,;
-    ,;
-    ReviewDialogComponent,;
-    ResponseDialogComponent,;
-    ReportDialogComponent,;
-    StarRatingComponent,;
-    ,;
-    ,;
-    ReviewFormComponent,;
-    NebularModule,;
-  ],;
+    CommonModule,
+    ReactiveFormsModule,
+    ReviewListComponent,
+    ReviewSummaryComponent,
+    ,
+    ReviewDialogComponent,
+    ResponseDialogComponent,
+    ReportDialogComponent,
+    StarRatingComponent,
+    ,
+    ,
+    ReviewFormComponent,
+    NebularModule,
+  ],
   exports: [;
     // Export all components for use in other modules
-    ReviewFormComponent,;
-    ReviewListComponent,;
-    ReviewSummaryComponent,;
-    ReviewDialogComponent,;
-    ResponseDialogComponent,;
-    ReportDialogComponent,;
-    StarRatingComponent,;
-  ],;
-});
+    ReviewFormComponent,
+    ReviewListComponent,
+    ReviewSummaryComponent,
+    ReviewDialogComponent,
+    ResponseDialogComponent,
+    ReportDialogComponent,
+    StarRatingComponent,
+  ],
+})
 export class ReviewModul {e {}
 ';

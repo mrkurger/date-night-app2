@@ -16,10 +16,10 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { SharedModule } from '../../shared.module';
-  FormBuilder,;
-  FormGroup,;
-  Validators,;
-  ReactiveFormsModule,;
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
   FormControl,';
 } from '@angular/forms';
 
@@ -34,16 +34,16 @@ export interface ResponseDialogData {
 }
 
 @Component({
-  selector: 'app-response-dialog',;
+  selector: 'app-response-dialog',
   template: `;`
     ;
       ;
-        {{ data?.title || 'Response' }};
+        {{ data?.title || 'Response' }}
       ;
       ;
-        {{ data.message }};
+        {{ data.message }}
         ;
-          Review: {{ data.reviewTitle }};
+          Review: {{ data.reviewTitle }}
           ;
             "{{ data.reviewContent | slice : 0 : 100;
             }}{{ data.reviewContent && data.reviewContent.length > 100 ? '...' : '' }}";
@@ -80,7 +80,7 @@ export interface ResponseDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host nb-card {
@@ -100,9 +100,9 @@ export interface ResponseDialogData {
       }
 
       .review-context {
-        background-color: var(--background-basic-color-2);
+        background-color: var(--background-basic-color-2)
         padding: 1rem;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         margin-bottom: 1rem;
       }
       .review-context h4 {
@@ -112,15 +112,15 @@ export interface ResponseDialogData {
       }
       .review-content-preview {
         font-style: italic;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
       .btn-loading {
         cursor: wait;
       }
-    `,;`
-  ],;
-  imports: [CommonModule, ReactiveFormsModule, NebularModule, SharedModule],;
-});
+    `,`
+  ],
+  imports: [CommonModule, ReactiveFormsModule, NebularModule, SharedModule],
+})
 export class ResponseDialogComponen {t implements OnInit {
   responseForm!: FormGroup;
   isSubmitting = false;
@@ -132,21 +132,21 @@ export class ResponseDialogComponen {t implements OnInit {
   }
 
   constructor(;
-    protected dialogRef: NbDialogRef,;
-    private fb: FormBuilder,;
-    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ResponseDialogData,;
+    protected dialogRef: NbDialogRef,
+    private fb: FormBuilder,
+    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ResponseDialogData,
   ) {
-    this.data = this.injectedData || {};
+    this.data = this.injectedData || {}
     this.responseForm = this.fb.group({
       response: [;
-        '',;
+        '',
         [;
-          Validators.required,;
-          Validators.minLength(this.data?.minLength || 10),;
-          Validators.maxLength(this.data?.maxLength || 1000),;
-        ],;
-      ],;
-    });
+          Validators.required,
+          Validators.minLength(this.data?.minLength || 10),
+          Validators.maxLength(this.data?.maxLength || 1000),
+        ],
+      ],
+    })
   }
 
   ngOnInit(): void {
@@ -155,11 +155,11 @@ export class ResponseDialogComponen {t implements OnInit {
 
   // Alias for submit() to support tests
   onSubmit(): void {
-    this.submit();
+    this.submit()
   }
 
   submit(): void {
-    this.responseForm.markAllAsTouched();
+    this.responseForm.markAllAsTouched()
     if (this.responseForm.invalid) {
       return;
     }
@@ -167,24 +167,24 @@ export class ResponseDialogComponen {t implements OnInit {
     this.isSubmitting = true;
     const responseValue = this.responseForm.get('response')?.value;
     // Simulate API call
-    console.log('Submitting response:', responseValue);
-    of(responseValue);
+    console.log('Submitting response:', responseValue)
+    of(responseValue)
       .pipe(;
-        delay(1000),;
+        delay(1000),
         tap(() => {
-          this.dialogRef.close(responseValue);
+          this.dialogRef.close(responseValue)
           this.isSubmitting = false;
-        }),;
-      );
-      .subscribe();
+        }),
+      )
+      .subscribe()
   }
 
   // Method to close the dialog
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   cancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

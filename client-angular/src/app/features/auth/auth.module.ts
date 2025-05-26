@@ -19,18 +19,18 @@ import { RequestPasswordComponent } from './components/request-password/request-
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 import { environment } from '../../../environments/environment';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbLayoutModule,;
-  NbBadgeModule,;
-  NbTagModule,;
-  NbSelectModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbLayoutModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
   NbCheckboxModule,';
 } from '@nebular/theme';
 
@@ -38,44 +38,44 @@ import { environment } from '../../../environments/environment';
 
 const routes: Routes = [;
   {
-    path: '',;
-    component: AuthLayoutComponent,;
+    path: '',
+    component: AuthLayoutComponent,
     children: [;
-      { path: 'login', component: LoginComponent },;
-      { path: 'register', component: RegisterComponent },;
-      { path: 'request-password', component: RequestPasswordComponent },;
-      { path: 'reset-password', component: ResetPasswordComponent },;
-      { path: '', redirectTo: 'login', pathMatch: 'full' },;
-    ],;
-  },;
-];
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'request-password', component: RequestPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+    ],
+  },
+]
 
 @NgModule({
   imports: [;
-    CommonModule,;
-    RouterModule.forChild(routes),;
-    ReactiveFormsModule,;
+    CommonModule,
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
     // Import standalone components
-    LoginComponent,;
-    RegisterComponent,;
-    AuthLayoutComponent,;
-    RequestPasswordComponent,;
-    ResetPasswordComponent,;
+    LoginComponent,
+    RegisterComponent,
+    AuthLayoutComponent,
+    RequestPasswordComponent,
+    ResetPasswordComponent,
     // Import Nebular modules
-    NbCardModule,;
-    NbInputModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbCheckboxModule,;
-    NbSpinnerModule,;
-    NbFormFieldModule,;
-    NbAlertModule,;
-    NbTooltipModule,;
-    NbLayoutModule,;
-    NbBadgeModule,;
-    NbTagModule,;
-    NbSelectModule,;
-  ],;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-});
+    NbCardModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbCheckboxModule,
+    NbSpinnerModule,
+    NbFormFieldModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbLayoutModule,
+    NbBadgeModule,
+    NbTagModule,
+    NbSelectModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
 export class AuthModul {e {}

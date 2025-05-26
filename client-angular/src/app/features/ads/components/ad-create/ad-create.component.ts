@@ -10,14 +10,14 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 
 @Component({';
-  selector: 'app-ad-create',;
+  selector: 'app-ad-create',
   imports: [;
-    CommonModule, ReactiveFormsModule, NebularModule,;
-    CardModule,;
-    ButtonModule,;
+    CommonModule, ReactiveFormsModule, NebularModule,
+    CardModule,
+    ButtonModule,
     DropdownModule;
-  ],;
-  templateUrl: './ad-create.component.html',;
+  ],
+  templateUrl: './ad-create.component.html',
   styles: [;
     `;`
       .ad-form-container {
@@ -35,59 +35,59 @@ import { DropdownModule } from 'primeng/dropdown';
         justify-content: space-between;
         margin-top: 30px;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class AdCreateComponen {t implements OnInit {
   adForm: FormGroup;
-  categories: string[] = ['Dating', 'Relationship', 'Short-term', 'Long-term', 'Casual', 'Serious'];
+  categories: string[] = ['Dating', 'Relationship', 'Short-term', 'Long-term', 'Casual', 'Serious']
   imagePreviewUrl: string | null = null;
 
   profileVisibilityOptions = [;
-    { label: 'Public - Visible to everyone', value: 'public' },;
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
-  ];
+  ]
 
   allowMessagingOptions = [;
-    { label: 'Everyone', value: 'all' },;
-    { label: 'Only Matches', value: 'matches' },;
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
     { label: 'No One (Disable messaging)', value: 'none' }
-  ];
+  ]
 
   contentDensityOptions = [;
-    { label: 'Compact', value: 'compact' },;
-    { label: 'Normal', value: 'normal' },;
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
     { label: 'Comfortable', value: 'comfortable' }
-  ];
+  ]
 
   cardSizeOptions = [;
-    { label: 'Small', value: 'small' },;
-    { label: 'Medium', value: 'medium' },;
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
     { label: 'Large', value: 'large' }
-  ];
+  ]
 
   defaultViewTypeOptions = [;
-    { label: 'Netflix View', value: 'netflix' },;
-    { label: 'Tinder View', value: 'tinder' },;
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
     { label: 'List View', value: 'list' }
-  ];
+  ]
 
   constructor(;
-    private fb: FormBuilder,;
-    private router: Router,;
+    private fb: FormBuilder,
+    private router: Router,
   ) {
     this.adForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],;
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       description: [;
-        '',;
-        [Validators.required, Validators.minLength(20), Validators.maxLength(1000)],;
-      ],;
-      category: ['', Validators.required],;
-      price: [0, [Validators.required, Validators.min(0)]],;
-      location: ['', Validators.required],;
-      images: [[]],;
-    });
+        '',
+        [Validators.required, Validators.minLength(20), Validators.maxLength(1000)],
+      ],
+      category: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      location: ['', Validators.required],
+      images: [[]],
+    })
   }
 
   ngOnInit(): void {
@@ -98,16 +98,16 @@ export class AdCreateComponen {t implements OnInit {
     if (this.adForm.valid) {
       // Process the form data
       // eslint-disable-next-line no-console
-      console.log('Form submitted', this.adForm.value);
+      console.log('Form submitted', this.adForm.value)
 
       // Navigate back to the list
-      this.router.navigate(['/ads']);
+      this.router.navigate(['/ads'])
     } else {
       // Mark all fields as touched to trigger validation
       Object.keys(this.adForm.controls).forEach((key) => {
-        const control = this.adForm.get(key);
-        control?.markAsTouched();
-      });
+        const control = this.adForm.get(key)
+        control?.markAsTouched()
+      })
     }
   }
 
@@ -116,17 +116,17 @@ export class AdCreateComponen {t implements OnInit {
     // For now, we'll just set a dummy image URL
     this.imagePreviewUrl = 'https://via.placeholder.com/300x200';
 
-    const images = this.adForm.get('images')?.value || [];
-    images.push(this.imagePreviewUrl);
-    this.adForm.get('images')?.setValue(images);
+    const images = this.adForm.get('images')?.value || []
+    images.push(this.imagePreviewUrl)
+    this.adForm.get('images')?.setValue(images)
   }
 
   onRemoveImage(): void {
     this.imagePreviewUrl = null;
-    this.adForm.get('images')?.setValue([]);
+    this.adForm.get('images')?.setValue([])
   }
 
   onCancel(): void {
-    this.router.navigate(['/ads']);
+    this.router.navigate(['/ads'])
   }
 }

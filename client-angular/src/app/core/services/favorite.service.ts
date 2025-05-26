@@ -29,7 +29,7 @@ export interface FavoriteFilterOptions {
   priceMax?: number;
   dateFrom?: Date;
   dateTo?: Date;
-  tags?: string[];
+  tags?: string[]
 }
 
 export interface FavoriteBatchResult {
@@ -45,7 +45,7 @@ export interface Favorite {
   ad: Ad;
   notes: string;
   notificationsEnabled: boolean;
-  tags: string[];
+  tags: string[]
   priority: 'low' | 'normal' | 'high';
   createdAt: string;
   updatedAt: string;
@@ -58,15 +58,15 @@ export interface Favorite {
  * Provides methods for adding, removing, and managing favorite ads;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class FavoriteServic {e {
   private apiUrl = `${environment.apiUrl}/favorites`;`
-  private favoritesSubject = new BehaviorSubject([]);
+  private favoritesSubject = new BehaviorSubject([])
   private favoritesLoaded = false;
 
   // Observable of favorite ad IDs
-  favorites$ = this.favoritesSubject.asObservable();
+  favorites$ = this.favoritesSubject.asObservable()
 
   constructor(private http: HttpClient) {}
 
@@ -77,10 +77,10 @@ export class FavoriteServic {e {
   loadFavoriteIds(): Observable {
     return this.http.get(`${this.apiUrl}/ids`).pipe(;`
       tap((ids) => {
-        this.favoritesSubject.next(ids);
+        this.favoritesSubject.next(ids)
         this.favoritesLoaded = true;
-      }),;
-    );
+      }),
+    )
   }
 
   /**
@@ -88,48 +88,48 @@ export class FavoriteServic {e {
    * @param options Optional filter and sort options;
    */
   getFavorites(options?: FavoriteFilterOptions): Observable {
-    let params = new HttpParams();
+    let params = new HttpParams()
 
     if (options) {
       if (options.sort) {
-        params = params.set('sort', options.sort);
+        params = params.set('sort', options.sort)
       }
       if (options.category) {
-        params = params.set('category', options.category);
+        params = params.set('category', options.category)
       }
       if (options.county) {
-        params = params.set('county', options.county);
+        params = params.set('county', options.county)
       }
       if (options.city) {
-        params = params.set('city', options.city);
+        params = params.set('city', options.city)
       }
       if (options.search) {
-        params = params.set('search', options.search);
+        params = params.set('search', options.search)
       }
       if (options.priority) {
-        params = params.set('priority', options.priority);
+        params = params.set('priority', options.priority)
       }
       if (options.priceMin !== undefined) {
-        params = params.set('priceMin', options.priceMin.toString());
+        params = params.set('priceMin', options.priceMin.toString())
       }
       if (options.priceMax !== undefined) {
-        params = params.set('priceMax', options.priceMax.toString());
+        params = params.set('priceMax', options.priceMax.toString())
       }
       if (options.dateFrom) {
-        params = params.set('dateFrom', new Date(options.dateFrom).toISOString());
+        params = params.set('dateFrom', new Date(options.dateFrom).toISOString())
       }
       if (options.dateTo) {
-        params = params.set('dateTo', new Date(options.dateTo).toISOString());
+        params = params.set('dateTo', new Date(options.dateTo).toISOString())
       }
       if (options.tags && options.tags.length > 0) {
         // For multiple tags, we need to handle them specially
         options.tags.forEach((tag) => {
-          params = params.append('tags', tag);
-        });
+          params = params.append('tags', tag)
+        })
       }
     }
 
-    return this.http.get(this.apiUrl, { params });
+    return this.http.get(this.apiUrl, { params })
   }
 
   /**
@@ -137,7 +137,7 @@ export class FavoriteServic {e {
    * @returns Observable of tags with usage counts;
    */
   getUserTags(): Observable {
-    return this.http.get(`${this.apiUrl}/tags`);`
+    return this.http.get(`${this.apiUrl}/tags`)`
   }
 
   /**
@@ -145,15 +145,15 @@ export class FavoriteServic {e {
    * @param adId Ad ID to check;
    */
   isFavorite(adId: string | { city: string; county: string }): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
 
     // If we've already loaded favorites, check locally
     if (this.favoritesLoaded) {
-      return this.favorites$.pipe(map((favorites) => favorites.includes(adIdStr)));
+      return this.favorites$.pipe(map((favorites) => favorites.includes(adIdStr)))
     }
 
     // Otherwise, check with the server
-    return this.http.get(`${this.apiUrl}/check/${adIdStr}`);`
+    return this.http.get(`${this.apiUrl}/check/${adIdStr}`)`
   }
 
   /**
@@ -162,34 +162,34 @@ export class FavoriteServic {e {
    * @param notes Optional notes about this favorite;
    * @param notificationsEnabled Whether to enable notifications for this favorite;
    * @param tags Optional tags for categorizing this favorite;
-   * @param priority Optional priority level (low, normal, high);
+   * @param priority Optional priority level (low, normal, high)
    */
   addFavorite(;
-    adId: string | { city: string; county: string },;
-    notes = '',;
-    notificationsEnabled = true,;
-    tags: string[] = [],;
-    priority: 'low' | 'normal' | 'high' = 'normal',;
+    adId: string | { city: string; county: string },
+    notes = '',
+    notificationsEnabled = true,
+    tags: string[] = [],
+    priority: 'low' | 'normal' | 'high' = 'normal',
   ): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
 
     return this.http;
       .post(`${this.apiUrl}/${adIdStr}`, {`
-        notes,;
-        notificationsEnabled,;
-        tags,;
-        priority,;
-      });
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
       .pipe(;
         tap(() => {
           if (this.favoritesLoaded) {
             const currentFavorites = this.favoritesSubject.value;
             if (!currentFavorites.includes(adIdStr)) {
-              this.favoritesSubject.next([...currentFavorites, adIdStr]);
+              this.favoritesSubject.next([...currentFavorites, adIdStr])
             }
           }
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -201,40 +201,40 @@ export class FavoriteServic {e {
    * @param priority Optional priority level to apply to all favorites;
    */
   addFavoritesBatch(;
-    adIds: (string | { city: string; county: string })[],;
-    notes = '',;
-    notificationsEnabled = true,;
-    tags: string[] = [],;
-    priority: 'low' | 'normal' | 'high' = 'normal',;
+    adIds: (string | { city: string; county: string })[],
+    notes = '',
+    notificationsEnabled = true,
+    tags: string[] = [],
+    priority: 'low' | 'normal' | 'high' = 'normal',
   ): Observable {
     // Convert complex IDs to strings
-    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
+    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)))
 
     return this.http;
       .post(`${this.apiUrl}/batch`, {`
-        adIds: adIdsStr,;
-        notes,;
-        notificationsEnabled,;
-        tags,;
-        priority,;
-      });
+        adIds: adIdsStr,
+        notes,
+        notificationsEnabled,
+        tags,
+        priority,
+      })
       .pipe(;
         tap((result) => {
           if (this.favoritesLoaded && result.added && result.added > 0) {
             const currentFavorites = this.favoritesSubject.value;
-            const newFavorites = [...currentFavorites];
+            const newFavorites = [...currentFavorites]
 
             // Add only the IDs that aren't already in the list
             adIdsStr.forEach((id) => {
               if (!currentFavorites.includes(id)) {
-                newFavorites.push(id);
+                newFavorites.push(id)
               }
-            });
+            })
 
-            this.favoritesSubject.next(newFavorites);
+            this.favoritesSubject.next(newFavorites)
           }
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -242,16 +242,16 @@ export class FavoriteServic {e {
    * @param adId Ad ID to remove;
    */
   removeFavorite(adId: string | { city: string; county: string }): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
 
     return this.http.delete(`${this.apiUrl}/${adIdStr}`).pipe(;`
       tap(() => {
         if (this.favoritesLoaded) {
           const currentFavorites = this.favoritesSubject.value;
-          this.favoritesSubject.next(currentFavorites.filter((id) => id !== adIdStr));
+          this.favoritesSubject.next(currentFavorites.filter((id) => id !== adIdStr))
         }
-      }),;
-    );
+      }),
+    )
   }
 
   /**
@@ -259,23 +259,23 @@ export class FavoriteServic {e {
    * @param adIds Array of ad IDs to remove;
    */
   removeFavoritesBatch(;
-    adIds: (string | { city: string; county: string })[],;
+    adIds: (string | { city: string; county: string })[],
   ): Observable {
     // Convert complex IDs to strings
-    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
+    const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)))
 
     return this.http;
       .delete(`${this.apiUrl}/batch`, {`
-        body: { adIds: adIdsStr },;
-      });
+        body: { adIds: adIdsStr },
+      })
       .pipe(;
         tap(() => {
           if (this.favoritesLoaded) {
             const currentFavorites = this.favoritesSubject.value;
-            this.favoritesSubject.next(currentFavorites.filter((id) => !adIdsStr.includes(id)));
+            this.favoritesSubject.next(currentFavorites.filter((id) => !adIdsStr.includes(id)))
           }
-        }),;
-      );
+        }),
+      )
   }
 
   /**
@@ -284,11 +284,11 @@ export class FavoriteServic {e {
    * @param notes New notes;
    */
   updateNotes(;
-    adId: string | { city: string; county: string },;
-    notes: string,;
+    adId: string | { city: string; county: string },
+    notes: string,
   ): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http.patch(`${this.apiUrl}/${adIdStr}/notes`, { notes });`
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
+    return this.http.patch(`${this.apiUrl}/${adIdStr}/notes`, { notes })`
   }
 
   /**
@@ -297,29 +297,29 @@ export class FavoriteServic {e {
    * @param tags New tags array;
    */
   updateTags(;
-    adId: string | { city: string; county: string },;
-    tags: string[],;
+    adId: string | { city: string; county: string },
+    tags: string[],
   ): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
     return this.http.patch(`${this.apiUrl}/${adIdStr}/tags`, {`
-      tags,;
-    });
+      tags,
+    })
   }
 
   /**
    * Update priority for a favorite;
    * @param adId Ad ID;
-   * @param priority New priority (low, normal, high);
+   * @param priority New priority (low, normal, high)
    */
   updatePriority(;
-    adId: string | { city: string; county: string },;
-    priority: 'low' | 'normal' | 'high',;
+    adId: string | { city: string; county: string },
+    priority: 'low' | 'normal' | 'high',
   ): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
     return this.http.patch(;
-      `${this.apiUrl}/${adIdStr}/priority`,;`
-      { priority },;
-    );
+      `${this.apiUrl}/${adIdStr}/priority`,`
+      { priority },
+    )
   }
 
   /**
@@ -327,20 +327,20 @@ export class FavoriteServic {e {
    * @param adId Ad ID;
    */
   toggleNotifications(;
-    adId: string | { city: string; county: string },;
+    adId: string | { city: string; county: string },
   ): Observable {
-    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
+    const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId)
     return this.http.patch(;
-      `${this.apiUrl}/${adIdStr}/notifications`,;`
-      {},;
-    );
+      `${this.apiUrl}/${adIdStr}/notifications`,`
+      {},
+    )
   }
 
   /**
-   * Clear the cached favorites (e.g., on logout);
+   * Clear the cached favorites (e.g., on logout)
    */
   clearCache(): void {
-    this.favoritesSubject.next([]);
+    this.favoritesSubject.next([])
     this.favoritesLoaded = false;
   }
 }

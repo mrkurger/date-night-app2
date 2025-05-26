@@ -17,22 +17,22 @@ import { SwipeViewComponent } from './components/swipe-view/swipe-view.component
 // ===================================================
 
 const routes: Routes = [';
-  { path: '', component: AdListComponent },;
-  { path: 'create', component: AdCreateComponent },;
-  { path: ':id', component: AdDetailComponent },;
-  { path: 'swipe', component: SwipeViewComponent },;
-];
+  { path: '', component: AdListComponent },
+  { path: 'create', component: AdCreateComponent },
+  { path: ':id', component: AdDetailComponent },
+  { path: 'swipe', component: SwipeViewComponent },
+]
 
 @NgModule({
-  declarations: [],;
+  declarations: [],
   imports: [;
-    CommonModule,;
-    ReactiveFormsModule,;
-    RouterModule.forChild(routes),;
-    AdListComponent,;
-    AdCreateComponent,;
-    AdDetailComponent,;
-    SwipeViewComponent,;
-  ],;
-});
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    AdListComponent,
+    AdCreateComponent,
+    AdDetailComponent,
+    SwipeViewComponent,
+  ],
+})
 export class AdsModul {e {}

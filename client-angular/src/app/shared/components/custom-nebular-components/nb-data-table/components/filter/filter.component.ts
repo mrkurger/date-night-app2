@@ -3,12 +3,12 @@ import { TableColumn } from '../../nb-data-table.component';
 import { NbDatepickerModule } from '@nebular/theme';
 
 @Component({';
-  selector: 'nb-data-table-filter',;
+  selector: 'nb-data-table-filter',
   template: `;`
     ;
       ;
         ;
-          Filter: {{ column?.name }};
+          Filter: {{ column?.name }}
           ;
             ;
           ;
@@ -67,7 +67,7 @@ import { NbDatepickerModule } from '@nebular/theme';
         Clear;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .filter-card {
@@ -99,15 +99,15 @@ import { NbDatepickerModule } from '@nebular/theme';
         flex-direction: column;
         gap: 0.5rem;
       }
-    `,;`
-  ],;
-  standalone: false,;
-});
+    `,`
+  ],
+  standalone: false,
+})
 export class NbDataTableFilterComponen {t {
   @Input() column: TableColumn | null = null;
   @Input() value: any;
-  @Output() filterChange = new EventEmitter();
-  @Output() close = new EventEmitter();
+  @Output() filterChange = new EventEmitter()
+  @Output() close = new EventEmitter()
 
   filterValue: any = null;
   numberOperator = 'eq';
@@ -132,7 +132,7 @@ export class NbDataTableFilterComponen {t {
   }
 
   onOperatorChange() {
-    this.applyFilter();
+    this.applyFilter()
   }
 
   applyFilter() {
@@ -141,21 +141,21 @@ export class NbDataTableFilterComponen {t {
     // Format the filter value based on type
     if (this.getFilterType() === 'number') {
       filterValue = {
-        value: parseFloat(this.filterValue),;
-        operator: this.numberOperator,;
-      };
+        value: parseFloat(this.filterValue),
+        operator: this.numberOperator,
+      }
     } else if (this.getFilterType() === 'date') {
       filterValue = this.filterValue ? new Date(this.filterValue) : null;
     } else if (this.getFilterType() === 'boolean') {
       filterValue = this.filterValue === 'true';
     }
 
-    this.filterChange.emit(filterValue);
+    this.filterChange.emit(filterValue)
   }
 
   clearFilter() {
     this.filterValue = null;
     this.numberOperator = 'eq';
-    this.filterChange.emit(null);
+    this.filterChange.emit(null)
   }
 }

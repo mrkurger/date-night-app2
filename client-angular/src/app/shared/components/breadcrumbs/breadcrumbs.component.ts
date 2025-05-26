@@ -22,32 +22,32 @@ export interface Breadcrumb {
 }
 
 @Component({';
-  selector: 'app-breadcrumbs',;
-  imports: [CommonModule, RouterModule, NbIconModule],;
+  selector: 'app-breadcrumbs',
+  imports: [CommonModule, RouterModule, NbIconModule],
   template: `;`
     ;
       ;
         ;
           ;
             ;
-            {{ breadcrumb.label }};
+            {{ breadcrumb.label }}
           ;
 
           ;
             ;
-            {{ breadcrumb.label }};
+            {{ breadcrumb.label }}
           ;
 
           ;
             ;
-            {{ breadcrumb.label }};
+            {{ breadcrumb.label }}
           ;
 
           ;
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .breadcrumbs {
@@ -67,12 +67,12 @@ export interface Breadcrumb {
       .breadcrumb-item {
         display: flex;
         align-items: center;
-        font-size: nb-theme(text-subtitle-2-font-size);
-        color: nb-theme(text-hint-color);
+        font-size: nb-theme(text-subtitle-2-font-size)
+        color: nb-theme(text-hint-color)
 
         &.active {
-          color: nb-theme(text-basic-color);
-          font-weight: nb-theme(text-subtitle-font-weight);
+          color: nb-theme(text-basic-color)
+          font-weight: nb-theme(text-subtitle-font-weight)
         }
       }
 
@@ -84,11 +84,11 @@ export interface Breadcrumb {
         transition: color 0.2s;
 
         &:hover {
-          color: nb-theme(color-primary-hover);
+          color: nb-theme(color-primary-hover)
         }
       }
 
-      .breadcrumb-text,;
+      .breadcrumb-text,
       .breadcrumb-current {
         display: flex;
         align-items: center;
@@ -101,7 +101,7 @@ export interface Breadcrumb {
 
         &.breadcrumb-separator {
           margin: 0 0.5rem;
-          color: nb-theme(text-hint-color);
+          color: nb-theme(text-hint-color)
         }
 
         &:not(.breadcrumb-separator) {
@@ -117,7 +117,7 @@ export interface Breadcrumb {
         }
 
         .breadcrumb-item {
-          font-size: nb-theme(text-caption-font-size);
+          font-size: nb-theme(text-caption-font-size)
         }
 
         nb-icon {
@@ -130,59 +130,59 @@ export interface Breadcrumb {
           }
         }
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class BreadcrumbsComponen {t implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
-  breadcrumbs: Breadcrumb[] = [];
+  private destroy$ = new Subject()
+  breadcrumbs: Breadcrumb[] = []
 
   constructor(private router: Router) {}
 
   ngOnInit() {
     // Generate initial breadcrumbs
-    this.generateBreadcrumbs();
+    this.generateBreadcrumbs()
 
     // Update breadcrumbs on navigation
     this.router.events;
       .pipe(;
-        filter((event) => event instanceof NavigationEnd),;
-        takeUntil(this.destroy$),;
-      );
+        filter((event) => event instanceof NavigationEnd),
+        takeUntil(this.destroy$),
+      )
       .subscribe(() => {
-        this.generateBreadcrumbs();
-      });
+        this.generateBreadcrumbs()
+      })
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   private generateBreadcrumbs() {
-    const urlSegments = this.router.url.split('/').filter((segment) => segment);
+    const urlSegments = this.router.url.split('/').filter((segment) => segment)
     this.breadcrumbs = [;
-      { label: 'Home', url: '/', icon: 'home-outline' },;
+      { label: 'Home', url: '/', icon: 'home-outline' },
       ...urlSegments.map((segment, index) => {
         const url = `/${urlSegments.slice(0, index + 1).join('/')}`;`
         return {
-          label: this.formatLabel(segment),;
-          url: index  word.charAt(0).toUpperCase() + word.slice(1));
-      .join(' ');
+          label: this.formatLabel(segment),
+          url: index  word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
   }
 
   private getIconForSegment(segment: string): string | undefined {
     // Map segments to icons
     const iconMap: { [key: string]: string } = {
-      profile: 'person-outline',;
-      settings: 'settings-2-outline',;
-      messages: 'message-circle-outline',;
-      favorites: 'heart-outline',;
-      ads: 'file-text-outline',;
-      admin: 'shield-outline',;
-      telemetry: 'activity-outline',;
-    };
+      profile: 'person-outline',
+      settings: 'settings-2-outline',
+      messages: 'message-circle-outline',
+      favorites: 'heart-outline',
+      ads: 'file-text-outline',
+      admin: 'shield-outline',
+      telemetry: 'activity-outline',
+    }
 
-    return iconMap[segment];
+    return iconMap[segment]
   }
 }

@@ -15,10 +15,10 @@ import { CardGridComponent } from './card-grid.component';
 import { SkeletonModule } from '../components/skeleton-loader/skeleton-loader.component';
 import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-test.module';
   // DebugElement, // Commented out as it's currently unused
-  Component,;
-  NO_ERRORS_SCHEMA,;
-  ViewChild,;
-  TemplateRef,;
+  Component,
+  NO_ERRORS_SCHEMA,
+  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 
 // Test host component to test CardGridComponent in a realistic scenario
@@ -26,13 +26,13 @@ import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-
     template: `;`
     ;
       ;
-        {{ item.title }};
+        {{ item.title }}
       ;
     ;
-  `,;`
-    imports: [CardGridComponent, CommonTestModule,;
-        NbCardModule,];
-});
+  `,`
+    imports: [CardGridComponent, CommonTestModule,
+        NbCardModule,]
+})
 class TestHostComponen {t {
   items = MOCK_ITEMS;
   layout: 'default' | 'compact' | 'masonry' = 'default';
@@ -57,34 +57,34 @@ class TestHostComponen {t {
 // Mock items for testing
 const MOCK_ITEMS = [;
   {
-    id: 'item1',;
-    title: 'Item 1',;
-    subtitle: 'Subtitle 1',;
-    description: 'Description for item 1',;
+    id: 'item1',
+    title: 'Item 1',
+    subtitle: 'Subtitle 1',
+    description: 'Description for item 1',
     imageUrl: 'https://example.com/image1.jpg',
     avatarUrl: 'https://example.com/avatar1.jpg',
-    avatarName: 'User 1',;
-    isOnline: true,;
-    tags: ['tag1', 'tag2'],;
+    avatarName: 'User 1',
+    isOnline: true,
+    tags: ['tag1', 'tag2'],
     actions: [;
-      { id: 'action1', icon: 'heart', tooltip: 'Like' },;
-      { id: 'action2', icon: 'comment', tooltip: 'Comment' },;
-    ],;
-  },;
+      { id: 'action1', icon: 'heart', tooltip: 'Like' },
+      { id: 'action2', icon: 'comment', tooltip: 'Comment' },
+    ],
+  },
   {
-    id: 'item2',;
-    title: 'Item 2',;
-    description: 'Description for item 2',;
+    id: 'item2',
+    title: 'Item 2',
+    description: 'Description for item 2',
     imageUrl: 'https://example.com/image2.jpg',
-    tags: ['tag3', 'tag4'],;
-  },;
+    tags: ['tag3', 'tag4'],
+  },
   {
-    id: 'item3',;
-    title: 'Item 3',;
-    subtitle: 'Subtitle 3',;
+    id: 'item3',
+    title: 'Item 3',
+    subtitle: 'Subtitle 3',
     imageUrl: 'https://example.com/image3.jpg',
-  },;
-];
+  },
+]
 
 describe('CardGridComponent', () => {
   let component: CardGridComponent;
@@ -96,23 +96,23 @@ describe('CardGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonTestModule, CardGridComponent, MockAppCardComponent, TestHostComponent],;
+      imports: [CommonTestModule, CardGridComponent, MockAppCardComponent, TestHostComponent],
       schemas: [NO_ERRORS_SCHEMA], // Add this to ignore unknown properties
-    });
+    })
       .overrideComponent(CardGridComponent, {
         set: {
-          imports: [CommonTestModule, MockAppCardComponent, SkeletonModule],;
-        },;
-      });
-      .compileComponents();
+          imports: [CommonTestModule, MockAppCardComponent, SkeletonModule],
+        },
+      })
+      .compileComponents()
 
     // Create the host component first
-    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture = TestBed.createComponent(TestHostComponent)
     // hostComponent = hostFixture.componentInstance;
-    hostFixture.detectChanges(); // This is needed to initialize the ViewChild
+    hostFixture.detectChanges() // This is needed to initialize the ViewChild
 
     // Create the component directly
-    fixture = TestBed.createComponent(CardGridComponent);
+    fixture = TestBed.createComponent(CardGridComponent)
     component = fixture.componentInstance;
     // debugElement = fixture.debugElement;
 
@@ -120,41 +120,41 @@ describe('CardGridComponent', () => {
     component.items = MOCK_ITEMS;
 
     // Allow actual rendering
-    fixture.detectChanges();
-  });
+    fixture.detectChanges()
+  })
 
   describe('Component Initialization', () => {
     it('should create', () => {
-      expect(component).toBeTruthy();
-    });
+      expect(component).toBeTruthy()
+    })
 
     it('should initialize with default values', () => {
-      const newComponent = new CardGridComponent();
-      expect(newComponent.layout).toBe('default');
-      expect(newComponent.cardLayout).toBe('default');
-      expect(newComponent.columns).toBe(4);
-      expect(newComponent.isLoading).toBeFalse();
-      expect(newComponent.emptyStateMessage).toBe('No items to display');
-      expect(newComponent.items).toEqual([]);
-    });
-  });
+      const newComponent = new CardGridComponent()
+      expect(newComponent.layout).toBe('default')
+      expect(newComponent.cardLayout).toBe('default')
+      expect(newComponent.columns).toBe(4)
+      expect(newComponent.isLoading).toBeFalse()
+      expect(newComponent.emptyStateMessage).toBe('No items to display')
+      expect(newComponent.items).toEqual([])
+    })
+  })
 
   describe('Event Handling', () => {
     it('should emit cardClick event when handleCardClick is called', () => {
-      spyOn(component.cardClick, 'emit');
+      spyOn(component.cardClick, 'emit')
 
-      component.handleCardClick('item1');
+      component.handleCardClick('item1')
 
-      expect(component.cardClick.emit).toHaveBeenCalledWith('item1');
-    });
+      expect(component.cardClick.emit).toHaveBeenCalledWith('item1')
+    })
 
     it('should emit actionClick event when handleActionClick is called', () => {
-      spyOn(component.actionClick, 'emit');
-      const actionEvent = { id: 'action1', itemId: 'item1' };
+      spyOn(component.actionClick, 'emit')
+      const actionEvent = { id: 'action1', itemId: 'item1' }
 
-      component.handleActionClick(actionEvent);
+      component.handleActionClick(actionEvent)
 
-      expect(component.actionClick.emit).toHaveBeenCalledWith(actionEvent);
-    });
-  });
-});
+      expect(component.actionClick.emit).toHaveBeenCalledWith(actionEvent)
+    })
+  })
+})

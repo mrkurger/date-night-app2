@@ -9,18 +9,18 @@ import { CommonModule } from '@angular/common';
  * It uses Nebular UI components for consistent styling.;
  */
 @Component({';
-  selector: 'nb-carousel',;
-  templateUrl: './carousel.component.html',;
-  styleUrls: ['./carousel.component.scss'],;
-  standalone: true,;
+  selector: 'nb-carousel',
+  templateUrl: './carousel.component.html',
+  styleUrls: ['./carousel.component.scss'],
+  standalone: true,
   imports: [;
-    CommonModule,;
-    NbButtonModule,;
+    CommonModule,
+    NbButtonModule,
     NbIconModule;
-  ],;
-});
+  ],
+})
 export class CarouselModul {e implements OnInit, OnDestroy {
-  @Input() items: CarouselItem[] = [];
+  @Input() items: CarouselItem[] = []
   @Input() showDots = true;
   @Input() showArrows = true;
   @Input() autoPlay = false;
@@ -28,52 +28,52 @@ export class CarouselModul {e implements OnInit, OnDestroy {
   @Input() aspectRatio: '1:1' | '4:3' | '16:9' | '21:9' = '16:9';
   @Input() thumbnails = false;
 
-  @Output() itemChange = new EventEmitter();
+  @Output() itemChange = new EventEmitter()
 
   currentIndex = 0;
   autoPlayTimer: any;
 
   ngOnInit(): void {
     if (this.autoPlay && this.items.length > 1) {
-      this.startAutoPlay();
+      this.startAutoPlay()
     }
   }
 
   ngOnDestroy(): void {
-    this.stopAutoPlay();
+    this.stopAutoPlay()
   }
 
   /**
    * Navigate to the next item;
    */
   next(event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
 
     this.currentIndex = (this.currentIndex + 1) % this.items.length;
-    this.itemChange.emit(this.currentIndex);
-    this.resetAutoPlay();
+    this.itemChange.emit(this.currentIndex)
+    this.resetAutoPlay()
   }
 
   /**
    * Navigate to the previous item;
    */
   prev(event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
 
     this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-    this.itemChange.emit(this.currentIndex);
-    this.resetAutoPlay();
+    this.itemChange.emit(this.currentIndex)
+    this.resetAutoPlay()
   }
 
   /**
    * Navigate to a specific item;
    */
   goTo(index: number, event?: Event): void {
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation()
 
     this.currentIndex = index;
-    this.itemChange.emit(this.currentIndex);
-    this.resetAutoPlay();
+    this.itemChange.emit(this.currentIndex)
+    this.resetAutoPlay()
   }
 
   /**
@@ -81,8 +81,8 @@ export class CarouselModul {e implements OnInit, OnDestroy {
    */
   private startAutoPlay(): void {
     this.autoPlayTimer = setInterval(() => {
-      this.next();
-    }, this.autoPlayInterval);
+      this.next()
+    }, this.autoPlayInterval)
   }
 
   /**
@@ -90,7 +90,7 @@ export class CarouselModul {e implements OnInit, OnDestroy {
    */
   private stopAutoPlay(): void {
     if (this.autoPlayTimer) {
-      clearInterval(this.autoPlayTimer);
+      clearInterval(this.autoPlayTimer)
     }
   }
 
@@ -99,8 +99,8 @@ export class CarouselModul {e implements OnInit, OnDestroy {
    */
   private resetAutoPlay(): void {
     if (this.autoPlay) {
-      this.stopAutoPlay();
-      this.startAutoPlay();
+      this.stopAutoPlay()
+      this.startAutoPlay()
     }
   }
 

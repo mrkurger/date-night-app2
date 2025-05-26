@@ -7,61 +7,61 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AlertFormDialogComponent } from '../alert-form-dialog/alert-form-dialog.component';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  _NbSpinnerModule,;
-  _NbAlertModule,;
-  NbTooltipModule,;
-  NbBadgeModule,;
-  NbTagModule,;
-  NbSelectModule,;
-  NbTableModule,;
-  NbDialogModule,;
-  NbDialogService,;
-  NbTabsetModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  _NbSpinnerModule,
+  _NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
+  NbSelectModule,
+  NbTableModule,
+  NbDialogModule,
+  NbDialogService,
+  NbTabsetModule,
   NbPaginatorModule,';
 } from '@nebular/theme';
 
 import {
-  AppSortComponent,;
-  AppSortHeaderComponent,;
+  AppSortComponent,
+  AppSortHeaderComponent,
 } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 
 import {
-  Alert,;
-  AlertEvent,;
-  AlertSeverity,;
-  AlertConditionType,;
-  _AlertTimeWindow,;
-  AlertChannel,;
+  Alert,
+  AlertEvent,
+  AlertSeverity,
+  AlertConditionType,
+  _AlertTimeWindow,
+  AlertChannel,
 } from '../../../../core/models/alert.model';
 
 @Component({
-  selector: 'app-alert-management',;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [NebularModule, CommonModule,;
-    ReactiveFormsModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbTableModule,;
-    NbFormFieldModule,;
-    NbInputModule,;
-    NbSelectModule,;
-    NbToggleModule,;
-    NbIconModule,;
-    NbDialogModule,;
-    NbTagModule,;
-    NbBadgeModule,;
-    NbTooltipModule,;
-    NbTabsetModule,;
-    AppSortComponent,;
-    AppSortHeaderComponent,;
-    NbPaginatorModule,;
-  ],;
+  selector: 'app-alert-management',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [NebularModule, CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbTableModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbToggleModule,
+    NbIconModule,
+    NbDialogModule,
+    NbTagModule,
+    NbBadgeModule,
+    NbTooltipModule,
+    NbTabsetModule,
+    AppSortComponent,
+    AppSortHeaderComponent,
+    NbPaginatorModule,
+  ],
   template: `;`
     ;
       Alert Management;
@@ -98,13 +98,13 @@ import {
                       Actions;
                     ;
                     ;
-                      {{ alert.name }};
+                      {{ alert.name }}
                       ;
                         ;
                           {{ getSeverityLabel(alert.severity) }}
                         ;
                       ;
-                      {{ getConditionDescription(alert.condition) }};
+                      {{ getConditionDescription(alert.condition) }}
                       ;
                         ;
                           ;
@@ -154,14 +154,14 @@ import {
                       Actions;
                     ;
                     ;
-                      {{ event.timestamp | date: 'medium' }};
-                      {{ event.alertName }};
+                      {{ event.timestamp | date: 'medium' }}
+                      {{ event.alertName }}
                       ;
                         ;
                           {{ getSeverityLabel(event.severity) }}
                         ;
                       ;
-                      {{ event.message }};
+                      {{ event.message }}
                       ;
                         ;
                       ;
@@ -182,7 +182,7 @@ import {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .alert-management-container {
@@ -195,7 +195,7 @@ import {
         margin-bottom: 20px;
       }
 
-      .alert-definitions-container,;
+      .alert-definitions-container,
       .active-alerts-container {
         margin-top: 20px;
       }
@@ -205,15 +205,15 @@ import {
         border-collapse: collapse;
       }
 
-      th,;
+      th,
       td {
         padding: 1rem;
         text-align: left;
-        border-bottom: 1px solid var(--border-basic-color-3);
+        border-bottom: 1px solid var(--border-basic-color-3)
       }
 
       th {
-        background-color: var(--background-basic-color-2);
+        background-color: var(--background-basic-color-2)
         font-weight: 600;
       }
 
@@ -229,18 +229,18 @@ import {
       button[nbButton] {
         margin-right: 0.5rem;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class AlertManagementComponen {t implements OnInit, OnDestroy {
   // Alert definitions
-  alerts: Alert[] = [];
+  alerts: Alert[] = []
   pageSize = 10;
   pageIndex = 0;
   totalAlerts = 0;
 
   // Active alerts
-  activeAlerts: AlertEvent[] = [];
+  activeAlerts: AlertEvent[] = []
   unacknowledgedCount = 0;
 
   // Tab selection
@@ -252,52 +252,52 @@ export class AlertManagementComponen {t implements OnInit, OnDestroy {
   activeSortColumn: string | null = null;
   activeSortDirection: string = 'asc';
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject()
 
   constructor(;
-    private alertService: AlertService,;
-    private dialog: NbDialogService,;
+    private alertService: AlertService,
+    private dialog: NbDialogService,
   ) {}
 
   ngOnInit(): void {
-    this.loadAlerts();
-    this.loadActiveAlerts();
+    this.loadAlerts()
+    this.loadActiveAlerts()
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   loadAlerts(): void {
     this.alertService;
-      .getAlerts(this.pageIndex, this.pageSize);
-      .pipe(takeUntil(this.destroy$));
+      .getAlerts(this.pageIndex, this.pageSize)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response) => {
         this.alerts = response.alerts;
         this.totalAlerts = response.total;
-      });
+      })
   }
 
   loadActiveAlerts(): void {
     this.alertService;
-      .getActiveAlerts();
-      .pipe(takeUntil(this.destroy$));
+      .getActiveAlerts()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((alerts) => {
         this.activeAlerts = alerts;
         this.unacknowledgedCount = alerts.filter((a) => !a.acknowledged).length;
-      });
+      })
   }
 
   onPageChange(page: number): void {
     this.pageIndex = page - 1;
-    this.loadAlerts();
+    this.loadAlerts()
   }
 
   onPageSizeChange(pageSize: number): void {
     this.pageSize = pageSize;
     this.pageIndex = 0;
-    this.loadAlerts();
+    this.loadAlerts()
   }
 
   sortAlerts(sort: { column: string; direction: string }): void {
@@ -309,13 +309,13 @@ export class AlertManagementComponen {t implements OnInit, OnDestroy {
       const isAsc = sort.direction === 'asc';
       switch (sort.column) {
         case 'name':;
-          return this.compare(a.name, b.name, isAsc);
+          return this.compare(a.name, b.name, isAsc)
         case 'severity':;
-          return this.compare(a.severity, b.severity, isAsc);
+          return this.compare(a.severity, b.severity, isAsc)
         default:;
           return 0;
       }
-    });
+    })
   }
 
   sortActiveAlerts(sort: { column: string; direction: string }): void {
@@ -327,62 +327,62 @@ export class AlertManagementComponen {t implements OnInit, OnDestroy {
       const isAsc = sort.direction === 'asc';
       switch (sort.column) {
         case 'timestamp':;
-          return this.compare(a.timestamp, b.timestamp, isAsc);
+          return this.compare(a.timestamp, b.timestamp, isAsc)
         case 'alertName':;
-          return this.compare(a.alertName, b.alertName, isAsc);
+          return this.compare(a.alertName, b.alertName, isAsc)
         case 'severity':;
-          return this.compare(a.severity, b.severity, isAsc);
+          return this.compare(a.severity, b.severity, isAsc)
         case 'status':;
-          return this.compare(a.acknowledged, b.acknowledged, isAsc);
+          return this.compare(a.acknowledged, b.acknowledged, isAsc)
         default:;
           return 0;
       }
-    });
+    })
   }
 
   private compare(a: any, b: any, isAsc: boolean): number {
     return (a  {
         alert.enabled = enabled;
-      });
+      })
   }
 
   openAlertDialog(alert?: Alert): void {
     const dialogRef = this.dialog.open(AlertFormDialogComponent, {
-      context: { alert },;
-    });
+      context: { alert },
+    })
 
     dialogRef.onClose.subscribe((result) => {
       if (result) {
-        this.loadAlerts();
+        this.loadAlerts()
       }
-    });
+    })
   }
 
   editAlert(alert: Alert): void {
-    this.openAlertDialog(alert);
+    this.openAlertDialog(alert)
   }
 
   testAlert(alert: Alert): void {
-    this.alertService.testAlert(alert.id).pipe(takeUntil(this.destroy$)).subscribe();
+    this.alertService.testAlert(alert.id).pipe(takeUntil(this.destroy$)).subscribe()
   }
 
   deleteAlert(alert: Alert): void {
     this.alertService;
-      .deleteAlert(alert.id);
-      .pipe(takeUntil(this.destroy$));
+      .deleteAlert(alert.id)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.loadAlerts();
-      });
+        this.loadAlerts()
+      })
   }
 
   acknowledgeAlert(event: AlertEvent): void {
     this.alertService;
-      .acknowledgeAlert(event.id);
-      .pipe(takeUntil(this.destroy$));
+      .acknowledgeAlert(event.id)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         event.acknowledged = true;
         this.unacknowledgedCount--;
-      });
+      })
   }
 
   viewAlertDetails(_event: AlertEvent): void {

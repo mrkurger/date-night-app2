@@ -10,8 +10,8 @@ import type { AppSortEvent } from '../../shared/components/custom-nebular-compon
 // Removed unused catchError import
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class ReviewServic {e {
   private apiUrl = `${environment.apiUrl}/reviews`;`
 
@@ -22,7 +22,7 @@ export class ReviewServic {e {
    * @param reviewData Review data;
    */
   createReview(reviewData: any): Observable {
-    return this.http.post(this.apiUrl, reviewData);
+    return this.http.post(this.apiUrl, reviewData)
   }
 
   /**
@@ -30,35 +30,35 @@ export class ReviewServic {e {
    * @param advertiserId Advertiser ID;
    * @param page Page number;
    * @param limit Items per page;
-   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful);
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getAdvertiserReviews(;
-    advertiserId: string,;
-    page = 1,;
-    limit = 10,;
-    sort = 'newest',;
+    advertiserId: string,
+    page = 1,
+    limit = 10,
+    sort = 'newest',
   ): Observable {
     return this.http.get(;
-      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,;`
-    );
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,`
+    )
   }
 
   /**
-   * Get reviews for an advertiser (typed version);
+   * Get reviews for an advertiser (typed version)
    * @param advertiserId Advertiser ID;
    * @param page Page number;
    * @param limit Items per page;
-   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful);
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getReviewsByAdvertiser(;
-    advertiserId: string,;
-    page = 1,;
-    limit = 10,;
-    sort = 'newest',;
+    advertiserId: string,
+    page = 1,
+    limit = 10,
+    sort = 'newest',
   ): Observable {
     return this.http.get(;
-      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,;`
-    );
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,`
+    )
   }
 
   /**
@@ -66,17 +66,17 @@ export class ReviewServic {e {
    * @param adId Ad ID;
    * @param page Page number;
    * @param limit Items per page;
-   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful);
+   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
    */
   getReviewsByAd(;
-    adId: string,;
-    page = 1,;
-    limit = 10,;
-    sort = 'newest',;
+    adId: string,
+    page = 1,
+    limit = 10,
+    sort = 'newest',
   ): Observable {
     return this.http.get(;
-      `${this.apiUrl}/ad/${adId}?page=${page}&limit=${limit}&sort=${sort}`,;`
-    );
+      `${this.apiUrl}/ad/${adId}?page=${page}&limit=${limit}&sort=${sort}`,`
+    )
   }
 
   /**
@@ -84,7 +84,7 @@ export class ReviewServic {e {
    * @param reviewId Review ID;
    */
   getReview(reviewId: string): Observable {
-    return this.http.get(`${this.apiUrl}/${reviewId}`);`
+    return this.http.get(`${this.apiUrl}/${reviewId}`)`
   }
 
   /**
@@ -93,7 +93,7 @@ export class ReviewServic {e {
    * @param reviewData Updated review data;
    */
   updateReview(reviewId: string, reviewData: any): Observable {
-    return this.http.put(`${this.apiUrl}/${reviewId}`, reviewData);`
+    return this.http.put(`${this.apiUrl}/${reviewId}`, reviewData)`
   }
 
   /**
@@ -101,7 +101,7 @@ export class ReviewServic {e {
    * @param reviewId Review ID;
    */
   deleteReview(reviewId: string): Observable {
-    return this.http.delete(`${this.apiUrl}/${reviewId}`);`
+    return this.http.delete(`${this.apiUrl}/${reviewId}`)`
   }
 
   /**
@@ -109,7 +109,7 @@ export class ReviewServic {e {
    * @param reviewId Review ID;
    */
   markReviewHelpful(reviewId: string): Observable {
-    return this.http.post(`${this.apiUrl}/${reviewId}/helpful`, {});`
+    return this.http.post(`${this.apiUrl}/${reviewId}/helpful`, {})`
   }
 
   /**
@@ -118,16 +118,16 @@ export class ReviewServic {e {
    * @param reason Reason for report;
    */
   reportReview(reviewId: string, reason: string): Observable {
-    return this.http.post(`${this.apiUrl}/${reviewId}/report`, { reason });`
+    return this.http.post(`${this.apiUrl}/${reviewId}/report`, { reason })`
   }
 
   /**
-   * Respond to a review (for advertisers);
+   * Respond to a review (for advertisers)
    * @param reviewId Review ID;
    * @param content Response content;
    */
   respondToReview(reviewId: string, content: string): Observable {
-    return this.http.post(`${this.apiUrl}/${reviewId}/respond`, { content });`
+    return this.http.post(`${this.apiUrl}/${reviewId}/respond`, { content })`
   }
 
   /**
@@ -137,8 +137,8 @@ export class ReviewServic {e {
    */
   getTopRatedAdvertisers(limit = 10, minReviews = 3): Observable {
     return this.http.get(;
-      `${this.apiUrl}/top-rated/advertisers?limit=${limit}&minReviews=${minReviews}`,;`
-    );
+      `${this.apiUrl}/top-rated/advertisers?limit=${limit}&minReviews=${minReviews}`,`
+    )
   }
 
   /**
@@ -147,7 +147,7 @@ export class ReviewServic {e {
    * @param limit Items per page;
    */
   getPendingReviews(page = 1, limit = 20): Observable {
-    return this.http.get(`${this.apiUrl}/admin/pending?page=${page}&limit=${limit}`);`
+    return this.http.get(`${this.apiUrl}/admin/pending?page=${page}&limit=${limit}`)`
   }
 
   /**
@@ -155,7 +155,7 @@ export class ReviewServic {e {
    * @param reviewId Review ID;
    */
   approveReview(reviewId: string): Observable {
-    return this.http.post(`${this.apiUrl}/admin/approve/${reviewId}`, {});`
+    return this.http.post(`${this.apiUrl}/admin/approve/${reviewId}`, {})`
   }
 
   /**
@@ -164,7 +164,7 @@ export class ReviewServic {e {
    * @param moderationNotes Moderation notes;
    */
   rejectReview(reviewId: string, moderationNotes: string): Observable {
-    return this.http.post(`${this.apiUrl}/admin/reject/${reviewId}`, { moderationNotes });`
+    return this.http.post(`${this.apiUrl}/admin/reject/${reviewId}`, { moderationNotes })`
   }
 
   /**
@@ -172,6 +172,6 @@ export class ReviewServic {e {
    * @param advertiserId Advertiser ID;
    */
   getReviewStats(advertiserId: string): Observable {
-    return this.http.get(`${this.apiUrl}/stats/${advertiserId}`);`
+    return this.http.get(`${this.apiUrl}/stats/${advertiserId}`)`
   }
 }

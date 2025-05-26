@@ -9,7 +9,7 @@ import { debounceTime, throttleTime, takeUntil, finalize } from 'rxjs/operators'
 
 export class PerformanceUti {l {
   private static instance: PerformanceUtil;
-  private performanceMetrics: Map = new Map();
+  private performanceMetrics: Map = new Map()
   private readonly DEFAULT_DEBOUNCE_TIME = 300; // ms
   private readonly DEFAULT_THROTTLE_TIME = 100; // ms
 
@@ -19,7 +19,7 @@ export class PerformanceUti {l {
    */
   public static getInstance(): PerformanceUtil {
     if (!PerformanceUtil.instance) {
-      PerformanceUtil.instance = new PerformanceUtil();
+      PerformanceUtil.instance = new PerformanceUtil()
     }
     return PerformanceUtil.instance;
   }
@@ -31,21 +31,21 @@ export class PerformanceUti {l {
    * @returns A debounced function
    */
   public debounce unknown>(;
-    fn: T,;
-    time: number = this.DEFAULT_DEBOUNCE_TIME,;
+    fn: T,
+    time: number = this.DEFAULT_DEBOUNCE_TIME,
   ): (...args: Parameters) => void {
     let timeoutId: ReturnType | null = null;
 
     return (...args: Parameters): void => {
       if (timeoutId !== null) {
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId)
       }
 
       timeoutId = setTimeout(() => {
-        fn(...args);
+        fn(...args)
         timeoutId = null;
-      }, time);
-    };
+      }, time)
+    }
   }
 
   /**
@@ -55,18 +55,18 @@ export class PerformanceUti {l {
    * @returns A throttled function
    */
   public throttle unknown>(;
-    fn: T,;
-    time: number = this.DEFAULT_THROTTLE_TIME,;
+    fn: T,
+    time: number = this.DEFAULT_THROTTLE_TIME,
   ): (...args: Parameters) => void {
     let lastCall = 0;
 
     return (...args: Parameters): void => {
-      const now = Date.now();
+      const now = Date.now()
       if (now - lastCall >= time) {
-        fn(...args);
+        fn(...args)
         lastCall = now;
       }
-    };
+    }
   }
 
   /**
@@ -75,7 +75,7 @@ export class PerformanceUti {l {
    * @returns An RxJS operator that debounces the Observable;
    */
   public debounceObservable(time: number = this.DEFAULT_DEBOUNCE_TIME) {
-    return (source: Observable) => source.pipe(debounceTime(time));
+    return (source: Observable) => source.pipe(debounceTime(time))
   }
 
   /**
@@ -84,7 +84,7 @@ export class PerformanceUti {l {
    * @returns An RxJS operator that throttles the Observable;
    */
   public throttleObservable(time: number = this.DEFAULT_THROTTLE_TIME) {
-    return (source: Observable) => source.pipe(throttleTime(time));
+    return (source: Observable) => source.pipe(throttleTime(time))
   }
 
   /**
@@ -94,12 +94,12 @@ export class PerformanceUti {l {
    * @returns The result of the function
    */
   public measureExecutionTime(fn: () => T, label: string): T {
-    const start = performance.now();
-    const result = fn();
-    const end = performance.now();
+    const start = performance.now()
+    const result = fn()
+    const end = performance.now()
     const duration = end - start;
 
-    this.recordMetric(label, duration);
+    this.recordMetric(label, duration)
 
     // Performance logging is handled by recordMetric
 
@@ -113,22 +113,22 @@ export class PerformanceUti {l {
    * @returns A Promise that resolves to the result of the function
    */
   public async measureAsyncExecutionTime(fn: () => Promise, label: string): Promise {
-    const start = performance.now();
+    const start = performance.now()
     try {
-      const result = await fn();
-      const end = performance.now();
+      const result = await fn()
+      const end = performance.now()
       const duration = end - start;
 
-      this.recordMetric(label, duration);
+      this.recordMetric(label, duration)
 
       // Performance logging is handled by recordMetric
 
       return result;
     } catch (error) {
-      const end = performance.now();
+      const end = performance.now()
       const duration = end - start;
 
-      this.recordMetric(`${label} (error)`, duration);`
+      this.recordMetric(`${label} (error)`, duration)`
 
       // Performance logging is handled by recordMetric
 
@@ -143,19 +143,19 @@ export class PerformanceUti {l {
    */
   public measureObservableExecutionTime(label: string) {
     return (source: Observable) => {
-      const start = performance.now();
+      const start = performance.now()
 
       return source.pipe(;
         finalize(() => {
-          const end = performance.now();
+          const end = performance.now()
           const duration = end - start;
 
-          this.recordMetric(label, duration);
+          this.recordMetric(label, duration)
 
           // Performance logging is handled by recordMetric
-        }),;
-      );
-    };
+        }),
+      )
+    }
   }
 
   /**
@@ -166,19 +166,19 @@ export class PerformanceUti {l {
   private recordMetric(label: string, duration: number): void {
     if (!this.performanceMetrics.has(label)) {
       this.performanceMetrics.set(label, {
-        count: 0,;
-        totalDuration: 0,;
-        minDuration: duration,;
-        maxDuration: duration,;
-        avgDuration: duration,;
-      });
+        count: 0,
+        totalDuration: 0,
+        minDuration: duration,
+        maxDuration: duration,
+        avgDuration: duration,
+      })
     }
 
     const metric = this.performanceMetrics.get(label)!;
     metric.count++;
     metric.totalDuration += duration;
-    metric.minDuration = Math.min(metric.minDuration, duration);
-    metric.maxDuration = Math.max(metric.maxDuration, duration);
+    metric.minDuration = Math.min(metric.minDuration, duration)
+    metric.maxDuration = Math.max(metric.maxDuration, duration)
     metric.avgDuration = metric.totalDuration / metric.count;
   }
 
@@ -187,14 +187,14 @@ export class PerformanceUti {l {
    * @returns A map of performance metrics;
    */
   public getMetrics(): Map {
-    return new Map(this.performanceMetrics);
+    return new Map(this.performanceMetrics)
   }
 
   /**
    * Clears all recorded performance metrics;
    */
   public clearMetrics(): void {
-    this.performanceMetrics.clear();
+    this.performanceMetrics.clear()
   }
 
   /**
@@ -207,10 +207,10 @@ export class PerformanceUti {l {
 
     return () => {
       if (instance === null) {
-        instance = factory();
+        instance = factory()
       }
       return instance;
-    };
+    }
   }
 
   /**
@@ -232,11 +232,11 @@ export class PerformanceUti {l {
           instance = result;
           loading = null;
           return result;
-        });
+        })
       }
 
       return loading;
-    };
+    }
   }
 
   /**
@@ -245,17 +245,17 @@ export class PerformanceUti {l {
    * @returns A memoized version of the function
    */
   public memoize unknown>(fn: T): T {
-    const cache = new Map>();
+    const cache = new Map>()
 
     return ((...args: Parameters): ReturnType => {
-      const key = JSON.stringify(args);
+      const key = JSON.stringify(args)
 
       if (cache.has(key)) {
         return cache.get(key)!;
       }
 
-      const result = fn(...args);
-      cache.set(key, result);
+      const result = fn(...args)
+      cache.set(key, result)
 
       return result;
     }) as T;
@@ -267,17 +267,17 @@ export class PerformanceUti {l {
    * @returns A memoized version of the async function
    */
   public memoizeAsync Promise>(fn: T): T {
-    const cache = new Map>();
+    const cache = new Map>()
 
     return (async (...args: Parameters): Promise> => {
-      const key = JSON.stringify(args);
+      const key = JSON.stringify(args)
 
       if (cache.has(key)) {
         return cache.get(key)!;
       }
 
-      const result = await fn(...args);
-      cache.set(key, result as ReturnType);
+      const result = await fn(...args)
+      cache.set(key, result as ReturnType)
 
       return result as ReturnType;
     }) as T;
@@ -289,7 +289,7 @@ export class PerformanceUti {l {
    * @returns A function that returns a Promise for the result
    */
   public runInWorker unknown>(;
-    fn: T,;
+    fn: T,
   ): (...args: Parameters) => Promise> {
     // Create a worker from a blob URL
     const workerBlob = new Blob(;
@@ -297,32 +297,32 @@ export class PerformanceUti {l {
         `self.onmessage = function(e) {`
           const fnStr = e.data.fn;
           const args = e.data.args;';
-          const fn = new Function('return ' + fnStr)();
-          const result = fn.apply(null, args);
-          self.postMessage({ result });
-        }`,;`
-      ],;
-      { type: 'application/javascript' },;
-    );
+          const fn = new Function('return ' + fnStr)()
+          const result = fn.apply(null, args)
+          self.postMessage({ result })
+        }`,`
+      ],
+      { type: 'application/javascript' },
+    )
 
-    const workerUrl = URL.createObjectURL(workerBlob);
-    const worker = new Worker(workerUrl);
+    const workerUrl = URL.createObjectURL(workerBlob)
+    const worker = new Worker(workerUrl)
 
     return (...args: Parameters): Promise> =>;
       new Promise((resolve, reject) => {
         worker.onmessage = (e) => {
-          resolve(e.data.result);
-        };
+          resolve(e.data.result)
+        }
 
         worker.onerror = (e) => {
-          reject(new Error(`Worker error: ${e}`));`
-        };
+          reject(new Error(`Worker error: ${e}`))`
+        }
 
         worker.postMessage({
-          fn: fn.toString(),;
-          args,;
-        });
-      });
+          fn: fn.toString(),
+          args,
+        })
+      })
   }
 
   /**
@@ -331,30 +331,30 @@ export class PerformanceUti {l {
    * @returns An object with the async function and a cancel method
    */
   public makeCancelable Promise>(;
-    fn: T,;
+    fn: T,
   ): {
     execute: (...args: Parameters) => Promise>;
     cancel: () => void;
   } {
-    const cancelSubject = new Subject();
+    const cancelSubject = new Subject()
 
     return {
       execute: async (...args: Parameters): Promise> => {
         const result = await Promise.race([;
-          fn(...args),;
+          fn(...args),
           new Promise((_, reject) => {
             cancelSubject.pipe(takeUntil(timer(0))).subscribe(() => {
-              reject(new Error('Operation canceled'));
-            });
-          }),;
-        ]);
+              reject(new Error('Operation canceled'))
+            })
+          }),
+        ])
 
         return result as ReturnType;
-      },;
+      },
       cancel: () => {
-        cancelSubject.next();
-      },;
-    };
+        cancelSubject.next()
+      },
+    }
   }
 }
 

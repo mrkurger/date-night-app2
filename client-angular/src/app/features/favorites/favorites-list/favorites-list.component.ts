@@ -9,9 +9,9 @@ import { NotesDialogComponent } from '../../../shared/components/notes-dialog/no
 import { Subject } from 'rxjs';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-  FavoriteService,;
-  Favorite,;
-  FavoriteFilterOptions,;
+  FavoriteService,
+  Favorite,
+  FavoriteFilterOptions,
   FavoriteTag,';
 } from '../../../core/services/favorite.service';
 
@@ -19,17 +19,17 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
 @Component({';
-  selector: 'app-favorites-list',;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  selector: 'app-favorites-list',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     NebularModule, // Ensure NebularModule is imported here
     // FavoriteButtonComponent is imported but not used in the template
     // FavoriteButtonComponent,
-  ],;
+  ],
   template: `;`
     ;
       ;
@@ -37,7 +37,7 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
 
          0">;
           ;
-            Batch Actions ({{ selectedFavorites.length }});
+            Batch Actions ({{ selectedFavorites.length }})
             ;
           ;
         ;
@@ -102,7 +102,7 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
 
               ;
                  0;
-                      ? favorite.ad.images[0];
+                      ? favorite.ad.images[0]
                       : 'assets/images/placeholder.jpg';
                   ";
                   [alt]="favorite.ad.title";
@@ -111,7 +111,7 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
 
               ;
                 ;
-                  {{ favorite.ad.title }};
+                  {{ favorite.ad.title }}
                 ;
 
                 ;
@@ -151,12 +151,12 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
         display: block;
-        padding: var(--padding);
+        padding: var(--padding)
       }
 
       .favorites-container {
@@ -168,32 +168,32 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: var(--margin);
+        margin-bottom: var(--margin)
       }
 
       .page-title {
         margin: 0;
-        color: var(--text-basic-color);
+        color: var(--text-basic-color)
       }
 
       .filters-container {
-        background-color: var(--card-background-color);
-        border-radius: var(--card-border-radius);
-        padding: var(--card-padding);
-        margin-bottom: var(--margin);
-        box-shadow: var(--shadow);
+        background-color: var(--card-background-color)
+        border-radius: var(--card-border-radius)
+        padding: var(--card-padding)
+        margin-bottom: var(--margin)
+        box-shadow: var(--shadow)
 
         nb-form-field {
-          margin-bottom: var(--margin);
+          margin-bottom: var(--margin)
         }
       }
 
       .tags-filter {
-        margin-bottom: var(--margin);
+        margin-bottom: var(--margin)
 
         .tags-label {
-          margin-bottom: var(--spacing);
-          color: var(--text-hint-color);
+          margin-bottom: var(--spacing)
+          color: var(--text-hint-color)
         }
       }
 
@@ -202,64 +202,64 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: var(--padding);
-        color: var(--text-hint-color);
+        padding: var(--padding)
+        color: var(--text-hint-color)
 
         nb-spinner {
-          margin-bottom: var(--spacing);
+          margin-bottom: var(--spacing)
         }
       }
 
       .no-favorites {
         text-align: center;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
 
         .empty-icon {
           font-size: 4rem;
-          margin-bottom: var(--spacing);
+          margin-bottom: var(--spacing)
         }
 
         h3 {
-          margin: 0 0 var(--spacing);
-          color: var(--text-basic-color);
+          margin: 0 0 var(--spacing)
+          color: var(--text-basic-color)
         }
 
         p {
-          margin: 0 0 var(--margin);
+          margin: 0 0 var(--margin)
         }
       }
 
       .favorites-list {
         display: grid;
-        gap: var(--margin);
+        gap: var(--margin)
       }
 
       nb-card {
         margin: 0;
 
         &.priority-high {
-          border-left: 4px solid var(--color-danger-default);
+          border-left: 4px solid var(--color-danger-default)
         }
 
         &.priority-normal {
-          border-left: 4px solid var(--color-warning-default);
+          border-left: 4px solid var(--color-warning-default)
         }
 
         &.priority-low {
-          border-left: 4px solid var(--color-success-default);
+          border-left: 4px solid var(--color-success-default)
         }
       }
 
       .favorite-header {
         display: flex;
-        gap: var(--spacing);
+        gap: var(--spacing)
         align-items: flex-start;
       }
 
       .favorite-image {
         width: 120px;
         height: 120px;
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius)
         overflow: hidden;
 
         img {
@@ -273,15 +273,15 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
         flex: 1;
 
         h3 {
-          margin: 0 0 var(--spacing);
-          font-size: var(--text-heading-6-font-size);
+          margin: 0 0 var(--spacing)
+          font-size: var(--text-heading-6-font-size)
 
           a {
-            color: var(--text-basic-color);
+            color: var(--text-basic-color)
             text-decoration: none;
 
             &:hover {
-              color: var(--color-primary-hover);
+              color: var(--color-primary-hover)
             }
           }
         }
@@ -290,39 +290,39 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
       .favorite-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--spacing-xs);
-        margin-bottom: var(--spacing);
+        gap: var(--spacing-xs)
+        margin-bottom: var(--spacing)
       }
 
       .favorite-tags {
-        margin-bottom: var(--spacing);
+        margin-bottom: var(--spacing)
       }
 
       .favorite-notes {
         margin: 0;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         font-style: italic;
       }
 
       .favorite-actions {
         margin-left: auto;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class FavoritesListComponen {t implements OnInit {
-  favorites: Favorite[] = [];
+  favorites: Favorite[] = []
   loading = false;
-  userTags: FavoriteTag[] = [];
-  selectedTagFilters: string[] = [];
-  selectedFavorites: (string | { city: string; county: string })[] = [];
+  userTags: FavoriteTag[] = []
+  selectedTagFilters: string[] = []
+  selectedFavorites: (string | { city: string; county: string })[] = []
 
   filterOptions: FavoriteFilterOptions = {
-    sort: 'newest',;
-    search: '',;
-  };
+    sort: 'newest',
+    search: '',
+  }
 
-  private searchSubject = new Subject();
+  private searchSubject = new Subject()
 
   /**
    * Convert ad ID to string regardless of its type;
@@ -331,7 +331,7 @@ export class FavoritesListComponen {t implements OnInit {
     if (!adId) return '';
     if (typeof adId === 'string') return adId;
     if (adId._id) return adId._id;
-    return JSON.stringify(adId);
+    return JSON.stringify(adId)
   }
 
   get isFiltered(): boolean {
@@ -341,30 +341,30 @@ export class FavoritesListComponen {t implements OnInit {
       !!this.filterOptions.county ||;
       !!this.filterOptions.city ||;
       this.selectedTagFilters.length > 0;
-    );
+    )
   }
 
   // Batch actions menu items
   batchActions: NbMenuItem[] = [;
-    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },;
-    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },;
-    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },;
-  ];
+    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },
+    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },
+    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },
+  ]
 
   constructor(;
-    private favoriteService: FavoriteService,;
-    private notificationService: NotificationService,;
-    private dialog: NbDialogService,;
+    private favoriteService: FavoriteService,
+    private notificationService: NotificationService,
+    private dialog: NbDialogService,
   ) {
     // Set up debounced search
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
-      this.applyFilters();
-    });
+      this.applyFilters()
+    })
   }
 
   ngOnInit(): void {
-    this.loadFavorites();
-    this.loadUserTags();
+    this.loadFavorites()
+    this.loadUserTags()
   }
 
   loadFavorites(): void {
@@ -373,57 +373,57 @@ export class FavoritesListComponen {t implements OnInit {
     this.favoriteService.getFavorites(this.filterOptions).subscribe({
       next: (favorites) => {
         this.favorites = favorites.map((favorite) => ({
-          ...favorite,;
-          selected: false,;
-        }));
+          ...favorite,
+          selected: false,
+        }))
         this.loading = false;
-      },;
+      },
       error: (error: Error) => {
-        this.notificationService.error('Failed to load favorites');
+        this.notificationService.error('Failed to load favorites')
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 
   loadUserTags(): void {
     this.favoriteService.getUserTags().subscribe({
       next: (tags) => {
         this.userTags = tags;
-      },;
+      },
       error: (error: Error) => {
-        this.notificationService.error('Failed to load tags');
-      },;
-    });
+        this.notificationService.error('Failed to load tags')
+      },
+    })
   }
 
   onSearchChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.filterOptions.search = value;
-    this.searchSubject.next(value);
+    this.searchSubject.next(value)
   }
 
   applyFilters(): void {
-    this.loadFavorites();
+    this.loadFavorites()
   }
 
   resetFilters(): void {
     this.filterOptions = {
-      sort: 'newest',;
-    };
-    this.selectedTagFilters = [];
-    this.applyFilters();
+      sort: 'newest',
+    }
+    this.selectedTagFilters = []
+    this.applyFilters()
   }
 
   removeFavorite(adId: string): void {
     this.favoriteService.removeFavorite(adId).subscribe({
       next: () => {
-        this.favorites = this.favorites.filter((favorite) => favorite.ad._id !== adId);
-        this.notificationService.success('Removed from favorites');
-      },;
+        this.favorites = this.favorites.filter((favorite) => favorite.ad._id !== adId)
+        this.notificationService.success('Removed from favorites')
+      },
       error: (error: Error) => {
-        this.notificationService.error('Failed to remove from favorites');
-      },;
-    });
+        this.notificationService.error('Failed to remove from favorites')
+      },
+    })
   }
 
   removeFavoritesBatch(): void {
@@ -434,15 +434,15 @@ export class FavoritesListComponen {t implements OnInit {
     this.favoriteService.removeFavoritesBatch(adIds).subscribe({
       next: (result) => {
         this.favorites = this.favorites.filter(;
-          (favorite) => !adIds.includes(this.getAdIdAsString(favorite.ad._id)),;
-        );
-        this.selectedFavorites = [];
-        this.notificationService.success(`Removed ${result.removed} items from favorites`);`
-      },;
+          (favorite) => !adIds.includes(this.getAdIdAsString(favorite.ad._id)),
+        )
+        this.selectedFavorites = []
+        this.notificationService.success(`Removed ${result.removed} items from favorites`)`
+      },
       error: (error: Error) => {
-        this.notificationService.error('Failed to remove selected favorites');
-      },;
-    });
+        this.notificationService.error('Failed to remove selected favorites')
+      },
+    })
   }
 
   toggleNotifications(favorite: Favorite): void {
@@ -450,13 +450,13 @@ export class FavoritesListComponen {t implements OnInit {
       next: (response) => {
         favorite.notificationsEnabled = response.notificationsEnabled;
         this.notificationService.success(;
-          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`,;`
-        );
-      },;
+          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`,`
+        )
+      },
       error: (error: Error) => {
-        this.notificationService.error('Failed to update notification settings');
-      },;
-    });
+        this.notificationService.error('Failed to update notification settings')
+      },
+    })
   }
 
   openNotesDialog(favorite: Favorite): void {
@@ -469,12 +469,12 @@ export class FavoritesListComponen {t implements OnInit {
     //   },
     //   hasBackdrop: true,
     //   closeOnBackdropClick: true,
-    // });
+    // })
     // dialogRef, : .onClose.subscribe((result) => {
     //   if (result) {
-    //     this.updateNotes(favorite,_result));
+    //     this.updateNotes(favorite,_result))
     //   }
-    // });
+    // })
   }
 
   openTagsDialogForSingle(favorite: Favorite): void {
@@ -488,13 +488,13 @@ export class FavoritesListComponen {t implements OnInit {
     //   },
     //   hasBackdrop: true,
     //   closeOnBackdropClick: true,
-    // });
+    // })
     // dialogRef.onClose.subscribe((result) => {
     //   if (result && typeof result === 'string') {
-    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
-    //     this.updateTags(favorite, tags);
+    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '')
+    //     this.updateTags(favorite, tags)
     //   }
-    // });
+    // })
   }
 
   openTagsDialog(): void {
@@ -503,10 +503,10 @@ export class FavoritesListComponen {t implements OnInit {
     //   .filter((fav) => this.selectedFavorites.includes(this.getAdIdAsString(fav.ad)))
     //   .reduce((acc, fav) => {
     //     if (fav.tags) {
-    //       fav.tags.forEach((tag) => acc.add(tag));
+    //       fav.tags.forEach((tag) => acc.add(tag))
     //     }
     //     return acc;
-    //   }, new Set());
+    //   }, new Set())
     // const dialogRef = this.dialog.open(NotesDialogComponent, {
     //   context: {
     //     title: `Edit Tags for ${this.selectedFavorites.length} Favorites`,`
@@ -517,125 +517,125 @@ export class FavoritesListComponen {t implements OnInit {
     //   },
     //   hasBackdrop: true,
     //   closeOnBackdropClick: true,
-    // });
+    // })
     // dialogRef.onClose.subscribe((result) => {
     //   if (result && typeof result === 'string') {
-    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '');
-    //     this.updateTagsBatch(tags);
+    //     const tags = result.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '')
+    //     this.updateTagsBatch(tags)
     //   }
-    // });
+    // })
   }
 
   updateNotes(favorite: Favorite, notes: string): void {
     // this.favoriteService.updateNotes(this.getAdIdAsString(favorite.ad._id), notes).subscribe({
     //   next: () => {
     //     favorite.notes = notes;
-    //     this.notificationService.success('Notes updated');
+    //     this.notificationService.success('Notes updated')
     //   },
     //   error: () => {
-    //     this.notificationService.error('Failed to update notes');
+    //     this.notificationService.error('Failed to update notes')
     //   },
-    // });
+    // })
   }
 
   updateTags(favorite: Favorite, tags: string[]): void {
     // this.favoriteService.updateTags(this.getAdIdAsString(favorite.ad._id), tags).subscribe({
     //   next: () => {
     //     favorite.tags = tags;
-    //     this.notificationService.success('Tags updated');
-    //     this.loadUserTags(); // Refresh tag list
+    //     this.notificationService.success('Tags updated')
+    //     this.loadUserTags() // Refresh tag list
     //   },
     //   error: () => {
-    //     this.notificationService.error('Failed to update tags');
+    //     this.notificationService.error('Failed to update tags')
     //   },
-    // });
+    // })
   }
 
   updateTagsBatch(tags: string[]): void {
     // if (this.selectedFavorites.length === 0) return;
-    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId));
+    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId))
     // let completed = 0;
     // let failed = 0;
     // adIds.forEach((adId) => {
     //   this.favoriteService.updateTags(adId, tags).subscribe({
     //     next: () => {
     //       completed++;
-    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
+    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId)
     //       if (favorite) {
-    //         favorite.tags = [...tags];
+    //         favorite.tags = [...tags]
     //       }
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated tags for ${completed} favorites`);`
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`)`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);`
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`)`
     //         }
-    //         this.loadUserTags(); // Refresh tag list
+    //         this.loadUserTags() // Refresh tag list
     //       }
     //     },
     //     error: () => {
     //       failed++;
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated tags for ${completed} favorites`);`
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`)`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);`
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`)`
     //         }
     //       }
     //     },
-    //   });
-    // });
+    //   })
+    // })
   }
 
   updatePriority(favorite: Favorite, priority: 'low' | 'normal' | 'high'): void {
     // this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
     //   next: () => {
     //     favorite.priority = priority;
-    //     this.notificationService.success(`Priority set to ${priority}`);`
+    //     this.notificationService.success(`Priority set to ${priority}`)`
     //   },
     //   error: () => {
-    //     this.notificationService.error('Failed to update priority');
+    //     this.notificationService.error('Failed to update priority')
     //   },
-    // });
+    // })
   }
 
   setPriorityBatch(priority: 'low' | 'normal' | 'high'): void {
     // if (this.selectedFavorites.length === 0) return;
-    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId));
+    // const adIds = this.selectedFavorites.map(adId => this.getAdIdAsString(adId))
     // let completed = 0;
     // let failed = 0;
     // adIds.forEach((adId) => {
     //   this.favoriteService.updatePriority(adId, priority).subscribe({
     //     next: () => {
     //       completed++;
-    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId);
+    //       const favorite = this.favorites.find((f) => this.getAdIdAsString(f.ad._id) === adId)
     //       if (favorite) {
     //         favorite.priority = priority;
     //       }
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated priority for ${completed} favorites`);`
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`)`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);`
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`)`
     //         }
     //       }
     //     },
     //     error: () => {
     //       failed++;
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated priority for ${completed} favorites`);`
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`)`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);`
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`)`
     //         }
     //       }
     //     },
-    //   });
-    // });
+    //   })
+    // })
   }
 
   onFavoriteRemoved(isFavorite: boolean, favorite: Favorite): void {
     // if (!isFavorite) {
-    //   this.favorites = this.favorites.filter((f) => f.ad._id !== favorite.ad._id);
+    //   this.favorites = this.favorites.filter((f) => f.ad._id !== favorite.ad._id)
     //   this.selectedFavorites = this.selectedFavorites.filter(
     //     (id) => id !== this.getAdIdAsString(favorite.ad)
-    //   );
+    //   )
     // }
   }
 
@@ -644,7 +644,7 @@ export class FavoritesListComponen {t implements OnInit {
     //   .filter((fav) => fav.selected)
     //   .map((fav) =>
     //     typeof fav.ad === 'string' ? fav.ad : this.getAdIdAsString(fav.ad._id)
-    //   );
+    //   )
   }
 
   getPriorityClass(favorite: Favorite): string {
@@ -669,10 +669,10 @@ export class FavoritesListComponen {t implements OnInit {
 
   toggleTagFilter(tag: string): void {
     // if (this.selectedTagFilters.includes(tag)) {
-    //   this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag);
+    //   this.selectedTagFilters = this.selectedTagFilters.filter((t) => t !== tag)
     // } else {
-    //   this.selectedTagFilters.push(tag);
+    //   this.selectedTagFilters.push(tag)
     // }
-    // this.applyFilters();
+    // this.applyFilters()
   }
 }

@@ -10,24 +10,24 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from 'primeng/api';
 
 @Component({';
-  selector: 'p-side-menu',;
+  selector: 'p-side-menu',
   template: `;`
     ;
       ;
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .side-menu {
         height: 100%;
         display: flex;
         flex-direction: column;
-        padding: var(--content-padding);
+        padding: var(--content-padding)
 
         &.compact {
-          padding: calc(var(--content-padding) / 2);
+          padding: calc(var(--content-padding) / 2)
 
           ::ng-deep {
             .p-panelmenu .p-menuitem-text {
@@ -44,7 +44,7 @@ import { MenuItem } from 'primeng/api';
       :host ::ng-deep {
         .p-sidebar {
           .p-sidebar-header {
-            padding: var(--content-padding);
+            padding: var(--content-padding)
           }
 
           .p-sidebar-content {
@@ -61,25 +61,25 @@ import { MenuItem } from 'primeng/api';
             padding: 0.75rem 1rem;
 
             .p-menuitem-icon {
-              color: var(--text-color-secondary);
+              color: var(--text-color-secondary)
               margin-right: 0.5rem;
             }
 
             .p-menuitem-text {
-              color: var(--text-color);
+              color: var(--text-color)
             }
 
             &:hover {
-              background: var(--surface-hover);
+              background: var(--surface-hover)
             }
 
             &.p-menuitem-link-active {
-              background: var(--primary-color);
-              color: var(--primary-color-text);
+              background: var(--primary-color)
+              color: var(--primary-color-text)
 
-              .p-menuitem-icon,;
+              .p-menuitem-icon,
               .p-menuitem-text {
-                color: var(--primary-color-text);
+                color: var(--primary-color-text)
               }
             }
           }
@@ -91,14 +91,14 @@ import { MenuItem } from 'primeng/api';
           }
         }
       }
-    `,;`
-  ],;
-  standalone: true,;
-  imports: [MenuItem, CommonModule, SidebarModule, PanelMenuModule],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+    `,`
+  ],
+  standalone: true,
+  imports: [MenuItem, CommonModule, SidebarModule, PanelMenuModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class SideMenuComponen {t {
-  @Input() menuItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
   @Input() visible = false;
   @Input() position: 'left' | 'right' = 'left';
   @Input() showCloseIcon = true;
@@ -106,38 +106,38 @@ export class SideMenuComponen {t {
   @Input() dismissible = true;
   @Input() compact = false;
   @Input() sidebarStyle: { [key: string]: string } = {
-    width: '250px',;
-  };
+    width: '250px',
+  }
 
-  @Output() visibleChange = new EventEmitter();
-  @Output() onShow = new EventEmitter();
-  @Output() onHide = new EventEmitter();
-  @Output() menuItemClick = new EventEmitter();
+  @Output() visibleChange = new EventEmitter()
+  @Output() onShow = new EventEmitter()
+  @Output() onHide = new EventEmitter()
+  @Output() menuItemClick = new EventEmitter()
 
   onMenuItemClick(event: { item: MenuItem }) {
-    this.menuItemClick.emit(event.item);
+    this.menuItemClick.emit(event.item)
   }
 }
 
 @Component({
-  selector: 'p-side-menu',;
+  selector: 'p-side-menu',
   template: `;`
     ;
       ;
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .side-menu {
         height: 100%;
         display: flex;
         flex-direction: column;
-        padding: var(--content-padding);
+        padding: var(--content-padding)
 
         &.compact {
-          padding: calc(var(--content-padding) / 2);
+          padding: calc(var(--content-padding) / 2)
 
           ::ng-deep {
             .p-panelmenu .p-menuitem-text {
@@ -154,7 +154,7 @@ export class SideMenuComponen {t {
       :host ::ng-deep {
         .p-sidebar {
           .p-sidebar-header {
-            padding: var(--content-padding);
+            padding: var(--content-padding)
           }
 
           .p-sidebar-content {
@@ -171,25 +171,25 @@ export class SideMenuComponen {t {
             padding: 0.75rem 1rem;
 
             .p-menuitem-icon {
-              color: var(--text-color-secondary);
+              color: var(--text-color-secondary)
               margin-right: 0.5rem;
             }
 
             .p-menuitem-text {
-              color: var(--text-color);
+              color: var(--text-color)
             }
 
             &:hover {
-              background: var(--surface-hover);
+              background: var(--surface-hover)
             }
 
             &.p-menuitem-link-active {
-              background: var(--primary-color);
-              color: var(--primary-color-text);
+              background: var(--primary-color)
+              color: var(--primary-color-text)
 
-              .p-menuitem-icon,;
+              .p-menuitem-icon,
               .p-menuitem-text {
-                color: var(--primary-color-text);
+                color: var(--primary-color-text)
               }
             }
           }
@@ -201,14 +201,14 @@ export class SideMenuComponen {t {
           }
         }
       }
-    `,;`
-  ],;
-  standalone: true,;
-  imports: [CommonModule, SidebarModule, PanelMenuModule],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-});
+    `,`
+  ],
+  standalone: true,
+  imports: [CommonModule, SidebarModule, PanelMenuModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class SideMenuComponen {t {
-  @Input() menuItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
   @Input() visible = false;
   @Input() position: 'left' | 'right' = 'left';
   @Input() showCloseIcon = true;
@@ -216,15 +216,15 @@ export class SideMenuComponen {t {
   @Input() dismissible = true;
   @Input() compact = false;
   @Input() sidebarStyle: { [key: string]: string } = {
-    width: '250px',;
-  };
+    width: '250px',
+  }
 
-  @Output() visibleChange = new EventEmitter();
-  @Output() onShow = new EventEmitter();
-  @Output() onHide = new EventEmitter();
-  @Output() menuItemClick = new EventEmitter();
+  @Output() visibleChange = new EventEmitter()
+  @Output() onShow = new EventEmitter()
+  @Output() onHide = new EventEmitter()
+  @Output() menuItemClick = new EventEmitter()
 
   onMenuItemClick(event: { item: MenuItem }) {
-    this.menuItemClick.emit(event.item);
+    this.menuItemClick.emit(event.item)
   }
 }

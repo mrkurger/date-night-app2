@@ -12,65 +12,65 @@ import { User } from '../../../core/models/user.interface';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-  FormControl,;
-  FormGroup,;
-  Validators,;
-  ReactiveFormsModule,;
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
   FormBuilder,';
 } from '@angular/forms';
 
 import {
-  NbDialogRef,;
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbSelectModule,;
-  NbFormFieldModule,;
-  NbSpinnerModule,;
-  NbIconModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbBadgeModule,;
-  NbTagModule,;
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbSelectModule,
+  NbFormFieldModule,
+  NbSpinnerModule,
+  NbIconModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbBadgeModule,
+  NbTagModule,
 } from '@nebular/theme';
 
 // Define the TransferDialogData interface
 export interface TransferDialogData {
-  balances?: WalletBalance[];
+  balances?: WalletBalance[]
   selectedCurrency?: string;
 }
 
 @Component({
-  selector: 'app-transfer-dialog',;
-  templateUrl: './transfer-dialog.component.html',;
-  styleUrls: ['./transfer-dialog.component.scss'],;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  selector: 'app-transfer-dialog',
+  templateUrl: './transfer-dialog.component.html',
+  styleUrls: ['./transfer-dialog.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [;
-    NebularModule, CommonModule,;
-    ReactiveFormsModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbInputModule,;
-    NbSelectModule,;
-    NbFormFieldModule,;
-    NbSpinnerModule,;
-    NbIconModule,;
-    NbAlertModule,;
-    NbTooltipModule,;
-    NbBadgeModule,;
-    NbTagModule,,;
+    NebularModule, CommonModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbSelectModule,
+    NbFormFieldModule,
+    NbSpinnerModule,
+    NbIconModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbBadgeModule,
+    NbTagModule,,
     ProgressSpinnerModule;
-  ],;
-});
+  ],
+})
 export class TransferDialogComponen {t implements OnInit, OnDestroy {
   transferForm: FormGroup;
-  availableBalances: WalletBalance[] = [];
+  availableBalances: WalletBalance[] = []
   maxAmount = 0;
   processingTransfer = false;
   selectedUserForTransfer: User | null = null;
-  filteredUsers$ = new Subject();
-  private destroy$ = new Subject();
+  filteredUsers$ = new Subject()
+  private destroy$ = new Subject()
 
   // Add missing properties referenced in the template
   isSubmitting = false;
@@ -81,50 +81,50 @@ export class TransferDialogComponen {t implements OnInit, OnDestroy {
   }
 
   constructor(;
-    private dialogRef: NbDialogRef,;
-    private fb: FormBuilder,;
-    public walletService: WalletService,;
-    private userService: UserService,;
-    private notificationService: NotificationService,;
+    private dialogRef: NbDialogRef,
+    private fb: FormBuilder,
+    public walletService: WalletService,
+    private userService: UserService,
+    private notificationService: NotificationService,
   ) {
     this.transferForm = this.fb.group({
-      currency: ['', Validators.required],;
-      amount: ['', [Validators.required, Validators.min(0.01)]],;
-      recipientUsername: ['', Validators.required],;
-      description: [''],;
-    });
+      currency: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(0.01)]],
+      recipientUsername: ['', Validators.required],
+      description: [''],
+    })
   }
 
   ngOnInit() {
     // Setup currency change handler
     this.transferForm;
-      .get('currency');
-      ?.valueChanges.pipe(takeUntil(this.destroy$));
+      .get('currency')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.updateMaxAmount();
-      });
+        this.updateMaxAmount()
+      })
 
     // Setup recipient search
     this.transferForm;
-      .get('recipientUsername');
-      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$));
+      .get('recipientUsername')
+      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((value) => {
         if (typeof value === 'string' && value.length > 2) {
-          this.searchUsers(value);
+          this.searchUsers(value)
         }
-      });
+      })
 
     // Load initial balances
-    this.loadBalances();
+    this.loadBalances()
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   getControlStatus(controlName: string): string {
-    const control = this.transferForm.get(controlName);
+    const control = this.transferForm.get(controlName)
     if (!control) return 'basic';
 
     if (control.touched) {
@@ -134,53 +134,53 @@ export class TransferDialogComponen {t implements OnInit, OnDestroy {
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   // Add missing methods referenced in the template
   cancel() {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   transfer() {
-    this.transferFunds();
+    this.transferFunds()
   }
 
   private loadBalances() {
     this.walletService;
-      .getWalletBalance();
-      .pipe(takeUntil(this.destroy$));
+      .getWalletBalance()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((balances) => {
         if (Array.isArray(balances)) {
-          this.availableBalances = balances.filter((b) => b.available > 0);
+          this.availableBalances = balances.filter((b) => b.available > 0)
         }
-      });
+      })
   }
 
   private updateMaxAmount() {
     const currency = this.transferForm.get('currency')?.value;
-    const balance = this.availableBalances.find((b) => b.currency === currency);
+    const balance = this.availableBalances.find((b) => b.currency === currency)
     this.maxAmount = balance?.available || 0;
 
     // Update amount validator
-    const amountControl = this.transferForm.get('amount');
+    const amountControl = this.transferForm.get('amount')
     if (amountControl) {
       amountControl.setValidators([;
-        Validators.required,;
-        Validators.min(0.01),;
-        Validators.max(this.maxAmount),;
-      ]);
-      amountControl.updateValueAndValidity();
+        Validators.required,
+        Validators.min(0.01),
+        Validators.max(this.maxAmount),
+      ])
+      amountControl.updateValueAndValidity()
     }
   }
 
   private searchUsers(term: string) {
     this.userService;
-      .searchUsers(term);
-      .pipe(takeUntil(this.destroy$));
+      .searchUsers(term)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((users) => {
-        this.filteredUsers$.next(users);
-      });
+        this.filteredUsers$.next(users)
+      })
   }
 
   onRecipientSelected(user: User) {
@@ -196,23 +196,23 @@ export class TransferDialogComponen {t implements OnInit, OnDestroy {
 
     this.walletService;
       .transferFunds(;
-        this.selectedUserForTransfer._id,;
-        formData.amount,;
-        formData.currency,;
-        formData.description || undefined,;
-      );
-      .pipe(takeUntil(this.destroy$));
+        this.selectedUserForTransfer._id,
+        formData.amount,
+        formData.currency,
+        formData.description || undefined,
+      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.notificationService.success('Transfer successful');
-          this.dialogRef.close({ success: true });
-        },;
+          this.notificationService.success('Transfer successful')
+          this.dialogRef.close({ success: true })
+        },
         error: (error) => {
-          console.error('Transfer error:', error);
-          this.notificationService.error('Failed to process transfer');
+          console.error('Transfer error:', error)
+          this.notificationService.error('Failed to process transfer')
           this.processingTransfer = false;
           this.isSubmitting = false;
-        },;
-      });
+        },
+      })
   }
 }

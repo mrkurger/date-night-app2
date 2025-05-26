@@ -7,46 +7,46 @@ import { NbDataTableHeaderComponent } from './components/header/header.component
 import { NbDataTablePaginatorComponent } from './components/paginator/paginator.component';
 import { NbDataTableFilterComponent } from './components/filter/filter.component';
 import { NbDataTableSortComponent } from './components/sort/sort.component';
-  NbTableModule,;
-  NbCardModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbInputModule,;
-  NbSelectModule,;
-  NbCheckboxModule,;
-  NbTooltipModule,;
-  NbSpinnerModule,;
+  NbTableModule,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbInputModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbTooltipModule,
+  NbSpinnerModule,
   NbBadgeModule,';
 } from '@nebular/theme';
 
 @NgModule({
   declarations: [;
-    NbDataTableComponent,;
-    NbDataTableHeaderComponent,;
-    NbDataTablePaginatorComponent,;
-    NbDataTableFilterComponent,;
-    NbDataTableSortComponent,;
-  ],;
+    NbDataTableComponent,
+    NbDataTableHeaderComponent,
+    NbDataTablePaginatorComponent,
+    NbDataTableFilterComponent,
+    NbDataTableSortComponent,
+  ],
   imports: [;
-    CommonModule,;
-    FormsModule,;
-    NbTableModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbInputModule,;
-    NbSelectModule,;
-    NbCheckboxModule,;
-    NbTooltipModule,;
-    NbSpinnerModule,;
-    NbBadgeModule,;
-  ],;
+    CommonModule,
+    FormsModule,
+    NbTableModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbInputModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbTooltipModule,
+    NbSpinnerModule,
+    NbBadgeModule,
+  ],
   exports: [;
-    NbDataTableComponent,;
-    NbDataTableHeaderComponent,;
-    NbDataTablePaginatorComponent,;
-    NbDataTableFilterComponent,;
-    NbDataTableSortComponent,;
-  ],;
-});
+    NbDataTableComponent,
+    NbDataTableHeaderComponent,
+    NbDataTablePaginatorComponent,
+    NbDataTableFilterComponent,
+    NbDataTableSortComponent,
+  ],
+})
 export class NbDataTableModul {e {}

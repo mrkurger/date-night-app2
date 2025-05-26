@@ -6,11 +6,11 @@ import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browse
  * Provides methods to safely handle URLs and HTML content;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class ContentSanitizerServic {e {
   // List of allowed protocols
-  private readonly allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:', 'data:'];
+  private readonly allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:', 'data:']
   // List of blocked IP patterns
   private readonly blockedIpPatterns = [;
     /^127\./, // localhost
@@ -21,12 +21,12 @@ export class ContentSanitizerServic {e {
     /^169\.254\./, // link-local
     /^fc00::/, // unique local addr
     /^fe80::/, // link-local
-  ];
+  ]
 
   constructor(private sanitizer: DomSanitizer) {}
 
   /**
-   * Sanitizes a URL for safe binding to elements like img[src] and video[src];
+   * Sanitizes a URL for safe binding to elements like img[src] and video[src]
    * @param url The URL to sanitize;
    * @returns A safe URL that can be used in templates;
    */
@@ -36,7 +36,7 @@ export class ContentSanitizerServic {e {
     }
 
     if (!this.isValidUrl(url)) {
-      console.error('Invalid or potentially dangerous URL:', url);
+      console.error('Invalid or potentially dangerous URL:', url)
       return '';
     }
 
@@ -46,15 +46,15 @@ export class ContentSanitizerServic {e {
         url = '/' + url;
       }
 
-      return this.sanitizer.bypassSecurityTrustUrl(url);
+      return this.sanitizer.bypassSecurityTrustUrl(url)
     } catch (error) {
-      console.error('Error sanitizing URL:', error);
+      console.error('Error sanitizing URL:', error)
       return '';
     }
   }
 
   /**
-   * Sanitizes a URL for safe binding to iframe[src];
+   * Sanitizes a URL for safe binding to iframe[src]
    * @param url The URL to sanitize;
    * @returns A safe resource URL that can be used in iframes;
    */
@@ -64,14 +64,14 @@ export class ContentSanitizerServic {e {
     }
 
     if (!this.isValidUrl(url)) {
-      console.error('Invalid or potentially dangerous URL:', url);
+      console.error('Invalid or potentially dangerous URL:', url)
       return '';
     }
 
     try {
-      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url)
     } catch (error) {
-      console.error('Error sanitizing resource URL:', error);
+      console.error('Error sanitizing resource URL:', error)
       return '';
     }
   }
@@ -85,13 +85,13 @@ export class ContentSanitizerServic {e {
     if (!text) return '';
     return text.replace(/[&"']/g, (match) => {
       const entities: { [key: string]: string } = {
-        '': '&gt;',;
-        '&': '&amp;',;
-        '"': '&quot;',;
-        "'": '&#x27;',;
-      };
-      return entities[match];
-    });
+        '': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&#x27;',
+      }
+      return entities[match]
+    })
   }
 
   /**
@@ -103,11 +103,11 @@ export class ContentSanitizerServic {e {
     if (!html) return '';
 
     // Define allowed tags and their attributes
-    const allowedTags = new Set(['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'span']);
-    const allowedAttrs = new Set(['href', 'target', 'rel']);
+    const allowedTags = new Set(['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'span'])
+    const allowedAttrs = new Set(['href', 'target', 'rel'])
 
     // Create a temporary element
-    const tempElement = document.createElement('div');
+    const tempElement = document.createElement('div')
     tempElement.innerHTML = html;
 
     // Recursively clean nodes
@@ -118,52 +118,52 @@ export class ContentSanitizerServic {e {
 
       if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as Element;
-        const tagName = element.tagName.toLowerCase();
+        const tagName = element.tagName.toLowerCase()
 
         // Remove disallowed tags
         if (!allowedTags.has(tagName)) {
-          return document.createTextNode(element.textContent || '');
+          return document.createTextNode(element.textContent || '')
         }
 
         // Clean attributes
         Array.from(element.attributes).forEach((attr) => {
           if (!allowedAttrs.has(attr.name)) {
-            element.removeAttribute(attr.name);
+            element.removeAttribute(attr.name)
           }
           // Additional security for links
           if (attr.name === 'href') {
             const url = attr.value;
             if (!this.isValidUrl(url)) {
-              element.removeAttribute(attr.name);
+              element.removeAttribute(attr.name)
             }
             // Force noopener noreferrer for external links
             if (url.startsWith('http')) {
-              element.setAttribute('rel', 'noopener noreferrer');
-              element.setAttribute('target', '_blank');
+              element.setAttribute('rel', 'noopener noreferrer')
+              element.setAttribute('target', '_blank')
             }
           }
-        });
+        })
 
         // Clean children
-        Array.from(element.childNodes);
-          .map(cleanNode);
-          .filter(Boolean);
+        Array.from(element.childNodes)
+          .map(cleanNode)
+          .filter(Boolean)
           .forEach((newChild) => {
-            element.appendChild(newChild!);
-          });
+            element.appendChild(newChild!)
+          })
 
         return element;
       }
 
       return null;
-    };
+    }
 
     // Clean the content
-    const cleanedContent = Array.from(tempElement.childNodes);
-      .map(cleanNode);
-      .filter(Boolean);
-      .map((node) => (node as Element).outerHTML || node!.textContent);
-      .join('');
+    const cleanedContent = Array.from(tempElement.childNodes)
+      .map(cleanNode)
+      .filter(Boolean)
+      .map((node) => (node as Element).outerHTML || node!.textContent)
+      .join('')
 
     return cleanedContent;
   }
@@ -175,15 +175,15 @@ export class ContentSanitizerServic {e {
    */
   sanitize(input: unknown): string {
     if (input === null || input === undefined) return '';
-    if (typeof input !== 'string') return String(input);
+    if (typeof input !== 'string') return String(input)
 
     // For HTML content, use sanitizeHtml
     if (//i.test(input)) {
-      return this.sanitizeHtml(input);
+      return this.sanitizeHtml(input)
     }
 
     // For plain text, use sanitizeText
-    return this.sanitizeText(input);
+    return this.sanitizeText(input)
   }
 
   /**
@@ -202,11 +202,11 @@ export class ContentSanitizerServic {e {
         return true;
       }
 
-      const parsedUrl = new URL(url);
+      const parsedUrl = new URL(url)
 
       // Check protocol
       if (!this.allowedProtocols.includes(parsedUrl.protocol.toLowerCase())) {
-        console.warn('Blocked URL with disallowed protocol:', parsedUrl.protocol);
+        console.warn('Blocked URL with disallowed protocol:', parsedUrl.protocol)
         return false;
       }
 
@@ -218,14 +218,14 @@ export class ContentSanitizerServic {e {
         // Check if hostname is an IP address
         if (this.isIpAddress(hostname)) {
           if (this.blockedIpPatterns.some((pattern) => pattern.test(hostname))) {
-            console.warn('Blocked URL with internal/private IP:', hostname);
+            console.warn('Blocked URL with internal/private IP:', hostname)
             return false;
           }
         }
 
         // Block localhost variations
         if (hostname === 'localhost' || hostname.endsWith('.localhost')) {
-          console.warn('Blocked localhost URL:', hostname);
+          console.warn('Blocked localhost URL:', hostname)
           return false;
         }
       }
@@ -247,6 +247,6 @@ export class ContentSanitizerServic {e {
     // IPv6
     const ipv6Pattern = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
 
-    return ipv4Pattern.test(hostname) || ipv6Pattern.test(hostname);
+    return ipv4Pattern.test(hostname) || ipv6Pattern.test(hostname)
   }
 }

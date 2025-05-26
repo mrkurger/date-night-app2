@@ -2,20 +2,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({';
-    selector: 'nb-breadcrumbs',;
+    selector: 'nb-breadcrumbs',
     template: `;`
     ;
       ;
         ;
           ;
             ;
-            {{ item.title }};
+            {{ item.title }}
           ;
-          {{ item.title }};
+          {{ item.title }}
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .breadcrumbs {
@@ -33,18 +33,18 @@ import { NbMenuItem } from '@nebular/theme';
       .breadcrumb-item {
         display: flex;
         align-items: center;
-        color: nb-theme(text-hint-color);
-        font-size: nb-theme(text-subtitle-font-size);
+        color: nb-theme(text-hint-color)
+        font-size: nb-theme(text-subtitle-font-size)
 
         &:not(:last-child)::after {
           content: '/';
           margin: 0 0.5rem;
-          color: nb-theme(text-hint-color);
+          color: nb-theme(text-hint-color)
         }
 
         &.active {
-          color: nb-theme(text-basic-color);
-          font-weight: nb-theme(text-subtitle-font-weight);
+          color: nb-theme(text-basic-color)
+          font-weight: nb-theme(text-subtitle-font-weight)
         }
 
         a {
@@ -55,7 +55,7 @@ import { NbMenuItem } from '@nebular/theme';
           transition: color 0.2s;
 
           &:hover {
-            color: nb-theme(color-primary-hover);
+            color: nb-theme(color-primary-hover)
           }
         }
 
@@ -68,15 +68,15 @@ import { NbMenuItem } from '@nebular/theme';
           line-height: 1;
         }
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbBreadcrumbsComponen {t {
-  @Input() items: NbMenuItem[] = [];
-  @Output() itemClick = new EventEmitter();
+  @Input() items: NbMenuItem[] = []
+  @Output() itemClick = new EventEmitter()
 
   onItemClick(item: NbMenuItem) {
-    this.itemClick.emit(item);
+    this.itemClick.emit(item)
   }
 }

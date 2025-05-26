@@ -21,58 +21,58 @@ describe('AdminGuard', () => {
   let userSubject: BehaviorSubject;
 
   beforeEach(() => {
-    userSubject = new BehaviorSubject(null);
+    userSubject = new BehaviorSubject(null)
 
     authServiceSpy = jasmine.createSpyObj('AuthService', [], {
-      currentUser$: userSubject.asObservable(),;
-    });
+      currentUser$: userSubject.asObservable(),
+    })
 
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
 
     TestBed.configureTestingModule({
       providers: [;
-        AdminGuard,;
-        { provide: AuthService, useValue: authServiceSpy },;
-        { provide: Router, useValue: routerSpy },;
-      ],;
-    });
+        AdminGuard,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy },
+      ],
+    })
 
-    guard = TestBed.inject(AdminGuard);
-  });
+    guard = TestBed.inject(AdminGuard)
+  })
 
   it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
+    expect(guard).toBeTruthy()
+  })
 
   it('should redirect to login when user is not authenticated', (done) => {
     // Arrange
-    userSubject.next(null);
+    userSubject.next(null)
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/admin/dashboard' } as RouterStateSnapshot;
 
     // Act
     guard.canActivate(route, state).subscribe((result) => {
       // Assert
-      expect(result).toBeFalse();
+      expect(result).toBeFalse()
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'], {
-        queryParams: { returnUrl: '/admin/dashboard' },;
-      });
-      done();
-    });
-  });
+        queryParams: { returnUrl: '/admin/dashboard' },
+      })
+      done()
+    })
+  })
 
   it('should allow access when user is an admin', (done) => {
     // Arrange
     const mockUser: User = {
-      id: '123',;
-      _id: '123',;
-      username: 'admin',;
-      email: 'admin@example.com',;
-      roles: ['admin'],;
-      status: 'active',;
-      createdAt: new Date(),;
-    };
-    userSubject.next(mockUser);
+      id: '123',
+      _id: '123',
+      username: 'admin',
+      email: 'admin@example.com',
+      roles: ['admin'],
+      status: 'active',
+      createdAt: new Date(),
+    }
+    userSubject.next(mockUser)
 
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/admin/dashboard' } as RouterStateSnapshot;
@@ -80,24 +80,24 @@ describe('AdminGuard', () => {
     // Act
     guard.canActivate(route, state).subscribe((result) => {
       // Assert
-      expect(result).toBeTrue();
-      expect(routerSpy.navigate).not.toHaveBeenCalled();
-      done();
-    });
-  });
+      expect(result).toBeTrue()
+      expect(routerSpy.navigate).not.toHaveBeenCalled()
+      done()
+    })
+  })
 
   it('should redirect to login when user is not an admin', (done) => {
     // Arrange
     const mockUser: User = {
-      id: '123',;
-      _id: '123',;
-      username: 'user',;
-      email: 'user@example.com',;
-      roles: ['user'],;
-      status: 'active',;
-      createdAt: new Date(),;
-    };
-    userSubject.next(mockUser);
+      id: '123',
+      _id: '123',
+      username: 'user',
+      email: 'user@example.com',
+      roles: ['user'],
+      status: 'active',
+      createdAt: new Date(),
+    }
+    userSubject.next(mockUser)
 
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/admin/dashboard' } as RouterStateSnapshot;
@@ -105,25 +105,25 @@ describe('AdminGuard', () => {
     // Act
     guard.canActivate(route, state).subscribe((result) => {
       // Assert
-      expect(result).toBeFalse();
+      expect(result).toBeFalse()
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'], {
-        queryParams: { returnUrl: '/admin/dashboard' },;
-      });
-      done();
-    });
-  });
+        queryParams: { returnUrl: '/admin/dashboard' },
+      })
+      done()
+    })
+  })
 
   it('should handle user with no roles property', (done) => {
     // Arrange
     const mockUser = {
-      id: '123',;
-      _id: '123',;
-      username: 'user',;
-      email: 'user@example.com',;
-      status: 'active',;
-      createdAt: new Date(),;
+      id: '123',
+      _id: '123',
+      username: 'user',
+      email: 'user@example.com',
+      status: 'active',
+      createdAt: new Date(),
     } as User;
-    userSubject.next(mockUser);
+    userSubject.next(mockUser)
 
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/admin/dashboard' } as RouterStateSnapshot;
@@ -131,11 +131,11 @@ describe('AdminGuard', () => {
     // Act
     guard.canActivate(route, state).subscribe((result) => {
       // Assert
-      expect(result).toBeFalse();
+      expect(result).toBeFalse()
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'], {
-        queryParams: { returnUrl: '/admin/dashboard' },;
-      });
-      done();
-    });
-  });
-});
+        queryParams: { returnUrl: '/admin/dashboard' },
+      })
+      done()
+    })
+  })
+})

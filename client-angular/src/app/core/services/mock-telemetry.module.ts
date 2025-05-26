@@ -17,13 +17,13 @@ import { environment } from '../../../environments/environment';
  * Module for providing the mock telemetry service in development mode;
  */
 @NgModule({
-  imports: [CommonModule],;
+  imports: [CommonModule],
   providers: [;
     {
-      provide: TelemetryService,;
-      useClass: environment.useMockServices ? MockTelemetryService : TelemetryService,;
-    },;
-  ],;
-});
+      provide: TelemetryService,
+      useClass: environment.useMockServices ? MockTelemetryService : TelemetryService,
+    },
+  ],
+})
 export class MockTelemetryModul {e {}
 ';

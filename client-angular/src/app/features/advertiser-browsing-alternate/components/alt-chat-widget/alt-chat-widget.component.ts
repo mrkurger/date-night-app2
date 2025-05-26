@@ -6,15 +6,15 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
 @Component({';
-    selector: 'app-alt-chat-widget',;
+    selector: 'app-alt-chat-widget',
     imports: [;
-    NebularModule, CommonModule, NbChatModule, NbIconModule,;
-    CardModule,;
+    NebularModule, CommonModule, NbChatModule, NbIconModule,
+    CardModule,
     ButtonModule;
-  ],;
-    templateUrl: './alt-chat-widget.component.html',;
-    styleUrls: ['./alt-chat-widget.component.scss'];
-});
+  ],
+    templateUrl: './alt-chat-widget.component.html',
+    styleUrls: ['./alt-chat-widget.component.scss']
+})
 export class AltChatWidgetComponen {t {
   // TODO: Implement chat widget logic
   isOpen = false;

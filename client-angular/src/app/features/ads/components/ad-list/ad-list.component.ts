@@ -17,8 +17,8 @@ import { Subject } from 'rxjs';
 // ===================================================
 
 @Component({';
-  selector: 'app-ad-list',;
-  templateUrl: './ad-list.component.html',;
+  selector: 'app-ad-list',
+  templateUrl: './ad-list.component.html',
   styles: [;
     `;`
       .ad-list-container {
@@ -45,28 +45,28 @@ import { Subject } from 'rxjs';
       .filter-section {
         margin-bottom: 20px;
       }
-    `,;`
-  ],;
-  imports: [CommonModule, RouterLink],;
-});
+    `,`
+  ],
+  imports: [CommonModule, RouterLink],
+})
 export class AdListComponen {t implements OnInit, OnDestroy {
-  ads: Ad[] = [];
-  filteredAds: Ad[] = [];
+  ads: Ad[] = []
+  filteredAds: Ad[] = []
   loading = false;
   error: string | null = null;
   searchQuery = '';
   sortOption = 'dateDesc';
-  private destroy$ = new Subject();
+  private destroy$ = new Subject()
 
   constructor(private adService: AdService) {}
 
   ngOnInit(): void {
-    this.loadAds();
+    this.loadAds()
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   loadAds(): void {
@@ -75,11 +75,11 @@ export class AdListComponen {t implements OnInit, OnDestroy {
       next: (response) => {
         this.ads = response.ads;
         this.loading = false;
-      },;
+      },
       error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 }

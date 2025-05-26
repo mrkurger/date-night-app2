@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 @Component({';
-    selector: 'nb-form-error',;
+    selector: 'nb-form-error',
     template: `;`
     ;
       ;
-      {{ message }};
+      {{ message }}
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .form-error {
@@ -15,8 +15,8 @@ import { Component, Input } from '@angular/core';
         align-items: center;
         gap: 0.5rem;
         margin-top: 0.5rem;
-        color: nb-theme(color-danger-default);
-        font-size: nb-theme(text-caption-font-size);
+        color: nb-theme(color-danger-default)
+        font-size: nb-theme(text-caption-font-size)
       }
 
       nb-icon {
@@ -26,10 +26,10 @@ import { Component, Input } from '@angular/core';
       .error-message {
         line-height: 1.2;
       }
-    `,;`
-    ],;
+    `,`
+    ],
     standalone: false;
-});
+})
 export class NbFormErrorComponen {t {
   @Input() message = '';
   @Input() visible = false;

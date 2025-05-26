@@ -4,10 +4,10 @@ import { Observable, of } from 'rxjs';
 import { tap, shareReplay } from 'rxjs/operators';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class CachingServic {e {
-  private cache: Map = new Map();
+  private cache: Map = new Map()
   private readonly DEFAULT_CACHE_TIME = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   constructor(private http: HttpClient) {}
@@ -15,22 +15,22 @@ export class CachingServic {e {
   /**
    * Get data from cache or fetch from server;
    * @param url The URL to fetch data from;
-   * @param cacheTime Optional cache time in milliseconds (default: 5 minutes);
+   * @param cacheTime Optional cache time in milliseconds (default: 5 minutes)
    * @returns Observable of the data;
    */
   get(url: string, cacheTime: number = this.DEFAULT_CACHE_TIME): Observable {
-    const cachedData = this.cache.get(url);
-    const now = Date.now();
+    const cachedData = this.cache.get(url)
+    const now = Date.now()
 
     if (cachedData && now - cachedData.timestamp (url).pipe(;
       tap((response) => {
         this.cache.set(url, {
-          data: response,;
-          timestamp: now,;
-        });
-      }),;
-      shareReplay(1),;
-    );
+          data: response,
+          timestamp: now,
+        })
+      }),
+      shareReplay(1),
+    )
   }
 
   /**
@@ -44,9 +44,9 @@ export class CachingServic {e {
     return this.http.post(url, body).pipe(;
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach((url) => this.clearCacheItem(url));
-      }),;
-    );
+        invalidateUrls.forEach((url) => this.clearCacheItem(url))
+      }),
+    )
   }
 
   /**
@@ -60,9 +60,9 @@ export class CachingServic {e {
     return this.http.put(url, body).pipe(;
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach((url) => this.clearCacheItem(url));
-      }),;
-    );
+        invalidateUrls.forEach((url) => this.clearCacheItem(url))
+      }),
+    )
   }
 
   /**
@@ -75,16 +75,16 @@ export class CachingServic {e {
     return this.http.delete(url).pipe(;
       tap(() => {
         // Invalidate specified URLs in cache
-        invalidateUrls.forEach((url) => this.clearCacheItem(url));
-      }),;
-    );
+        invalidateUrls.forEach((url) => this.clearCacheItem(url))
+      }),
+    )
   }
 
   /**
    * Clear the entire cache;
    */
   clearCache(): void {
-    this.cache.clear();
+    this.cache.clear()
   }
 
   /**
@@ -92,7 +92,7 @@ export class CachingServic {e {
    * @param url The URL to clear from cache;
    */
   clearCacheItem(url: string): void {
-    this.cache.delete(url);
+    this.cache.delete(url)
   }
 
   /**
@@ -100,11 +100,11 @@ export class CachingServic {e {
    * @param pattern The pattern to match URLs against;
    */
   clearCachePattern(pattern: string): void {
-    const regex = new RegExp(pattern);
+    const regex = new RegExp(pattern)
     this.cache.forEach((_, key) => {
       if (regex.test(key)) {
-        this.cache.delete(key);
+        this.cache.delete(key)
       }
-    });
+    })
   }
 }

@@ -23,10 +23,10 @@ import { NotificationService } from '../../core/services/notification.service';
 
 // Mock MainLayoutComponent
 @Component({';
-    selector: 'app-main-layout',;
-    template: '',;
-    imports: [ReactiveFormsModule];
-});
+    selector: 'app-main-layout',
+    template: '',
+    imports: [ReactiveFormsModule]
+})
 class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
@@ -41,268 +41,268 @@ describe('AdvertiserProfileComponent', () => {
 
   // Mock data
   const mockAd = {
-    _id: 'ad1',;
-    title: 'Test Ad',;
-    description: 'Test description',;
-    location: { city: 'Oslo', county: 'Oslo' },;
-    price: 100,;
-    category: 'Dinner',;
-    isTouring: false,;
-    tags: ['tag1', 'tag2'],;
-    userId: 'user1',;
-    advertiser: 'Test User',;
-    isActive: true,;
-    isFeatured: false,;
-    isTrending: false,;
-    viewCount: 0,;
-    clickCount: 0,;
-    inquiryCount: 0,;
-    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],;
-    images: ['/assets/images/test-image-1.jpg'],;
-    createdAt: new Date().toISOString(),;
-    updatedAt: new Date().toISOString(),;
-  };
+    _id: 'ad1',
+    title: 'Test Ad',
+    description: 'Test description',
+    location: { city: 'Oslo', county: 'Oslo' },
+    price: 100,
+    category: 'Dinner',
+    isTouring: false,
+    tags: ['tag1', 'tag2'],
+    userId: 'user1',
+    advertiser: 'Test User',
+    isActive: true,
+    isFeatured: false,
+    isTrending: false,
+    viewCount: 0,
+    clickCount: 0,
+    inquiryCount: 0,
+    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],
+    images: ['/assets/images/test-image-1.jpg'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
 
   const mockUser = {
-    _id: 'user1',;
-    name: 'Test User',;
-  };
+    _id: 'user1',
+    name: 'Test User',
+  }
 
   // Mock services
   class MockAdServic {e {
     getAdById() {
-      return of(mockAd);
+      return of(mockAd)
     }
 
     updateAd() {
-      return of(mockAd);
+      return of(mockAd)
     }
 
     deleteAd() {
-      return of({ success: true });
+      return of({ success: true })
     }
   }
 
   class MockAuthServic {e {
-    currentUser$ = of(mockUser);
+    currentUser$ = of(mockUser)
   }
 
   class MockNotificationServic {e {
     success(message: string): void {
       // Mock success notification
-      console.log('Success:', message);
+      console.log('Success:', message)
     }
 
     error(message: string): void {
       // Mock error notification
-      console.error('Error:', message);
+      console.error('Error:', message)
     }
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,;
-    ReactiveFormsModule,;
-    AdvertiserProfileComponent],;
-      declarations: [MockMainLayoutComponent],;
+      imports: [RouterTestingModule,
+    ReactiveFormsModule,
+    AdvertiserProfileComponent],
+      declarations: [MockMainLayoutComponent],
       providers: [;
         {
-          provide: ActivatedRoute,;
+          provide: ActivatedRoute,
           useValue: {
-            paramMap: of(convertToParamMap({ id: 'ad1' })),;
-          },;
-        },;
-        { provide: AdService, useClass: MockAdService },;
-        { provide: AuthService, useClass: MockAuthService },;
-        { provide: NotificationService, useClass: MockNotificationService },;
-      ],;
-    }).compileComponents();
+            paramMap: of(convertToParamMap({ id: 'ad1' })),
+          },
+        },
+        { provide: AdService, useClass: MockAdService },
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: NotificationService, useClass: MockNotificationService },
+      ],
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(AdvertiserProfileComponent);
+    fixture = TestBed.createComponent(AdvertiserProfileComponent)
     component = fixture.componentInstance;
-    adService = TestBed.inject(AdService);
-    authService = TestBed.inject(AuthService);
-    notificationService = TestBed.inject(NotificationService);
-    router = TestBed.inject(Router);
+    adService = TestBed.inject(AdService)
+    authService = TestBed.inject(AuthService)
+    notificationService = TestBed.inject(NotificationService)
+    router = TestBed.inject(Router)
 
     // Spy on router navigation
-    spyOn(router, 'navigateByUrl').and.stub();
-  });
+    spyOn(router, 'navigateByUrl').and.stub()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   describe('initialization', () => {
     it('should load ad on init', fakeAsync(() => {
-      spyOn(adService, 'getAdById').and.callThrough();
+      spyOn(adService, 'getAdById').and.callThrough()
 
-      component.ngOnInit();
-      tick();
+      component.ngOnInit()
+      tick()
 
-      expect(adService.getAdById).toHaveBeenCalledWith('ad1');
-      expect(component.ad).toEqual(mockAd);
-      expect(component.isOwner).toBeTrue();
-      expect(component.loading).toBeFalse();
+      expect(adService.getAdById).toHaveBeenCalledWith('ad1')
+      expect(component.ad).toEqual(mockAd)
+      expect(component.isOwner).toBeTrue()
+      expect(component.loading).toBeFalse()
 
       // Check form values
       expect(component.adForm.value).toEqual({
-        title: 'Test Ad',;
-        description: 'Test description',;
-        location: { city: 'Oslo', county: 'Oslo' },;
-        price: 100,;
-        category: 'Dinner',;
-        isTouring: false,;
-        tags: 'tag1, tag2',;
-      });
-    }));
+        title: 'Test Ad',
+        description: 'Test description',
+        location: { city: 'Oslo', county: 'Oslo' },
+        price: 100,
+        category: 'Dinner',
+        isTouring: false,
+        tags: 'tag1, tag2',
+      })
+    }))
 
     it('should handle error when loading ad', fakeAsync(() => {
       spyOn(adService, 'getAdById').and.returnValue(;
-        throwError(() => new Error('Failed to load ad')),;
-      );
-      spyOn(console, 'error').and.callThrough();
+        throwError(() => new Error('Failed to load ad')),
+      )
+      spyOn(console, 'error').and.callThrough()
 
-      component.ngOnInit();
-      tick();
+      component.ngOnInit()
+      tick()
 
-      expect(component.error).toBe('Failed to load ad details');
-      expect(component.loading).toBeFalse();
-      expect(console.error).toHaveBeenCalled();
-    }));
-  });
+      expect(component.error).toBe('Failed to load ad details')
+      expect(component.loading).toBeFalse()
+      expect(console.error).toHaveBeenCalled()
+    }))
+  })
 
   describe('ad operations', () => {
     beforeEach(fakeAsync(() => {
-      component.ngOnInit();
-      tick();
-    }));
+      component.ngOnInit()
+      tick()
+    }))
 
     it('should toggle edit mode', () => {
-      expect(component.editMode).toBeFalse();
+      expect(component.editMode).toBeFalse()
 
-      component.toggleEditMode();
-      expect(component.editMode).toBeTrue();
+      component.toggleEditMode()
+      expect(component.editMode).toBeTrue()
 
-      component.toggleEditMode();
-      expect(component.editMode).toBeFalse();
-    });
+      component.toggleEditMode()
+      expect(component.editMode).toBeFalse()
+    })
 
     it('should save changes when form is valid', () => {
-      spyOn(adService, 'updateAd').and.callThrough();
-      spyOn(notificationService, 'success').and.callThrough();
+      spyOn(adService, 'updateAd').and.callThrough()
+      spyOn(notificationService, 'success').and.callThrough()
 
-      component.toggleEditMode();
+      component.toggleEditMode()
       component.adForm.patchValue({
-        title: 'Updated Title',;
-        description: 'Updated description',;
-      });
+        title: 'Updated Title',
+        description: 'Updated description',
+      })
 
-      component.saveChanges();
+      component.saveChanges()
 
-      expect(adService.updateAd).toHaveBeenCalled();
-      expect(notificationService.success).toHaveBeenCalledWith('Ad updated successfully');
-      expect(component.editMode).toBeFalse();
-      expect(component.loading).toBeFalse();
-    });
+      expect(adService.updateAd).toHaveBeenCalled()
+      expect(notificationService.success).toHaveBeenCalledWith('Ad updated successfully')
+      expect(component.editMode).toBeFalse()
+      expect(component.loading).toBeFalse()
+    })
 
     it('should show error when form is invalid', () => {
-      spyOn(notificationService, 'error').and.callThrough();
+      spyOn(notificationService, 'error').and.callThrough()
 
-      component.toggleEditMode();
+      component.toggleEditMode()
       component.adForm.patchValue({
         title: '', // Invalid - required field
-        description: 'Updated description',;
-      });
+        description: 'Updated description',
+      })
 
-      component.saveChanges();
+      component.saveChanges()
 
       expect(notificationService.error).toHaveBeenCalledWith(;
-        'Please fix the form errors before submitting',;
-      );
-    });
+        'Please fix the form errors before submitting',
+      )
+    })
 
     it('should cancel edit and reset form', () => {
-      component.toggleEditMode();
+      component.toggleEditMode()
       component.adForm.patchValue({
-        title: 'Changed Title',;
-        description: 'Changed description',;
-      });
+        title: 'Changed Title',
+        description: 'Changed description',
+      })
 
-      component.cancelEdit();
+      component.cancelEdit()
 
-      expect(component.editMode).toBeFalse();
+      expect(component.editMode).toBeFalse()
       expect(component.adForm.value).toEqual({
-        title: 'Test Ad',;
-        description: 'Test description',;
-        location: 'Oslo',;
-        price: 100,;
-        category: 'Dinner',;
-        isTouring: false,;
-        tags: 'tag1, tag2',;
-      });
-    });
+        title: 'Test Ad',
+        description: 'Test description',
+        location: 'Oslo',
+        price: 100,
+        category: 'Dinner',
+        isTouring: false,
+        tags: 'tag1, tag2',
+      })
+    })
 
     it('should delete ad and navigate to my ads page', fakeAsync(() => {
-      spyOn(window, 'confirm').and.returnValue(true);
-      spyOn(adService, 'deleteAd').and.callThrough();
-      spyOn(notificationService, 'success').and.callThrough();
+      spyOn(window, 'confirm').and.returnValue(true)
+      spyOn(adService, 'deleteAd').and.callThrough()
+      spyOn(notificationService, 'success').and.callThrough()
 
-      component.deleteAd();
-      tick();
+      component.deleteAd()
+      tick()
 
-      expect(adService.deleteAd).toHaveBeenCalledWith('ad1');
-      expect(notificationService.success).toHaveBeenCalledWith('Ad deleted successfully');
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/my-ads');
-    }));
+      expect(adService.deleteAd).toHaveBeenCalledWith('ad1')
+      expect(notificationService.success).toHaveBeenCalledWith('Ad deleted successfully')
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/my-ads')
+    }))
 
     it('should not delete ad when user cancels confirmation', () => {
-      spyOn(window, 'confirm').and.returnValue(false);
-      spyOn(adService, 'deleteAd').and.callThrough();
+      spyOn(window, 'confirm').and.returnValue(false)
+      spyOn(adService, 'deleteAd').and.callThrough()
 
-      component.deleteAd();
+      component.deleteAd()
 
-      expect(adService.deleteAd).not.toHaveBeenCalled();
-    });
+      expect(adService.deleteAd).not.toHaveBeenCalled()
+    })
 
     it('should navigate to upgrade page', () => {
-      component.upgradeToFeatured();
+      component.upgradeToFeatured()
 
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/upgrade?adId=ad1');
-    });
-  });
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/upgrade?adId=ad1')
+    })
+  })
 
   describe('utility methods', () => {
     it('should get media URL from media array', () => {
       component.ad = mockAd;
 
-      const url = component.getMediaUrl(0);
+      const url = component.getMediaUrl(0)
 
-      expect(url).toBe('/assets/images/test-image-1.jpg');
-    });
+      expect(url).toBe('/assets/images/test-image-1.jpg')
+    })
 
     it('should get media URL from images array when media is not available', () => {
-      component.ad = { ...mockAd, media: [] };
+      component.ad = { ...mockAd, media: [] }
 
-      const url = component.getMediaUrl(0);
+      const url = component.getMediaUrl(0)
 
-      expect(url).toBe('/assets/images/test-image-1.jpg');
-    });
+      expect(url).toBe('/assets/images/test-image-1.jpg')
+    })
 
     it('should return default image when no media is available', () => {
-      component.ad = { ...mockAd, media: [], images: [] };
+      component.ad = { ...mockAd, media: [], images: [] }
 
-      const url = component.getMediaUrl(0);
+      const url = component.getMediaUrl(0)
 
-      expect(url).toBe('/assets/images/default-profile.jpg');
-    });
+      expect(url).toBe('/assets/images/default-profile.jpg')
+    })
 
     it('should return default image when ad is null', () => {
       component.ad = null;
 
-      const url = component.getMediaUrl(0);
+      const url = component.getMediaUrl(0)
 
-      expect(url).toBe('/assets/images/default-profile.jpg');
-    });
-  });
-});
+      expect(url).toBe('/assets/images/default-profile.jpg')
+    })
+  })
+})

@@ -5,11 +5,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { PaginatorState } from 'primeng/paginatorstate';
 
 @Component({';
-  selector: 'nb-paginator',;
-  imports: [CommonModule, PaginatorModule],;
+  selector: 'nb-paginator',
+  imports: [CommonModule, PaginatorModule],
   template: `;`
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host ::ng-deep .p-paginator {
@@ -18,24 +18,24 @@ import { PaginatorState } from 'primeng/paginatorstate';
         justify-content: space-between;
         align-items: center;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class NbPaginatorComponen {t implements OnInit {
   @Input() length: number = 0;
   @Input() pageSize: number = 10;
-  @Input() pageSizeOptions: number[] = [];
+  @Input() pageSizeOptions: number[] = []
   @Input() page: number = 0;
   @Input() showFirstLastButtons: boolean = true;
 
-  @Output() page$ = new EventEmitter();
+  @Output() page$ = new EventEmitter()
 
   ngOnInit(): void {
     if (this.pageSizeOptions.length > 0 && !this.pageSizeOptions.includes(this.pageSize)) {
       if (this.pageSizeOptions.includes(10)) {
         this.pageSize = 10;
       } else {
-        this.pageSize = this.pageSizeOptions[0];
+        this.pageSize = this.pageSizeOptions[0]
       }
     }
     if (this.page  maxPage && maxPage >= 0) {
@@ -48,13 +48,13 @@ export class NbPaginatorComponen {t implements OnInit {
     this.pageSize = event.rows !== undefined ? event.rows : 10;
 
     this.page$.emit({
-      page: this.page,;
-      pageSize: this.pageSize,;
-    });
+      page: this.page,
+      pageSize: this.pageSize,
+    })
   }
 
   private getNumberOfPages(): number {
     if (!this.pageSize || this.pageSize === 0) return 0;
-    return Math.ceil(this.length / this.pageSize);
+    return Math.ceil(this.length / this.pageSize)
   }
 }

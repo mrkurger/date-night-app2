@@ -22,14 +22,14 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   ';
-  selector: 'app-card',;
-  standalone: true,;
-  imports: [CommonModule],;
-  templateUrl: './card.component.html',;
-  styleUrls: ['./card.component.scss'],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-,;
-});
+  selector: 'app-card',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+,
+})
 export class CardComponen {t {
   /**
    * Whether to show a border around the card.;
@@ -46,9 +46,9 @@ export class CardComponen {t {
   /**
    * The padding size for the card.;
    * - 'none': No padding;
-   * - 'small': Small padding (8px);
-   * - 'medium': Medium padding (16px);
-   * - 'large': Large padding (24px);
+   * - 'small': Small padding (8px)
+   * - 'medium': Medium padding (16px)
+   * - 'large': Large padding (24px)
    * @default 'medium';
    */
   @Input() padding: 'none' | 'small' | 'medium' | 'large' = 'medium';
@@ -56,9 +56,9 @@ export class CardComponen {t {
   /**
    * The border radius size for the card.;
    * - 'none': No border radius;
-   * - 'small': Small border radius (4px);
-   * - 'medium': Medium border radius (8px);
-   * - 'large': Large border radius (12px);
+   * - 'small': Small border radius (4px)
+   * - 'medium': Medium border radius (8px)
+   * - 'large': Large border radius (12px)
    * @default 'medium';
    */
   @Input() radius: 'none' | 'small' | 'medium' | 'large' = 'medium';
@@ -88,14 +88,14 @@ export class CardComponen {t {
    */
   get cardClasses(): Record {
     return {
-      card: true,;
-      'card--bordered': this.bordered,;
-      'card--shadowed': this.shadowed,;
-      [`card--padding-${this.padding}`]: true,;`
-      [`card--radius-${this.radius}`]: true,;`
-      'card--clickable': this.clickable,;
-      'card--selected': this.selected,;
-      'card--disabled': this.disabled,;
-    };
+      card: true,
+      'card--bordered': this.bordered,
+      'card--shadowed': this.shadowed,
+      [`card--padding-${this.padding}`]: true,`
+      [`card--radius-${this.radius}`]: true,`
+      'card--clickable': this.clickable,
+      'card--selected': this.selected,
+      'card--disabled': this.disabled,
+    }
   }
 }

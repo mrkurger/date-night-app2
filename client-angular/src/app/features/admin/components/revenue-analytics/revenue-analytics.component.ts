@@ -17,20 +17,20 @@ interface TimeSeriesData {
   series: {
     name: string;
     value: number;
-  }[];
+  }[]
 }
 
 @Component({';
-  selector: 'app-revenue-analytics',;
+  selector: 'app-revenue-analytics',
   imports: [;
-    CommonModule, FormsModule, NebularModule, NgxChartsModule,;
-    CardModule,;
-    DropdownModule,;
+    CommonModule, FormsModule, NebularModule, NgxChartsModule,
+    CardModule,
+    DropdownModule,
     TabViewModule;
-  ],;
-  templateUrl: './revenue-analytics.component.html',;
-  styleUrls: ['./revenue-analytics.component.scss'],;
-});
+  ],
+  templateUrl: './revenue-analytics.component.html',
+  styleUrls: ['./revenue-analytics.component.scss'],
+})
 export class RevenueAnalyticsComponen {t implements OnInit {
   selectedPeriod = 'month';
   loading = false;
@@ -44,67 +44,67 @@ export class RevenueAnalyticsComponen {t implements OnInit {
   arpuDelta = 0;
 
   // Chart data
-  revenueTrend: TimeSeriesData[] = [];
+  revenueTrend: TimeSeriesData[] = []
   revenueOverTime: RevenueData[] = [;
-    { name: 'Jan', value: 85000 },;
-    { name: 'Feb', value: 92000 },;
-    { name: 'Mar', value: 98000 },;
-    { name: 'Apr', value: 105000 },;
-    { name: 'May', value: 115000 },;
-    { name: 'Jun', value: 125000 },;
-  ];
+    { name: 'Jan', value: 85000 },
+    { name: 'Feb', value: 92000 },
+    { name: 'Mar', value: 98000 },
+    { name: 'Apr', value: 105000 },
+    { name: 'May', value: 115000 },
+    { name: 'Jun', value: 125000 },
+  ]
   revenueByPlan: RevenueData[] = [;
-    { name: 'Basic', value: 45000 },;
-    { name: 'Premium', value: 55000 },;
-    { name: 'Enterprise', value: 25000 },;
-  ];
+    { name: 'Basic', value: 45000 },
+    { name: 'Premium', value: 55000 },
+    { name: 'Enterprise', value: 25000 },
+  ]
   churnRate: RevenueData[] = [;
-    { name: 'Jan', value: 2.1 },;
-    { name: 'Feb', value: 1.9 },;
-    { name: 'Mar', value: 1.7 },;
-    { name: 'Apr', value: 1.5 },;
-    { name: 'May', value: 1.3 },;
-    { name: 'Jun', value: 1.2 },;
-  ];
+    { name: 'Jan', value: 2.1 },
+    { name: 'Feb', value: 1.9 },
+    { name: 'Mar', value: 1.7 },
+    { name: 'Apr', value: 1.5 },
+    { name: 'May', value: 1.3 },
+    { name: 'Jun', value: 1.2 },
+  ]
 
   profileVisibilityOptions = [;
-    { label: 'Public - Visible to everyone', value: 'public' },;
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
-  ];
+  ]
 
   allowMessagingOptions = [;
-    { label: 'Everyone', value: 'all' },;
-    { label: 'Only Matches', value: 'matches' },;
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
     { label: 'No One (Disable messaging)', value: 'none' }
-  ];
+  ]
 
   contentDensityOptions = [;
-    { label: 'Compact', value: 'compact' },;
-    { label: 'Normal', value: 'normal' },;
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
     { label: 'Comfortable', value: 'comfortable' }
-  ];
+  ]
 
   cardSizeOptions = [;
-    { label: 'Small', value: 'small' },;
-    { label: 'Medium', value: 'medium' },;
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
     { label: 'Large', value: 'large' }
-  ];
+  ]
 
   defaultViewTypeOptions = [;
-    { label: 'Netflix View', value: 'netflix' },;
-    { label: 'Tinder View', value: 'tinder' },;
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
     { label: 'List View', value: 'list' }
-  ];
+  ]
 
   constructor() {}
 
   ngOnInit() {
-    this.loadData();
+    this.loadData()
   }
 
   onPeriodChange() {
-    this.loadData();
+    this.loadData()
   }
 
   private loadData() {
@@ -122,19 +122,19 @@ export class RevenueAnalyticsComponen {t implements OnInit {
 
       this.revenueTrend = [;
         {
-          name: 'Revenue',;
+          name: 'Revenue',
           series: [;
-            { name: 'Jan', value: 85000 },;
-            { name: 'Feb', value: 92000 },;
-            { name: 'Mar', value: 98000 },;
-            { name: 'Apr', value: 105000 },;
-            { name: 'May', value: 115000 },;
-            { name: 'Jun', value: 125000 },;
-          ],;
-        },;
-      ];
+            { name: 'Jan', value: 85000 },
+            { name: 'Feb', value: 92000 },
+            { name: 'Mar', value: 98000 },
+            { name: 'Apr', value: 105000 },
+            { name: 'May', value: 115000 },
+            { name: 'Jun', value: 125000 },
+          ],
+        },
+      ]
 
       this.loading = false;
-    }, 1000);
+    }, 1000)
   }
 }

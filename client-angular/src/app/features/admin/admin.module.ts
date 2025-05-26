@@ -48,19 +48,19 @@ import { ContentModerationComponent } from './content-moderation/content-moderat
  */
 @NgModule({
   imports: [;
-    CommonModule,;
-    AdminRoutingModule,;
-    ReactiveFormsModule,;
-    NebularModule,;
+    CommonModule,
+    AdminRoutingModule,
+    ReactiveFormsModule,
+    NebularModule,
     // Import standalone components
-    AuditLogComponent,;
-    AdminSettingsComponent,;
-    PerformanceDashboardComponent,;
-    TelemetryDashboardComponent,;
-    ContentModerationComponent,;
-  ],;
+    AuditLogComponent,
+    AdminSettingsComponent,
+    PerformanceDashboardComponent,
+    TelemetryDashboardComponent,
+    ContentModerationComponent,
+  ],
   // Only declare non-standalone components
-  declarations: [],;
-});
+  declarations: [],
+})
 export class AdminModul {e {}
 ';

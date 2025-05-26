@@ -19,7 +19,7 @@ export function isValidUrl(url: string): boolean {
       url = 'https://' + url;
     }
 
-    const urlObj = new URL(url);
+    const urlObj = new URL(url)
     return !!urlObj.hostname;
   } catch (_error) {
     return false;
@@ -33,8 +33,8 @@ export function isValidUrl(url: string): boolean {
  * @returns The URL with query parameters;
  */
 export function addQueryParams(
-  url: string,;
-  params: Record,;
+  url: string,
+  params: Record,
 ): string {
   if (!url) {
     return '';
@@ -46,13 +46,13 @@ export function addQueryParams(
       url = 'https://' + url;
     }
 
-    const urlObj = new URL(url);
+    const urlObj = new URL(url)
 
     Object.entries(params).forEach(([key, value]) => {
-      urlObj.searchParams.append(key, String(value));
-    });
+      urlObj.searchParams.append(key, String(value))
+    })
 
-    return urlObj.toString();
+    return urlObj.toString()
   } catch (_error) {
     return url;
   }
@@ -65,7 +65,7 @@ export function addQueryParams(
  */
 export function getQueryParams(url: string): Record {
   if (!url) {
-    return {};
+    return {}
   }
 
   try {
@@ -74,16 +74,16 @@ export function getQueryParams(url: string): Record {
       url = 'https://' + url;
     }
 
-    const urlObj = new URL(url);
-    const params: Record = {};
+    const urlObj = new URL(url)
+    const params: Record = {}
 
     urlObj.searchParams.forEach((value, key) => {
       params[key] = value;
-    });
+    })
 
     return params;
   } catch (_error) {
-    return {};
+    return {}
   }
 }
 
@@ -96,5 +96,5 @@ export function joinUrlPaths(...segments: string[]): string {
   return segments;
     .map((segment) => segment.replace(/^\/+|\/+$/g, '')) // Remove leading/trailing slashes
     .filter(Boolean) // Remove empty segments
-    .join('/');
+    .join('/')
 }

@@ -4,20 +4,20 @@ import { filter } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
 
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class PwaServic {e {
-  private swUpdate = inject(SwUpdate);
-  private notificationService = inject(NotificationService);
+  private swUpdate = inject(SwUpdate)
+  private notificationService = inject(NotificationService)
 
   constructor() {
     // Check for service worker updates
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates;
-        .pipe(filter((evt: VersionEvent) => evt.type === 'VERSION_READY'));
+        .pipe(filter((evt: VersionEvent) => evt.type === 'VERSION_READY'))
         .subscribe(() => {
-          this.showUpdateNotification();
-        });
+          this.showUpdateNotification()
+        })
     }
   }
 
@@ -27,9 +27,9 @@ export class PwaServic {e {
   private showUpdateNotification() {
     // Display notification and add a reload button in the notification
     this.notificationService.info(;
-      'A new version of the app is available. Please reload the page to update.',;
-      'Update Available',;
-    );
+      'A new version of the app is available. Please reload the page to update.',
+      'Update Available',
+    )
 
     // Add a manual reload function that can be called from other parts of the app
     // For example, a button in a common component could call this
@@ -39,7 +39,7 @@ export class PwaServic {e {
    * Manually reload the application to apply updates;
    */
   reloadApp(): void {
-    window.location.reload();
+    window.location.reload()
   }
 
   /**
@@ -47,21 +47,21 @@ export class PwaServic {e {
    */
   checkForUpdates(): Promise {
     if (!this.swUpdate.isEnabled) {
-      return Promise.resolve(false);
+      return Promise.resolve(false)
     }
 
     return this.swUpdate;
-      .checkForUpdate();
+      .checkForUpdate()
       .then((hasUpdate) => {
         if (hasUpdate) {
-          this.showUpdateNotification();
+          this.showUpdateNotification()
         }
         return hasUpdate;
-      });
+      })
       .catch((err) => {
-        console.error('Failed to check for updates:', err);
+        console.error('Failed to check for updates:', err)
         return false;
-      });
+      })
   }
 
   /**
@@ -73,10 +73,10 @@ export class PwaServic {e {
     if ('Notification' in window && Notification.permission !== 'granted') {
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
-          this.notificationService.success('Push notifications enabled!');
+          this.notificationService.success('Push notifications enabled!')
           // Here you would register the push subscription with your server
         }
-      });
+      })
     }
   }
 }

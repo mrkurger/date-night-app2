@@ -20,46 +20,46 @@ declare global {
 export const customMatchers: jasmine.CustomMatcherFactories = {
   toBeNull: () => ({
     compare: (actual: any) => ({
-      pass: actual === null,;
-      message: `Expected ${actual} to be null`,;`
-    }),;
-  }),;
+      pass: actual === null,
+      message: `Expected ${actual} to be null`,`
+    }),
+  }),
   toBeDefined: () => ({
     compare: (actual: any) => ({
-      pass: actual !== undefined,;
-      message: `Expected ${actual} to be defined`,;`
-    }),;
-  }),;
+      pass: actual !== undefined,
+      message: `Expected ${actual} to be defined`,`
+    }),
+  }),
   toBe: () => ({
     compare: (actual: any, expected: any) => ({
-      pass: Object.is(actual, expected),;
-      message: `Expected ${actual} to be ${expected}`,;`
-    }),;
-  }),;
+      pass: Object.is(actual, expected),
+      message: `Expected ${actual} to be ${expected}`,`
+    }),
+  }),
   toEqual: () => ({
     compare: (actual: any, expected: any) => ({
-      pass: JSON.stringify(actual) === JSON.stringify(expected),;
-      message: `Expected ${actual} to equal ${expected}`,;`
-    }),;
-  }),;
+      pass: JSON.stringify(actual) === JSON.stringify(expected),
+      message: `Expected ${actual} to equal ${expected}`,`
+    }),
+  }),
   toContain: () => ({
     compare: (actual: string, expected: string) => ({
-      pass: actual.includes(expected),;
-      message: `Expected ${actual} to contain ${expected}`,;`
-    }),;
-  }),;
+      pass: actual.includes(expected),
+      message: `Expected ${actual} to contain ${expected}`,`
+    }),
+  }),
   toMatch: () => ({
     compare: (actual: string, expected: string | RegExp) => ({
-      pass: typeof expected === 'string' ? actual.includes(expected) : expected.test(actual),;
-      message: `Expected ${actual} to match ${expected}`,;`
-    }),;
-  }),;
+      pass: typeof expected === 'string' ? actual.includes(expected) : expected.test(actual),
+      message: `Expected ${actual} to match ${expected}`,`
+    }),
+  }),
   toHaveBeenCalledWith: () => ({
     compare: (actual: jasmine.Spy, ...expected: any[]) => ({
       pass: actual.calls;
-        .argsFor(0);
-        .every((arg, i) => JSON.stringify(arg) === JSON.stringify(expected[i])),;
-      message: `Expected spy to have been called with ${expected}`,;`
-    }),;
-  }),;
-};
+        .argsFor(0)
+        .every((arg, i) => JSON.stringify(arg) === JSON.stringify(expected[i])),
+      message: `Expected spy to have been called with ${expected}`,`
+    }),
+  }),
+}

@@ -11,8 +11,8 @@ import { HttpClient } from '@angular/common/http';
  * with HTTP interceptors.;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class CsrfServic {e {
   private apiUrl = `${environment.apiUrl}/csrf-token`;`
   private csrfInitialized = false;
@@ -24,29 +24,29 @@ export class CsrfServic {e {
    */
   initializeCsrf(): Observable {
     if (this.csrfInitialized) {
-      return of(true);
+      return of(true)
     }
 
     // Use XMLHttpRequest directly to avoid circular dependency with HttpClient
     return from(;
       new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', this.apiUrl);
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', this.apiUrl)
         xhr.withCredentials = true;
 
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status  {
-          reject(new Error('Network error'));
-        };
+          reject(new Error('Network error'))
+        }
 
-        xhr.send();
-      }),;
+        xhr.send()
+      }),
     ).pipe(;
       catchError((error) => {
-        console.error('Failed to initialize CSRF token:', error);
-        return of(false);
-      }),;
-    );
+        console.error('Failed to initialize CSRF token:', error)
+        return of(false)
+      }),
+    )
   }
 
   /**
@@ -60,11 +60,11 @@ export class CsrfServic {e {
    * Get CSRF token from cookie;
    */
   getCsrfToken(): string | null {
-    const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(';')
     for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
+      const [name, value] = cookie.trim().split('=')
       if (name === 'XSRF-TOKEN') {
-        return decodeURIComponent(value);
+        return decodeURIComponent(value)
       }
     }
     return null;

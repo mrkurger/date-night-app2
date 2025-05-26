@@ -7,30 +7,30 @@ import { WalletService } from '../../../core/services/wallet.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
-  FormControl,;
-  FormGroup,;
-  Validators,;
-  FormsModule,;
+  FormControl,
+  FormGroup,
+  Validators,
+  FormsModule,
   ReactiveFormsModule,';
 } from '@angular/forms';
 
 import {
-  NbDialogRef,;
-  NB_DIALOG_CONFIG,;
-  NbCardModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbBadgeModule,;
-  NbToastrService,;
-  NbGlobalPosition,;
-  NbGlobalPhysicalPosition,;
-  NbFormFieldModule,;
-  NbInputModule,;
-  NbSelectModule,;
-  NbSpinnerModule,;
-  NbAlertModule,;
-  NbTooltipModule,;
-  NbTagModule,;
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbBadgeModule,
+  NbToastrService,
+  NbGlobalPosition,
+  NbGlobalPhysicalPosition,
+  NbFormFieldModule,
+  NbInputModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbAlertModule,
+  NbTooltipModule,
+  NbTagModule,
 } from '@nebular/theme';
 
 export interface WalletTransaction {
@@ -50,38 +50,38 @@ export interface WalletTransaction {
     senderWalletId?: string;
     transactionId?: string;
     [key: string]: any;
-  };
+  }
 }
 
 @Component({
-  selector: 'app-transaction-details-dialog',;
-  templateUrl: './transaction-details-dialog.component.html',;
-  styleUrls: ['./transaction-details-dialog.component.scss'],;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [NebularModule, CommonModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    ClipboardModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbIconModule,;
-    NbBadgeModule,;
-    NbFormFieldModule,;
-    NbInputModule,;
-    NbSelectModule,;
-    NbSpinnerModule,;
-    NbAlertModule,;
-    NbTooltipModule,;
-    NbTagModule,;
-  ],;
-});
+  selector: 'app-transaction-details-dialog',
+  templateUrl: './transaction-details-dialog.component.html',
+  styleUrls: ['./transaction-details-dialog.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [NebularModule, CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ClipboardModule,
+    NbCardModule,
+    NbButtonModule,
+    NbIconModule,
+    NbBadgeModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbAlertModule,
+    NbTooltipModule,
+    NbTagModule,
+  ],
+})
 export class TransactionDetailsDialogComponen {t {
   constructor(;
-    private dialogRef: NbDialogRef,;
-    public walletService: WalletService,;
-    private toastrService: NbToastrService,;
-    @Inject(NB_DIALOG_CONFIG) private config: { transaction: WalletTransaction },;
+    private dialogRef: NbDialogRef,
+    public walletService: WalletService,
+    private toastrService: NbToastrService,
+    @Inject(NB_DIALOG_CONFIG) private config: { transaction: WalletTransaction },
   ) {}
 
   get transaction(): WalletTransaction {
@@ -94,9 +94,9 @@ export class TransactionDetailsDialogComponen {t {
   }
 
   copyToClipboard(text: string): void {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text)
     const position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-    this.toastrService.success('Copied to clipboard', 'Success', { position });
+    this.toastrService.success('Copied to clipboard', 'Success', { position })
   }
 
   getTypeStatus(type: string): string {
@@ -135,19 +135,19 @@ export class TransactionDetailsDialogComponen {t {
 
   getMetadataKeys(): string[] {
     if (!this.transaction.metadata) {
-      return [];
+      return []
     }
-    return Object.keys(this.transaction.metadata);
+    return Object.keys(this.transaction.metadata)
   }
 
   formatMetadataKey(key: string): string {
     return key;
-      .replace(/([A-Z])/g, ' $1');
-      .replace(/^./, (str) => str.toUpperCase());
-      .replace(/Id$/, 'ID');
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, (str) => str.toUpperCase())
+      .replace(/Id$/, 'ID')
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

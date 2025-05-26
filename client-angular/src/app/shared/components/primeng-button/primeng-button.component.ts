@@ -14,20 +14,20 @@ import { TooltipModule } from 'primeng/tooltip';
  * ;
  */
 @Component({';
-  selector: 'app-primeng-button',;
-  standalone: true,;
-  imports: [CommonModule, ButtonModule, TooltipModule],;
+  selector: 'app-primeng-button',
+  standalone: true,
+  imports: [CommonModule, ButtonModule, TooltipModule],
   template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
   styles: [`;`
     :host {
       display: inline-block;
     }
-  `];`
-});
+  `]`
+})
 export class PrimengButtonComponen {t {
   /** The text to display on the button */
   @Input() label: string = '';
@@ -69,13 +69,13 @@ export class PrimengButtonComponen {t {
   @Input() styleClass: string = '';
   
   /** Event emitted when the button is clicked */
-  @Output() onClick: EventEmitter = new EventEmitter();
+  @Output() onClick: EventEmitter = new EventEmitter()
   
   /**
    * Handle button click event;
    * @param event - The click event;
    */
   handleClick(event: Event): void {
-    this.onClick.emit(event);
+    this.onClick.emit(event)
   }
 }

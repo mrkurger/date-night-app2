@@ -20,40 +20,40 @@ import { Subscription } from 'rxjs';
 import { NebularModule } from '../../../app/shared/nebular.module';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
-  NbCardModule,;
-  NbTabsetModule,;
-  NbIconModule,;
-  NbButtonModule,;
+  NbCardModule,
+  NbTabsetModule,
+  NbIconModule,
+  NbButtonModule,
   NbLayoutModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-browse',;
-    templateUrl: './browse.component.html',;
-    styleUrls: ['./browse.component.scss'],;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    selector: 'app-browse',
+    templateUrl: './browse.component.html',
+    styleUrls: ['./browse.component.scss'],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [;
-    NebularModule, CommonModule,;
-        RouterModule,;
-        NbCardModule,;
-        NbTabsetModule,;
-        NbIconModule,;
-        NbButtonModule,;
-        NbLayoutModule,;
-        NetflixViewComponent,;
-        TinderComponent,;
-        ListViewComponent,,;
+    NebularModule, CommonModule,
+        RouterModule,
+        NbCardModule,
+        NbTabsetModule,
+        NbIconModule,
+        NbButtonModule,
+        NbLayoutModule,
+        NetflixViewComponent,
+        TinderComponent,
+        ListViewComponent,,
     TabViewModule;
-  ];
-});
+  ]
+})
 export class BrowseComponen {t implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   constructor(;
-    private route: ActivatedRoute,;
-    private router: Router,;
-    private userPreferencesService: UserPreferencesService,;
+    private route: ActivatedRoute,
+    private router: Router,
+    private userPreferencesService: UserPreferencesService,
   ) {}
 
   ngOnInit(): void {
@@ -61,32 +61,32 @@ export class BrowseComponen {t implements OnInit, OnDestroy {
     this.subscriptions.push(;
       this.route.queryParams.subscribe((params) => {
         if (params['view']) {
-          const view = params['view'];
+          const view = params['view']
           if (['netflix', 'tinder', 'list'].includes(view)) {
             this.activeView = view;
 
             // Save the view preference
-            this.userPreferencesService.setDefaultViewType(view);
+            this.userPreferencesService.setDefaultViewType(view)
           }
         } else {
           // If no view is specified in the URL, use the user's preference
-          const preferences = this.userPreferencesService.getPreferences();
+          const preferences = this.userPreferencesService.getPreferences()
           this.activeView = preferences.defaultViewType;
 
           // Update the URL to reflect the user's preference
           this.router.navigate([], {
-            relativeTo: this.route,;
-            queryParams: { view: this.activeView },;
-            queryParamsHandling: 'merge',;
-          });
+            relativeTo: this.route,
+            queryParams: { view: this.activeView },
+            queryParamsHandling: 'merge',
+          })
         }
-      }),;
-    );
+      }),
+    )
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
   }
 
   /**
@@ -115,12 +115,12 @@ export class BrowseComponen {t implements OnInit, OnDestroy {
 
     // Update the URL without reloading the page
     this.router.navigate([], {
-      relativeTo: this.route,;
-      queryParams: { view: viewType },;
-      queryParamsHandling: 'merge',;
-    });
+      relativeTo: this.route,
+      queryParams: { view: viewType },
+      queryParamsHandling: 'merge',
+    })
 
     // Save the view preference
-    this.userPreferencesService.setDefaultViewType(viewType);
+    this.userPreferencesService.setDefaultViewType(viewType)
   }
 }

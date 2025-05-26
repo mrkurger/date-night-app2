@@ -17,20 +17,20 @@ import { WalletComponent } from './wallet.component';
 
 const routes: Routes = [;
   {';
-    path: '',;
-    component: WalletComponent,;
-    canActivate: [AuthGuard],;
-  },;
-];
+    path: '',
+    component: WalletComponent,
+    canActivate: [AuthGuard],
+  },
+]
 
 @NgModule({
-  declarations: [],;
+  declarations: [],
   imports: [;
-    CommonModule,;
-    RouterModule.forChild(routes),;
-    FormsModule,;
-    ReactiveFormsModule,;
-    WalletComponent,;
-  ],;
-});
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
+    WalletComponent,
+  ],
+})
 export class WalletModul {e {}

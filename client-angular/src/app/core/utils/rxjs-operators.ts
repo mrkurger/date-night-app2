@@ -17,10 +17,10 @@ import { mergeMap, finalize, catchError } from 'rxjs/operators';
  * @returns RxJS operator that retries with backoff;
  */
 export function retryWithBackoff(
-  maxRetries = 3,;
-  initialDelay = 1000,;
-  maxDelay = 10000,;
-  shouldRetry: (error: unknown) => boolean = () => true,;
+  maxRetries = 3,
+  initialDelay = 1000,
+  maxDelay = 10000,
+  shouldRetry: (error: unknown) => boolean = () => true,
 ) {
   let retries = 0;
 
@@ -28,20 +28,20 @@ export function retryWithBackoff(
     source.pipe(;
       catchError((error) => {
         if (retries >= maxRetries || !shouldRetry(error)) {
-          return throwError(() => error);
+          return throwError(() => error)
         }
 
         retries++;
-        const delay = Math.min(initialDelay * Math.pow(2, retries - 1), maxDelay);
+        const delay = Math.min(initialDelay * Math.pow(2, retries - 1), maxDelay)
         // Use warn for logging retries
-        console.warn(`Retry attempt ${retries} after ${delay}ms`);`
+        console.warn(`Retry attempt ${retries} after ${delay}ms`)`
 
-        return timer(delay).pipe(mergeMap(() => source));
-      }),;
+        return timer(delay).pipe(mergeMap(() => source))
+      }),
       finalize(() => {
         retries = 0;
-      }),;
-    );
+      }),
+    )
 }
 
 /**
@@ -56,18 +56,18 @@ export function safeMap(project: (value: T) => R) {
       source.subscribe({
         next(value) {
           try {
-            subscriber.next(project(value));
+            subscriber.next(project(value))
           } catch (err) {
-            subscriber.error(err);
+            subscriber.error(err)
           }
-        },;
+        },
         error(err) {
-          subscriber.error(err);
-        },;
+          subscriber.error(err)
+        },
         complete() {
-          subscriber.complete();
-        },;
-      }),;
-    );
+          subscriber.complete()
+        },
+      }),
+    )
 }
 ';

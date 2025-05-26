@@ -8,54 +8,54 @@ import { NbFormArrayComponent } from './components/form-array/form-array.compone
 import { NbFormGroupComponent } from './components/form-group/form-group.component';
 import { NbFormValidationComponent } from './components/form-validation/form-validation.component';
 import { NbFormErrorComponent } from './components/form-error/form-error.component';
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
-  NbIconModule,;
-  NbSelectModule,;
-  NbCheckboxModule,;
-  NbRadioModule,;
-  NbDatepickerModule,;
-  NbTimepickerModule,;
-  NbAutocompleteModule,;
-  NbTagModule,;
-  NbTooltipModule,;
-  NbSpinnerModule,;
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbSelectModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbDatepickerModule,
+  NbTimepickerModule,
+  NbAutocompleteModule,
+  NbTagModule,
+  NbTooltipModule,
+  NbSpinnerModule,
   NbAlertModule,';
 } from '@nebular/theme';
 
 const COMPONENTS = [;
-  NbAdvancedFormComponent,;
-  NbFormFieldComponent,;
-  NbFormArrayComponent,;
-  NbFormGroupComponent,;
-  NbFormValidationComponent,;
-  NbFormErrorComponent,;
-];
+  NbAdvancedFormComponent,
+  NbFormFieldComponent,
+  NbFormArrayComponent,
+  NbFormGroupComponent,
+  NbFormValidationComponent,
+  NbFormErrorComponent,
+]
 
 @NgModule({
-  declarations: [...COMPONENTS],;
+  declarations: [...COMPONENTS],
   imports: [;
-    CommonModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    NbCardModule,;
-    NbButtonModule,;
-    NbInputModule,;
-    NbFormFieldModule,;
-    NbIconModule,;
-    NbSelectModule,;
-    NbCheckboxModule,;
-    NbRadioModule,;
-    NbDatepickerModule,;
-    NbTimepickerModule,;
-    NbAutocompleteModule,;
-    NbTagModule,;
-    NbTooltipModule,;
-    NbSpinnerModule,;
-    NbAlertModule,;
-  ],;
-  exports: [...COMPONENTS],;
-});
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbCardModule,
+    NbButtonModule,
+    NbInputModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbDatepickerModule,
+    NbTimepickerModule,
+    NbAutocompleteModule,
+    NbTagModule,
+    NbTooltipModule,
+    NbSpinnerModule,
+    NbAlertModule,
+  ],
+  exports: [...COMPONENTS],
+})
 export class NbAdvancedFormModul {e {}

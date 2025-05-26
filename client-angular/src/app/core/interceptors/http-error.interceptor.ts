@@ -12,17 +12,17 @@ import { retryWithBackoff } from '../utils/rxjs-operators';
  * Error categories for classification;
  */
 export enum ErrorCategory {';
-  NETWORK = 'network',;
-  SERVER = 'server',;
-  CLIENT = 'client',;
-  AUTHENTICATION = 'authentication',;
-  AUTHORIZATION = 'authorization',;
-  VALIDATION = 'validation',;
-  TIMEOUT = 'timeout',;
-  UNKNOWN = 'unknown',;
-  RATE_LIMIT = 'rate_limit',;
-  NOT_FOUND = 'not_found',;
-  CONFLICT = 'conflict',;
+  NETWORK = 'network',
+  SERVER = 'server',
+  CLIENT = 'client',
+  AUTHENTICATION = 'authentication',
+  AUTHORIZATION = 'authorization',
+  VALIDATION = 'validation',
+  TIMEOUT = 'timeout',
+  UNKNOWN = 'unknown',
+  RATE_LIMIT = 'rate_limit',
+  NOT_FOUND = 'not_found',
+  CONFLICT = 'conflict',
 }
 
 /**
@@ -41,37 +41,37 @@ export interface HttpErrorInterceptorConfig {
   groupSimilarErrors: boolean;
   retryJitter: number;
   sanitizeSensitiveData: boolean;
-  skipUrls: string[];
+  skipUrls: string[]
 }
 
 // Default configuration
 const defaultConfig: HttpErrorInterceptorConfig = {
-  showNotifications: true,;
-  retryFailedRequests: false,;
-  maxRetryAttempts: 2,;
-  retryDelay: 1000,;
-  redirectToLogin: true,;
-  logErrors: true,;
-  includeRequestDetails: false,;
-  trackErrors: true,;
-  trackPerformance: false,;
-  groupSimilarErrors: true,;
-  retryJitter: 200,;
-  sanitizeSensitiveData: true,;
-  skipUrls: [],;
-};
+  showNotifications: true,
+  retryFailedRequests: false,
+  maxRetryAttempts: 2,
+  retryDelay: 1000,
+  redirectToLogin: true,
+  logErrors: true,
+  includeRequestDetails: false,
+  trackErrors: true,
+  trackPerformance: false,
+  groupSimilarErrors: true,
+  retryJitter: 200,
+  sanitizeSensitiveData: true,
+  skipUrls: [],
+}
 
 // Current configuration (can be updated by the configure function)
-let config: HttpErrorInterceptorConfig = { ...defaultConfig };
+let config: HttpErrorInterceptorConfig = { ...defaultConfig }
 
 /**
  * Configure the interceptor with custom settings;
  * @param newConfig Partial configuration to override default settings;
  */
 export function configureHttpErrorInterceptor(
-  newConfig: Partial,;
+  newConfig: Partial,
 ): void {
-  config = { ...config, ...newConfig };
+  config = { ...config, ...newConfig }
   // Configuration is applied silently
 }
 
@@ -81,53 +81,53 @@ export function configureHttpErrorInterceptor(
  * Handles HTTP errors and provides user-friendly error messages.;
  */
 export const httpErrorInterceptor: HttpInterceptorFn = (
-  request: HttpRequest,;
-  next: HttpHandlerFn,;
+  request: HttpRequest,
+  next: HttpHandlerFn,
 ) => {
-  const router = inject(Router);
-  const notificationService = inject(NotificationService);
-  const telemetryService = inject(TelemetryService);
-  const authService = inject(AuthService);
+  const router = inject(Router)
+  const notificationService = inject(NotificationService)
+  const telemetryService = inject(TelemetryService)
+  const authService = inject(AuthService)
 
   // Skip processing for asset requests
   if (request.url.includes('/assets/')) {
-    return next(request);
+    return next(request)
   }
 
   return next(request).pipe(;
     retry({
-      count: 2,;
-      delay: 1000,;
-      resetOnSuccess: true,;
-    }),;
+      count: 2,
+      delay: 1000,
+      resetOnSuccess: true,
+    }),
     catchError((error: HttpErrorResponse) => {
       // Log error
-      console.error('HTTP Error:', error);
+      console.error('HTTP Error:', error)
 
       // Track error with telemetry
       telemetryService.trackError({
-        name: 'HttpError',;
-        message: error.message,;
-        statusCode: error.status,;
-        url: request.url,;
-      });
+        name: 'HttpError',
+        message: error.message,
+        statusCode: error.status,
+        url: request.url,
+      })
 
       // Handle authentication errors
       if (error.status === 401) {
-        authService.logout();
+        authService.logout()
         router.navigate(['/auth/login'], {
-          queryParams: { returnUrl: router.url },;
-        });
+          queryParams: { returnUrl: router.url },
+        })
       }
 
       // Show notification
-      const message = getErrorMessage(error);
-      notificationService.error(message);
+      const message = getErrorMessage(error)
+      notificationService.error(message)
 
-      return throwError(() => error);
-    }),;
-  );
-};
+      return throwError(() => error)
+    }),
+  )
+}
 
 /**
  * Gets a user-friendly error message;
@@ -165,26 +165,26 @@ function getErrorMessage(error: HttpErrorResponse): string {
  * Checks if the URL should be skipped;
  */
 function shouldSkipUrl(url: string): boolean {
-  return config.skipUrls.some((skipUrl) => url.includes(skipUrl));
+  return config.skipUrls.some((skipUrl) => url.includes(skipUrl))
 }
 
 /**
  * Sanitizes headers to remove sensitive information;
  */
 function sanitizeHeaders(
-  headers: Array,;
+  headers: Array,
 ): Array {
   if (!config.sanitizeSensitiveData) {
     return headers;
   }
 
-  const sensitiveHeaders = ['authorization', 'cookie', 'x-auth-token'];
+  const sensitiveHeaders = ['authorization', 'cookie', 'x-auth-token']
   return headers.map((header) => {
     if (sensitiveHeaders.includes(header.key.toLowerCase())) {
-      return { key: header.key, value: '[REDACTED]' };
+      return { key: header.key, value: '[REDACTED]' }
     }
     return header;
-  });
+  })
 }
 
 /**
@@ -199,16 +199,16 @@ function sanitizeBody(body: unknown): unknown {
     return body;
   }
 
-  const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn'];
-  const sanitized = { ...(body as Record) };
+  const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn']
+  const sanitized = { ...(body as Record) }
 
   Object.keys(sanitized).forEach((key) => {
     if (sensitiveFields.some((field) => key.toLowerCase().includes(field))) {
       sanitized[key] = '[REDACTED]';
     } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
-      sanitized[key] = sanitizeBody(sanitized[key]);
+      sanitized[key] = sanitizeBody(sanitized[key])
     }
-  });
+  })
 
   return sanitized;
 }
@@ -222,22 +222,22 @@ function sanitizeUrl(url: string): string {
   }
 
   // Remove query parameters that might contain sensitive information
-  const sensitiveParams = ['token', 'key', 'password', 'secret'];
+  const sensitiveParams = ['token', 'key', 'password', 'secret']
   try {
-    const urlObj = new URL(url);
-    const params = new URLSearchParams(urlObj.search);
+    const urlObj = new URL(url)
+    const params = new URLSearchParams(urlObj.search)
 
     let modified = false;
     sensitiveParams.forEach((param) => {
       if (params.has(param)) {
-        params.set(param, '[REDACTED]');
+        params.set(param, '[REDACTED]')
         modified = true;
       }
-    });
+    })
 
     if (modified) {
-      urlObj.search = params.toString();
-      return urlObj.toString();
+      urlObj.search = params.toString()
+      return urlObj.toString()
     }
   } catch {
     // If URL parsing fails, return as is

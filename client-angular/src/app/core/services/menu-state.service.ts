@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface MenuState {';
   sidebarState: 'expanded' | 'collapsed' | 'compacted';
-  expandedItems: string[];
+  expandedItems: string[]
   selectedItem?: string;
   theme: 'default' | 'dark' | 'cosmic' | 'corporate';
 }
@@ -11,21 +11,21 @@ export interface MenuState {';
 const MENU_STATE_KEY = 'app_menu_state';
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class MenuStateServic {e {
   private defaultState: MenuState = {
-    sidebarState: 'expanded',;
-    expandedItems: [],;
-    theme: 'default',;
-  };
+    sidebarState: 'expanded',
+    expandedItems: [],
+    theme: 'default',
+  }
 
-  private stateSubject = new BehaviorSubject(this.loadState());
-  public state$ = this.stateSubject.asObservable();
+  private stateSubject = new BehaviorSubject(this.loadState())
+  public state$ = this.stateSubject.asObservable()
 
   constructor() {
     // Initialize with saved state or default
-    this.stateSubject.next(this.loadState());
+    this.stateSubject.next(this.loadState())
   }
 
   /**
@@ -33,10 +33,10 @@ export class MenuStateServic {e {
    */
   private loadState(): MenuState {
     try {
-      const savedState = localStorage.getItem(MENU_STATE_KEY);
+      const savedState = localStorage.getItem(MENU_STATE_KEY)
       return savedState ? { ...this.defaultState, ...JSON.parse(savedState) } : this.defaultState;
     } catch (error) {
-      console.error('Error loading menu state:', error);
+      console.error('Error loading menu state:', error)
       return this.defaultState;
     }
   }
@@ -46,9 +46,9 @@ export class MenuStateServic {e {
    */
   private saveState(state: MenuState): void {
     try {
-      localStorage.setItem(MENU_STATE_KEY, JSON.stringify(state));
+      localStorage.setItem(MENU_STATE_KEY, JSON.stringify(state))
     } catch (error) {
-      console.error('Error saving menu state:', error);
+      console.error('Error saving menu state:', error)
     }
   }
 
@@ -57,9 +57,9 @@ export class MenuStateServic {e {
    */
   updateSidebarState(state: 'expanded' | 'collapsed' | 'compacted'): void {
     const currentState = this.stateSubject.value;
-    const newState = { ...currentState, sidebarState: state };
-    this.stateSubject.next(newState);
-    this.saveState(newState);
+    const newState = { ...currentState, sidebarState: state }
+    this.stateSubject.next(newState)
+    this.saveState(newState)
   }
 
   /**
@@ -67,13 +67,13 @@ export class MenuStateServic {e {
    */
   toggleMenuItem(itemId: string): void {
     const currentState = this.stateSubject.value;
-    const expandedItems = currentState.expandedItems.includes(itemId);
-      ? currentState.expandedItems.filter((id) => id !== itemId);
-      : [...currentState.expandedItems, itemId];
+    const expandedItems = currentState.expandedItems.includes(itemId)
+      ? currentState.expandedItems.filter((id) => id !== itemId)
+      : [...currentState.expandedItems, itemId]
 
-    const newState = { ...currentState, expandedItems };
-    this.stateSubject.next(newState);
-    this.saveState(newState);
+    const newState = { ...currentState, expandedItems }
+    this.stateSubject.next(newState)
+    this.saveState(newState)
   }
 
   /**
@@ -81,9 +81,9 @@ export class MenuStateServic {e {
    */
   setSelectedItem(itemId: string): void {
     const currentState = this.stateSubject.value;
-    const newState = { ...currentState, selectedItem: itemId };
-    this.stateSubject.next(newState);
-    this.saveState(newState);
+    const newState = { ...currentState, selectedItem: itemId }
+    this.stateSubject.next(newState)
+    this.saveState(newState)
   }
 
   /**
@@ -91,9 +91,9 @@ export class MenuStateServic {e {
    */
   updateTheme(theme: 'default' | 'dark' | 'cosmic' | 'corporate'): void {
     const currentState = this.stateSubject.value;
-    const newState = { ...currentState, theme };
-    this.stateSubject.next(newState);
-    this.saveState(newState);
+    const newState = { ...currentState, theme }
+    this.stateSubject.next(newState)
+    this.saveState(newState)
   }
 
   /**
@@ -107,7 +107,7 @@ export class MenuStateServic {e {
    * Reset state to default;
    */
   resetState(): void {
-    this.stateSubject.next(this.defaultState);
-    this.saveState(this.defaultState);
+    this.stateSubject.next(this.defaultState)
+    this.saveState(this.defaultState)
   }
 }

@@ -18,13 +18,13 @@ import { Router } from '@angular/router';
 // ===================================================
 
 @Component({';
-    selector: 'app-favorite-button',;
-    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],;
+    selector: 'app-favorite-button',
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
     template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .favorite-button {
@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
       }
 
       .favorite-button:hover {
-        transform: scale(1.1);
+        transform: scale(1.1)
       }
 
       .button-small {
@@ -61,56 +61,56 @@ import { Router } from '@angular/router';
           line-height: 28px;
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class FavoriteButtonComponen {t implements OnInit, OnDestroy {
   @Input() adId = '';
   @Input() adTitle = '';
   @Input() small = false;
   @Input() large = false;
 
-  @Output() favoriteChanged = new EventEmitter();
+  @Output() favoriteChanged = new EventEmitter()
 
   isFavorite = false;
   loading = false;
   private subscription: Subscription | null = null;
 
   constructor(;
-    private favoriteService: FavoriteService,;
-    private authService: AuthService,;
-    private notificationService: NotificationService,;
-    private dialogService: DialogService,;
-    private router: Router,;
+    private favoriteService: FavoriteService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private dialogService: DialogService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.checkFavoriteStatus();
+    this.checkFavoriteStatus()
   }
 
   ngOnChanges(): void {
     if (this.adId) {
-      this.checkFavoriteStatus();
+      this.checkFavoriteStatus()
     }
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe()
     }
   }
 
   toggleFavorite(): void {
     if (!this.authService.isAuthenticated()) {
-      this.notificationService.info('Please log in to save favorites');
+      this.notificationService.info('Please log in to save favorites')
       this.router.navigate(['/auth/login'], {
-        queryParams: { returnUrl: this.router.url },;
-      });
+        queryParams: { returnUrl: this.router.url },
+      })
       return;
     }
 
     if (!this.adId) {
-      this.notificationService.error('Ad ID is required');
+      this.notificationService.error('Ad ID is required')
       return;
     }
 
@@ -120,16 +120,16 @@ export class FavoriteButtonComponen {t implements OnInit, OnDestroy {
       this.favoriteService.removeFavorite(this.adId).subscribe({
         next: () => {
           this.isFavorite = false;
-          this.favoriteChanged.emit(false);
-          this.notificationService.success('Removed from favorites');
+          this.favoriteChanged.emit(false)
+          this.notificationService.success('Removed from favorites')
           this.loading = false;
-        },;
+        },
         error: (error) => {
-          console.error('Error removing favorite:', error);
-          this.notificationService.error('Failed to remove from favorites');
+          console.error('Error removing favorite:', error)
+          this.notificationService.error('Failed to remove from favorites')
           this.loading = false;
-        },;
-      });
+        },
+      })
     } else {
       // If we have the ad title, open the dialog to add details
       if (this.adTitle) {
@@ -137,45 +137,45 @@ export class FavoriteButtonComponen {t implements OnInit, OnDestroy {
           if (result) {
             this.favoriteService;
               .addFavorite(;
-                this.adId,;
-                result.notes,;
-                result.notificationsEnabled,;
-                result.tags,;
-                result.priority,;
-              );
+                this.adId,
+                result.notes,
+                result.notificationsEnabled,
+                result.tags,
+                result.priority,
+              )
               .subscribe({
                 next: () => {
                   this.isFavorite = true;
-                  this.favoriteChanged.emit(true);
-                  this.notificationService.success('Added to favorites');
+                  this.favoriteChanged.emit(true)
+                  this.notificationService.success('Added to favorites')
                   this.loading = false;
-                },;
+                },
                 error: (error) => {
-                  console.error('Error adding favorite:', error);
-                  this.notificationService.error('Failed to add to favorites');
+                  console.error('Error adding favorite:', error)
+                  this.notificationService.error('Failed to add to favorites')
                   this.loading = false;
-                },;
-              });
+                },
+              })
           } else {
             // User canceled the dialog
             this.loading = false;
           }
-        });
+        })
       } else {
         // Simple add without dialog (fallback for backward compatibility)
         this.favoriteService.addFavorite(this.adId).subscribe({
           next: () => {
             this.isFavorite = true;
-            this.favoriteChanged.emit(true);
-            this.notificationService.success('Added to favorites');
+            this.favoriteChanged.emit(true)
+            this.notificationService.success('Added to favorites')
             this.loading = false;
-          },;
+          },
           error: (error) => {
-            console.error('Error adding favorite:', error);
-            this.notificationService.error('Failed to add to favorites');
+            console.error('Error adding favorite:', error)
+            this.notificationService.error('Failed to add to favorites')
             this.loading = false;
-          },;
-        });
+          },
+        })
       }
     }
   }
@@ -188,18 +188,18 @@ export class FavoriteButtonComponen {t implements OnInit, OnDestroy {
     this.loading = true;
 
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe()
     }
 
     this.subscription = this.favoriteService.isFavorite(this.adId).subscribe({
       next: (isFavorite) => {
         this.isFavorite = isFavorite;
         this.loading = false;
-      },;
+      },
       error: (error) => {
-        console.error('Error checking favorite status:', error);
+        console.error('Error checking favorite status:', error)
         this.loading = false;
-      },;
-    });
+      },
+    })
   }
 }

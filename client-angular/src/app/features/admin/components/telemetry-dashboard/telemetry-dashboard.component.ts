@@ -15,9 +15,9 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
 // ===================================================
 
 @Component({';
-    selector: 'app-telemetry-dashboard',;
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],;
+    selector: 'app-telemetry-dashboard',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
     template: `;`
     ;
       Application Telemetry Dashboard;
@@ -31,7 +31,7 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .telemetry-dashboard-container {
@@ -47,9 +47,9 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
           padding: 20px 0;
         }
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class TelemetryDashboardComponen {t {
   constructor() {}
 }

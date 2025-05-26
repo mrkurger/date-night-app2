@@ -7,8 +7,8 @@ import { TelemetryDashboardComponent } from './components/telemetry-dashboard/te
  */
 export const TELEMETRY_ROUTES: Routes = [
   {';
-    path: '',;
-    component: TelemetryDashboardComponent,;
-    title: 'Telemetry Dashboard',;
-  },;
-];
+    path: '',
+    component: TelemetryDashboardComponent,
+    title: 'Telemetry Dashboard',
+  },
+]

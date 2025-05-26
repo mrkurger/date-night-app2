@@ -29,31 +29,31 @@ import { AltChatWidgetComponent } from './components/alt-chat-widget/alt-chat-wi
 // TODO: Import AltPaidPlacementSidebarComponent and AltChatWidgetComponent when created
 
 @NgModule({
-  declarations: [AdvertiserBrowsingAlternateComponent],;
+  declarations: [AdvertiserBrowsingAlternateComponent],
   imports: [;
-    CommonModule,;
-    RouterModule.forChild(advertiserBrowsingAlternateRoutes),;
-    FormsModule,;
+    CommonModule,
+    RouterModule.forChild(advertiserBrowsingAlternateRoutes),
+    FormsModule,
     // PrimeNG modules
-    CardModule,;
-    ButtonModule,;
-    ToolbarModule,;
-    InputTextModule,;
-    TabViewModule,;
-    MenuModule,;
-    TieredMenuModule,;
-    ProgressSpinnerModule,;
-    BadgeModule,;
-    TooltipModule,;
-    PanelModule,;
-    RippleModule,;
+    CardModule,
+    ButtonModule,
+    ToolbarModule,
+    InputTextModule,
+    TabViewModule,
+    MenuModule,
+    TieredMenuModule,
+    ProgressSpinnerModule,
+    BadgeModule,
+    TooltipModule,
+    PanelModule,
+    RippleModule,
     // Standalone child components
-    AltPremiumAdsSectionComponent,;
-    AltNetflixViewComponent,;
-    AltTinderViewComponent,;
-    AltPaidPlacementSidebarComponent,;
-    AltChatWidgetComponent,;
-  ],;
-});
+    AltPremiumAdsSectionComponent,
+    AltNetflixViewComponent,
+    AltTinderViewComponent,
+    AltPaidPlacementSidebarComponent,
+    AltChatWidgetComponent,
+  ],
+})
 export class AdvertiserBrowsingAlternateModul {e {}
 ';

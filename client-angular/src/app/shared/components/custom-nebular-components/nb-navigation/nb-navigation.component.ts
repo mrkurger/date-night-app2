@@ -25,7 +25,7 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-primeng-navigation',;
+  selector: 'app-primeng-navigation',
   template: `;`
     ;
       ;
@@ -45,7 +45,7 @@ export interface UserData {
           ;
           ;
             ;
-            {{ userData.name }};
+            {{ userData.name }}
           ;
         ;
       ;
@@ -58,7 +58,7 @@ export interface UserData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .layout {
@@ -70,8 +70,8 @@ export interface UserData {
         display: flex;
         align-items: center;
         padding: 1rem;
-        background-color: var(--header-background-color);
-        border-bottom: 1px solid var(--divider-color);
+        background-color: var(--header-background-color)
+        border-bottom: 1px solid var(--divider-color)
       }
       .header-right {
         margin-left: auto;
@@ -89,44 +89,44 @@ export interface UserData {
         height: 32px;
         border-radius: 50%;
       }
-    `,;`
-  ],;
-  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule,; 
-    CommonModule,;
-    RouterModule,;
-    MenubarModule,;
-    SidebarModule,;
-    BreadcrumbModule,;
-    ButtonModule,;
-  ],;
-  standalone: true,;
-});
+    `,`
+  ],
+  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule, 
+    CommonModule,
+    RouterModule,
+    MenubarModule,
+    SidebarModule,
+    BreadcrumbModule,
+    ButtonModule,
+  ],
+  standalone: true,
+})
 export class PrimeNGNavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,;
-    showTopMenu: true,;
-    showUserMenu: true,;
-    showSearch: true,;
-    showBreadcrumbs: true,;
-    sidebarVisible: false,;
-    theme: 'default',;
-  };
+    showSidebar: true,
+    showTopMenu: true,
+    showUserMenu: true,
+    showSearch: true,
+    showBreadcrumbs: true,
+    sidebarVisible: false,
+    theme: 'default',
+  }
 
-  @Input() menuItems: MenuItem[] = [];
-  @Input() topMenuItems: MenuItem[] = [];
-  @Input() breadcrumbItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
+  @Input() topMenuItems: MenuItem[] = []
+  @Input() breadcrumbItems: MenuItem[] = []
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter();
-  @Output() topMenuItemClicked = new EventEmitter();
-  @Output() breadcrumbClicked = new EventEmitter();
-  @Output() searchSubmitted = new EventEmitter();
+  @Output() menuItemClicked = new EventEmitter()
+  @Output() topMenuItemClicked = new EventEmitter()
+  @Output() breadcrumbClicked = new EventEmitter()
+  @Output() searchSubmitted = new EventEmitter()
 
   toggleSidebar() {
     this.config.sidebarVisible = !this.config.sidebarVisible;
   }
 
   onSearch(query: string) {
-    this.searchSubmitted.emit(query);
+    this.searchSubmitted.emit(query)
   }
 }

@@ -2,22 +2,22 @@ import {
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-  Component,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  ElementRef,;
-  AfterViewInit,;
-  OnDestroy,;
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
   ViewChild,';
 } from '@angular/core';
 
 import {
-  faHeart,;
-  faTimes,;
-  faMessage,;
-  faInfoCircle,;
-  faMapMarkerAlt,;
+  faHeart,
+  faTimes,
+  faMessage,
+  faInfoCircle,
+  faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -36,16 +36,16 @@ export interface TinderCardData {
   id: string;
   title: string;
   description: string;
-  media: TinderCardMedia[];
+  media: TinderCardMedia[]
   distance?: number;
   price?: number;
   rating?: number;
-  labels?: string[];
+  labels?: string[]
 }
 
 @Component({
-  selector: 'app-tinder-card',;
-  standalone: true,;
+  selector: 'app-tinder-card',
+  standalone: true,
   template: `;`
     ;
       ;
@@ -81,11 +81,11 @@ export interface TinderCardData {
                  {{ data.distance }}km;
               ;
             ;
-            {{ data.price | currency }};
+            {{ data.price | currency }}
           ;
 
           ;
-            {{ data.description }};
+            {{ data.description }}
 
             ;
               ;
@@ -109,18 +109,18 @@ export interface TinderCardData {
         ;
       ;
     ;
-  `,;`
-  styleUrls: ['./tinder-card.component.scss'],;
-imports: [TagModule, ChipModule, ButtonModule, CardModule,;
-    CommonModule,;
-    CardModule,;
-    ButtonModule,;
-    ChipModule,;
-    TagModule,;
-    SharedModule,;
-    FontAwesomeModule,;
-  ],;
-});
+  `,`
+  styleUrls: ['./tinder-card.component.scss'],
+imports: [TagModule, ChipModule, ButtonModule, CardModule,
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    ChipModule,
+    TagModule,
+    SharedModule,
+    FontAwesomeModule,
+  ],
+})
 export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   @ViewChild('card') cardRef!: ElementRef;
 
@@ -132,10 +132,10 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   faMapMarkerAlt = faMapMarkerAlt;
   @Input() data!: TinderCardData;
   @Input() index = 0;
-  @Output() like = new EventEmitter();
-  @Output() dislike = new EventEmitter();
-  @Output() superlike = new EventEmitter();
-  @Output() info = new EventEmitter();
+  @Output() like = new EventEmitter()
+  @Output() dislike = new EventEmitter()
+  @Output() superlike = new EventEmitter()
+  @Output() info = new EventEmitter()
 
   private element: HTMLElement;
   private hammerManager: any;
@@ -148,12 +148,12 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.initializeSwipe();
+    this.initializeSwipe()
   }
 
   ngOnDestroy() {
     if (this.hammerManager) {
-      this.hammerManager.destroy();
+      this.hammerManager.destroy()
     }
   }
 
@@ -162,19 +162,19 @@ export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   }
 
   onLike() {
-    this.like.emit(this.data);
+    this.like.emit(this.data)
   }
 
   onDislike() {
-    this.dislike.emit(this.data);
+    this.dislike.emit(this.data)
   }
 
   onSuperlike() {
-    this.superlike.emit(this.data);
+    this.superlike.emit(this.data)
   }
 
   onInfo() {
-    this.info.emit(this.data);
+    this.info.emit(this.data)
   }
 
   nextImage() {

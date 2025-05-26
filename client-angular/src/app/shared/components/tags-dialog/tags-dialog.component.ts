@@ -2,20 +2,20 @@ import {
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-  NbDialogRef,;
-  NB_DIALOG_CONFIG,;
-  NbCardModule,;
-  NbButtonModule,;
-  NbIconModule,;
-  NbInputModule,;
-  NbFormFieldModule,;
+  NbDialogRef,
+  NB_DIALOG_CONFIG,
+  NbCardModule,
+  NbButtonModule,
+  NbIconModule,
+  NbInputModule,
+  NbFormFieldModule,
   NbTagModule,';
 } from '@nebular/theme';
 
 export interface TagsDialogData {
   title: string;
-  tags: string[];
-  suggestedTags?: string[];
+  tags: string[]
+  suggestedTags?: string[]
   maxTags?: number;
 }
 
@@ -24,22 +24,22 @@ export interface TagsDialogData {
  * Allows users to add, edit, and remove tags;
  */
 @Component({
-    selector: 'app-tags-dialog',;
+    selector: 'app-tags-dialog',
     imports: [;
-        CommonModule,;
-        FormsModule,;
-        ReactiveFormsModule,;
-        NbCardModule,;
-        NbButtonModule,;
-        NbIconModule,;
-        NbInputModule,;
-        NbFormFieldModule,;
-        NbTagModule,;
-    ],;
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbInputModule,
+        NbFormFieldModule,
+        NbTagModule,
+    ],
     template: `;`
     ;
       ;
-        {{ data.title }};
+        {{ data.title }}
         ;
           ;
         ;
@@ -51,7 +51,7 @@ export interface TagsDialogData {
             ;
             ;
           ;
-          Press Enter or Space to add a tag. {{ maxTagsMessage }};
+          Press Enter or Space to add a tag. {{ maxTagsMessage }}
         ;
 
          0">;
@@ -70,7 +70,7 @@ export interface TagsDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       :host {
@@ -106,7 +106,7 @@ export interface TagsDialogData {
       .hint-text {
         display: block;
         font-size: 0.875rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
         margin-top: 0.5rem;
       }
 
@@ -117,7 +117,7 @@ export interface TagsDialogData {
       .suggested-tags h3 {
         font-size: 1rem;
         margin-bottom: 0.5rem;
-        color: var(--text-hint-color);
+        color: var(--text-hint-color)
       }
 
       .suggested-tags-list {
@@ -140,18 +140,18 @@ export interface TagsDialogData {
         justify-content: flex-end;
         gap: 0.625rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class TagsDialogComponen {t {
-  tags: string[] = [];
+  tags: string[] = []
   inputValue = '';
 
   constructor(;
-    public dialogRef: NbDialogRef,;
-    @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData,;
+    public dialogRef: NbDialogRef,
+    @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData,
   ) {
-    this.tags = [...data.tags];
+    this.tags = [...data.tags]
   }
 
   /**
@@ -174,11 +174,11 @@ export class TagsDialogComponen {t {
     }
 
     const input = event.target as HTMLInputElement;
-    const value = input.value.trim();
+    const value = input.value.trim()
 
     // Prevent default behavior for space key
     if (event.key === ' ') {
-      event.preventDefault();
+      event.preventDefault()
     }
 
     if (!value) return;
@@ -188,7 +188,7 @@ export class TagsDialogComponen {t {
     }
 
     if (!this.tags.includes(value)) {
-      this.tags.push(value);
+      this.tags.push(value)
       input.value = '';
     }
   }
@@ -197,9 +197,9 @@ export class TagsDialogComponen {t {
    * Remove a tag;
    */
   removeTag(tag: string): void {
-    const index = this.tags.indexOf(tag);
+    const index = this.tags.indexOf(tag)
     if (index >= 0) {
-      this.tags.splice(index, 1);
+      this.tags.splice(index, 1)
     }
   }
 
@@ -208,7 +208,7 @@ export class TagsDialogComponen {t {
    */
   addSuggestedTag(tag: string): void {
     if (!this.tags.includes(tag) && (!this.data.maxTags || this.tags.length < this.data.maxTags)) {
-      this.tags.push(tag);
+      this.tags.push(tag)
     }
   }
 
@@ -216,13 +216,13 @@ export class TagsDialogComponen {t {
    * Save changes and close dialog;
    */
   onSave(): void {
-    this.dialogRef.close(this.tags);
+    this.dialogRef.close(this.tags)
   }
 
   /**
    * Close dialog without saving;
    */
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

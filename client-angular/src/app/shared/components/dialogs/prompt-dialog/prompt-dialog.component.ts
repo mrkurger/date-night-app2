@@ -2,10 +2,10 @@ import {
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-  NbDialogRef,;
-  NbCardModule,;
-  NbButtonModule,;
-  NbInputModule,;
+  NbDialogRef,
+  NbCardModule,
+  NbButtonModule,
+  NbInputModule,
   NbFormFieldModule,';
 } from '@nebular/theme';
 
@@ -20,22 +20,22 @@ export interface PromptDialogData {
 }
 
 @Component({
-    selector: 'nb-prompt-dialog',;
+    selector: 'nb-prompt-dialog',
     imports: [;
-        CommonModule,;
-        FormsModule,;
-        NbCardModule,;
-        NbButtonModule,;
-        NbInputModule,;
-        NbFormFieldModule,;
-    ],;
+        CommonModule,
+        FormsModule,
+        NbCardModule,
+        NbButtonModule,
+        NbInputModule,
+        NbFormFieldModule,
+    ],
     template: `;`
     ;
       ;
-        {{ data.title }};
+        {{ data.title }}
       ;
       ;
-        {{ data.message }};
+        {{ data.message }}
         ;
           ;
         ;
@@ -49,20 +49,20 @@ export interface PromptDialogData {
         ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
-        font-weight: nb-theme(text-heading-4-font-weight);
-        color: nb-theme(text-basic-color);
+        font-weight: nb-theme(text-heading-4-font-weight)
+        color: nb-theme(text-basic-color)
       }
 
       .dialog-message {
         margin: 0 0 1rem;
-        color: nb-theme(text-basic-color);
-        font-size: nb-theme(text-paragraph-font-size);
+        color: nb-theme(text-basic-color)
+        font-size: nb-theme(text-paragraph-font-size)
       }
 
       .dialog-actions {
@@ -70,24 +70,24 @@ export interface PromptDialogData {
         justify-content: flex-end;
         gap: 1rem;
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class PromptDialogComponen {t {
   value: string;
 
   constructor(;
-    private dialogRef: NbDialogRef,;
-    @Inject('PROMPT_DIALOG_DATA') public data: PromptDialogData,;
+    private dialogRef: NbDialogRef,
+    @Inject('PROMPT_DIALOG_DATA') public data: PromptDialogData,
   ) {
     this.value = data.defaultValue;
   }
 
   confirm() {
-    this.dialogRef.close(this.value);
+    this.dialogRef.close(this.value)
   }
 
   cancel() {
-    this.dialogRef.close(null);
+    this.dialogRef.close(null)
   }
 }

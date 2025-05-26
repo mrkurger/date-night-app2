@@ -21,23 +21,23 @@ export interface FormField {
   required?: boolean;
   disabled?: boolean;
   hidden?: boolean;
-  options?: { value: any; label: string }[];
-  validators?: ((control: AbstractControl) => ValidationErrors | null)[];
-  asyncValidators?: ((control: AbstractControl) => Promise)[];
-  fields?: FormField[]; // For group and array types
+  options?: { value: any; label: string }[]
+  validators?: ((control: AbstractControl) => ValidationErrors | null)[]
+  asyncValidators?: ((control: AbstractControl) => Promise)[]
+  fields?: FormField[] // For group and array types
   defaultValue?: any;
   hint?: string;
-  errorMessages?: { [key: string]: string };
+  errorMessages?: { [key: string]: string }
 }
 
 @Component({
-  selector: 'app-primeng-advanced-form',;
+  selector: 'app-primeng-advanced-form',
   template: `;`
     ;
       ;
         ;
           ;
-            {{ title }};
+            {{ title }}
           ;
         ;
 
@@ -47,19 +47,9 @@ export interface FormField {
             ;
               ;
               ;
-                {{ field.label }};
+                {{ field.label }}
                 ;
-                {{ field.hint }};
-                ;
-                  {{ getErrorMessage(field.key, field.errorMessages) }}
-                ;
-              ;
-
-              ;
-              ;
-                {{ field.label }};
-                ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -67,9 +57,9 @@ export interface FormField {
 
               ;
               ;
-                {{ field.label }};
+                {{ field.label }}
                 ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -77,11 +67,21 @@ export interface FormField {
 
               ;
               ;
-                {{ field.label }};
+                {{ field.label }}
+                ;
+                {{ field.hint }}
+                ;
+                  {{ getErrorMessage(field.key, field.errorMessages) }}
+                ;
+              ;
+
+              ;
+              ;
+                {{ field.label }}
                 ;
                   ;
                 ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -90,7 +90,7 @@ export interface FormField {
               ;
               ;
                 ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -98,9 +98,9 @@ export interface FormField {
 
               ;
               ;
-                {{ field.label }};
+                {{ field.label }}
                 ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -108,9 +108,9 @@ export interface FormField {
 
               ;
               ;
-                {{ field.label }};
+                {{ field.label }}
                 ;
-                {{ field.hint }};
+                {{ field.hint }}
                 ;
                   {{ getErrorMessage(field.key, field.errorMessages) }}
                 ;
@@ -124,7 +124,7 @@ export interface FormField {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .form-field {
@@ -134,48 +134,48 @@ export interface FormField {
       .p-hint {
         display: block;
         margin-top: 0.25rem;
-        color: var(--text-secondary-color);
+        color: var(--text-secondary-color)
       }
 
       .p-error {
         display: block;
         margin-top: 0.25rem;
-        color: var(--error-color);
+        color: var(--error-color)
       }
-    `,;`
-  ],;
-  standalone: true,;
-});
+    `,`
+  ],
+  standalone: true,
+})
 export class PrimeNGAdvancedFormComponen {t implements OnInit {
   @Input() title = '';
-  @Input() fields: FormField[] = [];
+  @Input() fields: FormField[] = []
   @Input() form: FormGroup;
 
-  @Output() formSubmit = new EventEmitter();
+  @Output() formSubmit = new EventEmitter()
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.form = this.fb.group({});
+    this.form = this.fb.group({})
   }
 
   onSubmit() {
     if (this.form.valid) {
-      this.formSubmit.emit(this.form.value);
+      this.formSubmit.emit(this.form.value)
     }
   }
 
   shouldShowError(key: string): boolean {
-    const control = this.form.get(key);
-    return control?.invalid && (control.dirty || control.touched);
+    const control = this.form.get(key)
+    return control?.invalid && (control.dirty || control.touched)
   }
 
   getErrorMessage(key: string, errorMessages?: { [key: string]: string }): string {
-    const control = this.form.get(key);
+    const control = this.form.get(key)
     if (control?.errors && errorMessages) {
       for (const errorKey of Object.keys(control.errors)) {
         if (errorMessages[errorKey]) {
-          return errorMessages[errorKey];
+          return errorMessages[errorKey]
         }
       }
     }

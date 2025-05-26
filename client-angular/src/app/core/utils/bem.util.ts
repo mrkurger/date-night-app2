@@ -10,7 +10,7 @@
  * import { BemUtil } from '@core/utils/bem.util';
  *;
  * @Component({';
- *   selector: 'app-card',;
+ *   selector: 'app-card',
  *   template: `;`
  *     ;
  *       ;
@@ -21,11 +21,11 @@
  *       ;
  *     ;
  *   `;`
- *,;
-  standalone: true,;
-  imports: [] });
+ *,
+  standalone: true,
+  imports: [] })
  * export class CardComponent {
- *   bem = new BemUtil('card');
+ *   bem = new BemUtil('card')
  *   isActive = false;
  * }
  * ```;`
@@ -43,7 +43,7 @@ export class BemUti {l {
    * @returns BEM block class name with optional modifiers
    */
   block(modifiers?: string[]): string {
-    return this.generateClassNames(this.blockName, null, modifiers);
+    return this.generateClassNames(this.blockName, null, modifiers)
   }
 
   /**
@@ -53,7 +53,7 @@ export class BemUti {l {
    * @returns BEM element class name with optional modifiers
    */
   element(elementName: string, modifiers?: string[]): string {
-    return this.generateClassNames(this.blockName, elementName, modifiers);
+    return this.generateClassNames(this.blockName, elementName, modifiers)
   }
 
   /**
@@ -81,9 +81,9 @@ export class BemUti {l {
 
     // Filter out empty modifiers and generate modifier classes
     const modifierClasses = modifiers;
-      .filter((modifier) => !!modifier);
-      .map((modifier) => `${baseClass}--${modifier}`);`
+      .filter((modifier) => !!modifier)
+      .map((modifier) => `${baseClass}--${modifier}`)`
 
-    return [baseClass, ...modifierClasses].join(' ');
+    return [baseClass, ...modifierClasses].join(' ')
   }
 }

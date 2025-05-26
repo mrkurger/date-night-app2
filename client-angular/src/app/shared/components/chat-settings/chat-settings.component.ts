@@ -20,19 +20,19 @@ import { RippleModule } from 'primeng/ripple';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ChatService } from '../../../core/services/chat.service';
-  Component,;
-  Input,;
-  Output,;
-  EventEmitter,;
-  OnInit,;
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
   ChangeDetectionStrategy,';
 } from '@angular/core';
 import {
-  FormBuilder,;
-  FormGroup,;
-  Validators,;
-  FormsModule,;
-  ReactiveFormsModule,;
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
 
 // Types
@@ -53,19 +53,19 @@ interface IChatSettings {
  * This component integrates with ChatService to persist settings;
  */
 @Component({
-  selector: 'app-chat-settings',;
+  selector: 'app-chat-settings',
   imports: [;
-    CardModule,;
-    ButtonModule,;
-    CommonModule,;
-    DropdownModule,;
-    FormsModule,;
-    InputSwitchModule,;
-    MessageModule,;
-    ProgressSpinnerModule,;
-    ReactiveFormsModule,;
-    RippleModule,;
-  ],;
+    CardModule,
+    ButtonModule,
+    CommonModule,
+    DropdownModule,
+    FormsModule,
+    InputSwitchModule,
+    MessageModule,
+    ProgressSpinnerModule,
+    ReactiveFormsModule,
+    RippleModule,
+  ],
   template: `;`
     ;
       ;
@@ -107,15 +107,15 @@ interface IChatSettings {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .settings-group {
-        margin-bottom: var(--content-padding);
+        margin-bottom: var(--content-padding)
 
         .hint-text {
           margin: 0.5rem 0 1rem;
-          color: var(--text-color-secondary);
+          color: var(--text-color-secondary)
           font-size: 0.875rem;
         }
       }
@@ -153,20 +153,20 @@ interface IChatSettings {
           margin-right: 0.5rem;
         }
       }
-    `,;`
-  ],;
-  changeDetection: ChangeDetectionStrategy.OnPush,;
-  standalone: true,;
-});
+    `,`
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+})
 export class ChatSettingsComponen {t implements OnInit {
   @Input() roomId!: string;
   @Input() settings: IChatSettings = {
-    messageExpiryEnabled: false,;
-    messageExpiryTime: 24,;
-    encryptionEnabled: true,;
-  };
+    messageExpiryEnabled: false,
+    messageExpiryTime: 24,
+    encryptionEnabled: true,
+  }
 
-  @Output() settingsChanged = new EventEmitter();
+  @Output() settingsChanged = new EventEmitter()
 
   settingsForm!: FormGroup;
   isSaving = false;
@@ -175,57 +175,57 @@ export class ChatSettingsComponen {t implements OnInit {
 
   // Predefined expiry time options in hours
   expiryTimeOptions = [;
-    { value: 1, label: '1 hour' },;
-    { value: 6, label: '6 hours' },;
-    { value: 12, label: '12 hours' },;
-    { value: 24, label: '1 day' },;
-    { value: 72, label: '3 days' },;
-    { value: 168, label: '1 week' },;
-  ];
+    { value: 1, label: '1 hour' },
+    { value: 6, label: '6 hours' },
+    { value: 12, label: '12 hours' },
+    { value: 24, label: '1 day' },
+    { value: 72, label: '3 days' },
+    { value: 168, label: '1 week' },
+  ]
 
   /**
    * Component constructor - initializes form builder and chat service;
    */
   profileVisibilityOptions = [;
-    { label: 'Public - Visible to everyone', value: 'public' },;
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
-  ];
+  ]
 
   allowMessagingOptions = [;
-    { label: 'Everyone', value: 'all' },;
-    { label: 'Only Matches', value: 'matches' },;
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
     { label: 'No One (Disable messaging)', value: 'none' }
-  ];
+  ]
 
   contentDensityOptions = [;
-    { label: 'Compact', value: 'compact' },;
-    { label: 'Normal', value: 'normal' },;
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
     { label: 'Comfortable', value: 'comfortable' }
-  ];
+  ]
 
   cardSizeOptions = [;
-    { label: 'Small', value: 'small' },;
-    { label: 'Medium', value: 'medium' },;
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
     { label: 'Large', value: 'large' }
-  ];
+  ]
 
   defaultViewTypeOptions = [;
-    { label: 'Netflix View', value: 'netflix' },;
-    { label: 'Tinder View', value: 'tinder' },;
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
     { label: 'List View', value: 'list' }
-  ];
+  ]
 
   constructor(;
-    private readonly fb: FormBuilder,;
-    private readonly chatService: ChatService,;
+    private readonly fb: FormBuilder,
+    private readonly chatService: ChatService,
   ) {}
 
   /**
    * Angular lifecycle hook - component initialization;
    */
   ngOnInit(): void {
-    this.initForm();
+    this.initForm()
   }
 
   /**
@@ -233,10 +233,10 @@ export class ChatSettingsComponen {t implements OnInit {
    */
   resetForm(): void {
     this.settingsForm.patchValue({
-      messageExpiryEnabled: this.settings.messageExpiryEnabled,;
-      messageExpiryTime: this.settings.messageExpiryTime,;
-      encryptionEnabled: this.settings.encryptionEnabled,;
-    });
+      messageExpiryEnabled: this.settings.messageExpiryEnabled,
+      messageExpiryTime: this.settings.messageExpiryTime,
+      encryptionEnabled: this.settings.encryptionEnabled,
+    })
 
     this.saveError = false;
     this.saveSuccess = false;
@@ -247,34 +247,34 @@ export class ChatSettingsComponen {t implements OnInit {
    */
   private initForm(): void {
     this.settingsForm = this.fb.group({
-      messageExpiryEnabled: [this.settings.messageExpiryEnabled],;
+      messageExpiryEnabled: [this.settings.messageExpiryEnabled],
       messageExpiryTime: [;
-        this.settings.messageExpiryTime,;
-        [Validators.required, Validators.min(1)],;
-      ],;
-      encryptionEnabled: [this.settings.encryptionEnabled],;
-    });
+        this.settings.messageExpiryTime,
+        [Validators.required, Validators.min(1)],
+      ],
+      encryptionEnabled: [this.settings.encryptionEnabled],
+    })
 
     // Disable messageExpiryTime when messageExpiryEnabled is false
-    const messageExpiryEnabledControl = this.settingsForm.get('messageExpiryEnabled');
+    const messageExpiryEnabledControl = this.settingsForm.get('messageExpiryEnabled')
     if (messageExpiryEnabledControl) {
       messageExpiryEnabledControl.valueChanges.subscribe((enabled: boolean) => {
-        const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
+        const expiryTimeControl = this.settingsForm.get('messageExpiryTime')
         if (expiryTimeControl) {
           if (enabled === true) {
-            expiryTimeControl.enable();
+            expiryTimeControl.enable()
           } else {
-            expiryTimeControl.disable();
+            expiryTimeControl.disable()
           }
         }
-      });
+      })
     }
 
     // Initialize disabled state
     if (this.settings.messageExpiryEnabled !== true) {
-      const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
+      const expiryTimeControl = this.settingsForm.get('messageExpiryTime')
       if (expiryTimeControl) {
-        expiryTimeControl.disable();
+        expiryTimeControl.disable()
       }
     }
   }
@@ -296,57 +296,57 @@ export class ChatSettingsComponen {t implements OnInit {
     // Configure message auto-deletion using ChatService
     if (settings.messageExpiryEnabled === true) {
       const ttlInMilliseconds = this.chatService.convertHoursToMilliseconds(;
-        settings.messageExpiryTime,;
-      );
+        settings.messageExpiryTime,
+      )
 
       this.chatService;
-        .configureMessageAutoDeletion(this.roomId, true, ttlInMilliseconds);
+        .configureMessageAutoDeletion(this.roomId, true, ttlInMilliseconds)
         .pipe(;
           catchError((error) => {
-            console.error('Error configuring message auto-deletion:', error);
-            return of(false);
-          }),;
-        );
+            console.error('Error configuring message auto-deletion:', error)
+            return of(false)
+          }),
+        )
         .subscribe((success) => {
           this.isSaving = false;
 
           if (success) {
             this.saveSuccess = true;
-            this.settingsChanged.emit(settings);
+            this.settingsChanged.emit(settings)
 
             // Hide success message after 3 seconds
             setTimeout(() => {
               this.saveSuccess = false;
-            }, 3000);
+            }, 3000)
           } else {
             this.saveError = true;
           }
-        });
+        })
     } else {
       // Disable auto-deletion
       this.chatService;
-        .configureMessageAutoDeletion(this.roomId, false, 0);
+        .configureMessageAutoDeletion(this.roomId, false, 0)
         .pipe(;
           catchError((error) => {
-            console.error('Error disabling message auto-deletion:', error);
-            return of(false);
-          }),;
-        );
+            console.error('Error disabling message auto-deletion:', error)
+            return of(false)
+          }),
+        )
         .subscribe((success) => {
           this.isSaving = false;
 
           if (success) {
             this.saveSuccess = true;
-            this.settingsChanged.emit(settings);
+            this.settingsChanged.emit(settings)
 
             // Hide success message after 3 seconds
             setTimeout(() => {
               this.saveSuccess = false;
-            }, 3000);
+            }, 3000)
           } else {
             this.saveError = true;
           }
-        });
+        })
     }
   }
 }

@@ -8,11 +8,11 @@ import { EncryptionService } from './encryption.service';
  * This file contains settings for the chat service;
  *;
  * COMMON CUSTOMIZATIONS:;
- * - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB);
- * - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000);
- * - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: true);
- * - DEFAULT_MESSAGE_TTL: Default time-to-live for messages in milliseconds (default: 7 days);
- * - ENABLE_MESSAGE_AUTO_DELETION: Enable automatic deletion of expired messages (default: true);
+ * - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
+ * - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
+ * - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: true)
+ * - DEFAULT_MESSAGE_TTL: Default time-to-live for messages in milliseconds (default: 7 days)
+ * - ENABLE_MESSAGE_AUTO_DELETION: Enable automatic deletion of expired messages (default: true)
  */
 
 /** Constants for message auto-deletion */
@@ -83,7 +83,7 @@ export interface IChatRoom {
   /** Display name of the room */
   name?: string;
   /** List of participants in the room */
-  participants: IChatParticipant[];
+  participants: IChatParticipant[]
   /** The last message sent in the room */
   lastMessage?: IChatMessage;
   /** Number of unread messages */
@@ -130,8 +130,8 @@ export interface ITypingStatus {
  * Injectable chat service for managing chat operations.;
  */
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class ChatServic {e {
   /** Observable for online users */
   public readonly onlineUsers$: Observable;
@@ -147,16 +147,16 @@ export class ChatServic {e {
 
   /** Subject for typing status updates */
   private readonly typingStatus = new BehaviorSubject({
-    roomId: '',;
-    userId: '',;
-    isTyping: false,;
-  });
+    roomId: '',
+    userId: '',
+    isTyping: false,
+  })
 
   /** Subject for new messages */
-  private readonly newMessage = new Subject();
+  private readonly newMessage = new Subject()
 
   /** Subject for online users */
-  private readonly onlineUsersSubject = new BehaviorSubject([]);
+  private readonly onlineUsersSubject = new BehaviorSubject([])
 
   /**
    * Constructor for ChatService.;
@@ -164,12 +164,12 @@ export class ChatServic {e {
    * @param encryptionService - Service for encryption operations;
    */
   constructor(;
-    private readonly http: HttpClient,;
-    private readonly encryptionService: EncryptionService,;
+    private readonly http: HttpClient,
+    private readonly encryptionService: EncryptionService,
   ) {
-    this.onlineUsers$ = this.onlineUsersSubject.asObservable();
-    this.newMessage$ = this.newMessage.asObservable();
-    this.typingStatus$ = this.typingStatus.asObservable();
+    this.onlineUsers$ = this.onlineUsersSubject.asObservable()
+    this.newMessage$ = this.newMessage.asObservable()
+    this.typingStatus$ = this.typingStatus.asObservable()
   }
 
   /**
@@ -177,7 +177,7 @@ export class ChatServic {e {
    * @returns Observable array of chat rooms;
    */
   getRooms(): Observable {
-    return this.http.get(`${this.apiUrl}/rooms`);`
+    return this.http.get(`${this.apiUrl}/rooms`)`
   }
 
   /**
@@ -186,7 +186,7 @@ export class ChatServic {e {
    * @returns Observable array of chat messages;
    */
   getMessages(roomId: string): Observable {
-    return this.http.get(`${this.apiUrl}/rooms/${roomId}/messages`);`
+    return this.http.get(`${this.apiUrl}/rooms/${roomId}/messages`)`
   }
 
   /**
@@ -195,7 +195,7 @@ export class ChatServic {e {
    * @returns Observable of the sent message;
    */
   sendMessage(message: IChatMessageRequest): Observable {
-    return this.http.post(`${this.apiUrl}/messages`, message);`
+    return this.http.post(`${this.apiUrl}/messages`, message)`
   }
 
   /**
@@ -204,7 +204,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   clearHistory(roomId: string): Observable {
-    return this.http.delete(`${this.apiUrl}/rooms/${roomId}/messages`);`
+    return this.http.delete(`${this.apiUrl}/rooms/${roomId}/messages`)`
   }
 
   /**
@@ -213,7 +213,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   blockUser(userId: string): Observable {
-    return this.http.post(`${this.apiUrl}/users/${userId}/block`, {});`
+    return this.http.post(`${this.apiUrl}/users/${userId}/block`, {})`
   }
 
   /**
@@ -223,7 +223,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   reportUser(userId: string, reason?: string): Observable {
-    return this.http.post(`${this.apiUrl}/users/${userId}/report`, { reason });`
+    return this.http.post(`${this.apiUrl}/users/${userId}/report`, { reason })`
   }
 
   /**
@@ -233,26 +233,26 @@ export class ChatServic {e {
    * @returns Observable of uploaded file information;
    */
   uploadFiles(;
-    roomId: string,;
-    formData: FormData,;
+    roomId: string,
+    formData: FormData,
   ): Observable }> {
     return this.http;
       .post }>(;
-        `${this.apiUrl}/rooms/${roomId}/files`,;`
-        formData,;
+        `${this.apiUrl}/rooms/${roomId}/files`,`
+        formData,
         {
-          reportProgress: true,;
-          observe: 'events',;
-        },;
-      );
+          reportProgress: true,
+          observe: 'events',
+        },
+      )
       .pipe(;
         map((event) => {
           if (event.type === HttpEventType.Response) {
-            return event.body as { files: Array };
+            return event.body as { files: Array }
           }
-          return { files: [] };
-        }),;
-      );
+          return { files: [] }
+        }),
+      )
   }
 
   /**
@@ -261,7 +261,7 @@ export class ChatServic {e {
    */
   sendTypingIndicator(roomId: string): void {
     // Implementation with WebSocket would go here
-    console.log('Sending typing indicator for room:', roomId);
+    console.log('Sending typing indicator for room:', roomId)
   }
 
   /**
@@ -269,7 +269,7 @@ export class ChatServic {e {
    */
   disconnectSocket(): void {
     // Implementation for WebSocket disconnect
-    console.log('Disconnecting from chat socket');
+    console.log('Disconnecting from chat socket')
   }
 
   /**
@@ -278,7 +278,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   markMessagesAsRead(roomId: string): Observable {
-    return this.http.post(`${this.apiUrl}/rooms/${roomId}/read`, {});`
+    return this.http.post(`${this.apiUrl}/rooms/${roomId}/read`, {})`
   }
 
   /**
@@ -287,7 +287,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   archiveRoom(roomId: string): Observable {
-    return this.http.post(`${this.apiUrl}/rooms/${roomId}/archive`, {});`
+    return this.http.post(`${this.apiUrl}/rooms/${roomId}/archive`, {})`
   }
 
   /**
@@ -296,7 +296,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   pinRoom(roomId: string): Observable {
-    return this.http.post(`${this.apiUrl}/rooms/${roomId}/pin`, {});`
+    return this.http.post(`${this.apiUrl}/rooms/${roomId}/pin`, {})`
   }
 
   /**
@@ -305,7 +305,7 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   clearRoom(roomId: string): Observable {
-    return this.http.post(`${this.apiUrl}/rooms/${roomId}/clear`, {});`
+    return this.http.post(`${this.apiUrl}/rooms/${roomId}/clear`, {})`
   }
 
   /**
@@ -315,39 +315,39 @@ export class ChatServic {e {
    * @returns Observable void;
    */
   updateRoomSettings(roomId: string, settings: IRoomSettings): Observable {
-    return this.http.patch(`${this.apiUrl}/rooms/${roomId}/settings`, settings);`
+    return this.http.patch(`${this.apiUrl}/rooms/${roomId}/settings`, settings)`
   }
 
   /**
    * Configure message auto-deletion settings for a room.;
    * @param roomId - The ID of the chat room;
    * @param enabled - Whether auto-deletion is enabled;
-   * @param ttl - Time-to-live in milliseconds (how long messages should last);
+   * @param ttl - Time-to-live in milliseconds (how long messages should last)
    * @returns Observable boolean indicating success;
    */
   configureMessageAutoDeletion(;
-    roomId: string,;
-    enabled: boolean,;
-    ttl: number = DEFAULT_MESSAGE_TTL,;
+    roomId: string,
+    enabled: boolean,
+    ttl: number = DEFAULT_MESSAGE_TTL,
   ): Observable {
     if (!this.encryptionService.isEncryptionAvailable()) {
-      console.warn('Encryption service not available, cannot configure message auto-deletion');
-      return of(false);
+      console.warn('Encryption service not available, cannot configure message auto-deletion')
+      return of(false)
     }
 
     // Configure the settings in the encryption service
-    this.encryptionService.setMessageExpirySettings(roomId, { enabled, ttl });
+    this.encryptionService.setMessageExpirySettings(roomId, { enabled, ttl })
 
     // Also update the server with these settings
     return this.http;
-      .post(`${this.apiUrl}/rooms/${roomId}/expiry-settings`, { enabled, ttl });`
+      .post(`${this.apiUrl}/rooms/${roomId}/expiry-settings`, { enabled, ttl })`
       .pipe(;
-        map((response) => response.success),;
+        map((response) => response.success),
         catchError((error) => {
-          console.error('Error configuring message auto-deletion:', error);
-          return of(false);
-        }),;
-      );
+          console.error('Error configuring message auto-deletion:', error)
+          return of(false)
+        }),
+      )
   }
 
   /**
@@ -357,10 +357,10 @@ export class ChatServic {e {
    */
   getMessageAutoDeletionSettings(roomId: string): { enabled: boolean; ttl: number } {
     if (!this.encryptionService.isEncryptionAvailable()) {
-      return { enabled: ENABLE_MESSAGE_AUTO_DELETION, ttl: DEFAULT_MESSAGE_TTL };
+      return { enabled: ENABLE_MESSAGE_AUTO_DELETION, ttl: DEFAULT_MESSAGE_TTL }
     }
 
-    return this.encryptionService.getMessageExpirySettings(roomId);
+    return this.encryptionService.getMessageExpirySettings(roomId)
   }
 
   /**

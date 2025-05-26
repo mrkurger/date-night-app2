@@ -6,23 +6,23 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 const routes: Routes = [;
   {';
-    path: '',;
-    component: ChatComponent,;
+    path: '',
+    component: ChatComponent,
     children: [;
       {
-        path: '',;
-        component: ChatListComponent,;
-      },;
+        path: '',
+        component: ChatListComponent,
+      },
       {
-        path: ':id',;
-        component: ChatRoomComponent,;
-      },;
-    ],;
-  },;
-];
+        path: ':id',
+        component: ChatRoomComponent,
+      },
+    ],
+  },
+]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],;
-  exports: [RouterModule],;
-});
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
 export class ChatRoutingModul {e {}

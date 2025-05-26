@@ -25,46 +25,46 @@ export interface HelpItem {
 }
 
 @Component({
-  selector: 'app-contextual-help',;
-  templateUrl: './contextual-help.component.html',;
-  styleUrls: ['./contextual-help.component.scss'],;
-  standalone: true,;
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],;
-});
+  selector: 'app-contextual-help',
+  templateUrl: './contextual-help.component.html',
+  styleUrls: ['./contextual-help.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+})
 export class ContextualHelpComponen {t implements OnInit {
-  @Input() helpItems: HelpItem[] = [];
+  @Input() helpItems: HelpItem[] = []
   @Input() storageKeyPrefix = 'help-dismissed-';
   @Input() autoAttach = true;
 
-  activeHelpItems: { [key: string]: boolean } = {};
+  activeHelpItems: { [key: string]: boolean } = {}
 
   ngOnInit(): void {
     if (this.autoAttach) {
-      this.attachHelpItems();
+      this.attachHelpItems()
     }
   }
 
   attachHelpItems(): void {
     // Reset active items
-    this.activeHelpItems = {};
+    this.activeHelpItems = {}
 
     // Check which items should be shown (not dismissed)
     this.helpItems.forEach((item) => {
       const isDismissed = localStorage.getItem(`${this.storageKeyPrefix}${item.id}`) === 'true';`
       this.activeHelpItems[item.id] = !isDismissed;
-    });
+    })
   }
 
   dismissHelp(itemId: string): void {
-    localStorage.setItem(`${this.storageKeyPrefix}${itemId}`, 'true');`
+    localStorage.setItem(`${this.storageKeyPrefix}${itemId}`, 'true')`
     this.activeHelpItems[itemId] = false;
   }
 
   resetAllHelpItems(): void {
     this.helpItems.forEach((item) => {
-      localStorage.removeItem(`${this.storageKeyPrefix}${item.id}`);`
-    });
-    this.attachHelpItems();
+      localStorage.removeItem(`${this.storageKeyPrefix}${item.id}`)`
+    })
+    this.attachHelpItems()
   }
 
   getHelpItemPosition(item: HelpItem): string {

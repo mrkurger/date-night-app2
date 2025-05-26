@@ -25,21 +25,21 @@ interface AuditLogEntry {
 }
 
 @Component({
-  selector: 'app-audit-log',;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  selector: 'app-audit-log',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [;
-    CommonModule,;
-    FormsModule,;
-    DropdownModule,;
-    CalendarModule,;
-    TableModule,;
-    CardModule,;
-    BadgeModule,;
-    InputTextModule,;
-    ButtonModule,;
-    ToastModule,;
-  ],;
-  providers: [MessageService],;
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    CalendarModule,
+    TableModule,
+    CardModule,
+    BadgeModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
   template: `;`
     ;
       ;
@@ -69,18 +69,18 @@ interface AuditLogEntry {
           ;
           ;
             ;
-              {{ entry.timestamp | date: 'medium' }};
-              {{ entry.action }};
-              {{ entry.performedBy }};
+              {{ entry.timestamp | date: 'medium' }}
+              {{ entry.action }}
+              {{ entry.performedBy }}
               ;
                 ;
               ;
-              {{ entry.targetId }};
+              {{ entry.targetId }}
               ;
                 ;
               ;
-              {{ entry.details }};
-              {{ entry.ipAddress || 'N/A' }};
+              {{ entry.details }}
+              {{ entry.ipAddress || 'N/A' }}
             ;
           ;
           ;
@@ -91,7 +91,7 @@ interface AuditLogEntry {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       :host {
@@ -120,28 +120,28 @@ interface AuditLogEntry {
       p-badge {
         text-transform: capitalize;
       }
-    `,;`
-  ],;
-});
+    `,`
+  ],
+})
 export class AuditLogComponen {t implements OnInit {
   loading = false;
   selectedType = 'all';
   selectedDate: Date | null = null;
-  logs: AuditLogEntry[] = [];
-  filteredLogs: AuditLogEntry[] = [];
+  logs: AuditLogEntry[] = []
+  filteredLogs: AuditLogEntry[] = []
 
   targetTypesForDropdown = [;
-    { label: 'All Types', value: 'all' },;
-    { label: 'User', value: 'user' },;
-    { label: 'Ad', value: 'ad' },;
-    { label: 'System', value: 'system' },;
-    { label: 'Payment', value: 'payment' },;
-  ];
+    { label: 'All Types', value: 'all' },
+    { label: 'User', value: 'user' },
+    { label: 'Ad', value: 'ad' },
+    { label: 'System', value: 'system' },
+    { label: 'Payment', value: 'payment' },
+  ]
 
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
-    this.loadLogs();
+    this.loadLogs()
   }
 
   loadLogs() {
@@ -150,48 +150,48 @@ export class AuditLogComponen {t implements OnInit {
     setTimeout(() => {
       this.logs = [;
         {
-          id: '1',;
-          action: 'User Ban',;
-          performedBy: 'admin@example.com',;
-          targetType: 'user',;
-          targetId: 'user123',;
-          details: 'User banned for violating terms of service',;
-          timestamp: new Date(),;
-          status: 'success',;
-          ipAddress: '192.168.1.1',;
-        },;
+          id: '1',
+          action: 'User Ban',
+          performedBy: 'admin@example.com',
+          targetType: 'user',
+          targetId: 'user123',
+          details: 'User banned for violating terms of service',
+          timestamp: new Date(),
+          status: 'success',
+          ipAddress: '192.168.1.1',
+        },
         {
-          id: '2',;
-          action: 'Ad Removal',;
-          performedBy: 'moderator@example.com',;
-          targetType: 'ad',;
-          targetId: 'ad456',;
-          details: 'Advertisement removed due to inappropriate content',;
+          id: '2',
+          action: 'Ad Removal',
+          performedBy: 'moderator@example.com',
+          targetType: 'ad',
+          targetId: 'ad456',
+          details: 'Advertisement removed due to inappropriate content',
           timestamp: new Date(Date.now() - 86400000), // 1 day ago
-          status: 'success',;
-          ipAddress: '192.168.1.2',;
-        },;
+          status: 'success',
+          ipAddress: '192.168.1.2',
+        },
         // Add more mock data as needed
-      ];
-      this.filterLogs();
+      ]
+      this.filterLogs()
       this.loading = false;
-    }, 1000);
+    }, 1000)
   }
 
   filterLogs() {
     this.filteredLogs = this.logs.filter((log) => {
       const typeMatch = this.selectedType === 'all' || log.targetType === this.selectedType;
-      const dateMatch = !this.selectedDate || this.isSameDay(log.timestamp, this.selectedDate);
+      const dateMatch = !this.selectedDate || this.isSameDay(log.timestamp, this.selectedDate)
       return typeMatch && dateMatch;
-    });
+    })
   }
 
   isSameDay(date1: Date, date2: Date): boolean {
     return (;
       date1.getFullYear() === date2.getFullYear() &&;
       date1.getMonth() === date2.getMonth() &&;
-      date1.getDate() === date2.getDate();
-    );
+      date1.getDate() === date2.getDate()
+    )
   }
 
   getTypeSeverity(type: string): string {

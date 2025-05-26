@@ -44,7 +44,7 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-navigation',;
+  selector: 'app-navigation',
   template: `;`
     ;
       ;
@@ -69,7 +69,7 @@ export interface UserData {
             ;
               ;
                 ;
-                {{ userData.name }};
+                {{ userData.name }}
                 ;
               ;
               ;
@@ -94,7 +94,7 @@ export interface UserData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [`;`
     :host {
       display: block;
@@ -105,12 +105,12 @@ export interface UserData {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background-color: var(--surface-ground);
+      background-color: var(--surface-ground)
     }
 
     .layout-header {
-      background-color: var(--surface-card);
-      border-bottom: 1px solid var(--surface-border);
+      background-color: var(--surface-card)
+      border-bottom: 1px solid var(--surface-border)
       padding: 0;
       position: relative;
       z-index: 999;
@@ -141,15 +141,15 @@ export interface UserData {
       height: 100vh;
       position: fixed;
       top: 0;
-      background-color: var(--surface-overlay);
-      border-right: 1px solid var(--surface-border);
+      background-color: var(--surface-overlay)
+      border-right: 1px solid var(--surface-border)
       transition: transform .3s;
     }
 
     .layout-main {
       flex: 1;
       padding-top: 4rem;
-      margin-left: var(--sidebar-width, 250px);
+      margin-left: var(--sidebar-width, 250px)
       transition: margin-left .3s;
     }
 
@@ -162,8 +162,8 @@ export interface UserData {
     }
 
     .layout-footer {
-      background-color: var(--surface-card);
-      border-top: 1px solid var(--surface-border);
+      background-color: var(--surface-card)
+      border-top: 1px solid var(--surface-border)
       padding: 1rem;
     }
 
@@ -201,7 +201,7 @@ export interface UserData {
           padding: 0;
         }
 
-        .p-menuitem-text,;
+        .p-menuitem-text,
         .p-submenu-icon {
           display: none;
         }
@@ -212,44 +212,44 @@ export interface UserData {
         }
       }
     }
-  `],;`
-  imports: [RippleModule, MenuModule, AvatarModule, AutoCompleteModule, BreadcrumbModule, MenubarModule, SidebarModule, ButtonModule, MenuItem,; 
-    CommonModule,;
-    RouterModule,;
-    ButtonModule,;
-    SidebarModule,;
-    MenubarModule,;
-    BreadcrumbModule,;
-    AutoCompleteModule,;
-    AvatarModule,;
-    MenuModule,;
-    RippleModule,;
-  ],;
+  `],`
+  imports: [RippleModule, MenuModule, AvatarModule, AutoCompleteModule, BreadcrumbModule, MenubarModule, SidebarModule, ButtonModule, MenuItem, 
+    CommonModule,
+    RouterModule,
+    ButtonModule,
+    SidebarModule,
+    MenubarModule,
+    BreadcrumbModule,
+    AutoCompleteModule,
+    AvatarModule,
+    MenuModule,
+    RippleModule,
+  ],
   standalone: true;
-});
+})
 export class NavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,;
-    showTopMenu: true,;
-    showUserMenu: true,;
-    showSearch: true,;
-    showBreadcrumbs: true,;
-    sidebarState: 'expanded',;
-    theme: 'light',;
-  };
+    showSidebar: true,
+    showTopMenu: true,
+    showUserMenu: true,
+    showSearch: true,
+    showBreadcrumbs: true,
+    sidebarState: 'expanded',
+    theme: 'light',
+  }
 
-  @Input() menuItems: MenuItem[] = [];
-  @Input() topMenuItems: MenuItem[] = [];
-  @Input() userMenuItems: MenuItem[] = [];
-  @Input() breadcrumbItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
+  @Input() topMenuItems: MenuItem[] = []
+  @Input() userMenuItems: MenuItem[] = []
+  @Input() breadcrumbItems: MenuItem[] = []
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter();
-  @Output() topMenuItemClicked = new EventEmitter();
-  @Output() userMenuItemClicked = new EventEmitter();
-  @Output() breadcrumbClicked = new EventEmitter();
-  @Output() searchSubmitted = new EventEmitter();
-  @Output() sidebarStateChanged = new EventEmitter();
+  @Output() menuItemClicked = new EventEmitter()
+  @Output() topMenuItemClicked = new EventEmitter()
+  @Output() userMenuItemClicked = new EventEmitter()
+  @Output() breadcrumbClicked = new EventEmitter()
+  @Output() searchSubmitted = new EventEmitter()
+  @Output() sidebarStateChanged = new EventEmitter()
 
   sidebarVisible = true;
   searchQuery = '';
@@ -258,43 +258,43 @@ export class NavigationComponen {t {
     this.sidebarVisible = !this.sidebarVisible;
     const newState = this.sidebarVisible ? 'expanded' : 'collapsed';
     this.config.sidebarState = newState;
-    this.sidebarStateChanged.emit(newState);
+    this.sidebarStateChanged.emit(newState)
   }
 
   onMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.menuItemClicked.emit(item);
+      this.menuItemClicked.emit(item)
     }
   }
 
   onTopMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.topMenuItemClicked.emit(item);
+      this.topMenuItemClicked.emit(item)
     }
   }
 
   onUserMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.userMenuItemClicked.emit(item);
+      this.userMenuItemClicked.emit(item)
     }
   }
 
   onBreadcrumbClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.breadcrumbClicked.emit(item);
+      this.breadcrumbClicked.emit(item)
     }
   }
 
   onSearch(event: any) {
-    this.searchSubmitted.emit(event.query);
+    this.searchSubmitted.emit(event.query)
   }
 
   onSearchSelect(event: any) {
-    this.searchSubmitted.emit(event);
+    this.searchSubmitted.emit(event)
   }
 }
 
@@ -319,7 +319,7 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-navigation',;
+  selector: 'app-navigation',
   template: `;`
     ;
       ;
@@ -344,7 +344,7 @@ export interface UserData {
             ;
               ;
                 ;
-                {{ userData.name }};
+                {{ userData.name }}
                 ;
               ;
               ;
@@ -369,7 +369,7 @@ export interface UserData {
         ;
       ;
     ;
-  `,;`
+  `,`
   styles: [`;`
     :host {
       display: block;
@@ -380,12 +380,12 @@ export interface UserData {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background-color: var(--surface-ground);
+      background-color: var(--surface-ground)
     }
 
     .layout-header {
-      background-color: var(--surface-card);
-      border-bottom: 1px solid var(--surface-border);
+      background-color: var(--surface-card)
+      border-bottom: 1px solid var(--surface-border)
       padding: 0;
       position: relative;
       z-index: 999;
@@ -416,15 +416,15 @@ export interface UserData {
       height: 100vh;
       position: fixed;
       top: 0;
-      background-color: var(--surface-overlay);
-      border-right: 1px solid var(--surface-border);
+      background-color: var(--surface-overlay)
+      border-right: 1px solid var(--surface-border)
       transition: transform .3s;
     }
 
     .layout-main {
       flex: 1;
       padding-top: 4rem;
-      margin-left: var(--sidebar-width, 250px);
+      margin-left: var(--sidebar-width, 250px)
       transition: margin-left .3s;
     }
 
@@ -437,8 +437,8 @@ export interface UserData {
     }
 
     .layout-footer {
-      background-color: var(--surface-card);
-      border-top: 1px solid var(--surface-border);
+      background-color: var(--surface-card)
+      border-top: 1px solid var(--surface-border)
       padding: 1rem;
     }
 
@@ -476,7 +476,7 @@ export interface UserData {
           padding: 0;
         }
 
-        .p-menuitem-text,;
+        .p-menuitem-text,
         .p-submenu-icon {
           display: none;
         }
@@ -487,44 +487,44 @@ export interface UserData {
         }
       }
     }
-  `],;`
+  `],`
   imports: [;
-    CommonModule,;
-    RouterModule,;
-    ButtonModule,;
-    SidebarModule,;
-    MenubarModule,;
-    BreadcrumbModule,;
-    AutoCompleteModule,;
-    AvatarModule,;
-    MenuModule,;
-    RippleModule,;
-  ],;
+    CommonModule,
+    RouterModule,
+    ButtonModule,
+    SidebarModule,
+    MenubarModule,
+    BreadcrumbModule,
+    AutoCompleteModule,
+    AvatarModule,
+    MenuModule,
+    RippleModule,
+  ],
   standalone: true;
-});
+})
 export class NavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,;
-    showTopMenu: true,;
-    showUserMenu: true,;
-    showSearch: true,;
-    showBreadcrumbs: true,;
-    sidebarState: 'expanded',;
-    theme: 'light',;
-  };
+    showSidebar: true,
+    showTopMenu: true,
+    showUserMenu: true,
+    showSearch: true,
+    showBreadcrumbs: true,
+    sidebarState: 'expanded',
+    theme: 'light',
+  }
 
-  @Input() menuItems: MenuItem[] = [];
-  @Input() topMenuItems: MenuItem[] = [];
-  @Input() userMenuItems: MenuItem[] = [];
-  @Input() breadcrumbItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = []
+  @Input() topMenuItems: MenuItem[] = []
+  @Input() userMenuItems: MenuItem[] = []
+  @Input() breadcrumbItems: MenuItem[] = []
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter();
-  @Output() topMenuItemClicked = new EventEmitter();
-  @Output() userMenuItemClicked = new EventEmitter();
-  @Output() breadcrumbClicked = new EventEmitter();
-  @Output() searchSubmitted = new EventEmitter();
-  @Output() sidebarStateChanged = new EventEmitter();
+  @Output() menuItemClicked = new EventEmitter()
+  @Output() topMenuItemClicked = new EventEmitter()
+  @Output() userMenuItemClicked = new EventEmitter()
+  @Output() breadcrumbClicked = new EventEmitter()
+  @Output() searchSubmitted = new EventEmitter()
+  @Output() sidebarStateChanged = new EventEmitter()
 
   sidebarVisible = true;
   searchQuery = '';
@@ -533,42 +533,42 @@ export class NavigationComponen {t {
     this.sidebarVisible = !this.sidebarVisible;
     const newState = this.sidebarVisible ? 'expanded' : 'collapsed';
     this.config.sidebarState = newState;
-    this.sidebarStateChanged.emit(newState);
+    this.sidebarStateChanged.emit(newState)
   }
 
   onMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.menuItemClicked.emit(item);
+      this.menuItemClicked.emit(item)
     }
   }
 
   onTopMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.topMenuItemClicked.emit(item);
+      this.topMenuItemClicked.emit(item)
     }
   }
 
   onUserMenuItemClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.userMenuItemClicked.emit(item);
+      this.userMenuItemClicked.emit(item)
     }
   }
 
   onBreadcrumbClick(event: any) {
     const item = event.item as MenuItem;
     if (item) {
-      this.breadcrumbClicked.emit(item);
+      this.breadcrumbClicked.emit(item)
     }
   }
 
   onSearch(event: any) {
-    this.searchSubmitted.emit(event.query);
+    this.searchSubmitted.emit(event.query)
   }
 
   onSearchSelect(event: any) {
-    this.searchSubmitted.emit(event);
+    this.searchSubmitted.emit(event)
   }
 }

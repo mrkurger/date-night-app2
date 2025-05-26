@@ -3,7 +3,7 @@ import { AdvertiserBrowsingAlternateComponent } from './advertiser-browsing-alte
 
 export const advertiserBrowsingAlternateRoutes: Routes = [
   {';
-    path: '',;
-    component: AdvertiserBrowsingAlternateComponent,;
-  },;
-];
+    path: '',
+    component: AdvertiserBrowsingAlternateComponent,
+  },
+]

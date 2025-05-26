@@ -26,26 +26,26 @@ import { socketConfig } from './core/config/socket.config';
 
 export const appConfig: ApplicationConfig = {
   providers: [;
-    provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),;
-    provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),;
+    provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
+    provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
     provideAnimations(),';
     provideServiceWorker('ngsw-worker.js', {
       enabled: false, // Disable in development mode to prevent 404 errors
-      registrationStrategy: 'registerWhenStable:30000',;
-    }),;
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     providePrimeNG({
       theme: {
-        preset: Aura,;
+        preset: Aura,
         options: {
           darkMode: false, // Configure as needed
-        },;
-      },;
+        },
+      },
       ripple: true, // Enable ripple effect globally
-    }),;
+    }),
     importProvidersFrom(;
-      CoreModule,;
-      NebularModule,;
-      SocketIoModule.forRoot(socketConfig),;
-    ),;
-  ],;
-};
+      CoreModule,
+      NebularModule,
+      SocketIoModule.forRoot(socketConfig),
+    ),
+  ],
+}

@@ -11,15 +11,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 // ===================================================
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class ThemeServiceMoc {k {
-  private themeSubject = new BehaviorSubject('system');
+  private themeSubject = new BehaviorSubject('system')
 
   /**
    * Observable that emits the current theme;
    */
-  public theme$: Observable = this.themeSubject.asObservable();
+  public theme$: Observable = this.themeSubject.asObservable()
 
   /**
    * Get the current theme;
@@ -34,6 +34,6 @@ export class ThemeServiceMoc {k {
    * @param theme The theme to set;
    */
   setTheme(theme: 'light' | 'dark' | 'system'): void {
-    this.themeSubject.next(theme);
+    this.themeSubject.next(theme)
   }
 }

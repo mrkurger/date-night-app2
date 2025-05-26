@@ -8,28 +8,28 @@ import { CommonModule } from '@angular/common';
  * Features customizable appearance, animation, and various shapes.;
  */
 @Component({';
-    selector: 'app-skeleton',;
-    imports: [CommonModule],;
+    selector: 'app-skeleton',
+    imports: [CommonModule],
     template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
     styles: [;
         `;`
       .skeleton {
         display: flex;
         flex-direction: column;
-        gap: nb-theme(spacing-2);
+        gap: nb-theme(spacing-2)
       }
 
       /* Variants */
       .skeleton--text .skeleton__item {
-        border-radius: nb-theme(border-radius);
+        border-radius: nb-theme(border-radius)
       }
 
       .skeleton--card .skeleton__item {
-        border-radius: nb-theme(card-border-radius);
+        border-radius: nb-theme(card-border-radius)
       }
 
       .skeleton--circle .skeleton__item {
@@ -39,17 +39,17 @@ import { CommonModule } from '@angular/common';
       /* Animation */
       .skeleton--animated .skeleton__item {
         background: linear-gradient(;
-          90deg,;
-          nb-theme(background-basic-color-2) 25%,;
-          nb-theme(background-basic-color-3) 37%,;
+          90deg,
+          nb-theme(background-basic-color-2) 25%,
+          nb-theme(background-basic-color-3) 37%,
           nb-theme(background-basic-color-2) 63%;
-        );
+        )
         background-size: 400% 100%;
         animation: skeleton-loading 1.4s ease infinite;
       }
 
       .skeleton__item {
-        background-color: nb-theme(background-basic-color-2);
+        background-color: nb-theme(background-basic-color-2)
       }
 
       /* Types */
@@ -63,7 +63,7 @@ import { CommonModule } from '@angular/common';
 
       .skeleton__item--title {
         height: 1.5em;
-        margin-bottom: nb-theme(spacing-2);
+        margin-bottom: nb-theme(spacing-2)
       }
 
       .skeleton__item--avatar {
@@ -80,7 +80,7 @@ import { CommonModule } from '@angular/common';
       .skeleton__item--button {
         height: 2.25rem;
         width: 100px;
-        border-radius: nb-theme(button-rectangle-border-radius);
+        border-radius: nb-theme(button-rectangle-border-radius)
       }
 
       @keyframes skeleton-loading {
@@ -95,19 +95,19 @@ import { CommonModule } from '@angular/common';
       /* Dark theme adjustments */
       :host-context([data-theme='dark']) .skeleton--animated .skeleton__item {
         background: linear-gradient(;
-          90deg,;
-          nb-theme(background-basic-color-3) 25%,;
-          nb-theme(background-basic-color-4) 37%,;
+          90deg,
+          nb-theme(background-basic-color-3) 25%,
+          nb-theme(background-basic-color-4) 37%,
           nb-theme(background-basic-color-3) 63%;
-        );
+        )
       }
 
       :host-context([data-theme='dark']) .skeleton__item {
-        background-color: nb-theme(background-basic-color-3);
+        background-color: nb-theme(background-basic-color-3)
       }
-    `,;`
-    ];
-});
+    `,`
+    ]
+})
 export class SkeletonModul {e {
   @Input() type: 'text' | 'title' | 'avatar' | 'thumbnail' | 'button' = 'text';
   @Input() variant: 'text' | 'card' | 'circle' = 'text';
@@ -122,9 +122,9 @@ export class SkeletonModul {e {
    * Get array of items based on count;
    */
   getArray(): number[] {
-    return Array(this.count);
-      .fill(0);
-      .map((_, i) => i);
+    return Array(this.count)
+      .fill(0)
+      .map((_, i) => i)
   }
 
   /**

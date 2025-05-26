@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Pipe({';
-  name: 'linkify',;
-  standalone: true,;
-});
+  name: 'linkify',
+  standalone: true,
+})
 export class LinkifyPip {e implements PipeTransform {
   // URL pattern for detecting links in text
   private urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -30,9 +30,9 @@ export class LinkifyPip {e implements PipeTransform {
       }
 
       return `${displayUrl}`;`
-    });
+    })
 
     // Sanitize the HTML to prevent XSS attacks
-    return this.sanitizer.bypassSecurityTrustHtml(replacedText);
+    return this.sanitizer.bypassSecurityTrustHtml(replacedText)
   }
 }

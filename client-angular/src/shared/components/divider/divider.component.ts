@@ -2,10 +2,10 @@ import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({';
-  selector: 'nb-divider',;
-  standalone: true,;
-  imports: [CommonModule],;
-  template: ``,;`
+  selector: 'nb-divider',
+  standalone: true,
+  imports: [CommonModule],
+  template: ``,`
   styles: `;`
     .divider {
       border-top: 1px solid #ccc;
@@ -19,9 +19,9 @@ import { CommonModule } from '@angular/common';
       height: 100%;
       display: inline-block;
     }
-  `,;`
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-});
+  `,`
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
 export class NbDividerComponen {t {
   @Input() vertical: boolean = false;
 }

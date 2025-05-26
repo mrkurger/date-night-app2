@@ -29,73 +29,73 @@ import { AdminGuard } from '../../core/guards/admin.guard';
  */
 const routes: Routes = [;
   {';
-    path: '',;
-    canActivate: [AdminGuard],;
+    path: '',
+    canActivate: [AdminGuard],
     children: [;
       {
-        path: 'telemetry',;
-        component: TelemetryDashboardComponent,;
-        data: { title: 'Telemetry Dashboard' },;
-      },;
+        path: 'telemetry',
+        component: TelemetryDashboardComponent,
+        data: { title: 'Telemetry Dashboard' },
+      },
       {
-        path: 'errors',;
-        component: ErrorDashboardComponent,;
-        data: { title: 'Error Dashboard' },;
-      },;
+        path: 'errors',
+        component: ErrorDashboardComponent,
+        data: { title: 'Error Dashboard' },
+      },
       {
-        path: 'performance',;
-        component: PerformanceDashboardComponent,;
-        data: { title: 'Performance Dashboard' },;
-      },;
+        path: 'performance',
+        component: PerformanceDashboardComponent,
+        data: { title: 'Performance Dashboard' },
+      },
       {
-        path: 'users',;
-        component: UserManagementComponent,;
-        data: { title: 'User Management' },;
-      },;
+        path: 'users',
+        component: UserManagementComponent,
+        data: { title: 'User Management' },
+      },
       {
-        path: 'revenue',;
-        component: RevenueAnalyticsComponent,;
-        data: { title: 'Revenue Analytics' },;
-      },;
+        path: 'revenue',
+        component: RevenueAnalyticsComponent,
+        data: { title: 'Revenue Analytics' },
+      },
       {
-        path: 'moderation',;
-        component: ContentModerationComponent,;
-        data: { title: 'Content Moderation' },;
-      },;
+        path: 'moderation',
+        component: ContentModerationComponent,
+        data: { title: 'Content Moderation' },
+      },
       {
-        path: 'health',;
-        component: SystemHealthComponent,;
-        data: { title: 'System Health' },;
-      },;
+        path: 'health',
+        component: SystemHealthComponent,
+        data: { title: 'System Health' },
+      },
       {
-        path: 'audit',;
-        component: AuditLogComponent,;
-        data: { title: 'Audit Log' },;
-      },;
+        path: 'audit',
+        component: AuditLogComponent,
+        data: { title: 'Audit Log' },
+      },
       {
-        path: 'settings',;
-        component: AdminSettingsComponent,;
-        data: { title: 'Admin Settings' },;
-      },;
+        path: 'settings',
+        component: AdminSettingsComponent,
+        data: { title: 'Admin Settings' },
+      },
       {
-        path: 'error-security',;
-        component: ErrorSecurityDashboardComponent,;
-        data: { title: 'Error Security Dashboard' },;
-      },;
+        path: 'error-security',
+        component: ErrorSecurityDashboardComponent,
+        data: { title: 'Error Security Dashboard' },
+      },
       {
-        path: '',;
-        redirectTo: 'telemetry',;
-        pathMatch: 'full',;
-      },;
-    ],;
-  },;
-];
+        path: '',
+        redirectTo: 'telemetry',
+        pathMatch: 'full',
+      },
+    ],
+  },
+]
 
 /**
  *;
  */
 @NgModule({
-  imports: [RouterModule.forChild(routes)],;
-  exports: [RouterModule],;
-});
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
 export class AdminRoutingModul {e {}

@@ -53,22 +53,22 @@ import { TinderCardComponent } from './tinder-card/tinder-card.component';
 @NgModule({
   declarations: [;
     // No declarations needed for standalone components
-  ],;
-  imports: [CommonModule,;
-    FormsModule,;
-    ReactiveFormsModule,;
-    AvatarModule,;
-    CarouselModule,;
-    PanelModule,;
-    TagModule,;
-    ToolbarModule,;
-    PaginatorModule,;
-    SkeletonModule,;
-    InputSwitchModule,;
-    CardGridComponent,;
-    ButtonModule,;
+  ],
+  imports: [CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AvatarModule,
+    CarouselModule,
+    PanelModule,
+    TagModule,
+    ToolbarModule,
+    PaginatorModule,
+    SkeletonModule,
+    InputSwitchModule,
+    CardGridComponent,
+    ButtonModule,
     TinderCardComponent;
-    CardModule,],;
+    CardModule,],
   // No exports needed for standalone components - they are imported directly where needed
-});
+})
 export class EmeraldModul {e {}

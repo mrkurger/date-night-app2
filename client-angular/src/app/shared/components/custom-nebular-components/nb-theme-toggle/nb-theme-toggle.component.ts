@@ -4,12 +4,12 @@ import { takeUntil } from 'rxjs/operators';
 import { ThemeService } from '../../../../core/services/theme.service';
 
 @Component({';
-  selector: 'app-primeng-theme-toggle',;
+  selector: 'app-primeng-theme-toggle',
   template: `;`
     ;
       ;
     ;
-  `,;`
+  `,`
   styles: [;
     `;`
       .theme-toggle {
@@ -29,40 +29,40 @@ import { ThemeService } from '../../../../core/services/theme.service';
 
       @keyframes rotate {
         from {
-          transform: rotate(0deg);
+          transform: rotate(0deg)
         }
         to {
-          transform: rotate(360deg);
+          transform: rotate(360deg)
         }
       }
-    `,;`
-  ],;
-  standalone: true,;
-});
+    `,`
+  ],
+  standalone: true,
+})
 export class PrimeNGThemeToggleComponen {t implements OnInit, OnDestroy {
   isDarkMode = false;
   isAnimating = false;
-  private destroy$ = new Subject();
+  private destroy$ = new Subject()
 
   constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
     this.themeService;
-      .getDarkMode();
-      .pipe(takeUntil(this.destroy$));
+      .getDarkMode()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((isDark) => {
         this.isDarkMode = isDark;
-      });
+      })
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   toggleTheme() {
     this.isAnimating = true;
-    this.themeService.toggleDarkMode();
+    this.themeService.toggleDarkMode()
   }
 
   onAnimationEnd() {

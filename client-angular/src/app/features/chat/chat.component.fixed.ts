@@ -21,15 +21,15 @@ import { MenuModule } from 'primeng/menu';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
-  Component,;
-  OnInit,;
-  OnDestroy,;
-  ViewChild,;
-  ElementRef,;
-  TemplateRef,;
-  AfterViewChecked,;
-  Input,;
-  CUSTOM_ELEMENTS_SCHEMA,;
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  TemplateRef,
+  AfterViewChecked,
+  Input,
+  CUSTOM_ELEMENTS_SCHEMA,
   Inject,';
 } from '@angular/core';
 
@@ -37,10 +37,10 @@ import { InputGroupModule } from 'primeng/inputgroup';
 
 // Services
 import {
-  ChatService,;
-  ChatMessage,;
-  ChatRoom,;
-  ChatParticipant,;
+  ChatService,
+  ChatMessage,
+  ChatRoom,
+  ChatParticipant,
 } from '../../core/services/chat.service';
 
 // // Alternative for NbMenuModule if a panel structure is needed
@@ -50,7 +50,7 @@ import {
 interface EmojiCategory {
   name: string;
   icon: string;
-  emojis: string[];
+  emojis: string[]
 }
 
 // Constants
@@ -58,12 +58,12 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const TYPING_INDICATOR_DELAY = 500; // ms
 
 @Component({
-  selector: 'app-chat',;
-  standalone: true,;
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
-  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule,; 
-    CommonModule,;
-    FormsModule,;
+  selector: 'app-chat',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule, 
+    CommonModule,
+    FormsModule,
     // Nebular Modules to be replaced:
     // NbCardModule,
     // NbButtonModule,
@@ -76,25 +76,25 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     // NbMenuModule,
 
     // PrimeNG Modules:
-    CardModule,;
-    ButtonModule,;
-    InputTextModule,;
-    TooltipModule,;
-    BadgeModule,;
-    ContextMenuModule,;
-    MenuModule,;
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    BadgeModule,
+    ContextMenuModule,
+    MenuModule,
     // FloatLabelModule, // Uncomment if p-float-label is used for form fields
     // InputGroupModule, // Uncomment if input groups are used
 
     // Existing non-Nebular imports:
-    AvatarModule,;
+    AvatarModule,
     SkeletonModule, // Assuming this is not Nebular's or already handled
-    AppSortComponent,;
-    AppSortHeaderComponent,;
-  ],;
-  templateUrl: './chat.component.html',;
-  styleUrls: ['./chat.component.scss'],;
-});
+    AppSortComponent,
+    AppSortHeaderComponent,
+  ],
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.scss'],
+})
 export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
   @ViewChild('messageList') messageList!: ElementRef;
@@ -106,10 +106,10 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   // Chat data
-  messages: ChatMessage[] = [];
-  rooms: ChatRoom[] = [];
-  contacts: ChatParticipant[] = [];
-  filteredContacts: ChatParticipant[] = [];
+  messages: ChatMessage[] = []
+  rooms: ChatRoom[] = []
+  contacts: ChatParticipant[] = []
+  filteredContacts: ChatParticipant[] = []
   newMessage = '';
   currentUserId = '';
   selectedRoomId: string | null = null;
@@ -134,14 +134,14 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
 
   // Chat menu items
   chatMenuItems = [;
-    { title: 'View Profile', icon: 'person-outline', data: { action: 'viewProfile' } },;
-    { title: 'Clear History', icon: 'trash-2-outline', data: { action: 'clearHistory' } },;
-    { title: 'Block User', icon: 'slash-outline', data: { action: 'blockUser' } },;
-    { title: 'Report', icon: 'alert-triangle-outline', data: { action: 'report' } },;
-  ];
+    { title: 'View Profile', icon: 'person-outline', data: { action: 'viewProfile' } },
+    { title: 'Clear History', icon: 'trash-2-outline', data: { action: 'clearHistory' } },
+    { title: 'Block User', icon: 'slash-outline', data: { action: 'blockUser' } },
+    { title: 'Report', icon: 'alert-triangle-outline', data: { action: 'report' } },
+  ]
 
   // Current messages
-  currentMessages: ChatMessage[] = [];
+  currentMessages: ChatMessage[] = []
 
   // Typing indicator
   isTyping = false;
@@ -153,7 +153,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   sendMessage(): void {
     if (!this.messageText.trim()) return;
 
-    console.log('Sending message:', this.messageText);
+    console.log('Sending message:', this.messageText)
     // Implementation would typically call a service method
 
     this.messageText = '';
@@ -162,7 +162,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // Handle typing events
   onTyping(): void {
     // Implementation would typically notify other users that this user is typing
-    console.log('User is typing...');
+    console.log('User is typing...')
   }
 
   temporaryMessageTTL = 24 * 60 * 60 * 1000; // Default: 24 hours in milliseconds
@@ -173,113 +173,113 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
 
   // New message dialog
   newMessageSearch = '';
-  filteredNewMessageContacts: ChatParticipant[] = [];
+  filteredNewMessageContacts: ChatParticipant[] = []
 
   // Image preview
   previewImage: { url: string; type: string } | null = null;
 
   // Search in chat
   chatSearchQuery = '';
-  chatSearchResults: ChatMessage[] = [];
+  chatSearchResults: ChatMessage[] = []
 
   // Media gallery
   galleryTab: 'images' | 'files' | 'links' = 'images';
-  galleryImages: { url: string; type: string }[] = [];
-  galleryFiles: { url: string; type: string }[] = [];
-  galleryLinks: { url: string; title?: string; timestamp: Date }[] = [];
+  galleryImages: { url: string; type: string }[] = []
+  galleryFiles: { url: string; type: string }[] = []
+  galleryLinks: { url: string; title?: string; timestamp: Date }[] = []
 
   // Emoji picker
   emojiCategories: EmojiCategory[] = [;
     {
-      name: 'Smileys & Emotion',;
-      icon: 'sentiment_satisfied_alt',;
+      name: 'Smileys & Emotion',
+      icon: 'sentiment_satisfied_alt',
       emojis: [;
-        '😀',;
-        '😃',;
-        '😄',;
-        '😁',;
-        '😆',;
-        '😅',;
-        '😂',;
-        '🤣',;
-        '😊',;
-        '😇',;
-        '🙂',;
-        '🙃',;
-        '😉',;
-        '😌',;
-        '😍',;
-        '🥰',;
-        '😘',;
-      ],;
-    },;
+        '😀',
+        '😃',
+        '😄',
+        '😁',
+        '😆',
+        '😅',
+        '😂',
+        '🤣',
+        '😊',
+        '😇',
+        '🙂',
+        '🙃',
+        '😉',
+        '😌',
+        '😍',
+        '🥰',
+        '😘',
+      ],
+    },
     {
-      name: 'People & Body',;
-      icon: 'person',;
+      name: 'People & Body',
+      icon: 'person',
       emojis: [;
-        '👍',;
-        '👎',;
-        '👌',;
-        '✌️',;
-        '🤞',;
-        '🤟',;
-        '🤘',;
-        '🤙',;
-        '👈',;
-        '👉',;
-        '👆',;
-        '👇',;
-        '👋',;
-        '🤚',;
-        '🖐️',;
-        '✋',;
-        '🖖',;
-      ],;
-    },;
+        '👍',
+        '👎',
+        '👌',
+        '✌️',
+        '🤞',
+        '🤟',
+        '🤘',
+        '🤙',
+        '👈',
+        '👉',
+        '👆',
+        '👇',
+        '👋',
+        '🤚',
+        '🖐️',
+        '✋',
+        '🖖',
+      ],
+    },
     {
-      name: 'Objects',;
-      icon: 'emoji_objects',;
+      name: 'Objects',
+      icon: 'emoji_objects',
       emojis: [;
-        '❤️',;
-        '🧡',;
-        '💛',;
-        '💚',;
-        '💙',;
-        '💜',;
-        '🖤',;
-        '💔',;
-        '❣️',;
-        '💕',;
-        '💞',;
-        '💓',;
-        '💗',;
-        '💖',;
-        '💘',;
-        '💝',;
-        '💟',;
-      ],;
-    },;
-  ];
+        '❤️',
+        '🧡',
+        '💛',
+        '💚',
+        '💙',
+        '💜',
+        '🖤',
+        '💔',
+        '❣️',
+        '💕',
+        '💞',
+        '💓',
+        '💗',
+        '💖',
+        '💘',
+        '💝',
+        '💟',
+      ],
+    },
+  ]
   currentCategoryEmojis: string[] = this.emojiCategories[0].emojis;
 
   // Subscriptions
-  private subscriptions: Subscription[] = [];
-  private typingSubject = new Subject();
+  private subscriptions: Subscription[] = []
+  private typingSubject = new Subject()
   private shouldScrollToBottom = true;
 
   constructor(;
-    private chatService: ChatService,;
-    private authService: AuthService,;
-    private notificationService: NotificationService,;
-    private router: Router,;
-    private route: ActivatedRoute,;
+    private chatService: ChatService,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
-    this.currentUserId = this.authService.getCurrentUserId();
+    this.currentUserId = this.authService.getCurrentUserId()
   }
 
   ngOnInit(): void {
-    this.loadRooms();
-    this.setupSubscriptions();
+    this.loadRooms()
+    this.setupSubscriptions()
   }
 
   selectContact(contactId: string): void {
@@ -292,24 +292,24 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   // Open link in new tab
   openLink(url: string): void {
-    window.open(url, '_blank');
+    window.open(url, '_blank')
   }
 
   // Show message date if it's the first message of the day or after a time gap
   showMessageDate(message: ChatMessage): boolean {
-    const index = this.currentMessages.indexOf(message);
+    const index = this.currentMessages.indexOf(message)
     if (index === 0) return true;
 
-    const prevMessage = this.currentMessages[index - 1];
-    const prevDate = new Date(prevMessage.timestamp);
-    const currentDate = new Date(message.timestamp);
+    const prevMessage = this.currentMessages[index - 1]
+    const prevDate = new Date(prevMessage.timestamp)
+    const currentDate = new Date(message.timestamp)
 
     // Show date if it's a different day or more than 1 hour apart
     return (;
@@ -317,35 +317,35 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
       prevDate.getMonth() !== currentDate.getMonth() ||;
       prevDate.getFullYear() !== currentDate.getFullYear() ||;
       currentDate.getTime() - prevDate.getTime() > 60 * 60 * 1000;
-    );
+    )
   }
 
   // Highlight search text in messages
   highlightSearchText(text: string): string {
     if (!this.searchQuery || !text) return text;
 
-    const regex = new RegExp(`(${this.escapeRegExp(this.searchQuery)})`, 'gi');`
-    return text.replace(regex, '$1');
+    const regex = new RegExp(`(${this.escapeRegExp(this.searchQuery)})`, 'gi')`
+    return text.replace(regex, '$1')
   }
 
   // Helper method to escape special characters in regex
   private escapeRegExp(string: string): string {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   }
 
   // Open image preview
   openImagePreview(image: any): void {
     // Implementation would typically open a modal or lightbox
-    console.log('Opening image preview:', image.url);
+    console.log('Opening image preview:', image.url)
   }
 
   // Download attachment
   downloadAttachment(file: any): void {
-    const link = document.createElement('a');
+    const link = document.createElement('a')
     link.href = file.url;
     link.download = file.name || 'download';
     link.target = '_blank';
-    link.click();
+    link.click()
   }
 
   // Get file icon based on file type
@@ -365,31 +365,31 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
 
   filterConversations(): void {
     if (!this.searchQuery) {
-      this.filteredContacts = [...this.contacts];
+      this.filteredContacts = [...this.contacts]
       return;
     }
 
-    const query = this.searchQuery.toLowerCase();
+    const query = this.searchQuery.toLowerCase()
     this.filteredContacts = this.contacts.filter(;
       (contact) =>;
         contact.name?.toLowerCase().includes(query) ||;
-        contact.lastMessage?.content?.toLowerCase().includes(query),;
-    );
+        contact.lastMessage?.content?.toLowerCase().includes(query),
+    )
   }
 
   clearSearch(): void {
     this.searchQuery = '';
-    this.filterConversations();
+    this.filterConversations()
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.chatService.disconnectSocket();
+    this.subscriptions.forEach((sub) => sub.unsubscribe())
+    this.chatService.disconnectSocket()
   }
 
   ngAfterViewChecked(): void {
     if (this.shouldScrollToBottom) {
-      this.scrollToBottom();
+      this.scrollToBottom()
     }
   }
 
@@ -399,12 +399,12 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
       next: (rooms) => {
         this.rooms = rooms;
         this.loadingContacts = false;
-      },;
+      },
       error: (err) => {
-        console.error('Error loading chat rooms:', err);
+        console.error('Error loading chat rooms:', err)
         this.loadingContacts = false;
-      },;
-    });
+      },
+    })
   }
 
   private setupSubscriptions(): void {
@@ -417,7 +417,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
       }
     } catch (err) {
-      console.error('Error scrolling to bottom:', err);
+      console.error('Error scrolling to bottom:', err)
     }
   }
 
@@ -428,25 +428,25 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // Download image
   downloadImage(): void {
     if (this.previewImage && this.previewImage.url) {
-      window.open(this.previewImage.url, '_blank');
+      window.open(this.previewImage.url, '_blank')
     }
   }
 
   // Share image
   shareImage(): void {
-    console.log('Sharing image:', this.previewImage);
+    console.log('Sharing image:', this.previewImage)
     // Implementation would typically open a share dialog
   }
 
   // Scroll to message
   scrollToMessage(message: any): void {
-    console.log('Scrolling to message:', message);
+    console.log('Scrolling to message:', message)
     // Implementation would typically scroll to the message in the chat
   }
 
   // Select contact for new message
   selectNewMessageContact(contact: any): void {
-    console.log('Selected contact for new message:', contact);
+    console.log('Selected contact for new message:', contact)
     // Implementation would typically start a new chat with the selected contact
   }
 }

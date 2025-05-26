@@ -12,38 +12,38 @@ import { ContentDensity, CardSize, UserPreferences } from './user-preferences.se
 // ===================================================
 
 const DEFAULT_PREFERENCES: UserPreferences = {';
-  defaultViewType: 'netflix',;
-  contentDensity: 'comfortable',;
-  cardSize: 'medium',;
-  savedFilters: {},;
-  recentlyViewed: [],;
-  favorites: [],;
-};
+  defaultViewType: 'netflix',
+  contentDensity: 'comfortable',
+  cardSize: 'medium',
+  savedFilters: {},
+  recentlyViewed: [],
+  favorites: [],
+}
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class UserPreferencesServiceMoc {k {
-  private preferencesSubject = new BehaviorSubject({ ...DEFAULT_PREFERENCES });
+  private preferencesSubject = new BehaviorSubject({ ...DEFAULT_PREFERENCES })
 
   /**
    * Observable that emits the current user preferences;
    */
-  public preferences$: Observable = this.preferencesSubject.asObservable();
+  public preferences$: Observable = this.preferencesSubject.asObservable()
 
   // Available content density options
   public readonly contentDensityOptions: ContentDensity[] = [;
-    { value: 'comfortable', label: 'Comfortable' },;
-    { value: 'compact', label: 'Compact' },;
-    { value: 'condensed', label: 'Condensed' },;
-  ];
+    { value: 'comfortable', label: 'Comfortable' },
+    { value: 'compact', label: 'Compact' },
+    { value: 'condensed', label: 'Condensed' },
+  ]
 
   // Available card size options
   public readonly cardSizeOptions: CardSize[] = [;
-    { value: 'small', label: 'Small' },;
-    { value: 'medium', label: 'Medium' },;
-    { value: 'large', label: 'Large' },;
-  ];
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' },
+  ]
 
   /**
    * Get the current user preferences;
@@ -59,11 +59,11 @@ export class UserPreferencesServiceMoc {k {
    */
   public updatePreferences(preferences: Partial): void {
     const updatedPreferences = {
-      ...this.preferencesSubject.value,;
-      ...preferences,;
-    };
+      ...this.preferencesSubject.value,
+      ...preferences,
+    }
 
-    this.preferencesSubject.next(updatedPreferences);
+    this.preferencesSubject.next(updatedPreferences)
   }
 
   /**
@@ -71,7 +71,7 @@ export class UserPreferencesServiceMoc {k {
    * @param viewType The view type to set as default;
    */
   public setDefaultViewType(viewType: 'netflix' | 'tinder' | 'list'): void {
-    this.updatePreferences({ defaultViewType: viewType });
+    this.updatePreferences({ defaultViewType: viewType })
   }
 
   /**
@@ -79,7 +79,7 @@ export class UserPreferencesServiceMoc {k {
    * @param density The content density to set;
    */
   public setContentDensity(density: ContentDensity['value']): void {
-    this.updatePreferences({ contentDensity: density });
+    this.updatePreferences({ contentDensity: density })
   }
 
   /**
@@ -87,7 +87,7 @@ export class UserPreferencesServiceMoc {k {
    * @param size The card size to set;
    */
   public setCardSize(size: CardSize['value']): void {
-    this.updatePreferences({ cardSize: size });
+    this.updatePreferences({ cardSize: size })
   }
 
   /**
@@ -97,11 +97,11 @@ export class UserPreferencesServiceMoc {k {
    */
   public saveFilter(name: string, filter: any): void {
     const savedFilters = {
-      ...this.preferencesSubject.value.savedFilters,;
-      [name]: filter,;
-    };
+      ...this.preferencesSubject.value.savedFilters,
+      [name]: filter,
+    }
 
-    this.updatePreferences({ savedFilters });
+    this.updatePreferences({ savedFilters })
   }
 
   /**
@@ -110,7 +110,7 @@ export class UserPreferencesServiceMoc {k {
    * @returns The saved filter or undefined if not found;
    */
   public getSavedFilter(name: string): any {
-    return this.preferencesSubject.value.savedFilters[name];
+    return this.preferencesSubject.value.savedFilters[name]
   }
 
   /**
@@ -118,16 +118,16 @@ export class UserPreferencesServiceMoc {k {
    * @param name The name of the filter to delete;
    */
   public deleteSavedFilter(name: string): void {
-    const savedFilters = { ...this.preferencesSubject.value.savedFilters };
-    delete savedFilters[name];
+    const savedFilters = { ...this.preferencesSubject.value.savedFilters }
+    delete savedFilters[name]
 
-    this.updatePreferences({ savedFilters });
+    this.updatePreferences({ savedFilters })
   }
 
   /**
    * Reset preferences to defaults;
    */
   public resetPreferences(): void {
-    this.preferencesSubject.next({ ...DEFAULT_PREFERENCES });
+    this.preferencesSubject.next({ ...DEFAULT_PREFERENCES })
   }
 }

@@ -12,21 +12,21 @@ export interface MapMarker {
 }
 
 @Injectable({
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class MapServic {e {
-  private markersSubject = new BehaviorSubject([]);
-  private selectedMarkerSubject = new BehaviorSubject(null);
+  private markersSubject = new BehaviorSubject([])
+  private selectedMarkerSubject = new BehaviorSubject(null)
 
-  markers$ = this.markersSubject.asObservable();
-  selectedMarker$ = this.selectedMarkerSubject.asObservable();
+  markers$ = this.markersSubject.asObservable()
+  selectedMarker$ = this.selectedMarkerSubject.asObservable()
 
   updateMarkers(markers: MapMarker[]): void {
-    this.markersSubject.next(markers);
+    this.markersSubject.next(markers)
   }
 
   selectMarker(marker: MapMarker | null): void {
-    this.selectedMarkerSubject.next(marker);
+    this.selectedMarkerSubject.next(marker)
   }
 
   getMarkerIcon(status: string): string {
@@ -46,67 +46,67 @@ export class MapServic {e {
 
   generateMarkerStyle(status: string): { [key: string]: string } {
     const colors = {
-      planned: '#2196F3',;
-      active: '#4CAF50',;
-      completed: '#9E9E9E',;
-      cancelled: '#F44336',;
-    };
+      planned: '#2196F3',
+      active: '#4CAF50',
+      completed: '#9E9E9E',
+      cancelled: '#F44336',
+    }
 
     return {
-      backgroundColor: colors[status] || '#757575',;
-      border: '2px solid white',;
-      borderRadius: '50%',;
-      width: '30px',;
-      height: '30px',;
-      display: 'flex',;
-      alignItems: 'center',;
-      justifyContent: 'center',;
-      color: 'white',;
-      fontWeight: 'bold',;
-    };
+      backgroundColor: colors[status] || '#757575',
+      border: '2px solid white',
+      borderRadius: '50%',
+      width: '30px',
+      height: '30px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'white',
+      fontWeight: 'bold',
+    }
   }
 
   // Convert travel itineraries to map markers
   convertItinerariesToMarkers(itineraries: any[]): MapMarker[] {
     return itineraries;
       .map((itinerary) => ({
-        id: itinerary._id,;
-        latitude: itinerary.destination?.location?.coordinates[1] || 0,;
-        longitude: itinerary.destination?.location?.coordinates[0] || 0,;
-        title: `${itinerary.destination?.city}, ${itinerary.destination?.county}`,;`
-        description: `${new Date(itinerary.arrivalDate).toLocaleDateString()} - ${new Date(itinerary.departureDate).toLocaleDateString()}`,;`
-        status: itinerary.status,;
-        icon: this.getMarkerIcon(itinerary.status),;
-      }));
-      .filter((marker) => marker.latitude !== 0 && marker.longitude !== 0);
+        id: itinerary._id,
+        latitude: itinerary.destination?.location?.coordinates[1] || 0,
+        longitude: itinerary.destination?.location?.coordinates[0] || 0,
+        title: `${itinerary.destination?.city}, ${itinerary.destination?.county}`,`
+        description: `${new Date(itinerary.arrivalDate).toLocaleDateString()} - ${new Date(itinerary.departureDate).toLocaleDateString()}`,`
+        status: itinerary.status,
+        icon: this.getMarkerIcon(itinerary.status),
+      }))
+      .filter((marker) => marker.latitude !== 0 && marker.longitude !== 0)
   }
 
   // Get bounds for a set of markers
   getMarkerBounds(markers: MapMarker[]): [[number, number], [number, number]] | null {
     if (!markers.length) return null;
 
-    const lats = markers.map((m) => m.latitude);
-    const lngs = markers.map((m) => m.longitude);
+    const lats = markers.map((m) => m.latitude)
+    const lngs = markers.map((m) => m.longitude)
 
     return [;
-      [Math.min(...lats), Math.min(...lngs)],;
-      [Math.max(...lats), Math.max(...lngs)],;
-    ];
+      [Math.min(...lats), Math.min(...lngs)],
+      [Math.max(...lats), Math.max(...lngs)],
+    ]
   }
 
   // Calculate center point for a set of markers
   calculateCenter(markers: MapMarker[]): { latitude: number; longitude: number } {
     if (!markers.length) {
       // Default to Norway's center if no markers
-      return { latitude: 64.5, longitude: 17.5 };
+      return { latitude: 64.5, longitude: 17.5 }
     }
 
-    const lats = markers.map((m) => m.latitude);
-    const lngs = markers.map((m) => m.longitude);
+    const lats = markers.map((m) => m.latitude)
+    const lngs = markers.map((m) => m.longitude)
 
     return {
-      latitude: (Math.min(...lats) + Math.max(...lats)) / 2,;
-      longitude: (Math.min(...lngs) + Math.max(...lngs)) / 2,;
-    };
+      latitude: (Math.min(...lats) + Math.max(...lats)) / 2,
+      longitude: (Math.min(...lngs) + Math.max(...lngs)) / 2,
+    }
   }
 }

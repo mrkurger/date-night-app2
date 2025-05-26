@@ -2,13 +2,13 @@ import {
 import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-  Component,;
-  ElementRef,;
-  EventEmitter,;
-  Input,;
-  OnDestroy,;
-  OnInit,;
-  Output,;
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
   Renderer2,';
 } from '@angular/core';
 
@@ -48,21 +48,21 @@ export interface TourStep {
 }
 
 @Component({
-  selector: 'app-feature-tour',;
-  templateUrl: './feature-tour.component.html',;
-  styleUrls: ['./feature-tour.component.scss'],;
-  standalone: true,;
-  imports: [CommonModule, NbButtonModule, NbIconModule],;
-});
+  selector: 'app-feature-tour',
+  templateUrl: './feature-tour.component.html',
+  styleUrls: ['./feature-tour.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NbButtonModule, NbIconModule],
+})
 export class FeatureTourComponen {t implements OnInit, OnDestroy {
-  @Input() steps: TourStep[] = [];
+  @Input() steps: TourStep[] = []
 
   @Input() showSkip = true;
   @Input() storageKey = 'feature-tour-completed';
 
-  @Output() complete = new EventEmitter();
-  @Output() skip = new EventEmitter();
-  @Output() stepChange = new EventEmitter();
+  @Output() complete = new EventEmitter()
+  @Output() skip = new EventEmitter()
+  @Output() stepChange = new EventEmitter()
 
   currentStepIndex = 0;
   isVisible = false;
@@ -73,12 +73,12 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
   private scrollListener: (() => void) | null = null;
 
   constructor(;
-    private renderer: Renderer2,;
-    private el: ElementRef,;
+    private renderer: Renderer2,
+    private el: ElementRef,
   ) {}
 
   get currentStep(): TourStep {
-    return this.steps[this.currentStepIndex];
+    return this.steps[this.currentStepIndex]
   }
 
   get progress(): number {
@@ -89,35 +89,35 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
     // Initialize resize observer to update spotlight position when window resizes
     this.resizeObserver = new ResizeObserver(() => {
       if (this.isVisible) {
-        this.updateTargetPosition();
+        this.updateTargetPosition()
       }
-    });
-    this.resizeObserver.observe(document.body);
+    })
+    this.resizeObserver.observe(document.body)
 
     // Add scroll listener to update spotlight position when page scrolls
     this.scrollListener = () => {
       if (this.isVisible) {
-        this.updateTargetPosition();
+        this.updateTargetPosition()
       }
-    };
-    window.addEventListener('scroll', this.scrollListener, true);
+    }
+    window.addEventListener('scroll', this.scrollListener, true)
   }
 
   ngOnDestroy(): void {
     // Clean up observers and listeners
     if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
+      this.resizeObserver.disconnect()
     }
 
     if (this.scrollListener) {
-      window.removeEventListener('scroll', this.scrollListener, true);
+      window.removeEventListener('scroll', this.scrollListener, true)
     }
   }
 
   show(): void {
     this.isVisible = true;
     this.currentStepIndex = 0;
-    this.goToStep(0);
+    this.goToStep(0)
   }
 
   hide(): void {
@@ -127,20 +127,20 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
 
   nextStep(): void {
     if (this.currentStep.action) {
-      this.currentStep.action();
+      this.currentStep.action()
     }
 
     if (this.currentStepIndex  0) {
-      this.goToStep(this.currentStepIndex - 1);
+      this.goToStep(this.currentStepIndex - 1)
     }
   }
 
   goToStep(index: number): void {
     if (index >= 0 && index  {
-        this.updateTargetPosition();
-      }, 300);
+        this.updateTargetPosition()
+      }, 300)
     } else {
-      console.warn(`Element not found for selector: ${selector}`);`
+      console.warn(`Element not found for selector: ${selector}`)`
       // If element not found, position tooltip in the center
       this.targetRect = null;
     }
@@ -148,7 +148,7 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
 
   private updateTargetPosition(): void {
     if (this.targetElement) {
-      this.targetRect = this.targetElement.getBoundingClientRect();
+      this.targetRect = this.targetElement.getBoundingClientRect()
     }
   }
 
@@ -157,18 +157,18 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
     if (!this.targetRect && this.currentStep.position !== 'center') {
       // Default to center position if no target element
       return {
-        top: '50%',;
-        left: '50%',;
-        transform: 'translate(-50%, -50%)',;
-      };
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }
     }
 
     if (this.currentStep.position === 'center') {
       return {
-        top: '50%',;
-        left: '50%',;
-        transform: 'translate(-50%, -50%)',;
-      };
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }
     }
 
     const rect = this.targetRect!;
@@ -177,34 +177,34 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
     switch (this.currentStep.position) {
       case 'top':;
         return {
-          bottom: `${window.innerHeight - rect.top + margin}px`,;`
-          left: `${rect.left + rect.width / 2}px`,;`
-          transform: 'translateX(-50%)',;
-        };
+          bottom: `${window.innerHeight - rect.top + margin}px`,`
+          left: `${rect.left + rect.width / 2}px`,`
+          transform: 'translateX(-50%)',
+        }
       case 'right':;
         return {
-          top: `${rect.top + rect.height / 2}px`,;`
-          left: `${rect.right + margin}px`,;`
-          transform: 'translateY(-50%)',;
-        };
+          top: `${rect.top + rect.height / 2}px`,`
+          left: `${rect.right + margin}px`,`
+          transform: 'translateY(-50%)',
+        }
       case 'bottom':;
         return {
-          top: `${rect.bottom + margin}px`,;`
-          left: `${rect.left + rect.width / 2}px`,;`
-          transform: 'translateX(-50%)',;
-        };
+          top: `${rect.bottom + margin}px`,`
+          left: `${rect.left + rect.width / 2}px`,`
+          transform: 'translateX(-50%)',
+        }
       case 'left':;
         return {
-          top: `${rect.top + rect.height / 2}px`,;`
-          right: `${window.innerWidth - rect.left + margin}px`,;`
-          transform: 'translateY(-50%)',;
-        };
+          top: `${rect.top + rect.height / 2}px`,`
+          right: `${window.innerWidth - rect.left + margin}px`,`
+          transform: 'translateY(-50%)',
+        }
       default:;
         return {
-          top: '50%',;
-          left: '50%',;
-          transform: 'translate(-50%, -50%)',;
-        };
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }
     }
   }
 
@@ -212,22 +212,22 @@ export class FeatureTourComponen {t implements OnInit, OnDestroy {
   getSpotlightStyle(): SpotlightStyles {
     if (!this.targetRect) {
       return {
-        top: '50%',;
-        left: '50%',;
-        width: '100px',;
-        height: '100px',;
-        transform: 'translate(-50%, -50%)',;
-      };
+        top: '50%',
+        left: '50%',
+        width: '100px',
+        height: '100px',
+        transform: 'translate(-50%, -50%)',
+      }
     }
 
     const rect = this.targetRect;
     const radius = this.currentStep.spotlightRadius || 0;
 
     return {
-      top: `${rect.top - radius}px`,;`
-      left: `${rect.left - radius}px`,;`
-      width: `${rect.width + radius * 2}px`,;`
-      height: `${rect.height + radius * 2}px`,;`
-    };
+      top: `${rect.top - radius}px`,`
+      left: `${rect.left - radius}px`,`
+      width: `${rect.width + radius * 2}px`,`
+      height: `${rect.height + radius * 2}px`,`
+    }
   }
 }

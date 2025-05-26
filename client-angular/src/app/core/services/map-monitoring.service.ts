@@ -13,8 +13,8 @@ import { LoggingService } from './logging.service';
  * The data is used to optimize the map component and improve user experience.;
  */
 @Injectable({';
-  providedIn: 'root',;
-});
+  providedIn: 'root',
+})
 export class MapMonitoringServic {e {
   private metrics: {
     initTime: number;
@@ -26,15 +26,15 @@ export class MapMonitoringServic {e {
     locationSelections: number;
     currentLocationUsage: number;
   } = {
-    initTime: 0,;
-    renderTime: 0,;
-    interactionCount: 0,;
-    errorCount: 0,;
-    markerCount: 0,;
-    viewportChanges: 0,;
-    locationSelections: 0,;
-    currentLocationUsage: 0,;
-  };
+    initTime: 0,
+    renderTime: 0,
+    interactionCount: 0,
+    errorCount: 0,
+    markerCount: 0,
+    viewportChanges: 0,
+    locationSelections: 0,
+    currentLocationUsage: 0,
+  }
 
   constructor(private loggingService: LoggingService) {}
 
@@ -44,7 +44,7 @@ export class MapMonitoringServic {e {
    */
   trackInitialization(timeMs: number): void {
     this.metrics.initTime = timeMs;
-    this.loggingService.logPerformance('Map initialization', timeMs);
+    this.loggingService.logPerformance('Map initialization', timeMs)
   }
 
   /**
@@ -53,17 +53,17 @@ export class MapMonitoringServic {e {
    */
   trackRender(timeMs: number): void {
     this.metrics.renderTime = timeMs;
-    this.loggingService.logPerformance('Map render', timeMs);
+    this.loggingService.logPerformance('Map render', timeMs)
   }
 
   /**
    * Track user interaction with the map;
-   * @param interactionType - Type of interaction (click, drag, zoom, etc.);
+   * @param interactionType - Type of interaction (click, drag, zoom, etc.)
    * @param details - Additional details about the interaction;
    */
   trackInteraction(interactionType: string, details?: any): void {
     this.metrics.interactionCount++;
-    this.loggingService.logInteraction('Map', interactionType, details);
+    this.loggingService.logInteraction('Map', interactionType, details)
   }
 
   /**
@@ -73,17 +73,17 @@ export class MapMonitoringServic {e {
    */
   trackError(errorType: string, details: any): void {
     this.metrics.errorCount++;
-    this.loggingService.logError('Map', errorType, details);
+    this.loggingService.logError('Map', errorType, details)
   }
 
   /**
    * Track marker operations;
    * @param count - Number of markers;
-   * @param operation - Operation type (add, remove, update);
+   * @param operation - Operation type (add, remove, update)
    */
   trackMarkers(count: number, operation: 'add' | 'remove' | 'update'): void {
     this.metrics.markerCount = count;
-    this.loggingService.logDebug('Map markers', { count, operation });
+    this.loggingService.logDebug('Map markers', { count, operation })
   }
 
   /**
@@ -93,7 +93,7 @@ export class MapMonitoringServic {e {
    */
   trackViewportChange(center: { lat: number; lng: number }, zoom: number): void {
     this.metrics.viewportChanges++;
-    this.loggingService.logDebug('Map viewport change', { center, zoom });
+    this.loggingService.logDebug('Map viewport change', { center, zoom })
   }
 
   /**
@@ -102,7 +102,7 @@ export class MapMonitoringServic {e {
    */
   trackLocationSelection(location: { latitude: number; longitude: number }): void {
     this.metrics.locationSelections++;
-    this.loggingService.logInteraction('Map', 'location_selection', location);
+    this.loggingService.logInteraction('Map', 'location_selection', location)
   }
 
   /**
@@ -114,9 +114,9 @@ export class MapMonitoringServic {e {
     this.metrics.currentLocationUsage++;
 
     if (success) {
-      this.loggingService.logInteraction('Map', 'current_location_success');
+      this.loggingService.logInteraction('Map', 'current_location_success')
     } else {
-      this.loggingService.logError('Map', 'current_location_error', error);
+      this.loggingService.logError('Map', 'current_location_error', error)
     }
   }
 
@@ -125,7 +125,7 @@ export class MapMonitoringServic {e {
    * @returns Current map metrics;
    */
   getMetrics(): any {
-    return { ...this.metrics };
+    return { ...this.metrics }
   }
 
   /**
@@ -134,7 +134,7 @@ export class MapMonitoringServic {e {
   resetMetrics(): void {
     Object.keys(this.metrics).forEach((key) => {
       (this.metrics as any)[key] = 0;
-    });
+    })
   }
 
   /**
@@ -144,6 +144,6 @@ export class MapMonitoringServic {e {
    * @param details - Additional details;
    */
   trackPerformance(operation: string, timeMs: number, details?: any): void {
-    this.loggingService.logPerformance(`Map ${operation}`, timeMs, details);`
+    this.loggingService.logPerformance(`Map ${operation}`, timeMs, details)`
   }
 }
