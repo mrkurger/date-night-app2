@@ -27,7 +27,7 @@
 
     <!-- Image Count Badge -->
     <div class="image-count" *ngIf="getImageCount() > 1">
-      <nb-icon icon="photo_library"></nb-icon>
+      <i class="pi pi-photo_library"></i>
       <span>{{ getImageCount() }}</span>
     </div>
 
@@ -57,7 +57,7 @@
 
       <!-- Location -->
       <p class="ad-card-location" *ngIf="ad.location && showLocation">
-        <nb-icon icon="location_on"></nb-icon>
+        <i class="pi pi-location_on"></i>
         <span>{{ ad.location }}</span>
       </p>
     </div>
@@ -78,33 +78,25 @@
       <!-- Meta Information -->
       <div class="ad-card-meta">
         <span class="ad-card-date" *ngIf="ad.createdAt">
-          <nb-icon icon="access_time"></nb-icon>
+          <i class="pi pi-access_time"></i>
           {{ getTimeSince() }}
         </span>
 
         <span class="ad-card-views" *ngIf="ad.viewCount">
-          <nb-icon icon="visibility"></nb-icon>
+          <i class="pi pi-visibility"></i>
           {{ ad.viewCount }}
         </span>
       </div>
 
       <!-- Action Buttons -->
       <div class="ad-card-actions" *ngIf="showActions">
-        <p-button></p-button>
-          <nb-icon icon="info"></nb-icon>
-        </button>
+        <p-button label="" icon="pi pi-info"></p-button>
 
-        <p-button></p-button>
-          <nb-icon icon="favorite_border"></nb-icon>
-        </button>
+        <p-button label="" icon="pi pi-favorite_border"></p-button>
 
-        <p-button></p-button>
-          <nb-icon icon="chat"></nb-icon>
-        </button>
+        <p-button label="" icon="pi pi-chat"></p-button>
 
-        <p-button></p-button>
-          <nb-icon icon="share"></nb-icon>
-        </button>
+        <p-button label="" icon="pi pi-share"></p-button>
       </div>
     </div>
   </div>

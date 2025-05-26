@@ -16,12 +16,16 @@ import {
     selector: 'nb-tag',
     templateUrl: './label.component.html',
     styleUrls: ['./label.component.scss'],
-    imports: [CommonModule,
-        NbTagComponent
-    ]
+    imports: [
+    CommonModule,
+        NbTagComponent,
+    TagModule
+  ]
 })
 export class TagModule {
   @Input() text = '';
+import { TagModule } from 'primeng/tag';
+
   @Input() variant: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() icon?: string;

@@ -1,17 +1,26 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
 
 import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
+import { NebularModule } from '../../nebular.module';
 
-export interface HeaderAction {
+/**
+ * Interface defining the structure of a header action button
+ */
+export interface IHeaderAction {
+  /** Unique identifier for the action */
   id: string;
+  /** Display label for the action button */
   label: string;
+  /** Optional icon name for the action button */
   icon?: string;
+  /** Optional status for styling the button */
   status?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic';
+  /** Whether this is the primary action */
   primary?: boolean;
+  /** Callback function to execute when the action is triggered */
   action?: () => void;
 }
 
@@ -20,6 +29,15 @@ export interface HeaderAction {
  *
  * A modern page header component using Nebular UI components.
  * Features title, breadcrumbs, actions, and optional user avatar.
+ *
+ * @example
+ * ```html
+ * <app-page-header
+ *   [title]="'Dashboard'"
+ *   [actions]="headerActions"
+ *   (actionTriggered)="onActionTriggered($event)">
+ * </app-page-header>
+ * ```
  */
 @Component({
   selector: 'app-page-header',
@@ -29,10 +47,8 @@ export interface HeaderAction {
     RouterModule,
     NbCardModule,
     NbButtonModule,
-    NbIconModule,
-    NbUserModule,
-    NbBadgeModule,
     BreadcrumbsComponent,
+    NebularModule,
   ],
   template: `
     <div
@@ -196,21 +212,21 @@ export class ToolbarModule {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() breadcrumbs: { title: string; link?: string[]; icon?: string }[] = [];
-  @Input() actions: HeaderAction[] = [];
+  @Input() actions: IHeaderAction[] = [];
   @Input() backLink?: string;
   @Input() backgroundImage?: string;
   @Input() avatarUrl?: string;
   @Input() avatarName?: string;
   @Input() avatarIsOnline?: boolean;
 
-  @Output() actionClick = new EventEmitter<HeaderAction>();
+  @Output() actionClick = new EventEmitter<IHeaderAction>();
 
   /**
    * Handle action click
    * @param action The action that was clicked
    * @param event The click event
    */
-  onActionClick(action: HeaderAction,_event: Event): void {
+  onActionClick(action: IHeaderAction, _event: Event): void {
     event.preventDefault();
     this.actionClick.emit(action);
 

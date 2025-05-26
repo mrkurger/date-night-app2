@@ -22,11 +22,14 @@ import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuItem } from 'primeng/menuitem';
+import { PanelModule } from 'primeng/panel';
+
 
 @Component({
   selector: 'app-navigation',
   standalone: true, // Ensure this component is standalone
-  imports: [MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
+  imports: [
+    MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
     CommonModule,
     RouterModule,
     BreadcrumbsComponent,
@@ -38,7 +41,8 @@ import { MenuItem } from 'primeng/menuitem';
     ButtonModule,
     AvatarModule,
     MenuModule,
-    TooltipModule,
+    TooltipModule,,
+    PanelModule
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],

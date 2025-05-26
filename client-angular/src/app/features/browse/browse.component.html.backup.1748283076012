@@ -1,0 +1,29 @@
+<p-card>
+  <p-card-header >
+    <p-tabView fullWidth (changeTab)="changeView($event.tabTitle.toLowerCase())" >
+      <p-tabPanel tabTitle="Discover" [active]="activeView === 'netflix'">
+        <ng-template nbTabIcon>
+          <nb-icon icon="grid-outline"></nb-icon>
+        </ng-template>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="Swipe" [active]="activeView === 'tinder'">
+        <ng-template nbTabIcon>
+          <nb-icon icon="heart-outline"></nb-icon>
+        </ng-template>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="List" [active]="activeView === 'list'">
+        <ng-template nbTabIcon>
+          <nb-icon icon="list-outline"></nb-icon>
+        </ng-template>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-template>
+  <p-card-body >
+    <!-- View Content -->
+    <div class="view-content">
+      <app-netflix-view *ngIf="activeView === 'netflix'"></app-netflix-view>
+      <app-tinder *ngIf="activeView === 'tinder'"></app-tinder>
+      <app-list-view *ngIf="activeView === 'list'"></app-list-view>
+    </div>
+  </ng-template>
+</p-card>

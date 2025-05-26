@@ -16,7 +16,7 @@
   </label>
 
   <!-- Nebular Toggle Switch -->
-  <nb-toggle
+  <p-inputSwitch
     [name]="name"
     [checked]="value"
     [disabled]="disabled"
@@ -24,7 +24,7 @@
     [status]="color"
     [attr.aria-label]="ariaLabel || label"
     (checkedChange)="toggle($event)"
-  ></nb-toggle>
+   ></p-inputSwitch>
 
   <!-- Label (Right Position) -->
   <label *ngIf="label && labelPosition === 'right'" [for]="name" class="nb-toggle__label">

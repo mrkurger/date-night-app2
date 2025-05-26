@@ -1,112 +1,239 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for the chat service
-//
-// COMMON CUSTOMIZATIONS:
-// - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
-// - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
-// - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: true)
-// ===================================================
+/**
+ * Chat service implementation for handling chat-related operations.
+ * This file contains settings for the chat service
+ *
+ * COMMON CUSTOMIZATIONS:
+ * - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
+ * - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
+ * - ENABLE_MESSAGE_ENCRYPTION: Enable end-to-end encryption for messages (default: true)
+ * - DEFAULT_MESSAGE_TTL: Default time-to-live for messages in milliseconds (default: 7 days)
+ * - ENABLE_MESSAGE_AUTO_DELETION: Enable automatic deletion of expired messages (default: true)
+ */
 
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-export interface ChatMessageRequest {
+import { EncryptionService } from './encryption.service';
+
+/** Constants for message auto-deletion */
+const DEFAULT_MESSAGE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+/** Whether message auto-deletion is enabled by default */
+const ENABLE_MESSAGE_AUTO_DELETION = true;
+
+/**
+ * Interface for chat message request data.
+ */
+export interface IChatMessageRequest {
+  /** The ID of the chat room */
   roomId: string;
+  /** The content of the message */
   content: string;
+  /** The ID of the sender */
   senderId: string;
+  /** The type of message */
   type?: 'text' | 'image' | 'file';
+  /** URL for file attachments */
   fileUrl?: string;
+  /** Name of file attachments */
   fileName?: string;
 }
 
-export interface ChatMessage {
+/**
+ * Interface for chat message data.
+ */
+export interface IChatMessage {
+  /** Unique identifier for the message */
   id: string;
+  /** The ID of the chat room */
   roomId: string;
+  /** The ID of the sender */
   senderId: string;
+  /** The content of the message */
   content: string;
+  /** Timestamp when the message was sent */
   timestamp: Date;
+  /** The type of message */
   type?: 'text' | 'image' | 'file';
+  /** URL for file attachments */
   fileUrl?: string;
+  /** Name of file attachments */
   fileName?: string;
 }
 
-export interface ChatParticipant {
+/**
+ * Interface for chat participant data.
+ */
+export interface IChatParticipant {
+  /** Unique identifier for the participant */
   id: string;
+  /** Display name of the participant */
   name: string;
+  /** Current status of the participant */
   status: 'online' | 'offline' | 'away';
+  /** Profile image URL */
   profileImage?: string;
 }
 
-export interface ChatRoom {
+/**
+ * Interface for chat room data.
+ */
+export interface IChatRoom {
+  /** Unique identifier for the room */
   id: string;
+  /** Display name of the room */
   name?: string;
-  participants: ChatParticipant[];
-  lastMessage?: ChatMessage;
+  /** List of participants in the room */
+  participants: IChatParticipant[];
+  /** The last message sent in the room */
+  lastMessage?: IChatMessage;
+  /** Number of unread messages */
   unreadCount: number;
+  /** Whether the room is pinned */
   pinned?: boolean;
+  /** When the room was created */
   createdAt?: Date;
+  /** When the room was last updated */
   updatedAt?: Date;
+  /** Whether encryption is enabled for this room */
   encryptionEnabled?: boolean;
+  /** Message expiry time in milliseconds */
   messageExpiryTime?: number;
 }
 
-export interface TypingStatus {
+/**
+ * Interface for room settings.
+ */
+export interface IRoomSettings {
+  /** Whether encryption is enabled */
+  encryptionEnabled?: boolean;
+  /** Whether message expiry is enabled */
+  messageExpiryEnabled?: boolean;
+  /** Message expiry time in milliseconds */
+  messageExpiryTime?: number;
+  /** Whether the room is pinned */
+  pinned?: boolean;
+}
+
+/**
+ * Interface for typing status.
+ */
+export interface ITypingStatus {
+  /** The ID of the room */
   roomId: string;
+  /** The ID of the user */
   userId: string;
+  /** Whether the user is currently typing */
   isTyping: boolean;
 }
 
+/**
+ * Injectable chat service for managing chat operations.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
+  /** Observable for online users */
+  public readonly onlineUsers$: Observable<string[]>;
+
+  /** Observable for new messages */
+  public readonly newMessage$: Observable<IChatMessage>;
+
+  /** Observable for typing status */
+  public readonly typingStatus$: Observable<ITypingStatus>;
+
+  /** API base URL for chat endpoints */
   private readonly apiUrl = '/api/chat';
-  private typingStatus = new BehaviorSubject<TypingStatus>({
+
+  /** Subject for typing status updates */
+  private readonly typingStatus = new BehaviorSubject<ITypingStatus>({
     roomId: '',
     userId: '',
     isTyping: false,
   });
-  private newMessage = new Subject<ChatMessage>();
 
-  // Online users observable
-  private onlineUsersSubject = new BehaviorSubject<string[]>([]);
-  public onlineUsers$ = this.onlineUsersSubject.asObservable();
+  /** Subject for new messages */
+  private readonly newMessage = new Subject<IChatMessage>();
 
-  // Public observables
-  public newMessage$ = this.newMessage.asObservable();
-  public typingStatus$ = this.typingStatus.asObservable();
+  /** Subject for online users */
+  private readonly onlineUsersSubject = new BehaviorSubject<string[]>([]);
 
-  constructor(private http: HttpClient) {}
-
-  getRooms(): Observable<ChatRoom[]> {
-    return this.http.get<ChatRoom[]>(`${this.apiUrl}/rooms`);
+  /**
+   * Constructor for ChatService.
+   * @param http - HTTP client for API calls
+   * @param encryptionService - Service for encryption operations
+   */
+  constructor(
+    private readonly http: HttpClient,
+    private readonly encryptionService: EncryptionService,
+  ) {
+    this.onlineUsers$ = this.onlineUsersSubject.asObservable();
+    this.newMessage$ = this.newMessage.asObservable();
+    this.typingStatus$ = this.typingStatus.asObservable();
   }
 
-  getMessages(roomId: string): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/messages`);
+  /**
+   * Get all chat rooms for the current user.
+   * @returns Observable array of chat rooms
+   */
+  getRooms(): Observable<IChatRoom[]> {
+    return this.http.get<IChatRoom[]>(`${this.apiUrl}/rooms`);
   }
 
-  sendMessage(message: ChatMessageRequest): Observable<ChatMessage> {
-    return this.http.post<ChatMessage>(`${this.apiUrl}/messages`, message);
+  /**
+   * Get messages for a specific chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable array of chat messages
+   */
+  getMessages(roomId: string): Observable<IChatMessage[]> {
+    return this.http.get<IChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/messages`);
   }
 
+  /**
+   * Send a message to a chat room.
+   * @param message - The message request data
+   * @returns Observable of the sent message
+   */
+  sendMessage(message: IChatMessageRequest): Observable<IChatMessage> {
+    return this.http.post<IChatMessage>(`${this.apiUrl}/messages`, message);
+  }
+
+  /**
+   * Clear all messages in a chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable void
+   */
   clearHistory(roomId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/rooms/${roomId}/messages`);
   }
 
+  /**
+   * Block a user.
+   * @param userId - The ID of the user to block
+   * @returns Observable void
+   */
   blockUser(userId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/users/${userId}/block`, {});
   }
 
+  /**
+   * Report a user.
+   * @param userId - The ID of the user to report
+   * @param reason - Optional reason for reporting
+   * @returns Observable void
+   */
   reportUser(userId: string, reason?: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/users/${userId}/report`, { reason });
   }
 
+  /**
+   * Upload files to a chat room.
+   * @param roomId - The ID of the chat room
+   * @param formData - The form data containing files
+   * @returns Observable of uploaded file information
+   */
   uploadFiles(
     roomId: string,
     formData: FormData,
@@ -130,62 +257,119 @@ export class ChatService {
       );
   }
 
+  /**
+   * Send a typing indicator to a chat room.
+   * @param roomId - The ID of the chat room
+   */
   sendTypingIndicator(roomId: string): void {
     // Implementation with WebSocket would go here
     console.log('Sending typing indicator for room:', roomId);
   }
 
+  /**
+   * Disconnect from the chat socket.
+   */
   disconnectSocket(): void {
     // Implementation for WebSocket disconnect
     console.log('Disconnecting from chat socket');
   }
 
+  /**
+   * Mark messages as read in a chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable void
+   */
   markMessagesAsRead(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/read`, {});
   }
 
+  /**
+   * Archive a chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable void
+   */
   archiveRoom(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/archive`, {});
   }
 
   /**
-   * Pin a chat room
+   * Pin a chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable void
    */
   pinRoom(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/pin`, {});
   }
 
   /**
-   * Clear all messages in a chat room
+   * Clear all messages in a chat room.
+   * @param roomId - The ID of the chat room
+   * @returns Observable void
    */
   clearRoom(roomId: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/rooms/${roomId}/clear`, {});
   }
 
   /**
-   * Block a user
+   * Update room settings.
+   * @param roomId - The ID of the chat room
+   * @param settings - The room settings to update
+   * @returns Observable void
    */
-  blockUser(userId: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/block`, {});
-  }
-
-  /**
-   * Report a user
-   */
-  reportUser(userId: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/report`, {});
-  }
-
-  /**
-   * Update room settings
-   */
-  updateRoomSettings(roomId: string, settings: RoomSettings): Observable<void> {
+  updateRoomSettings(roomId: string, settings: IRoomSettings): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/rooms/${roomId}/settings`, settings);
   }
 
   /**
-   * Convert hours to milliseconds
-   * @param hours Number of hours to convert
+   * Configure message auto-deletion settings for a room.
+   * @param roomId - The ID of the chat room
+   * @param enabled - Whether auto-deletion is enabled
+   * @param ttl - Time-to-live in milliseconds (how long messages should last)
+   * @returns Observable boolean indicating success
+   */
+  configureMessageAutoDeletion(
+    roomId: string,
+    enabled: boolean,
+    ttl: number = DEFAULT_MESSAGE_TTL,
+  ): Observable<boolean> {
+    if (!this.encryptionService.isEncryptionAvailable()) {
+      console.warn('Encryption service not available, cannot configure message auto-deletion');
+      return of(false);
+    }
+
+    // Configure the settings in the encryption service
+    this.encryptionService.setMessageExpirySettings(roomId, { enabled, ttl });
+
+    // Also update the server with these settings
+    return this.http
+      .post<{
+        success: boolean;
+      }>(`${this.apiUrl}/rooms/${roomId}/expiry-settings`, { enabled, ttl })
+      .pipe(
+        map((response) => response.success),
+        catchError((error) => {
+          console.error('Error configuring message auto-deletion:', error);
+          return of(false);
+        }),
+      );
+  }
+
+  /**
+   * Get the current message auto-deletion settings for a room.
+   * @param roomId - The ID of the chat room
+   * @returns The current expiry settings
+   */
+  getMessageAutoDeletionSettings(roomId: string): { enabled: boolean; ttl: number } {
+    if (!this.encryptionService.isEncryptionAvailable()) {
+      return { enabled: ENABLE_MESSAGE_AUTO_DELETION, ttl: DEFAULT_MESSAGE_TTL };
+    }
+
+    return this.encryptionService.getMessageExpirySettings(roomId);
+  }
+
+  /**
+   * Convert hours to milliseconds.
+   * @param hours - Number of hours to convert
    * @returns Number of milliseconds
    */
   convertHoursToMilliseconds(hours: number): number {

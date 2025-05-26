@@ -64,10 +64,19 @@ interface StripeCardElement {
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule, ReactiveFormsModule]
+    imports: [
+    NebularModule, CommonModule, ReactiveFormsModule,
+    CardModule,
+    MessageModule,
+    InputTextModule
+  ]
 })
 export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;
+import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
   subscriptionPrices: SubscriptionPrice[] = [];
   paymentForm: FormGroup;

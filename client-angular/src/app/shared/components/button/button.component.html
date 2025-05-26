@@ -11,11 +11,11 @@
   (click)="onClick($event)"
 >
   @if (loading) {
-    <nb-icon icon="loader-outline" class="spin"></nb-icon>
+    <i class="pi pi-loader"></i>
   } @else {
     <!-- Left Icon -->
     @if (iconLeft) {
-      <nb-icon [icon]="iconLeft" class="button-icon button-icon-left"></nb-icon>
+      <i [class]="getIconClass(iconLeft)"></i>
     }
 
     <!-- Button Text -->
@@ -25,7 +25,7 @@
 
     <!-- Right Icon -->
     @if (iconRight) {
-      <nb-icon [icon]="iconRight" class="button-icon button-icon-right"></nb-icon>
+      <i [class]="getIconClass(iconRight)"></i>
     }
   }
 </button>

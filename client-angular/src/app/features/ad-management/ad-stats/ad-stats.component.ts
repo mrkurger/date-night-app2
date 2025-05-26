@@ -25,11 +25,20 @@ import {
   styleUrls: ['./ad-stats.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, DatePipe, NebularModule],
+  imports: [
+    CommonModule, DatePipe, NebularModule,
+    CardModule,
+    DropdownModule,
+    ProgressSpinnerModule
+  ],
 })
 export class AdStatsComponent implements OnInit {
   // Make Math available to the template
   Math = Math;
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
   loading = false;
   dataSource: any[] = [];
@@ -49,6 +58,36 @@ export class AdStatsComponent implements OnInit {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   rawData: any[] = [];
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
 
   constructor(
     private route: ActivatedRoute,

@@ -16,6 +16,12 @@ import {
 } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+
+
 
 /**
  * Design System Demo Component
@@ -26,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
     selector: 'app-design-system-demo',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
+    imports: [
+    NebularModule, CommonModule,
         FormsModule,
         ReactiveFormsModule,
         NbCardModule,
@@ -40,8 +47,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         NbAlertModule,
         NbTooltipModule,
         NbBadgeModule,
-        NbTagModule,
-    ],
+        NbTagModule,,
+    DropdownModule,
+    InputTextModule
+  ],
     template: `
     <nb-card>
       <nb-card-header>

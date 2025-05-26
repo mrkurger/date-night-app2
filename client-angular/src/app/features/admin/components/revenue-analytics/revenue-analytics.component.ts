@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { TabViewModule } from 'primeng/tabview';
+
 
 interface RevenueData {
   name: string;
@@ -21,7 +25,12 @@ interface TimeSeriesData {
 
 @Component({
   selector: 'app-revenue-analytics',
-  imports: [CommonModule, FormsModule, NebularModule, NgxChartsModule],
+  imports: [
+    CommonModule, FormsModule, NebularModule, NgxChartsModule,
+    CardModule,
+    DropdownModule,
+    TabViewModule
+  ],
   templateUrl: './revenue-analytics.component.html',
   styleUrls: ['./revenue-analytics.component.scss'],
 })
@@ -59,6 +68,36 @@ export class RevenueAnalyticsComponent implements OnInit {
     { name: 'Apr', value: 1.5 },
     { name: 'May', value: 1.3 },
     { name: 'Jun', value: 1.2 },
+  ];
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
   ];
 
   constructor() {}

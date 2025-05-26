@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-05-26T17:49:04.502Z",
+  "phase": "phase1",
+  "configuration": {
+    "srcPath": "src",
+    "dryRun": true,
+    "verbose": false,
+    "backup": false,
+    "report": true,
+    "phase": "phase1"
+  },
+  "statistics": {
+    "filesProcessed": 97,
+    "filesModified": 0,
+    "componentsReplaced": 0,
+    "errors": []
+  },
+  "summary": {
+    "filesProcessed": 97,
+    "filesModified": 0,
+    "componentsReplaced": 0,
+    "errorCount": 0,
+    "successRate": "100.00%"
+  }
+}

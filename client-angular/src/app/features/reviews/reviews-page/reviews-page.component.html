@@ -7,14 +7,14 @@
       <div class="ad-details">
         <h2 class="ad-title">{{ adTitle }}</h2>
         <a [routerLink]="['/ad-details', adId]" class="ad-link">
-          View Ad <nb-icon icon="external-link-outline"></nb-icon>
+          View Ad <i class="pi pi-external-link"></i>
         </a>
       </div>
     </div>
 
     <div class="reviews-actions" *ngIf="!showReviewForm">
       <p-button label="Primary" class="p-button-primary"></p-button>
-        <nb-icon icon="star-outline"></nb-icon>
+        <i class="pi pi-star"></i>
         Write a Review
       </button>
     </div>

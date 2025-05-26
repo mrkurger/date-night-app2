@@ -2,19 +2,19 @@
   <h2>{{ isEditMode ? 'Edit Advertisement' : 'Create New Advertisement' }}</h2>
 
   <div *ngIf="loading" class="loading-spinner">
-    <nb-spinner status="primary" size="large"></nb-spinner>
+    <p-progressSpinner status="primary" size="large" ></p-progressSpinner>
   </div>
 
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h3>{{ isEditMode ? 'Edit' : 'Create' }} Advertisement</h3>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <form [formGroup]="adForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
         <div class="form-group">
           <label for="title" class="label">Title</label>
-          <nb-form-field>
-            <input nbInput fullWidth id="title" formControlName="title" placeholder="Enter title" />
+          <div class="p-field">
+            <input pInputText id="title" formControlName="title" placeholder="Enter title" />
             <nb-icon nbPrefix icon="edit-2-outline"></nb-icon>
             
               Title is required
@@ -22,15 +22,14 @@
             
               Title must be less than 100 characters
             
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="description" class="label">Description</label>
-          <nb-form-field>
+          <div class="p-field">
             <textarea
-              nbInput
-              fullWidth
+              pInputText
               id="description"
               formControlName="description"
               placeholder="Enter description"
@@ -42,15 +41,14 @@
             
               Description must be less than 1000 characters
             
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="price" class="label">Price</label>
-          <nb-form-field>
+          <div class="p-field">
             <input
-              nbInput
-              fullWidth
+              pInputText
               type="number"
               id="price"
               formControlName="price"
@@ -61,51 +59,50 @@
               Price is required
             
              Price must be greater than 0 
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="location" class="label">Location</label>
-          <nb-form-field>
-            <nb-select
+          <div class="p-field">
+            <p-dropdown
               fullWidth
               id="location"
               formControlName="location"
               placeholder="Select location"
-            >
-              <nb-option *ngFor="let county of counties" [value]="county">{{ county }}</nb-option>
-            </nb-select>
+             [options]="options" optionLabel="label" optionValue="value">
+              <!-- TODO: Convert to options array: {{ county }} -->
+            </p-dropdown>
             
               Location is required
             
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="category" class="label">Category</label>
-          <nb-form-field>
-            <nb-select
+          <div class="p-field">
+            <p-dropdown
               fullWidth
               id="category"
               formControlName="category"
               placeholder="Select category"
-            >
-              <nb-option *ngFor="let category of categories" [value]="category.toLowerCase()">
+             [options]="options" optionLabel="label" optionValue="value">
+              <!-- TODO: Convert to options array: 
                 {{ category }}
-              </nb-option>
-            </nb-select>
+               -->
+            </p-dropdown>
             
               Category is required
             
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="contactInfo" class="label">Contact Information</label>
-          <nb-form-field>
+          <div class="p-field">
             <input
-              nbInput
-              fullWidth
+              pInputText
               id="contactInfo"
               formControlName="contactInfo"
               placeholder="Enter contact information"
@@ -114,23 +111,21 @@
             
               Contact information is required
             
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-checkbox formControlName="isActive">Active</nb-checkbox>
+          <p-checkbox formControlName="isActive" >Active</p-checkbox>
         </div>
 
         <div class="form-group">
-          <nb-checkbox formControlName="isTouring">Touring</nb-checkbox>
+          <p-checkbox formControlName="isTouring" >Touring</p-checkbox>
         </div>
 
         <div class="form-actions">
-          <p-button></p-button>
-            {{ isEditMode ? 'Update' : 'Create' }} Advertisement
-          </button>
+          <p-button label="{{ isEditMode ? 'Update' : 'Create' }} Advertisement" ></p-button>
         </div>
       </form>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

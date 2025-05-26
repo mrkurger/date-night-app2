@@ -4,6 +4,9 @@ import { NebularModule } from '../../../shared/nebular.module';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+
 
 interface Ad {
   id: number;
@@ -17,7 +20,11 @@ interface Ad {
 
 @Component({
     selector: 'app-ad-detail',
-    imports: [CommonModule, NebularModule],
+    imports: [
+    CommonModule, NebularModule,
+    CardModule,
+    ButtonModule
+  ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './ad-detail.component.html',
     styleUrls: ['./ad-detail.component.scss']

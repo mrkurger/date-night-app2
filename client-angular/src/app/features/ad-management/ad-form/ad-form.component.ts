@@ -32,7 +32,8 @@ import { LocationService } from '../../../core/services/location.service';
   styleUrls: ['./ad-form.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbFormFieldModule,
@@ -43,11 +44,21 @@ import { LocationService } from '../../../core/services/location.service';
     NbCheckboxModule,
     NbTagModule,
     NbSpinnerModule,
-    NbAlertModule,
+    NbAlertModule,,
+    DropdownModule,
+    ProgressSpinnerModule,
+    InputTextModule
   ],
 })
 export class AdFormComponent implements OnInit {
   @Input() ad: Ad | null = null;
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+
   @Input() submitButtonText = 'Save';
   @Input() isSubmitting = false;
   @Input() error: string | null = null;
@@ -59,6 +70,36 @@ export class AdFormComponent implements OnInit {
   locations: string[] = [];
   uploadedImages: File[] = [];
   imagePreviewUrls: string[] = [];
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
 
   constructor(
     private fb: FormBuilder,

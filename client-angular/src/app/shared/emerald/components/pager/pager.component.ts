@@ -27,17 +27,20 @@ import { CommonModule } from '@angular/common';
     templateUrl: './pager.component.html',
     styleUrls: ['./pager.component.scss'],
     imports: [
-        CommonModule,
+    CommonModule,
         NbSelectModule,
         NbIconModule,
-        NbButtonModule
-    ]
+        NbButtonModule,
+    DropdownModule
+  ]
 })
 export class PaginatorModule implements OnChanges {
   /**
    * The current page number (1-based)
    */
   @Input() currentPage = 1;
+import { DropdownModule } from 'primeng/dropdown';
+
 
   /**
    * The total number of pages

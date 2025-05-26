@@ -1,10 +1,10 @@
 <p-card>
-  <nb-card-header>
+  <p-card-header >
     <h3>Transfer Funds</h3>
-  </nb-card-header>
-  <nb-card-body>
+  </ng-template>
+  <p-card-body >
     <form [formGroup]="transferForm" (ngSubmit)="transfer()">
-      <nb-form-field>
+      <div class="p-field">
         <label>Amount</label>
         <input
           nbInput
@@ -26,9 +26,9 @@
             <span *ngIf="f.amount.errors?.['max']">Amount exceeds your balance</span>
           </span>
         
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label>Recipient</label>
         <input
           nbInput
@@ -49,29 +49,29 @@
             <span *ngIf="f.recipient.errors?.['userNotFound']">User not found</span>
           </span>
         
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label>Note (Optional)</label>
         <textarea
           nbInput
           formControlName="note"
           placeholder="Add a note to the recipient"
         ></textarea>
-      </nb-form-field>
+      </div>
     </form>
-  </nb-card-body>
-  <nb-card-footer>
-    <p-button></p-button>Cancel</button>
+  </ng-template>
+  <p-card-footer >
+    <p-button label="Cancel" ></p-button>
     <button
       nbButton
       status="primary"
       [disabled]="!transferForm.valid || isSubmitting"
       (click)="transfer()"
     >
-      <nb-icon icon="checkmark-circle-2-outline" pack="eva" *ngIf="!isSubmitting"></nb-icon>
-      <nb-spinner size="small" *ngIf="isSubmitting"></nb-spinner>
+      <i class="pi pi-checkmark-circle-2"></i>
+      <p-progressSpinner size="small" *ngIf="isSubmitting" ></p-progressSpinner>
       Transfer
     </button>
-  </nb-card-footer>
-</nb-card>
+  </ng-template>
+</p-card>

@@ -10,7 +10,7 @@
   <!-- Empty State -->
   <div class="empty-state" *ngIf="!loading && reviews.length === 0">
     <div class="empty-icon">
-      <nb-icon icon="message-square-outline"></nb-icon>
+      <i class="pi pi-message-square"></i>
     </div>
     <h3>No Reviews Yet</h3>
     <p>Be the first to share your experience!</p>
@@ -30,7 +30,7 @@
             />
           </div>
           <div class="avatar anonymous" *ngIf="review.anonymous">
-            <nb-icon icon="person-outline"></nb-icon>
+            <i class="pi pi-user"></i>
           </div>
           <div class="user-details">
             <h4 class="user-name">{{ review.anonymous ? 'Anonymous User' : review.userName }}</h4>
@@ -40,19 +40,17 @@
 
         <!-- Review Actions -->
         <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
-          <p-button></p-button>
-            <nb-icon icon="more-vertical-outline"></nb-icon>
-          </button>
-          <nb-menu #reviewMenu="matMenu">
+          <p-button label="" icon="pi pi-more-vertical"></p-button>
+          <p-menu #reviewMenu="matMenu">
             <button nb-menu-item (click)="onEditReview(review)" *ngIf="isReviewAuthor(review)">
-              <nb-icon icon="edit-outline"></nb-icon>
+              <i class="pi pi-pencil"></i>
               <span>Edit Review</span>
             </button>
             <button nb-menu-item (click)="onDeleteReview(review._id)">
-              <nb-icon icon="trash-2-outline"></nb-icon>
+              <i class="pi pi-trash"></i>
               <span>Delete Review</span>
             </button>
-          </nb-menu>
+          </p-menu>
         </div>
       </div>
 
@@ -75,7 +73,7 @@
         <!-- Ad Info (if showing) -->
         <div class="ad-info" *ngIf="showAdInfo">
           <a [routerLink]="['/ad-details', review.adId]" class="ad-link">
-            View Ad <nb-icon icon="external-link-outline"></nb-icon>
+            View Ad <i class="pi pi-external-link"></i>
           </a>
         </div>
 
@@ -86,7 +84,7 @@
             [class.active]="review.userReaction === 'helpful'"
             (click)="onReactionClick(review._id, 'helpful')"
           >
-            <nb-icon icon="thumbs-up-outline"></nb-icon>
+            <i class="pi pi-thumbs-up"></i>
             <span>Helpful ({{ review.helpful }})</span>
           </button>
           <button
@@ -94,7 +92,7 @@
             [class.active]="review.userReaction === 'unhelpful'"
             (click)="onReactionClick(review._id, 'unhelpful')"
           >
-            <nb-icon icon="thumbs-down-outline"></nb-icon>
+            <i class="pi pi-thumbs-down"></i>
             <span>Not Helpful ({{ review.unhelpful }})</span>
           </button>
         </div>
@@ -113,7 +111,7 @@
             [disabled]="currentPage === 1"
             aria-label="Previous page"
           >
-            <nb-icon icon="arrow-left-outline"></nb-icon>
+            <i class="pi pi-arrow-left"></i>
           </button>
         </li>
 
@@ -144,7 +142,7 @@
             [disabled]="currentPage === totalPages"
             aria-label="Next page"
           >
-            <nb-icon icon="arrow-right-outline"></nb-icon>
+            <i class="pi pi-arrow-right"></i>
           </button>
         </li>
       </ul>

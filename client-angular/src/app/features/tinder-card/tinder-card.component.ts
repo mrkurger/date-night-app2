@@ -64,6 +64,12 @@ interface HammerManager {
 })
 export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+
+
   @Output() swiped = new EventEmitter<{
     direction: 'left' | 'right';
     adId: string | { city: string; county: string };

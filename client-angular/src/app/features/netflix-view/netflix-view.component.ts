@@ -63,7 +63,8 @@ interface GetAdsResponse {
   styleUrls: ['./netflix-view.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
+  imports: [
+    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
@@ -81,12 +82,15 @@ interface GetAdsResponse {
     RippleModule,
     DataViewModule,
     TooltipModule,
-    TagModule,
+    TagModule,,
+    ToastModule
   ],
 })
 export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
+import { ToastModule } from 'primeng/toast';
+
 
   // Store ads by category
   adsByCategory: { [key: string]: Ad[] } = {};

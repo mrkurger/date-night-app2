@@ -1,12 +1,5 @@
-<div class="modal-header">
-  <h4 class="modal-title">
-    <i class="fas" [ngClass]="media?.type === 'video' ? 'fa-video-camera' : 'fa-image'"></i>
-    Moderate Content
-  </h4>
-  <button type="button" class="btn-close" (click)="onClose.emit()"></button>
-</div>
-
-<div class="modal-body">
+<div class="p-dialog-content">
+  <!-- No separate header needed as it's moved to parent p-dialog -->
   <!-- Media Preview -->
   <div class="media-preview" *ngIf="media" [ngClass]="{ fullscreen: isFullscreen }">
     <!-- Media Error State -->
@@ -56,59 +49,68 @@
 
   <!-- Moderation Form -->
   <form [formGroup]="form" class="moderation-form">
-    <div class="form-group">
-      <label class="form-label">Moderation Decision</label>
-      <div class="status-options">
-        <div
-          class="status-option"
-          [ngClass]="{
-            selected: form.get('status')?.value === 'approved',
-            approved: form.get('status')?.value === 'approved',
-          }"
-          (click)="form.get('status')?.setValue('approved')"
+    <div class="p-field">
+      <label class="p-mb-2">Moderation Decision</label>
+      <div class="p-d-flex p-jc-between p-mb-3">
+        <p-button
+          styleClass="p-button-outlined p-button-success status-option"
+          [ngClass]="{ 'p-button-active': form.get('status')?.value === 'approved' }"
+          (onClick)="form.get('status')?.setValue('approved')"
+          label="Approve"
+          icon="fas fa-check-circle"
         >
-          <i class="fas fa-check-circle text-success"></i>
-          <div class="status-label">Approve</div>
-          <small>Content meets platform guidelines</small>
-        </div>
-        <div
-          class="status-option"
-          [ngClass]="{
-            selected: form.get('status')?.value === 'rejected',
-            rejected: form.get('status')?.value === 'rejected',
-          }"
-          (click)="form.get('status')?.setValue('rejected')"
+          <ng-template pTemplate="content">
+            <div class="status-option-content">
+              <i class="fas fa-check-circle p-mr-2"></i>
+              <div>
+                <div class="status-label">Approve</div>
+                <small>Content meets platform guidelines</small>
+              </div>
+            </div>
+          </ng-template>
+        </p-button>
+
+        <p-button
+          styleClass="p-button-outlined p-button-danger status-option"
+          [ngClass]="{ 'p-button-active': form.get('status')?.value === 'rejected' }"
+          (onClick)="form.get('status')?.setValue('rejected')"
+          label="Reject"
+          icon="fas fa-times-circle"
         >
-          <i class="fas fa-times-circle text-danger"></i>
-          <div class="status-label">Reject</div>
-          <small>Content violates platform guidelines</small>
-        </div>
+          <ng-template pTemplate="content">
+            <div class="status-option-content">
+              <i class="fas fa-times-circle p-mr-2"></i>
+              <div>
+                <div class="status-label">Reject</div>
+                <small>Content violates platform guidelines</small>
+              </div>
+            </div>
+          </ng-template>
+        </p-button>
       </div>
     </div>
 
-    <div class="form-group notes-field">
-      <label class="form-label">Moderation Notes</label>
+    <div class="p-field notes-field">
+      <label class="p-mb-2">Moderation Notes</label>
       <textarea
-        class="form-control"
+        pInputTextarea
         formControlName="notes"
         rows="4"
+        [autoResize]="true"
         placeholder="Provide detailed explanation for your decision..."
       ></textarea>
       <div
-        class="char-count"
+        class="p-d-flex p-jc-end p-mt-1 char-count"
         [ngClass]="{
-          warning: form.get('notes')?.value?.length > 400,
-          danger: form.get('notes')?.value?.length > 450,
+          'p-text-warning': form.get('notes')?.value?.length > 400,
+          'p-text-danger': form.get('notes')?.value?.length > 450,
         }"
       >
         {{ form.get('notes')?.value?.length || 0 }}/500 characters
       </div>
-      <div
-        class="invalid-feedback"
-        *ngIf="form.get('notes')?.invalid && form.get('notes')?.touched"
-      >
+      <small class="p-error" *ngIf="form.get('notes')?.invalid && form.get('notes')?.touched">
         Notes are required and must be less than 500 characters.
-      </div>
+      </small>
     </div>
   </form>
 
@@ -128,24 +130,30 @@
   </div>
 </div>
 
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="onClose.emit()">Cancel</button>
-  <button
+<div class="p-dialog-footer">
+  <p-button
+    label="Cancel"
+    icon="fas fa-times"
+    styleClass="p-button-secondary"
+    (onClick)="onClose.emit()"
+  >
+  </p-button>
+  <p-button
     *ngIf="form.get('status')?.value === 'rejected'"
-    type="button"
-    class="btn btn-reject"
+    label="Reject Content"
+    icon="fas fa-ban"
+    styleClass="p-button-danger"
     [disabled]="form.invalid"
-    (click)="validateAndSubmit()"
+    (onClick)="validateAndSubmit()"
   >
-    <i class="fas fa-ban"></i> Reject Content
-  </button>
-  <button
+  </p-button>
+  <p-button
     *ngIf="form.get('status')?.value === 'approved'"
-    type="button"
-    class="btn btn-approve"
+    label="Approve Content"
+    icon="fas fa-check"
+    styleClass="p-button-success"
     [disabled]="form.invalid"
-    (click)="validateAndSubmit()"
+    (onClick)="validateAndSubmit()"
   >
-    <i class="fas fa-check"></i> Approve Content
-  </button>
+  </p-button>
 </div>

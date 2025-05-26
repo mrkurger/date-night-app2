@@ -18,12 +18,17 @@ import {
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.scss'],
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     RouterModule,
-    NbBreadcrumbModule],
+    NbBreadcrumbModule,
+    AvatarModule
+  ],
 })
 export class ToolbarModule {
   @Input() title = '';
+import { AvatarModule } from 'primeng/avatar';
+
   @Input() subtitle?: string;
   @Input() breadcrumbs: Breadcrumb[] = [];
   @Input() actions: HeaderAction[] = [];

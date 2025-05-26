@@ -1,0 +1,42 @@
+<div class="ad-management-container">
+  <div class="header">
+    <h1>Ad Management</h1>
+    <p class="subtitle">Manage your advertisements and travel itineraries</p>
+  </div>
+
+  <nb-tabset fullWidth routerLinks>
+    <nb-tab
+      tabTitle="My Ads"
+      tabIcon="list-outline"
+      route="list"
+      [active]="router.url.includes('/list')"
+    >
+    </nb-tab>
+    <nb-tab
+      tabTitle="Create New Ad"
+      tabIcon="plus-outline"
+      route="create"
+      [active]="router.url.includes('/create')"
+    >
+    </nb-tab>
+    <nb-tab
+      tabTitle="Touring Advertisers"
+      tabIcon="globe-outline"
+      route="/touring"
+      [active]="router.url.includes('/touring')"
+    >
+    </nb-tab>
+    <nb-tab
+      *ngIf="isAdmin"
+      tabTitle="Admin Panel"
+      tabIcon="shield-outline"
+      route="/admin/ads"
+      [active]="router.url.includes('/admin/ads')"
+    >
+    </nb-tab>
+  </nb-tabset>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

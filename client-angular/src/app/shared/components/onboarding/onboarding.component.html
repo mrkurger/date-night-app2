@@ -3,7 +3,7 @@
     <div class="onboarding-header">
       <h2 class="onboarding-title">{{ currentStep.title }}</h2>
       <button class="onboarding-close" (click)="skipOnboarding()" aria-label="Close onboarding">
-        <nb-icon icon="close"></nb-icon>
+        <i class="pi pi-times"></i>
       </button>
     </div>
 
@@ -30,7 +30,7 @@
 
     <!-- Progress Indicator -->
     <div class="onboarding-progress" *ngIf="showProgress">
-      <nb-progress-bar mode="determinate" [value]="progress"></nb-progress-bar>
+      <p-progressBar mode="determinate" [value]="progress"></p-progressBar>
       <span class="progress-text">{{ currentStepIndex + 1 }} of {{ steps.length }}</span>
     </div>
 
@@ -54,7 +54,7 @@
         class="btn-previous"
         (click)="previousStep()"
       >
-        <nb-icon icon="arrow-back-outline"></nb-icon> Previous
+        <i class="pi pi-arrow-left"></i> Previous
       </button>
 
       <button

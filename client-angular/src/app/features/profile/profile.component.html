@@ -1,19 +1,19 @@
-<nb-card class="profile-card">
-  <nb-card-header>
+<p-card class="profile-card" >
+  <p-card-header >
     <h2>My Profile</h2>
-  </nb-card-header>
-  <nb-card-body>
+  </ng-template>
+  <p-card-body >
     <div *ngIf="isLoading" class="loading-container">
-      <nb-spinner status="primary" size="large"></nb-spinner>
+      <p-progressSpinner status="primary" size="large" ></p-progressSpinner>
     </div>
 
-    <nb-alert status="danger" *ngIf="errorMessage">
+    <p-message status="danger" *ngIf="errorMessage" [severity]="status">
       {{ errorMessage }}
-    </nb-alert>
+    </p-message>
 
-    <nb-alert status="success" *ngIf="successMessage">
+    <p-message status="success" *ngIf="successMessage" [severity]="status">
       {{ successMessage }}
-    </nb-alert>
+    </p-message>
 
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="userProfile && !isLoading">
       <div class="profile-image-section">
@@ -38,16 +38,15 @@
           (click)="fileInput.click()"
           class="change-photo-btn"
         >
-          <nb-icon icon="camera-outline"></nb-icon> Change Photo
+          <i class="pi pi-camera"></i> Change Photo
         </button>
       </div>
 
       <div class="form-row">
-        <nb-form-field class="form-field">
+        <div class="form-field" class="p-field">
           <label>First Name</label>
           <input
-            nbInput
-            fullWidth
+            pInputText
             formControlName="firstName"
             placeholder="First Name"
             [status]="
@@ -61,13 +60,12 @@
           >
             <p class="caption status-danger">First Name is required</p>
           </div>
-        </nb-form-field>
+        </div>
 
-        <nb-form-field class="form-field">
+        <div class="form-field" class="p-field">
           <label>Last Name</label>
           <input
-            nbInput
-            fullWidth
+            pInputText
             formControlName="lastName"
             placeholder="Last Name"
             [status]="
@@ -79,60 +77,58 @@
           <div *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid">
             <p class="caption status-danger">Last Name is required</p>
           </div>
-        </nb-form-field>
+        </div>
       </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label>Bio</label>
-        <textarea nbInput fullWidth formControlName="bio" placeholder="Bio" rows="4"></textarea>
-      </nb-form-field>
+        <textarea pInputText formControlName="bio" placeholder="Bio" rows="4"></textarea>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label>Phone Number</label>
-        <input nbInput fullWidth formControlName="phoneNumber" placeholder="Phone Number" />
-      </nb-form-field>
+        <input pInputText formControlName="phoneNumber" placeholder="Phone Number" />
+      </div>
 
       <div class="form-row">
-        <nb-form-field class="form-field">
+        <div class="form-field" class="p-field">
           <label>City</label>
-          <input nbInput fullWidth formControlName="location.city" placeholder="City" />
-        </nb-form-field>
+          <input pInputText formControlName="location.city" placeholder="City" />
+        </div>
 
-        <nb-form-field class="form-field">
+        <div class="form-field" class="p-field">
           <label>Country</label>
-          <input nbInput fullWidth formControlName="location.country" placeholder="Country" />
-        </nb-form-field>
+          <input pInputText formControlName="location.country" placeholder="Country" />
+        </div>
       </div>
 
       <div class="preferences-section">
         <h3>Preferences</h3>
-        <nb-checkbox formControlName="preferences.notifications" status="primary"
-          >Enable Notifications</nb-checkbox
+        <p-checkbox formControlName="preferences.notifications" status="primary"
+           >Enable Notifications</nb-checkbox
         >
 
-        <nb-form-field>
+        <div class="p-field">
           <label>Privacy Setting</label>
-          <nb-select fullWidth formControlName="preferences.privacy" placeholder="Privacy Setting">
-            <nb-option value="public">Public</nb-option>
-            <nb-option value="private">Private</nb-option>
-          </nb-select>
-        </nb-form-field>
+          <p-dropdown fullWidth formControlName="preferences.privacy" placeholder="Privacy Setting" [options]="options" optionLabel="label" optionValue="value">
+            <!-- TODO: Convert to options array: Public -->
+            <!-- TODO: Convert to options array: Private -->
+          </p-dropdown>
+        </div>
       </div>
 
       <div class="form-actions">
-        <p-button></p-button>
-          <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
-        </button>
+        <p-button label="Cancel" icon="pi pi-arrow-left"></p-button>
         <button
           nbButton
           status="primary"
           type="submit"
           [disabled]="profileForm.invalid || isLoading"
         >
-          <nb-icon icon="save-outline"></nb-icon> Save Changes
-          <nb-spinner *ngIf="isLoading" size="tiny" status="control"></nb-spinner>
+          <i class="pi pi-save"></i> Save Changes
+          <p-progressSpinner *ngIf="isLoading" size="tiny" status="control" ></p-progressSpinner>
         </button>
       </div>
     </form>
-  </nb-card-body>
-</nb-card>
+  </ng-template>
+</p-card>

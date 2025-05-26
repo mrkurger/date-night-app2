@@ -29,6 +29,11 @@ import {
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { WalletService } from '../../../core/services/wallet.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+
+
 
 export interface WalletTransaction {
   id: string;

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../../../../app/shared/nebular.module';
 import { NbCardModule } from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+
 interface Advertiser {
   id: number;
   name: string;

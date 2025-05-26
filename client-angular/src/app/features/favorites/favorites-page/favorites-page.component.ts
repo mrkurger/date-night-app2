@@ -44,6 +44,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChipModule } from 'primeng/chip';
 import { PaginatorState } from 'primeng/paginatorstate';
+import { CalendarModule } from 'primeng/calendar';
+
 
 interface Column {
   field: string;
@@ -55,7 +57,8 @@ interface Column {
   templateUrl: './favorites-page.component.html',
   styleUrls: ['./favorites-page.component.scss'],
   standalone: true,
-  imports: [PaginatorState, ChipModule, OverlayPanelModule, InputSwitchModule, MultiSelectModule, MessageService, ToastModule, ConfirmDialogModule, DialogModule, MenuItem, MenuModule, AvatarModule, TagModule, ProgressSpinnerModule, DropdownModule, InputTextModule, TooltipModule, CheckboxModule, ButtonModule, CardModule, TableModule, ContextMenuModule, 
+  imports: [
+    PaginatorState, ChipModule, OverlayPanelModule, InputSwitchModule, MultiSelectModule, MessageService, ToastModule, ConfirmDialogModule, DialogModule, MenuItem, MenuModule, AvatarModule, TagModule, ProgressSpinnerModule, DropdownModule, InputTextModule, TooltipModule, CheckboxModule, ButtonModule, CardModule, TableModule, ContextMenuModule, 
     CardModule,
     TableModule,
     ButtonModule,
@@ -74,7 +77,8 @@ interface Column {
     MultiSelectModule,
     InputSwitchModule,
     OverlayPanelModule,
-    ChipModule,
+    ChipModule,,
+    CalendarModule
   ],
   providers: [MessageService, ConfirmationService, FavoriteManagementService],
 })

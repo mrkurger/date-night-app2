@@ -5,7 +5,7 @@
       <p class="checklist-subtitle" *ngIf="!isCollapsed">{{ subtitle }}</p>
 
       <div class="progress-container" *ngIf="showProgress && !isCollapsed">
-        <nb-progress-bar mode="determinate" [value]="progress"></nb-progress-bar>
+        <p-progressBar mode="determinate" [value]="progress"></p-progressBar>
         <span class="progress-text">{{ completedCount }} of {{ items.length }} completed</span>
       </div>
     </div>
@@ -16,7 +16,7 @@
       class="collapse-button"
       [attr.aria-label]="isCollapsed ? 'Expand checklist' : 'Collapse checklist'"
     >
-      <nb-icon icon="{{ isCollapsed ? 'expand_more' : 'expand_less' }}"></nb-icon>
+      <i class="pi pi-{{ isCollapsed ? 'expand_more' : 'expand_less' }}"></i>
     </button>
   </div>
 
@@ -24,17 +24,17 @@
     <div class="checklist-items">
       <div *ngFor="let item of items" class="checklist-item" [class.completed]="item.completed">
         <div class="item-checkbox">
-          <nb-checkbox
+          <p-checkbox
             [checked]="item.completed"
             [disabled]="item.completed"
             (change)="markItemCompleted(item)"
-          >
-          </nb-checkbox>
+           >
+          </p-checkbox>
         </div>
 
         <div class="item-content" (click)="handleItemClick(item)">
           <div class="item-icon" *ngIf="item.icon">
-            <nb-icon icon="{{ item.icon }}"></nb-icon>
+            <i class="pi pi-{{ item.icon }}"></i>
           </div>
 
           <div class="item-text">
@@ -71,7 +71,7 @@
 
     <div class="checklist-footer" *ngIf="isAllCompleted">
       <div class="completion-message">
-        <nb-icon icon="celebration"></nb-icon>
+        <i class="pi pi-celebration"></i>
         <span>All tasks completed!</span>
       </div>
     </div>

@@ -1,26 +1,22 @@
 <p-card>
-  <nb-card-header class="dialog-header">
+  <p-card-header class="dialog-header" >
     <h3>Transaction Details</h3>
-    <p-button></p-button>
-      <nb-icon icon="close-outline"></nb-icon>
-    </button>
-  </nb-card-header>
-  <nb-card-body>
+    <p-button label="" icon="pi pi-times"></p-button>
+  </ng-template>
+  <p-card-body >
     <div class="transaction-details">
       <div class="detail-row">
         <div class="label">Transaction ID</div>
         <div class="value">
           {{ transaction.id }}
-          <p-button></p-button>
-            <nb-icon icon="copy-outline"></nb-icon>
-          </button>
+          <p-button label="" icon="pi pi-copy"></p-button>
         </div>
       </div>
 
       <div class="detail-row">
         <div class="label">Type</div>
         <div class="value">
-          <nb-badge [text]="transaction.type" [status]="getTypeStatus(transaction.type)"></nb-badge>
+          <p-badge [text]="transaction.type" [status]="getTypeStatus(transaction.type)" value=""></p-badge>
         </div>
       </div>
 
@@ -37,10 +33,10 @@
       <div class="detail-row">
         <div class="label">Status</div>
         <div class="value">
-          <nb-badge
+          <p-badge
             [text]="transaction.status"
             [status]="getStatusStatus(transaction.status)"
-          ></nb-badge>
+           value=""></p-badge>
         </div>
       </div>
 
@@ -64,8 +60,8 @@
         </div>
       </ng-container>
     </div>
-  </nb-card-body>
-  <nb-card-footer class="dialog-footer">
-    <p-button></p-button>Close</button>
-  </nb-card-footer>
-</nb-card>
+  </ng-template>
+  <p-card-footer class="dialog-footer" >
+    <p-button label="Close" ></p-button>
+  </ng-template>
+</p-card>

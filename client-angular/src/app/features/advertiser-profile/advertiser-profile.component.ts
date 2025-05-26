@@ -35,6 +35,11 @@ import { NotificationService } from '../../core/services/notification.service';
 import { UserService } from '../../core/services/user.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { User } from '../../core/models/user.interface';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 /**
  * Advertiser Profile Component
@@ -75,7 +80,9 @@ import { User } from '../../core/models/user.interface';
     NbSelectModule,
     NbTagModule,
     NbBadgeModule,
-    NbLayoutModule,
+    NbLayoutModule,,
+    ProgressSpinnerModule,
+    InputTextModule
   ],
 })
 export class AdvertiserProfileComponent implements OnInit {

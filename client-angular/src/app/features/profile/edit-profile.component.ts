@@ -20,7 +20,8 @@ import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-edit-profile',
-    imports: [NebularModule, CommonModule,
+    imports: [
+    NebularModule, CommonModule,
         ReactiveFormsModule,
         NbCardModule,
         NbFormFieldModule,
@@ -28,8 +29,10 @@ import { take } from 'rxjs/operators';
         NbButtonModule,
         NbIconModule,
         NbSpinnerModule,
-        NbLayoutModule,
-    ],
+        NbLayoutModule,,
+    ProgressSpinnerModule,
+    InputTextModule
+  ],
     providers: [UserService, AuthService, NotificationService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     template: `
@@ -151,6 +154,11 @@ import { take } from 'rxjs/operators';
     styles: [
         `
       @use '@nebular/theme/styles/theming' as *;
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+
 
       .edit-profile-card {
         margin: 2rem auto;

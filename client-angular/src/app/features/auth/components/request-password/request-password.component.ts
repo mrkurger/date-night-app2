@@ -4,13 +4,24 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { NebularModule } from '../../../../shared/nebular.module';
+import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
     selector: 'app-request-password',
     templateUrl: './request-password.component.html',
     styleUrls: ['./request-password.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, ReactiveFormsModule, RouterLink]
+    imports: [
+    NebularModule, ReactiveFormsModule, RouterLink,
+    CardModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule
+  ]
 })
 export class RequestPasswordComponent {
   requestForm: FormGroup;

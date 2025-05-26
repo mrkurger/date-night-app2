@@ -1,11 +1,18 @@
-<app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
-  <table nb-table [dataSource]="slowestEndpoints">
-    <!-- URL Column -->
-    <ng-container matColumnDef="url">
-      <th mat-header-cell *matHeaderCellDef>
-        <app-sort-header appSortHeaderId="url">URL</app-sort-header>
-      </th>
-      <td mat-cell *matCellDef="let endpoint" class="url-cell">{{ endpoint.url }}</td>
-    </ng-container>
-  </table>
-</app-sort>
+<p-table
+  [value]="slowestEndpoints"
+  [sortField]="sortColumn"
+  [sortOrder]="sortDirection === 'asc' ? 1 : -1"
+  styleClass="p-datatable-sm"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="url">URL <p-sortIcon field="url"></p-sortIcon></th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-endpoint>
+    <tr>
+      <td class="url-cell">{{ endpoint.url }}</td>
+    </tr>
+  </ng-template>
+</p-table>

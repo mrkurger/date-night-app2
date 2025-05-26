@@ -1,9 +1,9 @@
 <div class="ad-detail-container">
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h2>{{ ad?.title }}</h2>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <div class="ad-content">
         <div class="ad-images" *ngIf="ad?.images && ad.images.length > 0">
           <img [src]="ad.images[0]" alt="{{ ad.title }}" />
@@ -20,11 +20,11 @@
         <div class="ad-info">
           <div class="ad-price">{{ ad?.price | currency }}</div>
           <div class="ad-location">
-            <nb-icon icon="pin-outline"></nb-icon>
+            <i class="pi pi-pin"></i>
             {{ ad?.location }}
           </div>
           <div class="ad-date">
-            <nb-icon icon="calendar-outline"></nb-icon>
+            <i class="pi pi-calendar"></i>
             Posted on {{ ad?.createdAt | date }}
           </div>
           <div class="ad-description">
@@ -33,20 +33,14 @@
           </div>
 
           <div class="ad-actions">
-            <p-button></p-button>
-              <nb-icon icon="message-circle-outline"></nb-icon>
-              Contact Seller
-            </button>
+            <p-button label="Contact Seller" icon="pi pi-message-circle"></p-button>
             <app-favorite-button [adId]="ad?.id"></app-favorite-button>
           </div>
         </div>
       </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <p-button></p-button>
-        <nb-icon icon="arrow-back-outline"></nb-icon>
-        Back to Listings
-      </button>
-    </nb-card-footer>
-  </nb-card>
+    </ng-template>
+    <p-card-footer >
+      <p-button label="Back to Listings" icon="pi pi-arrow-left"></p-button>
+    </ng-template>
+  </p-card>
 </div>

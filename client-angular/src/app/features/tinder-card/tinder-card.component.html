@@ -1,5 +1,5 @@
-<nb-card class="tinder-card" #card [ngClass]="cardState">
-  <nb-card-body>
+<p-card class="tinder-card" #card [ngClass]="cardState" >
+  <p-card-body >
     <!-- Media Carousel -->
     <div class="card-media">
       <div *ngIf="isCurrentMediaVideo()" class="video-container">
@@ -34,7 +34,7 @@
         class="media-nav-button prev-button"
         (click)="$event.stopPropagation(); prevMedia()"
       >
-        <nb-icon icon="chevron-left-outline"></nb-icon>
+        <i class="pi pi-chevron-left"></i>
       </button>
       <button
         *ngIf="ad?.media && ad.media.length > 1"
@@ -44,54 +44,46 @@
         class="media-nav-button next-button"
         (click)="$event.stopPropagation(); nextMedia()"
       >
-        <nb-icon icon="chevron-right-outline"></nb-icon>
+        <i class="pi pi-chevron-right"></i>
       </button>
 
       <!-- Like/Dislike Indicators -->
       <div class="like-indicator">
-        <nb-icon icon="heart" status="success"></nb-icon>
+        <i class="pi pi-heart"></i>
         <span>LIKE</span>
       </div>
       <div class="dislike-indicator">
-        <nb-icon icon="close" status="danger"></nb-icon>
+        <i class="pi pi-times"></i>
         <span>NOPE</span>
       </div>
     </div>
 
     <!-- Card Content -->
     <div class="card-content">
-      <nb-card-header>
+      <p-card-header >
         <h2 class="card-title">
           {{ ad.title }}
-          <nb-badge *ngIf="ad.age" [text]="ad.age" status="info"></nb-badge>
+          <p-badge *ngIf="ad.age" [text]="ad.age" status="info" value=""></p-badge>
         </h2>
         <p class="card-location" *ngIf="ad.location">
-          <nb-icon icon="map-marker-outline"></nb-icon> {{ ad.location }}
+          <i class="pi pi-map-marker"></i> {{ ad.location }}
         </p>
-      </nb-card-header>
+      </ng-template>
 
       <div class="card-body">
         <p class="card-description">{{ ad.description }}</p>
 
-        <nb-tag-list *ngIf="ad.tags && ad.tags.length">
-          <nb-tag *ngFor="let tag of ad.tags" [text]="tag" appearance="filled"></nb-tag>
+        <p-tag-list *ngIf="ad.tags && ad.tags.length" value="
+          <nb-tag *ngFor="let tag of ad.tags" [text]="tag" appearance="filled">"></p-tag>
         </nb-tag-list>
       </div>
 
-      <nb-card-footer>
-        <p-button></p-button>
-          <nb-icon icon="info-outline"></nb-icon>
-        </button>
-        <p-button></p-button>
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-        <p-button></p-button>
-          <nb-icon icon="heart-outline"></nb-icon>
-        </button>
-        <p-button></p-button>
-          <nb-icon icon="message-circle-outline"></nb-icon>
-        </button>
-      </nb-card-footer>
+      <p-card-footer >
+        <p-button label="" icon="pi pi-info"></p-button>
+        <p-button label="" icon="pi pi-times"></p-button>
+        <p-button label="" icon="pi pi-heart"></p-button>
+        <p-button label="" icon="pi pi-message-circle"></p-button>
+      </ng-template>
     </div>
-  </nb-card-body>
-</nb-card>
+  </ng-template>
+</p-card>

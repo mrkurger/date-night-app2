@@ -1,12 +1,12 @@
 <div class="ad-create-container">
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h2>Create New Advertisement</h2>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <form [formGroup]="adForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="title">Title</label>
             <input nbInput formControlName="title" placeholder="Enter title" />
             <div
@@ -15,11 +15,11 @@
             >
               Title is required
             </div>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="description">Description</label>
             <textarea
               nbInput
@@ -36,17 +36,17 @@
             >
               Description is required
             </div>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="category">Category</label>
-            <nb-select formControlName="category" placeholder="Select category">
-              <nb-option *ngFor="let category of categories" [value]="category">{{
+            <p-dropdown formControlName="category" placeholder="Select category" [options]="options" optionLabel="label" optionValue="value">
+              <!-- TODO: Convert to options array: {{
                 category
-              }}</nb-option>
-            </nb-select>
+              }} -->
+            </p-dropdown>
             <div
               *ngIf="
                 adForm.get('category')?.hasError('required') && adForm.get('category')?.touched
@@ -55,11 +55,11 @@
             >
               Category is required
             </div>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="price">Price</label>
             <input nbInput type="number" formControlName="price" placeholder="Enter price" />
             <div
@@ -68,11 +68,11 @@
             >
               Price is required
             </div>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="location">Location</label>
             <input nbInput formControlName="location" placeholder="Enter location" />
             <div
@@ -83,32 +83,25 @@
             >
               Location is required
             </div>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Images</label>
           <div class="image-upload-container">
-            <p-button></p-button>
-              <nb-icon icon="plus-outline"></nb-icon>
-              Add Image
-            </button>
+            <p-button label="Add Image" icon="pi pi-plus"></p-button>
             <div class="image-preview" *ngIf="imagePreviewUrl">
               <img [src]="imagePreviewUrl" alt="Preview" />
-              <p-button></p-button>
-                <nb-icon icon="trash-2-outline"></nb-icon>
-              </button>
+              <p-button label="" icon="pi pi-trash"></p-button>
             </div>
           </div>
         </div>
 
         <div class="form-actions">
-          <p-button></p-button>
-            Create Advertisement
-          </button>
-          <p-button></p-button>Cancel</button>
+          <p-button label="Create Advertisement" ></p-button>
+          <p-button label="Cancel" ></p-button>
         </div>
       </form>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

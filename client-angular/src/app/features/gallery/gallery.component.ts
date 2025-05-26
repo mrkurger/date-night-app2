@@ -30,6 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../app/shared/shared.module';
 import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
     selector: 'app-gallery',

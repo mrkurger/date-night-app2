@@ -73,7 +73,8 @@ import { Ad } from '../../../../core/models/ad.interface';
     DropdownModule,
     InputTextModule,
     MultiSelectModule,
-    SpeedDialModule,
+    SpeedDialModule,,
+    ChipModule
   ],
   templateUrl: './alt-netflix-view.component.html',
   styleUrls: ['./alt-netflix-view.component.scss'],
@@ -81,6 +82,8 @@ import { Ad } from '../../../../core/models/ad.interface';
 export class AltNetflixViewComponent implements OnInit {
   // Inputs and Outputs
   @Input() advertisers: Ad[] = [];
+import { ChipModule } from 'primeng/chip';
+
   @Input() loading = false;
   @Output() favorite = new EventEmitter<string>();
   @Output() chat = new EventEmitter<string>();

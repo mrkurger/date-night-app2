@@ -1,20 +1,19 @@
 <div class="login-container">
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h2>Login</h2>
-    </nb-card-header>
+    </ng-template>
 
-    <nb-card-body>
+    <p-card-body >
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <nb-alert status="danger" *ngIf="errorMessage" class="error-alert">
+        <p-message status="danger" *ngIf="errorMessage" class="error-alert" [severity]="status">
           {{ errorMessage }}
-        </nb-alert>
+        </p-message>
 
-        <nb-form-field class="full-width">
+        <div class="full-width" class="p-field">
           <nb-icon nbPrefix icon="email-outline"></nb-icon>
           <input
-            nbInput
-            fullWidth
+            pInputText
             formControlName="email"
             type="email"
             placeholder="Email"
@@ -34,9 +33,9 @@
               Please enter a valid email address
             </span>
           </div>
-        </nb-form-field>
+        </div>
 
-        <nb-form-field class="full-width">
+        <div class="full-width" class="p-field">
           <nb-icon
             nbPrefix
             [icon]="hidePassword ? 'eye-off-outline' : 'eye-outline'"
@@ -46,8 +45,7 @@
           >
           </nb-icon>
           <input
-            nbInput
-            fullWidth
+            pInputText
             formControlName="password"
             [type]="hidePassword ? 'password' : 'text'"
             placeholder="Password"
@@ -69,7 +67,7 @@
               Password must be at least 6 characters
             </span>
           </div>
-        </nb-form-field>
+        </div>
 
         <div class="form-actions">
           <button
@@ -80,7 +78,7 @@
             [disabled]="loginForm.invalid || isLoading"
             class="full-width"
           >
-            <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
+            <p-progressSpinner *ngIf="isLoading" size="small" ></p-progressSpinner>
             <span *ngIf="!isLoading">Login</span>
           </button>
         </div>
@@ -89,17 +87,11 @@
           <p class="divider"><span>or continue with</span></p>
 
           <div class="social-buttons">
-            <p-button></p-button>
-              <nb-icon icon="google-outline"></nb-icon> Google
-            </button>
+            <p-button label="Google" icon="pi pi-google"></p-button>
 
-            <p-button></p-button>
-              <nb-icon icon="facebook-outline"></nb-icon> Facebook
-            </button>
+            <p-button label="Facebook" icon="pi pi-facebook"></p-button>
 
-            <p-button></p-button>
-              <nb-icon pack="custom" icon="apple"></nb-icon> Apple
-            </button>
+            <p-button label="Apple" icon="pi pi-apple"></p-button>
 
             <button
               nbButton
@@ -122,6 +114,6 @@
           >
         </div>
       </form>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

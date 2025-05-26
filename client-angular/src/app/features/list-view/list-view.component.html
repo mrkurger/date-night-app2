@@ -9,34 +9,24 @@ consistent UI # ===================================================
       <h1>Browse Profiles</h1>
       <p class="subtitle">Find your perfect match</p>
       <div class="header-actions">
-        <p-button></p-button>
-          <nb-icon icon="plus-outline"></nb-icon>
-          Create Ad
-        </button>
-        <p-button></p-button>
-          <nb-icon icon="refresh-outline"></nb-icon>
-          Refresh
-        </button>
-        <p-button></p-button>
-          <nb-icon icon="question-mark-circle-outline"></nb-icon>
-          Help
-        </button>
+        <p-button label="Create Ad" icon="pi pi-plus"></p-button>
+        <p-button label="Refresh" icon="pi pi-refresh"></p-button>
+        <p-button label="Help" icon="pi pi-question-mark-circle"></p-button>
       </div>
     </div>
 
     <!-- Search and Filters Bar -->
     <div class="search-filters-bar">
       <div class="search-box">
-        <nb-form-field>
+        <div class="p-field">
           <nb-icon nbPrefix icon="search-outline"></nb-icon>
           <input
-            nbInput
-            fullWidth
+            pInputText
             [formControl]="$any(filterForm.controls['searchQuery'])"
             (input)="onSearchChange()"
             placeholder="Search profiles..."
           />
-        </nb-form-field>
+        </div>
       </div>
 
       <div class="view-controls">
@@ -49,7 +39,7 @@ consistent UI # ===================================================
             nbTooltip="Grid View"
             (click)="setViewMode('grid')"
           >
-            <nb-icon icon="grid-outline"></nb-icon>
+            <i class="pi pi-grid"></i>
           </button>
           <button
             nbButton
@@ -58,7 +48,7 @@ consistent UI # ===================================================
             nbTooltip="List View"
             (click)="setViewMode('list')"
           >
-            <nb-icon icon="list-outline"></nb-icon>
+            <i class="pi pi-list"></i>
           </button>
           <button
             nbButton
@@ -67,31 +57,31 @@ consistent UI # ===================================================
             nbTooltip="Compact View"
             (click)="setViewMode('compact')"
           >
-            <nb-icon icon="layout-outline"></nb-icon>
+            <i class="pi pi-layout"></i>
           </button>
         </div>
 
         <!-- Sort Dropdown -->
         <p-button></p-button>
-          <nb-icon icon="sort-outline"></nb-icon>
+          <i class="pi pi-sort"></i>
           <span>Sort: {{ getCurrentSortLabel() }}</span>
-          <nb-icon icon="chevron-down-outline"></nb-icon>
+          <i class="pi pi-chevron-down"></i>
         </button>
 
         <!-- Filter Button -->
         <p-button></p-button>
-          <nb-icon icon="funnel-outline"></nb-icon>
+          <i class="pi pi-funnel"></i>
           <span>Filters</span>
-          <nb-badge
-            *ngIf="activeFilterCount > 0"
+          <p-badge
+            *ngIf="activeFilterCount  value=" 0"
             status="primary"
             [text]="activeFilterCount.toString()"
-          ></nb-badge>
+          >"></p-badge>
         </button>
 
         <!-- Clear Filters Button -->
         <p-button></p-button>
-          <nb-icon icon="close-outline"></nb-icon>
+          <i class="pi pi-times"></i>
           <span>Clear</span>
         </button>
       </div>
@@ -100,70 +90,66 @@ consistent UI # ===================================================
     <!-- Main Content Area with Filter Sidebar -->
     <div class="content-with-sidebar">
       <!-- Filter Sidebar -->
-      <nb-sidebar [state]="filterSidebarOpen ? 'expanded' : 'collapsed'" fixed>
+      <p-sidebar [state]="filterSidebarOpen ? 'expanded' : 'collapsed'" fixed>
         <div class="filter-sidebar-header">
           <h3>Filters</h3>
-          <p-button></p-button>
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
+          <p-button label="" icon="pi pi-times"></p-button>
         </div>
 
         <div class="filter-sidebar-content">
           <form [formGroup]="filterForm">
             <p-card>
-              <nb-card-body>
+              <p-card-body >
                 <h4>Categories</h4>
                 <div class="filter-group">
-                  <nb-checkbox formControlName="categories.escort">Escort</nb-checkbox>
-                  <nb-checkbox formControlName="categories.massage">Massage</nb-checkbox>
-                  <nb-checkbox formControlName="categories.striptease">Striptease</nb-checkbox>
+                  <p-checkbox formControlName="categories.escort" >Escort</p-checkbox>
+                  <p-checkbox formControlName="categories.massage" >Massage</p-checkbox>
+                  <p-checkbox formControlName="categories.striptease" >Striptease</p-checkbox>
                 </div>
 
                 <h4>Location</h4>
-                <nb-select
+                <p-dropdown
                   fullWidth
                   formControlName="location"
                   multiple
                   placeholder="Select Location"
-                >
-                  <nb-option value="Oslo">Oslo</nb-option>
-                  <nb-option value="Bergen">Bergen</nb-option>
-                  <nb-option value="Trondheim">Trondheim</nb-option>
-                  <nb-option value="Stavanger">Stavanger</nb-option>
-                  <nb-option value="Kristiansand">Kristiansand</nb-option>
-                  <nb-option value="Tromsø">Tromsø</nb-option>
-                </nb-select>
+                 [options]="options" optionLabel="label" optionValue="value">
+                  <!-- TODO: Convert to options array: Oslo -->
+                  <!-- TODO: Convert to options array: Bergen -->
+                  <!-- TODO: Convert to options array: Trondheim -->
+                  <!-- TODO: Convert to options array: Stavanger -->
+                  <!-- TODO: Convert to options array: Kristiansand -->
+                  <!-- TODO: Convert to options array: Tromsø -->
+                </p-dropdown>
 
                 <h4>Date Range</h4>
                 <div class="date-range-picker">
-                  <nb-form-field>
+                  <div class="p-field">
                     <input
-                      nbInput
-                      fullWidth
+                      pInputText
                       [nbDatepicker]="fromPicker"
                       formControlName="dateRange.from"
                       placeholder="From"
                     />
                     <nb-datepicker #fromPicker></nb-datepicker>
-                  </nb-form-field>
+                  </div>
 
-                  <nb-form-field>
+                  <div class="p-field">
                     <input
-                      nbInput
-                      fullWidth
+                      pInputText
                       [nbDatepicker]="toPicker"
                       formControlName="dateRange.to"
                       placeholder="To"
                     />
                     <nb-datepicker #toPicker></nb-datepicker>
-                  </nb-form-field>
+                  </div>
                 </div>
 
                 <h4>Status</h4>
                 <div class="filter-group">
-                  <nb-checkbox formControlName="status.online">Online Now</nb-checkbox>
-                  <nb-checkbox formControlName="status.touring">Touring</nb-checkbox>
-                  <nb-checkbox formControlName="status.verified">Verified</nb-checkbox>
+                  <p-checkbox formControlName="status.online" >Online Now</p-checkbox>
+                  <p-checkbox formControlName="status.touring" >Touring</p-checkbox>
+                  <p-checkbox formControlName="status.verified" >Verified</p-checkbox>
                 </div>
 
                 <h4>Saved Filters</h4>
@@ -174,7 +160,7 @@ consistent UI # ===================================================
                     (click)="loadSavedFilter('favorite')"
                     class="saved-filter-btn"
                   >
-                    <nb-icon icon="heart-outline"></nb-icon> Favorites
+                    <i class="pi pi-heart"></i> Favorites
                   </button>
                   <button
                     nbButton
@@ -182,28 +168,26 @@ consistent UI # ===================================================
                     (click)="loadSavedFilter('recent')"
                     class="saved-filter-btn"
                   >
-                    <nb-icon icon="clock-outline"></nb-icon> Recently Viewed
+                    <i class="pi pi-clock"></i> Recently Viewed
                   </button>
-                  <p-button></p-button>
-                    <nb-icon icon="save-outline"></nb-icon> Save Current Filter
-                  </button>
+                  <p-button label="Save Current Filter" icon="pi pi-save"></p-button>
                 </div>
 
                 <div class="filter-actions">
-                  <p-button></p-button>Reset All</button>
-                  <p-button></p-button>Apply Filters</button>
+                  <p-button label="Reset All" ></p-button>
+                  <p-button label="Apply Filters" ></p-button>
                 </div>
-              </nb-card-body>
-            </nb-card>
+              </ng-template>
+            </p-card>
           </form>
         </div>
-      </nb-sidebar>
+      </p-sidebar>
 
       <!-- Content Area -->
       <div class="content-area" [class.sidebar-open]="filterSidebarOpen">
         <!-- Active Filters -->
         <div class="active-filters" *ngIf="hasActiveFilters()">
-          <nb-tag-list>
+          <p-tag-list value="
             <nb-tag
               *ngFor="let filter of getActiveFilters()"
               [text]="filter.label"
@@ -211,31 +195,31 @@ consistent UI # ===================================================
               (remove)="removeFilter(filter)"
               status="primary"
             >
-            </nb-tag>
+            "></p-tag>
           </nb-tag-list>
         </div>
 
         <!-- Loading State -->
-        <nb-card *ngIf="loading">
-          <nb-card-body class="loading-state">
-            <nb-spinner size="large"></nb-spinner>
+        <p-card *ngIf="loading" >
+          <p-card-body class="loading-state" >
+            <p-progressSpinner size="large" ></p-progressSpinner>
             <p>Loading profiles...</p>
-          </nb-card-body>
-        </nb-card>
+          </ng-template>
+        </p-card>
 
         <!-- Error State -->
-        <nb-alert *ngIf="error" status="danger">
+        <p-message *ngIf="error" status="danger" [severity]="status">
           {{ error }}
-        </nb-alert>
+        </p-message>
 
         <!-- Empty State -->
-        <nb-card *ngIf="!loading && (!filteredAds || filteredAds.length === 0)">
-          <nb-card-body class="empty-state">
-            <nb-icon icon="alert-circle-outline" status="warning"></nb-icon>
+        <p-card *ngIf="!loading && (!filteredAds || filteredAds.length === 0)" >
+          <p-card-body class="empty-state" >
+            <i class="pi pi-alert-circle"></i>
             <h3>No Results Found</h3>
             <p>Try adjusting your filters or search criteria</p>
-          </nb-card-body>
-        </nb-card>
+          </ng-template>
+        </p-card>
 
         <!-- Results Grid -->
         <div
@@ -243,8 +227,8 @@ consistent UI # ===================================================
           class="results-grid"
           [class]="'view-mode-' + viewMode"
         >
-          <nb-card *ngFor="let ad of getCurrentPageAds()" class="ad-card">
-            <nb-card-body>
+          <p-card *ngFor="let ad of getCurrentPageAds()" class="ad-card" >
+            <p-card-body >
               <div class="ad-content">
                 <div class="ad-header">
                   <h3>
@@ -270,8 +254,8 @@ consistent UI # ===================================================
                 </div>
 
                 <div class="ad-meta">
-                  <nb-tag status="primary" icon="map-outline">{{ ad.location }}</nb-tag>
-                  <nb-tag status="info" icon="clock-outline">{{ ad.createdAt | date }}</nb-tag>
+                  <p-tag status="primary" icon="map-outline" value="{{ ad.location }}"></p-tag>
+                  <p-tag status="info" icon="clock-outline" value="{{ ad.createdAt | date }}"></p-tag>
                   <nb-tag *ngIf="ad.isVerified" status="success" icon="checkmark-circle-2-outline"
                     >Verified</nb-tag
                   >
@@ -282,31 +266,29 @@ consistent UI # ===================================================
 
                 <p class="ad-description">{{ ad.description }}</p>
               </div>
-            </nb-card-body>
-          </nb-card>
+            </ng-template>
+          </p-card>
         </div>
 
         <!-- Pagination -->
         <div class="pagination" *ngIf="!loading && filteredAds && filteredAds.length > 0">
           <div class="pagination-controls">
-            <nb-select [(ngModel)]="itemsPerPage" (selectedChange)="changePageSize($event)">
-              <nb-option [value]="10">10 per page</nb-option>
-              <nb-option [value]="20">20 per page</nb-option>
-              <nb-option [value]="50">50 per page</nb-option>
-              <nb-option [value]="100">100 per page</nb-option>
-            </nb-select>
+            <p-dropdown [(ngModel)]="itemsPerPage" (selectedChange)="changePageSize($event)" [options]="options" optionLabel="label" optionValue="value">
+              <!-- TODO: Convert to options array: 10 per page -->
+              <!-- TODO: Convert to options array: 20 per page -->
+              <!-- TODO: Convert to options array: 50 per page -->
+              <!-- TODO: Convert to options array: 100 per page -->
+            </p-dropdown>
 
             <div class="page-buttons">
-              <p-button></p-button>
-                <nb-icon icon="arrow-ios-double-left-outline"></nb-icon>
-              </button>
+              <p-button label="" icon="pi pi-arrow-ios-double-left"></p-button>
               <button
                 nbButton
                 ghost
                 [disabled]="currentPage === 1"
                 (click)="goToPage(currentPage - 1)"
               >
-                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+                <i class="pi pi-arrow-ios-back"></i>
               </button>
 
               <div class="page-numbers">
@@ -327,7 +309,7 @@ consistent UI # ===================================================
                 [disabled]="currentPage === totalPages"
                 (click)="goToPage(currentPage + 1)"
               >
-                <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+                <i class="pi pi-arrow-ios-forward"></i>
               </button>
               <button
                 nbButton
@@ -335,7 +317,7 @@ consistent UI # ===================================================
                 [disabled]="currentPage === totalPages"
                 (click)="goToPage(totalPages)"
               >
-                <nb-icon icon="arrow-ios-double-right-outline"></nb-icon>
+                <i class="pi pi-arrow-ios-double-right"></i>
               </button>
             </div>
 
@@ -351,21 +333,21 @@ consistent UI # ===================================================
 
 <!-- Sort Menu Template -->
 <ng-template #sortMenu>
-  <nb-menu [items]="sortMenuItems"></nb-menu>
+  <p-menu [items]="sortMenuItems"></p-menu>
 </ng-template>
 
 <!-- Save Filter Dialog Template -->
 <ng-template #saveFilterDialog>
   <p-card>
-    <nb-card-header>Save Filter</nb-card-header>
-    <nb-card-body>
-      <nb-form-field>
-        <input nbInput fullWidth [(ngModel)]="newFilterName" placeholder="Filter Name" />
-      </nb-form-field>
-    </nb-card-body>
-    <nb-card-footer>
-      <p-button></p-button>Cancel</button>
-      <p-button></p-button>Save</button>
-    </nb-card-footer>
-  </nb-card>
+    <p-card-header >Save Filter</ng-template>
+    <p-card-body >
+      <div class="p-field">
+        <input pInputText [(ngModel)]="newFilterName" placeholder="Filter Name" />
+      </div>
+    </ng-template>
+    <p-card-footer >
+      <p-button label="Cancel" ></p-button>
+      <p-button label="Save" ></p-button>
+    </ng-template>
+  </p-card>
 </ng-template>

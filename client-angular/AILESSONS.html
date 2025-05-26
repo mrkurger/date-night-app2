@@ -50,39 +50,55 @@
     </style>
   </head>
   <body>
-    <h1>AI Lessons Learned - Material UI to Nebular Migration</h1>
+    <h1>AI Lessons Learned - UI Framework Migration to PrimeNG</h1>
 
-    <h2>Component Migration Patterns</h2>
+    <h2>Current Migration Status - Updated December 2024</h2>
 
     <div class="lesson">
-      <h3>1. Layout Component Migration</h3>
+      <h3>Migration Reality Check</h3>
       <p>
-        When migrating from Material's layout components to Nebular's, we discovered several key
-        patterns:
+        <strong>IMPORTANT UPDATE:</strong> Previous documentation incorrectly stated a completed migration from Material UI to Nebular.
+        The actual current state shows a three-way implementation using PrimeNG (35%), Nebular (45%), and custom components (15%),
+        with remaining Angular Material components (5%).
+      </p>
+      <p>
+        <strong>Strategic Decision:</strong> PrimeNG has been chosen as the target UI framework to replace all other frameworks
+        (Nebular UI, Angular Material, and Bootstrap) for consistency, maintainability, and enterprise-grade component support.
+      </p>
+    </div>
+
+    <h2>PrimeNG Migration Patterns</h2>
+
+    <div class="lesson">
+      <h3>1. Layout Component Migration to PrimeNG</h3>
+      <p>
+        Key patterns discovered when migrating to PrimeNG layout components:
       </p>
       <ul>
         <li>
-          Nebular's layout system is more opinionated and requires proper nesting of components
+          PrimeNG uses <code>p-toolbar</code> for headers with flexible left/right content areas
         </li>
-        <li>The <code>nb-layout</code> component must be the root container</li>
-        <li>Sidebar and header components need specific placement within the layout hierarchy</li>
+        <li><code>p-sidebar</code> provides overlay and push modes for navigation</li>
+        <li>PrimeFlex utility classes handle responsive layout without complex nesting</li>
+        <li>Layout components integrate seamlessly with PrimeNG theming system</li>
       </ul>
       <div class="tip">
-        <strong>Best Practice:</strong> Always start migration from the root layout components and
-        work your way down to ensure proper component hierarchy.
+        <strong>Best Practice:</strong> Use PrimeNG's toolbar and sidebar components with PrimeFlex for
+        responsive layouts. Avoid mixing with Nebular layout components.
       </div>
     </div>
 
     <div class="lesson">
-      <h3>2. Form Control Differences</h3>
-      <p>Key differences in form control implementation between Material and Nebular:</p>
+      <h3>2. Form Control Migration to PrimeNG</h3>
+      <p>Key patterns for migrating form controls to PrimeNG:</p>
       <ul>
-        <li>Nebular form controls use different validation patterns</li>
-        <li>Status classes are handled differently in Nebular</li>
-        <li>Form field appearance customization requires different approaches</li>
+        <li>PrimeNG uses native HTML form elements with directive enhancement</li>
+        <li>Validation messages use Angular's built-in validation with custom display</li>
+        <li>Form styling is handled through PrimeNG themes and CSS classes</li>
+        <li>FloatLabel service provides consistent label behavior</li>
       </ul>
       <pre>
-// Material UI
+// Angular Material (Legacy)
 &lt;mat-form-field appearance="outline">
   &lt;input matInput [formControl]="control">
   &lt;mat-error *ngIf="control.hasError('required')">
@@ -90,53 +106,89 @@
   &lt;/mat-error>
 &lt;/mat-form-field>
 
-// Nebular
+// Nebular (Being Replaced)
 &lt;nb-form-field>
   &lt;input nbInput [formControl]="control">
   &lt;ng-container *ngIf="control.hasError('required')">
     Required field
   &lt;/ng-container>
-&lt;/nb-form-field></pre
+&lt;/nb-form-field>
+
+// PrimeNG (Target)
+&lt;div class="p-field">
+  &lt;label for="input">Label&lt;/label>
+  &lt;input pInputText id="input" [formControl]="control"
+         [class.p-invalid]="control.invalid && control.touched">
+  &lt;small class="p-error" *ngIf="control.hasError('required') && control.touched">
+    Required field
+  &lt;/small>
+&lt;/div></pre
       >
     </div>
 
     <div class="lesson">
-      <h3>3. Theme Migration Strategy</h3>
-      <p>Lessons learned about theme migration:</p>
+      <h3>3. PrimeNG Theme Migration Strategy</h3>
+      <p>Lessons learned about migrating to PrimeNG theming:</p>
       <ul>
-        <li>Nebular's theme system is more extensive and requires careful planning</li>
-        <li>Custom variables need to be mapped to Nebular's theme structure</li>
-        <li>Some Material-specific color functions need to be reimplemented</li>
+        <li>PrimeNG uses CSS custom properties for theme customization</li>
+        <li>Theme Designer tool provides visual theme customization</li>
+        <li>CSS-in-JS approach allows runtime theme switching</li>
+        <li>PrimeFlex provides utility classes for consistent spacing and layout</li>
       </ul>
       <pre>
-// Material UI
+// Angular Material (Legacy)
 $theme-colors: (
   primary: mat-palette($mat-indigo),
   accent: mat-palette($mat-pink)
 );
 
-// Nebular
+// Nebular (Being Replaced)
 $nb-themes: nb-register-theme((
   color-primary-100: #f2f6ff,
   color-primary-500: #3366ff,
   color-primary-900: #091c7a
-), default, default);</pre
+), default, default);
+
+// PrimeNG (Target)
+:root {
+  --primary-color: #3366ff;
+  --primary-color-text: #ffffff;
+  --surface-0: #ffffff;
+  --surface-50: #fafafa;
+  --surface-100: #f5f5f5;
+}</pre
       >
     </div>
 
-    <h2>Common Challenges and Solutions</h2>
+    <h2>Current Migration Challenges and Solutions</h2>
 
     <div class="lesson">
-      <h3>1. Icon System Migration</h3>
-      <p>Challenges faced when migrating from Material Icons to Eva Icons:</p>
+      <h3>1. Mixed Framework Usage Challenge</h3>
+      <p>Current challenge: Multiple UI frameworks in use simultaneously:</p>
       <ul>
-        <li>Icon name mapping is not one-to-one</li>
-        <li>Eva Icons have different naming conventions</li>
-        <li>Some icons need to be combined to achieve the same effect</li>
+        <li>PrimeNG (35% usage) - Target framework</li>
+        <li>Nebular (45% usage) - Being phased out</li>
+        <li>Custom components (15% usage) - Need replacement</li>
+        <li>Angular Material (5% usage) - Legacy components</li>
       </ul>
       <div class="tip">
-        <strong>Solution:</strong> Created a mapping service to handle icon name translations and
-        fallbacks.
+        <strong>Solution:</strong> Systematic migration plan with priority-based approach.
+        Start with Angular Material removal, then resolve mixed usage, finally replace custom components.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Icon System Consolidation</h3>
+      <p>Challenge: Multiple icon systems in use (PrimeIcons, Eva Icons, Material Icons):</p>
+      <ul>
+        <li>PrimeIcons - Target icon system</li>
+        <li>Eva Icons (nb-icon) - 40+ usages to migrate</li>
+        <li>Custom app-icon - 36+ usages to replace</li>
+        <li>Material Icons - Legacy usage</li>
+      </ul>
+      <div class="tip">
+        <strong>Solution:</strong> Standardize on PrimeIcons. Create icon mapping service for
+        Eva Icons → PrimeIcons conversion. Replace custom app-icon with PrimeIcons.
       </div>
     </div>
 
@@ -214,13 +266,13 @@ TestBed.configureTestingModule({
 
     <div class="lesson">
       <h3>Analysis of Nebular UI Implementation</h3>
-      
+
       <p>
         A comprehensive analysis of the codebase reveals that the Angular client is already
         extensively using Nebular UI components. The application has successfully implemented
         most core Nebular components, including:
       </p>
-      
+
       <ul>
         <li>Layout components (<code>nb-layout</code>, <code>nb-sidebar</code>)</li>
         <li>Form controls (<code>nb-input</code>, <code>nb-select</code>, etc.)</li>
@@ -228,11 +280,11 @@ TestBed.configureTestingModule({
         <li>Dialog system (<code>NbDialogService</code>)</li>
         <li>Navigation components (<code>nb-menu</code>, <code>nb-actions</code>)</li>
       </ul>
-      
+
       <p>
         The following components were identified as candidates for replacement with Nebular equivalents:
       </p>
-      
+
       <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
         <thead>
           <tr style="background-color: #edf1f7;">
@@ -268,11 +320,11 @@ TestBed.configureTestingModule({
 
     <div class="lesson">
       <h3>Benefits of Complete Migration</h3>
-      
+
       <p>
         Completing the migration to Nebular UI components would provide several benefits:
       </p>
-      
+
       <ul>
         <li><strong>Consistency:</strong> A unified design language across the application</li>
         <li><strong>Maintainability:</strong> Less custom code to maintain</li>
@@ -280,7 +332,7 @@ TestBed.configureTestingModule({
         <li><strong>Accessibility:</strong> Nebular components follow accessibility best practices</li>
         <li><strong>Performance:</strong> Optimized components with proper change detection</li>
       </ul>
-      
+
       <p>
         The application already has custom Nebular themes defined in <code>core/design/nebular-theme-customization.ts</code>.
         When replacing custom components with Nebular equivalents, it's important to extend these themes
@@ -296,7 +348,7 @@ TestBed.configureTestingModule({
         We encountered and resolved a critical issue with Karma test runner and the rimraf dependency.
         This provides important lessons about dependency management in modern JavaScript projects.
       </p>
-      
+
       <h4>Problem Analysis</h4>
       <ul>
         <li>Karma 6.4.x expects rimraf to be a function (as in version 3.x)</li>
@@ -304,20 +356,20 @@ TestBed.configureTestingModule({
         <li>In rimraf 5.x, the API changed from a function to an object with methods</li>
         <li>This caused the error: <code>TypeError: rimraf is not a function</code></li>
       </ul>
-      
+
       <h4>Solution Approach</h4>
       <p>
         Rather than downgrading rimraf (which could cause other compatibility issues), we created a patch
         for Karma's <code>temp_dir.js</code> file to handle both API versions:
       </p>
-      
+
       <pre>
 // Original code in temp_dir.js
 rimraf(path, done)
 
 // Patched code
 typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</pre>
-      
+
       <h4>Key Lessons</h4>
       <ul>
         <li><strong>Dependency Overrides:</strong> Package overrides in monorepos can cause unexpected compatibility issues</li>
@@ -325,18 +377,18 @@ typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</p
         <li><strong>Patching Strategy:</strong> Sometimes patching a dependency is better than downgrading or forking</li>
         <li><strong>Automation:</strong> We added the patch to the test scripts to ensure it's applied consistently</li>
       </ul>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> When using package overrides in a monorepo, always check compatibility with all tools and frameworks used across the project. Consider creating compatibility layers for critical dependencies.
       </div>
     </div>
-    
+
     <div class="lesson">
       <h3>Nebular Component Import Patterns - May 15, 2025</h3>
       <p>
         When working with Nebular UI components in Angular standalone components, we discovered several important patterns:
       </p>
-      
+
       <h4>Key Learnings</h4>
       <ul>
         <li><strong>Complete Imports:</strong> Always import all Nebular modules used in the component template</li>
@@ -344,12 +396,12 @@ typeof rimraf === "function" ? rimraf(path, done) : rimraf.rimraf(path, done)</p
         <li><strong>Injection Tokens:</strong> Remember to import and use proper injection tokens like <code>NB_DIALOG_CONFIG</code></li>
         <li><strong>Service Types:</strong> Import service types like <code>NbDialogRef</code> explicitly</li>
       </ul>
-      
+
       <pre>
 // Good practice - consolidated imports
-import { 
-  NbIconModule, 
-  NbCardModule, 
+import {
+  NbIconModule,
+  NbCardModule,
   NbButtonModule,
   NbDialogRef,
   NB_DIALOG_CONFIG
@@ -360,18 +412,18 @@ constructor(
   private dialogRef: NbDialogRef&lt;MyComponent&gt;,
   @Inject(NB_DIALOG_CONFIG) public data: MyDialogData
 ) {}</pre>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> When using standalone components, always include all required Nebular modules in the imports array, even if they're imported elsewhere in the application.
       </div>
     </div>
-    
+
     <div class="lesson">
       <h3>SASS Module System in Angular - May 15, 2025</h3>
       <p>
         We encountered and resolved issues with the SASS module system in Angular, particularly with map functions:
       </p>
-      
+
       <h4>Key Learnings</h4>
       <ul>
         <li><strong>Explicit Module Imports:</strong> Always import SASS built-in modules explicitly</li>
@@ -379,25 +431,25 @@ constructor(
         <li><strong>Namespace Imported Modules:</strong> Use namespaces to avoid conflicts</li>
         <li><strong>Modern SASS Syntax:</strong> Use @use instead of @import for better modularity</li>
       </ul>
-      
+
       <pre>
 // Required for using map functions
 @use 'sass:map';
 
 // Accessing map values
 $primary-color: map.get($colors, 'primary');</pre>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> Always include <code>@use 'sass:map';</code> at the top of SCSS files that use map functions like map.get().
       </div>
     </div>
-    
+
     <div class="lesson">
       <h3>Content Security Policy for Angular Apps - May 15, 2025</h3>
       <p>
         We improved the Content Security Policy configuration to allow loading resources from CDNs:
       </p>
-      
+
       <h4>Key Learnings</h4>
       <ul>
         <li><strong>External Resources:</strong> CSP must explicitly allow all external resources</li>
@@ -405,28 +457,28 @@ $primary-color: map.get($colors, 'primary');</pre>
         <li><strong>Font Sources:</strong> Font sources need special consideration in the CSP</li>
         <li><strong>Meta vs Headers:</strong> Some CSP directives only work via HTTP headers</li>
       </ul>
-      
+
       <pre>
 &lt;meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; 
-           script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; 
-           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; 
+  content="default-src 'self';
+           script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com;
+           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com;
            font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://unpkg.com data:;"
 /&gt;</pre>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> When adding external resources like CDN-hosted CSS, always update the CSP to allow loading from those domains.
       </div>
     </div>
-    
+
     <div class="lesson">
       <h3>Babel Runtime Module Resolution - May 13, 2025</h3>
       <p>
         We encountered and resolved an issue with missing Babel runtime helpers in Angular tests.
         This provides valuable insights into Node.js module resolution and custom module loaders.
       </p>
-      
+
       <h4>Problem Analysis</h4>
       <ul>
         <li>Angular tests were failing with: <code>Error: Can't resolve '@babel/runtime/helpers/asyncToGenerator.js'</code></li>
@@ -435,12 +487,12 @@ $primary-color: map.get($colors, 'primary');</pre>
         <li>This structure is typical in older Angular versions but not in Angular 19</li>
         <li>The build-angular directory was a symbolic link, making it impossible to create the nested structure</li>
       </ul>
-      
+
       <h4>Solution Approach</h4>
       <p>
         We created a custom module loader that intercepts require calls for the missing module:
       </p>
-      
+
       <pre>
 // Custom module loader
 const Module = require('module');
@@ -450,7 +502,7 @@ const path = require('path');
 const originalRequire = Module.prototype.require;
 
 // The path to the actual implementation
-const actualImplementationPath = path.resolve(__dirname, 
+const actualImplementationPath = path.resolve(__dirname,
   '../../node_modules/@babel/runtime/helpers/asyncToGenerator.js');
 
 // The path that tests are trying to load
@@ -462,11 +514,11 @@ Module.prototype.require = function(id) {
   if (id === missingModulePath) {
     return originalRequire.call(this, actualImplementationPath);
   }
-  
+
   // Otherwise, use the original require function
   return originalRequire.call(this, id);
 };</pre>
-      
+
       <h4>Key Lessons</h4>
       <ul>
         <li><strong>Module Resolution:</strong> Understanding how Node.js module resolution works is crucial</li>
@@ -475,19 +527,19 @@ Module.prototype.require = function(id) {
         <li><strong>Multiple Solutions:</strong> We tried several approaches before finding the most robust solution</li>
         <li><strong>Test Runner Integration:</strong> Created a custom test runner script that loads the module loader first</li>
       </ul>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> When dealing with hardcoded paths in generated code, a custom module loader can be more robust than trying to recreate the expected directory structure or using webpack aliases. This approach works at the Node.js level and doesn't require changes to the build configuration.
       </div>
     </div>
-    
+
     <div class="lesson">
       <h3>CSS Path Resolution in Karma Tests - May 13, 2025</h3>
       <p>
         We encountered and resolved an issue with missing CSS files in Karma tests.
         This provides insights into how Karma resolves static assets and how to handle missing dependencies.
       </p>
-      
+
       <h4>Problem Analysis</h4>
       <ul>
         <li>Karma tests were failing with: <code>Error: Can't resolve 'node_modules/@nebular/theme/styles/prebuilt/default.css'</code></li>
@@ -496,12 +548,12 @@ Module.prototype.require = function(id) {
         <li>These CSS files were referenced in the Angular configuration but not available in the test environment</li>
         <li>The CSS files are needed for the tests to run, even though the styles aren't actually used in the tests</li>
       </ul>
-      
+
       <h4>Solution Approach</h4>
       <p>
         We created placeholder CSS files and updated the Karma configuration:
       </p>
-      
+
       <pre>
 // 1. Create the directory structure
 fs.mkdirSync(path.join(clientNodeModulesDir, '@nebular'), { recursive: true });
@@ -523,7 +575,7 @@ karmaConfig = karmaConfig.replace(
   { pattern: 'node_modules/@nebular/theme/styles/prebuilt/default.css', included: true },
   { pattern: 'node_modules/eva-icons/style/eva-icons.css', included: true },`
 );</pre>
-      
+
       <h4>Key Lessons</h4>
       <ul>
         <li><strong>Asset Resolution:</strong> Karma has its own asset resolution mechanism separate from Angular</li>
@@ -532,7 +584,7 @@ karmaConfig = karmaConfig.replace(
         <li><strong>Test Environment:</strong> The test environment often has different requirements than the development environment</li>
         <li><strong>Automation:</strong> Creating a script to set up the test environment ensures consistency and reproducibility</li>
       </ul>
-      
+
       <div class="tip">
         <strong>Best Practice:</strong> When dealing with missing assets in test environments, create placeholder files rather than trying to copy or symlink the actual files. This approach is more lightweight and avoids potential issues with file permissions or symbolic links.
       </div>

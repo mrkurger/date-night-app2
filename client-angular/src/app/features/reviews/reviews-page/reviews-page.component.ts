@@ -12,11 +12,16 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
     selector: 'app-reviews-page',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent],
+    imports: [
+    CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent,
+    ButtonModule
+  ],
     template: `
     <div class="reviews-page-container">
       <nb-card class="reviews-header-card">

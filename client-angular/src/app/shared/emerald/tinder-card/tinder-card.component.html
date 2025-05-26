@@ -40,7 +40,7 @@
       (click)="prevMedia($event)"
       aria-label="Previous media"
     >
-      <nb-icon icon="arrow-left-outline"></nb-icon>
+      <i class="pi pi-arrow-left"></i>
     </button>
     <button
       *ngIf="media && media.length > 1"
@@ -48,16 +48,16 @@
       (click)="nextMedia($event)"
       aria-label="Next media"
     >
-      <nb-icon icon="arrow-right-outline"></nb-icon>
+      <i class="pi pi-arrow-right"></i>
     </button>
 
     <!-- Like/Dislike Indicators -->
     <div class="nb-flip-card__like-indicator">
-      <nb-icon icon="heart-outline"></nb-icon>
+      <i class="pi pi-heart"></i>
       <span>LIKE</span>
     </div>
     <div class="nb-flip-card__dislike-indicator">
-      <nb-icon icon="close-outline"></nb-icon>
+      <i class="pi pi-times"></i>
       <span>NOPE</span>
     </div>
   </div>
@@ -71,7 +71,7 @@
         <span class="nb-flip-card__age" *ngIf="age">{{ age }}</span>
       </h2>
       <p class="nb-flip-card__subtitle" *ngIf="subtitle">
-        <nb-icon icon="map-outline"></nb-icon> {{ subtitle }}
+        <i class="pi pi-map"></i> {{ subtitle }}
       </p>
     </div>
 
@@ -81,8 +81,8 @@
 
       <!-- Tags -->
       <div class="nb-flip-card__tags" *ngIf="tags && tags.length">
-        <nb-tag *ngFor="let tag of tags.slice(0, 5)" [text]="tag" size="small" color="secondary">
-        </nb-tag>
+        <p-tag *ngFor="let tag of tags.slice(0, 5)" [text]="tag" size="small" color="secondary" value="
+        "></p-tag>
       </div>
     </div>
 
@@ -106,28 +106,28 @@
           title="View Details"
           (click)="$event.stopPropagation(); onActionClick('info')"
         >
-          <nb-icon icon="info-outline"></nb-icon>
+          <i class="pi pi-info"></i>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--dislike"
           title="Dislike"
           (click)="$event.stopPropagation(); onSwipe('left')"
         >
-          <nb-icon icon="close-outline"></nb-icon>
+          <i class="pi pi-times"></i>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--like"
           title="Like"
           (click)="$event.stopPropagation(); onSwipe('right')"
         >
-          <nb-icon icon="heart-outline"></nb-icon>
+          <i class="pi pi-heart"></i>
         </button>
         <button
           class="nb-flip-card__action-button nb-flip-card__action-button--chat"
           title="Start Chat"
           (click)="$event.stopPropagation(); onActionClick('chat')"
         >
-          <nb-icon icon="message-circle-outline"></nb-icon>
+          <i class="pi pi-message-circle"></i>
         </button>
       </ng-template>
     </div>

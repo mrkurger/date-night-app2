@@ -8,6 +8,12 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
 import { UserService } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NebularModule } from '../../../shared/nebular.module';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -24,7 +30,14 @@ import { NebularModule } from '../../../shared/nebular.module';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss', './social-login.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, ReactiveFormsModule, RouterLink]
+    imports: [
+    NebularModule, ReactiveFormsModule, RouterLink,
+    CardModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule
+  ]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

@@ -46,6 +46,8 @@ export interface ChecklistItem {
 })
 export class OnboardingChecklistComponent implements OnInit {
   @Input() items: ChecklistItem[] = [];
+import { CheckboxModule } from 'primeng/checkbox';
+
   @Input() title = 'Getting Started';
   @Input() subtitle = 'Complete these tasks to set up your account';
   @Input() storageKey = 'onboarding-checklist';

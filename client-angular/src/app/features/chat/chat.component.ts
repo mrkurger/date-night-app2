@@ -63,7 +63,8 @@ import { ConfirmationService } from 'primeng/confirmationservice';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MessageService, MenuItem, FileUploadModule, ProgressSpinnerModule, ConfirmDialogModule, SkeletonModule, AvatarModule, TabViewModule, DialogModule, MenuModule, TooltipModule, BadgeModule, InputTextModule, ButtonModule, CardModule, 
+  imports: [
+    MessageService, MenuItem, FileUploadModule, ProgressSpinnerModule, ConfirmDialogModule, SkeletonModule, AvatarModule, TabViewModule, DialogModule, MenuModule, TooltipModule, BadgeModule, InputTextModule, ButtonModule, CardModule, 
     CommonModule,
     FormsModule,
     CardModule,
@@ -79,7 +80,8 @@ import { ConfirmationService } from 'primeng/confirmationservice';
     ConfirmDialogModule,
     ProgressSpinnerModule,
     FileUploadModule,
-    AvatarModule,
+    AvatarModule,,
+    InputTextareaModule
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './chat.component.html',
@@ -88,6 +90,8 @@ import { ConfirmationService } from 'primeng/confirmationservice';
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
   @ViewChild('messageList') messageList!: ElementRef;
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
   @ViewChild('messageInput') messageInput!: ElementRef;
 
   // Dialog visibility flags

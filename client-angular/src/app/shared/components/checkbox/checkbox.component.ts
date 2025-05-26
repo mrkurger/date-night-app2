@@ -7,38 +7,54 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ChangeDetectionStrategy,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import { IconComponent } from '../icon/icon.component';
+
+/**
+ * Interface for checkbox value change event
+ */
+export interface ICheckboxChangeEvent {
+  /** The checked state of the checkbox */
+  checked: boolean;
+  /** The DOM event that triggered the change */
+  event: Event;
+}
 
 /**
  * Checkbox Component
  *
  * A customizable checkbox component that follows the DateNight.io design system.
- * Supports different sizes and states.
+ * Supports different sizes, states, and implements ControlValueAccessor for form integration.
+ *
+ * @implements {ControlValueAccessor}
+ * 
+ * @example
+ * ```html
+ * <app-checkbox
+ *   [(ngModel)]="isChecked"
+ *   [label]="'Remember me'"
+ *   [size]="'medium'"
+ *   (change)="onCheckboxChange($event)">
+ * </app-checkbox>
+ * ```
  */
 @Component({
   selector: 'app-checkbox',
   standalone: true,
   imports: [CommonModule, FormsModule, IconComponent],
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CheckboxComponent),
-      multi: true,
-    },
+      multi: true
+    }
   ],
+  templateUrl: './checkbox.component.html',
+  styleUrls: ['./checkbox.component.scss'],
 })
 export class CheckboxComponent implements ControlValueAccessor {
   /**

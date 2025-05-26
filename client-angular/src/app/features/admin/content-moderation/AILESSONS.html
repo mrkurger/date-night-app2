@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Moderation - AI Lessons</title>
+  <style>
+    :root {
+      --primary-color: #5048E5;
+      --secondary-color: #14B8A6;
+      --background-color: #F9FAFC;
+      --text-color: #121828;
+      --muted-text-color: #65748B;
+      --border-color: #E5E7EB;
+      --success-color: #4CAF50;
+      --warning-color: #FF9800;
+      --danger-color: #F44336;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    
+    nav {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    nav ul li {
+      margin-right: 20px;
+      margin-bottom: 5px;
+    }
+    
+    nav ul li a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    h1, h2, h3, h4, h5 {
+      margin-top: 0;
+      color: var(--text-color);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 40px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 30px;
+    }
+    
+    .lesson {
+      margin-bottom: 40px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .lesson-header {
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    
+    .lesson-header h3 {
+      margin-bottom: 5px;
+    }
+    
+    .lesson-meta {
+      color: var(--muted-text-color);
+      font-size: 0.9rem;
+    }
+    
+    .lesson-category {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+      font-weight: 500;
+    }
+    
+    .category-migration {
+      background-color: #E3F2FD;
+      color: #1976D2;
+    }
+    
+    .category-architecture {
+      background-color: #E8F5E9;
+      color: #388E3C;
+    }
+    
+    .category-performance {
+      background-color: #FFF9C4;
+      color: #FBC02D;
+    }
+    
+    .category-testing {
+      background-color: #F3E5F5;
+      color: #8E24AA;
+    }
+    
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      background-color: #F1F5F9;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: var(--text-color);
+    }
+    
+    pre {
+      background-color: #F1F5F9;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9em;
+    }
+    
+    .highlight {
+      background-color: #FFF9C4;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #FBC02D;
+      margin: 20px 0;
+    }
+    
+    .tip {
+      background-color: #E8F5E9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #388E3C;
+      margin: 20px 0;
+    }
+    
+    .warning {
+      background-color: #FFEBEE;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #C62828;
+      margin: 20px 0;
+    }
+    
+    ul, ol {
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 5px;
+    }
+    
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--muted-text-color);
+      font-size: 0.9rem;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted #666;
+      cursor: help;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .lesson-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Content Moderation - AI Lessons</h1>
+    <p>Insights and lessons learned during the development and maintenance of the Content Moderation component.</p>
+  </header>
+  
+  <nav>
+    <ul>
+      <li><a href="../../../_docs_index.html">Main Documentation</a></li>
+      <li><a href="CHANGELOG.html">Changelog</a></li>
+      <li><a href="GLOSSARY.html">Glossary</a></li>
+      <li><a href="#migration">UI Framework Migration</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#testing">Testing</a></li>
+      <li><a href="#dependencies">Dependencies</a></li>
+    </ul>
+  </nav>
+  
+  <main>
+    <section id="duplicate-warning" class="lesson">
+      <div class="lesson-header">
+        <h3>Component Duplication Alert <span class="lesson-category category-migration">Warning</span></h3>
+        <div class="lesson-meta">Last Updated: May 25, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <p>⚠️ <strong>Important Notice:</strong> There are two separate ContentModerationComponent implementations in the codebase:</p>
+        <ul>
+          <li><code>/features/admin/content-moderation/content-moderation.component.ts</code> - PrimeNG based implementation (updated)</li>
+          <li><code>/features/admin/components/content-moderation/content-moderation.component.ts</code> - Nebular based implementation (currently used in routing)</li>
+        </ul>
+        
+        <div class="warning">
+          <h4>Resolution Needed</h4>
+          <p>The admin module is currently importing and using the Nebular-based component. To complete the migration, either:</p>
+          <ol>
+            <li>Update the import paths in admin.module.ts and admin-routing.module.ts to use the PrimeNG implementation, or</li>
+            <li>Migrate the active Nebular implementation to PrimeNG instead.</li>
+          </ol>
+        </div>
+        
+        <p>This duplicate implementation creates a risk of wasted development effort and inconsistent user experiences.</p>
+      </div>
+    </section>
+
+    <section id="migration" class="lesson">
+      <div class="lesson-header">
+        <h3>UI Framework Migration <span class="lesson-category category-migration">Migration</span></h3>
+        <div class="lesson-meta">Last Updated: May 25, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <p>During the migration from Bootstrap/Angular Material to PrimeNG, several key patterns and challenges emerged that provide valuable insights for future migrations.</p>
+        
+        <h4>Key Insights:</h4>
+        <ul>
+          <li><strong>Component Mapping</strong>: Understanding the equivalent components between frameworks is essential. For this migration, key mappings included:
+            <ul>
+              <li>NgbModal → PrimeNG Dialog</li>
+              <li>Bootstrap buttons → PrimeNG Button</li>
+              <li>Bootstrap pagination → PrimeNG Paginator</li>
+              <li>Bootstrap form controls → PrimeNG InputText, Dropdown, etc.</li>
+            </ul>
+          </li>
+          <li><strong>API Differences</strong>: Despite similar visual components, the APIs often differ significantly, requiring adjustments to event handlers and property bindings.</li>
+          <li><strong>CSS Class Structure</strong>: Moving from Bootstrap's utility classes (e.g., <code>mt-3</code>, <code>d-flex</code>) to PrimeNG's classes (e.g., <code>p-mt-3</code>, <code>p-d-flex</code>).</li>
+        </ul>
+        
+        <div class="tip">
+          <h4>Best Practice</h4>
+          <p>When migrating UI frameworks, create a comprehensive mapping document between equivalent components, their properties, and event handlers to streamline the process.</p>
+        </div>
+        
+        <h4>Common Pitfalls:</h4>
+        <ul>
+          <li><strong>Notification Services</strong>: Different method names between services (<code>error()</code> vs <code>showError()</code>) can cause subtle bugs.</li>
+          <li><strong>Dialog/Modal Handling</strong>: Modal state management differs significantly between frameworks - Bootstrap uses service injection while PrimeNG uses component visibility.</li>
+          <li><strong>Event Naming</strong>: Event emission naming conventions differ (<code>onClick</code> vs <code>click</code>).</li>
+        </ul>
+        
+        <div class="warning">
+          <h4>Challenge</h4>
+          <p>Maintaining consistent UI behavior during incremental migrations can be challenging, especially for components that interact with each other.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="architecture" class="lesson">
+      <div class="lesson-header">
+        <h3>Component Architecture <span class="lesson-category category-architecture">Architecture</span></h3>
+        <div class="lesson-meta">Last Updated: May 25, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <p>The Content Moderation component demonstrates several architectural patterns worth noting for future development.</p>
+        
+        <h4>Key Architectural Patterns:</h4>
+        <ul>
+          <li><strong>Container/Presentation Pattern</strong>: The main component handles data fetching and business logic, while delegating UI rendering to child components.</li>
+          <li><strong>Reactive State Management</strong>: Using RxJS for handling asynchronous operations and maintaining component state.</li>
+          <li><strong>Service Delegation</strong>: Core functionality is delegated to specialized services (MediaService, NotificationService, ContentSanitizerService).</li>
+        </ul>
+        
+        <div class="highlight">
+          <h4>Architecture Insight</h4>
+          <p>The component's filtering, sorting, and pagination logic is contained within the component rather than delegated to services. This works well for this use case but could be extracted into a reusable service for more complex scenarios.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="testing" class="lesson">
+      <div class="lesson-header">
+        <h3>Testing Strategies <span class="lesson-category category-testing">Testing</span></h3>
+        <div class="lesson-meta">Last Updated: May 25, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <p>Testing UI components, especially during framework migrations, requires special attention.</p>
+        
+        <h4>Testing Approach:</h4>
+        <ul>
+          <li><strong>Service Mocking</strong>: MediaService, NotificationService, and ContentSanitizerService are mocked to isolate component testing.</li>
+          <li><strong>Error Handling Tests</strong>: Special attention to error paths, including permission errors and API failures.</li>
+          <li><strong>UI Interaction Tests</strong>: Ensuring filters, sorting, and pagination work correctly.</li>
+        </ul>
+        
+        <h4>Migration Testing:</h4>
+        <p>When migrating between UI frameworks, implement:</p>
+        <ul>
+          <li>Visual regression tests to ensure UI appearance remains consistent</li>
+          <li>Interaction tests to verify the behavior matches pre-migration functionality</li>
+          <li>Error handling tests to ensure error states are properly displayed</li>
+        </ul>
+      </div>
+    </section>
+    
+    <section id="dependencies" class="lesson">
+      <div class="lesson-header">
+        <h3>Dependencies <span class="lesson-category category-architecture">Architecture</span></h3>
+        <div class="lesson-meta">Last Updated: May 25, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <h4>Core Dependencies:</h4>
+        <ul>
+          <li><strong>@angular/common</strong> - Common Angular directives and pipes</li>
+          <li><strong>@angular/forms</strong> - For form handling (ReactiveFormsModule, FormsModule)</li>
+          <li><strong>primeng/*</strong> - PrimeNG UI components:
+            <ul>
+              <li><code>primeng/dialog</code> - Modal dialogs for content moderation</li>
+              <li><code>primeng/button</code> - Button components</li>
+              <li><code>primeng/dropdown</code> - Dropdown menus for filters</li>
+              <li><code>primeng/inputtext</code> - Text input fields</li>
+              <li><code>primeng/message</code> - Message display</li>
+              <li><code>primeng/paginator</code> - Pagination controls</li>
+              <li><code>primeng/progressspinner</code> - Loading indicators</li>
+              <li><code>primeng/inputtextarea</code> - Textarea for moderation notes</li>
+              <li><code>primeng/api</code> - Core PrimeNG services (MessageService)</li>
+            </ul>
+          </li>
+          <li><strong>rxjs</strong> - Reactive programming library for handling asynchronous operations</li>
+        </ul>
+        
+        <h4>Internal Dependencies:</h4>
+        <ul>
+          <li><strong>MediaService</strong> - Handles API interactions for media content</li>
+          <li><strong>NotificationService</strong> - Manages user notifications</li>
+          <li><strong>ContentSanitizerService</strong> - Sanitizes content for safe display</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="duplication-resolution" class="lesson">
+      <div class="lesson-header">
+        <h3>Component Duplication Resolution <span class="lesson-category category-migration">Migration</span></h3>
+        <div class="lesson-meta">Last Updated: May 26, 2025</div>
+      </div>
+      <div class="lesson-content">
+        <p>Successfully resolved the component duplication issue, providing valuable insights for future migrations.</p>
+        
+        <h4>Resolution Process:</h4>
+        <ol>
+          <li>Verified routing was using the PrimeNG implementation</li>
+          <li>Confirmed no direct dependencies on the Nebular version</li>
+          <li>Safely removed the duplicate implementation</li>
+          <li>Updated documentation to reflect changes</li>
+        </ol>
+        
+        <div class="tip">
+          <h4>Best Practice</h4>
+          <p>When migrating components between frameworks:</p>
+          <ul>
+            <li>Keep the old implementation until the new one is fully tested</li>
+            <li>Update routing and imports to use new version before removing old</li>
+            <li>Verify no references exist to old implementation before removal</li>
+            <li>Document the migration process and resolution steps</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Date Night App Content Moderation Documentation - Last updated: May 25, 2025</p>
+  </footer>
+</body>
+</html>

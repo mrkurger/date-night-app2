@@ -1,0 +1,79 @@
+<div class="checklist-container" [class.collapsed]="isCollapsed">
+  <div class="checklist-header" (click)="collapsible && toggleCollapse()">
+    <div class="header-content">
+      <h3 class="checklist-title">{{ title }}</h3>
+      <p class="checklist-subtitle" *ngIf="!isCollapsed">{{ subtitle }}</p>
+
+      <div class="progress-container" *ngIf="showProgress && !isCollapsed">
+        <nb-progress-bar mode="determinate" [value]="progress"></nb-progress-bar>
+        <span class="progress-text">{{ completedCount }} of {{ items.length }} completed</span>
+      </div>
+    </div>
+
+    <button
+      *ngIf="collapsible"
+      nb-icon-button
+      class="collapse-button"
+      [attr.aria-label]="isCollapsed ? 'Expand checklist' : 'Collapse checklist'"
+    >
+      <i class="pi pi-{{ isCollapsed ? 'expand_more' : 'expand_less' }}"></i>
+    </button>
+  </div>
+
+  <div class="checklist-content" *ngIf="!isCollapsed">
+    <div class="checklist-items">
+      <div *ngFor="let item of items" class="checklist-item" [class.completed]="item.completed">
+        <div class="item-checkbox">
+          <p-checkbox
+            [checked]="item.completed"
+            [disabled]="item.completed"
+            (change)="markItemCompleted(item)"
+           >
+          </p-checkbox>
+        </div>
+
+        <div class="item-content" (click)="handleItemClick(item)">
+          <div class="item-icon" *ngIf="item.icon">
+            <i class="pi pi-{{ item.icon }}"></i>
+          </div>
+
+          <div class="item-text">
+            <h4 class="item-title">{{ item.title }}</h4>
+            <p class="item-description">{{ item.description }}</p>
+
+            <div class="item-reward" *ngIf="showRewards && item.reward">
+              <nb-icon *ngIf="item.reward.type === 'badge'">stars"></nb-icon>
+              <nb-icon *ngIf="item.reward.type === 'points'">toll"></nb-icon>
+              <nb-icon *ngIf="item.reward.type === 'feature'">lock_open"></nb-icon>
+              <span class="reward-text">
+                {{
+                  item.reward.type === 'points' ? item.reward.value + ' points' : item.reward.value
+                }}
+              </span>
+            </div>
+          </div>
+
+          <div class="item-action">
+            <button
+              nbButton
+              color="primary"
+              *ngIf="item.route && !item.completed"
+              [routerLink]="item.route"
+            >
+              Go
+            </button>
+
+            <nb-icon *ngIf="item.completed" class="completed-icon">check_circle"></nb-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-footer" *ngIf="isAllCompleted">
+      <div class="completion-message">
+        <i class="pi pi-celebration"></i>
+        <span>All tasks completed!</span>
+      </div>
+    </div>
+  </div>
+</div>

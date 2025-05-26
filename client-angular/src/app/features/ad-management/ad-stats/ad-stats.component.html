@@ -2,15 +2,15 @@
   <h2>Statistics for "{{ adTitle }}"</h2>
 
   <div *ngIf="loading" class="loading-spinner">
-    <nb-spinner status="primary" size="large"></nb-spinner>
+    <p-progressSpinner status="primary" size="large" ></p-progressSpinner>
   </div>
 
   <div *ngIf="!loading" class="stats-content">
-    <nb-card class="summary-card">
-      <nb-card-header>
+    <p-card class="summary-card" >
+      <p-card-header >
         <h5>Performance Summary (Last 7 Days)</h5>
-      </nb-card-header>
-      <nb-card-body class="summary-metrics">
+      </ng-template>
+      <p-card-body class="summary-metrics" >
         <div class="metric">
           <div class="metric-value">{{ getTotalViews(dataSource.slice(0, 7)) }}</div>
           <div class="metric-label">Total Views</div>
@@ -27,16 +27,16 @@
           <div class="metric-value">{{ getConversionRate(dataSource.slice(0, 7)) }}%</div>
           <div class="metric-label">Conversion Rate</div>
         </div>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
 
     <!-- Chart placeholders - in a real app, you would use a charting library like ngx-charts -->
     <div class="charts-container">
-      <nb-card class="chart-card">
-        <nb-card-header>
+      <p-card class="chart-card" >
+        <p-card-header >
           <h5>Daily Views</h5>
-        </nb-card-header>
-        <nb-card-body class="chart-placeholder">
+        </ng-template>
+        <p-card-body class="chart-placeholder" >
           <div class="chart-bars">
             <div
               class="bar"
@@ -50,14 +50,14 @@
               {{ item.name | date: 'MM/dd' }}
             </div>
           </div>
-        </nb-card-body>
-      </nb-card>
+        </ng-template>
+      </p-card>
 
-      <nb-card class="chart-card">
-        <nb-card-header>
+      <p-card class="chart-card" >
+        <p-card-header >
           <h5>Daily Clicks</h5>
-        </nb-card-header>
-        <nb-card-body class="chart-placeholder">
+        </ng-template>
+        <p-card-body class="chart-placeholder" >
           <div class="chart-bars">
             <div
               class="bar"
@@ -71,19 +71,19 @@
               {{ item.name | date: 'MM/dd' }}
             </div>
           </div>
-        </nb-card-body>
-      </nb-card>
+        </ng-template>
+      </p-card>
     </div>
 
     <!-- Detailed stats table -->
-    <nb-card class="table-card">
-      <nb-card-header>
+    <p-card class="table-card" >
+      <p-card-header >
         <h5>Detailed Statistics</h5>
-      </nb-card-header>
-      <nb-card-body>
-        <nb-form-field class="filter-field">
+      </ng-template>
+      <p-card-body >
+        <div class="filter-field" class="p-field">
           <input nbInput (keyup)="applyFilter($event)" placeholder="Search by date" />
-        </nb-form-field>
+        </div>
 
         <div class="table-container">
           <table [nbTreeGrid]="dataSource">
@@ -129,7 +129,7 @@
               [disabled]="currentPage === 1"
               (click)="onPageChange(currentPage - 1)"
             >
-              <nb-icon icon="arrow-left"></nb-icon>
+              <i class="pi pi-arrow-left"></i>
             </button>
             <span class="pagination-info"
               >Page {{ currentPage }} of {{ Math.ceil(totalItems / pageSize) }}</span
@@ -141,14 +141,14 @@
               [disabled]="currentPage >= totalItems / pageSize"
               (click)="onPageChange(currentPage + 1)"
             >
-              <nb-icon icon="arrow-right"></nb-icon>
+              <i class="pi pi-arrow-right"></i>
             </button>
-            <nb-select [(selected)]="pageSize" class="page-size-select">
-              <nb-option *ngFor="let size of pageSizes" [value]="size">{{ size }} items</nb-option>
-            </nb-select>
+            <p-dropdown [(selected)]="pageSize" class="page-size-select" [options]="options" optionLabel="label" optionValue="value">
+              <!-- TODO: Convert to options array: {{ size }} items -->
+            </p-dropdown>
           </div>
         </div>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
   </div>
 </div>

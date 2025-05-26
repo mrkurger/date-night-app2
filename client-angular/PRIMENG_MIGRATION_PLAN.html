@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimeNG Migration Plan - Date Night App</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #f8f9fa;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2e3a59;
+      }
+      .phase {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .priority-critical {
+        border-left: 5px solid #dc3545;
+      }
+      .priority-high {
+        border-left: 5px solid #fd7e14;
+      }
+      .priority-medium {
+        border-left: 5px solid #ffc107;
+      }
+      .priority-low {
+        border-left: 5px solid #28a745;
+      }
+      .component-mapping {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .migration-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+      .stat-card {
+        background: #ffffff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #3366ff;
+      }
+      .timeline {
+        background: #e9ecef;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .checklist {
+        background: #d4edda;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      .warning {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+      }
+      th,
+      td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+      }
+      code {
+        background: #f8f9fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PrimeNG Migration Plan</h1>
+    <p>
+      <strong>Strategic Goal:</strong> Migrate all UI components to PrimeNG framework, replacing
+      Nebular UI, Angular Material, Bootstrap, and custom components for consistency,
+      maintainability, and enterprise-grade support.
+    </p>
+
+    <div class="warning">
+      <h3>⚠️ Current State Alert</h3>
+      <p>
+        The application currently uses multiple UI frameworks simultaneously, creating maintenance
+        complexity and inconsistent user experience. This migration plan addresses the systematic
+        consolidation to PrimeNG.
+      </p>
+    </div>
+
+    <div class="migration-stats">
+      <div class="stat-card">
+        <div class="stat-number">35%</div>
+        <div>PrimeNG Components</div>
+        <small>Target Framework</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">45%</div>
+        <div>Nebular Components</div>
+        <small>To Be Migrated</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15%</div>
+        <div>Custom Components</div>
+        <small>To Be Replaced</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5%</div>
+        <div>Angular Material</div>
+        <small>Legacy - Remove First</small>
+      </div>
+    </div>
+
+    <h2>Migration Phases Overview</h2>
+
+    <div class="phase priority-critical">
+      <h3>Phase 1: Angular Material Removal (Critical Priority)</h3>
+      <div class="timeline">
+        <strong>Timeline:</strong> 1-2 weeks | <strong>Effort:</strong> 5% of total migration
+      </div>
+
+      <h4>Components to Migrate:</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Angular Material Component</th>
+            <th>Usage Count</th>
+            <th>PrimeNG Replacement</th>
+            <th>Migration Complexity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>mat-date-range-input</code></td>
+            <td>2+</td>
+            <td><code>p-calendar</code> with range selection</td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td><code>mat-date-range-picker</code></td>
+            <td>2+</td>
+            <td><code>p-calendar</code></td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td><code>mat-header-cell, mat-cell</code></td>
+            <td>6+</td>
+            <td><code>p-table</code> with column templates</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td><code>mat-header-row, mat-row</code></td>
+            <td>2+</td>
+            <td><code>p-table</code> structure</td>
+            <td>High</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="checklist">
+        <h4>Phase 1 Checklist:</h4>
+        <ul>
+          <li>□ Audit all mat-* component usage</li>
+          <li>□ Create PrimeNG table component replacements</li>
+          <li>□ Migrate date picker components to p-calendar</li>
+          <li>□ Update imports and remove Angular Material dependencies</li>
+          <li>□ Test functionality and styling</li>
+          <li>□ Update documentation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase priority-high">
+      <h3>Phase 2: Mixed Framework Resolution (High Priority)</h3>
+      <div class="timeline">
+        <strong>Timeline:</strong> 4-6 weeks | <strong>Effort:</strong> 30% of total migration
+      </div>
+
+      <h4>Critical Mixed Usage Areas:</h4>
+      <ul>
+        <li>
+          <strong>Cards:</strong> Templates using both <code>p-card</code> and <code>nb-card</code>
+        </li>
+        <li>
+          <strong>Buttons:</strong> Mix of <code>p-button</code>, <code>nb-button</code>, and custom
+          buttons
+        </li>
+        <li><strong>Forms:</strong> Combination of PrimeNG and Nebular form components</li>
+        <li><strong>Layout:</strong> Mixed toolbar and sidebar implementations</li>
+      </ul>
+
+      <div class="component-mapping">
+        <h4>Nebular → PrimeNG Component Mapping:</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Nebular Component</th>
+              <th>Usage Count</th>
+              <th>PrimeNG Equivalent</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>nb-card</code></td>
+              <td>37+</td>
+              <td><code>p-card</code></td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td><code>nb-form-field</code></td>
+              <td>24+</td>
+              <td><code>p-field</code> + validation</td>
+              <td>Requires validation restructure</td>
+            </tr>
+            <tr>
+              <td><code>nb-select</code></td>
+              <td>10+</td>
+              <td><code>p-dropdown</code></td>
+              <td>API differences</td>
+            </tr>
+            <tr>
+              <td><code>nb-checkbox</code></td>
+              <td>12+</td>
+              <td><code>p-checkbox</code></td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td><code>nb-tabset</code></td>
+              <td>10+</td>
+              <td><code>p-tabView</code></td>
+              <td>Template structure changes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="phase priority-medium">
+      <h3>Phase 3: Custom Component Replacement (Medium Priority)</h3>
+      <div class="timeline">
+        <strong>Timeline:</strong> 6-8 weeks | <strong>Effort:</strong> 40% of total migration
+      </div>
+
+      <h4>High-Usage Custom Components:</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Custom Component</th>
+            <th>Usage Count</th>
+            <th>PrimeNG Replacement Strategy</th>
+            <th>Migration Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>app-icon</code></td>
+            <td>36+</td>
+            <td>PrimeIcons + <code>i</code> element</td>
+            <td>Icon mapping service</td>
+          </tr>
+          <tr>
+            <td><code>app-button</code></td>
+            <td>28+</td>
+            <td><code>p-button</code></td>
+            <td>Direct replacement with style migration</td>
+          </tr>
+          <tr>
+            <td><code>app-input</code></td>
+            <td>24+</td>
+            <td><code>pInputText</code></td>
+            <td>Validation pattern migration</td>
+          </tr>
+          <tr>
+            <td><code>app-select</code></td>
+            <td>20+</td>
+            <td><code>p-dropdown</code></td>
+            <td>Options structure migration</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="phase priority-low">
+      <h3>Phase 4: Complete Framework Consolidation (Low Priority)</h3>
+      <div class="timeline">
+        <strong>Timeline:</strong> 2-4 weeks | <strong>Effort:</strong> 25% of total migration
+      </div>
+
+      <h4>Final Consolidation Tasks:</h4>
+      <ul>
+        <li>Migrate remaining Nebular components</li>
+        <li>Implement consistent PrimeNG theming</li>
+        <li>Remove unused framework dependencies</li>
+        <li>Update build configuration</li>
+        <li>Complete documentation update</li>
+        <li>Performance optimization</li>
+      </ul>
+    </div>
+
+    <h2>Implementation Guidelines</h2>
+
+    <div class="component-mapping">
+      <h3>PrimeNG Best Practices</h3>
+      <ul>
+        <li><strong>Theming:</strong> Use CSS custom properties for consistent theming</li>
+        <li>
+          <strong>Forms:</strong> Leverage Angular reactive forms with PrimeNG validation display
+        </li>
+        <li><strong>Icons:</strong> Standardize on PrimeIcons for consistency</li>
+        <li><strong>Layout:</strong> Use PrimeFlex utility classes for responsive design</li>
+        <li><strong>Accessibility:</strong> Ensure ARIA attributes are properly configured</li>
+      </ul>
+    </div>
+
+    <h2>Detailed Migration Strategies</h2>
+
+    <div class="phase">
+      <h3>Icon Migration Strategy</h3>
+      <p>
+        Create a comprehensive icon mapping service to handle the transition from multiple icon
+        systems to PrimeIcons.
+      </p>
+
+      <div class="component-mapping">
+        <h4>Icon System Mapping:</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Current Icon</th>
+              <th>System</th>
+              <th>PrimeIcon Equivalent</th>
+              <th>Migration Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>menu-2-outline</td>
+              <td>Eva Icons</td>
+              <td>pi pi-bars</td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td>search-outline</td>
+              <td>Eva Icons</td>
+              <td>pi pi-search</td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td>person-outline</td>
+              <td>Eva Icons</td>
+              <td>pi pi-user</td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td>bell-outline</td>
+              <td>Eva Icons</td>
+              <td>pi pi-bell</td>
+              <td>Direct replacement</td>
+            </tr>
+            <tr>
+              <td>settings-outline</td>
+              <td>Eva Icons</td>
+              <td>pi pi-cog</td>
+              <td>Direct replacement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="phase">
+      <h3>Form Migration Strategy</h3>
+      <p>
+        Systematic approach to migrating form components while maintaining validation and
+        accessibility.
+      </p>
+
+      <div class="component-mapping">
+        <h4>Form Component Migration Pattern:</h4>
+        <pre><code>// Before (Nebular)
+&lt;nb-form-field&gt;
+  &lt;label for="email"&gt;Email&lt;/label&gt;
+  &lt;input nbInput fullWidth type="email" id="email" formControlName="email"&gt;
+  &lt;div *ngIf="form.get('email')?.invalid && form.get('email')?.touched"&gt;
+    &lt;p class="caption status-danger"&gt;Email is required&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/nb-form-field&gt;
+
+// After (PrimeNG)
+&lt;div class="p-field"&gt;
+  &lt;label for="email"&gt;Email&lt;/label&gt;
+  &lt;input pInputText id="email" type="email" formControlName="email"
+         [class.p-invalid]="form.get('email')?.invalid && form.get('email')?.touched"&gt;
+  &lt;small class="p-error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched"&gt;
+    Email is required
+  &lt;/small&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <h2>Testing Strategy</h2>
+
+    <div class="checklist">
+      <h3>Comprehensive Testing Approach</h3>
+      <ul>
+        <li>
+          <strong>Visual Regression Testing:</strong> Screenshot comparison for each migrated
+          component
+        </li>
+        <li>
+          <strong>Functional Testing:</strong> Verify all component interactions work correctly
+        </li>
+        <li><strong>Accessibility Testing:</strong> WCAG 2.1 AA compliance verification</li>
+        <li><strong>Performance Testing:</strong> Bundle size analysis and runtime performance</li>
+        <li><strong>Cross-browser Testing:</strong> Chrome, Firefox, Safari, Edge compatibility</li>
+        <li><strong>Mobile Responsiveness:</strong> Touch interactions and responsive behavior</li>
+      </ul>
+    </div>
+
+    <h2>Risk Mitigation</h2>
+
+    <div class="warning">
+      <h3>Potential Risks and Mitigation Strategies</h3>
+      <ul>
+        <li><strong>Breaking Changes:</strong> Implement feature flags for gradual rollout</li>
+        <li><strong>Performance Impact:</strong> Monitor bundle size and implement lazy loading</li>
+        <li><strong>User Experience:</strong> Maintain visual consistency during transition</li>
+        <li>
+          <strong>Development Velocity:</strong> Provide migration guides and component examples
+        </li>
+        <li><strong>Accessibility Regression:</strong> Automated accessibility testing in CI/CD</li>
+      </ul>
+    </div>
+
+    <h2>Success Metrics</h2>
+
+    <div class="migration-stats">
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div>PrimeNG Components</div>
+        <small>Target State</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0%</div>
+        <div>Legacy Frameworks</div>
+        <small>Complete Removal</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">-30%</div>
+        <div>Bundle Size Reduction</div>
+        <small>Framework Consolidation</small>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div>WCAG Compliance</div>
+        <small>Accessibility Target</small>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h3>Total Migration Timeline: 13-20 weeks</h3>
+      <p>
+        <strong>Phase 1:</strong> 1-2 weeks | <strong>Phase 2:</strong> 4-6 weeks |
+        <strong>Phase 3:</strong> 6-8 weeks | <strong>Phase 4:</strong> 2-4 weeks
+      </p>
+    </div>
+  </body>
+</html>

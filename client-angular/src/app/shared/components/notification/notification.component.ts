@@ -2,10 +2,15 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NotificationMessage } from './notification.model';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
     selector: 'app-notification',
-    imports: [CommonModule, NebularModule],
+    imports: [
+    CommonModule, NebularModule,
+    ButtonModule
+  ],
     template: `
     <div class="notifications-container">
       <nb-card

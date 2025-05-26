@@ -27,18 +27,27 @@ import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-
     styleUrls: ['./tinder.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
-        CommonModule,
+    CommonModule,
         RouterModule,
         ReactiveFormsModule,
         MainLayoutComponent,
-        TinderCardComponent,
-    ]
+        TinderCardComponent,,
+    CardModule,
+    ButtonModule,
+    DropdownModule,
+    ProgressSpinnerModule
+  ]
 })
 export class TinderComponent implements OnInit {
   /**
    * Array of all ads available for swiping
    */
   ads: Ad[] = [];
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
   /**
    * Current ad being displayed
@@ -83,6 +92,36 @@ export class TinderComponent implements OnInit {
   /**
    * Constructor
    */
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
+
   constructor(
     private adService: AdService,
     private notificationService: NotificationService,

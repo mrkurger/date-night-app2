@@ -23,13 +23,17 @@ import {
   NbButtonModule,
   NbLayoutModule,
 } from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+import { TabViewModule } from 'primeng/tabview';
+
 
 @Component({
     selector: 'app-browse',
     templateUrl: './browse.component.html',
     styleUrls: ['./browse.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
+    imports: [
+    NebularModule, CommonModule,
         RouterModule,
         NbCardModule,
         NbTabsetModule,
@@ -38,8 +42,9 @@ import {
         NbLayoutModule,
         NetflixViewComponent,
         TinderComponent,
-        ListViewComponent,
-    ]
+        ListViewComponent,,
+    TabViewModule
+  ]
 })
 export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';

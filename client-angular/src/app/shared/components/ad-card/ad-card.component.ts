@@ -190,10 +190,15 @@ import { NebularModule } from '../../nebular.module';
       }
     `,
     ],
-    imports: [CommonModule, RouterModule, NebularModule]
+    imports: [
+    CommonModule, RouterModule, NebularModule,
+    ButtonModule
+  ]
 })
 export class AdCardComponent implements OnInit, OnDestroy {
   @Input() ad!: Ad;
+import { ButtonModule } from 'primeng/button';
+
   @Input() layout: 'grid' | 'list' | 'compact' | 'netflix' | 'tinder' = 'grid';
   @Input() showActions = true;
   @Input() showDescription = true;

@@ -1,0 +1,134 @@
+<p-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+  <p-card-header >
+    <h3>Add Payment Method</h3>
+  </ng-template>
+  <p-card-body >
+    <form [formGroup]="addPaymentMethodForm" (ngSubmit)="savePaymentMethod()">
+      <p-tabView fullWidth (changeTab)="onPaymentMethodTypeChange($event.tabTitle.toLowerCase())" >
+        <p-tabPanel tabTitle="Card" [active]="paymentMethodType === 'card'">
+          <div class="form-section">
+            <p class="text-hint">
+              Securely add your credit or debit card. We partner with Stripe for secure payment
+              processing.
+            </p>
+            <div class="p-field">
+              <label>Name on Card</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="nameOnCard"
+                placeholder="e.g., Jane Doe"
+                [status]="
+                  addPaymentMethodForm.get('nameOnCard')?.dirty
+                    ? addPaymentMethodForm.get('nameOnCard')?.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              />
+              
+                Name on card is required.
+              
+            </div>
+
+            <!-- Placeholder for Stripe Card Element -->
+            <!-- In a real implementation, you would use a component like ngx-stripe's <ngx-stripe-card> here -->
+            <div class="stripe-element-placeholder">
+              <nb-icon icon="credit-card-outline" pack="eva"></nb-icon>
+              <span>Stripe Card Element will be here</span>
+              <p class="text-hint small">
+                Card number, expiry, and CVC will be entered securely via Stripe.
+              </p>
+            </div>
+            <p-message status="info" class="mt-3" [severity]="status">
+              For security reasons, direct card input is handled by our payment processor (Stripe).
+              This form is a placeholder for that integration.
+            </p-message>
+          </div>
+        </p-tabPanel>
+
+        <p-tabPanel tabTitle="Bank Account" [active]="paymentMethodType === 'bank_account'">
+          <div class="form-section">
+            <p class="text-hint">Add your bank account for direct debits or payouts.</p>
+            <div class="p-field">
+              <label>Account Holder Name</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="accountHolderName"
+                placeholder="e.g., Jane Doe"
+                [status]="
+                  addPaymentMethodForm.get('accountHolderName')?.dirty
+                    ? addPaymentMethodForm.get('accountHolderName')?.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              />
+              
+                Account holder name is required.
+              
+            </div>
+
+            <div class="p-field">
+              <label>Account Number</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="accountNumber"
+                placeholder="e.g., 1234567890"
+                [status]="
+                  addPaymentMethodForm.get('accountNumber')?.dirty
+                    ? addPaymentMethodForm.get('accountNumber')?.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              />
+              
+                Account number is required.
+              
+            </div>
+
+            <div class="p-field">
+              <label>Routing Number / IBAN</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="routingNumber"
+                placeholder="e.g., 021000021 or GB29NWBK60161331926819"
+                [status]="
+                  addPaymentMethodForm.get('routingNumber')?.dirty
+                    ? addPaymentMethodForm.get('routingNumber')?.invalid
+                      ? 'danger'
+                      : 'success'
+                    : 'basic'
+                "
+              />
+              
+                Routing number or IBAN is required.
+              
+            </div>
+            <p-message status="warning" class="mt-3" [severity]="status">
+              Bank account details are handled securely. In a live environment, these would be
+              tokenized.
+            </p-message>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </form>
+  </ng-template>
+  <p-card-footer class="actions-footer" >
+    <p-button></p-button>Cancel</button>
+    <button
+      nbButton
+      status="primary"
+      (click)="savePaymentMethod()"
+      [disabled]="addPaymentMethodForm.invalid || isLoading"
+    >
+      <nb-icon icon="save-outline" *ngIf="!isLoading"></nb-icon>
+      <p-progressSpinner *ngIf="isLoading" nbSpinnerSize="tiny" nbSpinnerStatus="control" ></p-progressSpinner>
+      {{ isLoading ? 'Saving...' : 'Save Payment Method' }}
+    </button>
+  </ng-template>
+</p-card>

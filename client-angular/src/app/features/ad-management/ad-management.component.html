@@ -4,37 +4,37 @@
     <p class="subtitle">Manage your advertisements and travel itineraries</p>
   </div>
 
-  <nb-tabset fullWidth routerLinks>
-    <nb-tab
+  <p-tabView fullWidth routerLinks >
+    <p-tabPanel
       tabTitle="My Ads"
       tabIcon="list-outline"
       route="list"
       [active]="router.url.includes('/list')"
     >
-    </nb-tab>
-    <nb-tab
+    </p-tabPanel>
+    <p-tabPanel
       tabTitle="Create New Ad"
       tabIcon="plus-outline"
       route="create"
       [active]="router.url.includes('/create')"
     >
-    </nb-tab>
-    <nb-tab
+    </p-tabPanel>
+    <p-tabPanel
       tabTitle="Touring Advertisers"
       tabIcon="globe-outline"
       route="/touring"
       [active]="router.url.includes('/touring')"
     >
-    </nb-tab>
-    <nb-tab
+    </p-tabPanel>
+    <p-tabPanel
       *ngIf="isAdmin"
       tabTitle="Admin Panel"
       tabIcon="shield-outline"
       route="/admin/ads"
       [active]="router.url.includes('/admin/ads')"
     >
-    </nb-tab>
-  </nb-tabset>
+    </p-tabPanel>
+  </p-tabView>
 
   <div class="content">
     <router-outlet></router-outlet>

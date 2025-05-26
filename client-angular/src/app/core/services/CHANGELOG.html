@@ -154,6 +154,72 @@
 
     <div class="version">
       <div class="version-header">
+        <span class="version-number">Version 1.6.0</span>
+        <span class="version-date">May 25, 2025</span>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type feature">Features</span></h3>
+        <ul class="change-list">
+          <li>
+            Implemented missing <code>configureMessageAutoDeletion</code> method in 
+            <a href="./GLOSSARY.html#ChatService" class="tooltip"
+              >ChatService<span class="tooltip-text"
+                >Service for handling real-time messaging and auto-deletion</span
+              ></a>
+          </li>
+          <li>
+            Implemented missing <code>getMessageAutoDeletionSettings</code> method in 
+            <a href="./GLOSSARY.html#ChatService" class="tooltip"
+              >ChatService<span class="tooltip-text"
+                >Service for handling real-time messaging and auto-deletion</span
+              ></a>
+          </li>
+          <li>
+            Added comprehensive JSDoc documentation for all ChatService methods and interfaces
+          </li>
+          <li>
+            Renamed all interfaces to follow "I" prefix convention (IChatMessage, IChatRoom, etc.)
+          </li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type improvement">Improvements</span></h3>
+        <ul class="change-list">
+          <li>
+            Fixed import ordering and member ordering to comply with ESLint rules
+          </li>
+          <li>
+            Added proper readonly modifiers for all class members that are never reassigned
+          </li>
+          <li>
+            Integrated ChatService with existing EncryptionService for message expiry functionality
+          </li>
+          <li>
+            Enhanced error handling in message auto-deletion configuration
+          </li>
+        </ul>
+      </div>
+
+      <div class="change-category">
+        <h3><span class="change-type fix">Fixes</span></h3>
+        <ul class="change-list">
+          <li>
+            Resolved 50+ TypeScript compilation errors in ChatService implementation
+          </li>
+          <li>
+            Fixed missing method implementations that were preventing chat-settings component from functioning
+          </li>
+          <li>
+            Corrected constructor formatting and parameter annotations
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="version">
+      <div class="version-header">
         <span class="version-number">Version 1.5.0</span>
         <span class="version-date">May 25, 2025</span>
       </div>

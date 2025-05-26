@@ -1,21 +1,20 @@
-<nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" nbSpinnerSize="large">
-  <nb-card-header>
+<p-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+  <p-card-header >
     <h3>Add Payment Method</h3>
-  </nb-card-header>
-  <nb-card-body>
+  </ng-template>
+  <p-card-body >
     <form [formGroup]="addPaymentMethodForm" (ngSubmit)="savePaymentMethod()">
-      <nb-tabset fullWidth (changeTab)="onPaymentMethodTypeChange($event.tabTitle.toLowerCase())">
-        <nb-tab tabTitle="Card" [active]="paymentMethodType === 'card'">
+      <p-tabView fullWidth (changeTab)="onPaymentMethodTypeChange($event.tabTitle.toLowerCase())" >
+        <p-tabPanel tabTitle="Card" [active]="paymentMethodType === 'card'">
           <div class="form-section">
             <p class="text-hint">
               Securely add your credit or debit card. We partner with Stripe for secure payment
               processing.
             </p>
-            <nb-form-field>
+            <div class="p-field">
               <label>Name on Card</label>
               <input
-                nbInput
-                fullWidth
+                pInputText
                 formControlName="nameOnCard"
                 placeholder="e.g., Jane Doe"
                 [status]="
@@ -29,32 +28,31 @@
               
                 Name on card is required.
               
-            </nb-form-field>
+            </div>
 
             <!-- Placeholder for Stripe Card Element -->
             <!-- In a real implementation, you would use a component like ngx-stripe's <ngx-stripe-card> here -->
             <div class="stripe-element-placeholder">
-              <nb-icon icon="credit-card-outline" pack="eva"></nb-icon>
+              <i class="pi pi-credit-card"></i>
               <span>Stripe Card Element will be here</span>
               <p class="text-hint small">
                 Card number, expiry, and CVC will be entered securely via Stripe.
               </p>
             </div>
-            <nb-alert status="info" class="mt-3">
+            <p-message status="info" class="mt-3" [severity]="status">
               For security reasons, direct card input is handled by our payment processor (Stripe).
               This form is a placeholder for that integration.
-            </nb-alert>
+            </p-message>
           </div>
-        </nb-tab>
+        </p-tabPanel>
 
-        <nb-tab tabTitle="Bank Account" [active]="paymentMethodType === 'bank_account'">
+        <p-tabPanel tabTitle="Bank Account" [active]="paymentMethodType === 'bank_account'">
           <div class="form-section">
             <p class="text-hint">Add your bank account for direct debits or payouts.</p>
-            <nb-form-field>
+            <div class="p-field">
               <label>Account Holder Name</label>
               <input
-                nbInput
-                fullWidth
+                pInputText
                 formControlName="accountHolderName"
                 placeholder="e.g., Jane Doe"
                 [status]="
@@ -68,13 +66,12 @@
               
                 Account holder name is required.
               
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label>Account Number</label>
               <input
-                nbInput
-                fullWidth
+                pInputText
                 formControlName="accountNumber"
                 placeholder="e.g., 1234567890"
                 [status]="
@@ -88,13 +85,12 @@
               
                 Account number is required.
               
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label>Routing Number / IBAN</label>
               <input
-                nbInput
-                fullWidth
+                pInputText
                 formControlName="routingNumber"
                 placeholder="e.g., 021000021 or GB29NWBK60161331926819"
                 [status]="
@@ -108,27 +104,27 @@
               
                 Routing number or IBAN is required.
               
-            </nb-form-field>
-            <nb-alert status="warning" class="mt-3">
+            </div>
+            <p-message status="warning" class="mt-3" [severity]="status">
               Bank account details are handled securely. In a live environment, these would be
               tokenized.
-            </nb-alert>
+            </p-message>
           </div>
-        </nb-tab>
-      </nb-tabset>
+        </p-tabPanel>
+      </p-tabView>
     </form>
-  </nb-card-body>
-  <nb-card-footer class="actions-footer">
-    <p-button></p-button>Cancel</button>
+  </ng-template>
+  <p-card-footer class="actions-footer" >
+    <p-button label="Cancel" ></p-button>
     <button
       nbButton
       status="primary"
       (click)="savePaymentMethod()"
       [disabled]="addPaymentMethodForm.invalid || isLoading"
     >
-      <nb-icon icon="save-outline" *ngIf="!isLoading"></nb-icon>
-      <nb-spinner *ngIf="isLoading" nbSpinnerSize="tiny" nbSpinnerStatus="control"></nb-spinner>
+      <i class="pi pi-save"></i>
+      <p-progressSpinner *ngIf="isLoading" nbSpinnerSize="tiny" nbSpinnerStatus="control" ></p-progressSpinner>
       {{ isLoading ? 'Saving...' : 'Save Payment Method' }}
     </button>
-  </nb-card-footer>
-</nb-card>
+  </ng-template>
+</p-card>

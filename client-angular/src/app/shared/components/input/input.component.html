@@ -13,7 +13,7 @@
     <!-- Left Icon -->
     @if (iconLeft) {
       <span class="input__icon input__icon--left">
-        <app-icon [name]="iconLeft" size="small"></app-icon>
+        <i [name]="iconLeft" size="small" class="pi pi-{iconName}"></i>
       </span>
     }
 
@@ -49,14 +49,14 @@
         [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
         tabindex="-1"
       >
-        <app-icon [name]="passwordVisible ? 'eye-off' : 'eye'" size="small"> </app-icon>
+        <i [name]="passwordVisible ? 'eye-off' : 'eye'" size="small" class="pi pi-{iconName}"> </i>
       </button>
     }
 
     <!-- Right Icon (if not password) -->
     @if (iconRight && type !== 'password') {
       <span class="input__icon input__icon--right">
-        <app-icon [name]="iconRight" size="small"></app-icon>
+        <i [name]="iconRight" size="small" class="pi pi-{iconName}"></i>
       </span>
     }
   </div>

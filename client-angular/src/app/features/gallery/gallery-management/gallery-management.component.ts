@@ -27,10 +27,15 @@ interface Media {
   templateUrl: './gallery-management.component.html',
   styleUrls: ['./gallery-management.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule, ReactiveFormsModule, FormsModule,
+    ButtonModule
+  ],
 })
 export class GalleryManagementComponent implements OnInit {
   @Input() adId: string;
+import { ButtonModule } from 'primeng/button';
+
   @Output() mediaUpdated = new EventEmitter<void>();
 
   media: Media[] = [];

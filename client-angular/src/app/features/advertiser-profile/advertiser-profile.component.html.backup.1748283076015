@@ -1,0 +1,171 @@
+<div class="advertiser-profile-page">
+  <p-card *ngIf="advertiser && !loading; else loadingOrError" class="profile-card" >
+    <p-card-header class="profile-header" >
+      <div class="profile-media">
+        <div class="profile-gallery">
+          <div class="main-image">
+            <img [src]="getMediaUrl(0)" [alt]="advertiser.username" class="profile-image" />
+          </div>
+          <div class="thumbnail-row" *ngIf="getMediaIndices().length > 0">
+            <div class="thumbnail" *ngFor="let i of getMediaIndices(); let idx = index">
+              <img [src]="getMediaUrl(i)" [alt]="'Thumbnail ' + (i + 1)" class="thumbnail-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <div class="profile-title-section">
+          <h1 class="profile-title">{{ advertiser.username }}</h1>
+          <div class="profile-actions" *ngIf="isOwner">
+            <p-button></p-button>
+              <nb-icon icon="edit-2-outline"></nb-icon>
+              Edit Profile
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-meta">
+          <div class="profile-meta-item" *ngIf="advertiser.email">
+            <nb-icon icon="email-outline"></nb-icon>
+            <span>{{ advertiser.email }}</span>
+          </div>
+          <div class="profile-meta-item" *ngIf="advertiser.profile?.firstName">
+            <nb-icon icon="person-outline"></nb-icon>
+            <span>{{ advertiser.profile.firstName }} {{ advertiser.profile?.lastName }}</span>
+          </div>
+        </div>
+
+        <div class="profile-description" *ngIf="!editMode && advertiser.profile?.bio">
+          <h3 class="section-title">About</h3>
+          <p>{{ advertiser.profile.bio }}</p>
+        </div>
+
+        <!-- Edit Form -->
+        <form
+          [formGroup]="profileForm"
+          (ngSubmit)="saveChanges()"
+          *ngIf="editMode"
+          class="edit-form"
+        >
+          <div class="p-field">
+            <label for="username">Username</label>
+            <input
+              nbInput
+              fullWidth
+              id="username"
+              formControlName="username"
+              [status]="
+                profileForm.get('username')?.invalid && profileForm.get('username')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <nb-hint
+              *ngIf="
+                profileForm.get('username')?.hasError('required') &&
+                profileForm.get('username')?.touched
+              "
+              >Username is required.</nb-hint
+            >
+            <nb-hint
+              *ngIf="
+                profileForm.get('username')?.hasError('minlength') &&
+                profileForm.get('username')?.touched
+              "
+              >Username must be at least 3 characters.</nb-hint
+            >
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input
+              nbInput
+              fullWidth
+              id="email"
+              formControlName="email"
+              type="email"
+              [status]="
+                profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <nb-hint
+              *ngIf="
+                profileForm.get('email')?.hasError('required') && profileForm.get('email')?.touched
+              "
+              >Email is required.</nb-hint
+            >
+            <nb-hint
+              *ngIf="
+                profileForm.get('email')?.hasError('email') && profileForm.get('email')?.touched
+              "
+              >Invalid email format.</nb-hint
+            >
+          </div>
+
+          <div formGroupName="profile">
+            <div class="p-field">
+              <label for="firstName">First Name</label>
+              <input nbInput fullWidth id="firstName" formControlName="firstName" />
+            </div>
+
+            <div class="p-field">
+              <label for="lastName">Last Name</label>
+              <input nbInput fullWidth id="lastName" formControlName="lastName" />
+            </div>
+
+            <div class="p-field">
+              <label for="bio">Bio</label>
+              <textarea nbInput fullWidth id="bio" formControlName="bio" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <p-button></p-button>
+              <nb-icon icon="close-outline"></nb-icon>
+              Cancel
+            </button>
+            <button
+              nbButton
+              status="primary"
+              type="submit"
+              [disabled]="profileForm.invalid || loading"
+            >
+              <nb-icon icon="save-outline"></nb-icon>
+              Save Changes
+            </button>
+            <button
+              nbButton
+              status="danger"
+              ghost
+              type="button"
+              (click)="deleteAd()"
+              *ngIf="isOwner"
+            >
+              <nb-icon icon="trash-2-outline"></nb-icon>
+              Delete Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <p-progressSpinner status="primary" size="large" ></p-progressSpinner>
+    <p class="loading-text">Loading profile...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !loading">
+    <nb-icon icon="alert-circle-outline" status="danger" class="error-icon"></nb-icon>
+    <p class="error-text">{{ error }}</p>
+    <p-button></p-button>
+      <nb-icon icon="refresh-outline"></nb-icon>
+      Try Again
+    </button>
+  </div>
+</div>

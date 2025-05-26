@@ -7,22 +7,41 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ContentModerationComponent } from './content-moderation.component';
-import { ModerationModalComponent } from './moderation-modal/moderation-modal.component';
 
+// PrimeNG imports
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TextareaModule } from 'primeng/textarea';
+
+/**
+ * Module for content moderation functionality
+ *
+ * Note: ContentModerationComponent is now a standalone component
+ * and is directly imported in the AdminModule
+ */
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgbModule,
-    ContentModerationComponent,
-    ModerationModalComponent,
+    // PrimeNG modules
+    ButtonModule,
+    DialogModule,
+    DropdownModule,
+    InputTextModule,
+    MessageModule,
+    PaginatorModule,
+    ProgressSpinnerModule,
+    TextareaModule,
   ],
-  exports: [ContentModerationComponent],
+  exports: [],
 })
 export class ContentModerationModule {}

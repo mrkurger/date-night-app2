@@ -1,0 +1,151 @@
+<div class="reviews-list-container">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading reviews...</span>
+    </div>
+    <p>Loading reviews...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && reviews.length === 0">
+    <div class="empty-icon">
+      <i class="pi pi-message-square"></i>
+    </div>
+    <h3>No Reviews Yet</h3>
+    <p>Be the first to share your experience!</p>
+  </div>
+
+  <!-- Reviews List -->
+  <div class="reviews-list" *ngIf="!loading && reviews.length > 0">
+    <div class="review-item" *ngFor="let review of reviews">
+      <!-- Review Header -->
+      <div class="review-header">
+        <div class="user-info">
+          <div class="avatar" *ngIf="!review.anonymous">
+            <img
+              [src]="review.userAvatar || '/assets/img/default-avatar.png'"
+              [alt]="review.userName"
+              loading="lazy"
+            />
+          </div>
+          <div class="avatar anonymous" *ngIf="review.anonymous">
+            <i class="pi pi-user"></i>
+          </div>
+          <div class="user-details">
+            <h4 class="user-name">{{ review.anonymous ? 'Anonymous User' : review.userName }}</h4>
+            <div class="review-date">{{ formatDate(review.createdAt) }}</div>
+          </div>
+        </div>
+
+        <!-- Review Actions -->
+        <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
+          <p-button label="" icon="pi pi-more-vertical"></p-button>
+          <nb-menu #reviewMenu="matMenu">
+            <button nb-menu-item (click)="onEditReview(review)" *ngIf="isReviewAuthor(review)">
+              <i class="pi pi-pencil"></i>
+              <span>Edit Review</span>
+            </button>
+            <button nb-menu-item (click)="onDeleteReview(review._id)">
+              <i class="pi pi-trash"></i>
+              <span>Delete Review</span>
+            </button>
+          </nb-menu>
+        </div>
+      </div>
+
+      <!-- Review Content -->
+      <div class="review-content">
+        <div class="rating">
+          <div class="stars">
+            <nb-icon
+              *ngFor="let star of getStars(review.rating)"
+              [nbTooltip]="star ? 'Rated' : 'Not rated'"
+              [icon]="star ? 'star' : 'star-outline'"
+            ></nb-icon>
+          </div>
+          <span class="rating-value">{{ review.rating }}/5</span>
+        </div>
+
+        <h3 class="review-title">{{ review.title }}</h3>
+        <p class="review-text">{{ review.content }}</p>
+
+        <!-- Ad Info (if showing) -->
+        <div class="ad-info" *ngIf="showAdInfo">
+          <a [routerLink]="['/ad-details', review.adId]" class="ad-link">
+            View Ad <i class="pi pi-external-link"></i>
+          </a>
+        </div>
+
+        <!-- Review Feedback -->
+        <div class="review-feedback">
+          <button
+            class="feedback-btn"
+            [class.active]="review.userReaction === 'helpful'"
+            (click)="onReactionClick(review._id, 'helpful')"
+          >
+            <i class="pi pi-thumbs-up"></i>
+            <span>Helpful ({{ review.helpful }})</span>
+          </button>
+          <button
+            class="feedback-btn"
+            [class.active]="review.userReaction === 'unhelpful'"
+            (click)="onReactionClick(review._id, 'unhelpful')"
+          >
+            <i class="pi pi-thumbs-down"></i>
+            <span>Not Helpful ({{ review.unhelpful }})</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container" *ngIf="showPagination && totalPages > 1 && !loading">
+    <nav aria-label="Reviews pagination">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button
+            class="page-link"
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+            aria-label="Previous page"
+          >
+            <i class="pi pi-arrow-left"></i>
+          </button>
+        </li>
+
+        <li
+          class="page-item"
+          *ngFor="let page of pageNumbers"
+          [class.active]="page === currentPage"
+          [class.disabled]="page === -1"
+        >
+          <ng-container *ngIf="page !== -1; else ellipsis">
+            <button
+              class="page-link"
+              (click)="changePage(page)"
+              [attr.aria-current]="page === currentPage ? 'page' : null"
+            >
+              {{ page }}
+            </button>
+          </ng-container>
+          <ng-template #ellipsis>
+            <span class="page-link ellipsis">...</span>
+          </ng-template>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button
+            class="page-link"
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+            aria-label="Next page"
+          >
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

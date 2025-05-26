@@ -11,31 +11,44 @@ import { NebularModule } from '../../../shared/nebular.module';
 // ===================================================
 
 import { CommonModule } from '@angular/common';
-
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+
+// PrimeNG imports
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
 
 import { TelemetryService } from '../../../../core/services/telemetry.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-// Custom pagination event interface
-interface PaginationChangeEvent {
-  page: number;
-  pageSize: number;
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputTextModule } from 'primeng/inputtext';
+
+// PrimeNG table event interface
+interface TableLazyLoadEvent {
+  first: number;
+  rows: number;
+  sortField?: string;
+  sortOrder?: number;
 }
-import { AppSortEvent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 @Component({
   selector: 'app-performance-dashboard',
   imports: [
     CommonModule,
     NebularModule,
-    AppSortComponent,
-    AppSortHeaderComponent,
+    TableModule,
+    CalendarModule,
+    ButtonModule,
     ReactiveFormsModule,
-    NgxChartsModule,
+    NgxChartsModule,,
+    CardModule,
+    DropdownModule,
+    ProgressSpinnerModule,
+    InputTextModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './performance-dashboard.component.html',
@@ -73,6 +86,36 @@ export class PerformanceDashboardComponent implements OnInit {
   // State
   isLoading = false;
 
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
+
   constructor(
     private telemetryService: TelemetryService,
     private fb: FormBuilder,
@@ -81,8 +124,7 @@ export class PerformanceDashboardComponent implements OnInit {
       url: [''],
       method: [''],
       minDuration: [''],
-      startDate: [null],
-      endDate: [null],
+      dateRange: [null], // PrimeNG calendar range selection
     });
   }
 
@@ -94,16 +136,13 @@ export class PerformanceDashboardComponent implements OnInit {
     this.isLoading = true;
 
     // Get filter values
+    const dateRange = this.filterForm.get('dateRange')?.value;
     const filters = {
       url: this.filterForm.get('url')?.value,
       method: this.filterForm.get('method')?.value,
       minDuration: this.filterForm.get('minDuration')?.value,
-      startDate: this.filterForm.get('startDate')?.value
-        ? this.formatDate(this.filterForm.get('startDate')?.value)
-        : undefined,
-      endDate: this.filterForm.get('endDate')?.value
-        ? this.formatDate(this.filterForm.get('endDate')?.value)
-        : undefined,
+      startDate: dateRange && dateRange[0] ? this.formatDate(dateRange[0]) : undefined,
+      endDate: dateRange && dateRange[1] ? this.formatDate(dateRange[1]) : undefined,
       page: this.pageIndex.toString(), // Convert page to string
       pageSize: this.pageSize.toString(), // Convert pageSize to string
     };
@@ -222,20 +261,17 @@ export class PerformanceDashboardComponent implements OnInit {
   }
 
   /**
-   * Handle page change event from paginator
+   * Handle lazy load event from PrimeNG table (pagination, sorting, filtering)
    */
-  onPageChange(event: PaginationChangeEvent): void {
-    this.pageIndex = event.page - 1; // Convert 1-based to 0-based index
-    this.pageSize = event.pageSize;
-    this.loadDashboardData();
-  }
+  onPageChange(event: TableLazyLoadEvent): void {
+    this.pageIndex = Math.floor(event.first / event.rows);
+    this.pageSize = event.rows;
 
-  /**
-   * Handle sort event from sort component
-   */
-  sortData(sort: AppSortEvent): void {
-    // Implement sorting logic if needed, then reload data
-    // Example: this.sortField = sort.active; this.sortDirection = sort.direction;
+    if (event.sortField) {
+      this.sortColumn = event.sortField;
+      this.sortDirection = event.sortOrder === 1 ? 'asc' : 'desc';
+    }
+
     this.loadDashboardData();
   }
 

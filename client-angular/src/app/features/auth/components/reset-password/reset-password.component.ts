@@ -11,6 +11,11 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { NebularModule } from '../../../../shared/nebular.module';
+import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -30,7 +35,13 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, ReactiveFormsModule, RouterLink]
+    imports: [
+    NebularModule, ReactiveFormsModule, RouterLink,
+    CardModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule
+  ]
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;

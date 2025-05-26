@@ -7,6 +7,7 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -15,7 +16,6 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -23,40 +23,47 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-// PrimeNG imports
-// Environment
-import { environment } from '../../../../environments/environment';
-import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { ChatService } from '../../../core/services/chat.service';
 
 // Types
-interface ChatSettings {
+interface IChatSettings {
   messageExpiryEnabled: boolean;
   messageExpiryTime: number;
   encryptionEnabled: boolean;
 }
 
+/**
+ * Chat Settings Component
+ *
+ * Provides a configurable UI for chat room settings including:
+ * - Message auto-deletion with configurable timeframes
+ * - End-to-end encryption toggle
+ *
+ * @remarks
+ * This component integrates with ChatService to persist settings
+ */
 @Component({
   selector: 'app-chat-settings',
-  imports: [RippleModule, ProgressSpinnerModule, MessageModule, DropdownModule, InputSwitchModule, ButtonModule, CardModule, 
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+  imports: [
     CardModule,
     ButtonModule,
-    InputSwitchModule,
+    CommonModule,
     DropdownModule,
+    FormsModule,
+    InputSwitchModule,
     MessageModule,
     ProgressSpinnerModule,
+    ReactiveFormsModule,
     RippleModule,
   ],
   template: `
@@ -189,13 +196,13 @@ interface ChatSettings {
 })
 export class ChatSettingsComponent implements OnInit {
   @Input() roomId!: string;
-  @Input() settings: ChatSettings = {
+  @Input() settings: IChatSettings = {
     messageExpiryEnabled: false,
     messageExpiryTime: 24,
     encryptionEnabled: true,
   };
 
-  @Output() settingsChanged = new EventEmitter<ChatSettings>();
+  @Output() settingsChanged = new EventEmitter<IChatSettings>();
 
   settingsForm!: FormGroup;
   isSaving = false;
@@ -212,10 +219,63 @@ export class ChatSettingsComponent implements OnInit {
     { value: 168, label: '1 week' },
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  /**
+   * Component constructor - initializes form builder and chat service
+   */
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
 
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly chatService: ChatService,
+  ) {}
+
+  /**
+   * Angular lifecycle hook - component initialization
+   */
   ngOnInit(): void {
     this.initForm();
+  }
+
+  /**
+   * Reset the form to the original settings
+   */
+  resetForm(): void {
+    this.settingsForm.patchValue({
+      messageExpiryEnabled: this.settings.messageExpiryEnabled,
+      messageExpiryTime: this.settings.messageExpiryTime,
+      encryptionEnabled: this.settings.encryptionEnabled,
+    });
+
+    this.saveError = false;
+    this.saveSuccess = false;
   }
 
   /**
@@ -232,18 +292,26 @@ export class ChatSettingsComponent implements OnInit {
     });
 
     // Disable messageExpiryTime when messageExpiryEnabled is false
-    this.settingsForm.get('messageExpiryEnabled')?.valueChanges.subscribe((enabled) => {
-      const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
-      if (enabled) {
-        expiryTimeControl?.enable();
-      } else {
-        expiryTimeControl?.disable();
-      }
-    });
+    const messageExpiryEnabledControl = this.settingsForm.get('messageExpiryEnabled');
+    if (messageExpiryEnabledControl) {
+      messageExpiryEnabledControl.valueChanges.subscribe((enabled: boolean) => {
+        const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
+        if (expiryTimeControl) {
+          if (enabled === true) {
+            expiryTimeControl.enable();
+          } else {
+            expiryTimeControl.disable();
+          }
+        }
+      });
+    }
 
     // Initialize disabled state
-    if (!this.settings.messageExpiryEnabled) {
-      this.settingsForm.get('messageExpiryTime')?.disable();
+    if (this.settings.messageExpiryEnabled !== true) {
+      const expiryTimeControl = this.settingsForm.get('messageExpiryTime');
+      if (expiryTimeControl) {
+        expiryTimeControl.disable();
+      }
     }
   }
 
@@ -261,45 +329,60 @@ export class ChatSettingsComponent implements OnInit {
 
     const settings = this.settingsForm.value;
 
-    this.http
-      .put<{ success: boolean }>(
-        `${environment.apiUrl}/chat/rooms/${this.roomId}/settings`,
-        settings,
-      )
-      .pipe(
-        catchError((error) => {
-          console.error('Error saving chat settings:', error);
-          return of({ success: false });
-        }),
-      )
-      .subscribe((response) => {
-        this.isSaving = false;
+    // Configure message auto-deletion using ChatService
+    if (settings.messageExpiryEnabled === true) {
+      const ttlInMilliseconds = this.chatService.convertHoursToMilliseconds(
+        settings.messageExpiryTime,
+      );
 
-        if (response.success) {
-          this.saveSuccess = true;
-          this.settingsChanged.emit(settings);
+      this.chatService
+        .configureMessageAutoDeletion(this.roomId, true, ttlInMilliseconds)
+        .pipe(
+          catchError((error) => {
+            console.error('Error configuring message auto-deletion:', error);
+            return of(false);
+          }),
+        )
+        .subscribe((success) => {
+          this.isSaving = false;
 
-          // Hide success message after 3 seconds
-          setTimeout(() => {
-            this.saveSuccess = false;
-          }, 3000);
-        } else {
-          this.saveError = true;
-        }
-      });
-  }
+          if (success) {
+            this.saveSuccess = true;
+            this.settingsChanged.emit(settings);
 
-  /**
-   * Reset the form to the original settings
-   */
-  resetForm(): void {
-    this.settingsForm.patchValue({
-      messageExpiryEnabled: this.settings.messageExpiryEnabled,
-      messageExpiryTime: this.settings.messageExpiryTime,
-      encryptionEnabled: this.settings.encryptionEnabled,
-    });
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+              this.saveSuccess = false;
+            }, 3000);
+          } else {
+            this.saveError = true;
+          }
+        });
+    } else {
+      // Disable auto-deletion
+      this.chatService
+        .configureMessageAutoDeletion(this.roomId, false, 0)
+        .pipe(
+          catchError((error) => {
+            console.error('Error disabling message auto-deletion:', error);
+            return of(false);
+          }),
+        )
+        .subscribe((success) => {
+          this.isSaving = false;
 
-    this.saveError = false;
-    this.saveSuccess = false;
+          if (success) {
+            this.saveSuccess = true;
+            this.settingsChanged.emit(settings);
+
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+              this.saveSuccess = false;
+            }, 3000);
+          } else {
+            this.saveError = true;
+          }
+        });
+    }
   }
 }

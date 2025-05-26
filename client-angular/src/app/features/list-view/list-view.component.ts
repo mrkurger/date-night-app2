@@ -60,11 +60,37 @@ interface SavedFilter {
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule],
+  imports: [
+    CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule,
+    CardModule,
+    ButtonModule,
+    DropdownModule,
+    CheckboxModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule,
+    SidebarModule,
+    MenuModule,
+    BadgeModule,
+    TagModule
+  ],
 })
 export class ListViewComponent implements OnInit, AfterViewInit {
   // View template references
   @ViewChild('saveFilterDialog') saveFilterDialog!: TemplateRef<any>;
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+
+
 
   // Data
   ads: Ad[] = [];
@@ -115,6 +141,36 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   // Saved filters
   savedFilters: SavedFilter[] = [];
   newFilterName = '';
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
 
   constructor(
     private adService: AdService,

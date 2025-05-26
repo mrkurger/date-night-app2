@@ -1,29 +1,29 @@
 <p-card>
-  <nb-card-header>
-    <nb-tabset fullWidth (changeTab)="changeView($event.tabTitle.toLowerCase())">
-      <nb-tab tabTitle="Discover" [active]="activeView === 'netflix'">
+  <p-card-header >
+    <p-tabView fullWidth (changeTab)="changeView($event.tabTitle.toLowerCase())" >
+      <p-tabPanel tabTitle="Discover" [active]="activeView === 'netflix'">
         <ng-template nbTabIcon>
-          <nb-icon icon="grid-outline"></nb-icon>
+          <i class="pi pi-grid"></i>
         </ng-template>
-      </nb-tab>
-      <nb-tab tabTitle="Swipe" [active]="activeView === 'tinder'">
+      </p-tabPanel>
+      <p-tabPanel tabTitle="Swipe" [active]="activeView === 'tinder'">
         <ng-template nbTabIcon>
-          <nb-icon icon="heart-outline"></nb-icon>
+          <i class="pi pi-heart"></i>
         </ng-template>
-      </nb-tab>
-      <nb-tab tabTitle="List" [active]="activeView === 'list'">
+      </p-tabPanel>
+      <p-tabPanel tabTitle="List" [active]="activeView === 'list'">
         <ng-template nbTabIcon>
-          <nb-icon icon="list-outline"></nb-icon>
+          <i class="pi pi-list"></i>
         </ng-template>
-      </nb-tab>
-    </nb-tabset>
-  </nb-card-header>
-  <nb-card-body>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-template>
+  <p-card-body >
     <!-- View Content -->
     <div class="view-content">
       <app-netflix-view *ngIf="activeView === 'netflix'"></app-netflix-view>
       <app-tinder *ngIf="activeView === 'tinder'"></app-tinder>
       <app-list-view *ngIf="activeView === 'list'"></app-list-view>
     </div>
-  </nb-card-body>
-</nb-card>
+  </ng-template>
+</p-card>

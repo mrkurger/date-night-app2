@@ -1,0 +1,7 @@
+<div class="notification-container" [@notificationAnimation]>
+  <div class="notification" [ngClass]="statusClass">
+    <nb-icon [icon]="icon" class="notification-icon"></nb-icon>
+    <span class="notification-message">{{ message }}</span>
+    <p-button label="" icon="pi pi-times"></p-button>
+  </div>
+</div>

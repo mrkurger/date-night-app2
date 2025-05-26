@@ -14,10 +14,10 @@
   <main id="main-content" class="container">
     <!-- Introduction -->
     <p-card>
-      <nb-card-header>
+      <p-card-header >
         <h2 [class]="bem.element('section-title')">Introduction</h2>
-      </nb-card-header>
-      <nb-card-body>
+      </ng-template>
+      <p-card-body >
         <p>
           Accessibility is about making our application usable by everyone, including people with
           disabilities. This includes users who navigate with keyboards, screen readers, or other
@@ -27,19 +27,19 @@
           The Web Content Accessibility Guidelines (WCAG) provide a set of recommendations for
           making web content more accessible. DateNight.io aims to meet WCAG 2.1 AA standards.
         </p>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
 
     <!-- Keyboard Navigation -->
     <p-card>
-      <nb-card-header>
+      <p-card-header >
         <h2 [class]="bem.element('section-title')">Keyboard Navigation</h2>
-      </nb-card-header>
-      <nb-card-body>
-        <nb-accordion>
-          <nb-accordion-item expanded>
-            <nb-accordion-item-header> Focusable Elements </nb-accordion-item-header>
-            <nb-accordion-item-body>
+      </ng-template>
+      <p-card-body >
+        <p-accordion>
+          <p-accordionTab expanded>
+            <ng-template pTemplate="header"> Focusable Elements </ng-template>
+            <ng-template pTemplate="content">
               <p>
                 Interactive elements should be keyboard accessible. Users should be able to navigate
                 through all interactive elements using the Tab key.
@@ -48,70 +48,70 @@
               <div class="row">
                 <div class="col-md-4" *ngFor="let element of focusableElements">
                   <p-card>
-                    <nb-card-header>
+                    <p-card-header >
                       <h4>{{ element.name }}</h4>
-                    </nb-card-header>
-                    <nb-card-body>
+                    </ng-template>
+                    <p-card-body >
                       <p>{{ element.description }}</p>
                       <pre [class]="bem.element('code')">{{ element.code }}</pre>
-                    </nb-card-body>
-                  </nb-card>
+                    </ng-template>
+                  </p-card>
                 </div>
               </div>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
+            </ng-template>
+          </p-accordionTab>
 
-          <nb-accordion-item>
-            <nb-accordion-item-header> Custom Keyboard Handling </nb-accordion-item-header>
-            <nb-accordion-item-body>
+          <p-accordionTab>
+            <ng-template pTemplate="header"> Custom Keyboard Handling </ng-template>
+            <ng-template pTemplate="content">
               <p>
                 Custom components should implement keyboard navigation patterns that match their
                 visual presentation. For example, a list should support arrow key navigation.
               </p>
 
               <p>Use arrow keys to navigate between items, and Enter or Space to activate:</p>
-              <nb-list>
-                <nb-list-item
+              <ul class="list">
+                <li class="list-item"
                   *ngFor="let i of [1, 2, 3, 4, 5]"
                   tabindex="0"
                   (keydown)="handleKeyDown($event)"
                   (click)="handleItemClick(i)"
                 >
-                  <nb-icon icon="arrow-right-outline"></nb-icon> Item {{ i }}
-                </nb-list-item>
-              </nb-list>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-        </nb-accordion>
-      </nb-card-body>
-    </nb-card>
+                  <i class="pi pi-arrow-right"></i> Item {{ i }}
+                </li>
+              </ul>
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </ng-template>
+    </p-card>
 
     <!-- ARIA Attributes -->
     <p-card>
-      <nb-card-header>
+      <p-card-header >
         <h2 [class]="bem.element('section-title')">ARIA Attributes</h2>
-      </nb-card-header>
-      <nb-card-body>
+      </ng-template>
+      <p-card-body >
         <p>
           ARIA (Accessible Rich Internet Applications) attributes provide additional information to
           assistive technologies about the roles, states, and properties of elements.
         </p>
 
-        <nb-tabset fullWidth>
-          <nb-tab *ngFor="let example of ariaExamples" [tabTitle]="example.name">
+        <p-tabView fullWidth >
+          <p-tabPanel *ngFor="let example of ariaExamples" [tabTitle]="example.name">
             <div class="p-4">
               <h4>{{ example.name }}</h4>
               <p>{{ example.description }}</p>
-              <nb-card accent="info">
-                <nb-card-body>
+              <p-card accent="info" >
+                <p-card-body >
                   <pre [class]="bem.element('code')">{{ example.code }}</pre>
-                </nb-card-body>
-              </nb-card>
+                </ng-template>
+              </p-card>
             </div>
-          </nb-tab>
-        </nb-tabset>
-      </nb-card-body>
-    </nb-card>
+          </p-tabPanel>
+        </p-tabView>
+      </ng-template>
+    </p-card>
 
     <!-- Focus Management -->
     <section [class]="bem.element('section')">
@@ -258,38 +258,38 @@
 
     <!-- Resources -->
     <p-card>
-      <nb-card-header>
+      <p-card-header >
         <h2 [class]="bem.element('section-title')">Resources</h2>
-      </nb-card-header>
-      <nb-card-body>
-        <nb-list>
-          <nb-list-item>
+      </ng-template>
+      <p-card-body >
+        <ul class="list">
+          <li class="list-item">
             <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">
-              <nb-icon icon="external-link-outline"></nb-icon> WCAG 2.1 Quick Reference
+              <i class="pi pi-external-link"></i> WCAG 2.1 Quick Reference
             </a>
-          </nb-list-item>
-          <nb-list-item>
+          </li>
+          <li class="list-item">
             <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">
-              <nb-icon icon="external-link-outline"></nb-icon> ARIA Authoring Practices Guide
+              <i class="pi pi-external-link"></i> ARIA Authoring Practices Guide
             </a>
-          </nb-list-item>
-          <nb-list-item>
+          </li>
+          <li class="list-item">
             <a href="https://webaim.org/resources/contrastchecker/" target="_blank">
-              <nb-icon icon="color-palette-outline"></nb-icon> WebAIM Contrast Checker
+              <i class="pi pi-color-palette"></i> WebAIM Contrast Checker
             </a>
-          </nb-list-item>
-          <nb-list-item>
+          </li>
+          <li class="list-item">
             <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility" target="_blank">
-              <nb-icon icon="book-open-outline"></nb-icon> MDN Web Accessibility
+              <i class="pi pi-book-open"></i> MDN Web Accessibility
             </a>
-          </nb-list-item>
-          <nb-list-item>
+          </li>
+          <li class="list-item">
             <a href="https://www.deque.com/axe/" target="_blank">
-              <nb-icon icon="checkmark-circle-outline"></nb-icon> axe Accessibility Testing Tools
+              <i class="pi pi-checkmark-circle"></i> axe Accessibility Testing Tools
             </a>
-          </nb-list-item>
-        </nb-list>
-      </nb-card-body>
-    </nb-card>
+          </li>
+        </ul>
+      </ng-template>
+    </p-card>
   </main>
 </div>

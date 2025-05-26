@@ -16,10 +16,10 @@
 
       <div class="tooltip-actions">
         <button *ngIf="currentStepIndex > 0" nbButton class="btn-previous" (click)="previousStep()">
-          <nb-icon icon="arrow_back"></nb-icon> Previous
+          <i class="pi pi-arrow_back"></i> Previous
         </button>
 
-        <p-button></p-button>Skip Tour</button>
+        <p-button label="Skip Tour" ></p-button>
 
         <p-button></p-button>
           {{ currentStepIndex < steps.length - 1 ? 'Next' : 'Finish' }}

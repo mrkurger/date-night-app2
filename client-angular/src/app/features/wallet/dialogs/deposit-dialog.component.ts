@@ -24,6 +24,14 @@ import {
   NbIconModule,
   NbAlertModule,
 } from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 interface DepositRequest {
   amount: number;
@@ -46,7 +54,8 @@ interface DepositDialogConfig {
   styleUrls: ['./deposit-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule, CommonModule,
     ReactiveFormsModule,
     NbDialogModule,
     NbCardModule,
@@ -57,13 +66,48 @@ interface DepositDialogConfig {
     NbRadioModule,
     NbSpinnerModule,
     NbIconModule,
-    NbAlertModule,
+    NbAlertModule,,
+    DropdownModule,
+    RadioButtonModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DepositDialogComponent implements OnInit {
   depositForm: FormGroup;
   isSubmitting = false;
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
 
   constructor(
     protected ref: NbDialogRef<DepositDialogComponent>,

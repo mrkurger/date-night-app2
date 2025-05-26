@@ -15,16 +15,16 @@
   <!-- Page Size Selector -->
   <div class="nb-paginator__size-selector" *ngIf="showPageSize">
     <label for="pageSize">Items per page:</label>
-    <nb-select
+    <p-dropdown
       id="pageSize"
       [selected]="pageSize"
       (selectedChange)="onPageSizeChange($event)"
       [size]="size"
-    >
-      <nb-option *ngFor="let size of pageSizes" [value]="size">
+     [options]="options" optionLabel="label" optionValue="value">
+      <!-- TODO: Convert to options array: 
         {{ size }}
-      </nb-option>
-    </nb-select>
+       -->
+    </p-dropdown>
   </div>
 
   <!-- Pagination Controls -->
@@ -38,7 +38,7 @@
         (click)="goToPage(currentPage - 1)"
         aria-label="Previous page"
       >
-        <nb-icon icon="chevron-left-outline"></nb-icon>
+        <i class="pi pi-chevron-left"></i>
       </button>
       <span class="nb-paginator__current">{{ currentPage }} / {{ totalPages }}</span>
       <button
@@ -48,7 +48,7 @@
         (click)="goToPage(currentPage + 1)"
         aria-label="Next page"
       >
-        <nb-icon icon="chevron-right-outline"></nb-icon>
+        <i class="pi pi-chevron-right"></i>
       </button>
     </div>
 
@@ -64,7 +64,7 @@
         aria-label="First page"
         [size]="size"
       >
-        <nb-icon icon="chevrons-left-outline"></nb-icon>
+        <i class="pi pi-chevrons-left"></i>
       </button>
 
       <!-- Previous Page Button -->
@@ -77,7 +77,7 @@
         aria-label="Previous page"
         [size]="size"
       >
-        <nb-icon icon="chevron-left-outline"></nb-icon>
+        <i class="pi pi-chevron-left"></i>
       </button>
 
       <!-- Page Numbers -->
@@ -102,7 +102,7 @@
         aria-label="Next page"
         [size]="size"
       >
-        <nb-icon icon="chevron-right-outline"></nb-icon>
+        <i class="pi pi-chevron-right"></i>
       </button>
 
       <!-- Last Page Button -->
@@ -115,7 +115,7 @@
         aria-label="Last page"
         [size]="size"
       >
-        <nb-icon icon="chevrons-right-outline"></nb-icon>
+        <i class="pi pi-chevrons-right"></i>
       </button>
     </div>
   </div>

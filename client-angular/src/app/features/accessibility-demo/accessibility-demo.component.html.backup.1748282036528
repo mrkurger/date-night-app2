@@ -1,0 +1,295 @@
+<div [class]="bem.block()">
+  <!-- Skip link for keyboard users -->
+  <a [class]="bem.element('skip-link')" href="#main-content">Skip to main content</a>
+
+  <header [class]="bem.element('header')">
+    <div class="container">
+      <h1 [class]="bem.element('title')">Accessibility Best Practices</h1>
+      <p [class]="bem.element('description')">
+        This page demonstrates accessibility best practices for the DateNight.io application.
+      </p>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <!-- Introduction -->
+    <p-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Introduction</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <p>
+          Accessibility is about making our application usable by everyone, including people with
+          disabilities. This includes users who navigate with keyboards, screen readers, or other
+          assistive technologies.
+        </p>
+        <p>
+          The Web Content Accessibility Guidelines (WCAG) provide a set of recommendations for
+          making web content more accessible. DateNight.io aims to meet WCAG 2.1 AA standards.
+        </p>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Keyboard Navigation -->
+    <p-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Keyboard Navigation</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-accordion>
+          <nb-accordion-item expanded>
+            <nb-accordion-item-header> Focusable Elements </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <p>
+                Interactive elements should be keyboard accessible. Users should be able to navigate
+                through all interactive elements using the Tab key.
+              </p>
+
+              <div class="row">
+                <div class="col-md-4" *ngFor="let element of focusableElements">
+                  <p-card>
+                    <nb-card-header>
+                      <h4>{{ element.name }}</h4>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <p>{{ element.description }}</p>
+                      <pre [class]="bem.element('code')">{{ element.code }}</pre>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+          <nb-accordion-item>
+            <nb-accordion-item-header> Custom Keyboard Handling </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <p>
+                Custom components should implement keyboard navigation patterns that match their
+                visual presentation. For example, a list should support arrow key navigation.
+              </p>
+
+              <p>Use arrow keys to navigate between items, and Enter or Space to activate:</p>
+              <nb-list>
+                <nb-list-item
+                  *ngFor="let i of [1, 2, 3, 4, 5]"
+                  tabindex="0"
+                  (keydown)="handleKeyDown($event)"
+                  (click)="handleItemClick(i)"
+                >
+                  <nb-icon icon="arrow-right-outline"></nb-icon> Item {{ i }}
+                </nb-list-item>
+              </nb-list>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- ARIA Attributes -->
+    <p-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">ARIA Attributes</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <p>
+          ARIA (Accessible Rich Internet Applications) attributes provide additional information to
+          assistive technologies about the roles, states, and properties of elements.
+        </p>
+
+        <nb-tabset fullWidth>
+          <nb-tab *ngFor="let example of ariaExamples" [tabTitle]="example.name">
+            <div class="p-4">
+              <h4>{{ example.name }}</h4>
+              <p>{{ example.description }}</p>
+              <nb-card accent="info">
+                <nb-card-body>
+                  <pre [class]="bem.element('code')">{{ example.code }}</pre>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Focus Management -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Focus Management</h2>
+      <p>
+        Proper focus management ensures that keyboard users can navigate through the application
+        efficiently and predictably.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('focus-grid')">
+          <div *ngFor="let example of focusManagementExamples" [class]="bem.element('focus-item')">
+            <h4 [class]="bem.element('focus-name')">{{ example.name }}</h4>
+            <p [class]="bem.element('focus-description')">{{ example.description }}</p>
+            <pre [class]="bem.element('code')">{{ example.code }}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color Contrast -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Color Contrast</h2>
+      <p>
+        Sufficient color contrast ensures that text is readable for users with low vision or color
+        blindness. WCAG 2.1 AA requires a contrast ratio of at least 4.5:1 for normal text and 3:1
+        for large text.
+      </p>
+
+      <div [class]="bem.element('example')">
+        <div [class]="bem.element('contrast-grid')">
+          <div *ngFor="let example of colorContrastExamples" [class]="bem.element('contrast-item')">
+            <h4 [class]="bem.element('contrast-name')">{{ example.name }}</h4>
+            <p [class]="bem.element('contrast-description')">{{ example.description }}</p>
+            <div
+              [class]="bem.element('contrast-sample', [example.passes ? 'pass' : 'fail'])"
+              [style.color]="example.foreground"
+              [style.background-color]="example.background"
+            >
+              Sample Text
+            </div>
+            <p [class]="bem.element('contrast-ratio')">
+              Contrast ratio: {{ example.ratio }}
+              <span [class]="bem.element('contrast-status', [example.passes ? 'pass' : 'fail'])">
+                {{ example.passes ? 'Passes' : 'Fails' }} WCAG AA
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen Reader Support -->
+    <section [class]="bem.element('section')">
+      <h2 [class]="bem.element('section-title')">Screen Reader Support</h2>
+      <p>
+        Screen readers announce content to users who cannot see the screen. Proper HTML semantics
+        and ARIA attributes ensure that screen readers can interpret the content correctly.
+      </p>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Semantic HTML</h3>
+        <p>Use semantic HTML elements to provide meaning and structure to your content.</p>
+
+        <div [class]="bem.element('example')">
+          <div [class]="bem.element('semantic-comparison')">
+            <div [class]="bem.element('semantic-good')">
+              <h4 [class]="bem.element('semantic-title')">Good Example</h4>
+              <pre [class]="bem.element('code')">
+<header>
+  <h1>Page Title</h1>
+</header>
+<nav>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+</nav>
+<main>
+  <article>
+    <h2>Article Title</h2>
+    <p>Article content...</p>
+  </article>
+</main>
+<footer>
+  <p>Footer content...</p>
+</footer>
+              </pre>
+            </div>
+
+            <div [class]="bem.element('semantic-bad')">
+              <h4 [class]="bem.element('semantic-title')">Bad Example</h4>
+              <pre [class]="bem.element('code')">
+<div class="header">
+  <div class="title">Page Title</div>
+</div>
+<div class="nav">
+  <div class="nav-items">
+    <div class="nav-item"><a href="#">Home</a></div>
+    <div class="nav-item"><a href="#">About</a></div>
+  </div>
+</div>
+<div class="content">
+  <div class="article">
+    <div class="article-title">Article Title</div>
+    <div class="article-content">Article content...</div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-content">Footer content...</div>
+</div>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div [class]="bem.element('subsection')">
+        <h3 [class]="bem.element('subsection-title')">Alternative Text for Images</h3>
+        <p>
+          Provide alternative text for images to ensure they are accessible to screen reader users.
+        </p>
+
+        <div [class]="bem.element('example')">
+          <div [class]="bem.element('alt-text-comparison')">
+            <div [class]="bem.element('alt-text-good')">
+              <h4 [class]="bem.element('alt-text-title')">Good Example</h4>
+              <pre [class]="bem.element('code')">
+<img src="profile.jpg" alt="John Smith smiling in a business suit">
+              </pre>
+            </div>
+
+            <div [class]="bem.element('alt-text-bad')">
+              <h4 [class]="bem.element('alt-text-title')">Bad Example</h4>
+              <pre [class]="bem.element('code')">
+<img src="profile.jpg"> <!-- Missing alt attribute -->
+<img src="profile.jpg" alt="image"> <!-- Uninformative alt text -->
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <p-card>
+      <nb-card-header>
+        <h2 [class]="bem.element('section-title')">Resources</h2>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item>
+            <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">
+              <nb-icon icon="external-link-outline"></nb-icon> WCAG 2.1 Quick Reference
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">
+              <nb-icon icon="external-link-outline"></nb-icon> ARIA Authoring Practices Guide
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://webaim.org/resources/contrastchecker/" target="_blank">
+              <nb-icon icon="color-palette-outline"></nb-icon> WebAIM Contrast Checker
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility" target="_blank">
+              <nb-icon icon="book-open-outline"></nb-icon> MDN Web Accessibility
+            </a>
+          </nb-list-item>
+          <nb-list-item>
+            <a href="https://www.deque.com/axe/" target="_blank">
+              <nb-icon icon="checkmark-circle-outline"></nb-icon> axe Accessibility Testing Tools
+            </a>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </main>
+</div>

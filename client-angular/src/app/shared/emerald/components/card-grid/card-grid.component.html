@@ -9,12 +9,12 @@
     [ngClass]="{ 'nb-card-grid__item--animated': animated }"
   >
     <p-card>
-      <nb-card-body>
-        <nb-skeleton height="200px"></nb-skeleton>
-        <nb-skeleton height="1.5rem" width="80%"></nb-skeleton>
-        <nb-skeleton height="1rem" width="60%"></nb-skeleton>
-      </nb-card-body>
-    </nb-card>
+      <p-card-body >
+        <p-skeleton height="200px"></p-skeleton>
+        <p-skeleton height="1.5rem" width="80%"></p-skeleton>
+        <p-skeleton height="1rem" width="60%"></p-skeleton>
+      </ng-template>
+    </p-card>
   </div>
 </div>
 
@@ -35,16 +35,16 @@
           ></ng-container>
         </ng-container>
         <ng-template #defaultTemplate>
-          <nb-card *ngIf="item.title" (click)="handleCardClick(item.id)">
-            <nb-card-header *ngIf="item.title">{{ item.title }}</nb-card-header>
-            <nb-card-body>
+          <p-card *ngIf="item.title" (click)="handleCardClick(item.id)" >
+            <p-card-header *ngIf="item.title" >{{ item.title }}</ng-template>
+            <p-card-body >
               <div *ngIf="item.imageUrl" class="nb-card-image">
                 <img [src]="item.imageUrl" [alt]="item.title" />
               </div>
               <div *ngIf="item.subtitle" class="nb-card-subtitle">{{ item.subtitle }}</div>
               <div *ngIf="item.description" class="nb-card-description">{{ item.description }}</div>
               <div *ngIf="item.avatarUrl || item.avatarName" class="nb-card-avatar">
-                <nb-user
+                <p-avatar
                   [name]="item.avatarName"
                   [picture]="item.avatarUrl"
                   [title]="item.subtitle"
@@ -52,19 +52,19 @@
                   size="medium"
                   [badgeStatus]="item.isOnline ? 'success' : 'basic'"
                   [badgePosition]="'bottom right'"
-                ></nb-user>
+                ></p-avatar>
               </div>
               <div *ngIf="item.tags && item.tags.length" class="nb-card-tags">
-                <nb-badge
+                <p-badge
                   *ngFor="let tag of item.tags"
                   [text]="tag.label"
                   [status]="tag.status || 'primary'"
                   position="top right"
-                >
-                </nb-badge>
+                 value="
+                "></p-badge>
               </div>
-            </nb-card-body>
-            <nb-card-footer *ngIf="item.actions && item.actions.length">
+            </ng-template>
+            <p-card-footer *ngIf="item.actions && item.actions.length" >
               <nb-actions size="medium">
                 <nb-action
                   *ngFor="let action of item.actions"
@@ -76,8 +76,8 @@
                 >
                 </nb-action>
               </nb-actions>
-            </nb-card-footer>
-          </nb-card>
+            </ng-template>
+          </p-card>
           <div *ngIf="!item.title" class="nb-card-grid__default-item">
             {{ item.name || item.label || 'Item' }}
           </div>
@@ -107,16 +107,16 @@
       <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
     </ng-container>
     <ng-template #defaultTemplate>
-      <nb-card *ngIf="item.title" (click)="handleCardClick(item.id)">
-        <nb-card-header *ngIf="item.title">{{ item.title }}</nb-card-header>
-        <nb-card-body>
+      <p-card *ngIf="item.title" (click)="handleCardClick(item.id)" >
+        <p-card-header *ngIf="item.title" >{{ item.title }}</ng-template>
+        <p-card-body >
           <div *ngIf="item.imageUrl" class="nb-card-image">
             <img [src]="item.imageUrl" [alt]="item.title" />
           </div>
           <div *ngIf="item.subtitle" class="nb-card-subtitle">{{ item.subtitle }}</div>
           <div *ngIf="item.description" class="nb-card-description">{{ item.description }}</div>
           <div *ngIf="item.avatarUrl || item.avatarName" class="nb-card-avatar">
-            <nb-user
+            <p-avatar
               [name]="item.avatarName"
               [picture]="item.avatarUrl"
               [title]="item.subtitle"
@@ -124,19 +124,19 @@
               size="medium"
               [badgeStatus]="item.isOnline ? 'success' : 'basic'"
               [badgePosition]="'bottom right'"
-            ></nb-user>
+            ></p-avatar>
           </div>
           <div *ngIf="item.tags && item.tags.length" class="nb-card-tags">
-            <nb-badge
+            <p-badge
               *ngFor="let tag of item.tags"
               [text]="tag.label"
               [status]="tag.status || 'primary'"
               position="top right"
-            >
-            </nb-badge>
+             value="
+            "></p-badge>
           </div>
-        </nb-card-body>
-        <nb-card-footer *ngIf="item.actions && item.actions.length">
+        </ng-template>
+        <p-card-footer *ngIf="item.actions && item.actions.length" >
           <nb-actions size="medium">
             <nb-action
               *ngFor="let action of item.actions"
@@ -148,8 +148,8 @@
             >
             </nb-action>
           </nb-actions>
-        </nb-card-footer>
-      </nb-card>
+        </ng-template>
+      </p-card>
       <div *ngIf="!item.title" class="nb-card-grid__default-item">
         {{ item.name || item.label || 'Item' }}
       </div>
@@ -160,7 +160,7 @@
 <!-- Empty State -->
 <div *ngIf="!loading && items.length === 0" class="nb-card-grid__empty">
   <div class="nb-card-grid__empty-content">
-    <nb-icon icon="search-outline" pack="eva"></nb-icon>
+    <i class="pi pi-search"></i>
     <p>No items found</p>
   </div>
 </div>

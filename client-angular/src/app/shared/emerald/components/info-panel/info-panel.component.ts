@@ -15,10 +15,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './info-panel.component.html',
   styleUrls: ['./info-panel.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    BadgeModule,
+    AccordionModule
+  ],
 })
 export class PanelModule implements OnInit {
   @Input() title = '';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { AccordionModule } from 'primeng/accordion';
+
+
   @Input() subtitle?: string;
   @Input() items: InfoPanelItem[] = [];
   @Input() variant: 'default' | 'bordered' | 'shadowed' = 'default';

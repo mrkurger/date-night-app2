@@ -78,25 +78,19 @@
 </div>
 
 <!-- Nebular layout to be removed:
-<nb-layout>
-  <nb-sidebar [state]="sidebarState" [responsive]="true" class="menu-sidebar">
-    <nb-menu [items]="items" (itemClick)="onMenuItemClick($event)"></nb-menu>
-  </nb-sidebar>
+<div class="layout">
+  <p-sidebar [state]="sidebarState" [responsive]="true" class="menu-sidebar">
+    <p-menu [items]="items" (itemClick)="onMenuItemClick($event)"></p-menu>
+  </p-sidebar>
 
-  <nb-layout-header fixed>
+  <header class="layout-header" fixed>
     <div class="header-container">
-      <p-button></p-button>
-        <nb-icon
-          [icon]="sidebarState === 'collapsed' ? 'menu-2-outline' : 'menu-arrow-outline'"
-        ></nb-icon>
-      </button>
+      <p-button label="" ></p-button>
 
       <app-breadcrumbs></app-breadcrumbs>
 
       <div class="header-actions">
-        <p-button></p-button>
-          <nb-icon icon="search-outline"></nb-icon>
-        </button>
+        <p-button label="" icon="pi pi-search"></p-button>
 
         <button
           nbButton
@@ -105,33 +99,32 @@
           nbTooltipPlacement="bottom"
           (click)="openKeyboardShortcuts()"
         >
-          <nb-icon icon="options-2-outline"></nb-icon> 
+          <i class="pi pi-options-2"></i> 
         </button>
 
         <app-theme-toggle></app-theme-toggle>
 
         <nb-actions size="medium">
           <nb-action>
-            <nb-user
+            <p-avatar
               [name]="userName"
               [picture]="userAvatar"
               [nbContextMenu]="userMenuData" 
               nbContextMenuTag="user-profile-menu"
               size="medium"
-            >
-            </nb-user>
+            ></p-avatar>
           </nb-action>
         </nb-actions>
       </div>
     </div>
-  </nb-layout-header>
+  </header>
 
-  <nb-layout-column class="main-content">
+  <div class="layout-column" class="main-content">
     <ng-content></ng-content>
-  </nb-layout-column>
+  </div>
 
-  <nb-layout-footer fixed>
+  <footer class="layout-footer" fixed>
     <span>&copy; 2025 Date Night App. All rights reserved.</span>
-  </nb-layout-footer>
-</nb-layout>
+  </footer>
+</div>
 -->

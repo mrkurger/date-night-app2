@@ -67,13 +67,18 @@ export interface Review {
     NbIconModule,
     NbCardModule,
     NbTooltipModule,
-    NbBadgeModule,
+    NbBadgeModule,,
+    DividerModule
   ],
   templateUrl: './review-display.component.html',
   styleUrls: ['./review-display.component.scss'],
 })
 export class ReviewDisplayComponent {
   @Input() review!: Review;
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+
+
   @Input() isCurrentUserReviewer = false;
   @Input() isCurrentUserAdvertiser = false;
   @Input() showAdvertiserInfo = true;

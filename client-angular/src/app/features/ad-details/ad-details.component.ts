@@ -15,12 +15,17 @@ import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-ad-details',
   templateUrl: './ad-details.component.html',
   styleUrls: ['./ad-details.component.scss'],
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ButtonModule
+  ],
 })
 export class AdDetailsComponent implements OnInit {
   ad: Ad | null = null;

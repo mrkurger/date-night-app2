@@ -7,47 +7,47 @@
      - SETTING_NAME: Description of setting (default: value)
        Related to: other_file.html:OTHER_SETTING
      =================================================== -->
-<nb-card class="chat-settings-card">
-  <nb-card-header>
+<p-card class="chat-settings-card" >
+  <p-card-header >
     <h3 class="chat-settings-title">Chat Settings</h3>
-  </nb-card-header>
-  <nb-card-body>
+  </ng-template>
+  <p-card-body >
     <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" class="chat-settings-form">
       <!-- Message Auto-Deletion -->
       <div class="settings-group">
         <div class="settings-group-header">
           <h4 class="settings-group-title">Message Auto-Deletion</h4>
-          <nb-toggle formControlName="messageExpiryEnabled" status="primary"></nb-toggle>
+          <p-inputSwitch formControlName="messageExpiryEnabled" status="primary" ></p-inputSwitch>
         </div>
         <p class="settings-group-description">
           When enabled, messages will be automatically deleted after the specified time.
         </p>
-        <nb-form-field *ngIf="settingsForm.get('messageExpiryEnabled')?.value">
+        <div *ngIf="settingsForm.get('messageExpiryEnabled')?.value" class="p-field">
           <label for="messageExpiryTime">Delete messages after:</label>
-          <nb-select
+          <p-dropdown
             fullWidth
             id="messageExpiryTime"
             formControlName="messageExpiryTime"
             placeholder="Select duration"
-          >
-            <nb-option *ngFor="let option of expiryTimeOptions" [value]="option.value">
+           [options]="options" optionLabel="label" optionValue="value">
+            <!-- TODO: Convert to options array: 
               {{ option.label }}
-            </nb-option>
-          </nb-select>
-        </nb-form-field>
+             -->
+          </p-dropdown>
+        </div>
       </div>
 
       <!-- End-to-End Encryption -->
       <div class="settings-group">
         <div class="settings-group-header">
           <h4 class="settings-group-title">End-to-End Encryption</h4>
-          <nb-toggle formControlName="encryptionEnabled" status="primary"></nb-toggle>
+          <p-inputSwitch formControlName="encryptionEnabled" status="primary" ></p-inputSwitch>
         </div>
         <p class="settings-group-description">
           When enabled, messages are encrypted and can only be read by participants in this chat.
         </p>
         <div class="encryption-info-box" *ngIf="settingsForm.get('encryptionEnabled')?.value">
-          <nb-icon icon="lock-outline" status="success"></nb-icon>
+          <i class="pi pi-lock"></i>
           <p>
             Your messages are encrypted end-to-end. This means that only you and the recipient can
             read them.
@@ -57,25 +57,25 @@
 
       <!-- Form Actions -->
       <div class="form-actions">
-        <p-button></p-button>Cancel</button>
+        <p-button label="Cancel" ></p-button>
         <button
           nbButton
           status="primary"
           type="submit"
           [disabled]="settingsForm.invalid || isSaving"
         >
-          <nb-spinner *ngIf="isSaving" size="tiny" status="control"></nb-spinner>
+          <p-progressSpinner *ngIf="isSaving" size="tiny" status="control" ></p-progressSpinner>
           <span *ngIf="!isSaving">Save Settings</span>
         </button>
       </div>
 
       <!-- Status Messages -->
-      <nb-alert status="success" closable *ngIf="saveSuccess" (close)="saveSuccess = false">
+      <p-message status="success" closable *ngIf="saveSuccess" (close)="saveSuccess = false" [severity]="status">
         Settings saved successfully!
-      </nb-alert>
-      <nb-alert status="danger" closable *ngIf="saveError" (close)="saveError = false">
+      </p-message>
+      <p-message status="danger" closable *ngIf="saveError" (close)="saveError = false" [severity]="status">
         Failed to save settings. Please try again.
-      </nb-alert>
+      </p-message>
     </form>
-  </nb-card-body>
-</nb-card>
+  </ng-template>
+</p-card>

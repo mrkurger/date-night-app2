@@ -5,13 +5,20 @@ import { Router } from '@angular/router';
 import { NebularModule } from '../../shared/nebular.module';
 
 import { MapComponent } from '../../../shared/components/map/map.component';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-travel-itinerary',
   templateUrl: './travel-itinerary.component.html',
   styleUrls: ['./travel-itinerary.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NebularModule, MapComponent],
+  imports: [
+    CommonModule, ReactiveFormsModule, NebularModule, MapComponent,
+    CardModule,
+    ButtonModule
+  ],
 })
 export class TravelItineraryComponent implements OnInit {
   travelForm: FormGroup;

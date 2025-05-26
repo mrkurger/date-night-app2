@@ -20,6 +20,8 @@ import {
 } from 'rxjs';
 import { NorwayCity, NorwayCounty } from '../../core/constants/norway-locations';
 import { ClusterModule } from '../../shared/modules/cluster/cluster.module';
+import { ButtonModule } from 'primeng/button';
+
 
 interface LocationMatchResult {
   _id: string;
@@ -42,7 +44,10 @@ interface LocationMatchResult {
     templateUrl: './location-matching.component.html',
     styleUrls: ['./location-matching.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, ReactiveFormsModule, RouterModule, MapComponent]
+    imports: [
+    CommonModule, ReactiveFormsModule, RouterModule, MapComponent,
+    ButtonModule
+  ]
 })
 export class LocationMatchingComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;

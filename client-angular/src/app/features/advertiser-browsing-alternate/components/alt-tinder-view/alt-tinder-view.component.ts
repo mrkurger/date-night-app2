@@ -29,15 +29,16 @@ type SwipeDirection = 'left' | 'right' | null;
 @Component({
     selector: 'app-alt-tinder-view',
     imports: [
-        CommonModule,
+    CommonModule,
         NbCardModule,
         NbButtonModule,
         NbIconModule,
         NbBadgeModule,
         NbSpinnerModule,
         NbTagModule,
-        NbTooltipModule,
-    ],
+        NbTooltipModule,,
+    ProgressSpinnerModule
+  ],
     templateUrl: './alt-tinder-view.component.html',
     styleUrls: ['./alt-tinder-view.component.scss'],
     animations: [
@@ -109,6 +110,12 @@ type SwipeDirection = 'left' | 'right' | null;
 })
 export class AltTinderViewComponent implements OnInit {
   @Input() advertisers: Advertiser[] = [];
+import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+
+
   @Input() loading = false;
 
   @Output() like = new EventEmitter<Advertiser>();

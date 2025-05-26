@@ -15,13 +15,18 @@ import { AdService } from '../../../core/services/ad.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Ad } from '../../../core/models/ad.model';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-ad-list',
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, SharedModule],
+  imports: [
+    CommonModule, RouterModule, SharedModule,
+    ButtonModule
+  ],
 })
 export class AdListComponent implements OnInit {
   ads: Ad[] = [];

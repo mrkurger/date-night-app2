@@ -19,6 +19,8 @@ import { NebularModule } from '../../shared/nebular.module';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+
 
 export interface ReviewData {
   rating: number;
@@ -30,7 +32,10 @@ export interface ReviewData {
 @Component({
     selector: 'app-review-form',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, ReactiveFormsModule, NebularModule],
+    imports: [
+    CommonModule, ReactiveFormsModule, NebularModule,
+    ButtonModule
+  ],
     template: `
     <div class="review-form-container">
       <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>

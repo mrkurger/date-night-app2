@@ -5,64 +5,64 @@
   </div>
 
   <!-- Current Subscription Info -->
-  <nb-card
+  <p-card
     *ngIf="currentSubscription && currentSubscription.tier !== 'free'"
     class="current-subscription"
-  >
-    <nb-card-header>
+   >
+    <p-card-header >
       <h2>Current Subscription</h2>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <p><strong>Plan:</strong> {{ currentSubscription.tier | titlecase }}</p>
       <p><strong>Expires:</strong> {{ currentSubscription.expires | date: 'medium' }}</p>
-      <nb-alert status="warning" *ngIf="currentSubscription.cancelAtPeriodEnd">
+      <p-message status="warning" *ngIf="currentSubscription.cancelAtPeriodEnd" [severity]="status">
         Your subscription will not renew after the expiration date.
-      </nb-alert>
+      </p-message>
       <button
         nbButton
         status="danger"
         (click)="cancelSubscription()"
         [disabled]="loading || currentSubscription.cancelAtPeriodEnd"
       >
-        <nb-icon icon="close-outline"></nb-icon>
+        <i class="pi pi-times"></i>
         {{
           currentSubscription.cancelAtPeriodEnd ? 'Subscription Cancelled' : 'Cancel Subscription'
         }}
       </button>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 
   <!-- Subscription Plans -->
   <div class="subscription-plans">
     <div class="plan-grid">
       <!-- Free Plan -->
-      <nb-card class="plan-card" [class.selected]="selectedPrice === null">
-        <nb-card-header>
+      <p-card class="plan-card" [class.selected]="selectedPrice === null" >
+        <p-card-header >
           <h3>Free</h3>
-        </nb-card-header>
-        <nb-card-body>
+        </ng-template>
+        <p-card-body >
           <div class="price">
             <span class="amount">$0</span>
             <span class="period">/month</span>
           </div>
-          <nb-list>
-            <nb-list-item>
-              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+          <ul class="list">
+            <li class="list-item">
+              <i class="pi pi-check"></i>
               Basic profile
-            </nb-list-item>
-            <nb-list-item>
-              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+            </li>
+            <li class="list-item">
+              <i class="pi pi-check"></i>
               Limited ad views
-            </nb-list-item>
-            <nb-list-item>
-              <nb-icon icon="close-outline" status="danger"></nb-icon>
+            </li>
+            <li class="list-item">
+              <i class="pi pi-times"></i>
               No ad boosting
-            </nb-list-item>
-            <nb-list-item>
-              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+            </li>
+            <li class="list-item">
+              <i class="pi pi-check"></i>
               Standard support
-            </nb-list-item>
-          </nb-list>
+            </li>
+          </ul>
           <button
             nbButton
             outline
@@ -72,19 +72,19 @@
           >
             {{ currentSubscription?.tier === 'free' ? 'Current Plan' : 'Select' }}
           </button>
-        </nb-card-body>
-      </nb-card>
+        </ng-template>
+      </p-card>
 
       <!-- Premium Plans -->
-      <nb-card
+      <p-card
         *ngFor="let price of subscriptionPrices"
         class="plan-card"
         [class.selected]="selectedPrice?.id === price.id"
-      >
-        <nb-card-header>
+       >
+        <p-card-header >
           <h3>{{ price.productName }}</h3>
-        </nb-card-header>
-        <nb-card-body>
+        </ng-template>
+        <p-card-body >
           <div class="price">
             <span class="amount">{{ formatPrice(price) }}</span>
           </div>
@@ -101,23 +101,22 @@
                 : 'Select'
             }}
           </button>
-        </nb-card-body>
-      </nb-card>
+        </ng-template>
+      </p-card>
     </div>
   </div>
 
   <!-- Payment Form -->
-  <nb-card *ngIf="selectedPrice" class="payment-form">
-    <nb-card-header>
+  <p-card *ngIf="selectedPrice" class="payment-form" >
+    <p-card-header >
       <h2>Payment Information</h2>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
-        <nb-form-field>
+        <div class="p-field">
           <label for="name">Name on Card</label>
           <input
-            nbInput
-            fullWidth
+            pInputText
             id="name"
             formControlName="name"
             class="{{
@@ -132,13 +131,12 @@
           >
             Name is required
           </div>
-        </nb-form-field>
+        </div>
 
-        <nb-form-field>
+        <div class="p-field">
           <label for="email">Email</label>
           <input
-            nbInput
-            fullWidth
+            pInputText
             id="email"
             formControlName="email"
             class="{{
@@ -153,13 +151,13 @@
           >
             Valid email is required
           </div>
-        </nb-form-field>
+        </div>
 
-        <nb-form-field>
+        <div class="p-field">
           <label for="card-element">Credit or Debit Card</label>
           <div id="card-element" class="card-element" #cardElement></div>
           <div class="error-message" *ngIf="cardErrors">{{ cardErrors }}</div>
-        </nb-form-field>
+        </div>
 
         <div class="form-actions">
           <button
@@ -179,6 +177,6 @@
           </p>
         </div>
       </form>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

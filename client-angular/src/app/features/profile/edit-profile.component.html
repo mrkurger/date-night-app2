@@ -1,37 +1,35 @@
-<nb-card class="edit-profile-card">
-  <nb-card-header>
+<p-card class="edit-profile-card" >
+  <p-card-header >
     <h2>Edit Profile</h2>
-  </nb-card-header>
-  <nb-card-body>
+  </ng-template>
+  <p-card-body >
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-      <nb-form-field>
+      <div class="p-field">
         <label for="username">Username</label>
         <input
-          nbInput
-          fullWidth
+          pInputText
           type="text"
           id="username"
           formControlName="username"
           placeholder="Username"
-          [status]="submitted && f.username.errors ? 'danger' : 'basic'"
+          [class.ng-invalid]="$1"
         />
         <div *ngIf="submitted && f.username.errors">
           <p class="caption status-danger" *ngIf="f.username.errors.required">
             Username is required
           </p>
         </div>
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label for="email">Email</label>
         <input
-          nbInput
-          fullWidth
+          pInputText
           type="email"
           id="email"
           formControlName="email"
           placeholder="Email"
-          [status]="submitted && f.email.errors ? 'danger' : 'basic'"
+          [class.ng-invalid]="$1"
         />
         <div *ngIf="submitted && f.email.errors">
           <p class="caption status-danger" *ngIf="f.email.errors.required">Email is required</p>
@@ -39,71 +37,65 @@
             Email must be a valid email address
           </p>
         </div>
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label for="bio">Bio</label>
         <textarea
-          nbInput
-          fullWidth
+          pInputText
           id="bio"
           formControlName="bio"
           placeholder="Bio"
           rows="4"
         ></textarea>
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label for="location">Location</label>
         <input
-          nbInput
-          fullWidth
+          pInputText
           type="text"
           id="location"
           formControlName="location"
           placeholder="Location"
         />
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label for="website">Website</label>
         <input
-          nbInput
-          fullWidth
+          pInputText
           type="url"
           id="website"
           formControlName="website"
           placeholder="https://example.com"
-          [status]="submitted && f.website.errors ? 'danger' : 'basic'"
+          [class.ng-invalid]="$1"
         />
         <div *ngIf="submitted && f.website.errors">
           <p class="caption status-danger" *ngIf="f.website.errors.pattern">
             Please enter a valid URL
           </p>
         </div>
-      </nb-form-field>
+      </div>
 
-      <nb-form-field>
+      <div class="p-field">
         <label for="phone">Phone</label>
         <input
-          nbInput
-          fullWidth
+          pInputText
           type="tel"
           id="phone"
           formControlName="phone"
           placeholder="Phone"
         />
-      </nb-form-field>
+      </div>
 
       <div class="form-actions">
+        <p-button label="Cancel" icon="pi pi-arrow-left"></p-button>
         <p-button></p-button>
-          <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
-        </button>
-        <p-button></p-button>
-          <nb-spinner *ngIf="loading" size="tiny" status="control"></nb-spinner>
-          <nb-icon icon="save-outline" *ngIf="!loading"></nb-icon> Save Changes
+          <p-progressSpinner *ngIf="loading" size="tiny" status="control" ></p-progressSpinner>
+          <i class="pi pi-save"></i> Save Changes
         </button>
       </div>
     </form>
-  </nb-card-body>
-</nb-card>
+  </ng-template>
+</p-card>

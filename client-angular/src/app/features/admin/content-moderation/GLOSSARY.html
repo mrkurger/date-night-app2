@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Moderation - Glossary</title>
+  <style>
+    :root {
+      --primary-color: #5048E5;
+      --secondary-color: #14B8A6;
+      --background-color: #F9FAFC;
+      --text-color: #121828;
+      --muted-text-color: #65748B;
+      --border-color: #E5E7EB;
+      --success-color: #4CAF50;
+      --warning-color: #FF9800;
+      --danger-color: #F44336;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    
+    nav {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    nav ul li {
+      margin-right: 20px;
+      margin-bottom: 5px;
+    }
+    
+    nav ul li a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    h1, h2, h3, h4, h5 {
+      margin-top: 0;
+      color: var(--text-color);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 40px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 30px;
+    }
+    
+    .search-container {
+      margin-bottom: 30px;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+    
+    .glossary-item {
+      margin-bottom: 30px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .glossary-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .glossary-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--primary-color);
+    }
+    
+    .glossary-type {
+      background-color: #E3F2FD;
+      color: #1976D2;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+    
+    .glossary-type-method {
+      background-color: #E8F5E9;
+      color: #388E3C;
+    }
+    
+    .glossary-type-property {
+      background-color: #FFF9C4;
+      color: #FBC02D;
+    }
+    
+    .glossary-type-interface {
+      background-color: #F3E5F5;
+      color: #8E24AA;
+    }
+    
+    .glossary-type-component {
+      background-color: #FFEBEE;
+      color: #C62828;
+    }
+    
+    .glossary-type-service {
+      background-color: #E0F7FA;
+      color: #0097A7;
+    }
+    
+    .glossary-description {
+      margin-bottom: 10px;
+    }
+    
+    .glossary-source {
+      color: var(--muted-text-color);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    
+    .glossary-parameters {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .parameter-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .parameter-table th,
+    .parameter-table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .parameter-table th {
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      background-color: #F1F5F9;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: var(--text-color);
+    }
+    
+    pre {
+      background-color: #F1F5F9;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9em;
+    }
+    
+    .example {
+      background-color: #ECFDF5;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+    
+    .example-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--muted-text-color);
+      font-size: 0.9rem;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted #666;
+      cursor: help;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .jump-links {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .jump-links h4 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .jump-links ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .jump-links ul {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Content Moderation - Glossary</h1>
+    <p>Reference documentation for classes, methods, and properties in the Content Moderation component.</p>
+  </header>
+  
+  <nav>
+    <ul>
+      <li><a href="../../../_docs_index.html">Main Documentation</a></li>
+      <li><a href="CHANGELOG.html">Changelog</a></li>
+      <li><a href="AILESSONS.html">AI Lessons</a></li>
+    </ul>
+  </nav>
+  
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search glossary items..." onkeyup="searchGlossary()">
+  </div>
+  
+  <div class="jump-links">
+    <h4>Jump to:</h4>
+    <ul>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#interfaces">Interfaces</a></li>
+      <li><a href="#methods">Methods</a></li>
+      <li><a href="#properties">Properties</a></li>
+    </ul>
+  </div>
+  
+  <main id="glossary-items">
+    <h2 id="components">Components</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">ContentModerationComponent</h3>
+        <span class="glossary-type glossary-type-component">Component</span>
+      </div>
+      <div class="glossary-description">
+        <p>Main component for content moderation by administrators. Allows reviewing and moderating user-submitted media content.</p>
+        <p>Features include filtering, sorting, pagination, and moderation actions (approve/reject) for media items.</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>/features/admin/content-moderation/content-moderation.component.ts</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">ModerationModalComponent</h3>
+        <span class="glossary-type glossary-type-component">Component</span>
+      </div>
+      <div class="glossary-description">
+        <p>Component for displaying and handling media moderation in a modal dialog. Provides media preview and moderation form.</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>/features/admin/content-moderation/moderation-modal/moderation-modal.component.ts</code></p>
+      </div>
+    </div>
+    
+    <h2 id="interfaces">Interfaces</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">PendingMedia</h3>
+        <span class="glossary-type glossary-type-interface">Interface</span>
+      </div>
+      <div class="glossary-description">
+        <p>Represents a media item pending moderation.</p>
+        <pre><code>interface PendingMedia {
+  _id: string;
+  adId: string;
+  adTitle: string;
+  url: string;
+  type: 'image' | 'video';
+  createdAt: Date;
+  pendingSince: Date;
+}</code></pre>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>/core/models/media.interface.ts</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">ModerationRequest</h3>
+        <span class="glossary-type glossary-type-interface">Interface</span>
+      </div>
+      <div class="glossary-description">
+        <p>Represents a request to moderate content with decision and notes.</p>
+        <pre><code>interface ModerationRequest {
+  status: 'approved' | 'rejected';
+  notes: string;
+}</code></pre>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>/core/models/media.interface.ts</code></p>
+      </div>
+    </div>
+    
+    <h2 id="methods">Methods</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">loadPendingMedia</h3>
+        <span class="glossary-type glossary-type-method">Method</span>
+      </div>
+      <div class="glossary-description">
+        <p>Loads all pending media items that need moderation from the API.</p>
+      </div>
+      <div class="glossary-parameters">
+        <p><strong>Parameters:</strong> None</p>
+        <p><strong>Returns:</strong> void</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">openModerationModal</h3>
+        <span class="glossary-type glossary-type-method">Method</span>
+      </div>
+      <div class="glossary-description">
+        <p>Opens the moderation dialog for a specific media item.</p>
+      </div>
+      <div class="glossary-parameters">
+        <p><strong>Parameters:</strong></p>
+        <table class="parameter-table">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>media</td>
+            <td>PendingMedia</td>
+            <td>The media item to be moderated</td>
+          </tr>
+        </table>
+        <p><strong>Returns:</strong> void</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">submitModeration</h3>
+        <span class="glossary-type glossary-type-method">Method</span>
+      </div>
+      <div class="glossary-description">
+        <p>Submits the moderation decision for the selected media to the API.</p>
+      </div>
+      <div class="glossary-parameters">
+        <p><strong>Parameters:</strong> None</p>
+        <p><strong>Returns:</strong> void</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">applyFilters</h3>
+        <span class="glossary-type glossary-type-method">Method</span>
+      </div>
+      <div class="glossary-description">
+        <p>Applies filters and sorting to the pending media items based on current filter settings.</p>
+      </div>
+      <div class="glossary-parameters">
+        <p><strong>Parameters:</strong> None</p>
+        <p><strong>Returns:</strong> void</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">onPageChange</h3>
+        <span class="glossary-type glossary-type-method">Method</span>
+      </div>
+      <div class="glossary-description">
+        <p>Handles PrimeNG paginator page change events.</p>
+      </div>
+      <div class="glossary-parameters">
+        <p><strong>Parameters:</strong></p>
+        <table class="parameter-table">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>event</td>
+            <td>PaginatorEvent</td>
+            <td>The page event from PrimeNG paginator containing rows, first, and page information.</td>
+          </tr>
+        </table>
+        <p><strong>Returns:</strong> void</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <h2 id="properties">Properties</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">showModerationDialog</h3>
+        <span class="glossary-type glossary-type-property">Property</span>
+      </div>
+      <div class="glossary-description">
+        <p>Boolean flag that controls the visibility of the moderation dialog. Used by PrimeNG Dialog component.</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">filteredMedia</h3>
+        <span class="glossary-type glossary-type-property">Property</span>
+      </div>
+      <div class="glossary-description">
+        <p>Array of media items after filters have been applied.</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">selectedMedia</h3>
+        <span class="glossary-type glossary-type-property">Property</span>
+      </div>
+      <div class="glossary-description">
+        <p>The currently selected media item for moderation.</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+    
+    <div class="glossary-item">
+      <div class="glossary-header">
+        <h3 class="glossary-name">moderationForm</h3>
+        <span class="glossary-type glossary-type-property">Property</span>
+      </div>
+      <div class="glossary-description">
+        <p>Angular FormGroup for handling moderation form data (status and notes).</p>
+      </div>
+      <div class="glossary-source">
+        <p>Source: <code>ContentModerationComponent</code></p>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <p>Date Night App Content Moderation Documentation - Last updated: May 25, 2025</p>
+  </footer>
+  
+  <script>
+    function searchGlossary() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const items = document.getElementsByClassName("glossary-item");
+      
+      for (let i = 0; i < items.length; i++) {
+        const name = items[i].getElementsByClassName("glossary-name")[0];
+        const description = items[i].getElementsByClassName("glossary-description")[0];
+        
+        if (name.textContent.toLowerCase().indexOf(filter) > -1 || 
+            description.textContent.toLowerCase().indexOf(filter) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

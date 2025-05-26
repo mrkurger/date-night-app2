@@ -6,6 +6,15 @@ import { filter, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/oper
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
 import { MenuItem } from 'primeng/menuitem';
+import { ButtonModule } from 'primeng/button';
+import { TabViewModule } from 'primeng/tabview';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+
 
 // TODO: Create User interface if not available
 interface User {

@@ -1,0 +1,184 @@
+<div class="payment-container">
+  <div class="payment-header">
+    <h1>Subscription Plans</h1>
+    <p>Choose a subscription plan to unlock premium features</p>
+  </div>
+
+  <!-- Current Subscription Info -->
+  <p-card
+    *ngIf="currentSubscription && currentSubscription.tier !== 'free'"
+    class="current-subscription"
+   >
+    <p-card-header >
+      <h2>Current Subscription</h2>
+    </ng-template>
+    <p-card-body >
+      <p><strong>Plan:</strong> {{ currentSubscription.tier | titlecase }}</p>
+      <p><strong>Expires:</strong> {{ currentSubscription.expires | date: 'medium' }}</p>
+      <p-message status="warning" *ngIf="currentSubscription.cancelAtPeriodEnd" [severity]="status">
+        Your subscription will not renew after the expiration date.
+      </p-message>
+      <button
+        nbButton
+        status="danger"
+        (click)="cancelSubscription()"
+        [disabled]="loading || currentSubscription.cancelAtPeriodEnd"
+      >
+        <nb-icon icon="close-outline"></nb-icon>
+        {{
+          currentSubscription.cancelAtPeriodEnd ? 'Subscription Cancelled' : 'Cancel Subscription'
+        }}
+      </button>
+    </ng-template>
+  </p-card>
+
+  <!-- Subscription Plans -->
+  <div class="subscription-plans">
+    <div class="plan-grid">
+      <!-- Free Plan -->
+      <p-card class="plan-card" [class.selected]="selectedPrice === null" >
+        <p-card-header >
+          <h3>Free</h3>
+        </ng-template>
+        <p-card-body >
+          <div class="price">
+            <span class="amount">$0</span>
+            <span class="period">/month</span>
+          </div>
+          <nb-list>
+            <nb-list-item>
+              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              Basic profile
+            </nb-list-item>
+            <nb-list-item>
+              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              Limited ad views
+            </nb-list-item>
+            <nb-list-item>
+              <nb-icon icon="close-outline" status="danger"></nb-icon>
+              No ad boosting
+            </nb-list-item>
+            <nb-list-item>
+              <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              Standard support
+            </nb-list-item>
+          </nb-list>
+          <button
+            nbButton
+            outline
+            status="primary"
+            (click)="selectPrice(null)"
+            [disabled]="currentSubscription?.tier === 'free'"
+          >
+            {{ currentSubscription?.tier === 'free' ? 'Current Plan' : 'Select' }}
+          </button>
+        </ng-template>
+      </p-card>
+
+      <!-- Premium Plans -->
+      <p-card
+        *ngFor="let price of subscriptionPrices"
+        class="plan-card"
+        [class.selected]="selectedPrice?.id === price.id"
+       >
+        <p-card-header >
+          <h3>{{ price.productName }}</h3>
+        </ng-template>
+        <p-card-body >
+          <div class="price">
+            <span class="amount">{{ formatPrice(price) }}</span>
+          </div>
+          <p class="description">{{ price.description }}</p>
+          <button
+            nbButton
+            status="primary"
+            (click)="selectPrice(price)"
+            [disabled]="currentSubscription?.tier === price.productName.toLowerCase()"
+          >
+            {{
+              currentSubscription?.tier === price.productName.toLowerCase()
+                ? 'Current Plan'
+                : 'Select'
+            }}
+          </button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Payment Form -->
+  <p-card *ngIf="selectedPrice" class="payment-form" >
+    <p-card-header >
+      <h2>Payment Information</h2>
+    </ng-template>
+    <p-card-body >
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <div class="p-field">
+          <label for="name">Name on Card</label>
+          <input
+            nbInput
+            fullWidth
+            id="name"
+            formControlName="name"
+            class="{{
+              paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched
+                ? 'input-error'
+                : ''
+            }}"
+          />
+          <div
+            class="error-message"
+            *ngIf="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched"
+          >
+            Name is required
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="email">Email</label>
+          <input
+            nbInput
+            fullWidth
+            id="email"
+            formControlName="email"
+            class="{{
+              paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched
+                ? 'input-error'
+                : ''
+            }}"
+          />
+          <div
+            class="error-message"
+            *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched"
+          >
+            Valid email is required
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="card-element">Credit or Debit Card</label>
+          <div id="card-element" class="card-element" #cardElement></div>
+          <div class="error-message" *ngIf="cardErrors">{{ cardErrors }}</div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            class="btn-success btn-large btn-full-width"
+            type="submit"
+            [disabled]="paymentForm.invalid || loading"
+          >
+            <span *ngIf="loading" class="spinner-small"></span>
+            Subscribe Now
+          </button>
+        </div>
+
+        <div class="payment-details">
+          <p>You will be charged {{ formatPrice(selectedPrice) }}</p>
+          <p class="hint-text">
+            Your subscription will automatically renew. You can cancel anytime.
+          </p>
+        </div>
+      </form>
+    </ng-template>
+  </p-card>
+</div>

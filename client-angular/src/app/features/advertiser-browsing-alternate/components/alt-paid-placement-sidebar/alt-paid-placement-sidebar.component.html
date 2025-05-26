@@ -3,8 +3,8 @@
   <div *ngIf="ads.length === 0" class="no-sponsored-ads">
     <p>Advertise here!</p>
   </div>
-  <nb-card *ngFor="let ad of ads" class="paid-ad-item">
-    <nb-card-body>
+  <p-card *ngFor="let ad of ads" class="paid-ad-item" >
+    <p-card-body >
       <img
         [src]="ad.image || '/assets/img/default-placeholder.png'"
         [alt]="ad.name"
@@ -14,6 +14,6 @@
         <h6>{{ ad.name }}</h6>
         <p class="ad-location-small">{{ ad.location }}</p>
       </div>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

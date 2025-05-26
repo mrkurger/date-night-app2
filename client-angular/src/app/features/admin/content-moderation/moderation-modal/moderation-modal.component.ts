@@ -7,24 +7,34 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { PendingMedia } from '../../../../core/models/media.interface';
 import { SafeUrl } from '@angular/platform-browser';
+import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
+
+import { PendingMedia } from '../../../../core/models/media.interface';
 import { ContentSanitizerService } from '../../../../core/services/content-sanitizer.service';
 
 /**
  * Component for displaying and handling media moderation in a modal
  */
 @Component({
-    selector: 'app-moderation-modal',
-    templateUrl: './moderation-modal.component.html',
-    styleUrls: ['./moderation-modal.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule]
+  selector: 'app-moderation-modal',
+  templateUrl: './moderation-modal.component.html',
+  styleUrls: ['./moderation-modal.component.scss'],
+  imports: [
+    CommonModule, ReactiveFormsModule, ButtonModule, TextareaModule,
+    InputTextModule,
+    InputTextareaModule
+  ],
 })
 export class ModerationModalComponent implements OnChanges {
   @Input() media: PendingMedia | null = null;
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
   @Input() form!: FormGroup;
   @Output() onSubmit = new EventEmitter<void>();
   @Output() onClose = new EventEmitter<void>();
@@ -33,7 +43,10 @@ export class ModerationModalComponent implements OnChanges {
   isFullscreen = false;
   mediaError = false;
 
-  constructor(private contentSanitizer: ContentSanitizerService) {}
+  /**
+   *
+   */
+  constructor(private readonly contentSanitizer: ContentSanitizerService) {}
 
   /**
    * Lifecycle hook that is called when input properties change

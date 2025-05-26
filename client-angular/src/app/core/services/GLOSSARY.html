@@ -86,31 +86,61 @@
 
           <section id="ChatService">
             <h2>ChatService</h2>
-            <p>Service responsible for real-time messaging functionality.</p>
+            <p>Service responsible for real-time messaging functionality and message auto-deletion.</p>
 
             <h3>Methods</h3>
             <ul>
-              <li><strong>getContacts()</strong>: Retrieves the user's chat contacts</li>
+              <li><strong>getRooms()</strong>: Retrieves all chat rooms for the current user</li>
               <li>
                 <strong>getMessages(roomId: string)</strong>: Retrieves messages for a specific chat
                 room
               </li>
               <li>
-                <strong
-                  >sendMessage(roomId: string, content: string, replyToId?: string, ttl?:
-                  number)</strong
-                >: Sends a message to a chat room
+                <strong>sendMessage(message: IChatMessageRequest)</strong>: Sends a message to a chat room
               </li>
               <li>
-                <strong>markAsRead(roomId: string, messageIds: string[])</strong>: Marks messages as
-                read
+                <strong>clearHistory(roomId: string)</strong>: Clears all messages in a chat room
               </li>
               <li>
-                <strong>createOrGetChatRoom(userId: string)</strong>: Creates or retrieves a direct
-                chat room with another user
+                <strong>blockUser(userId: string)</strong>: Blocks a user from messaging
               </li>
               <li>
-                <strong>deleteMessage(roomId: string, messageId: string)</strong>: Deletes a message
+                <strong>reportUser(userId: string, reason?: string)</strong>: Reports a user for inappropriate behavior
+              </li>
+              <li>
+                <strong>uploadFiles(roomId: string, formData: FormData)</strong>: Uploads files to a chat room
+              </li>
+              <li>
+                <strong>markMessagesAsRead(roomId: string)</strong>: Marks messages as read in a room
+              </li>
+              <li>
+                <strong>archiveRoom(roomId: string)</strong>: Archives a chat room
+              </li>
+              <li>
+                <strong>pinRoom(roomId: string)</strong>: Pins a chat room for quick access
+              </li>
+              <li>
+                <strong>clearRoom(roomId: string)</strong>: Clears all messages in a room
+              </li>
+              <li>
+                <strong>updateRoomSettings(roomId: string, settings: IRoomSettings)</strong>: Updates room settings
+              </li>
+              <li>
+                <strong>configureMessageAutoDeletion(roomId: string, enabled: boolean, ttl?: number)</strong>: 
+                Configures automatic message deletion for a room. Returns Observable&lt;boolean&gt; indicating success.
+              </li>
+              <li>
+                <strong>getMessageAutoDeletionSettings(roomId: string)</strong>: 
+                Retrieves current auto-deletion settings for a room. Returns {enabled: boolean, ttl: number}.
+              </li>
+              <li>
+                <strong>convertHoursToMilliseconds(hours: number)</strong>: Utility method to convert hours to milliseconds
+              </li>
+              <li>
+                <strong>sendTypingIndicator(roomId: string)</strong>: Sends typing indicator to other users
+              </li>
+              <li>
+                <strong>disconnectSocket()</strong>: Disconnects from the chat WebSocket
               </li>
             </ul>
 
@@ -120,11 +150,7 @@
                 <strong>newMessage$</strong>: Observable that emits when a new message is received
               </li>
               <li>
-                <strong>messageRead$</strong>: Observable that emits when messages are marked as
-                read
-              </li>
-              <li>
-                <strong>typingIndicator$</strong>: Observable that emits when a user is typing
+                <strong>typingStatus$</strong>: Observable that emits when a user is typing
               </li>
               <li>
                 <strong>onlineUsers$</strong>: Observable that emits when users' online status

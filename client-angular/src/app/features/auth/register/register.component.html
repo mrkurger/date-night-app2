@@ -1,13 +1,13 @@
 <div class="register-container">
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h2>Create an Account</h2>
-    </nb-card-header>
-    <nb-card-body>
+    </ng-template>
+    <p-card-body >
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group">
-            <nb-form-field>
+            <div class="p-field">
               <label for="firstname">First Name</label>
               <input nbInput formControlName="firstname" placeholder="Enter first name" />
               <p
@@ -19,11 +19,11 @@
               >
                 First name is required
               </p>
-            </nb-form-field>
+            </div>
           </div>
 
           <div class="form-group">
-            <nb-form-field>
+            <div class="p-field">
               <label for="lastname">Last Name</label>
               <input nbInput formControlName="lastname" placeholder="Enter last name" />
               <p
@@ -35,12 +35,12 @@
               >
                 Last name is required
               </p>
-            </nb-form-field>
+            </div>
           </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="email">Email</label>
             <input nbInput formControlName="email" placeholder="Enter email" />
             <p
@@ -60,11 +60,11 @@
             >
               Please enter a valid email
             </p>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="password">Password</label>
             <input
               nbInput
@@ -90,11 +90,11 @@
             >
               Password must be at least 8 characters
             </p>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group">
-          <nb-form-field>
+          <div class="p-field">
             <label for="confirmPassword">Confirm Password</label>
             <input
               nbInput
@@ -120,12 +120,12 @@
             >
               Passwords do not match
             </p>
-          </nb-form-field>
+          </div>
         </div>
 
         <div class="form-group checkbox-group">
-          <nb-checkbox formControlName="termsAccepted"
-            >I accept the Terms and Conditions</nb-checkbox
+          <p-checkbox formControlName="termsAccepted"
+             >I accept the Terms and Conditions</nb-checkbox
           >
           <p
             class="caption status-danger"
@@ -139,27 +139,19 @@
         </div>
 
         <div class="form-actions">
-          <p-button></p-button>
-            Register
-          </button>
-          <p-button></p-button>Cancel</button>
+          <p-button label="Register" ></p-button>
+          <p-button label="Cancel" ></p-button>
         </div>
 
         <div class="social-auth">
           <p class="divider"><span>or register with</span></p>
 
           <div class="social-buttons">
-            <p-button></p-button>
-              <nb-icon icon="google-outline"></nb-icon> Google
-            </button>
+            <p-button label="Google" icon="pi pi-google"></p-button>
 
-            <p-button></p-button>
-              <nb-icon icon="facebook-outline"></nb-icon> Facebook
-            </button>
+            <p-button label="Facebook" icon="pi pi-facebook"></p-button>
 
-            <p-button></p-button>
-              <nb-icon pack="custom" icon="apple"></nb-icon> Apple
-            </button>
+            <p-button label="Apple" icon="pi pi-apple"></p-button>
 
             <button
               nbButton
@@ -175,6 +167,6 @@
 
         <div class="login-link">Already have an account? <a routerLink="/auth/login">Login</a></div>
       </form>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>

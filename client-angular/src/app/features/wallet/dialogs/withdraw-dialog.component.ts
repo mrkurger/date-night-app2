@@ -34,6 +34,13 @@ import {
 
 import { _SharedModule } from '../../../shared/shared.module';
 import { WalletService } from '../../../core/services/wallet.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { TabViewModule } from 'primeng/tabview';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 export interface WalletBalance {
   currency: string;
@@ -134,7 +141,8 @@ export interface WithdrawalRequest {
   styleUrls: ['./withdraw-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,
@@ -148,7 +156,11 @@ export interface WithdrawalRequest {
     NbIconModule,
     NbTooltipModule,
     NbBadgeModule,
-    NbTagModule,
+    NbTagModule,,
+    DropdownModule,
+    TabViewModule,
+    MessageModule,
+    InputTextModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -177,6 +189,36 @@ export class WithdrawDialogComponent implements OnInit {
   cryptoMaxAmount = 0;
   processingCryptoWithdrawal = false;
   loadingInitialData = false;
+
+  profileVisibilityOptions = [
+    { label: 'Public - Visible to everyone', value: 'public' },
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+    { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
+  ];
+
+  allowMessagingOptions = [
+    { label: 'Everyone', value: 'all' },
+    { label: 'Only Matches', value: 'matches' },
+    { label: 'No One (Disable messaging)', value: 'none' }
+  ];
+
+  contentDensityOptions = [
+    { label: 'Compact', value: 'compact' },
+    { label: 'Normal', value: 'normal' },
+    { label: 'Comfortable', value: 'comfortable' }
+  ];
+
+  cardSizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' }
+  ];
+
+  defaultViewTypeOptions = [
+    { label: 'Netflix View', value: 'netflix' },
+    { label: 'Tinder View', value: 'tinder' },
+    { label: 'List View', value: 'list' }
+  ];
 
   constructor(
     @Inject(NB_DIALOG_CONFIG) private config: WithdrawalDialogConfig,

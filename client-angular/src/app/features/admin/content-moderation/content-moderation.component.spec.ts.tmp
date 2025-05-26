@@ -1,0 +1,180 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Subject } from 'rxjs';
+
+import { ContentModerationComponent } from './content-moderation.component';
+import {
+  IMediaService,
+  INotificationService,
+  IContentSanitizerService,
+  IPendingMedia,
+} from './content-moderation.interfaces';
+
+describe('ContentModerationComponent', () => {
+  let component: ContentModerationComponent;
+  let fixture: ComponentFixture<ContentModerationComponent>;
+  let mediaService: jasmine.SpyObj<IMediaService>;
+  let notificationService: jasmine.SpyObj<INotificationService>; 
+  let contentSanitizerService: jasmine.SpyObj<IContentSanitizerService>;
+  let sanitizer: DomSanitizer;
+  let safeUrl: SafeUrl;
+
+  const mockPendingMedia: IPendingMedia[] = [
+    {
+      _id: '1',
+      adId: 'ad1',
+      adTitle: 'Test Ad 1',
+      type: 'image',
+      url: 'https://example.com/image1.jpg',
+      createdAt: new Date('2023-01-01'),
+      hasLoadError: false
+    },
+    {
+      _id: '2',
+      adId: 'ad2',
+      adTitle: 'Test Ad 2',
+      type: 'video',
+      url: 'https://example.com/video1.mp4',
+      createdAt: new Date('2023-01-02'),
+      hasLoadError: false
+    },
+    {
+      _id: '3',
+      adId: 'ad3',
+      adTitle: 'Another Test Ad',
+      type: 'image',
+      url: 'https://example.com/image2.jpg',
+      createdAt: new Date('2023-01-03'),
+      hasLoadError: false
+    }
+  ];
+
+  beforeEach(async () => {
+    mediaService = jasmine.createSpyObj<IMediaService>('MediaService', ['getPendingModerationMedia', 'moderateMedia']);
+    mediaService.getPendingModerationMedia.and.returnValue(Promise.resolve(mockPendingMedia));
+    mediaService.moderateMedia.and.returnValue(Promise.resolve());
+
+    notificationService = jasmine.createSpyObj<INotificationService>('NotificationService', [
+      'showSuccess', 
+      'showError',
+      'showWarning',
+      'showInfo'
+    ]);
+
+    safeUrl = {} as SafeUrl;
+
+    contentSanitizerService = jasmine.createSpyObj<IContentSanitizerService>('ContentSanitizerService', ['sanitizeUrl']);
+    contentSanitizerService.sanitizeUrl.and.returnValue(safeUrl);
+
+    await TestBed.configureTestingModule({
+      imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ButtonModule,
+        DialogModule,
+        InputTextModule, 
+        DropdownModule,
+        MessageModule,
+        PaginatorModule,
+        ProgressSpinnerModule,
+        ContentModerationComponent
+      ],
+      providers: [
+        FormBuilder,
+        {
+          provide: IMediaService,
+          useValue: mediaService
+        },
+        {
+          provide: INotificationService, 
+          useValue: notificationService
+        },
+        { 
+          provide: IContentSanitizerService,
+          useValue: contentSanitizerService
+        },
+        {
+          provide: DomSanitizer,
+          useValue: {
+            bypassSecurityTrustUrl: (url: string) => safeUrl
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ContentModerationComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should initialize with default values', () => {
+    fixture.detectChanges();
+    expect(component.loading).toBeFalsy();
+    expect(component.error).toBe('');
+    expect(component.searchTerm).toBe('');
+    expect(component.mediaTypeFilter).toBe('all');
+    expect(component.sortOrder).toBe('newest');
+    expect(component.currentPage).toBe(1);
+    expect(component.itemsPerPage).toBe(12);
+    expect(component.moderationForm).toBeTruthy();
+  });
+
+  it('should load pending media on init', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(mediaService.getPendingModerationMedia).toHaveBeenCalled();
+    expect(component.pendingMedia.length).toBe(3);
+    expect(component.filteredMedia.length).toBe(3);
+  });
+
+  it('should filter media by type', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    component.mediaTypeFilter = 'image';
+    component.applyFilters();
+    expect(component.filteredMedia.length).toBe(2);
+    expect(component.filteredMedia.every((media) => media.type === 'image')).toBeTrue();
+  });
+
+  it('should handle error when loading pending media', async () => {
+    const error = new Error('Test error');
+    mediaService.getPendingModerationMedia.and.returnValue(Promise.reject(error));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(component.error).toBeTruthy();
+    expect(notificationService.showError).toHaveBeenCalled();
+  });
+
+  it('should handle 403 forbidden error with specific message', async () => {
+    const forbiddenError = { status: 403, statusText: 'Forbidden' };
+    mediaService.getPendingModerationMedia.and.returnValue(Promise.reject(forbiddenError));
+    spyOn(console, 'error');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(component.error).toContain('permission');
+    expect(notificationService.showError).toHaveBeenCalledWith(jasmine.stringMatching(/permission/));
+    expect(console.error).toHaveBeenCalled();
+  });
+
+  it('should clean up subscriptions on destroy', () => {
+    const destroy$ = component['destroy$'] as Subject<void>;
+    spyOn(destroy$, 'next');
+    spyOn(destroy$, 'complete');
+    component.ngOnDestroy();
+    expect(destroy$.next).toHaveBeenCalled();
+    expect(destroy$.complete).toHaveBeenCalled();
+  });
+});

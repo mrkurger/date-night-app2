@@ -1,0 +1,135 @@
+<div
+  class="nb-flip-card"
+  [ngClass]="{
+    'nb-flip-card--like': state === 'like',
+    'nb-flip-card--dislike': state === 'dislike',
+  }"
+>
+  <!-- Card Media Section -->
+  <div class="nb-flip-card__media">
+    <!-- Video Media -->
+    <div *ngIf="isCurrentMediaVideo()" class="nb-flip-card__video-container">
+      <video controls>
+        <source [src]="getCurrentMediaUrl()" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Image Media -->
+    <img
+      *ngIf="!isCurrentMediaVideo()"
+      [src]="getCurrentMediaUrl()"
+      [alt]="title"
+      class="nb-flip-card__image"
+    />
+
+    <!-- Media Navigation Dots -->
+    <div class="nb-flip-card__media-dots" *ngIf="media && media.length > 1">
+      <div
+        *ngFor="let dot of getMediaDots(); let i = index"
+        class="nb-flip-card__media-dot"
+        [ngClass]="{ 'nb-flip-card__media-dot--active': i === currentMediaIndex }"
+        (click)="setMediaIndex(i, $event)"
+      ></div>
+    </div>
+
+    <!-- Media Navigation Arrows -->
+    <button
+      *ngIf="media && media.length > 1"
+      class="nb-flip-card__media-nav-button nb-flip-card__media-nav-button--prev"
+      (click)="prevMedia($event)"
+      aria-label="Previous media"
+    >
+      <nb-icon icon="arrow-left-outline"></nb-icon>
+    </button>
+    <button
+      *ngIf="media && media.length > 1"
+      class="nb-flip-card__media-nav-button nb-flip-card__media-nav-button--next"
+      (click)="nextMedia($event)"
+      aria-label="Next media"
+    >
+      <nb-icon icon="arrow-right-outline"></nb-icon>
+    </button>
+
+    <!-- Like/Dislike Indicators -->
+    <div class="nb-flip-card__like-indicator">
+      <nb-icon icon="heart-outline"></nb-icon>
+      <span>LIKE</span>
+    </div>
+    <div class="nb-flip-card__dislike-indicator">
+      <nb-icon icon="close-outline"></nb-icon>
+      <span>NOPE</span>
+    </div>
+  </div>
+
+  <!-- Card Content -->
+  <div class="nb-flip-card__content">
+    <!-- Card Header -->
+    <div class="nb-flip-card__header">
+      <h2 class="nb-flip-card__title">
+        {{ title }}
+        <span class="nb-flip-card__age" *ngIf="age">{{ age }}</span>
+      </h2>
+      <p class="nb-flip-card__subtitle" *ngIf="subtitle">
+        <nb-icon icon="map-outline"></nb-icon> {{ subtitle }}
+      </p>
+    </div>
+
+    <!-- Card Body -->
+    <div class="nb-flip-card__body">
+      <p class="nb-flip-card__description">{{ description }}</p>
+
+      <!-- Tags -->
+      <div class="nb-flip-card__tags" *ngIf="tags && tags.length">
+        <nb-tag *ngFor="let tag of tags.slice(0, 5)" [text]="tag" size="small" color="secondary">
+        </nb-tag>
+      </div>
+    </div>
+
+    <!-- Card Footer with Action Buttons -->
+    <div class="nb-flip-card__footer">
+      <ng-container *ngIf="actions && actions.length; else defaultActions">
+        <button
+          *ngFor="let action of actions"
+          class="nb-flip-card__action-button"
+          [ngClass]="'nb-flip-card__action-button--' + action.id"
+          [title]="action.tooltip || ''"
+          (click)="$event.stopPropagation(); onActionClick(action.id)"
+        >
+          <i [class]="action.icon"></i>
+        </button>
+      </ng-container>
+
+      <ng-template #defaultActions>
+        <button
+          class="nb-flip-card__action-button nb-flip-card__action-button--info"
+          title="View Details"
+          (click)="$event.stopPropagation(); onActionClick('info')"
+        >
+          <nb-icon icon="info-outline"></nb-icon>
+        </button>
+        <button
+          class="nb-flip-card__action-button nb-flip-card__action-button--dislike"
+          title="Dislike"
+          (click)="$event.stopPropagation(); onSwipe('left')"
+        >
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+        <button
+          class="nb-flip-card__action-button nb-flip-card__action-button--like"
+          title="Like"
+          (click)="$event.stopPropagation(); onSwipe('right')"
+        >
+          <nb-icon icon="heart-outline"></nb-icon>
+        </button>
+        <button
+          class="nb-flip-card__action-button nb-flip-card__action-button--chat"
+          title="Start Chat"
+          (click)="$event.stopPropagation(); onActionClick('chat')"
+        >
+          <nb-icon icon="message-circle-outline"></nb-icon>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>

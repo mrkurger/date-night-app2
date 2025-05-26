@@ -1,7 +1,7 @@
 <!-- InfoPanel Component -->
 <!-- Using Nebular components -->
 
-<nb-card
+<p-card
   [ngClass]="{
     'nb-card-bordered': variant === 'bordered',
     'nb-card-shadowed': variant === 'shadowed',
@@ -9,19 +9,19 @@
 >
   <!-- For non-collapsible panels -->
   <ng-container *ngIf="!collapsible">
-    <nb-card-header>
+    <ng-template pTemplate="header">
       <div class="nb-info-panel__title-container">
         <h3 class="nb-info-panel__title">{{ title }}</h3>
         <p *ngIf="subtitle" class="nb-info-panel__subtitle">{{ subtitle }}</p>
       </div>
-    </nb-card-header>
+    </ng-template>
 
-    <nb-card-body>
+    <ng-template pTemplate="content">
       <div class="nb-info-panel__items">
         <div *ngFor="let item of items" class="nb-info-panel__item">
           <!-- Item Label -->
           <div class="nb-info-panel__item-label">
-            <nb-icon *ngIf="item.icon" [icon]="getIconName(item.icon)" pack="eva"></nb-icon>
+            <i *ngIf="item.icon" [class]="getIconClass(item.icon)"></i>
             <span>{{ item.label }}</span>
           </div>
 
@@ -31,51 +31,44 @@
             <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
 
             <!-- Badge Value -->
-            <nb-badge
+            <p-badge
               *ngIf="item.type === 'badge'"
-              [text]="item.value.toString()"
-              [status]="item.variant || 'basic'"
-              position="centered"
-            ></nb-badge>
+              [value]="item.value.toString()"
+              [severity]="getBadgeSeverity(item.variant)"
+            ></p-badge>
 
             <!-- Progress Value -->
             <div *ngIf="item.type === 'progress'" class="nb-info-panel__progress">
-              <nb-progress-bar
-                [value]="item.value as number"
-                [status]="item.variant || 'basic'"
-                [displayValue]="true"
-              ></nb-progress-bar>
+              <p-progressBar [value]="item.value as number" [showValue]="true"></p-progressBar>
             </div>
 
             <!-- Boolean Value -->
             <span *ngIf="item.type === 'boolean'" class="nb-info-panel__boolean">
-              <nb-icon
-                [icon]="item.value ? 'checkmark-outline' : 'close-outline'"
-                [status]="item.value ? 'success' : 'danger'"
-                pack="eva"
-              ></nb-icon>
+              <i
+                [class]="item.value ? 'pi pi-check text-green-500' : 'pi pi-times text-red-500'"
+              ></i>
             </span>
           </div>
         </div>
       </div>
-    </nb-card-body>
+    </ng-template>
   </ng-container>
 
   <!-- For collapsible panels -->
-  <nb-accordion *ngIf="collapsible">
-    <nb-accordion-item [expanded]="!initiallyCollapsed">
-      <nb-accordion-item-header>
+  <p-accordion *ngIf="collapsible">
+    <p-accordionTab [expanded]="!initiallyCollapsed">
+      <ng-template pTemplate="header">
         <div class="nb-info-panel__title-container">
           <h3 class="nb-info-panel__title">{{ title }}</h3>
           <p *ngIf="subtitle" class="nb-info-panel__subtitle">{{ subtitle }}</p>
         </div>
-      </nb-accordion-item-header>
-      <nb-accordion-item-body>
+      </ng-template>
+      <ng-template pTemplate="content">
         <div class="nb-info-panel__items">
           <div *ngFor="let item of items" class="nb-info-panel__item">
             <!-- Item Label -->
             <div class="nb-info-panel__item-label">
-              <nb-icon *ngIf="item.icon" [icon]="getIconName(item.icon)" pack="eva"></nb-icon>
+              <i *ngIf="item.icon" [class]="getIconClass(item.icon)"></i>
               <span>{{ item.label }}</span>
             </div>
 
@@ -85,34 +78,33 @@
               <span *ngIf="!item.type || item.type === 'text'">{{ item.value }}</span>
 
               <!-- Badge Value -->
-              <nb-badge
+              <p-badge
                 *ngIf="item.type === 'badge'"
                 [text]="item.value.toString()"
                 [status]="item.variant || 'basic'"
                 position="centered"
-              ></nb-badge>
+                value=""
+              ></p-badge>
 
               <!-- Progress Value -->
               <div *ngIf="item.type === 'progress'" class="nb-info-panel__progress">
-                <nb-progress-bar
+                <p-progressBar
                   [value]="item.value as number"
                   [status]="item.variant || 'basic'"
                   [displayValue]="true"
-                ></nb-progress-bar>
+                ></p-progressBar>
               </div>
 
               <!-- Boolean Value -->
               <span *ngIf="item.type === 'boolean'" class="nb-info-panel__boolean">
-                <nb-icon
-                  [icon]="item.value ? 'checkmark-outline' : 'close-outline'"
-                  [status]="item.value ? 'success' : 'danger'"
-                  pack="eva"
-                ></nb-icon>
+                <i
+                  [class]="item.value ? 'pi pi-check text-green-500' : 'pi pi-times text-red-500'"
+                ></i>
               </span>
             </div>
           </div>
         </div>
-      </nb-accordion-item-body>
-    </nb-accordion-item>
-  </nb-accordion>
-</nb-card>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+</p-card>

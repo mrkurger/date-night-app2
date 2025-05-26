@@ -30,6 +30,10 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { User } from '../../../core/models/user.interface';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 // Define the TransferDialogData interface
 export interface TransferDialogData {
@@ -43,7 +47,8 @@ export interface TransferDialogData {
   styleUrls: ['./transfer-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule, CommonModule,
     ReactiveFormsModule,
     NbCardModule,
     NbButtonModule,
@@ -55,7 +60,8 @@ export interface TransferDialogData {
     NbAlertModule,
     NbTooltipModule,
     NbBadgeModule,
-    NbTagModule,
+    NbTagModule,,
+    ProgressSpinnerModule
   ],
 })
 export class TransferDialogComponent implements OnInit, OnDestroy {

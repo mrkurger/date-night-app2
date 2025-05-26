@@ -14,7 +14,7 @@
   <div class="nb-header__container">
     <!-- Back Link -->
     <a *ngIf="backLink" [routerLink]="backLink" class="nb-header__back-link">
-      <nb-icon icon="arrow-back-outline"></nb-icon>
+      <i class="pi pi-arrow-left"></i>
       <span>Back</span>
     </a>
 
@@ -32,15 +32,14 @@
     <div class="nb-header__content">
       <!-- Avatar (if provided) -->
       <div *ngIf="avatarUrl || avatarName" class="nb-header__avatar-container">
-        <nb-user
+        <p-avatar
           [name]="avatarName"
           [picture]="avatarUrl"
           [title]="subtitle"
           size="large"
           [showTitle]="false"
           [showName]="false"
-        >
-        </nb-user>
+        ></p-avatar>
 
         <span
           *ngIf="avatarIsOnline !== undefined"

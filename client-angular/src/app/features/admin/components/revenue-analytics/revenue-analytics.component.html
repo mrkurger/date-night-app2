@@ -1,22 +1,22 @@
 <div class="revenue-analytics">
   <p-card>
-    <nb-card-header class="d-flex justify-content-between align-items-center">
+    <p-card-header class="d-flex justify-content-between align-items-center" >
       <h5>Revenue Analytics</h5>
       <div>
-        <nb-select [(ngModel)]="selectedPeriod" (selectedChange)="onPeriodChange()">
-          <nb-option value="day">Today</nb-option>
-          <nb-option value="week">This Week</nb-option>
-          <nb-option value="month">This Month</nb-option>
-          <nb-option value="year">This Year</nb-option>
-        </nb-select>
+        <p-dropdown [(ngModel)]="selectedPeriod" (selectedChange)="onPeriodChange()" [options]="options" optionLabel="label" optionValue="value">
+          <!-- TODO: Convert to options array: Today -->
+          <!-- TODO: Convert to options array: This Week -->
+          <!-- TODO: Convert to options array: This Month -->
+          <!-- TODO: Convert to options array: This Year -->
+        </p-dropdown>
       </div>
-    </nb-card-header>
+    </ng-template>
 
-    <nb-card-body>
+    <p-card-body >
       <div class="row">
         <div class="col-md-4">
           <p-card>
-            <nb-card-body>
+            <p-card-body >
               <div class="stat-card">
                 <div class="stat-title">Total Revenue</div>
                 <div class="stat-value">${{ totalRevenue | number: '1.2-2' }}</div>
@@ -28,13 +28,13 @@
                   {{ revenueDelta > 0 ? '+' : '' }}{{ revenueDelta }}%
                 </div>
               </div>
-            </nb-card-body>
-          </nb-card>
+            </ng-template>
+          </p-card>
         </div>
 
         <div class="col-md-4">
           <p-card>
-            <nb-card-body>
+            <p-card-body >
               <div class="stat-card">
                 <div class="stat-title">Active Subscriptions</div>
                 <div class="stat-value">{{ activeSubscriptions }}</div>
@@ -46,13 +46,13 @@
                   {{ subscriptionDelta > 0 ? '+' : '' }}{{ subscriptionDelta }}
                 </div>
               </div>
-            </nb-card-body>
-          </nb-card>
+            </ng-template>
+          </p-card>
         </div>
 
         <div class="col-md-4">
           <p-card>
-            <nb-card-body>
+            <p-card-body >
               <div class="stat-card">
                 <div class="stat-title">Average Revenue Per User</div>
                 <div class="stat-value">${{ arpu | number: '1.2-2' }}</div>
@@ -64,13 +64,13 @@
                   {{ arpuDelta > 0 ? '+' : '' }}{{ arpuDelta }}%
                 </div>
               </div>
-            </nb-card-body>
-          </nb-card>
+            </ng-template>
+          </p-card>
         </div>
       </div>
 
-      <nb-tabset>
-        <nb-tab tabTitle="Revenue Trend">
+      <p-tabView >
+        <p-tabPanel tabTitle="Revenue Trend">
           <div class="chart-container">
             <ngx-charts-line-chart
               [results]="revenueTrend"
@@ -87,9 +87,9 @@
             >
             </ngx-charts-line-chart>
           </div>
-        </nb-tab>
+        </p-tabPanel>
 
-        <nb-tab tabTitle="Revenue by Plan">
+        <p-tabPanel tabTitle="Revenue by Plan">
           <div class="chart-container">
             <ngx-charts-pie-chart
               [results]="revenueByPlan"
@@ -100,9 +100,9 @@
             >
             </ngx-charts-pie-chart>
           </div>
-        </nb-tab>
+        </p-tabPanel>
 
-        <nb-tab tabTitle="Churn Rate">
+        <p-tabPanel tabTitle="Churn Rate">
           <div class="chart-container">
             <ngx-charts-bar-vertical
               [results]="churnRate"
@@ -116,8 +116,8 @@
             >
             </ngx-charts-bar-vertical>
           </div>
-        </nb-tab>
-      </nb-tabset>
-    </nb-card-body>
-  </nb-card>
+        </p-tabPanel>
+      </p-tabView>
+    </ng-template>
+  </p-card>
 </div>

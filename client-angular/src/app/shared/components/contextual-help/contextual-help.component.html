@@ -13,7 +13,7 @@
         [nbTooltip]="item.title"
         nbTooltipClass="help-tooltip-preview"
       >
-        <nb-icon icon="{{ item.icon || 'help_outline' }}"></nb-icon>
+        <i class="pi pi-{{ item.icon || 'help_outline' }}"></i>
       </button>
     </div>
 
@@ -27,7 +27,7 @@
           (click)="dismissHelp(item.id)"
           aria-label="Dismiss help"
         >
-          <nb-icon icon="close"></nb-icon>
+          <i class="pi pi-times"></i>
         </button>
       </div>
       <div class="help-body">

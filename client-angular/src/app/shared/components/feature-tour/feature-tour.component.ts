@@ -56,6 +56,8 @@ export interface TourStep {
 })
 export class FeatureTourComponent implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = [];
+import { ButtonModule } from 'primeng/button';
+
   @Input() showSkip = true;
   @Input() storageKey = 'feature-tour-completed';
 

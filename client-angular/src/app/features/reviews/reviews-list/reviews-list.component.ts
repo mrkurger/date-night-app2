@@ -12,6 +12,10 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+
+
 
 export interface Review {
   _id: string;
@@ -33,7 +37,11 @@ export interface Review {
 @Component({
     selector: 'app-reviews-list',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, RouterModule, NebularModule],
+    imports: [
+    CommonModule, RouterModule, NebularModule,
+    ButtonModule,
+    MenuModule
+  ],
     template: `
     <div class="reviews-list-container">
       <!-- Loading State -->

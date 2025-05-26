@@ -28,6 +28,8 @@ import { AppSortEvent } from '../../../../shared/components/custom-nebular-compo
 import { AppSortComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { NbDatepickerModule } from '@nebular/theme';
+import { TableModule } from 'primeng/table';
+
 
 /**
  * Performance Dashboard Component
@@ -47,7 +49,8 @@ import { NbDatepickerModule } from '@nebular/theme';
     ReactiveFormsModule,
     AppSortComponent,
     AppSortHeaderComponent,
-    NbDatepickerModule,
+    NbDatepickerModule,,
+    TableModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `

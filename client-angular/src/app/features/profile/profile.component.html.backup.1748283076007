@@ -1,0 +1,138 @@
+<p-card class="profile-card" >
+  <p-card-header >
+    <h2>My Profile</h2>
+  </ng-template>
+  <p-card-body >
+    <div *ngIf="isLoading" class="loading-container">
+      <p-progressSpinner status="primary" size="large" ></p-progressSpinner>
+    </div>
+
+    <p-message status="danger" *ngIf="errorMessage" [severity]="status">
+      {{ errorMessage }}
+    </p-message>
+
+    <p-message status="success" *ngIf="successMessage" [severity]="status">
+      {{ successMessage }}
+    </p-message>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="userProfile && !isLoading">
+      <div class="profile-image-section">
+        <img
+          [src]="userProfile.avatar || 'assets/images/default-profile.png'"
+          alt="Profile Image"
+          class="profile-avatar"
+        />
+        <input
+          #fileInput
+          type="file"
+          id="profileImage"
+          accept="image/*"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+        <button
+          nbButton
+          outline
+          status="primary"
+          size="small"
+          (click)="fileInput.click()"
+          class="change-photo-btn"
+        >
+          <nb-icon icon="camera-outline"></nb-icon> Change Photo
+        </button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field" class="p-field">
+          <label>First Name</label>
+          <input
+            nbInput
+            fullWidth
+            formControlName="firstName"
+            placeholder="First Name"
+            [status]="
+              profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <div
+            *ngIf="profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid"
+          >
+            <p class="caption status-danger">First Name is required</p>
+          </div>
+        </div>
+
+        <div class="form-field" class="p-field">
+          <label>Last Name</label>
+          <input
+            nbInput
+            fullWidth
+            formControlName="lastName"
+            placeholder="Last Name"
+            [status]="
+              profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <div *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid">
+            <p class="caption status-danger">Last Name is required</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field">
+        <label>Bio</label>
+        <textarea nbInput fullWidth formControlName="bio" placeholder="Bio" rows="4"></textarea>
+      </div>
+
+      <div class="p-field">
+        <label>Phone Number</label>
+        <input nbInput fullWidth formControlName="phoneNumber" placeholder="Phone Number" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-field" class="p-field">
+          <label>City</label>
+          <input nbInput fullWidth formControlName="location.city" placeholder="City" />
+        </div>
+
+        <div class="form-field" class="p-field">
+          <label>Country</label>
+          <input nbInput fullWidth formControlName="location.country" placeholder="Country" />
+        </div>
+      </div>
+
+      <div class="preferences-section">
+        <h3>Preferences</h3>
+        <p-checkbox formControlName="preferences.notifications" status="primary"
+           >Enable Notifications</nb-checkbox
+        >
+
+        <div class="p-field">
+          <label>Privacy Setting</label>
+          <p-dropdown fullWidth formControlName="preferences.privacy" placeholder="Privacy Setting" [options]="options" optionLabel="label" optionValue="value">
+            <nb-option value="public">Public</nb-option>
+            <nb-option value="private">Private</nb-option>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <p-button></p-button>
+          <nb-icon icon="arrow-back-outline"></nb-icon> Cancel
+        </button>
+        <button
+          nbButton
+          status="primary"
+          type="submit"
+          [disabled]="profileForm.invalid || isLoading"
+        >
+          <nb-icon icon="save-outline"></nb-icon> Save Changes
+          <p-progressSpinner *ngIf="isLoading" size="tiny" status="control" ></p-progressSpinner>
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

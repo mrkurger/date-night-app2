@@ -47,6 +47,13 @@ import {
 import { WalletService, PaymentMethod } from '../../../core/services/wallet.service';
 import { PaymentService } from '../../../core/services/payment.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { TabViewModule } from 'primeng/tabview';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-add-payment-method-dialog',
@@ -54,7 +61,8 @@ import { NotificationService } from '../../../core/services/notification.service
   styleUrls: ['./add-payment-method-dialog.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
+  imports: [
+    NebularModule, CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,
@@ -71,7 +79,11 @@ import { NotificationService } from '../../../core/services/notification.service
     NbAlertModule,
     NbTooltipModule,
     NbBadgeModule,
-    NbTagModule,
+    NbTagModule,,
+    TabViewModule,
+    ProgressSpinnerModule,
+    MessageModule,
+    InputTextModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

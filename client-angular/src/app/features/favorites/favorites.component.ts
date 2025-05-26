@@ -25,6 +25,8 @@ import { environment } from '../../../environments/environment';
 import { CardGridComponent } from '../../shared/components/card-grid/card-grid.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { NotificationService } from '../../core/services/notification.service';
+import { CardModule } from 'primeng/card';
+
 
 export interface Favorite {
   _id: string;_user: string;

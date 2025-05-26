@@ -1,12 +1,12 @@
 <div class="favorites-container">
   <p-card>
-    <nb-card-header>
+    <p-card-header >
       <h1 class="favorites-page__title">My Favorites</h1>
       <p class="favorites-page__description">
         Manage your favorite ads and get notified when advertisers update their profiles or travel
         plans.
       </p>
-    </nb-card-header>
+    </ng-template>
 
     <div class="favorites-page__content">
       <!-- Loading state -->
@@ -35,8 +35,8 @@
       ></app-empty-state>
 
       <!-- Favorites grid -->
-      <nb-card-grid
-        *ngIf="!loading && !error && favorites.length > 0"
+      <p-card-grid
+        *ngIf="!loading && !error && favorites.length  > 0"
         [cards]="favoriteCards"
         [showActions]="true"
         [actions]="[
@@ -49,5 +49,5 @@
         (actionClick)="onActionClick($event)"
       ></app-card-grid>
     </div>
-  </nb-card>
+  </p-card>
 </div>

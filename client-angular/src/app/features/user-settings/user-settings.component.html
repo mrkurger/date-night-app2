@@ -2,7 +2,7 @@
      CUSTOMIZABLE SETTINGS IN THIS FILE
      ===================================================
      This file contains settings for component configuration (user-settings.component)
-     
+
      COMMON CUSTOMIZATIONS:
      - SETTING_NAME: Description of setting (default: value)
        Related to: other_file.html:OTHER_SETTING
@@ -14,38 +14,38 @@
       <p class="settings-subtitle">Manage your account preferences and personal information</p>
     </div>
 
-    <nb-tabset (changeTab)="setActiveTab($event.tabTitle.toLowerCase())" fullWidth class="settings-tabset">
-      <nb-tab tabTitle="profile" [active]="activeTab === 'profile'">
-        <ng-template nbTabIcon>
-            <nb-icon icon="person-outline"></nb-icon>
+    <p-tabView (changeTab)="setActiveTab($event.tabTitle.toLowerCase())" fullWidth class="settings-tabset" >
+      <p-tabPanel tabTitle="profile" [active]="activeTab === 'profile'">
+        <ng-template pTemplate="lefticon">
+            <i class="pi pi-user"></i>
         </ng-template>
         <!-- Profile Settings Panel (Content will be moved here or handled by activeTab logic) -->
-      </nb-tab>
-      <nb-tab tabTitle="security" [active]="activeTab === 'security'">
-        <ng-template nbTabIcon>
-            <nb-icon icon="lock-outline"></nb-icon>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="security" [active]="activeTab === 'security'">
+        <ng-template pTemplate="lefticon">
+            <i class="pi pi-lock"></i>
         </ng-template>
         <!-- Security Settings Panel -->
-      </nb-tab>
-      <nb-tab tabTitle="notifications" [active]="activeTab === 'notifications'">
-        <ng-template nbTabIcon>
-            <nb-icon icon="bell-outline"></nb-icon>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="notifications" [active]="activeTab === 'notifications'">
+        <ng-template pTemplate="lefticon">
+            <i class="pi pi-bell"></i>
         </ng-template>
         <!-- Notifications Settings Panel -->
-      </nb-tab>
-      <nb-tab tabTitle="privacy" [active]="activeTab === 'privacy'">
-        <ng-template nbTabIcon>
-            <nb-icon icon="shield-outline"></nb-icon>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="privacy" [active]="activeTab === 'privacy'">
+        <ng-template pTemplate="lefticon">
+            <i class="pi pi-shield"></i>
         </ng-template>
         <!-- Privacy Settings Panel -->
-      </nb-tab>
-      <nb-tab tabTitle="display" [active]="activeTab === 'display'">
-        <ng-template nbTabIcon>
-            <nb-icon icon="monitor-outline"></nb-icon>
+      </p-tabPanel>
+      <p-tabPanel tabTitle="display" [active]="activeTab === 'display'">
+        <ng-template pTemplate="lefticon">
+            <i class="pi pi-desktop"></i>
         </ng-template>
         <!-- Display Settings Panel -->
-      </nb-tab>
-    </nb-tabset>
+      </p-tabPanel>
+    </p-tabView>
 
     <div class="settings-content">
       <!-- Settings Content will be dynamically shown based on activeTab -->
@@ -53,7 +53,7 @@
       <div class="settings-body">
         <!-- Loading State -->
         <div class="settings-loading" *ngIf="loading">
-          <nb-spinner status="primary" size="large"></nb-spinner> <!-- Changed to nb-spinner -->
+          <p-progressSpinner status="primary" size="large" ></p-progressSpinner> <!-- Changed to nb-spinner -->
           <p>Loading your settings...</p>
         </div>
 
@@ -63,10 +63,10 @@
           <p class="panel-description">Update your personal information and profile details</p>
 
           <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
-            <nb-form-field>
+            <div class="p-field">
               <label for="name">Full Name</label>
-              <input nbInput fullWidth type="text" id="name" formControlName="name"
-                     [status]="(profileForm.get('name')?.invalid && profileForm.get('name')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="text" id="name" formControlName="name"
+                     [class.ng-invalid]="(profileForm.get('name')?.invalid && profileForm.get('name')?.touched)" />
               <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
                 <p class="caption status-danger" *ngIf="profileForm.get('name')?.errors?.['required']">
                   Name is required
@@ -75,12 +75,12 @@
                   Name must be at least 2 characters
                 </p>
               </div>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="email">Email Address</label>
-              <input nbInput fullWidth type="email" id="email" formControlName="email"
-                     [status]="(profileForm.get('email')?.invalid && profileForm.get('email')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="email" id="email" formControlName="email"
+                     [class.ng-invalid]="(profileForm.get('email')?.invalid && profileForm.get('email')?.touched)" />
               <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
                 <p class="caption status-danger" *ngIf="profileForm.get('email')?.errors?.['required']">
                   Email is required
@@ -89,30 +89,28 @@
                   Please enter a valid email address
                 </p>
               </div>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="phone">Phone Number (optional)</label>
-              <input nbInput fullWidth type="tel" id="phone" formControlName="phone"
-                     [status]="(profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="tel" id="phone" formControlName="phone"
+                     [class.ng-invalid]="$1" />
               <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched">
                 <p class="caption status-danger" *ngIf="profileForm.get('phone')?.errors?.['pattern']">
                   Please enter a valid phone number
                 </p>
               </div>
               <p class="caption">Format: +47 12345678</p>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="bio">Bio (optional)</label>
-              <textarea nbInput fullWidth id="bio" formControlName="bio" rows="4"></textarea>
+              <textarea pInputText id="bio" formControlName="bio" rows="4"></textarea>
               <p class="caption">Tell others a bit about yourself</p>
-            </nb-form-field>
+            </div>
 
             <div class="form-actions">
-              <p-button></p-button>
-                <nb-icon icon="save-outline"></nb-icon> Save Changes
-              </button>
+              <p-button type="submit" label="Save Changes" icon="pi pi-save"></p-button>
             </div>
           </form>
         </div>
@@ -123,21 +121,21 @@
           <p class="panel-description">Manage your password and account security</p>
 
           <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-            <nb-form-field>
+            <div class="p-field">
               <label for="currentPassword">Current Password</label>
-              <input nbInput fullWidth type="password" id="currentPassword" formControlName="currentPassword"
-                     [status]="(passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="password" id="currentPassword" formControlName="currentPassword"
+                     [class.ng-invalid]="$1" />
               <div *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
                 <p class="caption status-danger" *ngIf="passwordForm.get('currentPassword')?.errors?.['required']">
                   Current password is required
                 </p>
               </div>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="newPassword">New Password</label>
-              <input nbInput fullWidth type="password" id="newPassword" formControlName="newPassword"
-                     [status]="(passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="password" id="newPassword" formControlName="newPassword"
+                     [class.ng-invalid]="$1" />
               <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
                 <p class="caption status-danger" *ngIf="passwordForm.get('newPassword')?.errors?.['required']">
                   New password is required
@@ -146,12 +144,12 @@
                   Password must be at least 6 characters
                 </p>
               </div>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="confirmPassword">Confirm New Password</label>
-              <input nbInput fullWidth type="password" id="confirmPassword" formControlName="confirmPassword"
-                     [status]="(passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched) ? 'danger' : 'basic'" />
+              <input pInputText type="password" id="confirmPassword" formControlName="confirmPassword"
+                     [class.ng-invalid]="$1" />
               <div *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched">
                 <p class="caption status-danger" *ngIf="passwordForm.get('confirmPassword')?.errors?.['required']">
                   Please confirm your new password
@@ -160,12 +158,10 @@
                   Passwords do not match
                 </p>
               </div>
-            </nb-form-field>
+            </div>
 
             <div class="form-actions">
-              <p-button></p-button>
-                <nb-icon icon="keypad-outline"></nb-icon> Change Password 
-              </button>
+              <p-button label="Change Password" icon="pi pi-key"></p-button>
             </div>
           </form>
 
@@ -179,9 +175,7 @@
                   undone.
                 </p>
               </div>
-              <p-button></p-button>
-                <nb-icon icon="trash-2-outline"></nb-icon> Delete Account
-              </button>
+              <p-button label="Delete Account" icon="pi pi-trash"></p-button>
             </div>
           </div>
         </div>
@@ -193,28 +187,26 @@
 
           <form [formGroup]="notificationForm" (ngSubmit)="saveNotificationSettings()">
             <div class="form-check-group">
-                <nb-checkbox formControlName="emailNotifications" status="primary">
+                <p-checkbox formControlName="emailNotifications" status="primary" >
                     Email Notifications
                     <small class="caption">Receive notifications via email</small>
-                </nb-checkbox>
-                <nb-checkbox formControlName="chatNotifications" status="primary">
+                </p-checkbox>
+                <p-checkbox formControlName="chatNotifications" status="primary" >
                     Chat Notifications
                     <small class="caption">Receive notifications for new chat messages</small>
-                </nb-checkbox>
-                <nb-checkbox formControlName="newMatchNotifications" status="primary">
+                </p-checkbox>
+                <p-checkbox formControlName="newMatchNotifications" status="primary" >
                     New Match Notifications
                     <small class="caption">Receive notifications when someone likes your profile</small>
-                </nb-checkbox>
-                <nb-checkbox formControlName="marketingEmails" status="primary">
+                </p-checkbox>
+                <p-checkbox formControlName="marketingEmails" status="primary" >
                     Marketing Emails
                     <small class="caption">Receive promotional emails and special offers</small>
-                </nb-checkbox>
+                </p-checkbox>
             </div>
 
             <div class="form-actions">
-              <p-button></p-button>
-                <nb-icon icon="save-outline"></nb-icon> Save Preferences
-              </button>
+              <p-button label="Save Preferences" icon="pi pi-save"></p-button>
             </div>
           </form>
         </div>
@@ -225,38 +217,37 @@
           <p class="panel-description">Control your privacy and data sharing preferences</p>
 
           <form [formGroup]="privacyForm" (ngSubmit)="savePrivacySettings()">
-            <nb-form-field>
+            <div class="p-field">
               <label for="profileVisibility">Profile Visibility</label>
-              <nb-select fullWidth id="profileVisibility" formControlName="profileVisibility">
-                <nb-option value="public">Public - Visible to everyone</nb-option>
-                <nb-option value="registered">Registered Users - Only visible to registered users</nb-option>
-                <nb-option value="private">Private - Only visible to users you've matched with</nb-option>
-              </nb-select>
-            </nb-form-field>
+              <p-dropdown id="profileVisibility" formControlName="profileVisibility"
+                         [options]="profileVisibilityOptions"
+                         optionLabel="label"
+                         optionValue="value"
+                         placeholder="Select visibility">
+              </p-dropdown>
+            </div>
 
-            <nb-checkbox formControlName="showOnlineStatus" status="primary">
+            <p-checkbox formControlName="showOnlineStatus" status="primary" >
                 Show Online Status
                 <small class="caption">Allow others to see when you're online</small>
-            </nb-checkbox>
+            </p-checkbox>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="allowMessaging">Who Can Message You</label>
-              <nb-select fullWidth id="allowMessaging" formControlName="allowMessaging">
-                <nb-option value="all">Everyone</nb-option>
-                <nb-option value="matches">Only Matches</nb-option>
-                <nb-option value="none">No One (Disable messaging)</nb-option>
-              </nb-select>
-            </nb-form-field>
+              <p-dropdown fullWidth id="allowMessaging" formControlName="allowMessaging" [options]="options" optionLabel="label" optionValue="value">
+                <!-- TODO: Convert to options array: Everyone -->
+                <!-- TODO: Convert to options array: Only Matches -->
+                <!-- TODO: Convert to options array: No One (Disable messaging) -->
+              </p-dropdown>
+            </div>
 
-            <nb-checkbox formControlName="dataSharing" status="primary">
+            <p-checkbox formControlName="dataSharing" status="primary" >
                 Data Sharing for Service Improvement
                 <small class="caption">Allow anonymous usage data to be collected to improve our services</small>
-            </nb-checkbox>
+            </p-checkbox>
 
             <div class="form-actions">
-              <p-button></p-button>
-                <nb-icon icon="save-outline"></nb-icon> Save Privacy Settings
-              </button>
+              <p-button label="Save Privacy Settings" icon="pi pi-save"></p-button>
             </div>
           </form>
         </div>
@@ -269,8 +260,8 @@
           <form [formGroup]="displayForm" (ngSubmit)="saveDisplaySettings()">
             <div class="form-group">
               <label class="form-label">Theme</label>
-              <nb-radio-group formControlName="theme" class="theme-options-radio">
-                <nb-radio value="light" (click)="setTheme('light')">
+              <div formControlName="theme" class="theme-options-radio" class="p-field-radiobutton">
+                <p-radioButton value="light" (click)="setTheme('light')" >
                   <div class="theme-preview-wrapper">
                     <div class="theme-preview theme-preview-light">
                       <div class="theme-preview-header"></div>
@@ -278,8 +269,8 @@
                     </div>
                     Light
                   </div>
-                </nb-radio>
-                <nb-radio value="dark" (click)="setTheme('dark')">
+                </p-radioButton>
+                <p-radioButton value="dark" (click)="setTheme('dark')" >
                   <div class="theme-preview-wrapper">
                     <div class="theme-preview theme-preview-dark">
                       <div class="theme-preview-header"></div>
@@ -287,8 +278,8 @@
                     </div>
                     Dark
                   </div>
-                </nb-radio>
-                <nb-radio value="system" (click)="setTheme('system')">
+                </p-radioButton>
+                <p-radioButton value="system" (click)="setTheme('system')" >
                   <div class="theme-preview-wrapper">
                     <div class="theme-preview theme-preview-system">
                       <div class="theme-preview-header"></div>
@@ -296,39 +287,39 @@
                     </div>
                     System
                   </div>
-                </nb-radio>
-              </nb-radio-group>
+                </p-radioButton>
+              </div>
             </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="defaultViewType">Default View Type</label>
-              <nb-select fullWidth id="defaultViewType" formControlName="defaultViewType">
-                <nb-option value="netflix">Netflix View</nb-option>
-                <nb-option value="tinder">Tinder View</nb-option>
-                <nb-option value="list">List View</nb-option>
-              </nb-select>
+              <p-dropdown fullWidth id="defaultViewType" formControlName="defaultViewType" [options]="options" optionLabel="label" optionValue="value">
+                <!-- TODO: Convert to options array: Netflix View -->
+                <!-- TODO: Convert to options array: Tinder View -->
+                <!-- TODO: Convert to options array: List View -->
+              </p-dropdown>
               <p class="caption">Choose your preferred view when browsing profiles</p>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="contentDensity">Content Density</label>
-              <nb-select fullWidth id="contentDensity" formControlName="contentDensity">
-                <nb-option *ngFor="let option of contentDensityOptions" [value]="option.value">
+              <p-dropdown fullWidth id="contentDensity" formControlName="contentDensity" [options]="options" optionLabel="label" optionValue="value">
+                <!-- TODO: Convert to options array: 
                   {{ option.label }}
-                </nb-option>
-              </nb-select>
+                 -->
+              </p-dropdown>
               <p class="caption">Adjust how compact content appears</p>
-            </nb-form-field>
+            </div>
 
-            <nb-form-field>
+            <div class="p-field">
               <label for="cardSize">Card Size</label>
-              <nb-select fullWidth id="cardSize" formControlName="cardSize">
+              <p-dropdown fullWidth id="cardSize" formControlName="cardSize" [options]="options" optionLabel="label" optionValue="value">
                 <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">
                   {{ option.label }}
                 </option>
-              </nb-select>
+              </p-dropdown>
               <p class="caption">Choose the size of profile cards</p>
-            </nb-form-field>
+            </div>
 
             <!-- Preview (visual only, no direct Nebular components here unless they are part of the preview itself) -->
             <div class="display-preview">
@@ -356,16 +347,12 @@
             </div>
 
             <div class="form-actions">
-              <p-button></p-button>
-                <nb-icon icon="undo-outline"></nb-icon> Reset to Defaults
-              </button>
-              <p-button></p-button>
-                <nb-icon icon="save-outline"></nb-icon> Save Display Settings
-              </button>
+              <p-button label="Reset to Defaults" icon="pi pi-undo"></p-button>
+              <p-button label="Save Display Settings" icon="pi pi-save"></p-button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  </nb-card>
+  </p-card>
 </div>

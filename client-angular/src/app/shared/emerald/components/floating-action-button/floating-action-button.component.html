@@ -33,7 +33,7 @@
     [status]="color"
     shape="round"
   >
-    <nb-icon [icon]="icon" pack="fas"></nb-icon>
+    <i [class]="getIconClass(icon)"></i>
 
     <!-- Tooltip -->
     <span *ngIf="showTooltip && tooltipText" class="nb-fab__tooltip" nbTooltip="{{ tooltipText }}">
@@ -70,7 +70,7 @@
       [status]="color"
       ghost
     >
-      <nb-icon [icon]="item.icon" pack="fas"></nb-icon>
+      <i [class]="getIconClass(item.icon)"></i>
       <span class="nb-fab-menu__item-label">{{ item.label }}</span>
     </button>
   </div>

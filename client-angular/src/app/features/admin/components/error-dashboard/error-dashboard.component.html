@@ -3,39 +3,39 @@
 
   <div class="filter-section">
     <form [formGroup]="filterForm" class="filter-form">
-      <nb-form-field>
-        <nb-form-field-label>Error Category</nb-form-field-label>
-        <nb-select formControlName="category">
-          <nb-option value="">All Categories</nb-option>
-          <nb-option *ngFor="let category of errorCategories" [value]="category">
+      <div class="p-field">
+        <div-label class="p-field">Error Category</nb-form-field-label>
+        <p-dropdown formControlName="category" [options]="options" optionLabel="label" optionValue="value">
+          <!-- TODO: Convert to options array: All Categories -->
+          <!-- TODO: Convert to options array: 
             {{ getCategoryLabel(category) }}
-          </nb-option>
-        </nb-select>
-      </nb-form-field>
+           -->
+        </p-dropdown>
+      </div>
 
-      <nb-form-field>
-        <nb-form-field-label>Status Code</nb-form-field-label>
-        <input nbInput fullWidth formControlName="statusCode" placeholder="e.g. 404, 500" />
-      </nb-form-field>
+      <div class="p-field">
+        <div-label class="p-field">Status Code</nb-form-field-label>
+        <input pInputText formControlName="statusCode" placeholder="e.g. 404, 500" />
+      </div>
 
-      <nb-form-field>
-        <nb-form-field-label>Date Range</nb-form-field-label>
+      <div class="p-field">
+        <div-label class="p-field">Date Range</nb-form-field-label>
         <div class="date-range-inputs">
           <input type="date" formControlName="startDate" placeholder="Start date" />
           <input type="date" formControlName="endDate" placeholder="End date" />
         </div>
-      </nb-form-field>
+      </div>
 
-      <p-button></p-button>Apply Filters</button>
+      <p-button label="Apply Filters" ></p-button>
 
-      <p-button></p-button>Reset</button>
+      <p-button label="Reset" ></p-button>
     </form>
   </div>
 
   <div class="dashboard-content">
-    <nb-card class="chart-card">
-      <nb-card-header>Errors by Category</nb-card-header>
-      <nb-card-body>
+    <p-card class="chart-card" >
+      <p-card-header >Errors by Category</ng-template>
+      <p-card-body >
         <div class="chart-container" *ngIf="!loading; else loadingTemplate">
           <ngx-charts-pie-chart
             [results]="errorsByCategory"
@@ -46,12 +46,12 @@
           >
           </ngx-charts-pie-chart>
         </div>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
 
-    <nb-card class="chart-card">
-      <nb-card-header>Errors by Status Code</nb-card-header>
-      <nb-card-body>
+    <p-card class="chart-card" >
+      <p-card-header >Errors by Status Code</ng-template>
+      <p-card-body >
         <div class="chart-container" *ngIf="!loading; else loadingTemplate">
           <ngx-charts-bar-vertical
             [results]="errorsByStatusCode"
@@ -65,12 +65,12 @@
           >
           </ngx-charts-bar-vertical>
         </div>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
 
-    <nb-card class="chart-card">
-      <nb-card-header>Errors Over Time</nb-card-header>
-      <nb-card-body>
+    <p-card class="chart-card" >
+      <p-card-header >Errors Over Time</ng-template>
+      <p-card-body >
         <div class="chart-container" *ngIf="!loading; else loadingTemplate">
           <ngx-charts-line-chart
             [results]="errorsOverTime"
@@ -84,13 +84,13 @@
           >
           </ngx-charts-line-chart>
         </div>
-      </nb-card-body>
-    </nb-card>
+      </ng-template>
+    </p-card>
   </div>
 
-  <nb-card class="error-list-card">
-    <nb-card-header>Recent Errors</nb-card-header>
-    <nb-card-body>
+  <p-card class="error-list-card" >
+    <p-card-header >Recent Errors</ng-template>
+    <p-card-body >
       <div class="table-container" *ngIf="!loading; else loadingTemplate">
         <app-sort [active]="sortColumn" [direction]="sortDirection" (sortChange)="sortData($event)">
           <table>
@@ -126,11 +126,11 @@
                 <app-sort-header appSortHeaderId="category">Category</app-sort-header>
               </th>
               <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                <nb-badge
+                <p-badge
                   [text]="getCategoryLabel(row.data.category)"
                   [status]="getCategoryStatus(row.data.category)"
-                >
-                </nb-badge>
+                 value="
+                "></p-badge>
               </td>
             </ng-container>
 
@@ -154,9 +154,7 @@
             <ng-container nbTreeGridColumnDef="actions">
               <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
               <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                <p-button></p-button>
-                  <nb-icon icon="eye-outline"></nb-icon>
-                </button>
+                <p-button label="" icon="pi pi-eye"></p-button>
               </td>
             </ng-container>
 
@@ -173,13 +171,13 @@
         >
         </nb-paginator>
       </div>
-    </nb-card-body>
-  </nb-card>
+    </ng-template>
+  </p-card>
 </div>
 
 <ng-template #loadingTemplate>
   <div class="loading-container">
-    <nb-spinner></nb-spinner>
+    <p-progressSpinner ></p-progressSpinner>
     <p>Loading data...</p>
   </div>
 </ng-template>
@@ -191,11 +189,11 @@
       <div class="error-header">
         <div class="error-title">
           <h3>{{ selectedError?.errorCode }}</h3>
-          <nb-badge
+          <p-badge
             [text]="getCategoryLabel(selectedError?.category)"
             [status]="getCategoryStatus(selectedError?.category)"
-          >
-          </nb-badge>
+           value="
+          "></p-badge>
         </div>
         <div class="error-meta">
           <p><strong>Status:</strong> {{ selectedError?.statusCode }}</p>

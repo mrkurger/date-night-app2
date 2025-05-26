@@ -90,18 +90,25 @@ import { CardModule } from '../app-card/app-card.component';
     `,
     ],
     imports: [
-        CommonModule,
+    CommonModule,
         NbCardModule,
         NbSpinnerModule,
         SkeletonModule,
-        CardModule
-    ]
+        CardModule,
+    BadgeModule,
+    AvatarModule
+  ]
 })
 export class CardGridComponent {
   /**
    * The items to display in the grid
    */
   @Input() items: any[] = [];
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+
+
 
   /**
    * The number of columns in the grid

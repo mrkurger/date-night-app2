@@ -9,19 +9,19 @@
 // ===================================================
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuard } from '../../core/guards/admin.guard';
 
 // Component imports
-import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
-import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
-import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
-import { UserManagementComponent } from './components/user-management/user-management.component';
-import { RevenueAnalyticsComponent } from './components/revenue-analytics/revenue-analytics.component';
-import { ContentModerationComponent } from './components/content-moderation/content-moderation.component';
-import { SystemHealthComponent } from './components/system-health/system-health.component';
-import { AuditLogComponent } from './components/audit-log/audit-log.component';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { AuditLogComponent } from './components/audit-log/audit-log.component';
+import { ErrorDashboardComponent } from './components/error-dashboard/error-dashboard.component';
 import { ErrorSecurityDashboardComponent } from './components/error-security-dashboard/error-security-dashboard.component';
+import { PerformanceDashboardComponent } from './components/performance-dashboard/performance-dashboard.component';
+import { RevenueAnalyticsComponent } from './components/revenue-analytics/revenue-analytics.component';
+import { SystemHealthComponent } from './components/system-health/system-health.component';
+import { TelemetryDashboardComponent } from './components/telemetry-dashboard/telemetry-dashboard.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { ContentModerationComponent } from './content-moderation/content-moderation.component';
+import { AdminGuard } from '../../core/guards/admin.guard';
 
 /**
  * Admin module routes
@@ -91,6 +91,9 @@ const routes: Routes = [
   },
 ];
 
+/**
+ *
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

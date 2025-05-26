@@ -20,20 +20,27 @@ import {
  */
 @Component({
     selector: 'app-accessibility-demo',
-    imports: [NebularModule, CommonModule,
+    imports: [
+    NebularModule, CommonModule,
         NbCardModule,
         NbAccordionModule,
         NbTabsetModule,
         NbButtonModule,
         NbIconModule,
         NbListModule,
-        NbBadgeModule,
-    ],
+        NbBadgeModule,,
+    TabViewModule
+  ],
     templateUrl: './accessibility-demo.component.html',
     styleUrls: ['./accessibility-demo.component.scss']
 })
 export class AccessibilityDemoComponent {
   bem = new BemUtil('a11y-demo');
+import { CardModule } from 'primeng/card';
+import { TabViewModule } from 'primeng/tabview';
+import { AccordionModule } from 'primeng/accordion';
+
+
 
   // Sample data for the demo
   focusableElements = [

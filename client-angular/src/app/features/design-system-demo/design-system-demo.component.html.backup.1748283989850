@@ -1,0 +1,660 @@
+<div class="design-demo">
+  <div class="container">
+    <header class="design-demo__header">
+      <h1 class="design-demo__title">DateNight.io Design System</h1>
+      <p class="design-demo__description">
+        This page demonstrates the components and styles available in the DateNight.io design
+        system.
+      </p>
+    </header>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Typography</h2>
+
+      <div class="design-demo__card-grid">
+        <p-card>
+          <h3 class="heading-1">Heading 1</h3>
+          <h3 class="heading-2">Heading 2</h3>
+          <h3 class="heading-3">Heading 3</h3>
+          <h3 class="heading-4">Heading 4</h3>
+          <h3 class="heading-5">Heading 5</h3>
+          <h3 class="heading-6">Heading 6</h3>
+        </p-card>
+
+        <p-card>
+          <p class="body-large">Body Large: This is larger body text used for featured content.</p>
+          <p class="body-default">
+            Body Default: This is the default body text used for most content.
+          </p>
+          <p class="body-small">
+            Body Small: This is smaller body text used for secondary content.
+          </p>
+          <p class="body-xs">
+            Body XS: This is extra small text used for fine print and legal text.
+          </p>
+          <p class="caption">
+            Caption: This is used for image captions and supplementary information.
+          </p>
+          <p class="label">Label: This is used for form labels and small headers.</p>
+        </p-card>
+      </div>
+    </section>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Colors</h2>
+
+      <div class="design-demo__card-grid">
+        <p-card>
+          <h3 class="heading-4 mb-4">Primary Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-primary"></div>
+              <div class="color-swatch__name">Primary</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-primary-light)"
+              ></div>
+              <div class="color-swatch__name">Primary Light</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-primary-dark)"
+              ></div>
+              <div class="color-swatch__name">Primary Dark</div>
+            </div>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Secondary Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-secondary"></div>
+              <div class="color-swatch__name">Secondary</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-secondary-light)"
+              ></div>
+              <div class="color-swatch__name">Secondary Light</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-secondary-dark)"
+              ></div>
+              <div class="color-swatch__name">Secondary Dark</div>
+            </div>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Semantic Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-success"></div>
+              <div class="color-swatch__name">Success</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-warning"></div>
+              <div class="color-swatch__name">Warning</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-danger"></div>
+              <div class="color-swatch__name">Danger</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-info"></div>
+              <div class="color-swatch__name">Info</div>
+            </div>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Neutral Colors</h3>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-white"></div>
+              <div class="color-swatch__name">White</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-light"></div>
+              <div class="color-swatch__name">Light Gray 1</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-light-gray-2)"
+              ></div>
+              <div class="color-swatch__name">Light Gray 2</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-medium-gray-1)"
+              ></div>
+              <div class="color-swatch__name">Medium Gray 1</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-medium-gray-2)"
+              ></div>
+              <div class="color-swatch__name">Medium Gray 2</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-dark-gray-1)"
+              ></div>
+              <div class="color-swatch__name">Dark Gray 1</div>
+            </div>
+            <div class="color-swatch">
+              <div
+                class="color-swatch__sample"
+                style="background-color: var(--color-dark-gray-2)"
+              ></div>
+              <div class="color-swatch__name">Dark Gray 2</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__sample bg-dark"></div>
+              <div class="color-swatch__name">Dark Gray 3</div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </section>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Buttons</h2>
+
+      <div class="design-demo__card-grid">
+        <p-card>
+          <h3 class="heading-4 mb-4">Button Variants</h3>
+          <div class="button-grid">
+            <app-button variant="primary" (buttonClick)="onButtonClick($event, 'Primary')">
+              Primary
+            </app-button>
+
+            <app-button variant="secondary" (buttonClick)="onButtonClick($event, 'Secondary')">
+              Secondary
+            </app-button>
+
+            <app-button variant="tertiary" (buttonClick)="onButtonClick($event, 'Tertiary')">
+              Tertiary
+            </app-button>
+
+            <app-button variant="danger" (buttonClick)="onButtonClick($event, 'Danger')">
+              Danger
+            </app-button>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Button Sizes</h3>
+          <div class="button-grid">
+            <app-button size="small" (buttonClick)="onButtonClick($event, 'Small')">
+              Small
+            </app-button>
+
+            <app-button size="medium" (buttonClick)="onButtonClick($event, 'Medium')">
+              Medium
+            </app-button>
+
+            <app-button size="large" (buttonClick)="onButtonClick($event, 'Large')">
+              Large
+            </app-button>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Button States</h3>
+          <div class="button-grid">
+            <app-button [disabled]="true"> Disabled </app-button>
+
+            <app-button [loading]="true"> Loading </app-button>
+
+            <app-button [fullWidth]="true"> Full Width </app-button>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Buttons with Icons</h3>
+          <div class="button-grid">
+            <app-button iconLeft="arrow-left" (buttonClick)="onButtonClick($event, 'Icon Left')">
+              Back
+            </app-button>
+
+            <app-button iconRight="arrow-right" (buttonClick)="onButtonClick($event, 'Icon Right')">
+              Next
+            </app-button>
+
+            <app-button
+              variant="secondary"
+              iconLeft="heart"
+              (buttonClick)="onButtonClick($event, 'Icon Left Secondary')"
+            >
+              Favorite
+            </app-button>
+
+            <app-button
+              variant="tertiary"
+              iconRight="search"
+              (buttonClick)="onButtonClick($event, 'Icon Right Tertiary')"
+            >
+              Search
+            </app-button>
+          </div>
+        </p-card>
+      </div>
+    </section>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Form Inputs</h2>
+
+      <div class="design-demo__card-grid">
+        <p-card>
+          <h3 class="heading-4 mb-4">Text Inputs</h3>
+          <div class="form-grid">
+            <app-input
+              label="Default Input"
+              placeholder="Enter text"
+              [(ngModel)]="inputValue"
+              (valueChange)="onInputChange($event, 'Default Input')"
+            >
+            </app-input>
+
+            <app-input
+              label="Input with Icon"
+              placeholder="Search..."
+              iconLeft="search"
+              [(ngModel)]="inputValue"
+              (valueChange)="onInputChange($event, 'Input with Icon')"
+            >
+            </app-input>
+
+            <app-input
+              label="Password Input"
+              type="password"
+              placeholder="Enter password"
+              [(ngModel)]="passwordValue"
+              (valueChange)="onInputChange($event, 'Password Input')"
+            >
+            </app-input>
+
+            <app-input
+              label="Disabled Input"
+              placeholder="This input is disabled"
+              [disabled]="true"
+            >
+            </app-input>
+
+            <app-input
+              label="Input with Error"
+              placeholder="Enter text"
+              errorMessage="This field is required"
+            >
+            </app-input>
+
+            <app-input
+              label="Input with Helper Text"
+              placeholder="Enter text"
+              helperText="This is some helper text"
+            >
+            </app-input>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Input Variants</h3>
+          <div class="form-grid">
+            <app-input
+              label="Outlined Input (Default)"
+              placeholder="Outlined input"
+              variant="outlined"
+            >
+            </app-input>
+
+            <app-input label="Filled Input" placeholder="Filled input" variant="filled">
+            </app-input>
+
+            <app-input label="Standard Input" placeholder="Standard input" variant="standard">
+            </app-input>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Input Sizes</h3>
+          <div class="form-grid">
+            <app-input label="Small Input" placeholder="Small input" size="small"> </app-input>
+
+            <app-input label="Medium Input (Default)" placeholder="Medium input" size="medium">
+            </app-input>
+
+            <app-input label="Large Input" placeholder="Large input" size="large"> </app-input>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Checkboxes (now Toggles)</h3>
+          <div class="form-grid">
+            <p-inputSwitch
+              label="Default Toggle"
+              [(ngModel)]="checkboxValue"
+              (change)="onToggleChange($event, 'Default Toggle')"
+             >
+            </p-inputSwitch>
+
+            <p-inputSwitch label="Checked Toggle" [(ngModel)]="checkedToggleValue" >
+            </p-inputSwitch>
+
+            <p-inputSwitch label="Disabled Toggle" [disabled]="true" > </p-inputSwitch>
+
+            <p-inputSwitch
+              label="Disabled Checked Toggle"
+              [(ngModel)]="disabledCheckedToggleValue"
+              [disabled]="true"
+             >
+            </p-inputSwitch>
+
+            <p-inputSwitch label="Toggle with (conceptual) Error" > </p-inputSwitch>
+
+            <p-inputSwitch label="Toggle with (conceptual) Helper Text" > </p-inputSwitch>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Toggle Sizes</h3>
+          <div class="form-grid">
+            <p-inputSwitch label="Small Toggle" size="small" > </p-inputSwitch>
+
+            <p-inputSwitch label="Medium Toggle (Default)" size="medium" > </p-inputSwitch>
+
+            <p-inputSwitch label="Large Toggle" size="large" > </p-inputSwitch>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Toggle Colors (Emerald Specific)</h3>
+          <div class="form-grid">
+            <p-inputSwitch
+              label="Primary Toggle"
+              color="primary"
+              [(ngModel)]="primaryToggleValue"
+             ></p-inputSwitch>
+            <p-inputSwitch
+              label="Success Toggle"
+              color="success"
+              [(ngModel)]="successToggleValue"
+             ></p-inputSwitch>
+            <p-inputSwitch
+              label="Warning Toggle"
+              color="warning"
+              [(ngModel)]="warningToggleValue"
+             ></p-inputSwitch>
+            <p-inputSwitch
+              label="Danger Toggle"
+              color="danger"
+              [(ngModel)]="dangerToggleValue"
+             ></p-inputSwitch>
+            <p-inputSwitch
+              label="Info Toggle"
+              color="info"
+              [(ngModel)]="infoToggleValue"
+             ></p-inputSwitch>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Select Inputs</h3>
+          <div class="form-grid">
+            <app-select
+              label="Default Select"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              [(ngModel)]="selectValue"
+              (valueChange)="onSelectChange($event, 'Default Select')"
+            >
+            </app-select>
+
+            <app-select
+              label="Disabled Select"
+              placeholder="This select is disabled"
+              [options]="selectOptions"
+              [disabled]="true"
+            >
+            </app-select>
+
+            <app-select
+              label="Select with Error"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              errorMessage="This field is required"
+            >
+            </app-select>
+
+            <app-select
+              label="Select with Helper Text"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              helperText="This is some helper text"
+            >
+            </app-select>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Select Variants</h3>
+          <div class="form-grid">
+            <app-select
+              label="Outlined Select (Default)"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              variant="outlined"
+            >
+            </app-select>
+
+            <app-select
+              label="Filled Select"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              variant="filled"
+            >
+            </app-select>
+
+            <app-select
+              label="Standard Select"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              variant="standard"
+            >
+            </app-select>
+          </div>
+        </p-card>
+
+        <p-card>
+          <h3 class="heading-4 mb-4">Select Sizes</h3>
+          <div class="form-grid">
+            <app-select
+              label="Small Select"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              size="small"
+            >
+            </app-select>
+
+            <app-select
+              label="Medium Select (Default)"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              size="medium"
+            >
+            </app-select>
+
+            <app-select
+              label="Large Select"
+              placeholder="Select an option"
+              [options]="selectOptions"
+              size="large"
+            >
+            </app-select>
+          </div>
+        </p-card>
+      </div>
+    </section>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Cards</h2>
+
+      <div class="design-demo__card-grid">
+        <p-card>
+          <h3 class="heading-4">Default Card</h3>
+          <p class="body-default">This is a default card with medium padding and border radius.</p>
+        </p-card>
+
+        <p-card [bordered]="false" >
+          <h3 class="heading-4">Borderless Card</h3>
+          <p class="body-default">This card has no border, only shadow.</p>
+        </p-card>
+
+        <p-card [shadowed]="false" >
+          <h3 class="heading-4">No Shadow Card</h3>
+          <p class="body-default">This card has a border but no shadow.</p>
+        </p-card>
+
+        <p-card padding="large" radius="large" >
+          <h3 class="heading-4">Large Padding & Radius</h3>
+          <p class="body-default">This card has large padding and border radius.</p>
+        </p-card>
+
+        <p-card padding="small" radius="small" >
+          <h3 class="heading-4">Small Padding & Radius</h3>
+          <p class="body-default">This card has small padding and border radius.</p>
+        </p-card>
+
+        <p-card [clickable]="true" >
+          <h3 class="heading-4">Clickable Card</h3>
+          <p class="body-default">This card is clickable and has hover effects.</p>
+        </p-card>
+
+        <p-card [selected]="true" >
+          <h3 class="heading-4">Selected Card</h3>
+          <p class="body-default">This card is in a selected state.</p>
+        </p-card>
+
+        <p-card [disabled]="true" >
+          <h3 class="heading-4">Disabled Card</h3>
+          <p class="body-default">This card is in a disabled state.</p>
+        </p-card>
+      </div>
+    </section>
+
+    <section class="design-demo__section">
+      <h2 class="design-demo__section-title">Icons</h2>
+
+      <p-card>
+        <h3 class="heading-4 mb-4">Icon Sizes & Colors</h3>
+        <div class="icon-grid">
+          <div class="icon-demo">
+            <app-icon name="heart" size="small"></app-icon>
+            <span class="icon-demo__label">Small</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" size="medium"></app-icon>
+            <span class="icon-demo__label">Medium</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" size="large"></app-icon>
+            <span class="icon-demo__label">Large</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="primary"></app-icon>
+            <span class="icon-demo__label">Primary</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="secondary"></app-icon>
+            <span class="icon-demo__label">Secondary</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="success"></app-icon>
+            <span class="icon-demo__label">Success</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="warning"></app-icon>
+            <span class="icon-demo__label">Warning</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="error"></app-icon>
+            <span class="icon-demo__label">Error</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart" color="info"></app-icon>
+            <span class="icon-demo__label">Info</span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="mt-4" >
+        <h3 class="heading-4 mb-4">Available Icons</h3>
+        <div class="icon-grid">
+          <div class="icon-demo">
+            <app-icon name="arrow-right"></app-icon>
+            <span class="icon-demo__label">arrow-right</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="arrow-left"></app-icon>
+            <span class="icon-demo__label">arrow-left</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="check"></app-icon>
+            <span class="icon-demo__label">check</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="close"></app-icon>
+            <span class="icon-demo__label">close</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="heart"></app-icon>
+            <span class="icon-demo__label">heart</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="search"></app-icon>
+            <span class="icon-demo__label">search</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="chevron-down"></app-icon>
+            <span class="icon-demo__label">chevron-down</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="eye"></app-icon>
+            <span class="icon-demo__label">eye</span>
+          </div>
+
+          <div class="icon-demo">
+            <app-icon name="eye-off"></app-icon>
+            <span class="icon-demo__label">eye-off</span>
+          </div>
+        </div>
+      </p-card>
+    </section>
+  </div>
+</div>

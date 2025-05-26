@@ -1,0 +1,478 @@
+# File: .github/workflows/codeql-analysis-pro.yml
+name: "CodeQL Security Analysis (Pro+ Compatible)"
+
+# This workflow runs CodeQL analysis without requiring GitHub Advanced Security
+# Results are saved as artifacts and posted to PR comments instead of Security tab
+
+on:
+  # Push events on main and develop branches trigger security scanning
+  push:
+    branches: [ main, develop ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'docs/**'
+  
+  # Pull requests to main branch get scanned before merge
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.jsx'
+      - '**.tsx'
+      - '**.py'
+      - '**.html'
+      - 'package*.json'
+      - 'requirements.txt'
+      - 'Pipfile*'
+  
+  # Weekly deep scans on Monday at 3 AM UTC
+  schedule:
+    - cron: '0 3 * * 1'
+  
+  # Manual trigger for on-demand scanning
+  workflow_dispatch:
+    inputs:
+      output_format:
+        description: 'Output format for results'
+        required: false
+        type: choice
+        options:
+          - 'markdown'
+          - 'json'
+          - 'both'
+        default: 'markdown'
+
+# Minimal permissions - no security-events write needed
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  actions: read
+
+# Cancel in-progress runs when new commits are pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Run CodeQL analysis and save results as artifacts
+  analyze:
+    name: Analyze Code Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript-typescript', 'python' ]
+        include:
+          - language: 'javascript-typescript'
+            build-mode: 'none'  # No build needed for JS/TS analysis
+          - language: 'python'
+            build-mode: 'none'
+
+    steps:
+    # Step 1: Checkout repository code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    # Step 2: Setup Node.js for JavaScript/TypeScript
+    - name: Setup Node.js
+      if: matrix.language == 'javascript-typescript'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    # Step 3: Setup Python for backend analysis
+    - name: Setup Python
+      if: matrix.language == 'python'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'  # TODO: Update to match your Python version
+        cache: 'pip'
+
+    # Step 4: Initialize CodeQL with CSV output (Pro+ compatible)
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        queries: security-and-quality
+        # Use CSV format for output since we can't use SARIF upload
+        config: |
+          paths-ignore:
+            - node_modules
+            - dist
+            - build
+            - .angular
+
+    # Step 5: Install dependencies for better analysis accuracy
+    - name: Install dependencies
+      run: |
+        echo "📦 Installing dependencies for ${{ matrix.language }} analysis..."
+        
+        if [ "${{ matrix.language }}" == "javascript-typescript" ]; then
+          # Install JavaScript/TypeScript dependencies
+          if [ -f "package.json" ]; then
+            npm ci --prefer-offline --no-audit || npm install
+          fi
+        elif [ "${{ matrix.language }}" == "python" ]; then
+          # Install Python dependencies
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt --no-deps 2>/dev/null || true
+          fi
+        fi
+
+    # Step 6: Perform CodeQL Analysis (no autobuild needed)
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{ matrix.language }}"
+        # Don't upload to code scanning since it's not available
+        upload: false
+        # Output results to a specific directory
+        output: codeql-results-${{ matrix.language }}
+
+    # Step 7: Convert CodeQL results to readable format
+    - name: Process CodeQL Results
+      id: process-results
+      run: |
+        echo "📊 Processing CodeQL results for ${{ matrix.language }}..."
+        
+        # Create results directory
+        mkdir -p processed-results
+        
+        # Find SARIF files in the results directory
+        SARIF_FILE=$(find codeql-results-${{ matrix.language }} -name "*.sarif" -type f | head -n 1)
+        
+        if [ -n "$SARIF_FILE" ]; then
+          echo "Found SARIF file: $SARIF_FILE"
+          
+          # Create a simple markdown report from SARIF
+          node --input-type=module --eval "
+          import { readFileSync, writeFileSync } from 'fs';
+          
+          // Read SARIF file
+          const sarifContent = readFileSync('$SARIF_FILE', 'utf8');
+          const sarif = JSON.parse(sarifContent);
+          
+          // Initialize counters
+          let criticalCount = 0;
+          let highCount = 0;
+          let mediumCount = 0;
+          let lowCount = 0;
+          const findings = [];
+          
+          // Process each run in the SARIF file
+          for (const run of sarif.runs || []) {
+            const tool = run.tool?.driver?.name || 'CodeQL';
+            
+            // Process results
+            for (const result of run.results || []) {
+              // Determine severity
+              const level = result.level || 'warning';
+              let severity = 'MEDIUM';
+              
+              if (level === 'error') {
+                severity = 'HIGH';
+                highCount++;
+              } else if (level === 'warning') {
+                severity = 'MEDIUM';
+                mediumCount++;
+              } else {
+                severity = 'LOW';
+                lowCount++;
+              }
+              
+              // Extract location information
+              const location = result.locations?.[0]?.physicalLocation;
+              const file = location?.artifactLocation?.uri || 'unknown';
+              const line = location?.region?.startLine || '?';
+              
+              // Add to findings array
+              findings.push({
+                severity,
+                rule: result.ruleId || 'unknown',
+                message: result.message?.text || 'No description',
+                file,
+                line,
+                tool
+              });
+            }
+          }
+          
+          // Sort findings by severity
+          const severityOrder = { 'CRITICAL': 0, 'HIGH': 1, 'MEDIUM': 2, 'LOW': 3 };
+          findings.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
+          
+          // Generate markdown report
+          let markdown = '# CodeQL Security Analysis Results\\n\\n';
+          markdown += '**Language:** ${{ matrix.language }}\\n';
+          markdown += '**Date:** ' + new Date().toISOString() + '\\n\\n';
+          
+          markdown += '## 📊 Summary\\n\\n';
+          markdown += '| Severity | Count |\\n';
+          markdown += '|----------|-------|\\n';
+          markdown += '| 🔴 HIGH | ' + highCount + ' |\\n';
+          markdown += '| 🟡 MEDIUM | ' + mediumCount + ' |\\n';
+          markdown += '| 🔵 LOW | ' + lowCount + ' |\\n';
+          markdown += '| **TOTAL** | **' + findings.length + '** |\\n\\n';
+          
+          if (findings.length > 0) {
+            markdown += '## 🔍 Detailed Findings\\n\\n';
+            
+            // Group by severity
+            const grouped = findings.reduce((acc, finding) => {
+              if (!acc[finding.severity]) acc[finding.severity] = [];
+              acc[finding.severity].push(finding);
+              return acc;
+            }, {});
+            
+            // Output findings by severity
+            for (const [severity, items] of Object.entries(grouped)) {
+              markdown += '### ' + severity + ' Severity Issues\\n\\n';
+              
+              for (const item of items.slice(0, 10)) {
+                markdown += '#### ' + item.rule + '\\n';
+                markdown += '- **File:** \`' + item.file + ':' + item.line + '\`\\n';
+                markdown += '- **Message:** ' + item.message + '\\n\\n';
+              }
+              
+              if (items.length > 10) {
+                markdown += '*... and ' + (items.length - 10) + ' more ' + severity + ' issues*\\n\\n';
+              }
+            }
+          } else {
+            markdown += '## ✅ No Security Issues Found!\\n\\n';
+            markdown += 'Great job! CodeQL analysis found no security vulnerabilities.\\n';
+          }
+          
+          // Save markdown report
+          writeFileSync('processed-results/codeql-${{ matrix.language }}.md', markdown);
+          
+          // Save JSON report
+          const jsonReport = {
+            language: '${{ matrix.language }}',
+            timestamp: new Date().toISOString(),
+            summary: {
+              total: findings.length,
+              high: highCount,
+              medium: mediumCount,
+              low: lowCount
+            },
+            findings: findings
+          };
+          
+          writeFileSync('processed-results/codeql-${{ matrix.language }}.json', JSON.stringify(jsonReport, null, 2));
+          
+          // Set outputs for GitHub Actions
+          console.log('::set-output name=total_issues::' + findings.length);
+          console.log('::set-output name=high_issues::' + highCount);
+          console.log('::set-output name=has_issues::' + (findings.length > 0));
+          "
+        else
+          echo "No SARIF file found, creating empty report..."
+          echo "# CodeQL Security Analysis Results" > processed-results/codeql-${{ matrix.language }}.md
+          echo "" >> processed-results/codeql-${{ matrix.language }}.md
+          echo "No results file generated. This might indicate an analysis error." >> processed-results/codeql-${{ matrix.language }}.md
+          echo "::set-output name=total_issues::0"
+          echo "::set-output name=high_issues::0"
+          echo "::set-output name=has_issues::false"
+        fi
+
+    # Step 8: Upload results as artifacts (accessible without Advanced Security)
+    - name: Upload CodeQL Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: codeql-results-${{ matrix.language }}
+        path: |
+          codeql-results-${{ matrix.language }}/
+          processed-results/
+        retention-days: 30
+
+    # Step 9: Add results to job summary
+    - name: Add to Job Summary
+      if: always()
+      run: |
+        echo "## 🔐 CodeQL Analysis Results for ${{ matrix.language }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f "processed-results/codeql-${{ matrix.language }}.md" ]; then
+          cat "processed-results/codeql-${{ matrix.language }}.md" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No results file found. Check the workflow logs for errors." >> $GITHUB_STEP_SUMMARY
+        fi
+
+  # Job 2: Combine results and create unified report
+  combine-results:
+    name: Combine Security Results
+    runs-on: ubuntu-latest
+    needs: analyze
+    if: always()
+    
+    steps:
+    # Step 1: Download all artifacts
+    - name: Download all results
+      uses: actions/download-artifact@v4
+      with:
+        path: all-results
+        pattern: codeql-results-*
+
+    # Step 2: Combine results into unified report
+    - name: Create Combined Report
+      id: combine
+      run: |
+        echo "📊 Combining security scan results..."
+        
+        # Create combined results directory
+        mkdir -p combined-results
+        
+        # Create combined markdown report
+        echo "# 🔐 Combined CodeQL Security Analysis Report" > combined-results/security-report.md
+        echo "" >> combined-results/security-report.md
+        echo "**Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> combined-results/security-report.md
+        echo "**Commit:** ${{ github.sha }}" >> combined-results/security-report.md
+        echo "**Date:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> combined-results/security-report.md
+        echo "" >> combined-results/security-report.md
+        
+        # Initialize counters
+        TOTAL_ISSUES=0
+        TOTAL_HIGH=0
+        
+        # Process each language result
+        for result_dir in all-results/codeql-results-*/processed-results; do
+          if [ -d "$result_dir" ]; then
+            # Add markdown content
+            for md_file in "$result_dir"/*.md; do
+              if [ -f "$md_file" ]; then
+                echo "" >> combined-results/security-report.md
+                echo "---" >> combined-results/security-report.md
+                echo "" >> combined-results/security-report.md
+                cat "$md_file" >> combined-results/security-report.md
+              fi
+            done
+            
+            # Count issues from JSON files
+            for json_file in "$result_dir"/*.json; do
+              if [ -f "$json_file" ]; then
+                ISSUES=$(jq -r '.summary.total // 0' "$json_file" 2>/dev/null || echo "0")
+                HIGH=$(jq -r '.summary.high // 0' "$json_file" 2>/dev/null || echo "0")
+                TOTAL_ISSUES=$((TOTAL_ISSUES + ISSUES))
+                TOTAL_HIGH=$((TOTAL_HIGH + HIGH))
+              fi
+            done
+          fi
+        done
+        
+        # Set outputs
+        echo "::set-output name=total_issues::$TOTAL_ISSUES"
+        echo "::set-output name=high_issues::$TOTAL_HIGH"
+        echo "::set-output name=should_fail::$( [ $TOTAL_HIGH -gt 0 ] && echo 'true' || echo 'false' )"
+        
+        # Create summary at the top of the report
+        SUMMARY="## 📊 Overall Summary\\n\\n"
+        SUMMARY+="**Total Security Issues Found:** $TOTAL_ISSUES\\n"
+        SUMMARY+="**High Severity Issues:** $TOTAL_HIGH\\n\\n"
+        
+        if [ $TOTAL_HIGH -gt 0 ]; then
+          SUMMARY+="⚠️ **Action Required:** This code contains high severity security issues that should be addressed.\\n"
+        elif [ $TOTAL_ISSUES -gt 0 ]; then
+          SUMMARY+="⚡ **Recommendation:** Review and address the security findings when possible.\\n"
+        else
+          SUMMARY+="✅ **All Clear:** No security issues detected!\\n"
+        fi
+        
+        # Prepend summary to report
+        echo -e "$SUMMARY" | cat - combined-results/security-report.md > temp && mv temp combined-results/security-report.md
+
+    # Step 3: Upload combined report
+    - name: Upload Combined Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-analysis-report
+        path: combined-results/
+        retention-days: 90
+
+    # Step 4: Comment on PR (if applicable)
+    - name: Comment on Pull Request
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          // Read the combined report
+          const fs = require('fs');
+          let reportContent = '## 🔐 CodeQL Security Analysis Results\n\n';
+          
+          // Add summary metrics
+          const totalIssues = '${{ steps.combine.outputs.total_issues }}' || '0';
+          const highIssues = '${{ steps.combine.outputs.high_issues }}' || '0';
+          
+          reportContent += `**Total Issues Found:** ${totalIssues}\n`;
+          reportContent += `**High Severity Issues:** ${highIssues}\n\n`;
+          
+          // Add status
+          if (highIssues > 0) {
+            reportContent += '⚠️ **Status:** Security issues detected that need attention\n\n';
+          } else if (totalIssues > 0) {
+            reportContent += '⚡ **Status:** Minor security issues detected\n\n';
+          } else {
+            reportContent += '✅ **Status:** No security issues found!\n\n';
+          }
+          
+          // Add link to full report
+          reportContent += `📄 **Full Report:** [View detailed results](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n\n`;
+          
+          // Add instructions
+          reportContent += '### 📋 Next Steps:\n';
+          reportContent += '1. Download the full security report from the workflow artifacts\n';
+          reportContent += '2. Review each finding and determine if it\'s a real issue\n';
+          reportContent += '3. Fix any legitimate security vulnerabilities\n';
+          reportContent += '4. Re-run the analysis after making changes\n\n';
+          
+          // Add footer
+          reportContent += '---\n';
+          reportContent += `<sub>🤖 This comment was generated by the CodeQL security workflow. `;
+          reportContent += `Since you're using GitHub Pro+, results are provided as artifacts instead of the Security tab.</sub>`;
+          
+          // Find and update or create comment
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+          
+          const botComment = comments.find(comment => 
+            comment.user.type === 'Bot' && 
+            comment.body.includes('CodeQL Security Analysis Results')
+          );
+          
+          if (botComment) {
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: botComment.id,
+              body: reportContent,
+            });
+          } else {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: reportContent,
+            });
+          }
+
+    # Step 5: Fail the workflow if high severity issues found (optional)
+    - name: Check Security Status
+      if: steps.combine.outputs.should_fail == 'true' && github.event_name == 'pull_request'
+      run: |
+        echo "❌ High severity security issues detected!"
+        echo "Please review the security report and fix the issues before merging."
+        # TODO: Uncomment the next line to fail PRs with security issues
+        # exit 1

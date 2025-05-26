@@ -19,7 +19,7 @@
           <h3 class="heading-4">Heading 4</h3>
           <h3 class="heading-5">Heading 5</h3>
           <h3 class="heading-6">Heading 6</h3>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <p class="body-large">Body Large: This is larger body text used for featured content.</p>
@@ -36,7 +36,7 @@
             Caption: This is used for image captions and supplementary information.
           </p>
           <p class="label">Label: This is used for form labels and small headers.</p>
-        </nb-card>
+        </p-card>
       </div>
     </section>
 
@@ -66,7 +66,7 @@
               <div class="color-swatch__name">Primary Dark</div>
             </div>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Secondary Colors</h3>
@@ -90,7 +90,7 @@
               <div class="color-swatch__name">Secondary Dark</div>
             </div>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Semantic Colors</h3>
@@ -112,7 +112,7 @@
               <div class="color-swatch__name">Info</div>
             </div>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Neutral Colors</h3>
@@ -165,7 +165,7 @@
               <div class="color-swatch__name">Dark Gray 3</div>
             </div>
           </div>
-        </nb-card>
+        </p-card>
       </div>
     </section>
 
@@ -176,80 +176,80 @@
         <p-card>
           <h3 class="heading-4 mb-4">Button Variants</h3>
           <div class="button-grid">
-            <app-button variant="primary" (buttonClick)="onButtonClick($event, 'Primary')">
+            <p-button variant="primary" (buttonClick)="onButtonClick($event, 'Primary')" pButton="">
               Primary
-            </app-button>
+            </p-button>
 
-            <app-button variant="secondary" (buttonClick)="onButtonClick($event, 'Secondary')">
+            <p-button variant="secondary" (buttonClick)="onButtonClick($event, 'Secondary')" pButton="">
               Secondary
-            </app-button>
+            </p-button>
 
-            <app-button variant="tertiary" (buttonClick)="onButtonClick($event, 'Tertiary')">
+            <p-button variant="tertiary" (buttonClick)="onButtonClick($event, 'Tertiary')" pButton="">
               Tertiary
-            </app-button>
+            </p-button>
 
-            <app-button variant="danger" (buttonClick)="onButtonClick($event, 'Danger')">
+            <p-button variant="danger" (buttonClick)="onButtonClick($event, 'Danger')" pButton="">
               Danger
-            </app-button>
+            </p-button>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Button Sizes</h3>
           <div class="button-grid">
-            <app-button size="small" (buttonClick)="onButtonClick($event, 'Small')">
+            <p-button size="small" (buttonClick)="onButtonClick($event, 'Small')" pButton="">
               Small
-            </app-button>
+            </p-button>
 
-            <app-button size="medium" (buttonClick)="onButtonClick($event, 'Medium')">
+            <p-button size="medium" (buttonClick)="onButtonClick($event, 'Medium')" pButton="">
               Medium
-            </app-button>
+            </p-button>
 
-            <app-button size="large" (buttonClick)="onButtonClick($event, 'Large')">
+            <p-button size="large" (buttonClick)="onButtonClick($event, 'Large')" pButton="">
               Large
-            </app-button>
+            </p-button>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Button States</h3>
           <div class="button-grid">
-            <app-button [disabled]="true"> Disabled </app-button>
+            <p-button [disabled]="true" pButton=""> Disabled </p-button>
 
-            <app-button [loading]="true"> Loading </app-button>
+            <p-button [loading]="true" pButton=""> Loading </p-button>
 
-            <app-button [fullWidth]="true"> Full Width </app-button>
+            <p-button [fullWidth]="true" pButton=""> Full Width </p-button>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Buttons with Icons</h3>
           <div class="button-grid">
-            <app-button iconLeft="arrow-left" (buttonClick)="onButtonClick($event, 'Icon Left')">
+            <p-button iconLeft="arrow-left" (buttonClick)="onButtonClick($event, 'Icon Left')" pButton="">
               Back
-            </app-button>
+            </p-button>
 
-            <app-button iconRight="arrow-right" (buttonClick)="onButtonClick($event, 'Icon Right')">
+            <p-button iconRight="arrow-right" (buttonClick)="onButtonClick($event, 'Icon Right')" pButton="">
               Next
-            </app-button>
+            </p-button>
 
-            <app-button
+            <p-button
               variant="secondary"
               iconLeft="heart"
               (buttonClick)="onButtonClick($event, 'Icon Left Secondary')"
-            >
+             pButton="">
               Favorite
-            </app-button>
+            </p-button>
 
-            <app-button
+            <p-button
               variant="tertiary"
               iconRight="search"
               (buttonClick)="onButtonClick($event, 'Icon Right Tertiary')"
-            >
+             pButton="">
               Search
-            </app-button>
+            </p-button>
           </div>
-        </nb-card>
+        </p-card>
       </div>
     </section>
 
@@ -260,250 +260,250 @@
         <p-card>
           <h3 class="heading-4 mb-4">Text Inputs</h3>
           <div class="form-grid">
-            <app-input
+            <input
               label="Default Input"
               placeholder="Enter text"
               [(ngModel)]="inputValue"
               (valueChange)="onInputChange($event, 'Default Input')"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input
+            <input
               label="Input with Icon"
               placeholder="Search..."
               iconLeft="search"
               [(ngModel)]="inputValue"
               (valueChange)="onInputChange($event, 'Input with Icon')"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input
+            <input
               label="Password Input"
               type="password"
               placeholder="Enter password"
               [(ngModel)]="passwordValue"
               (valueChange)="onInputChange($event, 'Password Input')"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input
+            <input
               label="Disabled Input"
               placeholder="This input is disabled"
               [disabled]="true"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input
+            <input
               label="Input with Error"
               placeholder="Enter text"
               errorMessage="This field is required"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input
+            <input
               label="Input with Helper Text"
               placeholder="Enter text"
               helperText="This is some helper text"
-            >
-            </app-input>
+             pInputText="">
+            </input>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Input Variants</h3>
           <div class="form-grid">
-            <app-input
+            <input
               label="Outlined Input (Default)"
               placeholder="Outlined input"
               variant="outlined"
-            >
-            </app-input>
+             pInputText="">
+            </input>
 
-            <app-input label="Filled Input" placeholder="Filled input" variant="filled">
-            </app-input>
+            <input label="Filled Input" placeholder="Filled input" variant="filled" pInputText="">
+            </input>
 
-            <app-input label="Standard Input" placeholder="Standard input" variant="standard">
-            </app-input>
+            <input label="Standard Input" placeholder="Standard input" variant="standard" pInputText="">
+            </input>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Input Sizes</h3>
           <div class="form-grid">
-            <app-input label="Small Input" placeholder="Small input" size="small"> </app-input>
+            <input label="Small Input" placeholder="Small input" size="small" pInputText=""> </input>
 
-            <app-input label="Medium Input (Default)" placeholder="Medium input" size="medium">
-            </app-input>
+            <input label="Medium Input (Default)" placeholder="Medium input" size="medium" pInputText="">
+            </input>
 
-            <app-input label="Large Input" placeholder="Large input" size="large"> </app-input>
+            <input label="Large Input" placeholder="Large input" size="large" pInputText=""> </input>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Checkboxes (now Toggles)</h3>
           <div class="form-grid">
-            <nb-toggle
+            <p-inputSwitch
               label="Default Toggle"
               [(ngModel)]="checkboxValue"
               (change)="onToggleChange($event, 'Default Toggle')"
-            >
-            </nb-toggle>
+             >
+            </p-inputSwitch>
 
-            <nb-toggle label="Checked Toggle" [(ngModel)]="checkedToggleValue">
-            </nb-toggle>
+            <p-inputSwitch label="Checked Toggle" [(ngModel)]="checkedToggleValue" >
+            </p-inputSwitch>
 
-            <nb-toggle label="Disabled Toggle" [disabled]="true"> </nb-toggle>
+            <p-inputSwitch label="Disabled Toggle" [disabled]="true" > </p-inputSwitch>
 
-            <nb-toggle
+            <p-inputSwitch
               label="Disabled Checked Toggle"
               [(ngModel)]="disabledCheckedToggleValue"
               [disabled]="true"
-            >
-            </nb-toggle>
+             >
+            </p-inputSwitch>
 
-            <nb-toggle label="Toggle with (conceptual) Error"> </nb-toggle>
+            <p-inputSwitch label="Toggle with (conceptual) Error" > </p-inputSwitch>
 
-            <nb-toggle label="Toggle with (conceptual) Helper Text"> </nb-toggle>
+            <p-inputSwitch label="Toggle with (conceptual) Helper Text" > </p-inputSwitch>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Toggle Sizes</h3>
           <div class="form-grid">
-            <nb-toggle label="Small Toggle" size="small"> </nb-toggle>
+            <p-inputSwitch label="Small Toggle" size="small" > </p-inputSwitch>
 
-            <nb-toggle label="Medium Toggle (Default)" size="medium"> </nb-toggle>
+            <p-inputSwitch label="Medium Toggle (Default)" size="medium" > </p-inputSwitch>
 
-            <nb-toggle label="Large Toggle" size="large"> </nb-toggle>
+            <p-inputSwitch label="Large Toggle" size="large" > </p-inputSwitch>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Toggle Colors (Emerald Specific)</h3>
           <div class="form-grid">
-            <nb-toggle
+            <p-inputSwitch
               label="Primary Toggle"
               color="primary"
               [(ngModel)]="primaryToggleValue"
-            ></nb-toggle>
-            <nb-toggle
+             ></p-inputSwitch>
+            <p-inputSwitch
               label="Success Toggle"
               color="success"
               [(ngModel)]="successToggleValue"
-            ></nb-toggle>
-            <nb-toggle
+             ></p-inputSwitch>
+            <p-inputSwitch
               label="Warning Toggle"
               color="warning"
               [(ngModel)]="warningToggleValue"
-            ></nb-toggle>
-            <nb-toggle
+             ></p-inputSwitch>
+            <p-inputSwitch
               label="Danger Toggle"
               color="danger"
               [(ngModel)]="dangerToggleValue"
-            ></nb-toggle>
-            <nb-toggle
+             ></p-inputSwitch>
+            <p-inputSwitch
               label="Info Toggle"
               color="info"
               [(ngModel)]="infoToggleValue"
-            ></nb-toggle>
+             ></p-inputSwitch>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Select Inputs</h3>
           <div class="form-grid">
-            <app-select
+            <p-dropdown
               label="Default Select"
               placeholder="Select an option"
               [options]="selectOptions"
               [(ngModel)]="selectValue"
               (valueChange)="onSelectChange($event, 'Default Select')"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Disabled Select"
               placeholder="This select is disabled"
               [options]="selectOptions"
               [disabled]="true"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Select with Error"
               placeholder="Select an option"
               [options]="selectOptions"
               errorMessage="This field is required"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Select with Helper Text"
               placeholder="Select an option"
               [options]="selectOptions"
               helperText="This is some helper text"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Select Variants</h3>
           <div class="form-grid">
-            <app-select
+            <p-dropdown
               label="Outlined Select (Default)"
               placeholder="Select an option"
               [options]="selectOptions"
               variant="outlined"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Filled Select"
               placeholder="Select an option"
               [options]="selectOptions"
               variant="filled"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Standard Select"
               placeholder="Select an option"
               [options]="selectOptions"
               variant="standard"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
           </div>
-        </nb-card>
+        </p-card>
 
         <p-card>
           <h3 class="heading-4 mb-4">Select Sizes</h3>
           <div class="form-grid">
-            <app-select
+            <p-dropdown
               label="Small Select"
               placeholder="Select an option"
               [options]="selectOptions"
               size="small"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Medium Select (Default)"
               placeholder="Select an option"
               [options]="selectOptions"
               size="medium"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
 
-            <app-select
+            <p-dropdown
               label="Large Select"
               placeholder="Select an option"
               [options]="selectOptions"
               size="large"
-            >
-            </app-select>
+             [options]="options">
+            </p-dropdown>
           </div>
-        </nb-card>
+        </p-card>
       </div>
     </section>
 
@@ -514,42 +514,42 @@
         <p-card>
           <h3 class="heading-4">Default Card</h3>
           <p class="body-default">This is a default card with medium padding and border radius.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card [bordered]="false">
+        <p-card [bordered]="false" >
           <h3 class="heading-4">Borderless Card</h3>
           <p class="body-default">This card has no border, only shadow.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card [shadowed]="false">
+        <p-card [shadowed]="false" >
           <h3 class="heading-4">No Shadow Card</h3>
           <p class="body-default">This card has a border but no shadow.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card padding="large" radius="large">
+        <p-card padding="large" radius="large" >
           <h3 class="heading-4">Large Padding & Radius</h3>
           <p class="body-default">This card has large padding and border radius.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card padding="small" radius="small">
+        <p-card padding="small" radius="small" >
           <h3 class="heading-4">Small Padding & Radius</h3>
           <p class="body-default">This card has small padding and border radius.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card [clickable]="true">
+        <p-card [clickable]="true" >
           <h3 class="heading-4">Clickable Card</h3>
           <p class="body-default">This card is clickable and has hover effects.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card [selected]="true">
+        <p-card [selected]="true" >
           <h3 class="heading-4">Selected Card</h3>
           <p class="body-default">This card is in a selected state.</p>
-        </nb-card>
+        </p-card>
 
-        <nb-card [disabled]="true">
+        <p-card [disabled]="true" >
           <h3 class="heading-4">Disabled Card</h3>
           <p class="body-default">This card is in a disabled state.</p>
-        </nb-card>
+        </p-card>
       </div>
     </section>
 
@@ -560,101 +560,101 @@
         <h3 class="heading-4 mb-4">Icon Sizes & Colors</h3>
         <div class="icon-grid">
           <div class="icon-demo">
-            <app-icon name="heart" size="small"></app-icon>
+            <i name="heart" size="small" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Small</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" size="medium"></app-icon>
+            <i name="heart" size="medium" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Medium</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" size="large"></app-icon>
+            <i name="heart" size="large" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Large</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="primary"></app-icon>
+            <i name="heart" color="primary" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Primary</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="secondary"></app-icon>
+            <i name="heart" color="secondary" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Secondary</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="success"></app-icon>
+            <i name="heart" color="success" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Success</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="warning"></app-icon>
+            <i name="heart" color="warning" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Warning</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="error"></app-icon>
+            <i name="heart" color="error" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Error</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart" color="info"></app-icon>
+            <i name="heart" color="info" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">Info</span>
           </div>
         </div>
-      </nb-card>
+      </p-card>
 
-      <nb-card class="mt-4">
+      <p-card class="mt-4" >
         <h3 class="heading-4 mb-4">Available Icons</h3>
         <div class="icon-grid">
           <div class="icon-demo">
-            <app-icon name="arrow-right"></app-icon>
+            <i name="arrow-right" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">arrow-right</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="arrow-left"></app-icon>
+            <i name="arrow-left" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">arrow-left</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="check"></app-icon>
+            <i name="check" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">check</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="close"></app-icon>
+            <i name="close" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">close</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="heart"></app-icon>
+            <i name="heart" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">heart</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="search"></app-icon>
+            <i name="search" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">search</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="chevron-down"></app-icon>
+            <i name="chevron-down" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">chevron-down</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="eye"></app-icon>
+            <i name="eye" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">eye</span>
           </div>
 
           <div class="icon-demo">
-            <app-icon name="eye-off"></app-icon>
+            <i name="eye-off" class="pi pi-{iconName}"></i>
             <span class="icon-demo__label">eye-off</span>
           </div>
         </div>
-      </nb-card>
+      </p-card>
     </section>
   </div>
 </div>

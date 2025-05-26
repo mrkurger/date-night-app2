@@ -9,7 +9,17 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, NavigationComponent, ButtonModule], // Add ButtonModule here
+  imports: [
+    RouterModule, NavigationComponent, ButtonModule,
+    CardModule,
+    ProgressSpinnerModule,
+    SidebarModule,
+    MenuModule,
+    AvatarModule,
+    PanelModule,
+    ToolbarModule,
+    PanelMenuModule
+  ], // Add ButtonModule here
   template: `
     <app-navigation>
       <router-outlet></router-outlet>
@@ -20,6 +30,15 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
+import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
+import { PanelModule } from 'primeng/panel';
+import { ToolbarModule } from 'primeng/toolbar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+
 
   constructor(
     private themeService: ThemeService,

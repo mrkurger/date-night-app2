@@ -1,18 +1,18 @@
-<nb-card class="review-card" [class.pending]="review.status === 'pending'">
+<p-card class="review-card" [class.pending]="review.status === 'pending'" >
   <!-- Review Header -->
-  <nb-card-header>
+  <p-card-header >
     <img
       nb-card-avatar
       [src]="review.reviewer.profileImage || '/assets/img/default-profile.jpg'"
       [alt]="review.reviewer.username"
     />
-    <nb-card-title>
+    <p-card-title >
       {{ review.title }}
       <span class="verified-badge" *ngIf="review.isVerifiedMeeting" nbTooltip="Verified Meeting">
-        <nb-icon icon="verified"></nb-icon>
+        <i class="pi pi-verified"></i>
       </span>
     </nb-card-title>
-    <nb-card-subtitle>
+    <p-card-subtitle >
       <span class="reviewer-name">{{ review.reviewer.username }}</span>
       <span class="review-date">{{ review.createdAt | timeAgo }}</span>
 
@@ -26,10 +26,10 @@
         [showRatingText]="true"
       ></app-star-rating>
     </div>
-  </nb-card-header>
+  </ng-template>
 
   <!-- Review Content -->
-  <nb-card-body>
+  <p-card-body >
     <div class="review-content">
       {{ review.content }}
     </div>
@@ -87,13 +87,13 @@
 
     <!-- Meeting Date -->
     <div class="meeting-date" *ngIf="review.isVerifiedMeeting && review.meetingDate">
-      <nb-icon icon="event"></nb-icon>
+      <i class="pi pi-event"></i>
       <span>Met on {{ review.meetingDate | date: 'mediumDate' }}</span>
     </div>
 
     <!-- Advertiser Response -->
     <div class="advertiser-response" *ngIf="review.advertiserResponse">
-      <nb-divider></nb-divider>
+      <p-divider></p-divider>
       <div class="response-header">
         <img
           class="response-avatar"
@@ -111,17 +111,17 @@
         {{ review.advertiserResponse.content }}
       </div>
     </div>
-  </nb-card-body>
+  </ng-template>
 
   <!-- Review Actions -->
-  <nb-card-actions *ngIf="showActions && review.status === 'approved'">
+  <p-card-actions *ngIf="showActions && review.status === 'approved'" >
     <button nbButton
       color="primary"
       (click)="onMarkHelpful()"
       [disabled]="isCurrentUserReviewer"
       nbTooltip="Mark this review as helpful"
     >
-      <nb-icon icon="thumb_up"></nb-icon>
+      <i class="pi pi-thumb_up"></i>
       Helpful ({{ review.helpfulVotes }})
     </button>
 
@@ -131,7 +131,7 @@
       [disabled]="isCurrentUserReviewer"
       nbTooltip="Report this review"
     >
-      <nb-icon icon="flag"></nb-icon>
+      <i class="pi pi-flag"></i>
       Report
     </button>
 
@@ -144,7 +144,7 @@
       (click)="onRespondToReview()"
       nbTooltip="Respond to this review"
     >
-      <nb-icon icon="reply"></nb-icon>
+      <i class="pi pi-reply"></i>
       Respond
     </button>
 
@@ -155,7 +155,7 @@
       (click)="onEditReview()"
       nbTooltip="Edit your review"
     >
-      <nb-icon icon="edit"></nb-icon>
+      <i class="pi pi-pencil"></i>
       Edit
     </button>
 
@@ -165,8 +165,8 @@
       (click)="onDeleteReview()"
       nbTooltip="Delete your review"
     >
-      <nb-icon icon="delete"></nb-icon>
+      <i class="pi pi-delete"></i>
       Delete
     </button>
-  </nb-card-footer>
-</nb-card>
+  </ng-template>
+</p-card>

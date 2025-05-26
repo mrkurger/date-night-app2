@@ -14,6 +14,10 @@ import { UserService } from '../../../core/services/user.service';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 import { finalize } from 'rxjs/operators';
 import { NebularModule } from '../../../shared/nebular.module';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -32,7 +36,12 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss', './social-login.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, ReactiveFormsModule, RouterLink]
+    imports: [
+    NebularModule, ReactiveFormsModule, RouterLink,
+    CardModule,
+    ButtonModule,
+    CheckboxModule
+  ]
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
