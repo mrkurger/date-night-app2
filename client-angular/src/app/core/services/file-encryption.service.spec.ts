@@ -1,3 +1,6 @@
+import { TestBed } from '@angular/core/testing';
+import { FileEncryptionService } from './file-encryption.service';
+import { EncryptionService } from './encryption.service';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,13 +10,10 @@
 // - None specific to this service
 // ===================================================
 
-import { TestBed } from '@angular/core/testing';
-import { FileEncryptionService } from './file-encryption.service';
-import { EncryptionService } from './encryption.service';
-
+';
 describe('FileEncryptionService', () => {
   let service: FileEncryptionService;
-  let encryptionServiceSpy: jasmine.SpyObj<EncryptionService>;
+  let encryptionServiceSpy: jasmine.SpyObj;
 
   beforeEach(() => {
     // Create a spy for the EncryptionService with the methods used in FileEncryptionService
@@ -22,11 +22,11 @@ describe('FileEncryptionService', () => {
     spy.decrypt.and.returnValue(Promise.resolve(new ArrayBuffer(8)));
 
     TestBed.configureTestingModule({
-      providers: [FileEncryptionService, { provide: EncryptionService, useValue: spy }],
+      providers: [FileEncryptionService, { provide: EncryptionService, useValue: spy }],;
     });
 
     service = TestBed.inject(FileEncryptionService);
-    encryptionServiceSpy = TestBed.inject(EncryptionService) as jasmine.SpyObj<EncryptionService>;
+    encryptionServiceSpy = TestBed.inject(EncryptionService) as jasmine.SpyObj;
   });
 
   it('should be created', () => {

@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { trigger, transition, style, animate } from '@angular/animations';
 
 export interface CarouselItem {
@@ -12,62 +10,40 @@ export interface CarouselItem {
   description?: string;
 }
 
-@Component({
-  selector: 'app-carousel',
-  standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule],
-  template: `
-    <div class="carousel" [class.carousel--fullscreen]="fullscreen">
-      <div class="carousel__container">
-        <div class="carousel__slides">
-          <div
-            *ngFor="let item of items; let i = index"
-            class="carousel__slide"
-            [@slideAnimation]="currentIndex === i ? 'active' : 'inactive'"
-            [class.carousel__slide--active]="currentIndex === i"
-          >
-            <img [src]="item.image" [alt]="item.title || ''" class="carousel__image" />
+@Component({';
+  selector: 'app-carousel',;
+  standalone: true,;
+  imports: [CommonModule, NbButtonModule, NbIconModule],;
+  template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
 
-            <div class="carousel__content" *ngIf="item.title || item.description">
-              <h3 class="carousel__title" *ngIf="item.title">{{ item.title }}</h3>
-              <p class="carousel__description" *ngIf="item.description">{{ item.description }}</p>
-            </div>
-          </div>
-        </div>
+            ;
+              {{ item.title }};
+              {{ item.description }};
+            ;
+          ;
+        ;
 
-        <button
-          nbButton
-          ghost
-          class="carousel__nav carousel__nav--prev"
-          (click)="prev()"
-          [disabled]="!loop && currentIndex === 0"
-        >
-          <nb-icon icon="chevron-left-outline"></nb-icon>
-        </button>
+        ;
+          ;
+        ;
 
-        <button
-          nbButton
-          ghost
-          class="carousel__nav carousel__nav--next"
-          (click)="next()"
-          [disabled]="!loop && currentIndex === items.length - 1"
-        >
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-        </button>
+        ;
+          ;
+        ;
 
-        <div class="carousel__indicators" *ngIf="showIndicators">
-          <button
-            *ngFor="let item of items; let i = index"
-            class="carousel__indicator"
-            [class.carousel__indicator--active]="currentIndex === i"
-            (click)="goToSlide(i)"
-          ></button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+        ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
       }
@@ -209,28 +185,28 @@ export interface CarouselItem {
           background: rgba(255, 255, 255, 0.7);
         }
       }
-    `,
-  ],
-  animations: [
-    trigger('slideAnimation', [
-      transition('void => active', [
-        style({ opacity: 0, transform: 'scale(1.1)' }),
-        animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),
-      ]),
-      transition('active => void', [
-        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.9)' })),
-      ]),
-    ]),
-  ],
-})
-export class CarouselModule {
+    `,;`
+  ],;
+  animations: [;
+    trigger('slideAnimation', [;
+      transition('void => active', [;
+        style({ opacity: 0, transform: 'scale(1.1)' }),;
+        animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),;
+      ]),;
+      transition('active => void', [;
+        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.9)' })),;
+      ]),;
+    ]),;
+  ],;
+});
+export class CarouselModul {e {
   @Input() items: CarouselItem[] = [];
   @Input() loop = true;
   @Input() autoplay = false;
   @Input() autoplayInterval = 5000;
   @Input() showIndicators = true;
   @Input() fullscreen = false;
-  @Output() slideChange = new EventEmitter<number>();
+  @Output() slideChange = new EventEmitter();
 
   currentIndex = 0;
   private autoplayTimer: any;
@@ -246,15 +222,7 @@ export class CarouselModule {
   }
 
   next() {
-    if (this.currentIndex < this.items.length - 1) {
-      this.goToSlide(this.currentIndex + 1);
-    } else if (this.loop) {
-      this.goToSlide(0);
-    }
-  }
-
-  prev() {
-    if (this.currentIndex > 0) {
+    if (this.currentIndex  0) {
       this.goToSlide(this.currentIndex - 1);
     } else if (this.loop) {
       this.goToSlide(this.items.length - 1);

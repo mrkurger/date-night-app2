@@ -39,7 +39,7 @@ export interface Notification {
   message: string;
   read: boolean;
   createdAt: Date;
-  data?: Record<string, any>;
+  data?: Record;
 }
 
 export type NotificationType = 'match' | 'message' | 'system' | 'date_reminder' | 'profile_update';
@@ -50,22 +50,22 @@ export interface MenuItem {
   icon?: string;
   link?: string;
   children?: MenuItem[];
-  data?: Record<string, any>;
+  data?: Record;
 }
 
 // Theme related types
 export interface ThemeConfig {
   name: string;
-  variables: Record<string, string>;
+  variables: Record;
 }
 
 // API Response types
-export interface ApiResponse<T> {
+export interface ApiResponse {
   success: boolean;
   data?: T;
   error?: {
     code: string;
     message: string;
-    details?: Record<string, any>;
+    details?: Record;
   };
 }

@@ -1,12 +1,6 @@
+import {
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -17,41 +11,47 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Observable, Subject, from, of } from 'rxjs';
 import { catchError, finalize, retry, takeUntil } from 'rxjs/operators';
+  FormBuilder,;
+  FormGroup,;
+  FormsModule,;
+  ReactiveFormsModule,;
+  Validators,';
+} from '@angular/forms';
 
 import {
-  IContentSanitizerService,
-  IMediaService,
-  IModerationRequest,
-  INotificationService,
-  IPageEvent,
-  IPendingMedia,
+  IContentSanitizerService,;
+  IMediaService,;
+  IModerationRequest,;
+  INotificationService,;
+  IPageEvent,;
+  IPendingMedia,;
 } from './content-moderation.interfaces';
 
 /**
- * Component for content moderation by administrators.
- * Allows reviewing and moderating user-submitted media.
+ * Component for content moderation by administrators.;
+ * Allows reviewing and moderating user-submitted media.;
  */
 @Component({
-  selector: 'app-content-moderation',
-  templateUrl: './content-moderation.component.html',
-  styleUrls: ['./content-moderation.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DialogModule,
-    ButtonModule,
-    InputTextModule,
-    DropdownModule,
-    MessageModule,
-    PaginatorModule,
-    ProgressSpinnerModule,
-  ],
-})
-export class ContentModerationComponent implements OnInit, OnDestroy {
+  selector: 'app-content-moderation',;
+  templateUrl: './content-moderation.component.html',;
+  styleUrls: ['./content-moderation.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
+    DialogModule,;
+    ButtonModule,;
+    InputTextModule,;
+    DropdownModule,;
+    MessageModule,;
+    PaginatorModule,;
+    ProgressSpinnerModule,;
+  ],;
+});
+export class ContentModerationComponen {t implements OnInit, OnDestroy {
   /**
-   * UI state properties
+   * UI state properties;
    */
   public loading = false;
   public error = '';
@@ -59,7 +59,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   public showModerationDialog = false;
 
   /**
-   * Data properties
+   * Data properties;
    */
   public pendingMedia: IPendingMedia[] = [];
   public filteredMedia: IPendingMedia[] = [];
@@ -67,49 +67,49 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   public selectedMedia: IPendingMedia | null = null;
 
   /**
-   * Filtering properties
+   * Filtering properties;
    */
   public searchTerm = '';
   public mediaTypeFilter: 'all' | 'image' | 'video' = 'all';
   public sortOrder: 'newest' | 'oldest' = 'newest';
 
   /**
-   * Pagination properties
+   * Pagination properties;
    */
   public currentPage = 1;
   public itemsPerPage = 12;
   public totalPages = 1;
 
   /**
-   * Used for cleanup of subscriptions
+   * Used for cleanup of subscriptions;
    */
-  private readonly destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject();
 
   /**
-   * Creates an instance of ContentModerationComponent.
+   * Creates an instance of ContentModerationComponent.;
    */
-  constructor(
-    private readonly mediaService: IMediaService,
-    private readonly notificationService: INotificationService,
-    private readonly formBuilder: FormBuilder,
-    private readonly contentSanitizer: IContentSanitizerService,
-    private readonly sanitizer: DomSanitizer,
+  constructor(;
+    private readonly mediaService: IMediaService,;
+    private readonly notificationService: INotificationService,;
+    private readonly formBuilder: FormBuilder,;
+    private readonly contentSanitizer: IContentSanitizerService,;
+    private readonly sanitizer: DomSanitizer,;
   ) {
     this.moderationForm = this.formBuilder.group({
-      status: ['approved', [Validators.required]],
-      notes: ['', [Validators.required, Validators.maxLength(500)]],
+      status: ['approved', [Validators.required]],;
+      notes: ['', [Validators.required, Validators.maxLength(500)]],;
     });
   }
 
   /**
-   * Lifecycle hook that is called when component is initialized
+   * Lifecycle hook that is called when component is initialized;
    */
   public ngOnInit(): void {
     this.loadPendingMedia();
   }
 
   /**
-   * Lifecycle hook that is called before component is destroyed
+   * Lifecycle hook that is called before component is destroyed;
    */
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -117,36 +117,36 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Loads all pending media items that need moderation
+   * Loads all pending media items that need moderation;
    */
   public loadPendingMedia(): void {
     this.error = '';
     this.loading = true;
     this.resetFilters();
 
-    from(this.mediaService.getPendingModerationMedia())
-      .pipe(
-        retry(2),
+    from(this.mediaService.getPendingModerationMedia());
+      .pipe(;
+        retry(2),;
         catchError((error) => {
-          const errorMsg =
-            error.status === 403
-              ? 'You do not have permission to access moderation features'
+          const errorMsg =;
+            error.status === 403;
+              ? 'You do not have permission to access moderation features';
               : 'Failed to load pending media';
 
           this.error = errorMsg;
           this.notificationService.showError(errorMsg);
           console.error('Error loading pending media:', error);
           return of([]);
-        }),
+        }),;
         finalize(() => {
           this.loading = false;
-        }),
-        takeUntil(this.destroy$),
-      )
+        }),;
+        takeUntil(this.destroy$),;
+      );
       .subscribe((data) => {
         this.pendingMedia = (data ?? []).map((item) => ({
-          ...item,
-          createdAt: item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt),
+          ...item,;
+          createdAt: item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt),;
         }));
 
         this.applyFilters();
@@ -154,7 +154,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Resets all filters to their default values
+   * Resets all filters to their default values;
    */
   public resetFilters(): void {
     this.searchTerm = '';
@@ -172,7 +172,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Applies current filters and sorting to the media items
+   * Applies current filters and sorting to the media items;
    */
   public applyFilters(): void {
     // Filter by type
@@ -186,8 +186,8 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
     // Filter by search term
     if (this.searchTerm) {
       const searchLower = this.searchTerm.toLowerCase();
-      this.filteredMedia = this.filteredMedia.filter((media) =>
-        media.adTitle.toLowerCase().includes(searchLower),
+      this.filteredMedia = this.filteredMedia.filter((media) =>;
+        media.adTitle.toLowerCase().includes(searchLower),;
       );
     }
 
@@ -213,21 +213,21 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sanitizes a URL for safe display in the template
+   * Sanitizes a URL for safe display in the template;
    */
   public getSafeUrl(url: string): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   /**
-   * Handles media loading errors
+   * Handles media loading errors;
    */
   public onMediaLoadError(media: IPendingMedia): void {
     media.hasLoadError = true;
   }
 
   /**
-   * Handles PrimeNG paginator page change events
+   * Handles PrimeNG paginator page change events;
    */
   public onPageChange(event: IPageEvent): void {
     this.itemsPerPage = event.rows;
@@ -236,7 +236,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handles changes to items per page
+   * Handles changes to items per page;
    */
   public onItemsPerPageChange(): void {
     this.totalPages = Math.ceil(this.filteredMedia.length / this.itemsPerPage);
@@ -245,10 +245,10 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Changes the current page
+   * Changes the current page;
    */
   public changePage(page: number): void {
-    if (page < 1 || page > this.totalPages) {
+    if (page  this.totalPages) {
       return;
     }
     this.currentPage = page;
@@ -256,7 +256,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Closes the moderation dialog
+   * Closes the moderation dialog;
    */
   public closeModerationDialog(): void {
     this.showModerationDialog = false;
@@ -264,7 +264,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Gets an array of page numbers for pagination
+   * Gets an array of page numbers for pagination;
    */
   public getPageNumbers(): number[] {
     const maxVisiblePages = 5;
@@ -274,76 +274,42 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
 
     startPage = Math.max(1, endPage - maxVisiblePages + 1);
 
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  }
-
-  /**
-   * Submits a moderation decision
-   */
-  public submitModeration(): void {
-    if (this.moderationForm.invalid) {
-      this.notificationService.showError('Please fill out all required fields');
-      return;
-    }
-
-    if (this.selectedMedia === null) {
-      this.notificationService.showError('No media item selected for moderation');
-      return;
-    }
-
-    const request: IModerationRequest = this.moderationForm.value;
-    this.loading = true;
-
-    from(
-      this.mediaService.moderateMedia(
-        this.selectedMedia.adId,
-        this.selectedMedia._id,
-        request.status,
-        request.notes,
-      ),
-    )
-      .pipe(
-        retry(1),
-        catchError((error) => {
-          const errorMsg =
-            error.status === 403
-              ? 'You do not have permission to moderate content'
+    for (let i = startPage; i  {
+          const errorMsg =;
+            error.status === 403;
+              ? 'You do not have permission to moderate content';
               : 'Failed to moderate media';
 
           this.error = errorMsg;
           this.notificationService.showError(errorMsg);
           console.error('Error moderating media:', error);
           return of(void 0);
-        }),
+        }),;
         finalize(() => {
           this.loading = false;
-        }),
-        takeUntil(this.destroy$),
-      )
+        }),;
+        takeUntil(this.destroy$),;
+      );
       .subscribe({
         next: () => {
           // Remove moderated item and update lists
-          this.pendingMedia = this.pendingMedia.filter(
-            (item) => item._id !== this.selectedMedia?._id,
+          this.pendingMedia = this.pendingMedia.filter(;
+            (item) => item._id !== this.selectedMedia?._id,;
           );
           this.applyFilters();
 
           // Show success message and clean up
           const action = request.status === 'approved' ? 'approved' : 'rejected';
-          this.notificationService.showSuccess(
-            `Content has been ${action} and removed from the moderation queue`,
+          this.notificationService.showSuccess(;
+            `Content has been ${action} and removed from the moderation queue`,;`
           );
           this.closeModerationDialog();
-        },
+        },;
       });
   }
 
   /**
-   * Updates the paginated media list based on current filters and sorting
+   * Updates the paginated media list based on current filters and sorting;
    */
   private updatePaginatedMedia(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;

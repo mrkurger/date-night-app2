@@ -1,25 +1,8 @@
+import {
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FavoriteManagementService } from '@features/favorites/services/favorite-management.service';
-import {
-  AdvancedSearchQuery,
-  Favorite,
-  FavoritePriority,
-  FavoriteSortOption,
-  FavoriteType,
-  PaginatedFavoritesResponse,
-  SortDirection,
-} from '@features/favorites/models/favorites.model';
 import { AuthService } from '@core/auth/services/auth.service';
 import { User } from '@core/auth/models/auth.model';
-import {
-  Subject,
-  Subscription,
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { TableModule, Table } from 'primeng/table';
@@ -45,7 +28,24 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChipModule } from 'primeng/chip';
 import { PaginatorState } from 'primeng/paginatorstate';
 import { CalendarModule } from 'primeng/calendar';
+  AdvancedSearchQuery,;
+  Favorite,;
+  FavoritePriority,;
+  FavoriteSortOption,;
+  FavoriteType,;
+  PaginatedFavoritesResponse,;
+  SortDirection,';
+} from '@features/favorites/models/favorites.model';
 
+import {
+  Subject,;
+  Subscription,;
+  debounceTime,;
+  distinctUntilChanged,;
+  switchMap,;
+  takeUntil,;
+  tap,;
+} from 'rxjs';
 
 interface Column {
   field: string;
@@ -53,36 +53,36 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-favorites-page',
-  templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.scss'],
-  standalone: true,
-  imports: [
-    PaginatorState, ChipModule, OverlayPanelModule, InputSwitchModule, MultiSelectModule, MessageService, ToastModule, ConfirmDialogModule, DialogModule, MenuItem, MenuModule, AvatarModule, TagModule, ProgressSpinnerModule, DropdownModule, InputTextModule, TooltipModule, CheckboxModule, ButtonModule, CardModule, TableModule, ContextMenuModule, 
-    CardModule,
-    TableModule,
-    ButtonModule,
-    CheckboxModule,
-    TooltipModule,
-    InputTextModule,
-    DropdownModule,
-    ProgressSpinnerModule,
-    TagModule,
-    AvatarModule,
-    ContextMenuModule,
-    MenuModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ToastModule,
-    MultiSelectModule,
-    InputSwitchModule,
-    OverlayPanelModule,
-    ChipModule,,
-    CalendarModule
-  ],
-  providers: [MessageService, ConfirmationService, FavoriteManagementService],
-})
-export class FavoritesPageComponent implements OnInit, OnDestroy {
+  selector: 'app-favorites-page',;
+  templateUrl: './favorites-page.component.html',;
+  styleUrls: ['./favorites-page.component.scss'],;
+  standalone: true,;
+  imports: [;
+    PaginatorState, ChipModule, OverlayPanelModule, InputSwitchModule, MultiSelectModule, MessageService, ToastModule, ConfirmDialogModule, DialogModule, MenuItem, MenuModule, AvatarModule, TagModule, ProgressSpinnerModule, DropdownModule, InputTextModule, TooltipModule, CheckboxModule, ButtonModule, CardModule, TableModule, ContextMenuModule,; 
+    CardModule,;
+    TableModule,;
+    ButtonModule,;
+    CheckboxModule,;
+    TooltipModule,;
+    InputTextModule,;
+    DropdownModule,;
+    ProgressSpinnerModule,;
+    TagModule,;
+    AvatarModule,;
+    ContextMenuModule,;
+    MenuModule,;
+    DialogModule,;
+    ConfirmDialogModule,;
+    ToastModule,;
+    MultiSelectModule,;
+    InputSwitchModule,;
+    OverlayPanelModule,;
+    ChipModule,,;
+    CalendarModule;
+  ],;
+  providers: [MessageService, ConfirmationService, FavoriteManagementService],;
+});
+export class FavoritesPageComponen {t implements OnInit, OnDestroy {
   favorites: Favorite[] = [];
   isLoading = false;
   error: string | null = null;
@@ -93,11 +93,11 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   totalItems = 0;
   itemsPerPageOptions = [5, 10, 20, 50];
 
-  sortOptions: { label: string; value: FavoriteSortOption }[] = [
-    { label: 'Date Added', value: FavoriteSortOption.DateAdded },
-    { label: 'Name', value: FavoriteSortOption.Name },
-    { label: 'Priority', value: FavoriteSortOption.Priority },
-    { label: 'Type', value: FavoriteSortOption.Type },
+  sortOptions: { label: string; value: FavoriteSortOption }[] = [;
+    { label: 'Date Added', value: FavoriteSortOption.DateAdded },;
+    { label: 'Name', value: FavoriteSortOption.Name },;
+    { label: 'Priority', value: FavoriteSortOption.Priority },;
+    { label: 'Type', value: FavoriteSortOption.Type },;
   ];
   currentSort: FavoriteSortOption = FavoriteSortOption.DateAdded;
   sortDirection: SortDirection = SortDirection.Descending;
@@ -117,42 +117,42 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
 
   @ViewChild('dt') table!: Table;
 
-  private destroy$ = new Subject<void>();
-  private searchTerms = new Subject<string>();
+  private destroy$ = new Subject();
+  private searchTerms = new Subject();
   private subscriptions = new Subscription();
 
   displayAdvancedSearch = false;
   advancedSearchQuery: AdvancedSearchQuery = {
-    nameContains: '',
-    notesContains: '',
-    urlContains: '',
-    tagsIncludeAll: [],
-    tagsIncludeAny: [],
-    minDateAdded: null,
-    maxDateAdded: null,
-    minLastAccessed: null,
-    maxLastAccessed: null,
+    nameContains: '',;
+    notesContains: '',;
+    urlContains: '',;
+    tagsIncludeAll: [],;
+    tagsIncludeAny: [],;
+    minDateAdded: null,;
+    maxDateAdded: null,;
+    minLastAccessed: null,;
+    maxLastAccessed: null,;
   };
   availableTags: string[] = [];
 
-  cols: Column[] = [
-    { field: 'name', header: 'Name' },
-    { field: 'type', header: 'Type' },
-    { field: 'priority', header: 'Priority' },
-    { field: 'dateAdded', header: 'Date Added' },
-    { field: 'lastAccessed', header: 'Last Accessed' },
-    { field: 'tags', header: 'Tags' },
+  cols: Column[] = [;
+    { field: 'name', header: 'Name' },;
+    { field: 'type', header: 'Type' },;
+    { field: 'priority', header: 'Priority' },;
+    { field: 'dateAdded', header: 'Date Added' },;
+    { field: 'lastAccessed', header: 'Last Accessed' },;
+    { field: 'tags', header: 'Tags' },;
   ];
   selectedColumns: Column[] = this.cols;
 
-  constructor(
-    private favoriteService: FavoriteManagementService,
-    private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private cdr: ChangeDetectorRef,
+  constructor(;
+    private favoriteService: FavoriteManagementService,;
+    private authService: AuthService,;
+    private router: Router,;
+    private activatedRoute: ActivatedRoute,;
+    private messageService: MessageService,;
+    private confirmationService: ConfirmationService,;
+    private cdr: ChangeDetectorRef,;
   ) {}
 
   ngOnInit(): void {
@@ -177,28 +177,28 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   }
 
   loadAvailableTags(): void {
-    this.favoriteService
-      .getAllTags()
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .getAllTags();
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: (tags) => {
           this.availableTags = tags;
           this.cdr.markForCheck();
-        },
+        },;
         error: (err) => {
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Could not load tags.',
+            severity: 'error',;
+            summary: 'Error',;
+            detail: 'Could not load tags.',;
           });
           console.error('Error loading tags:', err);
-        },
+        },;
       });
   }
 
   setupSearchDebounce(): void {
-    this.searchTerms
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    this.searchTerms;
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$));
       .subscribe(() => {
         this.currentPage = 1;
         this.loadFavorites();
@@ -206,34 +206,34 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   }
 
   setupBatchActions(): void {
-    this.batchActions = [
+    this.batchActions = [;
       {
-        label: 'Delete Selected',
-        icon: 'pi pi-trash',
-        command: () => this.confirmDeleteSelected(),
-      },
+        label: 'Delete Selected',;
+        icon: 'pi pi-trash',;
+        command: () => this.confirmDeleteSelected(),;
+      },;
       {
-        label: 'Mark as High Priority',
-        icon: 'pi pi-star',
-        command: () => this.updatePriorityForSelected(FavoritePriority.High),
-      },
+        label: 'Mark as High Priority',;
+        icon: 'pi pi-star',;
+        command: () => this.updatePriorityForSelected(FavoritePriority.High),;
+      },;
       {
-        label: 'Mark as Medium Priority',
-        icon: 'pi pi-star-half-alt',
-        command: () => this.updatePriorityForSelected(FavoritePriority.Medium),
-      },
+        label: 'Mark as Medium Priority',;
+        icon: 'pi pi-star-half-alt',;
+        command: () => this.updatePriorityForSelected(FavoritePriority.Medium),;
+      },;
       {
-        label: 'Mark as Low Priority',
-        icon: 'pi pi-star-o',
-        command: () => this.updatePriorityForSelected(FavoritePriority.Low),
-      },
+        label: 'Mark as Low Priority',;
+        icon: 'pi pi-star-o',;
+        command: () => this.updatePriorityForSelected(FavoritePriority.Low),;
+      },;
     ];
   }
 
-  loadFavorites(
-    event?:
-      | PaginatorState
-      | { first?: number; rows?: number; sortField?: string; sortOrder?: number },
+  loadFavorites(;
+    event?:;
+      | PaginatorState;
+      | { first?: number; rows?: number; sortField?: string; sortOrder?: number },;
   ): void {
     this.isLoading = true;
     this.error = null;
@@ -254,23 +254,23 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
       }
       if ('sortOrder' in event && event.sortOrder) {
         sortOrder = event.sortOrder;
-        this.sortDirection =
+        this.sortDirection =;
           event.sortOrder === 1 ? SortDirection.Ascending : SortDirection.Descending;
       }
     }
 
-    this.favoriteService
-      .getFavorites(
-        page,
-        limit,
-        sortField,
-        this.sortDirection,
-        this.searchTerm,
-        this.priorityFilter || undefined,
-        this.typeFilter || undefined,
-        this.advancedSearchQuery,
-      )
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .getFavorites(;
+        page,;
+        limit,;
+        sortField,;
+        this.sortDirection,;
+        this.searchTerm,;
+        this.priorityFilter || undefined,;
+        this.typeFilter || undefined,;
+        this.advancedSearchQuery,;
+      );
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: (response: PaginatedFavoritesResponse) => {
           this.favorites = response.data;
@@ -278,18 +278,18 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.selectAll = false;
           this.cdr.markForCheck();
-        },
+        },;
         error: (err) => {
           this.isLoading = false;
           this.error = 'Failed to load favorites. Please try again later.';
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error Loading Favorites',
-            detail: this.error,
+            severity: 'error',;
+            summary: 'Error Loading Favorites',;
+            detail: this.error,;
           });
           console.error('Error loading favorites:', err);
           this.cdr.markForCheck();
-        },
+        },;
       });
   }
 
@@ -301,9 +301,9 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
 
   onSortChange(event: { value: FavoriteSortOption }): void {
     if (this.currentSort === event.value) {
-      this.sortDirection =
-        this.sortDirection === SortDirection.Ascending
-          ? SortDirection.Descending
+      this.sortDirection =;
+        this.sortDirection === SortDirection.Ascending;
+          ? SortDirection.Descending;
           : SortDirection.Ascending;
     } else {
       this.currentSort = event.value;
@@ -358,7 +358,7 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
     } else {
       this.selectedFavorites = this.selectedFavorites.filter((f) => f.id !== favorite.id);
     }
-    this.selectAll =
+    this.selectAll =;
       this.selectedFavorites.length === this.favorites.length && this.favorites.length > 0;
     this.cdr.markForCheck();
   }
@@ -373,63 +373,63 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
 
   editFavorite(favorite: Favorite): void {
     this.messageService.add({
-      severity: 'info',
-      summary: 'Edit',
-      detail: `Editing ${favorite.name} (UI Placeholder)`,
+      severity: 'info',;
+      summary: 'Edit',;
+      detail: `Editing ${favorite.name} (UI Placeholder)`,;`
     });
     this.router.navigate(['/favorites/edit', favorite.id]);
   }
 
   confirmDeleteFavorite(favorite: Favorite): void {
     this.confirmationService.confirm({
-      message: `Are you sure you want to delete "${favorite.name}"?`,
-      header: 'Confirm Deletion',
-      icon: 'pi pi-exclamation-triangle',
+      message: `Are you sure you want to delete "${favorite.name}"?`,;`
+      header: 'Confirm Deletion',;
+      icon: 'pi pi-exclamation-triangle',;
       accept: () => {
         this.deleteFavorite(favorite);
-      },
+      },;
       reject: () => {
         this.messageService.add({
-          severity: 'info',
-          summary: 'Cancelled',
-          detail: 'Deletion cancelled.',
+          severity: 'info',;
+          summary: 'Cancelled',;
+          detail: 'Deletion cancelled.',;
         });
-      },
+      },;
     });
   }
 
   private deleteFavorite(favorite: Favorite): void {
     this.isLoading = true;
-    this.favoriteService
-      .deleteFavorite(favorite.id)
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .deleteFavorite(favorite.id);
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: () => {
           this.messageService.add({
-            severity: 'success',
-            summary: 'Deleted',
-            detail: `"${favorite.name}" has been deleted.`,
+            severity: 'success',;
+            summary: 'Deleted',;
+            detail: `"${favorite.name}" has been deleted.`,;`
           });
           this.loadFavorites();
           this.selectedFavorites = this.selectedFavorites.filter((f) => f.id !== favorite.id);
-        },
+        },;
         error: (err) => {
           this.isLoading = false;
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: `Failed to delete "${favorite.name}".`,
+            severity: 'error',;
+            summary: 'Error',;
+            detail: `Failed to delete "${favorite.name}".`,;`
           });
           console.error('Error deleting favorite:', err);
-        },
+        },;
       });
   }
 
   toggleFavoritePriority(favorite: Favorite, priority: FavoritePriority): void {
     const newPriority = favorite.priority === priority ? null : priority;
-    this.favoriteService
-      .updateFavoritePriority(favorite.id, newPriority)
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .updateFavoritePriority(favorite.id, newPriority);
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: (updatedFavorite) => {
           const index = this.favorites.findIndex((f) => f.id === updatedFavorite.id);
@@ -439,102 +439,102 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
             this.cdr.markForCheck();
           }
           this.messageService.add({
-            severity: 'success',
-            summary: 'Priority Updated',
-            detail: `Priority for "${updatedFavorite.name}" updated.`,
+            severity: 'success',;
+            summary: 'Priority Updated',;
+            detail: `Priority for "${updatedFavorite.name}" updated.`,;`
           });
-        },
+        },;
         error: (err) => {
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to update priority.',
+            severity: 'error',;
+            summary: 'Error',;
+            detail: 'Failed to update priority.',;
           });
           console.error('Error updating priority:', err);
-        },
+        },;
       });
   }
 
   confirmDeleteSelected(): void {
     if (this.selectedFavorites.length === 0) {
       this.messageService.add({
-        severity: 'warn',
-        summary: 'No Selection',
-        detail: 'Please select favorites to delete.',
+        severity: 'warn',;
+        summary: 'No Selection',;
+        detail: 'Please select favorites to delete.',;
       });
       return;
     }
     this.confirmationService.confirm({
-      message: `Are you sure you want to delete ${this.selectedFavorites.length} selected favorite(s)?`,
-      header: 'Confirm Batch Deletion',
-      icon: 'pi pi-exclamation-triangle',
+      message: `Are you sure you want to delete ${this.selectedFavorites.length} selected favorite(s)?`,;`
+      header: 'Confirm Batch Deletion',;
+      icon: 'pi pi-exclamation-triangle',;
       accept: () => {
         this.deleteSelectedFavorites();
-      },
+      },;
     });
   }
 
   private deleteSelectedFavorites(): void {
     const idsToDelete = this.selectedFavorites.map((f) => f.id);
     this.isLoading = true;
-    this.favoriteService
-      .deleteMultipleFavorites(idsToDelete)
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .deleteMultipleFavorites(idsToDelete);
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: () => {
           this.messageService.add({
-            severity: 'success',
-            summary: 'Batch Deleted',
-            detail: `${idsToDelete.length} favorite(s) deleted.`,
+            severity: 'success',;
+            summary: 'Batch Deleted',;
+            detail: `${idsToDelete.length} favorite(s) deleted.`,;`
           });
           this.loadFavorites();
           this.selectedFavorites = [];
           this.selectAll = false;
-        },
+        },;
         error: (err) => {
           this.isLoading = false;
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to delete selected favorites.',
+            severity: 'error',;
+            summary: 'Error',;
+            detail: 'Failed to delete selected favorites.',;
           });
           console.error('Error batch deleting favorites:', err);
-        },
+        },;
       });
   }
 
   updatePriorityForSelected(priority: FavoritePriority | null): void {
     if (this.selectedFavorites.length === 0) {
       this.messageService.add({
-        severity: 'warn',
-        summary: 'No Selection',
-        detail: 'Please select favorites to update priority.',
+        severity: 'warn',;
+        summary: 'No Selection',;
+        detail: 'Please select favorites to update priority.',;
       });
       return;
     }
     const idsToUpdate = this.selectedFavorites.map((f) => f.id);
     this.isLoading = true;
-    this.favoriteService
-      .updateMultipleFavoritesPriority(idsToUpdate, priority)
-      .pipe(takeUntil(this.destroy$))
+    this.favoriteService;
+      .updateMultipleFavoritesPriority(idsToUpdate, priority);
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: () => {
           this.messageService.add({
-            severity: 'success',
-            summary: 'Priority Updated',
-            detail: `Priority updated for ${idsToUpdate.length} favorite(s).`,
+            severity: 'success',;
+            summary: 'Priority Updated',;
+            detail: `Priority updated for ${idsToUpdate.length} favorite(s).`,;`
           });
           this.loadFavorites();
-        },
+        },;
         error: (err) => {
           this.isLoading = false;
           this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to update priority for selected favorites.',
+            severity: 'error',;
+            summary: 'Error',;
+            detail: 'Failed to update priority for selected favorites.',;
           });
           console.error('Error batch updating priority:', err);
-        },
+        },;
       });
   }
 
@@ -545,48 +545,48 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   }
 
   generateContextMenuItems(favorite: Favorite): MenuItem[] {
-    return [
+    return [;
       {
-        label: 'View Details',
-        icon: 'pi pi-eye',
-        command: () => this.viewFavoriteDetails(favorite),
-      },
-      { label: 'Edit', icon: 'pi pi-pencil', command: () => this.editFavorite(favorite) },
-      { label: 'Delete', icon: 'pi pi-trash', command: () => this.confirmDeleteFavorite(favorite) },
-      { separator: true },
+        label: 'View Details',;
+        icon: 'pi pi-eye',;
+        command: () => this.viewFavoriteDetails(favorite),;
+      },;
+      { label: 'Edit', icon: 'pi pi-pencil', command: () => this.editFavorite(favorite) },;
+      { label: 'Delete', icon: 'pi pi-trash', command: () => this.confirmDeleteFavorite(favorite) },;
+      { separator: true },;
       {
-        label: 'Mark High Priority',
-        icon: this.getPriorityIcon(FavoritePriority.High),
-        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.High),
-      },
+        label: 'Mark High Priority',;
+        icon: this.getPriorityIcon(FavoritePriority.High),;
+        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.High),;
+      },;
       {
-        label: 'Mark Medium Priority',
-        icon: this.getPriorityIcon(FavoritePriority.Medium),
-        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.Medium),
-      },
+        label: 'Mark Medium Priority',;
+        icon: this.getPriorityIcon(FavoritePriority.Medium),;
+        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.Medium),;
+      },;
       {
-        label: 'Mark Low Priority',
-        icon: this.getPriorityIcon(FavoritePriority.Low),
-        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.Low),
-      },
+        label: 'Mark Low Priority',;
+        icon: this.getPriorityIcon(FavoritePriority.Low),;
+        command: () => this.toggleFavoritePriority(favorite, FavoritePriority.Low),;
+      },;
       {
-        label: 'Clear Priority',
-        icon: 'pi pi-times-circle',
-        command: () => this.toggleFavoritePriority(favorite, null as any),
-      },
+        label: 'Clear Priority',;
+        icon: 'pi pi-times-circle',;
+        command: () => this.toggleFavoritePriority(favorite, null as any),;
+      },;
     ];
   }
 
   getPriorityIcon(priority: FavoritePriority | null | undefined): string {
     if (!priority) return 'pi pi-circle-off';
     switch (priority) {
-      case FavoritePriority.High:
+      case FavoritePriority.High:;
         return 'pi pi-star-fill';
-      case FavoritePriority.Medium:
+      case FavoritePriority.Medium:;
         return 'pi pi-star-half-alt';
-      case FavoritePriority.Low:
+      case FavoritePriority.Low:;
         return 'pi pi-star';
-      default:
+      default:;
         return 'pi pi-circle-off';
     }
   }
@@ -594,13 +594,13 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   getPriorityClass(priority: FavoritePriority | null | undefined): string {
     if (!priority) return 'priority-none';
     switch (priority) {
-      case FavoritePriority.High:
+      case FavoritePriority.High:;
         return 'priority-high';
-      case FavoritePriority.Medium:
+      case FavoritePriority.Medium:;
         return 'priority-medium';
-      case FavoritePriority.Low:
+      case FavoritePriority.Low:;
         return 'priority-low';
-      default:
+      default:;
         return 'priority-none';
     }
   }
@@ -608,13 +608,13 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   getSeverityForPriority(priority: FavoritePriority | null | undefined): string | undefined {
     if (!priority) return undefined;
     switch (priority) {
-      case FavoritePriority.High:
+      case FavoritePriority.High:;
         return 'danger';
-      case FavoritePriority.Medium:
+      case FavoritePriority.Medium:;
         return 'warning';
-      case FavoritePriority.Low:
+      case FavoritePriority.Low:;
         return 'success';
-      default:
+      default:;
         return undefined;
     }
   }
@@ -630,15 +630,15 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
 
   resetAdvancedSearch(): void {
     this.advancedSearchQuery = {
-      nameContains: '',
-      notesContains: '',
-      urlContains: '',
-      tagsIncludeAll: [],
-      tagsIncludeAny: [],
-      minDateAdded: null,
-      maxDateAdded: null,
-      minLastAccessed: null,
-      maxLastAccessed: null,
+      nameContains: '',;
+      notesContains: '',;
+      urlContains: '',;
+      tagsIncludeAll: [],;
+      tagsIncludeAny: [],;
+      minDateAdded: null,;
+      maxDateAdded: null,;
+      minLastAccessed: null,;
+      maxLastAccessed: null,;
     };
   }
 

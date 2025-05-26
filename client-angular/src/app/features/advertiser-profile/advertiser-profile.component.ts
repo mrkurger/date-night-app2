@@ -1,34 +1,10 @@
+import {
 import { OnInit } from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (advertiser-profile.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { AdService } from '../../core/services/ad.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -39,53 +15,75 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputTextModule } from 'primeng/inputtext';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,';
+} from '@nebular/theme';
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (advertiser-profile.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 
 /**
- * Advertiser Profile Component
- *
- * Displays and manages an advertiser's profile information using Nebular UI components.
- * Features include:
- * - Profile viewing with responsive layout
- * - Profile editing with form validation
- * - Media gallery with thumbnails
- * - Status badges (Featured, Touring)
- * - Actions (Edit, Delete, Upgrade)
- *
- * Uses Nebular components:
- * - NbCard for layout containers
- * - NbBadge for status indicators
- * - NbForm components for editing
- * - NbButton for actions
- * - NbIcon for visual indicators
- * - NbSpinner for loading states
+ * Advertiser Profile Component;
+ *;
+ * Displays and manages an advertiser's profile information using Nebular UI components.;
+ * Features include:;
+ * - Profile viewing with responsive layout;
+ * - Profile editing with form validation;
+ * - Media gallery with thumbnails;
+ * - Status badges (Featured, Touring);
+ * - Actions (Edit, Delete, Upgrade);
+ *;
+ * Uses Nebular components:;
+ * - NbCard for layout containers;
+ * - NbBadge for status indicators;
+ * - NbForm components for editing;
+ * - NbButton for actions;
+ * - NbIcon for visual indicators;
+ * - NbSpinner for loading states;
  */
 @Component({
-  selector: 'app-advertiser-profile',
-  templateUrl: './advertiser-profile.component.html',
-  styleUrls: ['./advertiser-profile.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    NebularModule,
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbTagModule,
-    NbBadgeModule,
-    NbLayoutModule,,
-    ProgressSpinnerModule,
-    InputTextModule
-  ],
-})
-export class AdvertiserProfileComponent implements OnInit {
+  selector: 'app-advertiser-profile',;
+  templateUrl: './advertiser-profile.component.html',;
+  styleUrls: ['./advertiser-profile.component.scss'],;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    NebularModule,;
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    MainLayoutComponent,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbSpinnerModule,;
+    NbFormFieldModule,;
+    NbInputModule,;
+    NbSelectModule,;
+    NbTagModule,;
+    NbBadgeModule,;
+    NbLayoutModule,,;
+    ProgressSpinnerModule,;
+    InputTextModule;
+  ],;
+});
+export class AdvertiserProfileComponen {t implements OnInit {
   advertiser: User | null = null;
   loading = true;
   error: string | null = null;
@@ -93,22 +91,22 @@ export class AdvertiserProfileComponent implements OnInit {
   editMode = false;
   profileForm: FormGroup;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private userService: UserService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private fb: FormBuilder,
+  constructor(;
+    private route: ActivatedRoute,;
+    private router: Router,;
+    private userService: UserService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private fb: FormBuilder,;
   ) {
     this.profileForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(3)]],;
+      email: ['', [Validators.required, Validators.email]],;
       profile: this.fb.group({
-        firstName: [''],
-        lastName: [''],
-        bio: [''],
-      }),
+        firstName: [''],;
+        lastName: [''],;
+        bio: [''],;
+      }),;
     });
   }
 
@@ -147,20 +145,20 @@ export class AdvertiserProfileComponent implements OnInit {
         });
 
         this.profileForm.patchValue({
-          username: advertiserData.username,
-          email: advertiserData.email,
+          username: advertiserData.username,;
+          email: advertiserData.email,;
           profile: {
-            firstName: advertiserData.profile?.firstName || '',
-            lastName: advertiserData.profile?.lastName || '',
-            bio: advertiserData.profile?.bio || '',
-          },
+            firstName: advertiserData.profile?.firstName || '',;
+            lastName: advertiserData.profile?.lastName || '',;
+            bio: advertiserData.profile?.bio || '',;
+          },;
         });
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load advertiser details';
         this.loading = false;
         console.error('Error loading advertiser:', err);
-      },
+      },;
     });
   }
 
@@ -177,8 +175,8 @@ export class AdvertiserProfileComponent implements OnInit {
     if (!this.advertiser) return;
 
     const updatedAdvertiser = {
-      ...this.advertiser,
-      ...this.profileForm.value,
+      ...this.advertiser,;
+      ...this.profileForm.value,;
     };
 
     this.loading = true;
@@ -188,13 +186,13 @@ export class AdvertiserProfileComponent implements OnInit {
         this.loading = false;
         this.editMode = false;
         this.notificationService.success('Profile updated successfully');
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to update profile';
         this.loading = false;
         console.error('Error updating profile:', err);
         this.notificationService.error('Failed to update profile');
-      },
+      },;
     });
   }
 
@@ -203,13 +201,13 @@ export class AdvertiserProfileComponent implements OnInit {
 
     if (this.advertiser) {
       this.profileForm.patchValue({
-        username: this.advertiser.username,
-        email: this.advertiser.email,
+        username: this.advertiser.username,;
+        email: this.advertiser.email,;
         profile: {
-          firstName: this.advertiser.profile?.firstName || '',
-          lastName: this.advertiser.profile?.lastName || '',
-          bio: this.advertiser.profile?.bio || '',
-        },
+          firstName: this.advertiser.profile?.firstName || '',;
+          lastName: this.advertiser.profile?.lastName || '',;
+          bio: this.advertiser.profile?.bio || '',;
+        },;
       });
     }
   }
@@ -223,13 +221,13 @@ export class AdvertiserProfileComponent implements OnInit {
         next: () => {
           this.notificationService.success('Profile deleted successfully');
           this.router.navigateByUrl('/browse');
-        },
+        },;
         error: (err) => {
           this.error = 'Failed to delete profile';
           this.loading = false;
           console.error('Error deleting profile:', err);
           this.notificationService.error('Failed to delete profile');
-        },
+        },;
       });
     }
   }

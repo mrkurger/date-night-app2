@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
+
 interface Advertiser {
   id: number | string;
   name: string;
@@ -19,14 +20,14 @@ interface Advertiser {
   isPremium?: boolean;
 }
 
-@Component({
-  selector: 'app-alt-premium-ad-card',
-  standalone: true,
-  imports: [CommonModule, RouterModule, CardModule, ButtonModule, BadgeModule, TagModule],
-  templateUrl: './alt-premium-ad-card.component.html',
-  styleUrls: ['./alt-premium-ad-card.component.scss'],
-})
-export class AltPremiumAdCardComponent {
+@Component({';
+  selector: 'app-alt-premium-ad-card',;
+  standalone: true,;
+  imports: [CommonModule, RouterModule, CardModule, ButtonModule, BadgeModule, TagModule],;
+  templateUrl: './alt-premium-ad-card.component.html',;
+  styleUrls: ['./alt-premium-ad-card.component.scss'],;
+});
+export class AltPremiumAdCardComponen {t {
   @Input() ad!: Advertiser;
   isHovered = false;
 }

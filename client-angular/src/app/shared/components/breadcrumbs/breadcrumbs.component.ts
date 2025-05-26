@@ -21,44 +21,35 @@ export interface Breadcrumb {
   icon?: string;
 }
 
-@Component({
-  selector: 'app-breadcrumbs',
-  imports: [CommonModule, RouterModule, NbIconModule],
-  template: `
-    <nav class="breadcrumbs" aria-label="breadcrumb">
-      <ol class="breadcrumb-list">
-        <li
-          *ngFor="let breadcrumb of breadcrumbs; let last = last"
-          class="breadcrumb-item"
-          [class.active]="last"
-        >
-          <a *ngIf="!last && breadcrumb.url" [routerLink]="breadcrumb.url" class="breadcrumb-link">
-            <nb-icon *ngIf="breadcrumb.icon" [icon]="breadcrumb.icon"></nb-icon>
-            <span>{{ breadcrumb.label }}</span>
-          </a>
+@Component({';
+  selector: 'app-breadcrumbs',;
+  imports: [CommonModule, RouterModule, NbIconModule],;
+  template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            {{ breadcrumb.label }};
+          ;
 
-          <span *ngIf="!last && !breadcrumb.url" class="breadcrumb-text">
-            <nb-icon *ngIf="breadcrumb.icon" [icon]="breadcrumb.icon"></nb-icon>
-            <span>{{ breadcrumb.label }}</span>
-          </span>
+          ;
+            ;
+            {{ breadcrumb.label }};
+          ;
 
-          <span *ngIf="last" class="breadcrumb-current">
-            <nb-icon *ngIf="breadcrumb.icon" [icon]="breadcrumb.icon"></nb-icon>
-            <span>{{ breadcrumb.label }}</span>
-          </span>
+          ;
+            ;
+            {{ breadcrumb.label }};
+          ;
 
-          <nb-icon
-            *ngIf="!last"
-            icon="chevron-right-outline"
-            class="breadcrumb-separator"
-            aria-hidden="true"
-          ></nb-icon>
-        </li>
-      </ol>
-    </nav>
-  `,
-  styles: [
-    `
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .breadcrumbs {
         padding: 0.75rem 0;
         margin-bottom: 1rem;
@@ -97,7 +88,7 @@ export interface Breadcrumb {
         }
       }
 
-      .breadcrumb-text,
+      .breadcrumb-text,;
       .breadcrumb-current {
         display: flex;
         align-items: center;
@@ -139,11 +130,11 @@ export interface Breadcrumb {
           }
         }
       }
-    `,
-  ],
-})
-export class BreadcrumbsComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+    `,;`
+  ],;
+});
+export class BreadcrumbsComponen {t implements OnInit, OnDestroy {
+  private destroy$ = new Subject();
   breadcrumbs: Breadcrumb[] = [];
 
   constructor(private router: Router) {}
@@ -153,11 +144,11 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     this.generateBreadcrumbs();
 
     // Update breadcrumbs on navigation
-    this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        takeUntil(this.destroy$),
-      )
+    this.router.events;
+      .pipe(;
+        filter((event) => event instanceof NavigationEnd),;
+        takeUntil(this.destroy$),;
+      );
       .subscribe(() => {
         this.generateBreadcrumbs();
       });
@@ -170,37 +161,26 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   private generateBreadcrumbs() {
     const urlSegments = this.router.url.split('/').filter((segment) => segment);
-    this.breadcrumbs = [
-      { label: 'Home', url: '/', icon: 'home-outline' },
+    this.breadcrumbs = [;
+      { label: 'Home', url: '/', icon: 'home-outline' },;
       ...urlSegments.map((segment, index) => {
-        const url = `/${urlSegments.slice(0, index + 1).join('/')}`;
+        const url = `/${urlSegments.slice(0, index + 1).join('/')}`;`
         return {
-          label: this.formatLabel(segment),
-          url: index < urlSegments.length - 1 ? url : undefined,
-          icon: this.getIconForSegment(segment),
-        };
-      }),
-    ];
-  }
-
-  private formatLabel(segment: string): string {
-    // Convert kebab-case to Title Case
-    return segment
-      .split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          label: this.formatLabel(segment),;
+          url: index  word.charAt(0).toUpperCase() + word.slice(1));
       .join(' ');
   }
 
   private getIconForSegment(segment: string): string | undefined {
     // Map segments to icons
     const iconMap: { [key: string]: string } = {
-      profile: 'person-outline',
-      settings: 'settings-2-outline',
-      messages: 'message-circle-outline',
-      favorites: 'heart-outline',
-      ads: 'file-text-outline',
-      admin: 'shield-outline',
-      telemetry: 'activity-outline',
+      profile: 'person-outline',;
+      settings: 'settings-2-outline',;
+      messages: 'message-circle-outline',;
+      favorites: 'heart-outline',;
+      ads: 'file-text-outline',;
+      admin: 'shield-outline',;
+      telemetry: 'activity-outline',;
     };
 
     return iconMap[segment];

@@ -1,19 +1,20 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 // PrimeNG Modules
 // Import MenuItem
 
 // Application-specific services and components
 import { AuthService } from '../../services/auth.service'; // Corrected path
+
+';
+import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component'; // Assuming this is already PrimeNG or will be migrated';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'; // Assuming this is already PrimeNG or will be migrated';
+import { User } from '../../models/user.model'; // Corrected path';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ThemeService } from '../../services/theme.service';
 import { NotificationService } from '../../services/notification.service';
-import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component'; // Assuming this is already PrimeNG or will be migrated
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'; // Assuming this is already PrimeNG or will be migrated
-import { User } from '../../models/user.model'; // Corrected path
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -24,30 +25,29 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MenuItem } from 'primeng/menuitem';
 import { PanelModule } from 'primeng/panel';
 
-
-@Component({
-  selector: 'app-navigation',
+@Component({';
+  selector: 'app-navigation',;
   standalone: true, // Ensure this component is standalone
-  imports: [
-    MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule, 
-    CommonModule,
-    RouterModule,
-    BreadcrumbsComponent,
-    ThemeToggleComponent,
+  imports: [;
+    MenuItem, TooltipModule, MenuModule, AvatarModule, ButtonModule, ToolbarModule, PanelMenuModule, SidebarModule,; 
+    CommonModule,;
+    RouterModule,;
+    BreadcrumbsComponent,;
+    ThemeToggleComponent,;
     // PrimeNG Modules
-    SidebarModule,
-    PanelMenuModule,
-    ToolbarModule,
-    ButtonModule,
-    AvatarModule,
-    MenuModule,
-    TooltipModule,,
-    PanelModule
-  ],
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
-})
-export class NavigationComponent implements OnInit, OnDestroy {
+    SidebarModule,;
+    PanelMenuModule,;
+    ToolbarModule,;
+    ButtonModule,;
+    AvatarModule,;
+    MenuModule,;
+    TooltipModule,,;
+    PanelModule;
+  ],;
+  templateUrl: './navigation.component.html',;
+  styleUrls: ['./navigation.component.scss'],;
+});
+export class NavigationComponen {t implements OnInit, OnDestroy {
   @Input() items: MenuItem[] = []; // Changed from NbMenuItem[] to PrimeNG MenuItem[]
 
   sidebarVisible = true; // Replaces sidebarState
@@ -57,14 +57,14 @@ export class NavigationComponent implements OnInit, OnDestroy {
   userMenuItems: MenuItem[] = []; // For PrimeNG user menu
   currentYear: number = new Date().getFullYear();
 
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject();
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
+  constructor(;
+    private authService: AuthService,;
+    private router: Router,;
     private themeService: ThemeService, // Keep if theme toggle or logic relies on it
     private notificationService: NotificationService, // Keep if used
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,;
   ) {}
 
   ngOnInit(): void {
@@ -77,9 +77,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     });
 
     // Example menu items - replace with your actual logic for generating menu items
-    this.items = [
-      { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
-      { label: 'Ads', icon: 'pi pi-list', routerLink: ['/ads'] },
+    this.items = [;
+      { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },;
+      { label: 'Ads', icon: 'pi pi-list', routerLink: ['/ads'] },;
       // Add more items as needed
     ];
 
@@ -88,16 +88,16 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   updateUserMenuItems(): void {
     if (this.currentUser) {
-      this.userMenuItems = [
+      this.userMenuItems = [;
         { label: 'Profile', icon: 'pi pi-user', routerLink: ['/profile', this.currentUser.id] }, // Corrected from _id to id
-        { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
-        { separator: true },
-        { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
+        { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },;
+        { separator: true },;
+        { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },;
       ];
     } else {
-      this.userMenuItems = [
-        { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/auth/login'] },
-        { label: 'Register', icon: 'pi pi-user-plus', routerLink: ['/auth/register'] },
+      this.userMenuItems = [;
+        { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/auth/login'] },;
+        { label: 'Register', icon: 'pi pi-user-plus', routerLink: ['/auth/register'] },;
       ];
     }
   }

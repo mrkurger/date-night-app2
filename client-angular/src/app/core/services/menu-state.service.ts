@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export interface MenuState {
+export interface MenuState {';
   sidebarState: 'expanded' | 'collapsed' | 'compacted';
   expandedItems: string[];
   selectedItem?: string;
@@ -11,16 +11,16 @@ export interface MenuState {
 const MENU_STATE_KEY = 'app_menu_state';
 
 @Injectable({
-  providedIn: 'root',
-})
-export class MenuStateService {
+  providedIn: 'root',;
+});
+export class MenuStateServic {e {
   private defaultState: MenuState = {
-    sidebarState: 'expanded',
-    expandedItems: [],
-    theme: 'default',
+    sidebarState: 'expanded',;
+    expandedItems: [],;
+    theme: 'default',;
   };
 
-  private stateSubject = new BehaviorSubject<MenuState>(this.loadState());
+  private stateSubject = new BehaviorSubject(this.loadState());
   public state$ = this.stateSubject.asObservable();
 
   constructor() {
@@ -29,7 +29,7 @@ export class MenuStateService {
   }
 
   /**
-   * Load saved state from localStorage
+   * Load saved state from localStorage;
    */
   private loadState(): MenuState {
     try {
@@ -42,7 +42,7 @@ export class MenuStateService {
   }
 
   /**
-   * Save current state to localStorage
+   * Save current state to localStorage;
    */
   private saveState(state: MenuState): void {
     try {
@@ -53,7 +53,7 @@ export class MenuStateService {
   }
 
   /**
-   * Update sidebar state
+   * Update sidebar state;
    */
   updateSidebarState(state: 'expanded' | 'collapsed' | 'compacted'): void {
     const currentState = this.stateSubject.value;
@@ -63,12 +63,12 @@ export class MenuStateService {
   }
 
   /**
-   * Toggle menu item expansion
+   * Toggle menu item expansion;
    */
   toggleMenuItem(itemId: string): void {
     const currentState = this.stateSubject.value;
-    const expandedItems = currentState.expandedItems.includes(itemId)
-      ? currentState.expandedItems.filter((id) => id !== itemId)
+    const expandedItems = currentState.expandedItems.includes(itemId);
+      ? currentState.expandedItems.filter((id) => id !== itemId);
       : [...currentState.expandedItems, itemId];
 
     const newState = { ...currentState, expandedItems };
@@ -77,7 +77,7 @@ export class MenuStateService {
   }
 
   /**
-   * Update selected menu item
+   * Update selected menu item;
    */
   setSelectedItem(itemId: string): void {
     const currentState = this.stateSubject.value;
@@ -87,7 +87,7 @@ export class MenuStateService {
   }
 
   /**
-   * Update theme
+   * Update theme;
    */
   updateTheme(theme: 'default' | 'dark' | 'cosmic' | 'corporate'): void {
     const currentState = this.stateSubject.value;
@@ -97,14 +97,14 @@ export class MenuStateService {
   }
 
   /**
-   * Get current menu state
+   * Get current menu state;
    */
   getCurrentState(): MenuState {
     return this.stateSubject.value;
   }
 
   /**
-   * Reset state to default
+   * Reset state to default;
    */
   resetState(): void {
     this.stateSubject.next(this.defaultState);

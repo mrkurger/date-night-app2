@@ -1,17 +1,15 @@
+import {
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  FormArray,
-  ValidatorFn,
-  ValidationErrors,
-  AbstractControl,
-  Validators,
+  FormBuilder,;
+  FormGroup,;
+  ReactiveFormsModule,;
+  FormArray,;
+  ValidatorFn,;
+  ValidationErrors,;
+  AbstractControl,;
+  Validators,';
 } from '@angular/forms';
 
 export interface TimeSlot {
@@ -42,22 +40,13 @@ const validateTimeSlot: ValidatorFn = (control: AbstractControl): ValidationErro
   const start = timeToMinutes(startTime);
   const end = timeToMinutes(endTime);
 
-  if (end <= start) {
-    return { invalidTimeRange: true };
-  }
-
-  return null;
-};
-
-const validateTimeSlotOverlap: ValidatorFn = (
-  control: AbstractControl,
-): ValidationErrors | null => {
+  if (end  {
   if (!(control instanceof FormArray)) {
     return null;
   }
 
   const timeSlots = control.value as { startTime: string; endTime: string }[];
-  const overlaps = timeSlots.some((slot1, index1) =>
+  const overlaps = timeSlots.some((slot1, index1) =>;
     timeSlots.some((slot2, index2) => {
       if (index1 === index2) return false;
 
@@ -66,94 +55,84 @@ const validateTimeSlotOverlap: ValidatorFn = (
       const start2 = timeToMinutes(slot2.startTime);
       const end2 = timeToMinutes(slot2.endTime);
 
-      return start1 < end2 && end1 > start2;
-    }),
+      return start1  start2;
+    }),;
   );
 
   return overlaps ? { overlappingSlots: true } : null;
 };
 
 @Component({
-    selector: 'app-availability-calendar',
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        NbDatepickerModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbButtonModule,
-        NbSelectModule,
-        NbIconModule,
-    ],
-    template: `
-    <div class="availability-calendar">
-      <form [formGroup]="availabilityForm">
-        <!-- Date Selection -->
-        <mat-form-field appearance="outline" class="date-picker">
-          <mat-label>Select Date</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="date" />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="availabilityForm.get('date')?.errors?.required">
-            Date is required
-          </mat-error>
-        </mat-form-field>
+    selector: 'app-availability-calendar',;
+    imports: [;
+        CommonModule,;
+        ReactiveFormsModule,;
+        NbDatepickerModule,;
+        NbFormFieldModule,;
+        NbInputModule,;
+        NbButtonModule,;
+        NbSelectModule,;
+        NbIconModule,;
+    ],;
+    template: `;`
+    ;
+      ;
+        ;
+        ;
+          Select Date;
+          ;
+          ;
+          ;
+          ;
+            Date is required;
+          ;
+        ;
 
-        <!-- Time Slots -->
-        <div formArrayName="timeSlots" class="time-slots">
-          <div
-            *ngFor="let slot of timeSlots.controls; let i = index"
-            [formGroupName]="i"
-            class="time-slot"
-          >
-            <mat-form-field appearance="outline">
-              <mat-label>Start Time</mat-label>
-              <input matInput type="time" formControlName="startTime" />
-              <mat-error *ngIf="slot.errors?.invalidTimeRange">
-                End time must be after start time
-              </mat-error>
-            </mat-form-field>
+        ;
+        ;
+          ;
+            ;
+              Start Time;
+              ;
+              ;
+                End time must be after start time;
+              ;
+            ;
 
-            <mat-form-field appearance="outline">
-              <mat-label>End Time</mat-label>
-              <input matInput type="time" formControlName="endTime" />
-            </mat-form-field>
+            ;
+              End Time;
+              ;
+            ;
 
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="removeTimeSlot(i)"
-              type="button"
-              [disabled]="timeSlots.length === 1"
-            >
-              <nb-icon icon="delete"></nb-icon>
-            </button>
-          </div>
+            ;
+              ;
+            ;
+          ;
 
-          <div class="error-message" *ngIf="timeSlots.errors?.overlappingSlots">
-            Time slots cannot overlap
-          </div>
-        </div>
+          ;
+            Time slots cannot overlap;
+          ;
+        ;
 
-        <!-- Add Time Slot Button -->
-        <button mat-button color="primary" (click)="addTimeSlot()" type="button">
-          <nb-icon icon="add"></nb-icon>
-          Add Time Slot
-        </button>
+        ;
+        ;
+          ;
+          Add Time Slot;
+        ;
 
-        <!-- Recurring Option -->
-        <mat-form-field appearance="outline" class="recurring-select">
-          <mat-label>Repeat</mat-label>
-          <mat-select formControlName="isRecurring">
-            <mat-option [value]="false">One-time</mat-option>
-            <mat-option [value]="true">Weekly</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </div>
-  `,
-    styles: [
-        `
+        ;
+        ;
+          Repeat;
+          ;
+            One-time;
+            Weekly;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .availability-calendar {
         padding: 1rem;
       }
@@ -166,7 +145,7 @@ const validateTimeSlotOverlap: ValidatorFn = (
         align-items: center;
         margin-bottom: 0.5rem;
       }
-      .date-picker,
+      .date-picker,;
       .recurring-select {
         width: 100%;
         max-width: 300px;
@@ -177,28 +156,28 @@ const validateTimeSlotOverlap: ValidatorFn = (
         margin-top: -8px;
         margin-bottom: 8px;
       }
-    `,
-    ]
-})
-export class AvailabilityCalendarComponent implements OnInit {
+    `,;`
+    ];
+});
+export class AvailabilityCalendarComponen {t implements OnInit {
   @Input() initialAvailability?: AvailabilitySlot;
-  @Output() availabilityChange = new EventEmitter<AvailabilitySlot>();
+  @Output() availabilityChange = new EventEmitter();
 
   availabilityForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.availabilityForm = this.fb.group({
-      date: [null, [Validators.required]],
-      timeSlots: this.fb.array([], [validateTimeSlotOverlap]),
-      isRecurring: [false],
+      date: [null, [Validators.required]],;
+      timeSlots: this.fb.array([], [validateTimeSlotOverlap]),;
+      isRecurring: [false],;
     });
   }
 
   ngOnInit() {
     if (this.initialAvailability) {
       this.availabilityForm.patchValue({
-        date: this.initialAvailability.date,
-        isRecurring: this.initialAvailability.isRecurring || false,
+        date: this.initialAvailability.date,;
+        isRecurring: this.initialAvailability.isRecurring || false,;
       });
 
       // Initialize time slots
@@ -214,9 +193,9 @@ export class AvailabilityCalendarComponent implements OnInit {
     this.availabilityForm.valueChanges.subscribe((value) => {
       if (this.availabilityForm.valid) {
         this.availabilityChange.emit({
-          date: value.date,
-          timeSlots: value.timeSlots,
-          isRecurring: value.isRecurring,
+          date: value.date,;
+          timeSlots: value.timeSlots,;
+          isRecurring: value.isRecurring,;
         });
       }
     });
@@ -227,12 +206,12 @@ export class AvailabilityCalendarComponent implements OnInit {
   }
 
   addTimeSlot(slot?: TimeSlot) {
-    const timeSlot = this.fb.group(
+    const timeSlot = this.fb.group(;
       {
-        startTime: [slot?.startTime || '09:00'],
-        endTime: [slot?.endTime || '17:00'],
-      },
-      { validators: validateTimeSlot },
+        startTime: [slot?.startTime || '09:00'],;
+        endTime: [slot?.endTime || '17:00'],;
+      },;
+      { validators: validateTimeSlot },;
     );
 
     this.timeSlots.push(timeSlot);

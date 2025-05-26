@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -5,13 +7,10 @@
 //
 // COMMON CUSTOMIZATIONS:
 // - DEFAULT_PREFERENCES: Default user preferences (default: see below)
-//   Related to: user-settings.component.ts:defaultPreferences
+//   Related to: user-settings.component.ts:defaultPreferences';
 // - STORAGE_KEY: Key used for localStorage (default: 'user_preferences')
 //   Related to: theme.service.ts:THEME_STORAGE_KEY
 // ===================================================
-
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ContentDensity {
   value: 'comfortable' | 'compact' | 'condensed';
@@ -35,43 +34,43 @@ export interface UserPreferences {
 }
 
 const DEFAULT_PREFERENCES: UserPreferences = {
-  defaultViewType: 'netflix',
-  contentDensity: 'comfortable',
-  cardSize: 'medium',
-  savedFilters: {},
-  recentlyViewed: [],
-  favorites: [],
+  defaultViewType: 'netflix',;
+  contentDensity: 'comfortable',;
+  cardSize: 'medium',;
+  savedFilters: {},;
+  recentlyViewed: [],;
+  favorites: [],;
 };
 
 const STORAGE_KEY = 'user_preferences';
 
 /**
- * Service for managing user preferences
- * Handles saving and retrieving user preferences for layout customization
+ * Service for managing user preferences;
+ * Handles saving and retrieving user preferences for layout customization;
  */
 @Injectable({
-  providedIn: 'root',
-})
-export class UserPreferencesService {
-  private preferencesSubject = new BehaviorSubject<UserPreferences>(this.getInitialPreferences());
+  providedIn: 'root',;
+});
+export class UserPreferencesServic {e {
+  private preferencesSubject = new BehaviorSubject(this.getInitialPreferences());
 
   /**
-   * Observable that emits the current user preferences
+   * Observable that emits the current user preferences;
    */
-  public preferences$: Observable<UserPreferences> = this.preferencesSubject.asObservable();
+  public preferences$: Observable = this.preferencesSubject.asObservable();
 
   // Available content density options
-  public readonly contentDensityOptions: ContentDensity[] = [
-    { value: 'comfortable', label: 'Comfortable' },
-    { value: 'compact', label: 'Compact' },
-    { value: 'condensed', label: 'Condensed' },
+  public readonly contentDensityOptions: ContentDensity[] = [;
+    { value: 'comfortable', label: 'Comfortable' },;
+    { value: 'compact', label: 'Compact' },;
+    { value: 'condensed', label: 'Condensed' },;
   ];
 
   // Available card size options
-  public readonly cardSizeOptions: CardSize[] = [
-    { value: 'small', label: 'Small' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'large', label: 'Large' },
+  public readonly cardSizeOptions: CardSize[] = [;
+    { value: 'small', label: 'Small' },;
+    { value: 'medium', label: 'Medium' },;
+    { value: 'large', label: 'Large' },;
   ];
 
   constructor() {
@@ -80,21 +79,21 @@ export class UserPreferencesService {
   }
 
   /**
-   * Get the current user preferences
-   * @returns The current user preferences
+   * Get the current user preferences;
+   * @returns The current user preferences;
    */
   public getPreferences(): UserPreferences {
     return this.preferencesSubject.value;
   }
 
   /**
-   * Update user preferences
-   * @param preferences The preferences to update
+   * Update user preferences;
+   * @param preferences The preferences to update;
    */
-  public updatePreferences(preferences: Partial<UserPreferences>): void {
+  public updatePreferences(preferences: Partial): void {
     const updatedPreferences = {
-      ...this.preferencesSubject.value,
-      ...preferences,
+      ...this.preferencesSubject.value,;
+      ...preferences,;
     };
 
     this.preferencesSubject.next(updatedPreferences);
@@ -102,55 +101,55 @@ export class UserPreferencesService {
   }
 
   /**
-   * Set the default view type
-   * @param viewType The view type to set as default
+   * Set the default view type;
+   * @param viewType The view type to set as default;
    */
   public setDefaultViewType(viewType: 'netflix' | 'tinder' | 'list'): void {
     this.updatePreferences({ defaultViewType: viewType });
   }
 
   /**
-   * Set the content density
-   * @param density The content density to set
+   * Set the content density;
+   * @param density The content density to set;
    */
   public setContentDensity(density: ContentDensity['value']): void {
     this.updatePreferences({ contentDensity: density });
   }
 
   /**
-   * Set the card size
-   * @param size The card size to set
+   * Set the card size;
+   * @param size The card size to set;
    */
   public setCardSize(size: CardSize['value']): void {
     this.updatePreferences({ cardSize: size });
   }
 
   /**
-   * Save a filter
-   * @param name The name of the filter
-   * @param filter The filter to save
+   * Save a filter;
+   * @param name The name of the filter;
+   * @param filter The filter to save;
    */
   public saveFilter(name: string, filter: any): void {
     const savedFilters = {
-      ...this.preferencesSubject.value.savedFilters,
-      [name]: filter,
+      ...this.preferencesSubject.value.savedFilters,;
+      [name]: filter,;
     };
 
     this.updatePreferences({ savedFilters });
   }
 
   /**
-   * Get a saved filter
-   * @param name The name of the filter
-   * @returns The saved filter or undefined if not found
+   * Get a saved filter;
+   * @param name The name of the filter;
+   * @returns The saved filter or undefined if not found;
    */
   public getSavedFilter(name: string): any {
     return this.preferencesSubject.value.savedFilters[name];
   }
 
   /**
-   * Delete a saved filter
-   * @param name The name of the filter to delete
+   * Delete a saved filter;
+   * @param name The name of the filter to delete;
    */
   public deleteSavedFilter(name: string): void {
     const savedFilters = { ...this.preferencesSubject.value.savedFilters };
@@ -160,14 +159,14 @@ export class UserPreferencesService {
   }
 
   /**
-   * Add an item to recently viewed
-   * @param id The ID of the item to add
-   * @param maxItems Maximum number of items to keep (default: 10)
+   * Add an item to recently viewed;
+   * @param id The ID of the item to add;
+   * @param maxItems Maximum number of items to keep (default: 10);
    */
   public addToRecentlyViewed(id: string, maxItems = 10): void {
     // Remove the item if it already exists
-    const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(
-      (item) => item !== id,
+    const recentlyViewed = this.preferencesSubject.value.recentlyViewed.filter(;
+      (item) => item !== id,;
     );
 
     // Add the item to the beginning of the array
@@ -180,8 +179,8 @@ export class UserPreferencesService {
   }
 
   /**
-   * Add or remove an item from favorites
-   * @param id The ID of the item to toggle
+   * Add or remove an item from favorites;
+   * @param id The ID of the item to toggle;
    */
   public toggleFavorite(id: string): void {
     const favorites = [...this.preferencesSubject.value.favorites];
@@ -199,16 +198,16 @@ export class UserPreferencesService {
   }
 
   /**
-   * Check if an item is in favorites
-   * @param id The ID of the item to check
-   * @returns True if the item is in favorites, false otherwise
+   * Check if an item is in favorites;
+   * @param id The ID of the item to check;
+   * @returns True if the item is in favorites, false otherwise;
    */
   public isFavorite(id: string): boolean {
     return this.preferencesSubject.value.favorites.includes(id);
   }
 
   /**
-   * Reset preferences to defaults
+   * Reset preferences to defaults;
    */
   public resetPreferences(): void {
     this.preferencesSubject.next({ ...DEFAULT_PREFERENCES });
@@ -216,8 +215,8 @@ export class UserPreferencesService {
   }
 
   /**
-   * Get the initial preferences from localStorage or defaults
-   * @returns The initial preferences
+   * Get the initial preferences from localStorage or defaults;
+   * @returns The initial preferences;
    */
   private getInitialPreferences(): UserPreferences {
     try {
@@ -234,7 +233,7 @@ export class UserPreferencesService {
   }
 
   /**
-   * Load preferences from localStorage
+   * Load preferences from localStorage;
    */
   private loadPreferences(): void {
     const preferences = this.getInitialPreferences();
@@ -242,8 +241,8 @@ export class UserPreferencesService {
   }
 
   /**
-   * Save preferences to localStorage
-   * @param preferences The preferences to save
+   * Save preferences to localStorage;
+   * @param preferences The preferences to save;
    */
   private savePreferences(preferences: UserPreferences): void {
     try {

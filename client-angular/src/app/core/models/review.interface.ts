@@ -30,11 +30,7 @@ export interface Review {
   };
   helpfulVotes: number;
   reportCount: number;
-  reports?: Array<{
-    userId: string;
-    reason: string;
-    date: Date;
-  }>;
+  reports?: Array;
   createdAt: Date;
   updatedAt: Date;
 }

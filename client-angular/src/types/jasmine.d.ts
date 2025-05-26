@@ -1,17 +1,17 @@
-/// <reference types="jasmine" />
+/// 
 
 interface StringMatching extends jasmine.AsymmetricMatcher {
   asymmetricMatch(other: string): boolean;
 }
 
 declare namespace jasmine {
-  interface Matchers<T> {
+  interface Matchers {
     toBeTruthy(): void;
     toBeFalsy(): void;
     toBe(expected: T): void;
     toBeTrue(): void;
     toBeFalse(): void;
-    toEqual<E = T>(expected: E): void;
+    toEqual(expected: E): void;
     toContain(expected: any): void;
     toHaveBeenCalled(): void;
     toHaveBeenCalledWith(...args: any[]): void;
@@ -24,9 +24,9 @@ declare namespace jasmine {
     toMatch(expected: string | RegExp): void;
     toThrow(expected?: any): void;
     toThrowError(expected?: new (...args: any[]) => Error | string | RegExp): void;
-    objectContaining(sample: Partial<T>): T;
+    objectContaining(sample: Partial): T;
     stringMatching(expected: string | RegExp): string;
-    not: Matchers<T>;
+    not: Matchers;
   }
 
   interface Spy {
@@ -36,7 +36,7 @@ declare namespace jasmine {
     withArgs(...args: any[]): Spy;
   }
 
-  interface SpyAnd<T = any> {
+  interface SpyAnd {
     callThrough(): Spy;
     returnValue(val: T): Spy;
     returnValues(...values: T[]): Spy;
@@ -45,23 +45,23 @@ declare namespace jasmine {
     stub(): Spy;
   }
 
-  interface SpyObj<T> {
+  interface SpyObj {
     [key: string]: Spy;
   }
 
-  function createSpyObj<T>(
-    baseName: string,
-    methodNames: Array<string> | { [key: string]: any },
-    propertyNames?: Array<string>,
-  ): SpyObj<T>;
+  function createSpyObj(
+    baseName: string,;
+    methodNames: Array | { [key: string]: any },;
+    propertyNames?: Array,;
+  ): SpyObj;
 
   function any(classToMatch: any): AsymmetricMatcher;
-  function objectContaining<T>(sample: Partial<T>): AsymmetricMatcher;
+  function objectContaining(sample: Partial): AsymmetricMatcher;
   function stringMatching(regex: string | RegExp): StringMatching;
 }
 
 interface ExpectStatic {
-  <T = any>(actual: T): jasmine.Matchers<T>;
+  (actual: T): jasmine.Matchers;
   stringMatching(expected: string | RegExp): StringMatching;
 }
 

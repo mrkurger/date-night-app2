@@ -1,68 +1,66 @@
-/// <reference types="jasmine" />
+/// 
 
-import { OnInit } from '@angular/core';
 import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule
-} from '@nebular/theme';
-
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-
 import { NetflixViewComponent } from './netflix-view.component';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule';
+} from '@nebular/theme';
 
 // Mock data
-const mockAds = [
+const mockAds = [;
   {
-    _id: '1',
-    title: 'Test Ad 1',
-    description: 'This is a test ad description',
-    shortDescription: 'Short description',
-    location: 'Oslo',
-    advertiserName: 'Test Advertiser',
-    advertiserImage: '/assets/images/default-profile.jpg',
-    isAdvertiserOnline: true,
-    images: ['/assets/images/test-image-1.jpg'],
-    tags: ['Tag1', 'Tag2', 'Tag3'],
-    createdAt: new Date().toISOString(),
-    isTouring: false,
-  },
+    _id: '1',;
+    title: 'Test Ad 1',;
+    description: 'This is a test ad description',;
+    shortDescription: 'Short description',;
+    location: 'Oslo',;
+    advertiserName: 'Test Advertiser',;
+    advertiserImage: '/assets/images/default-profile.jpg',;
+    isAdvertiserOnline: true,;
+    images: ['/assets/images/test-image-1.jpg'],;
+    tags: ['Tag1', 'Tag2', 'Tag3'],;
+    createdAt: new Date().toISOString(),;
+    isTouring: false,;
+  },;
   {
-    _id: '2',
-    title: 'Test Ad 2',
-    description: 'This is another test ad description',
-    location: 'Bergen',
-    advertiserName: 'Test Advertiser 2',
-    advertiserImage: '/assets/images/default-profile.jpg',
-    isAdvertiserOnline: false,
-    images: ['/assets/images/test-image-2.jpg'],
-    tags: ['Tag4', 'Tag5'],
+    _id: '2',;
+    title: 'Test Ad 2',;
+    description: 'This is another test ad description',;
+    location: 'Bergen',;
+    advertiserName: 'Test Advertiser 2',;
+    advertiserImage: '/assets/images/default-profile.jpg',;
+    isAdvertiserOnline: false,;
+    images: ['/assets/images/test-image-2.jpg'],;
+    tags: ['Tag4', 'Tag5'],;
     createdAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-    isTouring: true,
-  },
+    isTouring: true,;
+  },;
 ];
 
 // Mock services
-class MockAdService {
+class MockAdServic {e {
   getFeaturedAds() {
     return of(mockAds.slice(0, 1));
   }
@@ -80,7 +78,7 @@ class MockAdService {
   }
 }
 
-class MockNotificationService implements Partial<NotificationService> {
+class MockNotificationServic {e implements Partial {
   success(message: string): void {
     console.log('Success:', message);
   }
@@ -105,19 +103,19 @@ class MockNotificationService implements Partial<NotificationService> {
   unreadCount$ = of(0);
 }
 
-class MockChatService {
+class MockChatServic {e {
   createAdRoom(adId: string) {
     return of({ _id: 'chat-room-1' });
   }
 }
 
-class MockAuthService {
+class MockAuthServic {e {
   currentUser$ = of({ _id: 'user-1', name: 'Test User' });
 }
 
 describe('NetflixViewComponent', () => {
   let component: NetflixViewComponent;
-  let fixture: ComponentFixture<NetflixViewComponent>;
+  let fixture: ComponentFixture;
   let adService: AdService;
   let notificationService: NotificationService;
   let chatService: ChatService;
@@ -126,25 +124,25 @@ describe('NetflixViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        NetflixViewComponent,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbLayoutModule,
-        NbTagModule,
-        NbBadgeModule,
-        NbToggleModule,
-      ],
-      providers: [
-        { provide: AdService, useClass: MockAdService },
-        { provide: NotificationService, useClass: MockNotificationService },
-        { provide: ChatService, useClass: MockChatService },
-        { provide: AuthService, useClass: MockAuthService },
-      ],
+      imports: [;
+        RouterTestingModule,;
+        ReactiveFormsModule,;
+        NetflixViewComponent,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbSpinnerModule,;
+        NbLayoutModule,;
+        NbTagModule,;
+        NbBadgeModule,;
+        NbToggleModule,;
+      ],;
+      providers: [;
+        { provide: AdService, useClass: MockAdService },;
+        { provide: NotificationService, useClass: MockNotificationService },;
+        { provide: ChatService, useClass: MockChatService },;
+        { provide: AuthService, useClass: MockAuthService },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(NetflixViewComponent);
@@ -195,8 +193,8 @@ describe('NetflixViewComponent', () => {
     }));
 
     it('should handle error when loading featured ads fails', fakeAsync(() => {
-      spyOn(adService, 'getFeaturedAds').and.returnValue(
-        throwError(() => new Error('Failed to load featured ads')),
+      spyOn(adService, 'getFeaturedAds').and.returnValue(;
+        throwError(() => new Error('Failed to load featured ads')),;
       );
       spyOn(adService, 'getTrendingAds').and.callThrough();
       spyOn(adService, 'getAds').and.callThrough();
@@ -318,9 +316,9 @@ describe('NetflixViewComponent', () => {
 
     it('should reset filters when resetFilters is called', () => {
       component.filterForm.setValue({
-        category: 'Escort',
-        location: 'Oslo',
-        touringOnly: true,
+        category: 'Escort',;
+        location: 'Oslo',;
+        touringOnly: true,;
       });
 
       spyOn(component, 'applyFilters').and.callThrough();
@@ -328,9 +326,9 @@ describe('NetflixViewComponent', () => {
       component.resetFilters();
 
       expect(component.filterForm.value).toEqual({
-        category: '',
-        location: '',
-        touringOnly: false,
+        category: '',;
+        location: '',;
+        touringOnly: false,;
       });
       expect(component.applyFilters).toHaveBeenCalled();
     });
@@ -340,33 +338,33 @@ describe('NetflixViewComponent', () => {
     it('should return correct media URL', () => {
       // Create a mock Ad object with the required properties
       const mockAd: any = {
-        _id: '1',
-        title: 'Test Ad 1',
-        description: 'This is a test ad description',
-        category: 'Test Category',
-        price: 100,
-        location: 'Oslo',
-        images: ['/assets/images/test-image-1.jpg'],
-        media: [{ type: 'image', url: '/assets/images/test-image-1.jpg' }],
-        advertiser: 'Test Advertiser',
-        userId: 'user1',
-        isActive: true,
-        isFeatured: false,
-        isTrending: false,
-        isTouring: false,
-        viewCount: 0,
-        clickCount: 0,
-        inquiryCount: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        _id: '1',;
+        title: 'Test Ad 1',;
+        description: 'This is a test ad description',;
+        category: 'Test Category',;
+        price: 100,;
+        location: 'Oslo',;
+        images: ['/assets/images/test-image-1.jpg'],;
+        media: [{ type: 'image', url: '/assets/images/test-image-1.jpg' }],;
+        advertiser: 'Test Advertiser',;
+        userId: 'user1',;
+        isActive: true,;
+        isFeatured: false,;
+        isTrending: false,;
+        isTouring: false,;
+        viewCount: 0,;
+        clickCount: 0,;
+        inquiryCount: 0,;
+        createdAt: new Date().toISOString(),;
+        updatedAt: new Date().toISOString(),;
       };
 
       expect(component.getMediaUrl(mockAd)).toBe('/assets/images/test-image-1.jpg');
 
       // Create a mock Ad without images
       const mockAdWithoutImages: any = {
-        ...mockAd,
-        images: [],
+        ...mockAd,;
+        images: [],;
       };
 
       expect(component.getMediaUrl(mockAdWithoutImages)).toBe('/assets/images/default-profile.jpg');

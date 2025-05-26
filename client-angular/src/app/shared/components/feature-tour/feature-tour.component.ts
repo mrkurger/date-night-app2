@@ -1,22 +1,22 @@
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  Renderer2,
-} from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+  Component,;
+  ElementRef,;
+  EventEmitter,;
+  Input,;
+  OnDestroy,;
+  OnInit,;
+  Output,;
+  Renderer2,';
+} from '@angular/core';
 
 /**
- * Feature Tour Component
- *
- * A customizable component for displaying feature tours and walkthroughs.
- * Configure settings below to customize the behavior.
+ * Feature Tour Component;
+ *;
+ * A customizable component for displaying feature tours and walkthroughs.;
+ * Configure settings below to customize the behavior.;
  * @see other_file.ts:OTHER_SETTING for related functionality
  */
 
@@ -48,22 +48,21 @@ export interface TourStep {
 }
 
 @Component({
-  selector: 'app-feature-tour',
-  templateUrl: './feature-tour.component.html',
-  styleUrls: ['./feature-tour.component.scss'],
-  standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule],
-})
-export class FeatureTourComponent implements OnInit, OnDestroy {
+  selector: 'app-feature-tour',;
+  templateUrl: './feature-tour.component.html',;
+  styleUrls: ['./feature-tour.component.scss'],;
+  standalone: true,;
+  imports: [CommonModule, NbButtonModule, NbIconModule],;
+});
+export class FeatureTourComponen {t implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = [];
-import { ButtonModule } from 'primeng/button';
 
   @Input() showSkip = true;
   @Input() storageKey = 'feature-tour-completed';
 
-  @Output() complete = new EventEmitter<void>();
-  @Output() skip = new EventEmitter<void>();
-  @Output() stepChange = new EventEmitter<number>();
+  @Output() complete = new EventEmitter();
+  @Output() skip = new EventEmitter();
+  @Output() stepChange = new EventEmitter();
 
   currentStepIndex = 0;
   isVisible = false;
@@ -73,9 +72,9 @@ import { ButtonModule } from 'primeng/button';
   private resizeObserver: ResizeObserver | null = null;
   private scrollListener: (() => void) | null = null;
 
-  constructor(
-    private renderer: Renderer2,
-    private el: ElementRef,
+  constructor(;
+    private renderer: Renderer2,;
+    private el: ElementRef,;
   ) {}
 
   get currentStep(): TourStep {
@@ -131,57 +130,17 @@ import { ButtonModule } from 'primeng/button';
       this.currentStep.action();
     }
 
-    if (this.currentStepIndex < this.steps.length - 1) {
-      this.goToStep(this.currentStepIndex + 1);
-    } else {
-      this.completeTour();
-    }
-  }
-
-  previousStep(): void {
-    if (this.currentStepIndex > 0) {
+    if (this.currentStepIndex  0) {
       this.goToStep(this.currentStepIndex - 1);
     }
   }
 
   goToStep(index: number): void {
-    if (index >= 0 && index < this.steps.length) {
-      this.currentStepIndex = index;
-      this.stepChange.emit(this.currentStepIndex);
-      this.updateTargetElement();
-    }
-  }
-
-  completeTour(): void {
-    localStorage.setItem(this.storageKey, 'true');
-    this.hide();
-    this.complete.emit();
-  }
-
-  skipTour(): void {
-    localStorage.setItem(this.storageKey, 'true');
-    this.hide();
-    this.skip.emit();
-  }
-
-  private updateTargetElement(): void {
-    // Find the target element for the current step
-    const selector = this.currentStep.element;
-    this.targetElement = document.querySelector(selector);
-
-    if (this.targetElement) {
-      // Scroll element into view if needed
-      this.targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-
-      // Update position after a short delay to ensure scrolling is complete
-      setTimeout(() => {
+    if (index >= 0 && index  {
         this.updateTargetPosition();
       }, 300);
     } else {
-      console.warn(`Element not found for selector: ${selector}`);
+      console.warn(`Element not found for selector: ${selector}`);`
       // If element not found, position tooltip in the center
       this.targetRect = null;
     }
@@ -198,17 +157,17 @@ import { ButtonModule } from 'primeng/button';
     if (!this.targetRect && this.currentStep.position !== 'center') {
       // Default to center position if no target element
       return {
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        top: '50%',;
+        left: '50%',;
+        transform: 'translate(-50%, -50%)',;
       };
     }
 
     if (this.currentStep.position === 'center') {
       return {
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        top: '50%',;
+        left: '50%',;
+        transform: 'translate(-50%, -50%)',;
       };
     }
 
@@ -216,35 +175,35 @@ import { ButtonModule } from 'primeng/button';
     const margin = 20; // Margin between target and tooltip
 
     switch (this.currentStep.position) {
-      case 'top':
+      case 'top':;
         return {
-          bottom: `${window.innerHeight - rect.top + margin}px`,
-          left: `${rect.left + rect.width / 2}px`,
-          transform: 'translateX(-50%)',
+          bottom: `${window.innerHeight - rect.top + margin}px`,;`
+          left: `${rect.left + rect.width / 2}px`,;`
+          transform: 'translateX(-50%)',;
         };
-      case 'right':
+      case 'right':;
         return {
-          top: `${rect.top + rect.height / 2}px`,
-          left: `${rect.right + margin}px`,
-          transform: 'translateY(-50%)',
+          top: `${rect.top + rect.height / 2}px`,;`
+          left: `${rect.right + margin}px`,;`
+          transform: 'translateY(-50%)',;
         };
-      case 'bottom':
+      case 'bottom':;
         return {
-          top: `${rect.bottom + margin}px`,
-          left: `${rect.left + rect.width / 2}px`,
-          transform: 'translateX(-50%)',
+          top: `${rect.bottom + margin}px`,;`
+          left: `${rect.left + rect.width / 2}px`,;`
+          transform: 'translateX(-50%)',;
         };
-      case 'left':
+      case 'left':;
         return {
-          top: `${rect.top + rect.height / 2}px`,
-          right: `${window.innerWidth - rect.left + margin}px`,
-          transform: 'translateY(-50%)',
+          top: `${rect.top + rect.height / 2}px`,;`
+          right: `${window.innerWidth - rect.left + margin}px`,;`
+          transform: 'translateY(-50%)',;
         };
-      default:
+      default:;
         return {
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          top: '50%',;
+          left: '50%',;
+          transform: 'translate(-50%, -50%)',;
         };
     }
   }
@@ -253,11 +212,11 @@ import { ButtonModule } from 'primeng/button';
   getSpotlightStyle(): SpotlightStyles {
     if (!this.targetRect) {
       return {
-        top: '50%',
-        left: '50%',
-        width: '100px',
-        height: '100px',
-        transform: 'translate(-50%, -50%)',
+        top: '50%',;
+        left: '50%',;
+        width: '100px',;
+        height: '100px',;
+        transform: 'translate(-50%, -50%)',;
       };
     }
 
@@ -265,10 +224,10 @@ import { ButtonModule } from 'primeng/button';
     const radius = this.currentStep.spotlightRadius || 0;
 
     return {
-      top: `${rect.top - radius}px`,
-      left: `${rect.left - radius}px`,
-      width: `${rect.width + radius * 2}px`,
-      height: `${rect.height + radius * 2}px`,
+      top: `${rect.top - radius}px`,;`
+      left: `${rect.left - radius}px`,;`
+      width: `${rect.width + radius * 2}px`,;`
+      height: `${rect.height + radius * 2}px`,;`
     };
   }
 }

@@ -1,12 +1,3 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (ad-details.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
@@ -16,18 +7,26 @@ import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (ad-details.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 
-
-@Component({
-  selector: 'app-ad-details',
-  templateUrl: './ad-details.component.html',
-  styleUrls: ['./ad-details.component.scss'],
-  imports: [
-    CommonModule,
-    ButtonModule
-  ],
-})
-export class AdDetailsComponent implements OnInit {
+@Component({';
+  selector: 'app-ad-details',;
+  templateUrl: './ad-details.component.html',;
+  styleUrls: ['./ad-details.component.scss'],;
+  imports: [;
+    CommonModule,;
+    ButtonModule;
+  ],;
+});
+export class AdDetailsComponen {t implements OnInit {
   ad: Ad | null = null;
   loading = true;
   error: string | null = null;
@@ -37,13 +36,13 @@ export class AdDetailsComponent implements OnInit {
   currentImageUrl = '';
   favorites: string[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private adService: AdService,
-    private userService: UserService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
+  constructor(;
+    private route: ActivatedRoute,;
+    private router: Router,;
+    private adService: AdService,;
+    private userService: UserService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +69,7 @@ export class AdDetailsComponent implements OnInit {
             } else {
               this.currentImage = ad.images[0];
             }
-            this.currentImageUrl =
+            this.currentImageUrl =;
               typeof ad.images[0] === 'string' ? ad.images[0] : ad.images[0].url;
           }
 
@@ -82,12 +81,12 @@ export class AdDetailsComponent implements OnInit {
               this.isOwner = false; // Ensure isOwner is reset if user is not owner or not logged in
             }
           });
-        },
+        },;
         error: (err) => {
           console.error('Error fetching ad details:', err);
           this.error = 'Failed to load ad details. Please try again.';
           this.loading = false;
-        },
+        },;
       });
     } else {
       this.error = 'Ad ID not found';
@@ -99,8 +98,8 @@ export class AdDetailsComponent implements OnInit {
     this.authService.currentUser$.subscribe((currentUser) => {
       if (currentUser) {
         this.userService.getFavorites().subscribe({
-          next: (favorites) => (this.favorites = favorites),
-          error: (err) => console.error('Error loading favorites:', err),
+          next: (favorites) => (this.favorites = favorites),;
+          error: (err) => console.error('Error loading favorites:', err),;
         });
       } else {
         this.favorites = []; // Clear favorites if no user
@@ -123,19 +122,19 @@ export class AdDetailsComponent implements OnInit {
           type?: string;
         };
       }
-      this.currentImageUrl =
+      this.currentImageUrl =;
         typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
   }
 
   prevImage(): void {
     if (this.ad && this.ad.media && this.ad.media.length > 0) {
-      this.currentImageIndex =
+      this.currentImageIndex =;
         (this.currentImageIndex - 1 + this.ad.media.length) % this.ad.media.length;
       this.currentImage = this.ad.media[this.currentImageIndex];
       this.currentImageUrl = this.ad.media[this.currentImageIndex].url;
     } else if (this.ad && this.ad.images && this.ad.images.length > 0) {
-      this.currentImageIndex =
+      this.currentImageIndex =;
         (this.currentImageIndex - 1 + this.ad.images.length) % this.ad.images.length;
       if (typeof this.ad.images[this.currentImageIndex] === 'string') {
         this.currentImage = { url: this.ad.images[this.currentImageIndex] as string };
@@ -145,7 +144,7 @@ export class AdDetailsComponent implements OnInit {
           type?: string;
         };
       }
-      this.currentImageUrl =
+      this.currentImageUrl =;
         typeof this.currentImage === 'string' ? this.currentImage : this.currentImage.url;
     }
   }
@@ -153,7 +152,7 @@ export class AdDetailsComponent implements OnInit {
   startChat(): void {
     if (this.ad) {
       // Navigate to chat with the advertiser
-      const advertiserId =
+      const advertiserId =;
         typeof this.ad.advertiser === 'object' ? this.ad.advertiser.username : this.ad.advertiser;
       this.router.navigate(['/chat', advertiserId]);
     }
@@ -200,22 +199,22 @@ export class AdDetailsComponent implements OnInit {
           next: () => {
             this.favorites = this.favorites.filter((id) => id !== adIdStr);
             this.notificationService.success('Removed from favorites');
-          },
+          },;
           error: (err) => {
             console.error('Error removing from favorites:', err);
             this.notificationService.error('Failed to remove from favorites');
-          },
+          },;
         });
       } else {
         this.userService.addFavorite(this.ad._id).subscribe({
           next: () => {
             this.favorites.push(adIdStr);
             this.notificationService.success('Added to favorites');
-          },
+          },;
           error: (err) => {
             console.error('Error adding to favorites:', err);
             this.notificationService.error('Failed to add to favorites');
-          },
+          },;
         });
       }
     });
@@ -239,11 +238,11 @@ export class AdDetailsComponent implements OnInit {
       this.adService.reportAd(this.ad._id, reason).subscribe({
         next: () => {
           this.notificationService.success('Ad reported successfully');
-        },
+        },;
         error: (err) => {
           console.error('Error reporting ad:', err);
           this.notificationService.error('Failed to report ad');
-        },
+        },;
       });
     }
   }
@@ -266,14 +265,14 @@ export class AdDetailsComponent implements OnInit {
     this.adService.toggleActiveStatus(this.ad._id, newStatus).subscribe({
       next: () => {
         if (this.ad) this.ad.isActive = newStatus;
-        this.notificationService.success(
-          `Ad ${newStatus ? 'activated' : 'deactivated'} successfully`,
+        this.notificationService.success(;
+          `Ad ${newStatus ? 'activated' : 'deactivated'} successfully`,;`
         );
-      },
+      },;
       error: (err) => {
         console.error('Error toggling ad status:', err);
         this.notificationService.error('Failed to update ad status');
-      },
+      },;
     });
   }
 
@@ -285,11 +284,11 @@ export class AdDetailsComponent implements OnInit {
         next: () => {
           this.notificationService.success('Ad deleted successfully');
           this.router.navigate(['/ad-management']);
-        },
+        },;
         error: (err) => {
           console.error('Error deleting ad:', err);
           this.notificationService.error('Failed to delete ad');
-        },
+        },;
       });
     }
   }

@@ -1,39 +1,38 @@
-import { Injectable, Inject } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpResponse,
-} from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
-
 import { PERFORMANCE_MODULE_OPTIONS, PerformanceModuleOptions } from './performance.module';
 import { PerformanceMonitorService } from '../services/performance-monitor.service';
 import { ApiCacheService } from '../services/api-cache.service';
+  HttpRequest,;
+  HttpHandler,;
+  HttpEvent,;
+  HttpInterceptor,;
+  HttpResponse,';
+} from '@angular/common/http';
 
 /**
- * Performance Interceptor
- *
- * This interceptor measures API response times and caches API responses.
- * It works with the PerformanceMonitorService to track API performance.
+ * Performance Interceptor;
+ *;
+ * This interceptor measures API response times and caches API responses.;
+ * It works with the PerformanceMonitorService to track API performance.;
  */
-@Injectable()
-export class PerformanceInterceptor implements HttpInterceptor {
-  constructor(
-    @Inject(PERFORMANCE_MODULE_OPTIONS) private options: PerformanceModuleOptions,
-    private performanceMonitor: PerformanceMonitorService,
-    private apiCache: ApiCacheService,
+@Injectable();
+export class PerformanceIntercepto {r implements HttpInterceptor {
+  constructor(;
+    @Inject(PERFORMANCE_MODULE_OPTIONS) private options: PerformanceModuleOptions,;
+    private performanceMonitor: PerformanceMonitorService,;
+    private apiCache: ApiCacheService,;
   ) {}
 
   /**
-   * Intercepts HTTP requests to measure performance and cache responses
-   * @param request The HTTP request
-   * @param next The HTTP handler
-   * @returns An Observable of the HTTP event
+   * Intercepts HTTP requests to measure performance and cache responses;
+   * @param request The HTTP request;
+   * @param next The HTTP handler;
+   * @returns An Observable of the HTTP event;
    */
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest, next: HttpHandler): Observable> {
     // Skip performance monitoring for certain requests
     if (this.shouldSkipRequest(request)) {
       return next.handle(request);
@@ -50,17 +49,17 @@ export class PerformanceInterceptor implements HttpInterceptor {
     // Measure API response time
     const startTime = performance.now();
 
-    return next.handle(request).pipe(
+    return next.handle(request).pipe(;
       tap((event) => {
         // Cache successful GET responses
         if (
-          this.options.enableApiCache &&
-          request.method === 'GET' &&
-          event instanceof HttpResponse
+          this.options.enableApiCache &&;
+          request.method === 'GET' &&;
+          event instanceof HttpResponse;
         ) {
           this.addToCache(request, event);
         }
-      }),
+      }),;
       finalize(() => {
         // Record API response time
         if (this.options.enableMonitoring) {
@@ -72,18 +71,18 @@ export class PerformanceInterceptor implements HttpInterceptor {
 
           // Log the API response time
 
-          console.warn(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);
+          console.warn(`[API] ${request.method} ${url}: ${duration.toFixed(2)}ms`);`
         }
-      }),
+      }),;
     );
   }
 
   /**
-   * Checks if a request should be skipped for performance monitoring
-   * @param request The HTTP request
-   * @returns True if the request should be skipped
+   * Checks if a request should be skipped for performance monitoring;
+   * @param request The HTTP request;
+   * @returns True if the request should be skipped;
    */
-  private shouldSkipRequest(request: HttpRequest<unknown>): boolean {
+  private shouldSkipRequest(request: HttpRequest): boolean {
     // Skip monitoring for certain URLs
     const skipUrls = ['/assets/', '/api/health', '/api/metrics'];
 
@@ -91,28 +90,28 @@ export class PerformanceInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Tries to get a response from the cache
-   * @param request The HTTP request
-   * @returns An Observable of the HTTP event or null if not cached
+   * Tries to get a response from the cache;
+   * @param request The HTTP request;
+   * @returns An Observable of the HTTP event or null if not cached;
    */
-  private tryGetFromCache(_request: HttpRequest<unknown>): Observable<HttpEvent<unknown>> | null {
+  private tryGetFromCache(_request: HttpRequest): Observable> | null {
     // Implement cache lookup logic here
     return null;
   }
 
   /**
-   * Adds a response to the cache
-   * @param request The HTTP request
-   * @param response The HTTP response
+   * Adds a response to the cache;
+   * @param request The HTTP request;
+   * @param response The HTTP response;
    */
-  private addToCache(_request: HttpRequest<unknown>, _response: HttpResponse<unknown>): void {
+  private addToCache(_request: HttpRequest, _response: HttpResponse): void {
     // Implement cache storage logic here
   }
 
   /**
-   * Gets a clean URL without query parameters
-   * @param url The URL
-   * @returns A clean URL
+   * Gets a clean URL without query parameters;
+   * @param url The URL;
+   * @returns A clean URL;
    */
   private getCleanUrl(url: string): string {
     return url.split('?')[0];

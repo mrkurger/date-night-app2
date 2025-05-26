@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CardModule } from './app-card.component';
+import { CommonModule } from '@angular/common';
+import { Ad } from '../../../../core/models/ad.interface';
+
 // ===================================================
 // UNIT TESTS FOR APP CARD COMPONENT
 // ===================================================
@@ -17,45 +22,42 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardModule } from './app-card.component';
-import { CommonModule } from '@angular/common';
-import { Ad } from '../../../../core/models/ad.interface';
 
+';
 describe('CardModule (Unit Tests)', () => {
   let component: CardModule;
-  let fixture: ComponentFixture<CardModule>;
+  let fixture: ComponentFixture;
 
   // Mock ad data for testing
   const mockAd: Ad = {
-    _id: 'ad123',
-    title: 'Test Ad',
-    description: 'This is a test ad description',
-    category: 'test',
-    price: 1234.56,
-    location: { city: 'Test Location', county: 'Test County' },
-    advertiser: 'Test Advertiser',
-    isActive: true,
-    isFeatured: false,
-    isTrending: false,
-    isTouring: false,
-    viewCount: 0,
-    clickCount: 0,
-    inquiryCount: 0,
-    tags: ['tag1', 'tag2', 'tag3'],
-    media: [
+    _id: 'ad123',;
+    title: 'Test Ad',;
+    description: 'This is a test ad description',;
+    category: 'test',;
+    price: 1234.56,;
+    location: { city: 'Test Location', county: 'Test County' },;
+    advertiser: 'Test Advertiser',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: false,;
+    isTouring: false,;
+    viewCount: 0,;
+    clickCount: 0,;
+    inquiryCount: 0,;
+    tags: ['tag1', 'tag2', 'tag3'],;
+    media: [;
       { url: 'https://example.com/image1.jpg', type: 'image' },
       { url: 'https://example.com/image2.jpg', type: 'image' },
-    ],
+    ],;
     images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    userId: 'user123',
+    createdAt: new Date().toISOString(),;
+    updatedAt: new Date().toISOString(),;
+    userId: 'user123',;
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CardModule],
+      imports: [CommonModule, CardModule],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardModule);
@@ -118,7 +120,7 @@ describe('CardModule (Unit Tests)', () => {
 
   // Test: Truncate long description
   it('should truncate long description', () => {
-    const longDescription =
+    const longDescription =;
       'This is a very long description that should be truncated when displayed on the card.';
     component.ad = { ...mockAd, description: longDescription };
 

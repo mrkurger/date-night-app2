@@ -13,7 +13,7 @@ export interface LoginCredentials {
 export interface RegisterData {
   username: string;
   email: string;
-  password: string;
+  password: string;';
   role?: 'user' | 'advertiser';
 }
 
@@ -23,13 +23,13 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: 'root',
-})
-export class UserService {
+  providedIn: 'root',;
+});
+export class UserServic {e {
   private readonly apiUrl = environment.apiUrl + '/users';
   private readonly authUrl = environment.apiUrl + '/auth';
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  private authStatusSubject = new BehaviorSubject<boolean>(this.hasValidToken());
+  private currentUserSubject = new BehaviorSubject(null);
+  private authStatusSubject = new BehaviorSubject(this.hasValidToken());
 
   constructor(private http: HttpClient) {
     // Initialize current user if authenticated (token is now in HttpOnly cookie)
@@ -37,57 +37,57 @@ export class UserService {
   }
 
   /**
-   * Get the current authentication status as an observable
+   * Get the current authentication status as an observable;
    */
-  get authStatus$(): Observable<boolean> {
+  get authStatus$(): Observable {
     return this.authStatusSubject.asObservable();
   }
 
   /**
-   * Get the current user as an observable
+   * Get the current user as an observable;
    */
-  get currentUser$(): Observable<User | null> {
+  get currentUser$(): Observable {
     return this.currentUserSubject.asObservable();
   }
 
   /**
-   * Get the current user value
+   * Get the current user value;
    */
   get currentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
   /**
-   * Check if user is authenticated
+   * Check if user is authenticated;
    */
   isAuthenticated(): boolean {
     return this.hasValidToken();
   }
 
   /**
-   * Login user with email and password
-   * @param credentials User login credentials
+   * Login user with email and password;
+   * @param credentials User login credentials;
    */
-  login(credentials: LoginCredentials): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.authUrl}/login`, credentials).pipe(
-      tap((response) => this.handleAuthentication(response)),
-      catchError(this.handleError),
+  login(credentials: LoginCredentials): Observable {
+    return this.http.post(`${this.authUrl}/login`, credentials).pipe(;`
+      tap((response) => this.handleAuthentication(response)),;
+      catchError(this.handleError),;
     );
   }
 
   /**
-   * Register a new user
-   * @param userData User registration data
+   * Register a new user;
+   * @param userData User registration data;
    */
-  register(userData: RegisterData): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.authUrl}/register`, userData).pipe(
-      tap((response) => this.handleAuthentication(response)),
-      catchError(this.handleError),
+  register(userData: RegisterData): Observable {
+    return this.http.post(`${this.authUrl}/register`, userData).pipe(;`
+      tap((response) => this.handleAuthentication(response)),;
+      catchError(this.handleError),;
     );
   }
 
   /**
-   * Logout the current user
+   * Logout the current user;
    */
   logout(): void {
     // No need to remove token from localStorage; token is in HttpOnly cookie
@@ -96,86 +96,86 @@ export class UserService {
   }
 
   /**
-   * Get user profile by ID
-   * @param userId User ID
+   * Get user profile by ID;
+   * @param userId User ID;
    */
-  getUserProfile(userId: string): Observable<UserProfile> {
-    return this.http
-      .get<UserProfile>(`${this.apiUrl}/${userId}`)
+  getUserProfile(userId: string): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/${userId}`);`
       .pipe(catchError(this.handleError));
   }
 
   /**
-   * Update user profile with form data (supports file uploads)
-   * @param formData Form data with profile updates
+   * Update user profile with form data (supports file uploads);
+   * @param formData Form data with profile updates;
    */
-  updateProfile(formData: FormData): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/profile`, formData).pipe(
+  updateProfile(formData: FormData): Observable {
+    return this.http.put(`${this.apiUrl}/profile`, formData).pipe(;`
       tap((user) => {
         // Update current user if it's the logged-in user
         if (this.currentUser && this.currentUser._id === user._id) {
           this.currentUserSubject.next(user);
         }
-      }),
-      catchError(this.handleError),
+      }),;
+      catchError(this.handleError),;
     );
   }
 
   /**
    * Update user profile by ID (admin function)
-   * @param userId User ID
-   * @param userData Updated user data
+   * @param userId User ID;
+   * @param userData Updated user data;
    */
-  updateUserProfile(userId: string, userData: Partial<UserProfile>): Observable<UserProfile> {
-    return this.http
-      .put<UserProfile>(`${this.apiUrl}/${userId}`, userData)
+  updateUserProfile(userId: string, userData: Partial): Observable {
+    return this.http;
+      .put(`${this.apiUrl}/${userId}`, userData);`
       .pipe(catchError(this.handleError));
   }
 
   /**
-   * Get public profile information for a user
-   * @param userId User ID
+   * Get public profile information for a user;
+   * @param userId User ID;
    */
-  getPublicProfile(userId: string): Observable<PublicProfile> {
-    return this.http
-      .get<PublicProfile>(`${this.apiUrl}/${userId}/public`)
+  getPublicProfile(userId: string): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/${userId}/public`);`
       .pipe(catchError(this.handleError));
   }
 
-  checkFavorite(adId: string): Observable<boolean> {
-    return this.http
-      .get<boolean>(`${this.apiUrl}/favorites/check/${adId}`)
+  checkFavorite(adId: string): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/favorites/check/${adId}`);`
       .pipe(catchError(this.handleError));
   }
 
-  addFavorite(adId: string | { city: string; county: string }): Observable<void> {
+  addFavorite(adId: string | { city: string; county: string }): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http
-      .post<void>(`${this.apiUrl}/favorites/${adIdStr}`, {})
+    return this.http;
+      .post(`${this.apiUrl}/favorites/${adIdStr}`, {});`
       .pipe(catchError(this.handleError));
   }
 
-  removeFavorite(adId: string | { city: string; county: string }): Observable<void> {
+  removeFavorite(adId: string | { city: string; county: string }): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http
-      .delete<void>(`${this.apiUrl}/favorites/${adIdStr}`)
+    return this.http;
+      .delete(`${this.apiUrl}/favorites/${adIdStr}`);`
       .pipe(catchError(this.handleError));
   }
 
-  getFavorites(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/favorites`).pipe(catchError(this.handleError));
+  getFavorites(): Observable {
+    return this.http.get(`${this.apiUrl}/favorites`).pipe(catchError(this.handleError));`
   }
 
   /**
-   * Search users by username or email
-   * @param query Search query
-   * @returns Observable of search results
+   * Search users by username or email;
+   * @param query Search query;
+   * @returns Observable of search results;
    */
-  searchUsers(query: string): Observable<User[]> {
-    return this.http
-      .get<User[]>(`${this.apiUrl}/search`, {
-        params: { q: query },
-      })
+  searchUsers(query: string): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/search`, {`
+        params: { q: query },;
+      });
       .pipe(catchError(this.handleError));
   }
 
@@ -189,19 +189,19 @@ export class UserService {
   }
 
   /**
-   * Get the current user from the server
-   * @returns Observable of the current user
+   * Get the current user from the server;
+   * @returns Observable of the current user;
    */
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.authUrl}/me`).pipe(
+  getCurrentUser(): Observable {
+    return this.http.get(`${this.authUrl}/me`).pipe(;`
       tap((user) => {
         this.currentUserSubject.next(user);
         this.authStatusSubject.next(true);
-      }),
+      }),;
       catchError((error) => {
         this.logout();
         return throwError(() => error);
-      }),
+      }),;
     );
   }
 
@@ -222,7 +222,7 @@ export class UserService {
     }
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  private handleError(error: HttpErrorResponse): Observable {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
       // Client-side error
@@ -234,55 +234,50 @@ export class UserService {
     return throwError(() => new Error(errorMessage));
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+  getUsers(): Observable {
+    return this.http.get(this.apiUrl);
   }
 
-  getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  getUser(id: string): Observable {
+    return this.http.get(`${this.apiUrl}/${id}`);`
   }
 
-  createUser(user: Partial<User>): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+  createUser(user: Partial): Observable {
+    return this.http.post(this.apiUrl, user);
   }
 
-  updateUser(id: string, updates: Partial<User>): Observable<User> {
-    return this.http.patch<User>(`${this.apiUrl}/${id}`, updates);
+  updateUser(id: string, updates: Partial): Observable {
+    return this.http.patch(`${this.apiUrl}/${id}`, updates);`
   }
 
-  deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteUser(id: string): Observable {
+    return this.http.delete(`${this.apiUrl}/${id}`);`
   }
 
-  banUser(id: string): Observable<User> {
+  banUser(id: string): Observable {
     return this.updateUser(id, { status: 'banned' });
   }
 
-  unbanUser(id: string): Observable<User> {
+  unbanUser(id: string): Observable {
     return this.updateUser(id, { status: 'active' });
   }
 
-  getUserStats(): Observable<{
-    total: number;
-    active: number;
-    banned: number;
-    suspended: number;
-  }> {
-    return this.getUsers().pipe(
+  getUserStats(): Observable {
+    return this.getUsers().pipe(;
       map((users) => ({
-        total: users.length,
-        active: users.filter((u) => u.status === 'active').length,
-        banned: users.filter((u) => u.status === 'banned').length,
-        suspended: users.filter((u) => u.status === 'suspended').length,
-      })),
+        total: users.length,;
+        active: users.filter((u) => u.status === 'active').length,;
+        banned: users.filter((u) => u.status === 'banned').length,;
+        suspended: users.filter((u) => u.status === 'suspended').length,;
+      })),;
     );
   }
 
-  getUsersByRole(role: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/by-role/${role}`);
+  getUsersByRole(role: string): Observable {
+    return this.http.get(`${this.apiUrl}/by-role/${role}`);`
   }
 
-  updateUserRole(userId: string, role: string): Observable<User> {
-    return this.http.patch<User>(`${this.apiUrl}/${userId}/role`, { role });
+  updateUserRole(userId: string, role: string): Observable {
+    return this.http.patch(`${this.apiUrl}/${userId}/role`, { role });`
   }
 }

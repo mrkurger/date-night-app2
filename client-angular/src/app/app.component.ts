@@ -5,31 +5,6 @@ import { Subscription } from 'rxjs';
 import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import { ButtonModule } from 'primeng/button';
-// Import ButtonModule
-
-@Component({
-  selector: 'app-root',
-  imports: [
-    RouterModule, NavigationComponent, ButtonModule,
-    CardModule,
-    ProgressSpinnerModule,
-    SidebarModule,
-    MenuModule,
-    AvatarModule,
-    PanelModule,
-    ToolbarModule,
-    PanelMenuModule
-  ], // Add ButtonModule here
-  template: `
-    <app-navigation>
-      <router-outlet></router-outlet>
-    </app-navigation>
-  `,
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-})
-export class AppComponent implements OnInit, OnDestroy {
-  private subscription: Subscription | null = null;
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SidebarModule } from 'primeng/sidebar';
@@ -39,10 +14,35 @@ import { PanelModule } from 'primeng/panel';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 
+@Component({';
+  selector: 'app-root',;
+  imports: [;
+    RouterModule,;
+    NavigationComponent,;
+    ButtonModule,;
+    CardModule,;
+    ProgressSpinnerModule,;
+    SidebarModule,;
+    MenuModule,;
+    AvatarModule,;
+    PanelModule,;
+    ToolbarModule,;
+    PanelMenuModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+    ;
+  `,;`
+  styleUrls: ['./app.component.scss'],;
+  standalone: true,;
+});
+export class AppComponen {t implements OnInit, OnDestroy {
+  private subscription: Subscription | null = null;
 
-  constructor(
-    private themeService: ThemeService,
-    private webSocketFallbackService: WebSocketFallbackService,
+  constructor(;
+    private themeService: ThemeService,;
+    private webSocketFallbackService: WebSocketFallbackService,;
   ) {}
 
   ngOnInit() {

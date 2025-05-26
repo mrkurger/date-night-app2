@@ -6,27 +6,38 @@
 // ===================================================
 
 import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  TemplateRef,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-// Import NebularModule which contains all Nebular components
 import { NebularModule } from '../../../app/shared/nebular.module';
 import { NbDialogService } from '@nebular/theme';
-
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Ad } from '../../core/models/ad.interface';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+import { CalendarModule } from 'primeng/calendar';
+  Component,;
+  OnInit,;
+  AfterViewInit,;
+  ViewChild,;
+  TemplateRef,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
+
+// Import NebularModule which contains all Nebular components
 
 // Interfaces
 interface SortOption {
@@ -56,41 +67,29 @@ interface SavedFilter {
 }
 
 @Component({
-  selector: 'app-list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule,
-    CardModule,
-    ButtonModule,
-    DropdownModule,
-    CheckboxModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule,
-    SidebarModule,
-    MenuModule,
-    BadgeModule,
-    TagModule
-  ],
-})
-export class ListViewComponent implements OnInit, AfterViewInit {
+  selector: 'app-list-view',;
+  templateUrl: './list-view.component.html',;
+  styleUrls: ['./list-view.component.scss'],;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule,;
+    CardModule,;
+    ButtonModule,;
+    DropdownModule,;
+    CheckboxModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule,;
+    SidebarModule,;
+    MenuModule,;
+    BadgeModule,;
+    TagModule,;
+    CalendarModule;
+  ],;
+});
+export class ListViewComponen {t implements OnInit, AfterViewInit {
   // View template references
-  @ViewChild('saveFilterDialog') saveFilterDialog!: TemplateRef<any>;
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { MessageModule } from 'primeng/message';
-import { InputTextModule } from 'primeng/inputtext';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
-import { BadgeModule } from 'primeng/badge';
-import { TagModule } from 'primeng/tag';
-
-
+  @ViewChild('saveFilterDialog') saveFilterDialog!: TemplateRef;
 
   // Data
   ads: Ad[] = [];
@@ -106,23 +105,23 @@ import { TagModule } from 'primeng/tag';
   totalPages = 1;
 
   // Sorting
-  sortOptions: SortOption[] = [
-    { value: 'newest', label: 'Newest First', direction: 'desc' },
-    { value: 'oldest', label: 'Oldest First', direction: 'asc' },
-    { value: 'nameAsc', label: 'Name (A-Z)', direction: 'asc' },
-    { value: 'nameDesc', label: 'Name (Z-A)', direction: 'desc' },
-    { value: 'popularityDesc', label: 'Most Popular', direction: 'desc' },
+  sortOptions: SortOption[] = [;
+    { value: 'newest', label: 'Newest First', direction: 'desc' },;
+    { value: 'oldest', label: 'Oldest First', direction: 'asc' },;
+    { value: 'nameAsc', label: 'Name (A-Z)', direction: 'asc' },;
+    { value: 'nameDesc', label: 'Name (Z-A)', direction: 'desc' },;
+    { value: 'popularityDesc', label: 'Most Popular', direction: 'desc' },;
   ];
   currentSort = 'newest';
 
   // Sort menu items for NbMenu
   sortMenuItems = this.sortOptions.map((option) => ({
-    title: option.label,
-    data: { value: option.value },
+    title: option.label,;
+    data: { value: option.value },;
   }));
 
   // Search debouncing
-  private searchTimeout: ReturnType<typeof setTimeout>;
+  private searchTimeout: ReturnType;
 
   // View options
   viewMode: 'grid' | 'list' | 'compact' = 'grid';
@@ -132,74 +131,74 @@ import { TagModule } from 'primeng/tag';
   activeFilterCount = 0;
 
   // Header actions
-  headerActions: HeaderAction[] = [
-    { id: 'new-ad', label: 'Create Ad', icon: 'plus-outline', type: 'primary' },
-    { id: 'refresh', label: 'Refresh', icon: 'refresh-outline' },
-    { id: 'help', label: 'Help', icon: 'question-mark-circle-outline' },
+  headerActions: HeaderAction[] = [;
+    { id: 'new-ad', label: 'Create Ad', icon: 'plus-outline', type: 'primary' },;
+    { id: 'refresh', label: 'Refresh', icon: 'refresh-outline' },;
+    { id: 'help', label: 'Help', icon: 'question-mark-circle-outline' },;
   ];
 
   // Saved filters
   savedFilters: SavedFilter[] = [];
   newFilterName = '';
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  contentDensityOptions = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Normal', value: 'normal' },
+  contentDensityOptions = [;
+    { label: 'Compact', value: 'compact' },;
+    { label: 'Normal', value: 'normal' },;
     { label: 'Comfortable', value: 'comfortable' }
   ];
 
-  cardSizeOptions = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
+  cardSizeOptions = [;
+    { label: 'Small', value: 'small' },;
+    { label: 'Medium', value: 'medium' },;
     { label: 'Large', value: 'large' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    private adService: AdService,
-    private notificationService: NotificationService,
-    private chatService: ChatService,
-    private authService: AuthService,
-    private userPreferencesService: UserPreferencesService,
-    private fb: FormBuilder,
-    private router: Router,
-    private dialog: NbDialogService,
+  constructor(;
+    private adService: AdService,;
+    private notificationService: NotificationService,;
+    private chatService: ChatService,;
+    private authService: AuthService,;
+    private userPreferencesService: UserPreferencesService,;
+    private fb: FormBuilder,;
+    private router: Router,;
+    private dialog: NbDialogService,;
   ) {
     // Initialize form with nested structure for advanced filtering
     this.filterForm = this.fb.group({
-      searchQuery: [''],
+      searchQuery: [''],;
       categories: this.fb.group({
-        escort: [false],
-        massage: [false],
-        striptease: [false],
-      }),
-      location: [[]],
+        escort: [false],;
+        massage: [false],;
+        striptease: [false],;
+      }),;
+      location: [[]],;
       dateRange: this.fb.group({
-        from: [null],
-        to: [null],
-      }),
+        from: [null],;
+        to: [null],;
+      }),;
       status: this.fb.group({
-        online: [false],
-        touring: [false],
-        verified: [false],
-      }),
+        online: [false],;
+        touring: [false],;
+        verified: [false],;
+      }),;
     });
 
     // Load saved filters from localStorage
@@ -243,18 +242,18 @@ import { TagModule } from 'primeng/tag';
     this.adService.getAds().subscribe({
       next: (response) => {
         this.ads = response.ads.map((ad) => ({
-          ...ad,
-          createdAt: ad.createdAt || new Date().toISOString(),
-          category: ad.category || 'Uncategorized',
+          ...ad,;
+          createdAt: ad.createdAt || new Date().toISOString(),;
+          category: ad.category || 'Uncategorized',;
         }));
         this.applyFilters();
         this.loading = false;
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load ads. Please try again later.';
         this.loading = false;
         this.notificationService.error('Error', this.error);
-      },
+      },;
     });
   }
 
@@ -265,19 +264,19 @@ import { TagModule } from 'primeng/tag';
     // Apply search filter
     if (filters.searchQuery) {
       const search = filters.searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (ad) =>
-          ad.title.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search),
+      filtered = filtered.filter(;
+        (ad) =>;
+          ad.title.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search),;
       );
     }
 
     // Apply category filters
     if (Object.values(filters.categories).some((value) => value)) {
-      filtered = filtered.filter((ad) =>
-        Object.entries(filters.categories).some(
-          ([category, isSelected]) =>
-            isSelected && ad.category.toLowerCase() === category.toLowerCase(),
-        ),
+      filtered = filtered.filter((ad) =>;
+        Object.entries(filters.categories).some(;
+          ([category, isSelected]) =>;
+            isSelected && ad.category.toLowerCase() === category.toLowerCase(),;
+        ),;
       );
     }
 
@@ -294,19 +293,9 @@ import { TagModule } from 'primeng/tag';
         const toDate = filters.dateRange.to ? new Date(filters.dateRange.to) : null;
 
         if (fromDate && toDate) {
-          return adDate >= fromDate && adDate <= toDate;
-        } else if (fromDate) {
-          return adDate >= fromDate;
+          return adDate >= fromDate && adDate = fromDate;
         } else if (toDate) {
-          return adDate <= toDate;
-        }
-
-        return true;
-      });
-    }
-
-    // Apply status filters
-    if (Object.values(filters.status).some((value) => value)) {
+          return adDate  value)) {
       filtered = filtered.filter((ad) => {
         if (filters.status.online && !ad.isAdvertiserOnline) return false;
         if (filters.status.touring && !ad.isTouring) return false;
@@ -323,17 +312,17 @@ import { TagModule } from 'primeng/tag';
   sortAds(): void {
     this.filteredAds.sort((a, b) => {
       switch (this.currentSort) {
-        case 'newest':
+        case 'newest':;
           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case 'oldest':
+        case 'oldest':;
           return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        case 'nameAsc':
+        case 'nameAsc':;
           return a.title.localeCompare(b.title);
-        case 'nameDesc':
+        case 'nameDesc':;
           return b.title.localeCompare(a.title);
-        case 'popularityDesc':
+        case 'popularityDesc':;
           return (b.views || 0) - (a.views || 0);
-        default:
+        default:;
           return 0;
       }
     });
@@ -374,7 +363,7 @@ import { TagModule } from 'primeng/tag';
   setViewMode(mode: 'grid' | 'list' | 'compact'): void {
     this.viewMode = mode;
     this.userPreferencesService.updatePreferences({
-      defaultViewType: mode === 'compact' ? 'tinder' : mode === 'grid' ? 'list' : mode,
+      defaultViewType: mode === 'compact' ? 'tinder' : mode === 'grid' ? 'list' : mode,;
     });
   }
 
@@ -417,32 +406,32 @@ import { TagModule } from 'primeng/tag';
       this.chatService.createAdRoom(adIdStr).subscribe({
         next: (room) => {
           this.router.navigate(['/chat'], { queryParams: { id: room.id } });
-        },
+        },;
         error: (err) => {
           this.notificationService.error('Error', 'Failed to start chat. Please try again later.');
-        },
+        },;
       });
     }
   }
 
   clearFilters(): void {
     this.filterForm.patchValue({
-      searchQuery: '',
+      searchQuery: '',;
       categories: {
-        escort: false,
-        massage: false,
-        striptease: false,
-      },
-      location: [],
+        escort: false,;
+        massage: false,;
+        striptease: false,;
+      },;
+      location: [],;
       dateRange: {
-        from: null,
-        to: null,
-      },
+        from: null,;
+        to: null,;
+      },;
       status: {
-        online: false,
-        touring: false,
-        verified: false,
-      },
+        online: false,;
+        touring: false,;
+        verified: false,;
+      },;
     });
 
     this.applyFilters();
@@ -482,44 +471,44 @@ import { TagModule } from 'primeng/tag';
 
     if (formValue.searchQuery) {
       activeFilters.push({
-        key: 'searchQuery',
-        value: formValue.searchQuery,
-        label: `Search: ${formValue.searchQuery}`,
+        key: 'searchQuery',;
+        value: formValue.searchQuery,;
+        label: `Search: ${formValue.searchQuery}`,;`
       });
     }
 
     Object.keys(formValue.categories).forEach((category) => {
       if (formValue.categories[category]) {
         activeFilters.push({
-          key: `categories.${category}`,
-          value: category,
-          label: `Category: ${this.capitalizeFirstLetter(category)}`,
+          key: `categories.${category}`,;`
+          value: category,;
+          label: `Category: ${this.capitalizeFirstLetter(category)}`,;`
         });
       }
     });
 
     if (formValue.location && formValue.location.length > 0) {
       activeFilters.push({
-        key: 'location',
-        value: formValue.location,
-        label: `Location: ${formValue.location.join(', ')}`,
+        key: 'location',;
+        value: formValue.location,;
+        label: `Location: ${formValue.location.join(', ')}`,;`
       });
     }
 
     if (formValue.dateRange.from || formValue.dateRange.to) {
       activeFilters.push({
-        key: 'dateRange',
-        value: { from: formValue.dateRange.from, to: formValue.dateRange.to },
-        label: `Date: ${formValue.dateRange.from || ''} - ${formValue.dateRange.to || ''}`,
+        key: 'dateRange',;
+        value: { from: formValue.dateRange.from, to: formValue.dateRange.to },;
+        label: `Date: ${formValue.dateRange.from || ''} - ${formValue.dateRange.to || ''}`,;`
       });
     }
 
     Object.keys(formValue.status).forEach((status) => {
       if (formValue.status[status]) {
         activeFilters.push({
-          key: `status.${status}`,
-          value: status,
-          label: `Status: ${this.capitalizeFirstLetter(status)}`,
+          key: `status.${status}`,;`
+          value: status,;
+          label: `Status: ${this.capitalizeFirstLetter(status)}`,;`
         });
       }
     });
@@ -556,13 +545,13 @@ import { TagModule } from 'primeng/tag';
 
   onHeaderActionClick(action: HeaderAction): void {
     switch (action.id) {
-      case 'new-ad':
+      case 'new-ad':;
         this.router.navigate(['/ads/create']);
         break;
-      case 'refresh':
+      case 'refresh':;
         this.loadAds();
         break;
-      case 'help':
+      case 'help':;
         // Implement help functionality
         this.notificationService.info('Help', 'Help documentation coming soon!');
         break;
@@ -591,9 +580,9 @@ import { TagModule } from 'primeng/tag';
     this.currentDialogRef.onClose.subscribe((name) => {
       if (name) {
         const filter: SavedFilter = {
-          id: Date.now().toString(),
-          name,
-          filter: this.filterForm.value,
+          id: Date.now().toString(),;
+          name,;
+          filter: this.filterForm.value,;
         };
 
         this.savedFilters.push(filter);

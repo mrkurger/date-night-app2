@@ -2,21 +2,22 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/menuitem';
-@Component({
-  selector: 'p-top-menu',
-  template: `
-    <p-menubar [model]="menuItems" [style]="style" (onMenuItemClick)="onMenuItemClick($event)">
-      <ng-template pTemplate="start" *ngIf="startTemplate">
-        <ng-content select="[menuStart]"></ng-content>
-      </ng-template>
 
-      <ng-template pTemplate="end" *ngIf="endTemplate">
-        <ng-content select="[menuEnd]"></ng-content>
-      </ng-template>
-    </p-menubar>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'p-top-menu',;
+  template: `;`
+    ;
+      ;
+        ;
+      ;
+
+      ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
       }
@@ -52,7 +53,7 @@ import { MenuItem } from 'primeng/menuitem';
               background: var(--primary-color);
               color: var(--primary-color-text);
 
-              .p-menuitem-icon,
+              .p-menuitem-icon,;
               .p-menuitem-text {
                 color: var(--primary-color-text);
               }
@@ -67,19 +68,19 @@ import { MenuItem } from 'primeng/menuitem';
           }
         }
       }
-    `,
-  ],
-  standalone: true,
-  imports: [MenuItem, CommonModule, MenubarModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class TopMenuComponent {
+    `,;`
+  ],;
+  standalone: true,;
+  imports: [MenuItem, CommonModule, MenubarModule],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+});
+export class TopMenuComponen {t {
   @Input() menuItems: MenuItem[] = [];
   @Input() style: { [key: string]: string } = {};
   @Input() startTemplate = false;
   @Input() endTemplate = false;
 
-  @Output() menuItemClick = new EventEmitter<MenuItem>();
+  @Output() menuItemClick = new EventEmitter();
 
   onMenuItemClick(event: { item: MenuItem }) {
     this.menuItemClick.emit(event.item);

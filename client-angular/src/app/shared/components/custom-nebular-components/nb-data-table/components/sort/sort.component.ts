@@ -1,16 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbSortDirection, NbSortRequest } from '@nebular/theme';
 
-@Component({
-    selector: 'nb-data-table-sort',
-    template: `
-    <div class="sort-header" [class.active]="isActive" (click)="toggleSort()">
-      <span class="sort-title">{{ title }}</span>
-      <nb-icon [icon]="getSortIcon()" [class.visible]="isActive" class="sort-icon"></nb-icon>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'nb-data-table-sort',;
+    template: `;`
+    ;
+      {{ title }};
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .sort-header {
         display: flex;
         align-items: center;
@@ -41,41 +41,41 @@ import { NbSortDirection, NbSortRequest } from '@nebular/theme';
           opacity: 1;
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbDataTableSortComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbDataTableSortComponen {t {
   @Input() title = '';
   @Input() column = '';
   @Input() direction: NbSortDirection = NbSortDirection.NONE;
   @Input() isActive = false;
 
-  @Output() sort = new EventEmitter<NbSortRequest>();
+  @Output() sort = new EventEmitter();
 
   toggleSort() {
-    const directions: NbSortDirection[] = [
-      NbSortDirection.NONE,
-      'asc' as NbSortDirection,
-      'desc' as NbSortDirection,
+    const directions: NbSortDirection[] = [;
+      NbSortDirection.NONE,;
+      'asc' as NbSortDirection,;
+      'desc' as NbSortDirection,;
     ];
     const currentIndex = directions.indexOf(this.direction);
     const nextIndex = (currentIndex + 1) % directions.length;
     this.direction = directions[nextIndex];
 
     this.sort.emit({
-      column: this.column,
-      direction: this.direction,
+      column: this.column,;
+      direction: this.direction,;
     });
   }
 
   getSortIcon(): string {
     switch (this.direction) {
-      case 'asc':
+      case 'asc':;
         return 'arrow-upward-outline';
-      case 'desc':
+      case 'desc':;
         return 'arrow-downward-outline';
-      default:
+      default:;
         return 'arrow-ios-upward-outline';
     }
   }

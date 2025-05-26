@@ -1,16 +1,14 @@
+import {
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { NbDialogRef, NB_DIALOG_CONFIG, NbTagInputAddEvent, NbToggleModule } from '@nebular/theme';
-
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators,
+  FormsModule,;
+  ReactiveFormsModule,;
+  FormBuilder,;
+  FormGroup,;
+  FormControl,;
+  Validators,';
 } from '@angular/forms';
 
 export interface FavoriteDialogData {
@@ -30,104 +28,83 @@ export interface FavoriteDialogResult {
 }
 
 /**
- * Dialog component for adding or editing favorites
- * Allows users to add notes, tags, set priority, and configure notifications
+ * Dialog component for adding or editing favorites;
+ * Allows users to add notes, tags, set priority, and configure notifications;
  */
 @Component({
-  selector: 'app-favorite-dialog',
-  imports: [CommonModule, NebularModule, NbToggleModule, FormsModule, ReactiveFormsModule],
-  template: `
-    <nb-card class="favorite-dialog-container">
-      <nb-card-header class="dialog-header">
-        <h2>{{ isEdit ? 'Edit Favorite' : 'Add to Favorites' }}</h2>
-        <button nbButton ghost (click)="onClose()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-card-header>
+  selector: 'app-favorite-dialog',;
+  imports: [CommonModule, NebularModule, NbToggleModule, FormsModule, ReactiveFormsModule],;
+  template: `;`
+    ;
+      ;
+        {{ isEdit ? 'Edit Favorite' : 'Add to Favorites' }};
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <form [formGroup]="favoriteForm" (ngSubmit)="onSubmit()">
-          <h3 class="ad-title">{{ data?.adTitle }}</h3>
+      ;
+        ;
+          {{ data?.adTitle }};
 
-          <div class="form-group">
-            <label class="label" for="notes">Notes</label>
-            <textarea
-              nbInput
-              fullWidth
-              id="notes"
-              formControlName="notes"
-              placeholder="Add personal notes about this ad"
-              rows="3"
-            ></textarea>
-            <p class="caption status-basic">
-              {{ favoriteForm.get('notes')?.value?.length || 0 }}/500
-            </p>
-            <p
-              class="caption status-danger"
-              *ngIf="favoriteForm.get('notes')?.hasError('maxlength')"
-            >
-              Notes cannot exceed 500 characters
-            </p>
-          </div>
+          ;
+            Notes;
+            ;
+            ;
+              {{ favoriteForm.get('notes')?.value?.length || 0 }}/500;
+            ;
+            ;
+              Notes cannot exceed 500 characters;
+            ;
+          ;
 
-          <div class="form-group">
-            <label class="label" for="tags">Tags</label>
-            <nb-form-field>
-              <nb-tag-list (tagRemove)="removeTag($event)">
-                <nb-tag
-                  *ngFor="let tag of tags"
-                  [text]="tag"
-                  removable
-                  (remove)="removeTag(tag)"
-                ></nb-tag>
-                <input
-                  nbTagInput
-                  fullWidth
-                  [separatorKeys]="separatorKeysCodes"
-                  placeholder="Add tags..."
-                  (tagAdd)="addTag($event)"
-                />
-              </nb-tag-list>
-            </nb-form-field>
-            <p class="caption status-basic">Press Enter to add a tag</p>
-          </div>
+          ;
+            Tags;
+            ;
+              ;
+                ;
+                ;
+              ;
+            ;
+            Press Enter to add a tag;
+          ;
 
-          <div class="form-group">
-            <label class="label" for="priority">Priority</label>
-            <nb-select fullWidth formControlName="priority" id="priority">
-              <nb-option value="high">
-                <nb-icon icon="arrow-up-outline" class="priority-icon high"></nb-icon> High
-              </nb-option>
-              <nb-option value="normal">
-                <nb-icon icon="minus-outline" class="priority-icon normal"></nb-icon> Normal
-              </nb-option>
-              <nb-option value="low">
-                <nb-icon icon="arrow-down-outline" class="priority-icon low"></nb-icon> Low
-              </nb-option>
-            </nb-select>
-          </div>
+          ;
+            Priority;
+            ;
+              ;
+                 High;
+              ;
+              ;
+                 Normal;
+              ;
+              ;
+                 Low;
+              ;
+            ;
+          ;
 
-          <div class="form-group notifications-toggle">
-            <nb-toggle formControlName="notificationsEnabled" status="primary">
-              Enable notifications
-            </nb-toggle>
-            <p class="caption status-basic notifications-hint">
-              Get notified when this advertiser updates their profile or travel plans
-            </p>
-          </div>
+          ;
+            ;
+              Enable notifications;
+            ;
+            ;
+              Get notified when this advertiser updates their profile or travel plans;
+            ;
+          ;
 
-          <div class="form-actions">
-            <button nbButton ghost type="button" (click)="onClose()">Cancel</button>
-            <button nbButton status="primary" type="submit" [disabled]="favoriteForm.invalid">
+          ;
+            Cancel;
+            ;
               {{ isEdit ? 'Update' : 'Add to Favorites' }}
-            </button>
-          </div>
-        </form>
-      </nb-card-body>
-    </nb-card>
-  `,
-  styles: [
-    `
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .favorite-dialog-container {
         min-width: 400px;
         max-width: 600px;
@@ -185,19 +162,19 @@ export interface FavoriteDialogResult {
       nb-tag-list {
         width: 100%;
       }
-    `,
-  ],
-})
-export class FavoriteDialogComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class FavoriteDialogComponen {t implements OnInit {
   favoriteForm!: FormGroup;
   tags: string[] = [];
   isEdit = false;
   readonly separatorKeysCodes: number[] = [13, 188];
 
-  constructor(
-    private fb: FormBuilder,
-    public dialogRef: NbDialogRef<FavoriteDialogComponent>,
-    @Optional() @Inject(NB_DIALOG_CONFIG) public data: FavoriteDialogData,
+  constructor(;
+    private fb: FormBuilder,;
+    public dialogRef: NbDialogRef,;
+    @Optional() @Inject(NB_DIALOG_CONFIG) public data: FavoriteDialogData,;
   ) {
     if (data) {
       this.isEdit = !!data.existingNotes || !!data.existingTags?.length;
@@ -207,10 +184,10 @@ export class FavoriteDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.favoriteForm = this.fb.group({
-      notes: [this.data?.existingNotes || '', [Validators.maxLength(500)]],
-      tags: [this.tags],
-      priority: [this.data?.existingPriority || 'normal'],
-      notificationsEnabled: [this.data?.existingNotificationsEnabled || false],
+      notes: [this.data?.existingNotes || '', [Validators.maxLength(500)]],;
+      tags: [this.tags],;
+      priority: [this.data?.existingPriority || 'normal'],;
+      notificationsEnabled: [this.data?.existingNotificationsEnabled || false],;
     });
   }
 
@@ -239,10 +216,10 @@ export class FavoriteDialogComponent implements OnInit {
   onSubmit(): void {
     if (this.favoriteForm.valid) {
       const result: FavoriteDialogResult = {
-        notes: this.favoriteForm.get('notes')?.value || '',
-        tags: this.tags,
-        priority: this.favoriteForm.get('priority')?.value || 'normal',
-        notificationsEnabled: this.favoriteForm.get('notificationsEnabled')?.value || false,
+        notes: this.favoriteForm.get('notes')?.value || '',;
+        tags: this.tags,;
+        priority: this.favoriteForm.get('priority')?.value || 'normal',;
+        notificationsEnabled: this.favoriteForm.get('notificationsEnabled')?.value || false,;
       };
       this.dialogRef.close(result);
     }

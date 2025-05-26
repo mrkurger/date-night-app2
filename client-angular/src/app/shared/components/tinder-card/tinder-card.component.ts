@@ -10,17 +10,17 @@
 //   Related to: tinder-card.component.scss:$rotation-factor
 // ===================================================
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbButtonModule, NbIconModule, NbTagModule } from '@nebular/theme';
+  Component,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  ElementRef,;
+  ViewChild,;
+  AfterViewInit,;
+  OnDestroy,';
+} from '@angular/core';
 
 export interface TinderCardMedia {
   type: 'image' | 'video';
@@ -38,105 +38,65 @@ export interface TinderCardAction {
 export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
 
 @Component({
-    selector: 'nb-tinder-card',
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
-    template: `
-    <nb-card
-      #card
-      class="tinder-card"
-      [class.swiping]="isSwiping"
-      [class.liked]="isLiked"
-      [class.disliked]="isDisliked"
-      [ngStyle]="cardStyle"
-    >
-      <div class="like-indicator" [class.visible]="showLikeIndicator">
-        <nb-icon icon="heart" status="success"></nb-icon>
-        <span>LIKE</span>
-      </div>
-      <div class="dislike-indicator" [class.visible]="showDislikeIndicator">
-        <nb-icon icon="close" status="danger"></nb-icon>
-        <span>NOPE</span>
-      </div>
+    selector: 'nb-tinder-card',;
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],;
+    template: `;`
+    ;
+      ;
+        ;
+        LIKE;
+      ;
+      ;
+        ;
+        NOPE;
+      ;
 
-      <div class="media-container">
-        <div class="media-item" [ngStyle]="mediaStyle">
-          <ng-container [ngSwitch]="currentMedia.type">
-            <img
-              *ngSwitchCase="'image'"
-              [src]="currentMedia.url"
-              [alt]="title"
-              class="media-content"
-            />
-            <video
-              *ngSwitchCase="'video'"
-              [src]="currentMedia.url"
-              [poster]="currentMedia.thumbnail"
-              controls
-              class="media-content"
-            ></video>
-          </ng-container>
-        </div>
+      ;
+        ;
+          ;
+            ;
+            ;
+          ;
+        ;
 
-        <div class="media-navigation" *ngIf="media.length > 1">
-          <div class="media-dots">
-            <span
-              *ngFor="let m of media; let i = index"
-              class="media-dot"
-              [class.active]="i === currentMediaIndex"
-              (click)="setMediaIndex(i)"
-            ></span>
-          </div>
-          <button
-            nbButton
-            ghost
-            class="media-nav-button prev"
-            (click)="previousMedia()"
-            *ngIf="currentMediaIndex > 0"
-          >
-            <nb-icon icon="chevron-left"></nb-icon>
-          </button>
-          <button
-            nbButton
-            ghost
-            class="media-nav-button next"
-            (click)="nextMedia()"
-            *ngIf="currentMediaIndex < media.length - 1"
-          >
-            <nb-icon icon="chevron-right"></nb-icon>
-          </button>
-        </div>
-      </div>
+         1">;
+          ;
+            ;
+          ;
+           0";
+          >;
+            ;
+          ;
+          ;
+            ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <div class="card-header">
-          <h2 class="title">{{ title }}</h2>
-          <span class="age" *ngIf="age">{{ age }}</span>
-        </div>
-        <div class="subtitle" *ngIf="subtitle">{{ subtitle }}</div>
-        <p class="description" *ngIf="description">{{ description }}</p>
-        <div class="tags" *ngIf="tags && tags.length">
-          <nb-tag
-            *ngFor="let tag of tags"
-            [text]="tag"
-            appearance="filled"
-            status="primary"
-            size="small"
-          ></nb-tag>
-        </div>
-      </nb-card-body>
+      ;
+        ;
+          {{ title }};
+          {{ age }};
+        ;
+        {{ subtitle }};
+        {{ description }};
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-footer>
-        <button nbButton ghost status="danger" (click)="onDislike()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-        <button nbButton ghost status="success" (click)="onLike()">
-          <nb-icon icon="heart-outline"></nb-icon>
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+      ;
+        ;
+          ;
+        ;
+        ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
         position: relative;
@@ -171,7 +131,7 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
         }
       }
 
-      .like-indicator,
+      .like-indicator,;
       .dislike-indicator {
         position: absolute;
         top: 50%;
@@ -336,10 +296,10 @@ export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
           }
         }
       }
-    `,
-    ]
-})
-export class TinderCardComponent implements AfterViewInit, OnDestroy {
+    `,;`
+    ];
+});
+export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   @Input() media: TinderCardMedia[] = [];
   @Input() title = '';
   @Input() age?: number;
@@ -347,9 +307,9 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
   @Input() description?: string;
   @Input() tags: string[] = [];
 
-  @Output() like = new EventEmitter<void>();
-  @Output() dislike = new EventEmitter<void>();
-  @Output() superlike = new EventEmitter<void>();
+  @Output() like = new EventEmitter();
+  @Output() dislike = new EventEmitter();
+  @Output() superlike = new EventEmitter();
 
   @ViewChild('card') cardElement!: ElementRef;
 
@@ -437,53 +397,20 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
 
     const rotate = this.xOffset * 0.1;
     this.cardStyle = {
-      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,
+      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,;`
     };
 
     this.showLikeIndicator = this.xOffset > this.swipeThreshold;
-    this.showDislikeIndicator = this.xOffset < -this.swipeThreshold;
-  }
-
-  private dragEnd(): void {
-    this.initialX = this.xOffset;
-    this.initialY = this.yOffset;
-
-    if (this.xOffset > this.swipeThreshold) {
+    this.showDislikeIndicator = this.xOffset  this.swipeThreshold) {
       this.onLike();
-    } else if (this.xOffset < -this.swipeThreshold) {
-      this.onDislike();
-    } else {
-      this.resetCard();
-    }
-
-    this.isSwiping = false;
-  }
-
-  private resetCard(): void {
-    this.cardStyle = {
-      transform: 'translate(0px, 0px) rotate(0deg)',
-      transition: 'transform 0.3s ease',
-    };
-    this.xOffset = 0;
-    this.yOffset = 0;
-    this.showLikeIndicator = false;
-    this.showDislikeIndicator = false;
-  }
-
-  onLike(): void {
-    this.isLiked = true;
-    this.cardStyle = {
-      transform: 'translate(150%, 0) rotate(40deg)',
-      transition: 'transform 0.3s ease',
-    };
-    setTimeout(() => this.like.emit(), 300);
+    } else if (this.xOffset  this.like.emit(), 300);
   }
 
   onDislike(): void {
     this.isDisliked = true;
     this.cardStyle = {
-      transform: 'translate(-150%, 0) rotate(-40deg)',
-      transition: 'transform 0.3s ease',
+      transform: 'translate(-150%, 0) rotate(-40deg)',;
+      transition: 'transform 0.3s ease',;
     };
     setTimeout(() => this.dislike.emit(), 300);
   }

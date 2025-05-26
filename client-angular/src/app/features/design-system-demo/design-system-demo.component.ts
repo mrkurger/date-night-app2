@@ -1,107 +1,105 @@
+import {
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-  NbToggleModule,
-} from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-
-
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,;
+  NbToggleModule,';
+} from '@nebular/theme';
 
 /**
- * Design System Demo Component
- *
- * A demonstration of the DateNight.io design system components.
- * This component showcases various components and their variants.
+ * Design System Demo Component;
+ *;
+ * A demonstration of the DateNight.io design system components.;
+ * This component showcases various components and their variants.;
  */
 @Component({
-    selector: 'app-design-system-demo',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    NebularModule, CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbInputModule,
-        NbToggleModule,
-        NbSelectModule,
-        NbFormFieldModule,
-        NbSpinnerModule,
-        NbAlertModule,
-        NbTooltipModule,
-        NbBadgeModule,
-        NbTagModule,,
-    DropdownModule,
-    InputTextModule
-  ],
-    template: `
-    <nb-card>
-      <nb-card-header>
-        <h1>Design System Demo</h1>
-      </nb-card-header>
-      <nb-card-body>
-        <section class="section">
-          <h2>Colors</h2>
-          <div class="color-grid">
-            <div class="color-sample" *ngFor="let color of colors">
-              <div class="color-preview" [style.background-color]="color.value"></div>
-              <div class="color-info">
-                <span class="color-name">{{ color.name }}</span>
-                <span class="color-value">{{ color.value }}</span>
-              </div>
-            </div>
-          </div>
-        </section>
+    selector: 'app-design-system-demo',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    NebularModule, CommonModule,;
+        FormsModule,;
+        ReactiveFormsModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbInputModule,;
+        NbToggleModule,;
+        NbSelectModule,;
+        NbFormFieldModule,;
+        NbSpinnerModule,;
+        NbAlertModule,;
+        NbTooltipModule,;
+        NbBadgeModule,;
+        NbTagModule,,;
+    DropdownModule,;
+    InputTextModule;
+  ],;
+    template: `;`
+    ;
+      ;
+        Design System Demo;
+      ;
+      ;
+        ;
+          Colors;
+          ;
+            ;
+              ;
+              ;
+                {{ color.name }};
+                {{ color.value }};
+              ;
+            ;
+          ;
+        ;
 
-        <section class="section">
-          <h2>Typography</h2>
-          <div class="typography-samples">
-            <div class="typography-sample" *ngFor="let type of typography">
-              <div class="sample-text" [style.font-size]="type.size">
+        ;
+          Typography;
+          ;
+            ;
+              ;
                 {{ type.name }}
-              </div>
-              <div class="sample-info">
-                <span class="sample-name">{{ type.name }}</span>
-                <span class="sample-value">{{ type.size }}</span>
-              </div>
-            </div>
-          </div>
-        </section>
+              ;
+              ;
+                {{ type.name }};
+                {{ type.size }};
+              ;
+            ;
+          ;
+        ;
 
-        <section class="section">
-          <h2>Spacing</h2>
-          <div class="spacing-samples">
-            <div class="spacing-sample" *ngFor="let space of spacing">
-              <div class="space-preview" [style.width]="space.value"></div>
-              <div class="space-info">
-                <span class="space-name">{{ space.name }}</span>
-                <span class="space-value">{{ space.value }}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </nb-card-body>
-    </nb-card>
-  `,
-    styles: [
-        `
+        ;
+          Spacing;
+          ;
+            ;
+              ;
+              ;
+                {{ space.name }};
+                {{ space.value }};
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
         padding: 2rem;
@@ -224,30 +222,30 @@ import { InputTextModule } from 'primeng/inputtext';
         font-size: 0.875rem;
         color: var(--text-hint-color);
       }
-    `,
-    ]
-})
-export class DesignSystemDemoComponent {
-  colors = [
-    { name: 'Primary', value: 'var(--color-primary-500)' },
-    { name: 'Success', value: 'var(--color-success-500)' },
-    { name: 'Warning', value: 'var(--color-warning-500)' },
-    { name: 'Danger', value: 'var(--color-danger-500)' },
+    `,;`
+    ];
+});
+export class DesignSystemDemoComponen {t {
+  colors = [;
+    { name: 'Primary', value: 'var(--color-primary-500)' },;
+    { name: 'Success', value: 'var(--color-success-500)' },;
+    { name: 'Warning', value: 'var(--color-warning-500)' },;
+    { name: 'Danger', value: 'var(--color-danger-500)' },;
   ];
 
-  typography = [
-    { name: 'Heading 1', size: '2.5rem' },
-    { name: 'Heading 2', size: '2rem' },
-    { name: 'Heading 3', size: '1.75rem' },
-    { name: 'Body', size: '1rem' },
-    { name: 'Small', size: '0.875rem' },
+  typography = [;
+    { name: 'Heading 1', size: '2.5rem' },;
+    { name: 'Heading 2', size: '2rem' },;
+    { name: 'Heading 3', size: '1.75rem' },;
+    { name: 'Body', size: '1rem' },;
+    { name: 'Small', size: '0.875rem' },;
   ];
 
-  spacing = [
-    { name: 'XS', value: '0.5rem' },
-    { name: 'SM', value: '1rem' },
-    { name: 'MD', value: '1.5rem' },
-    { name: 'LG', value: '2rem' },
-    { name: 'XL', value: '3rem' },
+  spacing = [;
+    { name: 'XS', value: '0.5rem' },;
+    { name: 'SM', value: '1rem' },;
+    { name: 'MD', value: '1.5rem' },;
+    { name: 'LG', value: '2rem' },;
+    { name: 'XL', value: '3rem' },;
   ];
 }

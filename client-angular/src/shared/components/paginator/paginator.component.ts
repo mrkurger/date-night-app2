@@ -1,22 +1,22 @@
 import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'nb-paginator',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="paginator-container">
-      <button nbButton status="basic" [disabled]="page === 1" (click)="onPrevious()">
-        Previous
-      </button>
-      <span class="page-info"> Page {{ page }} of {{ totalPages() }} </span>
-      <button nbButton status="basic" [disabled]="page >= totalPages()" (click)="onNext()">
-        Next
-      </button>
-    </div>
-  `,
-  styles: `
+@Component({';
+  selector: 'nb-paginator',;
+  standalone: true,;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+      ;
+        Previous;
+      ;
+       Page {{ page }} of {{ totalPages() }} ;
+      = totalPages()" (click)="onNext()">;
+        Next;
+      ;
+    ;
+  `,;`
+  styles: `;`
     .paginator-container {
       display: flex;
       justify-content: center;
@@ -26,14 +26,14 @@ import { CommonModule } from '@angular/common';
     .page-info {
       margin: 0 1rem;
     }
-  `,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-})
-export class NbPaginatorComponent {
+  `,;`
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+});
+export class NbPaginatorComponen {t {
   @Input() pageSize: number = 10;
   @Input() total: number = 0;
   @Input() page: number = 1;
-  @Output() pageChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter();
 
   totalPages(): number {
     return Math.ceil(this.total / this.pageSize);

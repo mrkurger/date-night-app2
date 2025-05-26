@@ -1,3 +1,9 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { _NebularModule } from '../../nebular.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CheckboxModule } from 'primeng/checkbox';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,12 +13,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 export interface ChecklistItem {
   id: string;
@@ -22,7 +22,7 @@ export interface ChecklistItem {
   route?: string; // Optional route to navigate to
   action?: () => void; // Optional action to perform
   icon?: string; // Optional icon
-  reward?: {
+  reward?: {';
     type: 'badge' | 'points' | 'feature';
     value: string | number;
     description: string;
@@ -30,23 +30,22 @@ export interface ChecklistItem {
 }
 
 @Component({
-  selector: 'app-onboarding-checklist',
-  templateUrl: './onboarding-checklist.component.html',
-  styleUrls: ['./onboarding-checklist.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    NbCheckboxModule,
-    RouterModule,
-  ],
-})
-export class OnboardingChecklistComponent implements OnInit {
+  selector: 'app-onboarding-checklist',;
+  templateUrl: './onboarding-checklist.component.html',;
+  styleUrls: ['./onboarding-checklist.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbProgressBarModule,;
+    NbCheckboxModule,;
+    RouterModule,;
+  ],;
+});
+export class OnboardingChecklistComponen {t implements OnInit {
   @Input() items: ChecklistItem[] = [];
-import { CheckboxModule } from 'primeng/checkbox';
 
   @Input() title = 'Getting Started';
   @Input() subtitle = 'Complete these tasks to set up your account';
@@ -56,8 +55,8 @@ import { CheckboxModule } from 'primeng/checkbox';
   @Input() initiallyCollapsed = false;
   @Input() showRewards = true;
 
-  @Output() itemCompleted = new EventEmitter<ChecklistItem>();
-  @Output() allCompleted = new EventEmitter<void>();
+  @Output() itemCompleted = new EventEmitter();
+  @Output() allCompleted = new EventEmitter();
 
   isCollapsed = false;
 

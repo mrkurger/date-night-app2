@@ -1,15 +1,15 @@
+import {
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbTagModule,
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  NbCardModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbTagModule,';
 } from '@nebular/theme';
 
 export interface TagsDialogData {
@@ -20,69 +20,59 @@ export interface TagsDialogData {
 }
 
 /**
- * Dialog component for managing tags
- * Allows users to add, edit, and remove tags
+ * Dialog component for managing tags;
+ * Allows users to add, edit, and remove tags;
  */
 @Component({
-    selector: 'app-tags-dialog',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbInputModule,
-        NbFormFieldModule,
-        NbTagModule,
-    ],
-    template: `
-    <nb-card>
-      <nb-card-header class="dialog-header">
-        <h2>{{ data.title }}</h2>
-        <button nbButton ghost size="small" (click)="onClose()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-card-header>
+    selector: 'app-tags-dialog',;
+    imports: [;
+        CommonModule,;
+        FormsModule,;
+        ReactiveFormsModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbInputModule,;
+        NbFormFieldModule,;
+        NbTagModule,;
+    ],;
+    template: `;`
+    ;
+      ;
+        {{ data.title }};
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <nb-form-field>
-          <div class="tags-container">
-            <nb-tag
-              *ngFor="let tag of tags"
-              [text]="tag"
-              removable
-              (remove)="removeTag(tag)"
-            ></nb-tag>
-            <input nbInput placeholder="Add tags..." (keydown)="onTagAdd($event)" />
-          </div>
-          <span class="hint-text">Press Enter or Space to add a tag. {{ maxTagsMessage }}</span>
-        </nb-form-field>
+      ;
+        ;
+          ;
+            ;
+            ;
+          ;
+          Press Enter or Space to add a tag. {{ maxTagsMessage }};
+        ;
 
-        <div class="suggested-tags" *ngIf="data.suggestedTags && data.suggestedTags.length > 0">
-          <h3>Suggested Tags</h3>
-          <div class="suggested-tags-list">
-            <nb-tag
-              *ngFor="let tag of data.suggestedTags"
-              [text]="tag"
-              [status]="tags.includes(tag) ? 'basic' : 'primary'"
-              (click)="addSuggestedTag(tag)"
-              [class.disabled]="tags.includes(tag) || (data.maxTags && tags.length >= data.maxTags)"
-            ></nb-tag>
-          </div>
-        </div>
-      </nb-card-body>
+         0">;
+          Suggested Tags;
+          ;
+            = data.maxTags)";
+            >;
+          ;
+        ;
+      ;
 
-      <nb-card-footer>
-        <div class="form-actions">
-          <button nbButton status="basic" (click)="onClose()">Cancel</button>
-          <button nbButton status="primary" (click)="onSave()">Save</button>
-        </div>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+      ;
+        ;
+          Cancel;
+          Save;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
         min-width: 400px;
@@ -150,32 +140,32 @@ export interface TagsDialogData {
         justify-content: flex-end;
         gap: 0.625rem;
       }
-    `,
-    ]
-})
-export class TagsDialogComponent {
+    `,;`
+    ];
+});
+export class TagsDialogComponen {t {
   tags: string[] = [];
   inputValue = '';
 
-  constructor(
-    public dialogRef: NbDialogRef<TagsDialogComponent>,
-    @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData,
+  constructor(;
+    public dialogRef: NbDialogRef,;
+    @Inject(NB_DIALOG_CONFIG) public data: TagsDialogData,;
   ) {
     this.tags = [...data.tags];
   }
 
   /**
-   * Get message about maximum tags limit
+   * Get message about maximum tags limit;
    */
   get maxTagsMessage(): string {
     if (this.data.maxTags) {
-      return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`;
+      return `Maximum ${this.data.maxTags} tags (${this.tags.length}/${this.data.maxTags}).`;`
     }
     return '';
   }
 
   /**
-   * Add a new tag
+   * Add a new tag;
    */
   onTagAdd(event: KeyboardEvent): void {
     // Only handle Enter and Space keys
@@ -204,7 +194,7 @@ export class TagsDialogComponent {
   }
 
   /**
-   * Remove a tag
+   * Remove a tag;
    */
   removeTag(tag: string): void {
     const index = this.tags.indexOf(tag);
@@ -214,7 +204,7 @@ export class TagsDialogComponent {
   }
 
   /**
-   * Add a suggested tag
+   * Add a suggested tag;
    */
   addSuggestedTag(tag: string): void {
     if (!this.tags.includes(tag) && (!this.data.maxTags || this.tags.length < this.data.maxTags)) {
@@ -223,14 +213,14 @@ export class TagsDialogComponent {
   }
 
   /**
-   * Save changes and close dialog
+   * Save changes and close dialog;
    */
   onSave(): void {
     this.dialogRef.close(this.tags);
   }
 
   /**
-   * Close dialog without saving
+   * Close dialog without saving;
    */
   onClose(): void {
     this.dialogRef.close();

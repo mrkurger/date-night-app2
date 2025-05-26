@@ -1,3 +1,7 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { CachingService } from './caching.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,19 +11,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { CachingService } from './caching.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+';
 describe('CachingService', () => {
   let service: CachingService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [CachingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [CachingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
     service = TestBed.inject(CachingService);
     httpMock = TestBed.inject(HttpTestingController);

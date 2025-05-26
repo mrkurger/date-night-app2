@@ -1,21 +1,8 @@
 import {
-  Component,
-  Input,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// PrimeNG imports
-// Services and Models
 import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
 import { EncryptionService } from '../../../core/services/encryption.service';
 import { AuthService } from '../../../core/services/auth.service';
-
-// Pipes
-
-// Pipes
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
@@ -25,27 +12,40 @@ import { BadgeModule } from 'primeng/badge';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
 import { TooltipModule } from 'primeng/tooltip';
+  Component,;
+  Input,;
+  OnInit,;
+  ChangeDetectionStrategy,;
+  ChangeDetectorRef,';
+} from '@angular/core';
+
+// PrimeNG imports
+// Services and Models
+
+// Pipes
+
+// Pipes
 
 @Component({
-  selector: 'app-chat-message',
-  imports: [TooltipModule, AvatarModule, ProgressSpinnerModule, BadgeModule, ButtonModule, CardModule, 
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    BadgeModule,
-    ProgressSpinnerModule,
-    AvatarModule,
-    TooltipModule,
-    TimeAgoPipe,
-    LinkifyPipe,
-    FileSizePipe,
-  ],
-  templateUrl: './chat-message.component.html',
-  styleUrls: ['./chat-message.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-})
-export class ChatMessageComponent implements OnInit {
+  selector: 'app-chat-message',;
+  imports: [TooltipModule, AvatarModule, ProgressSpinnerModule, BadgeModule, ButtonModule, CardModule,; 
+    CommonModule,;
+    CardModule,;
+    ButtonModule,;
+    BadgeModule,;
+    ProgressSpinnerModule,;
+    AvatarModule,;
+    TooltipModule,;
+    TimeAgoPipe,;
+    LinkifyPipe,;
+    FileSizePipe,;
+  ],;
+  templateUrl: './chat-message.component.html',;
+  styleUrls: ['./chat-message.component.scss'],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+  standalone: true,;
+});
+export class ChatMessageComponen {t implements OnInit {
   @Input() message!: ChatMessage;
   @Input() roomId!: string;
   @Input() showSender = true;
@@ -55,10 +55,10 @@ export class ChatMessageComponent implements OnInit {
   isDecrypting = false;
   decryptionFailed = false;
 
-  constructor(
-    private encryptionService: EncryptionService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef,
+  constructor(;
+    private encryptionService: EncryptionService,;
+    private authService: AuthService,;
+    private cdr: ChangeDetectorRef,;
   ) {}
 
   ngOnInit(): void {
@@ -71,9 +71,9 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Process the message content, decrypting if necessary
+   * Process the message content, decrypting if necessary;
    */
-  private async processMessageContent(): Promise<void> {
+  private async processMessageContent(): Promise {
     // If the message is not encrypted, use the content directly
     if (!this.message.isEncrypted) {
       this.decryptedContent = this.message.message || this.message.content || '';
@@ -91,9 +91,9 @@ export class ChatMessageComponent implements OnInit {
       }
 
       const encryptedData = {
-        ciphertext: this.message.message || '',
-        iv: this.message.encryptionData.iv,
-        authTag: this.message.encryptionData.authTag,
+        ciphertext: this.message.message || '',;
+        iv: this.message.encryptionData.iv,;
+        authTag: this.message.encryptionData.authTag,;
       };
 
       // Decrypt the message
@@ -116,33 +116,33 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Check if the message is from the current user
+   * Check if the message is from the current user;
    */
   private checkIfCurrentUser(): boolean {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !this.message.sender) return false;
 
-    const senderId =
+    const senderId =;
       typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
 
     return senderId === currentUser.id;
   }
 
   /**
-   * Check if the message is from the current user
+   * Check if the message is from the current user;
    */
   private checkIfCurrentUser(): boolean {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !this.message.sender) return false;
 
-    const senderId =
+    const senderId =;
       typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
 
     return senderId === currentUser.id;
   }
 
   /**
-   * Get the display name for the message sender
+   * Get the display name for the message sender;
    */
   getSenderName(): string {
     if (typeof this.message.sender === 'string') {
@@ -152,8 +152,8 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Get the profile image for the message sender
-   * Get the profile image for the message sender
+   * Get the profile image for the message sender;
+   * Get the profile image for the message sender;
    */
   getSenderProfileImage(): string {
     if (typeof this.message.sender === 'string') {
@@ -166,22 +166,22 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Get the CSS classes for the message
+   * Get the CSS classes for the message;
    */
   getMessageClasses(): { [key: string]: boolean } {
     return {
-      message: true,
-      'message--outgoing': this.isCurrentUser,
-      'message--incoming': !this.isCurrentUser,
-      'message--encrypted': this.message.isEncrypted,
-      'message--decryption-failed': this.decryptionFailed,
-      'message--system': this.message.type === 'system',
+      message: true,;
+      'message--outgoing': this.isCurrentUser,;
+      'message--incoming': !this.isCurrentUser,;
+      'message--encrypted': this.message.isEncrypted,;
+      'message--decryption-failed': this.decryptionFailed,;
+      'message--system': this.message.type === 'system',;
     };
   }
 
   /**
-   * Open an attachment (for images)
-   * Open an attachment (for images)
+   * Open an attachment (for images);
+   * Open an attachment (for images);
    */
   openAttachment(attachment: Attachment): void {
     if (attachment.type === 'image' && attachment.url) {
@@ -194,7 +194,7 @@ export class ChatMessageComponent implements OnInit {
   }
 
   /**
-   * Download an attachment
+   * Download an attachment;
    */
   downloadAttachment(attachment: Attachment): void {
     if (attachment.url) {

@@ -1,3 +1,6 @@
+import { TestBed } from '@angular/core/testing';
+import { MapMonitoringService } from './map-monitoring.service';
+import { LoggingService } from './logging.service';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,28 +10,26 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { MapMonitoringService } from './map-monitoring.service';
-import { LoggingService } from './logging.service';
 
+';
 describe('MapMonitoringService', () => {
   let service: MapMonitoringService;
-  let loggingServiceSpy: jasmine.SpyObj<LoggingService>;
+  let loggingServiceSpy: jasmine.SpyObj;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('LoggingService', [
-      'logPerformance',
-      'logInteraction',
-      'logError',
-      'logDebug',
+    const spy = jasmine.createSpyObj('LoggingService', [;
+      'logPerformance',;
+      'logInteraction',;
+      'logError',;
+      'logDebug',;
     ]);
 
     TestBed.configureTestingModule({
-      providers: [MapMonitoringService, { provide: LoggingService, useValue: spy }],
+      providers: [MapMonitoringService, { provide: LoggingService, useValue: spy }],;
     });
 
     service = TestBed.inject(MapMonitoringService);
-    loggingServiceSpy = TestBed.inject(LoggingService) as jasmine.SpyObj<LoggingService>;
+    loggingServiceSpy = TestBed.inject(LoggingService) as jasmine.SpyObj;
   });
 
   it('should be created', () => {
@@ -73,26 +74,26 @@ describe('MapMonitoringService', () => {
     const zoom = 10;
     service.trackViewportChange(center, zoom);
     expect(loggingServiceSpy.logDebug).toHaveBeenCalledWith('Map viewport change', {
-      center,
-      zoom,
+      center,;
+      zoom,;
     });
   });
 
   it('should track location selection', () => {
     const location = { latitude: 59.9139, longitude: 10.7522 };
     service.trackLocationSelection(location);
-    expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(
-      'Map',
-      'location_selection',
-      location,
+    expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(;
+      'Map',;
+      'location_selection',;
+      location,;
     );
   });
 
   it('should track successful current location usage', () => {
     service.trackCurrentLocation(true);
-    expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(
-      'Map',
-      'current_location_success',
+    expect(loggingServiceSpy.logInteraction).toHaveBeenCalledWith(;
+      'Map',;
+      'current_location_success',;
     );
   });
 

@@ -1,3 +1,12 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MediaService } from '../../../core/services/media.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { forkJoin } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,14 +16,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MediaService } from '../../../core/services/media.service';
-import { NotificationService } from '../../../core/services/notification.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { forkJoin } from 'rxjs';
 
 interface Media {
   _id: string;
@@ -22,21 +23,20 @@ interface Media {
   featuredMedia?: boolean;
 }
 
-@Component({
-  selector: 'app-gallery-management',
-  templateUrl: './gallery-management.component.html',
-  styleUrls: ['./gallery-management.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule, ReactiveFormsModule, FormsModule,
-    ButtonModule
-  ],
-})
-export class GalleryManagementComponent implements OnInit {
+@Component({';
+  selector: 'app-gallery-management',;
+  templateUrl: './gallery-management.component.html',;
+  styleUrls: ['./gallery-management.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule, ReactiveFormsModule, FormsModule,;
+    ButtonModule;
+  ],;
+});
+export class GalleryManagementComponen {t implements OnInit {
   @Input() adId: string;
-import { ButtonModule } from 'primeng/button';
 
-  @Output() mediaUpdated = new EventEmitter<void>();
+  @Output() mediaUpdated = new EventEmitter();
 
   media: Media[] = [];
   selectedFiles: File[] = [];
@@ -47,11 +47,11 @@ import { ButtonModule } from 'primeng/button';
   error = '';
   featuredMediaId: string | null = null;
 
-  constructor(
-    private mediaService: MediaService,
-    private notificationService: NotificationService,
-    private authService: AuthService,
-    private sanitizer: DomSanitizer,
+  constructor(;
+    private mediaService: MediaService,;
+    private notificationService: NotificationService,;
+    private authService: AuthService,;
+    private sanitizer: DomSanitizer,;
   ) {}
 
   ngOnInit(): void {
@@ -70,12 +70,12 @@ import { ButtonModule } from 'primeng/button';
           this.featuredMediaId = featuredItem._id;
         }
         this.loading = false;
-      },
+      },;
       error: () => {
         this.error = 'Failed to load media';
         this.loading = false;
         this.notificationService.error(this.error);
-      },
+      },;
     });
   }
 
@@ -91,7 +91,7 @@ import { ButtonModule } from 'primeng/button';
     this.previewUrls = [];
     this.selectedFiles.forEach((file) => {
       const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
+      reader.onload = (e: ProgressEvent) => {
         if (e.target?.result) {
           const url = this.sanitizer.bypassSecurityTrustUrl(e.target.result as string);
           this.previewUrls.push(url);
@@ -111,8 +111,8 @@ import { ButtonModule } from 'primeng/button';
     this.progress = 0;
 
     // Upload each file
-    const uploadObservables = this.selectedFiles.map((file) =>
-      this.mediaService.uploadMedia(this.adId, file),
+    const uploadObservables = this.selectedFiles.map((file) =>;
+      this.mediaService.uploadMedia(this.adId, file),;
     );
 
     forkJoin(uploadObservables).subscribe({
@@ -121,15 +121,15 @@ import { ButtonModule } from 'primeng/button';
         this.progress = 100;
         this.selectedFiles = [];
         this.previewUrls = [];
-        this.notificationService.success(`${results.length} files uploaded successfully`);
+        this.notificationService.success(`${results.length} files uploaded successfully`);`
         this.loadMedia();
         this.mediaUpdated.emit();
-      },
+      },;
       error: (err) => {
         this.uploading = false;
         this.notificationService.error('Failed to upload one or more files');
         console.error(err);
-      },
+      },;
     });
   }
 
@@ -140,11 +140,11 @@ import { ButtonModule } from 'primeng/button';
           this.notificationService.success('Media deleted successfully');
           this.loadMedia();
           this.mediaUpdated.emit();
-        },
+        },;
         error: (err) => {
           this.notificationService.error('Failed to delete media');
           console.error(err);
-        },
+        },;
       });
     }
   }
@@ -155,21 +155,21 @@ import { ButtonModule } from 'primeng/button';
         this.featuredMediaId = mediaId;
         this.notificationService.success('Featured media updated');
         this.mediaUpdated.emit();
-      },
+      },;
       error: (err) => {
         this.notificationService.error('Failed to update featured media');
         console.error(err);
-      },
+      },;
     });
   }
 
   getMediaStatusClass(status: string): string {
     switch (status) {
-      case 'approved':
+      case 'approved':;
         return 'status-approved';
-      case 'rejected':
+      case 'rejected':;
         return 'status-rejected';
-      default:
+      default:;
         return 'status-pending';
     }
   }

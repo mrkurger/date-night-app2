@@ -1,102 +1,99 @@
+import {
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import {
-  PerformanceMonitorService,
-  PerformanceMetrics,
+  PerformanceMonitorService,;
+  PerformanceMetrics,';
 } from '../../services/performance-monitor.service';
 
 /**
- * Performance Monitor Component
- *
- * This component displays performance metrics for the application.
- * It can be used for debugging and monitoring performance issues.
+ * Performance Monitor Component;
+ *;
+ * This component displays performance metrics for the application.;
+ * It can be used for debugging and monitoring performance issues.;
  */
 @Component({
-  selector: 'app-performance-monitor',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="performance-monitor" *ngIf="isVisible">
-      <div class="performance-monitor__header">
-        <h3 class="performance-monitor__title">Performance Monitor</h3>
-        <button class="performance-monitor__close" (click)="toggleVisibility()">×</button>
-      </div>
-      <div class="performance-monitor__content">
-        <div class="performance-monitor__metrics">
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">Page Load Time</div>
-            <div class="performance-monitor__metric-value">
-              {{ metrics?.pageLoadTime | number: '1.0-0' }} ms
-            </div>
-          </div>
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">FCP</div>
-            <div class="performance-monitor__metric-value">
-              {{ metrics?.firstContentfulPaint | number: '1.0-0' }} ms
-            </div>
-          </div>
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">LCP</div>
-            <div class="performance-monitor__metric-value">
-              {{ metrics?.largestContentfulPaint | number: '1.0-0' }} ms
-            </div>
-          </div>
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">FID</div>
-            <div class="performance-monitor__metric-value">
-              {{ metrics?.firstInputDelay | number: '1.0-0' }} ms
-            </div>
-          </div>
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">CLS</div>
-            <div class="performance-monitor__metric-value">
+  selector: 'app-performance-monitor',;
+  standalone: true,;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+      ;
+        Performance Monitor;
+        ×;
+      ;
+      ;
+        ;
+          ;
+            Page Load Time;
+            ;
+              {{ metrics?.pageLoadTime | number: '1.0-0' }} ms;
+            ;
+          ;
+          ;
+            FCP;
+            ;
+              {{ metrics?.firstContentfulPaint | number: '1.0-0' }} ms;
+            ;
+          ;
+          ;
+            LCP;
+            ;
+              {{ metrics?.largestContentfulPaint | number: '1.0-0' }} ms;
+            ;
+          ;
+          ;
+            FID;
+            ;
+              {{ metrics?.firstInputDelay | number: '1.0-0' }} ms;
+            ;
+          ;
+          ;
+            CLS;
+            ;
               {{ metrics?.cumulativeLayoutShift | number: '1.2-2' }}
-            </div>
-          </div>
-          <div class="performance-monitor__metric">
-            <div class="performance-monitor__metric-label">Memory</div>
-            <div class="performance-monitor__metric-value">
-              {{ metrics?.memoryUsage | number: '1.0-0' }} MB
-            </div>
-          </div>
-        </div>
+            ;
+          ;
+          ;
+            Memory;
+            ;
+              {{ metrics?.memoryUsage | number: '1.0-0' }} MB;
+            ;
+          ;
+        ;
 
-        <div class="performance-monitor__section">
-          <h4 class="performance-monitor__section-title"></h4>
-          <div class="performance-monitor__long-tasks" *ngIf="metrics?.longTasks?.length">
-            <div
-              class="performance-monitor__long-task"
-              *ngFor="let task of metrics?.longTasks?.slice(0, 3)"
-            >
-              <div class="performance-monitor__long-task-name">{{ task.name }}</div>
-              <div class="performance-monitor__long-task-duration">
-                {{ task.duration | number: '1.0-0' }} ms
-              </div>
-            </div>
-            <div class="performance-monitor__more" *ngIf="metrics?.longTasks?.length > 3">
-              + {{ metrics?.longTasks?.length - 3 }} more
-            </div>
-          </div>
-          <div class="performance-monitor__empty" *ngIf="!metrics?.longTasks?.length">
-            No long tasks detected
-          </div>
-        </div>
+        ;
+          ;
+          ;
+            ;
+              {{ task.name }};
+              ;
+                {{ task.duration | number: '1.0-0' }} ms;
+              ;
+            ;
+             3">;
+              + {{ metrics?.longTasks?.length - 3 }} more;
+            ;
+          ;
+          ;
+            No long tasks detected;
+          ;
+        ;
 
-        <div class="performance-monitor__actions">
-          <button class="performance-monitor__action" (click)="clearMetrics()">
-            Clear Metrics
-          </button>
-        </div>
-      </div>
-    </div>
+        ;
+          ;
+            Clear Metrics;
+          ;
+        ;
+      ;
+    ;
 
-    <button class="performance-monitor-toggle" (click)="toggleVisibility()" *ngIf="!isVisible">
-      <span class="performance-monitor-toggle__icon">📊</span>
-    </button>
-  `,
-  styles: [
-    `
+    ;
+      📊;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         position: fixed;
         bottom: 20px;
@@ -254,10 +251,10 @@ import {
       .performance-monitor-toggle__icon {
         font-size: 16px;
       }
-    `,
-  ],
-})
-export class PerformanceMonitorComponent implements OnInit, OnDestroy {
+    `,;`
+  ],;
+});
+export class PerformanceMonitorComponen {t implements OnInit, OnDestroy {
   metrics: PerformanceMetrics | null = null;
   isVisible = false;
   private subscription: Subscription | null = null;
@@ -281,7 +278,7 @@ export class PerformanceMonitorComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Toggles the visibility of the performance monitor
+   * Toggles the visibility of the performance monitor;
    */
   toggleVisibility(): void {
     this.isVisible = !this.isVisible;
@@ -289,7 +286,7 @@ export class PerformanceMonitorComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Clears all performance metrics
+   * Clears all performance metrics;
    */
   clearMetrics(): void {
     this.performanceMonitor.clearMetrics();

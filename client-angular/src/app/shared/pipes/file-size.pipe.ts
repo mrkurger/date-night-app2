@@ -1,15 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'fileSize',
-  standalone: true,
-})
-export class FileSizePipe implements PipeTransform {
+@Pipe({';
+  name: 'fileSize',;
+  standalone: true,;
+});
+export class FileSizePip {e implements PipeTransform {
   /**
-   * Transform a file size in bytes to a human-readable format
-   * @param bytes File size in bytes
-   * @param decimals Number of decimal places to show
-   * @returns Human-readable file size (e.g. "1.5 MB")
+   * Transform a file size in bytes to a human-readable format;
+   * @param bytes File size in bytes;
+   * @param decimals Number of decimal places to show;
+   * @returns Human-readable file size (e.g. "1.5 MB");
    */
   transform(bytes: number, decimals = 2): string {
     if (bytes === 0) {

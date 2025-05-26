@@ -1,3 +1,12 @@
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+import { FavoriteService } from '../../../core/services/favorite.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { DialogService } from '../../../core/services/dialog.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,38 +16,17 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 
-import { FavoriteService } from '../../../core/services/favorite.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { NotificationService } from '../../../core/services/notification.service';
-import { DialogService } from '../../../core/services/dialog.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-
-@Component({
-    selector: 'app-favorite-button',
-    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
-    template: `
-    <button
-      nbButton
-      ghost
-      [status]="isFavorite ? 'danger' : 'basic'"
-      [nbTooltip]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
-      (click)="toggleFavorite()"
-      [disabled]="loading"
-      [class.favorite-button]="true"
-      [class.is-favorite]="isFavorite"
-      [class.button-small]="small"
-      [class.button-large]="large"
-    >
-      <nb-icon [icon]="isFavorite ? 'heart' : 'heart-outline'"></nb-icon>
-    </button>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-favorite-button',;
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .favorite-button {
         transition: transform 0.2s ease;
         padding: 0.4rem !important;
@@ -73,27 +61,27 @@ import { Router } from '@angular/router';
           line-height: 28px;
         }
       }
-    `,
-    ]
-})
-export class FavoriteButtonComponent implements OnInit, OnDestroy {
+    `,;`
+    ];
+});
+export class FavoriteButtonComponen {t implements OnInit, OnDestroy {
   @Input() adId = '';
   @Input() adTitle = '';
   @Input() small = false;
   @Input() large = false;
 
-  @Output() favoriteChanged = new EventEmitter<boolean>();
+  @Output() favoriteChanged = new EventEmitter();
 
   isFavorite = false;
   loading = false;
   private subscription: Subscription | null = null;
 
-  constructor(
-    private favoriteService: FavoriteService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private dialogService: DialogService,
-    private router: Router,
+  constructor(;
+    private favoriteService: FavoriteService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private dialogService: DialogService,;
+    private router: Router,;
   ) {}
 
   ngOnInit(): void {
@@ -116,7 +104,7 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
     if (!this.authService.isAuthenticated()) {
       this.notificationService.info('Please log in to save favorites');
       this.router.navigate(['/auth/login'], {
-        queryParams: { returnUrl: this.router.url },
+        queryParams: { returnUrl: this.router.url },;
       });
       return;
     }
@@ -135,38 +123,38 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
           this.favoriteChanged.emit(false);
           this.notificationService.success('Removed from favorites');
           this.loading = false;
-        },
+        },;
         error: (error) => {
           console.error('Error removing favorite:', error);
           this.notificationService.error('Failed to remove from favorites');
           this.loading = false;
-        },
+        },;
       });
     } else {
       // If we have the ad title, open the dialog to add details
       if (this.adTitle) {
         this.dialogService.addToFavorites(this.adId, this.adTitle).subscribe((result) => {
           if (result) {
-            this.favoriteService
-              .addFavorite(
-                this.adId,
-                result.notes,
-                result.notificationsEnabled,
-                result.tags,
-                result.priority,
-              )
+            this.favoriteService;
+              .addFavorite(;
+                this.adId,;
+                result.notes,;
+                result.notificationsEnabled,;
+                result.tags,;
+                result.priority,;
+              );
               .subscribe({
                 next: () => {
                   this.isFavorite = true;
                   this.favoriteChanged.emit(true);
                   this.notificationService.success('Added to favorites');
                   this.loading = false;
-                },
+                },;
                 error: (error) => {
                   console.error('Error adding favorite:', error);
                   this.notificationService.error('Failed to add to favorites');
                   this.loading = false;
-                },
+                },;
               });
           } else {
             // User canceled the dialog
@@ -181,12 +169,12 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
             this.favoriteChanged.emit(true);
             this.notificationService.success('Added to favorites');
             this.loading = false;
-          },
+          },;
           error: (error) => {
             console.error('Error adding favorite:', error);
             this.notificationService.error('Failed to add to favorites');
             this.loading = false;
-          },
+          },;
         });
       }
     }
@@ -207,11 +195,11 @@ export class FavoriteButtonComponent implements OnInit, OnDestroy {
       next: (isFavorite) => {
         this.isFavorite = isFavorite;
         this.loading = false;
-      },
+      },;
       error: (error) => {
         console.error('Error checking favorite status:', error);
         this.loading = false;
-      },
+      },;
     });
   }
 }

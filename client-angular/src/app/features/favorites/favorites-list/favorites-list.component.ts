@@ -1,258 +1,159 @@
+import {
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import {
-  FavoriteService,
-  Favorite,
-  FavoriteFilterOptions,
-  FavoriteTag,
-} from '../../../core/services/favorite.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { FavoriteButtonComponent } from '../../../shared/components/favorite-button/favorite-button.component';
 import { NotesDialogComponent } from '../../../shared/components/notes-dialog/notes-dialog.component';
 import { Subject } from 'rxjs';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+  FavoriteService,;
+  Favorite,;
+  FavoriteFilterOptions,;
+  FavoriteTag,';
+} from '../../../core/services/favorite.service';
 
 // Import NebularModule directly for standalone components if not already present
 import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure this path is correct and module exports necessary Nebular components
 
-@Component({
-  selector: 'app-favorites-list',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
+@Component({';
+  selector: 'app-favorites-list',;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    CommonModule,;
+    RouterModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
     NebularModule, // Ensure NebularModule is imported here
     // FavoriteButtonComponent is imported but not used in the template
     // FavoriteButtonComponent,
-  ],
-  template: `
-    <div class="favorites-container">
-      <div class="favorites-header">
-        <h2 class="page-title">My Favorites</h2>
+  ],;
+  template: `;`
+    ;
+      ;
+        My Favorites;
 
-        <div class="favorites-actions" *ngIf="favorites && favorites.length > 0">
-          <button
-            nbButton
-            status="primary"
-            [disabled]="selectedFavorites.length === 0"
-            [nbContextMenu]="batchActions"
-            nbContextMenuTag="batch-menu"
-          >
-            Batch Actions ({{ selectedFavorites.length }})
-            <nb-icon icon="chevron-down-outline"></nb-icon>
-          </button>
-        </div>
-      </div>
+         0">;
+          ;
+            Batch Actions ({{ selectedFavorites.length }});
+            ;
+          ;
+        ;
+      ;
 
-      <div class="filters-container" *ngIf="favorites && favorites.length > 0">
-        <nb-form-field>
-          <nb-icon nbPrefix icon="search-outline"></nb-icon>
-          <input
-            nbInput
-            fullWidth
-            [(ngModel)]="filterOptions.search"
-            (input)="onSearchChange($event)"
-            placeholder="Search by title, description, or notes"
-          />
-        </nb-form-field>
+       0">;
+        ;
+          ;
+          ;
+        ;
 
-        <nb-form-field>
-          <nb-select
-            fullWidth
-            [(ngModel)]="filterOptions.sort"
-            (selectedChange)="applyFilters()"
-            placeholder="Sort by"
-          >
-            <nb-option value="newest">Newest first</nb-option>
-            <nb-option value="oldest">Oldest first</nb-option>
-            <nb-option value="price-asc">Price: Low to High</nb-option>
-            <nb-option value="price-desc">Price: High to Low</nb-option>
-            <nb-option value="title-asc">Title: A to Z</nb-option>
-            <nb-option value="title-desc">Title: Z to A</nb-option>
-            <nb-option value="priority-high">Priority: High to Low</nb-option>
-            <nb-option value="priority-low">Priority: Low to High</nb-option>
-          </nb-select>
-        </nb-form-field>
+        ;
+          ;
+            Newest first;
+            Oldest first;
+            Price: Low to High;
+            Price: High to Low;
+            Title: A to Z;
+            Title: Z to A;
+            Priority: High to Low;
+            Priority: Low to High;
+          ;
+        ;
 
-        <div class="tags-filter" *ngIf="userTags && userTags.length > 0">
-          <div class="tags-label">Filter by tag:</div>
-          <nb-tag-list>
-            <nb-tag
-              *ngFor="let tag of userTags"
-              [text]="tag.tag + ' (' + tag.count + ')'"
-              [selected]="selectedTagFilters.includes(tag.tag)"
-              (click)="toggleTagFilter(tag.tag)"
-              appearance="outline"
-              status="basic"
-            >
-            </nb-tag>
-          </nb-tag-list>
-        </div>
+         0">;
+          Filter by tag:;
+          ;
+            ;
+            ;
+          ;
+        ;
 
-        <button nbButton ghost (click)="resetFilters()" *ngIf="isFiltered">
-          <nb-icon icon="close-outline"></nb-icon>
-          Clear Filters
-        </button>
-      </div>
+        ;
+          ;
+          Clear Filters;
+        ;
+      ;
 
-      <div class="loading-container" *ngIf="loading">
-        <nb-spinner size="large"></nb-spinner>
-        <p>Loading your favorites...</p>
-      </div>
+      ;
+        ;
+        Loading your favorites...;
+      ;
 
-      <div class="no-favorites" *ngIf="!loading && (!favorites || favorites.length === 0)">
-        <nb-card>
-          <nb-card-body>
-            <nb-icon icon="heart-outline" class="empty-icon"></nb-icon>
-            <h3>No favorites yet</h3>
-            <p>Browse ads and click the heart icon to add them to your favorites.</p>
-            <button nbButton status="primary" routerLink="/ads">Browse Ads</button>
-          </nb-card-body>
-        </nb-card>
-      </div>
+      ;
+        ;
+          ;
+            ;
+            No favorites yet;
+            Browse ads and click the heart icon to add them to your favorites.;
+            Browse Ads;
+          ;
+        ;
+      ;
 
-      <div class="favorites-list" *ngIf="!loading && favorites && favorites.length > 0">
-        <nb-card *ngFor="let favorite of favorites" [ngClass]="getPriorityClass(favorite)">
-          <nb-card-body>
-            <div class="favorite-header">
-              <div class="favorite-select">
-                <nb-checkbox
-                  [(ngModel)]="favorite.selected"
-                  (ngModelChange)="updateSelectedFavorites()"
-                  status="primary"
-                ></nb-checkbox>
-              </div>
+       0">;
+        ;
+          ;
+            ;
+              ;
+                ;
+              ;
 
-              <div class="favorite-image">
-                <img
-                  [src]="
-                    favorite.ad.images && favorite.ad.images.length > 0
-                      ? favorite.ad.images[0]
-                      : 'assets/images/placeholder.jpg'
-                  "
-                  [alt]="favorite.ad.title"
-                />
-              </div>
+              ;
+                 0;
+                      ? favorite.ad.images[0];
+                      : 'assets/images/placeholder.jpg';
+                  ";
+                  [alt]="favorite.ad.title";
+                />;
+              ;
 
-              <div class="favorite-info">
-                <h3>
-                  <a [routerLink]="['/ads', favorite.ad._id]">{{ favorite.ad.title }}</a>
-                </h3>
+              ;
+                ;
+                  {{ favorite.ad.title }};
+                ;
 
-                <div class="favorite-meta">
-                  <nb-tag
-                    [status]="getPriorityClass(favorite)"
-                    [icon]="getPriorityIcon(favorite.priority)"
-                  >
-                    {{ favorite.priority | titlecase }} Priority
-                  </nb-tag>
+                ;
+                  ;
+                    {{ favorite.priority | titlecase }} Priority;
+                  ;
 
-                  <nb-tag status="basic" icon="calendar-outline">
+                  ;
                     Added {{ favorite.dateAdded || favorite.createdAt | date }}
-                  </nb-tag>
+                  ;
 
-                  <nb-tag
-                    *ngIf="favorite.notificationsEnabled"
-                    status="success"
-                    icon="bell-outline"
-                  >
-                    Notifications On
-                  </nb-tag>
-                </div>
+                  ;
+                    Notifications On;
+                  ;
+                ;
 
-                <div class="favorite-tags" *ngIf="favorite.tags && favorite.tags.length > 0">
-                  <nb-tag-list>
-                    <nb-tag
-                      *ngFor="let tag of favorite.tags"
-                      status="basic"
-                      appearance="outline"
-                      size="tiny"
-                    >
+                 0">;
+                  ;
+                    ;
                       {{ tag }}
-                    </nb-tag>
-                  </nb-tag-list>
-                </div>
+                    ;
+                  ;
+                ;
 
-                <p class="favorite-notes" *ngIf="favorite.notes">
+                ;
                   {{ favorite.notes }}
-                </p>
-              </div>
+                ;
+              ;
 
-              <div class="favorite-actions">
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  [nbContextMenu]="[
-                    {
-                      title: 'View Details',
-                      icon: 'eye-outline',
-                      link: '/ads/' + this.getAdIdAsString(favorite.ad),
-                    },
-                    {
-                      title: 'Edit Notes',
-                      icon: 'edit-outline',
-                      data: favorite,
-                    },
-                    {
-                      title: 'Manage Tags',
-                      icon: 'bookmark-outline',
-                      data: favorite,
-                    },
-                    {
-                      title: 'Set Priority',
-                      icon: 'arrow-up-outline',
-                      children: [
-                        {
-                          title: 'High',
-                          icon: 'arrow-up-outline',
-                          data: { favorite, priority: 'high' },
-                        },
-                        {
-                          title: 'Normal',
-                          icon: 'minus-outline',
-                          data: { favorite, priority: 'normal' },
-                        },
-                        {
-                          title: 'Low',
-                          icon: 'arrow-down-outline',
-                          data: { favorite, priority: 'low' },
-                        },
-                      ],
-                    },
-                    {
-                      title: favorite.notificationsEnabled
-                        ? 'Disable Notifications'
-                        : 'Enable Notifications',
-                      icon: favorite.notificationsEnabled ? 'bell-off-outline' : 'bell-outline',
-                      data: favorite,
-                    },
-                    {
-                      title: 'Remove',
-                      icon: 'trash-2-outline',
-                      data: favorite,
-                    },
-                  ]"
-                  nbContextMenuTag="favorite-menu"
-                >
-                  <nb-icon icon="more-vertical-outline"></nb-icon>
-                </button>
-              </div>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+              ;
+                ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
         padding: var(--padding);
@@ -406,10 +307,10 @@ import { NebularModule } from '../../../../app/shared/nebular.module'; // Ensure
       .favorite-actions {
         margin-left: auto;
       }
-    `,
-  ],
-})
-export class FavoritesListComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class FavoritesListComponen {t implements OnInit {
   favorites: Favorite[] = [];
   loading = false;
   userTags: FavoriteTag[] = [];
@@ -417,14 +318,14 @@ export class FavoritesListComponent implements OnInit {
   selectedFavorites: (string | { city: string; county: string })[] = [];
 
   filterOptions: FavoriteFilterOptions = {
-    sort: 'newest',
-    search: '',
+    sort: 'newest',;
+    search: '',;
   };
 
-  private searchSubject = new Subject<string>();
+  private searchSubject = new Subject();
 
   /**
-   * Convert ad ID to string regardless of its type
+   * Convert ad ID to string regardless of its type;
    */
   getAdIdAsString(adId: any): string {
     if (!adId) return '';
@@ -434,26 +335,26 @@ export class FavoritesListComponent implements OnInit {
   }
 
   get isFiltered(): boolean {
-    return (
-      !!this.filterOptions.search ||
-      !!this.filterOptions.category ||
-      !!this.filterOptions.county ||
-      !!this.filterOptions.city ||
-      this.selectedTagFilters.length > 0
+    return (;
+      !!this.filterOptions.search ||;
+      !!this.filterOptions.category ||;
+      !!this.filterOptions.county ||;
+      !!this.filterOptions.city ||;
+      this.selectedTagFilters.length > 0;
     );
   }
 
   // Batch actions menu items
-  batchActions: NbMenuItem[] = [
-    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },
-    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },
-    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },
+  batchActions: NbMenuItem[] = [;
+    { title: 'Add Tags', icon: 'tag-outline', data: { action: 'addTags' } },;
+    { title: 'Remove Tags', icon: 'close-circle-outline', data: { action: 'removeTags' } },;
+    { title: 'Delete Selected', icon: 'trash-2-outline', data: { action: 'delete' } },;
   ];
 
-  constructor(
-    private favoriteService: FavoriteService,
-    private notificationService: NotificationService,
-    private dialog: NbDialogService,
+  constructor(;
+    private favoriteService: FavoriteService,;
+    private notificationService: NotificationService,;
+    private dialog: NbDialogService,;
   ) {
     // Set up debounced search
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
@@ -472,15 +373,15 @@ export class FavoritesListComponent implements OnInit {
     this.favoriteService.getFavorites(this.filterOptions).subscribe({
       next: (favorites) => {
         this.favorites = favorites.map((favorite) => ({
-          ...favorite,
-          selected: false,
+          ...favorite,;
+          selected: false,;
         }));
         this.loading = false;
-      },
+      },;
       error: (error: Error) => {
         this.notificationService.error('Failed to load favorites');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -488,10 +389,10 @@ export class FavoritesListComponent implements OnInit {
     this.favoriteService.getUserTags().subscribe({
       next: (tags) => {
         this.userTags = tags;
-      },
+      },;
       error: (error: Error) => {
         this.notificationService.error('Failed to load tags');
-      },
+      },;
     });
   }
 
@@ -507,7 +408,7 @@ export class FavoritesListComponent implements OnInit {
 
   resetFilters(): void {
     this.filterOptions = {
-      sort: 'newest',
+      sort: 'newest',;
     };
     this.selectedTagFilters = [];
     this.applyFilters();
@@ -518,10 +419,10 @@ export class FavoritesListComponent implements OnInit {
       next: () => {
         this.favorites = this.favorites.filter((favorite) => favorite.ad._id !== adId);
         this.notificationService.success('Removed from favorites');
-      },
+      },;
       error: (error: Error) => {
         this.notificationService.error('Failed to remove from favorites');
-      },
+      },;
     });
   }
 
@@ -532,15 +433,15 @@ export class FavoritesListComponent implements OnInit {
 
     this.favoriteService.removeFavoritesBatch(adIds).subscribe({
       next: (result) => {
-        this.favorites = this.favorites.filter(
-          (favorite) => !adIds.includes(this.getAdIdAsString(favorite.ad._id)),
+        this.favorites = this.favorites.filter(;
+          (favorite) => !adIds.includes(this.getAdIdAsString(favorite.ad._id)),;
         );
         this.selectedFavorites = [];
-        this.notificationService.success(`Removed ${result.removed} items from favorites`);
-      },
+        this.notificationService.success(`Removed ${result.removed} items from favorites`);`
+      },;
       error: (error: Error) => {
         this.notificationService.error('Failed to remove selected favorites');
-      },
+      },;
     });
   }
 
@@ -548,20 +449,20 @@ export class FavoritesListComponent implements OnInit {
     this.favoriteService.toggleNotifications(this.getAdIdAsString(favorite.ad._id)).subscribe({
       next: (response) => {
         favorite.notificationsEnabled = response.notificationsEnabled;
-        this.notificationService.success(
-          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`,
+        this.notificationService.success(;
+          `Notifications ${favorite.notificationsEnabled ? 'enabled' : 'disabled'} for this favorite`,;`
         );
-      },
+      },;
       error: (error: Error) => {
         this.notificationService.error('Failed to update notification settings');
-      },
+      },;
     });
   }
 
   openNotesDialog(favorite: Favorite): void {
     // const dialogRef = this.dialog.open(NotesDialogComponent, {
     //   context: {
-    //     title: `Notes for ${favorite.ad.title}`,
+    //     title: `Notes for ${favorite.ad.title}`,`
     //     notes: favorite.notes,
     //     maxLength: 500,
     //     placeholder: 'Enter your notes here...',
@@ -579,7 +480,7 @@ export class FavoritesListComponent implements OnInit {
   openTagsDialogForSingle(favorite: Favorite): void {
     // const dialogRef = this.dialog.open(NotesDialogComponent, {
     //   context: {
-    //     title: `Tags for ${favorite.ad.title}`,
+    //     title: `Tags for ${favorite.ad.title}`,`
     //     notes: favorite.tags ? favorite.tags.join(', ') : '',
     //     maxLength: 200,
     //     placeholder: 'Enter tags, comma-separated...',
@@ -605,10 +506,10 @@ export class FavoritesListComponent implements OnInit {
     //       fav.tags.forEach((tag) => acc.add(tag));
     //     }
     //     return acc;
-    //   }, new Set<string>());
+    //   }, new Set());
     // const dialogRef = this.dialog.open(NotesDialogComponent, {
     //   context: {
-    //     title: `Edit Tags for ${this.selectedFavorites.length} Favorites`,
+    //     title: `Edit Tags for ${this.selectedFavorites.length} Favorites`,`
     //     notes: Array.from(initialTags).join(', '),
     //     maxLength: 200,
     //     placeholder: 'Enter tags, comma-separated...',
@@ -664,9 +565,9 @@ export class FavoritesListComponent implements OnInit {
     //         favorite.tags = [...tags];
     //       }
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated tags for ${completed} favorites`);
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`);`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);`
     //         }
     //         this.loadUserTags(); // Refresh tag list
     //       }
@@ -674,9 +575,9 @@ export class FavoritesListComponent implements OnInit {
     //     error: () => {
     //       failed++;
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated tags for ${completed} favorites`);
+    //         this.notificationService.success(`Updated tags for ${completed} favorites`);`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);
+    //           this.notificationService.error(`Failed to update tags for ${failed} favorites`);`
     //         }
     //       }
     //     },
@@ -688,7 +589,7 @@ export class FavoritesListComponent implements OnInit {
     // this.favoriteService.updatePriority(this.getAdIdAsString(favorite.ad._id), priority).subscribe({
     //   next: () => {
     //     favorite.priority = priority;
-    //     this.notificationService.success(`Priority set to ${priority}`);
+    //     this.notificationService.success(`Priority set to ${priority}`);`
     //   },
     //   error: () => {
     //     this.notificationService.error('Failed to update priority');
@@ -710,18 +611,18 @@ export class FavoritesListComponent implements OnInit {
     //         favorite.priority = priority;
     //       }
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated priority for ${completed} favorites`);
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`);`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);`
     //         }
     //       }
     //     },
     //     error: () => {
     //       failed++;
     //       if (completed + failed === adIds.length) {
-    //         this.notificationService.success(`Updated priority for ${completed} favorites`);
+    //         this.notificationService.success(`Updated priority for ${completed} favorites`);`
     //         if (failed > 0) {
-    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);
+    //           this.notificationService.error(`Failed to update priority for ${failed} favorites`);`
     //         }
     //       }
     //     },

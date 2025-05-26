@@ -1,49 +1,48 @@
 import { Component } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { of, throwError } from 'rxjs';
 import { FavoriteButtonComponent } from './favorite-button.component';
 import { FavoriteService } from '../../../core/services/favorite.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 
+';
 describe('FavoriteButtonComponent', () => {
   let component: FavoriteButtonComponent;
-  let fixture: ComponentFixture<FavoriteButtonComponent>;
-  let favoriteServiceSpy: jasmine.SpyObj<FavoriteService>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
+  let fixture: ComponentFixture;
+  let favoriteServiceSpy: jasmine.SpyObj;
+  let authServiceSpy: jasmine.SpyObj;
+  let notificationServiceSpy: jasmine.SpyObj;
 
   beforeEach(async () => {
     // Create spies for all required services
-    favoriteServiceSpy = jasmine.createSpyObj('FavoriteService', [
-      'isFavorite',
-      'addFavorite',
-      'removeFavorite',
+    favoriteServiceSpy = jasmine.createSpyObj('FavoriteService', [;
+      'isFavorite',;
+      'addFavorite',;
+      'removeFavorite',;
     ]);
     authServiceSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [
-      'success',
-      'error',
-      'info',
+    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [;
+      'success',;
+      'error',;
+      'info',;
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        NbIconModule,
-        NbButtonModule,
-        NbTooltipModule,
-        FavoriteButtonComponent,
-      ],
-      providers: [
-        { provide: FavoriteService, useValue: favoriteServiceSpy },
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: NotificationService, useValue: notificationServiceSpy },
-      ],
+      imports: [;
+        RouterTestingModule,;
+        NbIconModule,;
+        NbButtonModule,;
+        NbTooltipModule,;
+        FavoriteButtonComponent,;
+      ],;
+      providers: [;
+        { provide: FavoriteService, useValue: favoriteServiceSpy },;
+        { provide: AuthService, useValue: authServiceSpy },;
+        { provide: NotificationService, useValue: notificationServiceSpy },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(FavoriteButtonComponent);

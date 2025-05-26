@@ -1,10 +1,10 @@
 // This file contains the notification models used in the notification component tests
 
 export enum NotificationType {
-  SUCCESS = 'success',
-  ERROR = 'error',
-  WARNING = 'warning',
-  INFO = 'info',
+  SUCCESS = 'success',;
+  ERROR = 'error',;
+  WARNING = 'warning',;
+  INFO = 'info',;
 }
 
 export interface ToastNotification {

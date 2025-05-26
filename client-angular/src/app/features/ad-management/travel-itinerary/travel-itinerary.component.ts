@@ -3,40 +3,40 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NebularModule } from '../../shared/nebular.module';
-
 import { MapComponent } from '../../../shared/components/map/map.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 
-
-@Component({
-  selector: 'app-travel-itinerary',
-  templateUrl: './travel-itinerary.component.html',
-  styleUrls: ['./travel-itinerary.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule, ReactiveFormsModule, NebularModule, MapComponent,
-    CardModule,
-    ButtonModule
-  ],
-})
-export class TravelItineraryComponent implements OnInit {
+@Component({';
+  selector: 'app-travel-itinerary',;
+  templateUrl: './travel-itinerary.component.html',;
+  styleUrls: ['./travel-itinerary.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule, ReactiveFormsModule, NebularModule, MapComponent,;
+    CardModule,;
+    ButtonModule,;
+    CalendarModule;
+  ],;
+});
+export class TravelItineraryComponen {t implements OnInit {
   travelForm: FormGroup;
   showMap = false;
   mapLatitude = 51.505;
   mapLongitude = -0.09;
   mapZoom = 13;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
+  constructor(;
+    private fb: FormBuilder,;
+    private router: Router,;
   ) {
     this.travelForm = this.fb.group({
-      destination: ['', Validators.required],
-      startDate: [new Date(), Validators.required],
-      endDate: [new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), Validators.required],
-      travelers: [2, [Validators.required, Validators.min(1)]],
-      budget: [1000],
+      destination: ['', Validators.required],;
+      startDate: [new Date(), Validators.required],;
+      endDate: [new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), Validators.required],;
+      travelers: [2, [Validators.required, Validators.min(1)]],;
+      budget: [1000],;
     });
   }
 

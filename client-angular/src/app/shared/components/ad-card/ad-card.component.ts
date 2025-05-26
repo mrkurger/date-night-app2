@@ -1,3 +1,11 @@
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Ad } from '../../../core/models/ad.interface';
+import { UserPreferencesService } from '../../../core/services/user-preferences.service';
+import { Subscription } from 'rxjs';
+import { NebularModule } from '../../nebular.module';
+import { ButtonModule } from 'primeng/button';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,60 +15,48 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Ad } from '../../../core/models/ad.interface';
-import { UserPreferencesService } from '../../../core/services/user-preferences.service';
-import { Subscription } from 'rxjs';
-import { NebularModule } from '../../nebular.module';
 
-@Component({
-    selector: 'app-ad-card',
-    template: `
-    <nb-card [ngClass]="[size, density]" class="ad-card">
-      <nb-card-header>
-        <div class="ad-header">
-          <div class="ad-badges">
-            <nb-badge *ngIf="isFeatured" text="Featured" status="primary"></nb-badge>
-            <nb-badge *ngIf="isNew" text="New" status="success"></nb-badge>
-            <nb-badge *ngIf="isTrending" text="Trending" status="warning"></nb-badge>
-          </div>
-          <span class="ad-price">{{ ad?.price | currency }}</span>
-        </div>
-      </nb-card-header>
-      <nb-card-body>
-        <div class="ad-images">
-          <img [src]="getPrimaryImage()" [alt]="ad?.title" class="primary-image" />
-          <img
-            *ngIf="getSecondaryImage()"
-            [src]="getSecondaryImage()"
-            [alt]="ad?.title"
-            class="secondary-image"
-          />
-          <span *ngIf="getImageCount() > 1" class="image-count">+{{ getImageCount() - 1 }}</span>
-        </div>
-        <h3 class="ad-title">{{ ad?.title }}</h3>
-        <p class="ad-description">{{ ad?.description }}</p>
-        <div class="ad-location">
-          <nb-icon icon="pin-outline"></nb-icon>
-          <span>{{ ad?.location }}</span>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <div class="ad-actions">
-          <button nbButton ghost size="small" (click)="onLike($event)">
-            <nb-icon [icon]="isFavorite ? 'heart' : 'heart-outline'"></nb-icon>
-          </button>
-          <button nbButton ghost size="small" (click)="onShare($event)">
-            <nb-icon icon="share-outline"></nb-icon>
-          </button>
-        </div>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-ad-card',;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            ;
+            ;
+          ;
+          {{ ad?.price | currency }};
+        ;
+      ;
+      ;
+        ;
+          ;
+          ;
+           1" class="image-count">+{{ getImageCount() - 1 }};
+        ;
+        {{ ad?.title }};
+        {{ ad?.description }};
+        ;
+          ;
+          {{ ad?.location }};
+        ;
+      ;
+      ;
+        ;
+          ;
+            ;
+          ;
+          ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -99,7 +95,7 @@ import { NebularModule } from '../../nebular.module';
         margin-bottom: 1rem;
       }
 
-      .primary-image,
+      .primary-image,;
       .secondary-image {
         width: 100%;
         height: 100%;
@@ -188,16 +184,15 @@ import { NebularModule } from '../../nebular.module';
           margin-bottom: 1.5rem;
         }
       }
-    `,
-    ],
-    imports: [
-    CommonModule, RouterModule, NebularModule,
-    ButtonModule
-  ]
-})
-export class AdCardComponent implements OnInit, OnDestroy {
+    `,;`
+    ],;
+    imports: [;
+    CommonModule, RouterModule, NebularModule,;
+    ButtonModule;
+  ];
+});
+export class AdCardComponen {t implements OnInit, OnDestroy {
   @Input() ad!: Ad;
-import { ButtonModule } from 'primeng/button';
 
   @Input() layout: 'grid' | 'list' | 'compact' | 'netflix' | 'tinder' = 'grid';
   @Input() showActions = true;
@@ -213,10 +208,10 @@ import { ButtonModule } from 'primeng/button';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() density: 'compact' | 'comfortable' | 'spacious' = 'comfortable';
 
-  @Output() viewDetails = new EventEmitter<string>();
-  @Output() like = new EventEmitter<string>();
-  @Output() chat = new EventEmitter<string>();
-  @Output() share = new EventEmitter<string>();
+  @Output() viewDetails = new EventEmitter();
+  @Output() like = new EventEmitter();
+  @Output() chat = new EventEmitter();
+  @Output() share = new EventEmitter();
 
   private subscriptions: Subscription[] = [];
 
@@ -230,11 +225,11 @@ import { ButtonModule } from 'primeng/button';
       if (!this.contentDensity) this.contentDensity = preferences.contentDensity;
 
       // Subscribe to preference changes only if not provided as inputs
-      this.subscriptions.push(
+      this.subscriptions.push(;
         this.userPreferencesService.preferences$.subscribe((prefs) => {
           if (!this.cardSize) this.cardSize = prefs.cardSize;
           if (!this.contentDensity) this.contentDensity = prefs.contentDensity;
-        }),
+        }),;
       );
     }
   }
@@ -245,7 +240,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Get the primary image URL for the ad
+   * Get the primary image URL for the ad;
    */
   getPrimaryImage(): string {
     if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
@@ -268,7 +263,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Get the secondary image URL for the ad
+   * Get the secondary image URL for the ad;
    */
   getSecondaryImage(): string | null {
     if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 1) {
@@ -291,7 +286,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Get the total number of images for the ad
+   * Get the total number of images for the ad;
    */
   getImageCount(): number {
     if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
@@ -306,7 +301,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Handle image loading error
+   * Handle image loading error;
    */
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
@@ -314,18 +309,18 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Format the price for display
+   * Format the price for display;
    */
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
+      style: 'currency',;
+      currency: 'USD',;
+      minimumFractionDigits: 0,;
     }).format(price);
   }
 
   /**
-   * Get a truncated description based on content density
+   * Get a truncated description based on content density;
    */
   getTruncatedDescription(): string {
     if (!this.ad.description) return '';
@@ -334,13 +329,13 @@ import { ButtonModule } from 'primeng/button';
     let maxLength = 120;
 
     switch (this.contentDensity) {
-      case 'comfortable':
+      case 'comfortable':;
         maxLength = 120;
         break;
-      case 'compact':
+      case 'compact':;
         maxLength = 80;
         break;
-      case 'condensed':
+      case 'condensed':;
         maxLength = 40;
         break;
     }
@@ -353,7 +348,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Get the time since the ad was created
+   * Get the time since the ad was created;
    */
   getTimeSince(): string {
     if (!this.ad.createdAt) return '';
@@ -367,26 +362,26 @@ import { ButtonModule } from 'primeng/button';
       const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
       if (diffHours === 0) {
         const diffMinutes = Math.floor(diffMs / (1000 * 60));
-        return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+        return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;`
       }
-      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;`
     }
 
     if (diffDays < 7) {
-      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;`
     }
 
     if (diffDays < 30) {
       const diffWeeks = Math.floor(diffDays / 7);
-      return `${diffWeeks} week${diffWeeks !== 1 ? 's' : ''} ago`;
+      return `${diffWeeks} week${diffWeeks !== 1 ? 's' : ''} ago`;`
     }
 
     const diffMonths = Math.floor(diffDays / 30);
-    return `${diffMonths} month${diffMonths !== 1 ? 's' : ''} ago`;
+    return `${diffMonths} month${diffMonths !== 1 ? 's' : ''} ago`;`
   }
 
   /**
-   * Handle view details click
+   * Handle view details click;
    */
   onViewDetails(): void {
     // Convert complex _id to string if needed
@@ -395,7 +390,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Handle like click
+   * Handle like click;
    */
   onLike(event: Event): void {
     event.stopPropagation();
@@ -405,7 +400,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Handle chat click
+   * Handle chat click;
    */
   onChat(event: Event): void {
     event.stopPropagation();
@@ -415,7 +410,7 @@ import { ButtonModule } from 'primeng/button';
   }
 
   /**
-   * Handle share click
+   * Handle share click;
    */
   onShare(event: Event): void {
     event.stopPropagation();

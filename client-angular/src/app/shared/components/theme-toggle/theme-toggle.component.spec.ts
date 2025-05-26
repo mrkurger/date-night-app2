@@ -4,20 +4,21 @@ import { ThemeToggleComponent } from './theme-toggle.component';
 import { ThemeService } from '../../../core/services/theme.service';
 import { of } from 'rxjs';
 
+';
 describe('ThemeToggleComponent', () => {
   let component: ThemeToggleComponent;
-  let fixture: ComponentFixture<ThemeToggleComponent>;
-  let themeServiceMock: jasmine.SpyObj<ThemeService>;
+  let fixture: ComponentFixture;
+  let themeServiceMock: jasmine.SpyObj;
 
   beforeEach(async () => {
     // Create mock service
     themeServiceMock = jasmine.createSpyObj('ThemeService', ['toggleTheme'], {
-      isDarkMode$: of(false),
+      isDarkMode$: of(false),;
     });
 
     await TestBed.configureTestingModule({
-      imports: [ThemeToggleComponent],
-      providers: [{ provide: ThemeService, useValue: themeServiceMock }],
+      imports: [ThemeToggleComponent],;
+      providers: [{ provide: ThemeService, useValue: themeServiceMock }],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(ThemeToggleComponent);

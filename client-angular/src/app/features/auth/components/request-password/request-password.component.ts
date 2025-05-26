@@ -9,21 +9,20 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 
-
-@Component({
-    selector: 'app-request-password',
-    templateUrl: './request-password.component.html',
-    styleUrls: ['./request-password.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    NebularModule, ReactiveFormsModule, RouterLink,
-    CardModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ]
-})
-export class RequestPasswordComponent {
+@Component({';
+    selector: 'app-request-password',;
+    templateUrl: './request-password.component.html',;
+    styleUrls: ['./request-password.component.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    NebularModule, ReactiveFormsModule, RouterLink,;
+    CardModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ];
+});
+export class RequestPasswordComponen {t {
   requestForm: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -31,7 +30,7 @@ export class RequestPasswordComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.requestForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],;
     });
   }
 
@@ -46,19 +45,19 @@ export class RequestPasswordComponent {
 
     const { email } = this.requestForm.value;
 
-    this.authService
-      .requestPassword(email)
-      .pipe(finalize(() => (this.isLoading = false)))
+    this.authService;
+      .requestPassword(email);
+      .pipe(finalize(() => (this.isLoading = false)));
       .subscribe({
         next: () => {
           this.successMessage = 'Password reset link has been sent to your email.';
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 3000);
-        },
+        },;
         error: (error) => {
           this.errorMessage = error.message || 'Failed to send password reset link.';
-        },
+        },;
       });
   }
 }

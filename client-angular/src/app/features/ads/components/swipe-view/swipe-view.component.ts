@@ -1,5 +1,9 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { AdService } from '../../../../core/services/ad.service';
+import { Ad } from '../../../../core/models/ad.interface';
+import { CommonModule } from '@angular/common';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,28 +13,25 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { AdService } from '../../../../core/services/ad.service';
-import { Ad } from '../../../../core/models/ad.interface';
-import { CommonModule } from '@angular/common';
 
-@Component({
-    selector: 'app-swipe-view',
-    imports: [CommonModule],
-    template: `
-    <div class="container mt-4">
-      <div *ngIf="currentAd" class="swipe-card">
-        <img [src]="currentAd.images[0]" alt="Ad Image" class="card-img-top" />
-        <div class="card-body">
-          <h5 class="card-title">{{ currentAd.title }}</h5>
-          <p class="card-text">{{ currentAd.description }}</p>
-          <button (click)="swipe('left')" class="btn btn-danger">Reject</button>
-          <button (click)="swipe('right')" class="btn btn-success">Accept</button>
-        </div>
-      </div>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-swipe-view',;
+    imports: [CommonModule],;
+    template: `;`
+    ;
+      ;
+        ;
+        ;
+          {{ currentAd.title }};
+          {{ currentAd.description }};
+          Reject;
+          Accept;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .swipe-card {
         /* Add styling for the swipeable card */
         border: 1px solid #ccc;
@@ -43,10 +44,10 @@ import { CommonModule } from '@angular/common';
         max-height: 200px;
         object-fit: cover;
       }
-    `,
-    ]
-})
-export class SwipeViewComponent implements OnInit {
+    `,;`
+    ];
+});
+export class SwipeViewComponen {t implements OnInit {
   ads: Ad[] = [];
   currentAd: Ad | null = null;
   index = 0;
@@ -62,8 +63,8 @@ export class SwipeViewComponent implements OnInit {
       next: (ads) => {
         this.ads = ads;
         this.showNextAd();
-      },
-      error: (err) => console.error('Error loading ads:', err),
+      },;
+      error: (err) => console.error('Error loading ads:', err),;
     });
   }
 
@@ -79,8 +80,8 @@ export class SwipeViewComponent implements OnInit {
   swipe(direction: 'left' | 'right'): void {
     if (this.currentAd) {
       this.adService.recordSwipe(this.currentAd._id, direction).subscribe({
-        next: () => this.showNextAd(),
-        error: (err) => console.error('Error recording swipe:', err),
+        next: () => this.showNextAd(),;
+        error: (err) => console.error('Error recording swipe:', err),;
       });
     }
   }

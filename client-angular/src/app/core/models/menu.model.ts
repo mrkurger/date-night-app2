@@ -4,3 +4,4 @@ export interface AppMenuItem extends NbMenuItem {
   id?: string;
   children?: AppMenuItem[];
 }
+';

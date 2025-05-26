@@ -1,33 +1,23 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
-@Component({
-    selector: 'nb-breadcrumbs',
-    template: `
-    <nav class="breadcrumbs" aria-label="breadcrumb">
-      <ol class="breadcrumb-list">
-        <li
-          *ngFor="let item of items; let last = last"
-          class="breadcrumb-item"
-          [class.active]="last"
-        >
-          <a
-            *ngIf="!last"
-            [routerLink]="item.link"
-            [queryParams]="item.queryParams"
-            [fragment]="item.fragment"
-            (click)="onItemClick(item)"
-          >
-            <nb-icon *ngIf="item.icon" [icon]="item.icon" [status]="item.iconStatus"></nb-icon>
-            <span class="breadcrumb-title">{{ item.title }}</span>
-          </a>
-          <span *ngIf="last" class="breadcrumb-title">{{ item.title }}</span>
-        </li>
-      </ol>
-    </nav>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'nb-breadcrumbs',;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            {{ item.title }};
+          ;
+          {{ item.title }};
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .breadcrumbs {
         padding: 1rem 0;
       }
@@ -78,13 +68,13 @@ import { NbMenuItem } from '@nebular/theme';
           line-height: 1;
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbBreadcrumbsComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbBreadcrumbsComponen {t {
   @Input() items: NbMenuItem[] = [];
-  @Output() itemClick = new EventEmitter<NbMenuItem>();
+  @Output() itemClick = new EventEmitter();
 
   onItemClick(item: NbMenuItem) {
     this.itemClick.emit(item);

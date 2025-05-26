@@ -1,9 +1,10 @@
 import { EventEmitter } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,33 +14,32 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'app-error-message',
-  standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],
-  template: `
-    <nb-card status="danger" class="error-container">
-      <nb-card-body>
-        <div class="error-content">
-          <nb-icon icon="alert-circle-outline" class="error-icon"></nb-icon>
-          <div class="error-text">
-            <h3 class="error-title">{{ title }}</h3>
-            <p class="error-message">{{ message }}</p>
-            <div class="error-actions" *ngIf="showRetry">
-              <button nbButton status="primary" size="small" (click)="onRetry.emit()">
-                <nb-icon icon="refresh-outline"></nb-icon>
-                Retry
-              </button>
-            </div>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-error-message',;
+  standalone: true,;
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbCardModule],;
+  template: `;`
+    ;
+      ;
+        ;
+          ;
+          ;
+            {{ title }};
+            {{ message }};
+            ;
+              ;
+                ;
+                Retry;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .error-container {
         margin: 1rem 0;
       }
@@ -66,12 +66,12 @@ import { CommonModule } from '@angular/common';
       .error-actions {
         margin-top: 0.5rem;
       }
-    `,
-  ],
-})
-export class ErrorMessageComponent {
+    `,;`
+  ],;
+});
+export class ErrorMessageComponen {t {
   @Input() title = 'Error';
   @Input() message = 'An error occurred. Please try again later.';
   @Input() showRetry = true;
-  @Output() onRetry = new EventEmitter<void>();
+  @Output() onRetry = new EventEmitter();
 }

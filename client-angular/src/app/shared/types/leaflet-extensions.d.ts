@@ -1,5 +1,6 @@
 import * as L from 'leaflet';
 
+';
 declare module 'leaflet' {
   interface MarkerClusterGroupOptions {
     chunkedLoading?: boolean;
@@ -45,7 +46,7 @@ declare module 'leaflet' {
       textPlaceholder?: string;
     }
 
-    class Search extends L.Control {
+    class Searc {h extends L.Control {
       constructor(options?: SearchOptions);
       setLayer(layer: L.LayerGroup): this;
       showAlert(text: string): this;

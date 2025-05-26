@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,110 +9,111 @@ import { Component } from '@angular/core';
 //   Related to: client-angular/src/environments/environment.ts
 // ===================================================
 
+import {
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import {
-  GeocodingService,
-  GeocodingResult,
-  EnhancedGeocodingResult,
-  ReverseGeocodingResult,
-} from './geocoding.service';
 import { LocationService } from './location.service';
 import { environment } from '../../../environments/environment';
 import { of, throwError } from 'rxjs';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+  GeocodingService,;
+  GeocodingResult,;
+  EnhancedGeocodingResult,;
+  ReverseGeocodingResult,';
+} from './geocoding.service';
 
 describe('GeocodingService', () => {
   let service: GeocodingService;
   let httpMock: HttpTestingController;
-  let locationServiceSpy: jasmine.SpyObj<LocationService>;
+  let locationServiceSpy: jasmine.SpyObj;
 
-  const apiUrl = `${environment.apiUrl}/geocoding`;
+  const apiUrl = `${environment.apiUrl}/geocoding`;`
   const nominatimUrl = 'https://nominatim.openstreetmap.org/search';
   const reverseNominatimUrl = 'https://nominatim.openstreetmap.org/reverse';
 
   // Mock data
   const mockCoordinates: [number, number] = [10.7522, 59.9139]; // Oslo coordinates
   const mockGeocodingResult: GeocodingResult = {
-    type: 'Point',
-    coordinates: mockCoordinates,
+    type: 'Point',;
+    coordinates: mockCoordinates,;
   };
 
-  const mockNominatimResponse = [
+  const mockNominatimResponse = [;
     {
-      place_id: 123456,
-      licence: 'Data © OpenStreetMap contributors, ODbL 1.0.',
-      osm_type: 'node',
-      osm_id: 123456789,
-      boundingbox: ['59.9', '59.95', '10.7', '10.8'],
-      lat: '59.9139',
-      lon: '10.7522',
-      display_name: 'Oslo, Norway',
-      class: 'place',
-      type: 'city',
-      importance: 0.7,
+      place_id: 123456,;
+      licence: 'Data © OpenStreetMap contributors, ODbL 1.0.',;
+      osm_type: 'node',;
+      osm_id: 123456789,;
+      boundingbox: ['59.9', '59.95', '10.7', '10.8'],;
+      lat: '59.9139',;
+      lon: '10.7522',;
+      display_name: 'Oslo, Norway',;
+      class: 'place',;
+      type: 'city',;
+      importance: 0.7,;
       icon: 'https://nominatim.openstreetmap.org/ui/mapicons/poi_place_city.p.20.png',
-    },
+    },;
   ];
 
   const mockReverseNominatimResponse = {
-    place_id: 123456,
-    licence: 'Data © OpenStreetMap contributors, ODbL 1.0.',
-    osm_type: 'node',
-    osm_id: 123456789,
-    lat: '59.9139',
-    lon: '10.7522',
-    display_name: 'Oslo, Oslo, Norway',
+    place_id: 123456,;
+    licence: 'Data © OpenStreetMap contributors, ODbL 1.0.',;
+    osm_type: 'node',;
+    osm_id: 123456789,;
+    lat: '59.9139',;
+    lon: '10.7522',;
+    display_name: 'Oslo, Oslo, Norway',;
     address: {
-      city: 'Oslo',
-      county: 'Oslo',
-      country: 'Norway',
-      country_code: 'no',
-    },
+      city: 'Oslo',;
+      county: 'Oslo',;
+      country: 'Norway',;
+      country_code: 'no',;
+    },;
   };
 
   const mockEnhancedGeocodingResult: EnhancedGeocodingResult = {
-    name: 'Oslo',
-    formattedAddress: 'Oslo, Norway',
-    latitude: 59.9139,
-    longitude: 10.7522,
-    country: 'Norway',
-    countryCode: 'NO',
-    city: 'Oslo',
-    provider: 'nominatim',
-    timestamp: Date.now(),
+    name: 'Oslo',;
+    formattedAddress: 'Oslo, Norway',;
+    latitude: 59.9139,;
+    longitude: 10.7522,;
+    country: 'Norway',;
+    countryCode: 'NO',;
+    city: 'Oslo',;
+    provider: 'nominatim',;
+    timestamp: Date.now(),;
   };
 
   const mockReverseGeocodingResult: ReverseGeocodingResult = {
-    formattedAddress: 'Oslo, Oslo, Norway',
-    latitude: 59.9139,
-    longitude: 10.7522,
+    formattedAddress: 'Oslo, Oslo, Norway',;
+    latitude: 59.9139,;
+    longitude: 10.7522,;
     components: {
-      city: 'Oslo',
-      state: 'Oslo',
-      country: 'Norway',
-      countryCode: 'no',
-    },
-    provider: 'nominatim',
-    timestamp: Date.now(),
+      city: 'Oslo',;
+      state: 'Oslo',;
+      country: 'Norway',;
+      countryCode: 'no',;
+    },;
+    provider: 'nominatim',;
+    timestamp: Date.now(),;
   };
 
   beforeEach(() => {
     // Create a spy for the LocationService
-    const locationSpy = jasmine.createSpyObj('LocationService', [
-      'getCityCoordinates',
-      'findNearestCity',
-      'getNorwegianCities',
+    const locationSpy = jasmine.createSpyObj('LocationService', [;
+      'getCityCoordinates',;
+      'findNearestCity',;
+      'getNorwegianCities',;
     ]);
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [GeocodingService, { provide: LocationService, useValue: locationSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [GeocodingService, { provide: LocationService, useValue: locationSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     service = TestBed.inject(GeocodingService);
     httpMock = TestBed.inject(HttpTestingController);
-    locationServiceSpy = TestBed.inject(LocationService) as jasmine.SpyObj<LocationService>;
+    locationServiceSpy = TestBed.inject(LocationService) as jasmine.SpyObj;
 
     // Clear any cached data
     (service as any).cache = new Map();
@@ -135,7 +135,7 @@ describe('GeocodingService', () => {
         expect(result).toEqual(mockGeocodingResult);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/forward?address=${encodeURIComponent(address)}`);
+      const req = httpMock.expectOne(`${apiUrl}/forward?address=${encodeURIComponent(address)}`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockGeocodingResult);
     });
@@ -148,8 +148,8 @@ describe('GeocodingService', () => {
       });
 
       // First, the backend API request fails
-      const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,
+      const backendReq = httpMock.expectOne(;
+        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,;`
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -168,8 +168,8 @@ describe('GeocodingService', () => {
       });
 
       // First, the backend API request fails
-      const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,
+      const backendReq = httpMock.expectOne(;
+        `${apiUrl}/forward?address=${encodeURIComponent(address)}`,;`
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -192,7 +192,7 @@ describe('GeocodingService', () => {
       });
 
       expect(locationServiceSpy.getCityCoordinates).toHaveBeenCalledWith(city);
-      httpMock.expectNone(`${apiUrl}/forward`);
+      httpMock.expectNone(`${apiUrl}/forward`);`
     });
 
     it('should use backend API if local database fails', () => {
@@ -200,8 +200,8 @@ describe('GeocodingService', () => {
       const county = 'Oslo';
       const country = 'Norway';
 
-      locationServiceSpy.getCityCoordinates.and.returnValue(
-        throwError(() => new Error('Not found')),
+      locationServiceSpy.getCityCoordinates.and.returnValue(;
+        throwError(() => new Error('Not found')),;
       );
 
       service.geocodeLocation(city, county, country).subscribe((result) => {
@@ -210,8 +210,8 @@ describe('GeocodingService', () => {
 
       expect(locationServiceSpy.getCityCoordinates).toHaveBeenCalledWith(city);
 
-      const req = httpMock.expectOne(
-        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,
+      const req = httpMock.expectOne(;
+        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockGeocodingResult);
@@ -222,8 +222,8 @@ describe('GeocodingService', () => {
       const county = 'Oslo';
       const country = 'Norway';
 
-      locationServiceSpy.getCityCoordinates.and.returnValue(
-        throwError(() => new Error('Not found')),
+      locationServiceSpy.getCityCoordinates.and.returnValue(;
+        throwError(() => new Error('Not found')),;
       );
 
       service.geocodeLocation(city, county, country).subscribe((result) => {
@@ -234,8 +234,8 @@ describe('GeocodingService', () => {
       expect(locationServiceSpy.getCityCoordinates).toHaveBeenCalledWith(city);
 
       // Then, the backend API request fails
-      const backendReq = httpMock.expectOne(
-        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,
+      const backendReq = httpMock.expectOne(;
+        `${apiUrl}/forward?city=${encodeURIComponent(city)}&county=${encodeURIComponent(county)}&country=${encodeURIComponent(country)}`,;`
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -250,18 +250,18 @@ describe('GeocodingService', () => {
     it('should reverse geocode coordinates using the backend API', () => {
       const [longitude, latitude] = mockCoordinates;
       const mockResponse = {
-        city: 'Oslo',
-        county: 'Oslo',
-        country: 'Norway',
-        address: 'Oslo, Oslo, Norway',
+        city: 'Oslo',;
+        county: 'Oslo',;
+        country: 'Norway',;
+        address: 'Oslo, Oslo, Norway',;
       };
 
       service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
+      const req = httpMock.expectOne(;
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -270,25 +270,25 @@ describe('GeocodingService', () => {
     it('should fall back to local database if backend API fails', () => {
       const [longitude, latitude] = mockCoordinates;
       const mockCityResult = {
-        city: 'Oslo',
-        county: 'Oslo',
-        distance: 0.5,
+        city: 'Oslo',;
+        county: 'Oslo',;
+        distance: 0.5,;
       };
 
       locationServiceSpy.findNearestCity.and.returnValue(of(mockCityResult));
 
       service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual({
-          city: 'Oslo',
-          county: 'Oslo',
-          country: 'Norway',
-          address: 'Oslo, Oslo, Norway',
+          city: 'Oslo',;
+          county: 'Oslo',;
+          country: 'Norway',;
+          address: 'Oslo, Oslo, Norway',;
         });
       });
 
       // First, the backend API request fails
-      const backendReq = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
+      const backendReq = httpMock.expectOne(;
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,;`
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -303,16 +303,16 @@ describe('GeocodingService', () => {
 
       service.reverseGeocode(longitude, latitude).subscribe((result) => {
         expect(result).toEqual({
-          city: 'Oslo',
-          county: 'Oslo',
-          country: 'Norway',
-          address: 'Oslo, Oslo, Norway',
+          city: 'Oslo',;
+          county: 'Oslo',;
+          country: 'Norway',;
+          address: 'Oslo, Oslo, Norway',;
         });
       });
 
       // First, the backend API request fails
-      const backendReq = httpMock.expectOne(
-        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,
+      const backendReq = httpMock.expectOne(;
+        `${apiUrl}/reverse?longitude=${longitude}&latitude=${latitude}`,;`
       );
       backendReq.error(new ErrorEvent('Network error'));
 
@@ -331,7 +331,7 @@ describe('GeocodingService', () => {
       const address = 'Oslo, Norway';
 
       // Add a result to the cache
-      (service as any).addToCache(`enhanced:${address}`, mockEnhancedGeocodingResult);
+      (service as any).addToCache(`enhanced:${address}`, mockEnhancedGeocodingResult);`
 
       service.enhancedGeocode(address).subscribe((result) => {
         expect(result).toEqual(mockEnhancedGeocodingResult);
@@ -362,9 +362,9 @@ describe('GeocodingService', () => {
       const [longitude, latitude] = mockCoordinates;
 
       // Add a result to the cache
-      (service as any).addToCache(
-        `enhanced-reverse:${latitude},${longitude}`,
-        mockReverseGeocodingResult,
+      (service as any).addToCache(;
+        `enhanced-reverse:${latitude},${longitude}`,;`
+        mockReverseGeocodingResult,;
       );
 
       service.enhancedReverseGeocode(latitude, longitude).subscribe((result) => {
@@ -423,7 +423,7 @@ describe('GeocodingService', () => {
       const mockPlaces = [mockEnhancedGeocodingResult];
 
       // Add results to the cache
-      (service as any).addToCache(`nearby:${latitude},${longitude},${radius},`, mockPlaces);
+      (service as any).addToCache(`nearby:${latitude},${longitude},${radius},`, mockPlaces);`
 
       service.getNearbyPlaces(latitude, longitude, radius).subscribe((results) => {
         expect(results).toEqual(mockPlaces);
@@ -454,11 +454,11 @@ describe('GeocodingService', () => {
 
       service.getNearbyPlaces(latitude, longitude, radius, type).subscribe();
 
-      const req = httpMock.expectOne(
-        (req) =>
-          req.url.startsWith(nominatimUrl) &&
-          req.params.has('amenity') &&
-          req.params.get('amenity') === type,
+      const req = httpMock.expectOne(;
+        (req) =>;
+          req.url.startsWith(nominatimUrl) &&;
+          req.params.has('amenity') &&;
+          req.params.get('amenity') === type,;
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockNominatimResponse);

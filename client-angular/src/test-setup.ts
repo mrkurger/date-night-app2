@@ -13,3 +13,4 @@ declare global {
   const afterEach: Function;
   function fail(error?: Error | string): void;
 }
+';

@@ -1,3 +1,10 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { MediaService } from './media.service';
+import { environment } from '../../../environments/environment';
+import { CachingService } from './caching.service';
+import { of } from 'rxjs';
+import { HttpResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,27 +14,21 @@
 // - MOCK_MEDIA: Mock media data for testing
 //   Related to: client-angular/src/app/core/models/media.interface.ts
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { MediaService } from './media.service';
-import { environment } from '../../../environments/environment';
-import { CachingService } from './caching.service';
-import { of } from 'rxjs';
-import { HttpResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+';
 describe('MediaService', () => {
   let service: MediaService;
   let httpMock: HttpTestingController;
-  let cachingServiceSpy: jasmine.SpyObj<CachingService>;
+  let cachingServiceSpy: jasmine.SpyObj;
 
-  const apiUrl = `${environment.apiUrl}/api/v1/ads`;
+  const apiUrl = `${environment.apiUrl}/api/v1/ads`;`
   const mockAdId = '123';
   const mockMediaId = '456';
   const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
   const mockResponse = { id: mockMediaId, url: 'test-url' };
-  const mockAdMedia = [
-    { id: '1', url: 'url1' },
-    { id: '2', url: 'url2' },
+  const mockAdMedia = [;
+    { id: '1', url: 'url1' },;
+    { id: '2', url: 'url2' },;
   ];
   const mockPendingMedia = [{ id: '3', status: 'pending' }];
   const errorResponse = { status: 400, statusText: 'Bad Request' };
@@ -37,13 +38,13 @@ describe('MediaService', () => {
     spy.get.and.returnValue(of(null));
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [MediaService, { provide: CachingService, useValue: spy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [MediaService, { provide: CachingService, useValue: spy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     service = TestBed.inject(MediaService);
     httpMock = TestBed.inject(HttpTestingController);
-    cachingServiceSpy = TestBed.inject(CachingService) as jasmine.SpyObj<CachingService>;
+    cachingServiceSpy = TestBed.inject(CachingService) as jasmine.SpyObj;
   });
 
   afterEach(() => {
@@ -63,8 +64,8 @@ describe('MediaService', () => {
 
       // Create a proper HttpResponse object
       const mockEvent = new HttpResponse({
-        body: mockResponse,
-        status: 200,
+        body: mockResponse,;
+        status: 200,;
       });
 
       let receivedResponse: any = null;
@@ -75,7 +76,7 @@ describe('MediaService', () => {
         }
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);`
       expect(req.request.method).toBe('POST');
 
       // Verify FormData contains the file
@@ -83,8 +84,8 @@ describe('MediaService', () => {
 
       // Flush with the HttpResponse object
       req.flush(mockResponse, {
-        status: 200,
-        statusText: 'OK',
+        status: 200,;
+        statusText: 'OK',;
       });
 
       // Verify we received the response
@@ -100,7 +101,7 @@ describe('MediaService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}`);`
       expect(req.request.method).toBe('DELETE');
       req.flush(null);
     });
@@ -112,7 +113,7 @@ describe('MediaService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}/featured`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/media/${mockMediaId}/featured`);`
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual({});
       req.flush(null);
@@ -125,7 +126,7 @@ describe('MediaService', () => {
         expect(media).toEqual(mockAdMedia);
       });
 
-      expect(cachingServiceSpy.get).toHaveBeenCalledWith(`${apiUrl}/${mockAdId}/media`);
+      expect(cachingServiceSpy.get).toHaveBeenCalledWith(`${apiUrl}/${mockAdId}/media`);`
     });
   });
 
@@ -135,7 +136,7 @@ describe('MediaService', () => {
         expect(media).toEqual(mockPendingMedia);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/pending`);
+      const req = httpMock.expectOne(`${apiUrl}/pending`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockPendingMedia);
     });
@@ -150,7 +151,7 @@ describe('MediaService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ status, notes });
       req.flush(null);
@@ -166,7 +167,7 @@ describe('MediaService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ status, notes });
       req.flush(null);
@@ -181,7 +182,7 @@ describe('MediaService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ status, notes: '' });
       req.flush(null);
@@ -199,14 +200,14 @@ describe('MediaService', () => {
 
       // Subscribe to the service method with proper error handling
       service.uploadMedia(mockAdId, mockFile).subscribe({
-        next: () => {},
+        next: () => {},;
         error: (error) => {
           errorSpy(error);
-        },
+        },;
       });
 
       // Get the request and simulate an error response
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/upload`);`
       expect(req.request.method).toBe('POST');
 
       // Use error instead of flush to simulate an HTTP error response
@@ -225,13 +226,13 @@ describe('MediaService', () => {
       const errorSpy = jasmine.createSpy('error');
 
       service.getPendingModerationMedia().subscribe({
-        next: () => fail('should have failed with a 403 error'),
+        next: () => fail('should have failed with a 403 error'),;
         error: (error) => {
           errorSpy(error);
-        },
+        },;
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/pending`);
+      const req = httpMock.expectOne(`${apiUrl}/pending`);`
       req.error(new ErrorEvent('Forbidden'), errorResponse);
 
       expect(errorSpy).toHaveBeenCalled();
@@ -244,13 +245,13 @@ describe('MediaService', () => {
       const errorSpy = jasmine.createSpy('error');
 
       service.moderateMedia(mockAdId, mockMediaId, 'approved', 'notes').subscribe({
-        next: () => fail('should have failed with a 400 error'),
+        next: () => fail('should have failed with a 400 error'),;
         error: (error) => {
           errorSpy(error);
-        },
+        },;
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);
+      const req = httpMock.expectOne(`${apiUrl}/${mockAdId}/moderate/${mockMediaId}`);`
       req.error(new ErrorEvent('Bad Request'), errorResponse);
 
       expect(errorSpy).toHaveBeenCalled();

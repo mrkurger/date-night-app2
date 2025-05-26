@@ -1,7 +1,3 @@
-import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
-import { NebularModule } from '../../nebular.module';
-
-import { Component, Inject, OnInit, Optional } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,13 +7,17 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
+
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-  FormControl,
+import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
+import { NebularModule } from '../../nebular.module';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { CommonModule } from '@angular/common';
+  FormBuilder,;
+  FormGroup,;
+  ReactiveFormsModule,;
+  Validators,;
+  FormControl,';
 } from '@angular/forms';
 
 export interface ReportDialogData {
@@ -31,81 +31,59 @@ export interface ReportDialogData {
 }
 
 @Component({
-  selector: 'app-report-dialog',
-  imports: [CommonModule, ReactiveFormsModule, NebularModule],
-  template: `
-    <nb-card class="report-dialog">
-      <nb-card-header class="dialog-header">
-        <h2>{{ data?.title || 'Report Issue' }}</h2>
-        <button nbButton ghost (click)="onClose()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-card-header>
-      <nb-card-body>
-        <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-          <nb-form-field class="full-width">
-            <label class="label" for="reason">Reason for report *</label>
-            <nb-select formControlName="reason" placeholder="Select a reason" fullWidth id="reason">
-              <nb-option value="inappropriate">Inappropriate content</nb-option>
-              <nb-option value="spam">Spam</nb-option>
-              <nb-option value="fake">Fake profile</nb-option>
-              <nb-option value="offensive">Offensive behavior</nb-option>
-              <nb-option value="scam">Scam attempt</nb-option>
-              <nb-option value="other">Other</nb-option>
-            </nb-select>
-            <p
-              class="caption status-danger"
-              *ngIf="reportForm.get('reason')?.invalid && reportForm.get('reason')?.touched"
-            >
-              Please select a reason.
-            </p>
-          </nb-form-field>
+  selector: 'app-report-dialog',;
+  imports: [CommonModule, ReactiveFormsModule, NebularModule],;
+  template: `;`
+    ;
+      ;
+        {{ data?.title || 'Report Issue' }};
+        ;
+          ;
+        ;
+      ;
+      ;
+        ;
+          ;
+            Reason for report *;
+            ;
+              Inappropriate content;
+              Spam;
+              Fake profile;
+              Offensive behavior;
+              Scam attempt;
+              Other;
+            ;
+            ;
+              Please select a reason.;
+            ;
+          ;
 
-          <nb-form-field class="full-width">
-            <label class="label" for="details">Details *</label>
-            <textarea
-              nbInput
-              formControlName="details"
-              placeholder="Please provide specific details..."
-              rows="5"
-              fullWidth
-              id="details"
-            ></textarea>
-            <div class="text-right" *ngIf="reportForm.get('details')?.value">
-              {{ reportForm.get('details')?.value?.length || 0 }}/500
-            </div>
-            <p
-              class="caption status-danger"
-              *ngIf="reportForm.get('details')?.errors?.['required'] && reportForm.get('details')?.touched"
-            >
-              Details are required.
-            </p>
-            <p
-              class="caption status-danger"
-              *ngIf="reportForm.get('details')?.errors?.['maxlength'] && reportForm.get('details')?.touched"
-            >
-              Details cannot exceed 500 characters.
-            </p>
-          </nb-form-field>
+          ;
+            Details *;
+            ;
+            ;
+              {{ reportForm.get('details')?.value?.length || 0 }}/500;
+            ;
+            ;
+              Details are required.;
+            ;
+            ;
+              Details cannot exceed 500 characters.;
+            ;
+          ;
 
-          <div class="form-actions">
-            <button nbButton type="button" status="basic" (click)="onClose()">Cancel</button>
-            <button
-              nbButton
-              type="submit"
-              status="danger"
-              [disabled]="reportForm.invalid || submitted"
-              [class.btn-loading]="submitted"
-            >
-              Submit Report
-            </button>
-          </div>
-        </form>
-      </nb-card-body>
-    </nb-card>
-  `,
-  styles: [
-    `
+          ;
+            Cancel;
+            ;
+              Submit Report;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .report-dialog {
         max-width: 600px;
         min-width: 400px;
@@ -139,31 +117,31 @@ export interface ReportDialogData {
       .btn-loading {
         cursor: wait;
       }
-    `,
-  ],
-})
-export class ReportDialogComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class ReportDialogComponen {t implements OnInit {
   reportForm!: FormGroup;
   submitted = false;
   data: ReportDialogData;
 
-  constructor(
-    protected dialogRef: NbDialogRef<ReportDialogComponent>,
-    private fb: FormBuilder,
-    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ReportDialogData,
+  constructor(;
+    protected dialogRef: NbDialogRef,;
+    private fb: FormBuilder,;
+    @Optional() @Inject(NB_DIALOG_CONFIG) private injectedData?: ReportDialogData,;
   ) {
     this.data = this.injectedData || {};
   }
 
   ngOnInit(): void {
     this.reportForm = this.fb.group({
-      reason: ['', Validators.required],
-      details: ['', [Validators.required, Validators.maxLength(500)]],
-      userId: [this.data?.userId],
-      advertiserId: [this.data?.advertiserId],
-      adId: [this.data?.adId],
-      type: [this.data?.type],
-      contentId: [this.data?.contentId],
+      reason: ['', Validators.required],;
+      details: ['', [Validators.required, Validators.maxLength(500)]],;
+      userId: [this.data?.userId],;
+      advertiserId: [this.data?.advertiserId],;
+      adId: [this.data?.adId],;
+      type: [this.data?.type],;
+      contentId: [this.data?.contentId],;
     });
   }
 
@@ -177,8 +155,8 @@ export class ReportDialogComponent implements OnInit {
     }
 
     const reportData = {
-      ...this.data,
-      ...this.reportForm.value,
+      ...this.data,;
+      ...this.reportForm.value,;
     };
 
     console.log('Submitting report:', reportData);

@@ -7,25 +7,27 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Injectable } from '@angular/core';
+
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-  HttpResponse,
-} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError, timer } from 'rxjs';
 import { retryWhen, concatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { TelemetryService } from '../services/telemetry.service';
 import { AuthService } from '../services/auth.service';
+  HttpRequest,;
+  HttpHandler,;
+  HttpEvent,;
+  HttpInterceptor,;
+  HttpErrorResponse,;
+  HttpResponse,';
+} from '@angular/common/http';
+
 // import { Dictionary, ApiResponse } from '../../shared/types/common.types'; // Unused imports
 
 /**
- * Configuration options for the HTTP error interceptor
+ * Configuration options for the HTTP error interceptor;
  */
 export interface HttpErrorInterceptorConfig {
   /** Whether to show notifications for errors */
@@ -57,67 +59,67 @@ export interface HttpErrorInterceptorConfig {
 }
 
 /**
- * Default configuration for the HTTP error interceptor
+ * Default configuration for the HTTP error interceptor;
  */
 const DEFAULT_CONFIG: HttpErrorInterceptorConfig = {
-  showNotifications: true,
-  retryFailedRequests: true,
-  maxRetryAttempts: 3,
-  retryDelay: 1000,
-  redirectToLogin: true,
-  logErrors: true,
-  includeRequestDetails: true,
-  trackErrors: true,
-  trackPerformance: true,
-  groupSimilarErrors: true,
-  retryJitter: 300,
-  sanitizeSensitiveData: true,
-  skipUrls: ['/api/health', '/api/metrics', '/api/telemetry'],
+  showNotifications: true,;
+  retryFailedRequests: true,;
+  maxRetryAttempts: 3,;
+  retryDelay: 1000,;
+  redirectToLogin: true,;
+  logErrors: true,;
+  includeRequestDetails: true,;
+  trackErrors: true,;
+  trackPerformance: true,;
+  groupSimilarErrors: true,;
+  retryJitter: 300,;
+  sanitizeSensitiveData: true,';
+  skipUrls: ['/api/health', '/api/metrics', '/api/telemetry'],;
 };
 
 /**
- * Error categories for better error handling
+ * Error categories for better error handling;
  */
 export enum ErrorCategory {
-  NETWORK = 'network',
-  AUTHENTICATION = 'authentication',
-  AUTHORIZATION = 'authorization',
-  VALIDATION = 'validation',
-  SERVER = 'server',
-  CLIENT = 'client',
-  TIMEOUT = 'timeout',
-  RATE_LIMIT = 'rate_limit',
-  NOT_FOUND = 'not_found',
-  CONFLICT = 'conflict',
-  UNKNOWN = 'unknown',
+  NETWORK = 'network',;
+  AUTHENTICATION = 'authentication',;
+  AUTHORIZATION = 'authorization',;
+  VALIDATION = 'validation',;
+  SERVER = 'server',;
+  CLIENT = 'client',;
+  TIMEOUT = 'timeout',;
+  RATE_LIMIT = 'rate_limit',;
+  NOT_FOUND = 'not_found',;
+  CONFLICT = 'conflict',;
+  UNKNOWN = 'unknown',;
 }
 
 /**
- * HTTP interceptor that handles error responses
- * - Retries failed requests with exponential backoff and jitter
- * - Shows user-friendly error notifications
- * - Redirects to login page on authentication errors
- * - Logs detailed error information
- * - Tracks errors and performance metrics with telemetry
- * - Sanitizes sensitive information
- * - Categorizes errors for better handling
+ * HTTP interceptor that handles error responses;
+ * - Retries failed requests with exponential backoff and jitter;
+ * - Shows user-friendly error notifications;
+ * - Redirects to login page on authentication errors;
+ * - Logs detailed error information;
+ * - Tracks errors and performance metrics with telemetry;
+ * - Sanitizes sensitive information;
+ * - Categorizes errors for better handling;
  */
-@Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
+@Injectable();
+export class HttpErrorIntercepto {r implements HttpInterceptor {
   private config: HttpErrorInterceptorConfig;
-  private requestTimings: Map<string, { startTime: number; url: string; method: string }> =
+  private requestTimings: Map =;
     new Map();
 
   // Track recent errors to avoid showing duplicates
-  private recentErrors: Map<string, { count: number; timestamp: number }> = new Map();
+  private recentErrors: Map = new Map();
   // Error notification cooldown period (ms)
   private readonly ERROR_COOLDOWN = 5000;
 
-  constructor(
-    private router: Router,
-    private notificationService: NotificationService,
-    private telemetryService: TelemetryService,
-    private authService: AuthService,
+  constructor(;
+    private router: Router,;
+    private notificationService: NotificationService,;
+    private telemetryService: TelemetryService,;
+    private authService: AuthService,;
   ) {
     this.config = DEFAULT_CONFIG;
 
@@ -126,20 +128,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Configure the interceptor
-   * @param config Configuration options
+   * Configure the interceptor;
+   * @param config Configuration options;
    */
-  configure(config: Partial<HttpErrorInterceptorConfig>): void {
+  configure(config: Partial): void {
     this.config = { ...DEFAULT_CONFIG, ...config };
   }
 
   /**
-   * Intercept HTTP requests and handle errors
-   * @param request The outgoing request
-   * @param next The next handler
-   * @returns An observable of the HTTP event
+   * Intercept HTTP requests and handle errors;
+   * @param request The outgoing request;
+   * @param next The next handler;
+   * @returns An observable of the HTTP event;
    */
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest, next: HttpHandler): Observable> {
     // Temporarily disable error handling to fix compatibility issues
     return next.handle(request);
 
@@ -155,9 +157,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     // Track request start time for performance monitoring
     if (this.config.trackPerformance) {
       this.requestTimings.set(requestId, {
-        startTime: performance.now(),
-        url: request.url,
-        method: request.method
+        startTime: performance.now(),;
+        url: request.url,;
+        method: request.method;
       });
     }
     */
@@ -189,12 +191,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         // Return the error for further handling
         return throwError(() => ({
-          error,
-          message: errorDetails.userMessage,
-          details: errorDetails,
-          category: errorCategory
+          error,;
+          message: errorDetails.userMessage,;
+          details: errorDetails,;
+          category: errorCategory;
         }));
-      }),
+      }),;
 
       // Finalize the request
       finalize(() => {
@@ -202,27 +204,27 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (this.config.trackPerformance) {
           this.requestTimings.delete(requestId);
         }
-      })
+      });
     );
     */
   }
 
   /**
-   * Creates a retry operator with exponential backoff and jitter
-   * @param request The original HTTP request
+   * Creates a retry operator with exponential backoff and jitter;
+   * @param request The original HTTP request;
    * @returns A function that applies retry logic to an observable
    */
-  private retryWithBackoff(request: HttpRequest<never>) {
+  private retryWithBackoff(request: HttpRequest) {
     // Return a function that takes an observable and returns a new observable with the same type
     // Using generic type parameter to ensure type compatibility across different RxJS versions
-    return <T>(source: Observable<T>): Observable<T> => {
+    return (source: Observable): Observable => {
       if (!this.config.retryFailedRequests) {
         return source;
       }
 
-      return source.pipe(
-        retryWhen((errors) =>
-          errors.pipe(
+      return source.pipe(;
+        retryWhen((errors) =>;
+          errors.pipe(;
             concatMap((error, index) => {
               const attemptNumber = index + 1;
 
@@ -237,53 +239,53 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               const totalDelay = backoffDelay + jitter;
 
               if (this.config.logErrors) {
-                console.warn(
-                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`,
+                console.warn(;
+                  `Retrying request to ${request.url} (${attemptNumber}/${this.config.maxRetryAttempts}) after ${totalDelay}ms`,;`
                 );
               }
 
               // Track retry attempt in telemetry
               if (this.config.trackErrors) {
-                this.telemetryService
+                this.telemetryService;
                   .trackError({
-                    errorCode: 'retry_attempt',
-                    statusCode: error.status,
-                    message: 'Retrying request',
-                    name: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,
-                    url: request.url,
-                    category: ErrorCategory.NETWORK,
+                    errorCode: 'retry_attempt',;
+                    statusCode: error.status,;
+                    message: 'Retrying request',;
+                    name: `Retry attempt ${attemptNumber} for ${request.method} ${request.url}`,;`
+                    url: request.url,;
+                    category: ErrorCategory.NETWORK,;
                     metadata: {
-                      attemptNumber,
-                      delay: totalDelay,
-                      maxAttempts: this.config.maxRetryAttempts,
-                      method: request.method,
-                    },
-                  })
+                      attemptNumber,;
+                      delay: totalDelay,;
+                      maxAttempts: this.config.maxRetryAttempts,;
+                      method: request.method,;
+                    },;
+                  });
                   .subscribe();
               }
 
               return timer(totalDelay);
-            }),
-          ),
-        ),
+            }),;
+          ),;
+        ),;
       );
     };
   }
 
   /**
-   * Generate a unique request ID
-   * @returns A unique request ID
+   * Generate a unique request ID;
+   * @returns A unique request ID;
    */
   private generateRequestId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
   }
 
   /**
-   * Track request performance metrics
-   * @param requestId The unique request ID
-   * @param response The HTTP response
+   * Track request performance metrics;
+   * @param requestId The unique request ID;
+   * @param response The HTTP response;
    */
-  private trackRequestPerformance(requestId: string, response: HttpResponse<any>): void {
+  private trackRequestPerformance(requestId: string, response: HttpResponse): void {
     const timing = this.requestTimings.get(requestId);
     if (!timing) return;
 
@@ -302,19 +304,19 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }
     }
 
-    this.telemetryService
+    this.telemetryService;
       .trackPerformance({
-        url: timing.url,
-        method: timing.method,
-        duration,
-        responseSize,
+        url: timing.url,;
+        method: timing.method,;
+        duration,;
+        responseSize,;
         context: {
-          status: response.status,
-          statusText: response.statusText,
-          contentType: response.headers.get('content-type') || undefined,
-          contentLength: response.headers.get('content-length') || undefined,
-        },
-      })
+          status: response.status,;
+          statusText: response.statusText,;
+          contentType: response.headers.get('content-type') || undefined,;
+          contentLength: response.headers.get('content-length') || undefined,;
+        },;
+      });
       .subscribe();
 
     // Remove the timing data
@@ -322,11 +324,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Track error with telemetry service
-   * @param errorDetails The error details
-   * @param request The original request
+   * Track error with telemetry service;
+   * @param errorDetails The error details;
+   * @param request The original request;
    */
-  private trackError(errorDetails: any, request: HttpRequest<any>): void {
+  private trackError(errorDetails: any, request: HttpRequest): void {
     // Sanitize URL before tracking
     const sanitizedUrl = this.sanitizeUrl(request.url);
     if (!sanitizedUrl) {
@@ -334,46 +336,46 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       return;
     }
 
-    this.telemetryService
+    this.telemetryService;
       .trackError({
-        type: 'error',
-        message: errorDetails.userMessage || 'Unknown error',
-        name: errorDetails.errorCode || 'unknown_error',
-        category: errorDetails.category || ErrorCategory.UNKNOWN,
-        statusCode: errorDetails.status,
-        stackTrace: errorDetails.technicalMessage,
-        url: sanitizedUrl,
+        type: 'error',;
+        message: errorDetails.userMessage || 'Unknown error',;
+        name: errorDetails.errorCode || 'unknown_error',;
+        category: errorDetails.category || ErrorCategory.UNKNOWN,;
+        statusCode: errorDetails.status,;
+        stackTrace: errorDetails.technicalMessage,;
+        url: sanitizedUrl,;
         metadata: {
-          requestDetails: this.config.includeRequestDetails
+          requestDetails: this.config.includeRequestDetails;
             ? {
-                headers: this.getHeadersMap(
-                  request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
-                ),
-                body: this.config.sanitizeSensitiveData
-                  ? this.sanitizeRequestBody(request.body)
-                  : request.body,
-                queryParams: request.params
-                  .keys()
-                  .reduce((params: Record<string, string>, key: string) => {
+                headers: this.getHeadersMap(;
+                  request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),;
+                ),;
+                body: this.config.sanitizeSensitiveData;
+                  ? this.sanitizeRequestBody(request.body);
+                  : request.body,;
+                queryParams: request.params;
+                  .keys();
+                  .reduce((params: Record, key: string) => {
                     params[key] = request.params.get(key) || '';
                     return params;
-                  }, {}),
+                  }, {}),;
               }
-            : undefined,
-          response: errorDetails.response,
-          browser: navigator.userAgent,
-          viewportSize: `${window.innerWidth}x${window.innerHeight}`,
-          currentUrl: window.location.href,
-          method: request.method,
-        },
-      })
+            : undefined,;
+          response: errorDetails.response,;
+          browser: navigator.userAgent,;
+          viewportSize: `${window.innerWidth}x${window.innerHeight}`,;`
+          currentUrl: window.location.href,;
+          method: request.method,;
+        },;
+      });
       .subscribe();
   }
 
   /**
-   * Determine if an error is retryable
-   * @param error The HTTP error
-   * @returns Whether the error is retryable
+   * Determine if an error is retryable;
+   * @param error The HTTP error;
+   * @returns Whether the error is retryable;
    */
   private isRetryable(error: HttpErrorResponse): boolean {
     // Don't retry client-side errors
@@ -406,9 +408,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Calculate retry delay with exponential backoff
-   * @param attempt The retry attempt number
-   * @returns The delay in milliseconds
+   * Calculate retry delay with exponential backoff;
+   * @param attempt The retry attempt number;
+   * @returns The delay in milliseconds;
    */
   private getRetryDelay(attempt: number): number {
     // Exponential backoff: baseDelay * 2^(attempt-1)
@@ -416,9 +418,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Categorize an error for better handling
-   * @param error The HTTP error
-   * @returns The error category
+   * Categorize an error for better handling;
+   * @param error The HTTP error;
+   * @returns The error category;
    */
   private categorizeError(error: HttpErrorResponse): ErrorCategory {
     if (error.error instanceof ErrorEvent) {
@@ -426,39 +428,39 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }
 
     switch (error.status) {
-      case 0:
+      case 0:;
         return ErrorCategory.NETWORK;
-      case 401:
+      case 401:;
         return ErrorCategory.AUTHENTICATION;
-      case 403:
+      case 403:;
         return ErrorCategory.AUTHORIZATION;
-      case 404:
+      case 404:;
         return ErrorCategory.NOT_FOUND;
-      case 408:
+      case 408:;
         return ErrorCategory.TIMEOUT;
-      case 409:
+      case 409:;
         return ErrorCategory.CONFLICT;
-      case 422:
+      case 422:;
         return ErrorCategory.VALIDATION;
-      case 429:
+      case 429:;
         return ErrorCategory.RATE_LIMIT;
-      case 500:
-      case 502:
-      case 503:
-      case 504:
+      case 500:;
+      case 502:;
+      case 503:;
+      case 504:;
         return ErrorCategory.SERVER;
-      default:
+      default:;
         return ErrorCategory.UNKNOWN;
     }
   }
 
   /**
-   * Get detailed error information
-   * @param error The HTTP error
-   * @param request The original request
-   * @returns Detailed error information
+   * Get detailed error information;
+   * @param error The HTTP error;
+   * @param request The original request;
+   * @returns Detailed error information;
    */
-  private getErrorDetails(error: HttpErrorResponse, request: HttpRequest<any>): any {
+  private getErrorDetails(error: HttpErrorResponse, request: HttpRequest): any {
     let errorCode = 'unknown_error';
     let userMessage = 'An unknown error occurred';
     let technicalMessage = error.message || 'Unknown error';
@@ -471,106 +473,106 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else {
       // Server-side error
       switch (error.status) {
-        case 0:
+        case 0:;
           errorCode = 'network_error';
           userMessage = 'Unable to connect to the server';
           technicalMessage = 'Network error or CORS issue';
           break;
-        case 400:
+        case 400:;
           errorCode = 'bad_request';
           userMessage = 'The request was invalid';
           technicalMessage = error.error?.message || 'Bad Request';
           break;
-        case 401:
+        case 401:;
           errorCode = 'unauthorized';
           userMessage = 'Please log in to continue';
           technicalMessage = 'Authentication required';
           break;
-        case 403:
+        case 403:;
           errorCode = 'forbidden';
           userMessage = 'You do not have permission to access this resource';
           technicalMessage = 'Access forbidden';
           break;
-        case 404:
+        case 404:;
           errorCode = 'not_found';
           userMessage = 'The requested resource was not found';
           technicalMessage = 'Resource not found';
           break;
-        case 408:
+        case 408:;
           errorCode = 'timeout';
           userMessage = 'The request timed out';
           technicalMessage = 'Request timeout';
           break;
-        case 409:
+        case 409:;
           errorCode = 'conflict';
           userMessage = 'The request could not be completed due to a conflict';
           technicalMessage = error.error?.message || 'Resource conflict';
           break;
-        case 422:
+        case 422:;
           errorCode = 'validation_error';
-          userMessage =
+          userMessage =;
             this.getValidationErrorMessage(error.error) || 'The submitted data is invalid';
           technicalMessage = error.error?.message || 'Validation failed';
           break;
-        case 429:
+        case 429:;
           errorCode = 'too_many_requests';
           userMessage = 'Too many requests, please try again later';
           technicalMessage = 'Rate limit exceeded';
           break;
-        case 500:
+        case 500:;
           errorCode = 'server_error';
           userMessage = 'Something went wrong on our end';
           technicalMessage = error.error?.message || 'Internal server error';
           break;
-        case 502:
+        case 502:;
           errorCode = 'bad_gateway';
           userMessage = 'Service temporarily unavailable';
           technicalMessage = 'Bad gateway';
           break;
-        case 503:
+        case 503:;
           errorCode = 'service_unavailable';
           userMessage = 'Service temporarily unavailable';
           technicalMessage = 'Service unavailable';
           break;
-        case 504:
+        case 504:;
           errorCode = 'gateway_timeout';
           userMessage = 'Service temporarily unavailable';
           technicalMessage = 'Gateway timeout';
           break;
-        default:
-          errorCode = `http_${error.status}`;
-          userMessage = `Error ${error.status}: ${error.statusText}`;
+        default:;
+          errorCode = `http_${error.status}`;`
+          userMessage = `Error ${error.status}: ${error.statusText}`;`
           technicalMessage = error.error?.message || error.statusText;
       }
     }
 
     const details: any = {
-      errorCode,
-      userMessage,
-      technicalMessage,
-      timestamp: new Date().toISOString(),
-      status: error.status,
-      statusText: error.statusText,
+      errorCode,;
+      userMessage,;
+      technicalMessage,;
+      timestamp: new Date().toISOString(),;
+      status: error.status,;
+      statusText: error.statusText,;
     };
 
     // Include request details if configured
     if (this.config.includeRequestDetails) {
       details.request = {
-        url: request.url,
-        method: request.method,
-        headers: this.getHeadersMap(
-          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),
-        ),
-        body: this.config.sanitizeSensitiveData
-          ? this.sanitizeRequestBody(request.body)
-          : request.body,
+        url: request.url,;
+        method: request.method,;
+        headers: this.getHeadersMap(;
+          request.headers.keys().map((key) => ({ key, value: request.headers.get(key) })),;
+        ),;
+        body: this.config.sanitizeSensitiveData;
+          ? this.sanitizeRequestBody(request.body);
+          : request.body,;
       };
     }
 
     // Include error response if available
     if (error.error && typeof error.error === 'object') {
-      details.response = this.config.sanitizeSensitiveData
-        ? this.sanitizeResponseData(error.error)
+      details.response = this.config.sanitizeSensitiveData;
+        ? this.sanitizeResponseData(error.error);
         : error.error;
     }
 
@@ -578,9 +580,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Extract a user-friendly validation error message
-   * @param errorResponse The error response object
-   * @returns A user-friendly validation error message
+   * Extract a user-friendly validation error message;
+   * @param errorResponse The error response object;
+   * @returns A user-friendly validation error message;
    */
   private getValidationErrorMessage(errorResponse: any): string | null {
     if (!errorResponse) return null;
@@ -592,14 +594,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // If there's only one error, return it directly
       if (errorResponse.errors.length === 1) {
         const error = errorResponse.errors[0];
-        return error.message || `Invalid ${error.field || 'input'}`;
+        return error.message || `Invalid ${error.field || 'input'}`;`
       }
 
       // If there are multiple errors, summarize them
       const fieldErrors = errorResponse.errors.filter((e: any) => e.field).map((e: any) => e.field);
 
       if (fieldErrors.length > 0) {
-        return `Please check the following fields: ${fieldErrors.join(', ')}`;
+        return `Please check the following fields: ${fieldErrors.join(', ')}`;`
       }
 
       return 'Multiple validation errors occurred';
@@ -614,21 +616,21 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Log error details to the console
-   * @param errorDetails The error details
+   * Log error details to the console;
+   * @param errorDetails The error details;
    */
   private logError(errorDetails: any): void {
     // Using console.error is allowed by our ESLint config
-    console.error(`HTTP Error: ${errorDetails.errorCode} (${errorDetails.category})`);
-    console.error(`${errorDetails.technicalMessage}`);
+    console.error(`HTTP Error: ${errorDetails.errorCode} (${errorDetails.category})`);`
+    console.error(`${errorDetails.technicalMessage}`);`
     console.error('Status:', errorDetails.status, errorDetails.statusText);
     console.error('URL:', errorDetails.request?.url);
     console.error('Details:', errorDetails);
   }
 
   /**
-   * Show an error notification to the user
-   * @param errorDetails The error details
+   * Show an error notification to the user;
+   * @param errorDetails The error details;
    */
   private showErrorNotification(errorDetails: any): void {
     // Track this error to avoid showing duplicates
@@ -639,8 +641,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Track a recent error to avoid showing duplicate notifications
-   * @param errorCode The error code
+   * Track a recent error to avoid showing duplicate notifications;
+   * @param errorCode The error code;
    */
   private trackRecentError(errorCode: string): void {
     const now = Date.now();
@@ -648,21 +650,21 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     if (existing) {
       this.recentErrors.set(errorCode, {
-        count: existing.count + 1,
-        timestamp: now,
+        count: existing.count + 1,;
+        timestamp: now,;
       });
     } else {
       this.recentErrors.set(errorCode, {
-        count: 1,
-        timestamp: now,
+        count: 1,;
+        timestamp: now,;
       });
     }
   }
 
   /**
-   * Check if an error is in the cooldown period
-   * @param errorCode The error code
-   * @returns Whether the error is in cooldown
+   * Check if an error is in the cooldown period;
+   * @param errorCode The error code;
+   * @returns Whether the error is in cooldown;
    */
   private isInCooldown(errorCode: string): boolean {
     const existing = this.recentErrors.get(errorCode);
@@ -681,7 +683,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Clean up old errors from the recent errors map
+   * Clean up old errors from the recent errors map;
    */
   private cleanupRecentErrors(): void {
     const now = Date.now();
@@ -694,14 +696,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Convert headers array to a map
-   * @param headers The headers array
-   * @returns Headers map
+   * Convert headers array to a map;
+   * @param headers The headers array;
+   * @returns Headers map;
    */
-  private getHeadersMap(
-    headers: Array<{ key: string; value: string | null }>,
-  ): Record<string, string> {
-    const result: Record<string, string> = {};
+  private getHeadersMap(;
+    headers: Array,;
+  ): Record {
+    const result: Record = {};
 
     headers.forEach(({ key, value }) => {
       if (value !== null) {
@@ -718,29 +720,29 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Check if a header is sensitive and should be excluded from logs
-   * @param headerName The header name
-   * @returns Whether the header is sensitive
+   * Check if a header is sensitive and should be excluded from logs;
+   * @param headerName The header name;
+   * @returns Whether the header is sensitive;
    */
   private isSensitiveHeader(headerName: string): boolean {
-    const sensitiveHeaders = [
-      'authorization',
-      'x-auth-token',
-      'cookie',
-      'set-cookie',
-      'x-csrf-token',
-      'x-api-key',
-      'x-access-token',
-      'x-session-id',
+    const sensitiveHeaders = [;
+      'authorization',;
+      'x-auth-token',;
+      'cookie',;
+      'set-cookie',;
+      'x-csrf-token',;
+      'x-api-key',;
+      'x-access-token',;
+      'x-session-id',;
     ];
 
     return sensitiveHeaders.includes(headerName.toLowerCase());
   }
 
   /**
-   * Sanitize request body to remove sensitive information
-   * @param body The request body
-   * @returns Sanitized body
+   * Sanitize request body to remove sensitive information;
+   * @param body The request body;
+   * @returns Sanitized body;
    */
   private sanitizeRequestBody(body: any): any {
     if (!body) {
@@ -753,29 +755,29 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     // Create a new object to avoid prototype pollution
     // Use Object.create(null) to create an object with no prototype
-    const sanitized = Array.isArray(body)
-      ? [...body]
+    const sanitized = Array.isArray(body);
+      ? [...body];
       : Object.getOwnPropertyNames(body).reduce((obj, key) => {
           obj[key] = body[key];
           return obj;
         }, Object.create(null));
 
     // Mask sensitive fields
-    const sensitiveFields = [
-      'password',
-      'token',
-      'secret',
-      'creditCard',
-      'cardNumber',
-      'cvv',
-      'pin',
-      'ssn',
-      'socialSecurity',
-      'accessToken',
-      'refreshToken',
-      'apiKey',
-      'privateKey',
-      'authorization',
+    const sensitiveFields = [;
+      'password',;
+      'token',;
+      'secret',;
+      'creditCard',;
+      'cardNumber',;
+      'cvv',;
+      'pin',;
+      'ssn',;
+      'socialSecurity',;
+      'accessToken',;
+      'refreshToken',;
+      'apiKey',;
+      'privateKey',;
+      'authorization',;
     ];
 
     // Recursively sanitize objects
@@ -785,9 +787,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Sanitize response data to remove sensitive information
-   * @param data The response data
-   * @returns Sanitized data
+   * Sanitize response data to remove sensitive information;
+   * @param data The response data;
+   * @returns Sanitized data;
    */
   private sanitizeResponseData(data: any): any {
     if (!data) {
@@ -800,29 +802,29 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     // Create a new object to avoid prototype pollution
     // Use Object.create(null) to create an object with no prototype
-    const sanitized = Array.isArray(data)
-      ? [...data]
+    const sanitized = Array.isArray(data);
+      ? [...data];
       : Object.getOwnPropertyNames(data).reduce((obj, key) => {
           obj[key] = data[key];
           return obj;
         }, Object.create(null));
 
     // Mask sensitive fields
-    const sensitiveFields = [
-      'password',
-      'token',
-      'secret',
-      'creditCard',
-      'cardNumber',
-      'cvv',
-      'pin',
-      'ssn',
-      'socialSecurity',
-      'accessToken',
-      'refreshToken',
-      'apiKey',
-      'privateKey',
-      'authorization',
+    const sensitiveFields = [;
+      'password',;
+      'token',;
+      'secret',;
+      'creditCard',;
+      'cardNumber',;
+      'cvv',;
+      'pin',;
+      'ssn',;
+      'socialSecurity',;
+      'accessToken',;
+      'refreshToken',;
+      'apiKey',;
+      'privateKey',;
+      'authorization',;
     ];
 
     // Recursively sanitize objects
@@ -832,9 +834,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Recursively sanitize an object to mask sensitive fields
-   * @param obj The object to sanitize
-   * @param sensitiveFields Array of sensitive field names
+   * Recursively sanitize an object to mask sensitive fields;
+   * @param obj The object to sanitize;
+   * @param sensitiveFields Array of sensitive field names;
    */
   private sanitizeObject(obj: any, sensitiveFields: string[]): void {
     if (!obj || typeof obj !== 'object') {
@@ -866,9 +868,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Safely check if error handling should be skipped for a URL
-   * @param url The request URL
-   * @returns Whether to skip error handling
+   * Safely check if error handling should be skipped for a URL;
+   * @param url The request URL;
+   * @returns Whether to skip error handling;
    */
   private shouldSkipErrorHandling(url: string): boolean {
     if (!url || typeof url !== 'string') {
@@ -913,9 +915,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Sanitize a URL to prevent SSRF attacks
-   * @param url The URL to sanitize
-   * @returns Sanitized URL or null if invalid
+   * Sanitize a URL to prevent SSRF attacks;
+   * @param url The URL to sanitize;
+   * @returns Sanitized URL or null if invalid;
    */
   private sanitizeUrl(url: string): string | null {
     if (!url || typeof url !== 'string') {

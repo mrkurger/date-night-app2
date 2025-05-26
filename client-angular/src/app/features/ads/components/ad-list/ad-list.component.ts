@@ -1,5 +1,11 @@
 import { OnInit, OnDestroy } from '@angular/core';
 import { Component } from '@angular/core';
+import { AdService } from '../../../../core/services/ad.service';
+import { Ad } from '../../../../core/models/ad.interface';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { Subject } from 'rxjs';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,17 +15,12 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { AdService } from '../../../../core/services/ad.service';
-import { Ad } from '../../../../core/models/ad.interface';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { Subject } from 'rxjs';
 
-@Component({
-  selector: 'app-ad-list',
-  templateUrl: './ad-list.component.html',
-  styles: [
-    `
+@Component({';
+  selector: 'app-ad-list',;
+  templateUrl: './ad-list.component.html',;
+  styles: [;
+    `;`
       .ad-list-container {
         padding: 20px;
       }
@@ -44,18 +45,18 @@ import { Subject } from 'rxjs';
       .filter-section {
         margin-bottom: 20px;
       }
-    `,
-  ],
-  imports: [CommonModule, RouterLink],
-})
-export class AdListComponent implements OnInit, OnDestroy {
+    `,;`
+  ],;
+  imports: [CommonModule, RouterLink],;
+});
+export class AdListComponen {t implements OnInit, OnDestroy {
   ads: Ad[] = [];
   filteredAds: Ad[] = [];
   loading = false;
   error: string | null = null;
   searchQuery = '';
   sortOption = 'dateDesc';
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject();
 
   constructor(private adService: AdService) {}
 
@@ -74,11 +75,11 @@ export class AdListComponent implements OnInit, OnDestroy {
       next: (response) => {
         this.ads = response.ads;
         this.loading = false;
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
-      },
+      },;
     });
   }
 }

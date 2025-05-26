@@ -4,41 +4,31 @@ import { NbPaginationChangeEvent } from './nb-paginator.module';
 import { PaginatorModule } from 'primeng/paginator';
 import { PaginatorState } from 'primeng/paginatorstate';
 
-@Component({
-  selector: 'nb-paginator',
-  imports: [CommonModule, PaginatorModule],
-  template: `
-    <p-paginator
-      (onPageChange)="onPrimePageChange($event)"
-      [first]="page * pageSize"
-      [rows]="pageSize"
-      [totalRecords]="length"
-      [rowsPerPageOptions]="pageSizeOptions"
-      [showFirstLastIcon]="showFirstLastButtons"
-      [showPageLinks]="true"
-      [showCurrentPageReport]="true"
-      currentPageReportTemplate="{first} - {last} of {totalRecords}"
-    ></p-paginator>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'nb-paginator',;
+  imports: [CommonModule, PaginatorModule],;
+  template: `;`
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host ::ng-deep .p-paginator {
         padding: 0.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-    `,
-  ],
-})
-export class NbPaginatorComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class NbPaginatorComponen {t implements OnInit {
   @Input() length: number = 0;
   @Input() pageSize: number = 10;
   @Input() pageSizeOptions: number[] = [];
   @Input() page: number = 0;
   @Input() showFirstLastButtons: boolean = true;
 
-  @Output() page$ = new EventEmitter<NbPaginationChangeEvent>();
+  @Output() page$ = new EventEmitter();
 
   ngOnInit(): void {
     if (this.pageSizeOptions.length > 0 && !this.pageSizeOptions.includes(this.pageSize)) {
@@ -48,11 +38,7 @@ export class NbPaginatorComponent implements OnInit {
         this.pageSize = this.pageSizeOptions[0];
       }
     }
-    if (this.page < 0) {
-      this.page = 0;
-    }
-    const maxPage = this.getNumberOfPages() - 1;
-    if (this.page > maxPage && maxPage >= 0) {
+    if (this.page  maxPage && maxPage >= 0) {
       this.page = maxPage;
     }
   }
@@ -62,8 +48,8 @@ export class NbPaginatorComponent implements OnInit {
     this.pageSize = event.rows !== undefined ? event.rows : 10;
 
     this.page$.emit({
-      page: this.page,
-      pageSize: this.pageSize,
+      page: this.page,;
+      pageSize: this.pageSize,;
     });
   }
 

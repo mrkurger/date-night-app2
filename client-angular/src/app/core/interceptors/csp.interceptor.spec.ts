@@ -5,10 +5,10 @@ import { cspInterceptor } from './csp.interceptor';
 import { Injectable } from '@angular/core';
 
 /**
- * Mock Location Service to avoid issues with window.location
+ * Mock Location Service to avoid issues with window.location;
  */
-@Injectable()
-class MockLocationService {
+@Injectable();
+class MockLocationServic {e {';
   private _origin = 'http://localhost:4200';
 
   get origin(): string {
@@ -34,12 +34,12 @@ class MockLocationService {
 }
 
 /**
- * Unit tests for the CSPInterceptor
- *
- * These tests verify that the interceptor:
- * 1. Adds CSP headers to same-origin requests
- * 2. Doesn't add CSP headers to cross-origin requests
- * 3. Includes all required CSP directives in the header
+ * Unit tests for the CSPInterceptor;
+ *;
+ * These tests verify that the interceptor:;
+ * 1. Adds CSP headers to same-origin requests;
+ * 2. Doesn't add CSP headers to cross-origin requests;
+ * 3. Includes all required CSP directives in the header;
  */
 describe('CSP Interceptor', () => {
   let httpClient: HttpClient;
@@ -48,8 +48,8 @@ describe('CSP Interceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptors([cspInterceptor])), MockLocationService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [provideHttpClient(withInterceptors([cspInterceptor])), MockLocationService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     httpClient = TestBed.inject(HttpClient);

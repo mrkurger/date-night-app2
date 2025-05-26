@@ -1,5 +1,17 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { UserSettingsComponent } from './user-settings.component';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { ThemeService } from '../../core/services/theme.service';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { CommonTestModule, MockMainLayoutComponent } from '../../testing/common-test.module';
+import { createMockService } from '../../testing/test-utils';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,22 +21,11 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
 
-import { UserSettingsComponent } from './user-settings.component';
-import { AuthService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
-import { ThemeService } from '../../core/services/theme.service';
-import { UserPreferencesService } from '../../core/services/user-preferences.service';
-import { CommonTestModule, MockMainLayoutComponent } from '../../testing/common-test.module';
-import { createMockService } from '../../testing/test-utils';
-
+';
 describe('UserSettingsComponent', () => {
   let component: UserSettingsComponent;
-  let fixture: ComponentFixture<UserSettingsComponent>;
+  let fixture: ComponentFixture;
   let authService: AuthService;
   let notificationService: NotificationService;
   let themeService: ThemeService;
@@ -33,27 +34,27 @@ describe('UserSettingsComponent', () => {
 
   // Mock user data
   const mockUser = {
-    _id: 'user1',
-    name: 'Test User',
-    email: 'test@example.com',
-    phone: '+1234567890',
-    bio: 'Test bio',
+    _id: 'user1',;
+    name: 'Test User',;
+    email: 'test@example.com',;
+    phone: '+1234567890',;
+    bio: 'Test bio',;
     notificationSettings: {
-      emailNotifications: true,
-      chatNotifications: true,
-      marketingEmails: false,
-      newMatchNotifications: true,
-    },
+      emailNotifications: true,;
+      chatNotifications: true,;
+      marketingEmails: false,;
+      newMatchNotifications: true,;
+    },;
     privacySettings: {
-      profileVisibility: 'public',
-      showOnlineStatus: true,
-      allowMessaging: 'all',
-      dataSharing: false,
-    },
+      profileVisibility: 'public',;
+      showOnlineStatus: true,;
+      allowMessaging: 'all',;
+      dataSharing: false,;
+    },;
   };
 
   // Mock services
-  class MockAuthService {
+  class MockAuthServic {e {
     currentUser$ = of(mockUser);
 
     updateProfile() {
@@ -77,7 +78,7 @@ describe('UserSettingsComponent', () => {
     }
   }
 
-  class MockNotificationService {
+  class MockNotificationServic {e {
     success(message: string): void {
       // Mock success notification with default implementation
       this.onSuccess(message);
@@ -97,7 +98,7 @@ describe('UserSettingsComponent', () => {
     }
   }
 
-  class MockThemeService {
+  class MockThemeServic {e {
     theme$ = of('system');
 
     getCurrentTheme() {
@@ -109,36 +110,36 @@ describe('UserSettingsComponent', () => {
     }
   }
 
-  class MockUserPreferencesService {
+  class MockUserPreferencesServic {e {
     preferences$ = of({
-      defaultViewType: 'netflix',
-      contentDensity: 'comfortable',
-      cardSize: 'medium',
-      savedFilters: {},
-      recentlyViewed: [],
-      favorites: [],
+      defaultViewType: 'netflix',;
+      contentDensity: 'comfortable',;
+      cardSize: 'medium',;
+      savedFilters: {},;
+      recentlyViewed: [],;
+      favorites: [],;
     });
 
-    contentDensityOptions = [
-      { value: 'comfortable', label: 'Comfortable' },
-      { value: 'compact', label: 'Compact' },
-      { value: 'condensed', label: 'Condensed' },
+    contentDensityOptions = [;
+      { value: 'comfortable', label: 'Comfortable' },;
+      { value: 'compact', label: 'Compact' },;
+      { value: 'condensed', label: 'Condensed' },;
     ];
 
-    cardSizeOptions = [
-      { value: 'small', label: 'Small' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'large', label: 'Large' },
+    cardSizeOptions = [;
+      { value: 'small', label: 'Small' },;
+      { value: 'medium', label: 'Medium' },;
+      { value: 'large', label: 'Large' },;
     ];
 
     getPreferences() {
       return {
-        defaultViewType: 'netflix',
-        contentDensity: 'comfortable',
-        cardSize: 'medium',
-        savedFilters: {},
-        recentlyViewed: [],
-        favorites: [],
+        defaultViewType: 'netflix',;
+        contentDensity: 'comfortable',;
+        cardSize: 'medium',;
+        savedFilters: {},;
+        recentlyViewed: [],;
+        favorites: [],;
       };
     }
 
@@ -173,18 +174,18 @@ describe('UserSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonTestModule,
-        RouterTestingModule,
-        UserSettingsComponent,
-        MockMainLayoutComponent,
-      ],
-      providers: [
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: NotificationService, useClass: MockNotificationService },
-        { provide: ThemeService, useClass: MockThemeService },
-        { provide: UserPreferencesService, useClass: MockUserPreferencesService },
-      ],
+      imports: [;
+        CommonTestModule,;
+        RouterTestingModule,;
+        UserSettingsComponent,;
+        MockMainLayoutComponent,;
+      ],;
+      providers: [;
+        { provide: AuthService, useClass: MockAuthService },;
+        { provide: NotificationService, useClass: MockNotificationService },;
+        { provide: ThemeService, useClass: MockThemeService },;
+        { provide: UserPreferencesService, useClass: MockUserPreferencesService },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserSettingsComponent);
@@ -210,22 +211,22 @@ describe('UserSettingsComponent', () => {
 
       expect(component.user).toEqual(mockUser);
       expect(component.profileForm.value).toEqual({
-        name: 'Test User',
-        email: 'test@example.com',
-        phone: '+1234567890',
-        bio: 'Test bio',
+        name: 'Test User',;
+        email: 'test@example.com',;
+        phone: '+1234567890',;
+        bio: 'Test bio',;
       });
       expect(component.notificationForm.value).toEqual({
-        emailNotifications: true,
-        chatNotifications: true,
-        marketingEmails: false,
-        newMatchNotifications: true,
+        emailNotifications: true,;
+        chatNotifications: true,;
+        marketingEmails: false,;
+        newMatchNotifications: true,;
       });
       expect(component.privacyForm.value).toEqual({
-        profileVisibility: 'public',
-        showOnlineStatus: true,
-        allowMessaging: 'all',
-        dataSharing: false,
+        profileVisibility: 'public',;
+        showOnlineStatus: true,;
+        allowMessaging: 'all',;
+        dataSharing: false,;
       });
       expect(component.loading).toBeFalse();
     }));
@@ -241,21 +242,21 @@ describe('UserSettingsComponent', () => {
 
     it('should load display settings on init', fakeAsync(() => {
       spyOn(userPreferencesService, 'getPreferences').and.returnValue({
-        defaultViewType: 'netflix',
-        contentDensity: 'comfortable',
-        cardSize: 'medium',
-        savedFilters: {},
-        recentlyViewed: [],
-        favorites: [],
+        defaultViewType: 'netflix',;
+        contentDensity: 'comfortable',;
+        cardSize: 'medium',;
+        savedFilters: {},;
+        recentlyViewed: [],;
+        favorites: [],;
       });
 
       component.ngOnInit();
       tick();
 
       expect(component.displayForm.value).toEqual({
-        defaultViewType: 'netflix',
-        contentDensity: 'comfortable',
-        cardSize: 'medium',
+        defaultViewType: 'netflix',;
+        contentDensity: 'comfortable',;
+        cardSize: 'medium',;
       });
     }));
   });
@@ -283,16 +284,16 @@ describe('UserSettingsComponent', () => {
 
       component.saveProfile();
 
-      expect(notificationService.error).toHaveBeenCalledWith(
-        'Please fix the form errors before submitting',
+      expect(notificationService.error).toHaveBeenCalledWith(;
+        'Please fix the form errors before submitting',;
       );
     });
 
     it('should change password when changePassword is called', () => {
       component.passwordForm.setValue({
-        currentPassword: 'oldPassword',
-        newPassword: 'newPassword',
-        confirmPassword: 'newPassword',
+        currentPassword: 'oldPassword',;
+        newPassword: 'newPassword',;
+        confirmPassword: 'newPassword',;
       });
 
       spyOn(authService, 'changePassword').and.callThrough();
@@ -301,8 +302,8 @@ describe('UserSettingsComponent', () => {
       component.changePassword();
 
       expect(authService.changePassword).toHaveBeenCalledWith({
-        currentPassword: 'oldPassword',
-        newPassword: 'newPassword',
+        currentPassword: 'oldPassword',;
+        newPassword: 'newPassword',;
       });
       expect(notificationService.success).toHaveBeenCalledWith('Password changed successfully');
       expect(component.loading).toBeFalse();
@@ -314,8 +315,8 @@ describe('UserSettingsComponent', () => {
 
       component.saveNotificationSettings();
 
-      expect(authService.updateNotificationSettings).toHaveBeenCalledWith(
-        component.notificationForm.value,
+      expect(authService.updateNotificationSettings).toHaveBeenCalledWith(;
+        component.notificationForm.value,;
       );
       expect(notificationService.success).toHaveBeenCalledWith('Notification settings updated');
       expect(component.loading).toBeFalse();
@@ -364,8 +365,8 @@ describe('UserSettingsComponent', () => {
 
     it('should handle error when deleting account fails', fakeAsync(() => {
       spyOn(window, 'confirm').and.returnValue(true);
-      spyOn(authService, 'deleteAccount').and.returnValue(
-        throwError(() => new Error('Delete failed')),
+      spyOn(authService, 'deleteAccount').and.returnValue(;
+        throwError(() => new Error('Delete failed')),;
       );
       spyOn(notificationService, 'error').and.callThrough();
       spyOn(console, 'error').and.callThrough();
@@ -390,17 +391,17 @@ describe('UserSettingsComponent', () => {
 
     it('should validate password match', () => {
       component.passwordForm.setValue({
-        currentPassword: 'oldPassword',
-        newPassword: 'newPassword',
-        confirmPassword: 'differentPassword',
+        currentPassword: 'oldPassword',;
+        newPassword: 'newPassword',;
+        confirmPassword: 'differentPassword',;
       });
 
       expect(component.passwordForm.hasError('passwordMismatch')).toBeTrue();
 
       component.passwordForm.setValue({
-        currentPassword: 'oldPassword',
-        newPassword: 'newPassword',
-        confirmPassword: 'newPassword',
+        currentPassword: 'oldPassword',;
+        newPassword: 'newPassword',;
+        confirmPassword: 'newPassword',;
       });
 
       expect(component.passwordForm.hasError('passwordMismatch')).toBeFalse();
@@ -426,20 +427,20 @@ describe('UserSettingsComponent', () => {
       spyOn(notificationService, 'success');
 
       component.displayForm.patchValue({
-        defaultViewType: 'list',
-        contentDensity: 'compact',
-        cardSize: 'large',
+        defaultViewType: 'list',;
+        contentDensity: 'compact',;
+        cardSize: 'large',;
       });
 
       component.saveDisplaySettings();
 
       expect(userPreferencesService.updatePreferences).toHaveBeenCalledWith({
-        defaultViewType: 'list',
-        contentDensity: 'compact',
-        cardSize: 'large',
+        defaultViewType: 'list',;
+        contentDensity: 'compact',;
+        cardSize: 'large',;
       });
-      expect(notificationService.success).toHaveBeenCalledWith(
-        'Display settings saved successfully',
+      expect(notificationService.success).toHaveBeenCalledWith(;
+        'Display settings saved successfully',;
       );
     });
 
@@ -459,9 +460,9 @@ describe('UserSettingsComponent', () => {
 
       // First change the values
       component.displayForm.patchValue({
-        defaultViewType: 'list',
-        contentDensity: 'condensed',
-        cardSize: 'small',
+        defaultViewType: 'list',;
+        contentDensity: 'condensed',;
+        cardSize: 'small',;
       });
 
       // Then reset
@@ -469,9 +470,9 @@ describe('UserSettingsComponent', () => {
 
       // Check that values were reset
       expect(component.displayForm.value).toEqual({
-        defaultViewType: 'netflix',
-        contentDensity: 'comfortable',
-        cardSize: 'medium',
+        defaultViewType: 'netflix',;
+        contentDensity: 'comfortable',;
+        cardSize: 'medium',;
       });
 
       // Check that save was called

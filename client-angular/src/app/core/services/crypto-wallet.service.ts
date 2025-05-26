@@ -4,9 +4,10 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CryptoWallet, CryptoTransaction, WithdrawalRequest } from './models/crypto.models';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CryptoWalletService {
-  private apiUrl = `${environment.apiUrl}/wallet/crypto`;
-  private cryptoWalletsSubject = new BehaviorSubject
+@Injectable({';
+  providedIn: 'root',;
+});
+export class CryptoWalletServic {e {
+  private apiUrl = `${environment.apiUrl}/wallet/crypto`;`
+  private cryptoWalletsSubject = new BehaviorSubject([]);
+}

@@ -1,101 +1,83 @@
+import {
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbInputModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbListModule,
-} from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { SearchService, SearchResult } from '../../services/search.service';
+  NbDialogRef,;
+  NbCardModule,;
+  NbInputModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbListModule,';
+} from '@nebular/theme';
 
 @Component({
-    selector: 'app-search-dialog',
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        NbCardModule,
-        NbInputModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbListModule,
-    ],
-    template: `
-    <nb-card>
-      <nb-card-header class="search-header">
-        <div class="search-input-container">
-          <nb-icon icon="search-outline"></nb-icon>
-          <input
-            #searchInput
-            nbInput
-            fullWidth
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange($event)"
-            (keydown.arrowdown)="onArrowDown($event)"
-            (keydown.arrowup)="onArrowUp($event)"
-            (keydown.enter)="onEnter()"
-            (keydown.escape)="close()"
-            placeholder="Search..."
-            autofocus
-          />
-        </div>
-        <button nbButton ghost (click)="close()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-card-header>
+    selector: 'app-search-dialog',;
+    imports: [;
+        CommonModule,;
+        RouterModule,;
+        FormsModule,;
+        NbCardModule,;
+        NbInputModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbSpinnerModule,;
+        NbListModule,;
+    ],;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+          ;
+        ;
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <div *ngIf="isLoading" class="search-loading">
-          <nb-spinner></nb-spinner>
-          <span>Searching...</span>
-        </div>
+      ;
+        ;
+          ;
+          Searching...;
+        ;
 
-        <nb-list *ngIf="!isLoading && results.length > 0">
-          <nb-list-item
-            *ngFor="let result of results; let i = index"
-            class="search-result"
-            [class.selected]="i === selectedIndex"
-            (click)="selectResult(result)"
-            (mouseenter)="selectedIndex = i"
-          >
-            <nb-icon [icon]="result.icon || getDefaultIcon(result.type)"></nb-icon>
-            <div class="result-content">
-              <div class="result-title">{{ result.title }}</div>
-              <div class="result-description" *ngIf="result.description">
+         0">;
+          ;
+            ;
+            ;
+              {{ result.title }};
+              ;
                 {{ result.description }}
-              </div>
-              <div class="result-type">{{ formatType(result.type) }}</div>
-            </div>
-            <nb-icon icon="arrow-forward-outline"></nb-icon>
-          </nb-list-item>
-        </nb-list>
+              ;
+              {{ formatType(result.type) }};
+            ;
+            ;
+          ;
+        ;
 
-        <div *ngIf="!isLoading && results.length === 0 && searchQuery" class="no-results">
-          <nb-icon icon="alert-circle-outline"></nb-icon>
-          <span>No results found</span>
-          <p class="hint">Try different keywords or check spelling</p>
-        </div>
+        ;
+          ;
+          No results found;
+          Try different keywords or check spelling;
+        ;
 
-        <div *ngIf="!isLoading && !searchQuery" class="empty-state">
-          <nb-icon icon="search-outline"></nb-icon>
-          <span>Type to search</span>
-          <p class="hint">
-            Press <kbd>↑</kbd> <kbd>↓</kbd> to navigate, <kbd>Enter</kbd> to select
-          </p>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  `,
-    styles: [
-        `
+        ;
+          ;
+          Type to search;
+          ;
+            Press ↑ ↓ to navigate, Enter to select;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -148,7 +130,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         cursor: pointer;
         transition: all 0.2s;
 
-        &:hover,
+        &:hover,;
         &.selected {
           background-color: nb-theme(background-basic-hover-color);
           transform: translateX(4px);
@@ -170,7 +152,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
           }
         }
 
-        &:hover,
+        &:hover,;
         &.selected {
           nb-icon:last-child {
             opacity: 1;
@@ -205,7 +187,7 @@ import { SearchService, SearchResult } from '../../services/search.service';
         letter-spacing: 0.5px;
       }
 
-      .no-results,
+      .no-results,;
       .empty-state {
         display: flex;
         flex-direction: column;
@@ -239,19 +221,19 @@ import { SearchService, SearchResult } from '../../services/search.service';
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
         }
       }
-    `,
-    ]
-})
-export class SearchDialogComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+    `,;`
+    ];
+});
+export class SearchDialogComponen {t implements OnInit, OnDestroy {
+  private destroy$ = new Subject();
   searchQuery = '';
   results: SearchResult[] = [];
   isLoading = false;
   selectedIndex = -1;
 
-  constructor(
-    private dialogRef: NbDialogRef<SearchDialogComponent>,
-    private searchService: SearchService,
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    private searchService: SearchService,;
   ) {}
 
   ngOnInit() {
@@ -272,9 +254,9 @@ export class SearchDialogComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
-    this.searchService
-      .search(query)
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    this.searchService;
+      .search(query);
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$));
       .subscribe((results) => {
         this.results = results;
         this.isLoading = false;
@@ -293,14 +275,8 @@ export class SearchDialogComponent implements OnInit, OnDestroy {
   onArrowUp(event: KeyboardEvent) {
     event.preventDefault();
     if (this.results.length > 0) {
-      this.selectedIndex =
-        this.selectedIndex <= 0 ? this.results.length - 1 : this.selectedIndex - 1;
-      this.scrollSelectedIntoView();
-    }
-  }
-
-  onEnter() {
-    if (this.selectedIndex >= 0 && this.results[this.selectedIndex]) {
+      this.selectedIndex =;
+        this.selectedIndex = 0 && this.results[this.selectedIndex]) {
       this.selectResult(this.results[this.selectedIndex]);
     }
   }
@@ -315,15 +291,15 @@ export class SearchDialogComponent implements OnInit, OnDestroy {
 
   getDefaultIcon(type: string): string {
     switch (type) {
-      case 'ad':
+      case 'ad':;
         return 'file-text-outline';
-      case 'user':
+      case 'user':;
         return 'person-outline';
-      case 'page':
+      case 'page':;
         return 'file-outline';
-      case 'setting':
+      case 'setting':;
         return 'settings-2-outline';
-      default:
+      default:;
         return 'alert-circle-outline';
     }
   }
@@ -341,8 +317,8 @@ export class SearchDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:keydown.alt.k', ['$event'])
-  @HostListener('window:keydown.meta.k', ['$event'])
+  @HostListener('window:keydown.alt.k', ['$event']);
+  @HostListener('window:keydown.meta.k', ['$event']);
   onSearchHotkey(event: KeyboardEvent) {
     event.preventDefault();
     this.close();

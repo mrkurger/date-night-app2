@@ -1,22 +1,27 @@
+import {
 import { OnDestroy } from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { OnInit } from '@angular/core';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
+import { Subscription } from 'rxjs';
+import { Ad } from '../../core/models/ad.interface';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,';
+} from '@nebular/theme';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -25,261 +30,234 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ADS: Sample ad data for demonstration (default: see below)
 // ===================================================
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
-  UserPreferencesService,
-  ContentDensity,
-  CardSize,
+  UserPreferencesService,;
+  ContentDensity,;
+  CardSize,;
 } from '../../core/services/user-preferences.service';
-import { AdCardComponent } from '../../shared/components/ad-card/ad-card.component';
-import { Subscription } from 'rxjs';
-import { Ad } from '../../core/models/ad.interface';
 
 // Mock data for demonstration
-const MOCK_ADS: Ad[] = [
+const MOCK_ADS: Ad[] = [;
   {
-    _id: '1',
-    title: 'Professional Photographer',
-    description:
-      'Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.',
-    category: 'Photography',
-    price: 200,
-    location: { city: 'New York', county: 'NY' },
-    images: ['/assets/img/sample/photo1.jpg', '/assets/img/sample/photo2.jpg'],
-    media: [
-      { type: 'image', url: '/assets/img/sample/photo1.jpg' },
-      { type: 'image', url: '/assets/img/sample/photo2.jpg' },
-    ],
+    _id: '1',;
+    title: 'Professional Photographer',;
+    description:;
+      'Experienced photographer specializing in portrait and event photography. Available for bookings throughout the city. Packages start at $200 for a 2-hour session.',;
+    category: 'Photography',;
+    price: 200,;
+    location: { city: 'New York', county: 'NY' },;
+    images: ['/assets/img/sample/photo1.jpg', '/assets/img/sample/photo2.jpg'],;
+    media: [;
+      { type: 'image', url: '/assets/img/sample/photo1.jpg' },;
+      { type: 'image', url: '/assets/img/sample/photo2.jpg' },;
+    ],;
     advertiser: {
-      _id: 'user123',
-      username: 'John Smith',
-    },
-    userId: 'user123',
-    isActive: true,
-    isFeatured: true,
-    isTrending: false,
-    isTouring: false,
-    viewCount: 245,
-    clickCount: 32,
-    inquiryCount: 8,
-    createdAt: '2023-04-15T10:30:00Z',
-    updatedAt: '2023-04-15T10:30:00Z',
-  },
+      _id: 'user123',;
+      username: 'John Smith',;
+    },;
+    userId: 'user123',;
+    isActive: true,;
+    isFeatured: true,;
+    isTrending: false,;
+    isTouring: false,;
+    viewCount: 245,;
+    clickCount: 32,;
+    inquiryCount: 8,;
+    createdAt: '2023-04-15T10:30:00Z',;
+    updatedAt: '2023-04-15T10:30:00Z',;
+  },;
   {
-    _id: '2',
-    title: 'Makeup Artist',
-    description:
-      'Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.',
-    category: 'Beauty',
-    price: 150,
+    _id: '2',;
+    title: 'Makeup Artist',;
+    description:;
+      'Professional makeup artist with 5+ years of experience. Specializing in wedding makeup, photoshoots, and special events. Using high-quality products for long-lasting results.',;
+    category: 'Beauty',;
+    price: 150,;
     location: {
-      city: 'Los Angeles',
-      county: 'CA',
-    },
-    images: [
-      { url: '/assets/img/sample/makeup1.jpg', type: 'image' },
-      { url: '/assets/img/sample/makeup2.jpg', type: 'image' },
-    ],
-    media: [
-      { type: 'image', url: '/assets/img/sample/makeup1.jpg' },
-      { type: 'image', url: '/assets/img/sample/makeup2.jpg' },
-    ],
+      city: 'Los Angeles',;
+      county: 'CA',;
+    },;
+    images: [;
+      { url: '/assets/img/sample/makeup1.jpg', type: 'image' },;
+      { url: '/assets/img/sample/makeup2.jpg', type: 'image' },;
+    ],;
+    media: [;
+      { type: 'image', url: '/assets/img/sample/makeup1.jpg' },;
+      { type: 'image', url: '/assets/img/sample/makeup2.jpg' },;
+    ],;
     advertiser: {
-      _id: 'user456',
-      username: 'Sarah Johnson',
-    },
-    userId: 'user456',
-    isActive: true,
-    isFeatured: false,
-    isTrending: true,
-    isTouring: false,
-    viewCount: 189,
-    clickCount: 27,
-    inquiryCount: 5,
-    createdAt: '2023-04-10T14:20:00Z',
-    updatedAt: '2023-04-10T14:20:00Z',
-  },
+      _id: 'user456',;
+      username: 'Sarah Johnson',;
+    },;
+    userId: 'user456',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: true,;
+    isTouring: false,;
+    viewCount: 189,;
+    clickCount: 27,;
+    inquiryCount: 5,;
+    createdAt: '2023-04-10T14:20:00Z',;
+    updatedAt: '2023-04-10T14:20:00Z',;
+  },;
   {
-    _id: '3',
-    title: 'Live Band for Events',
-    description:
-      'Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&B.',
-    category: 'Music',
-    price: 800,
+    _id: '3',;
+    title: 'Live Band for Events',;
+    description:;
+      'Versatile 5-piece band available for weddings, corporate events, and private parties. Extensive repertoire covering multiple genres including jazz, pop, rock, and R&B.',;
+    category: 'Music',;
+    price: 800,;
     location: {
-      city: 'Chicago',
-      county: 'IL',
-    },
-    images: [
-      { url: '/assets/img/sample/band1.jpg', type: 'image' },
-      { url: '/assets/img/sample/band2.jpg', type: 'image' },
-    ],
-    media: [
-      { type: 'image', url: '/assets/img/sample/band1.jpg' },
-      { type: 'image', url: '/assets/img/sample/band2.jpg' },
-    ],
+      city: 'Chicago',;
+      county: 'IL',;
+    },;
+    images: [;
+      { url: '/assets/img/sample/band1.jpg', type: 'image' },;
+      { url: '/assets/img/sample/band2.jpg', type: 'image' },;
+    ],;
+    media: [;
+      { type: 'image', url: '/assets/img/sample/band1.jpg' },;
+      { type: 'image', url: '/assets/img/sample/band2.jpg' },;
+    ],;
     advertiser: {
-      _id: 'user789',
-      username: 'The Harmonics',
-    },
-    userId: 'user789',
-    isActive: true,
-    isFeatured: false,
-    isTrending: false,
-    isTouring: true,
-    viewCount: 312,
-    clickCount: 45,
-    inquiryCount: 12,
-    createdAt: '2023-04-05T09:15:00Z',
-    updatedAt: '2023-04-05T09:15:00Z',
+      _id: 'user789',;
+      username: 'The Harmonics',;
+    },;
+    userId: 'user789',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: false,;
+    isTouring: true,;
+    viewCount: 312,;
+    clickCount: 45,;
+    inquiryCount: 12,;
+    createdAt: '2023-04-05T09:15:00Z',;
+    updatedAt: '2023-04-05T09:15:00Z',;
     tourDates: {
-      start: '2023-05-01T00:00:00Z',
-      end: '2023-07-31T00:00:00Z',
-      cities: ['Chicago, IL', 'Detroit, MI', 'Cleveland, OH', 'Indianapolis, IN'],
-    },
-  },
+      start: '2023-05-01T00:00:00Z',;
+      end: '2023-07-31T00:00:00Z',;
+      cities: ['Chicago, IL', 'Detroit, MI', 'Cleveland, OH', 'Indianapolis, IN'],;
+    },;
+  },;
   {
-    _id: '4',
-    title: 'Event Planner',
-    description:
-      'Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.',
-    category: 'Events',
-    price: 500,
+    _id: '4',;
+    title: 'Event Planner',;
+    description:;
+      'Full-service event planning for weddings, corporate events, and special occasions. Attention to detail and personalized service to make your event memorable.',;
+    category: 'Events',;
+    price: 500,;
     location: {
-      city: 'Miami',
-      county: 'FL',
-    },
-    images: [
-      { url: '/assets/img/sample/event1.jpg', type: 'image' },
-      { url: '/assets/img/sample/event2.jpg', type: 'image' },
-    ],
-    media: [
-      { type: 'image', url: '/assets/img/sample/event1.jpg' },
-      { type: 'image', url: '/assets/img/sample/event2.jpg' },
-    ],
+      city: 'Miami',;
+      county: 'FL',;
+    },;
+    images: [;
+      { url: '/assets/img/sample/event1.jpg', type: 'image' },;
+      { url: '/assets/img/sample/event2.jpg', type: 'image' },;
+    ],;
+    media: [;
+      { type: 'image', url: '/assets/img/sample/event1.jpg' },;
+      { type: 'image', url: '/assets/img/sample/event2.jpg' },;
+    ],;
     advertiser: {
-      _id: 'user101',
-      username: 'Elegant Events',
-    },
-    userId: 'user101',
-    isActive: true,
-    isFeatured: true,
-    isTrending: true,
-    isTouring: false,
-    viewCount: 278,
-    clickCount: 39,
-    inquiryCount: 15,
-    createdAt: '2023-04-12T11:45:00Z',
-    updatedAt: '2023-04-12T11:45:00Z',
-  },
+      _id: 'user101',;
+      username: 'Elegant Events',;
+    },;
+    userId: 'user101',;
+    isActive: true,;
+    isFeatured: true,;
+    isTrending: true,;
+    isTouring: false,;
+    viewCount: 278,;
+    clickCount: 39,;
+    inquiryCount: 15,;
+    createdAt: '2023-04-12T11:45:00Z',;
+    updatedAt: '2023-04-12T11:45:00Z',;
+  },;
 ];
 
 @Component({
-    selector: 'app-preferences-demo',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSelectModule,
-        NbFormFieldModule,
-        NbLayoutModule,
-        AdCardComponent,
-    ],
-    template: `
-    <div class="preferences-demo-container">
-      <nb-card class="settings-card">
-        <nb-card-header>
-          <h3>User Preferences Demo</h3>
-          <p class="subtitle">Customize your viewing experience</p>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="settings-form">
-            <nb-form-field>
-              <label>Default View Type</label>
-              <nb-select
-                fullWidth
-                [(ngModel)]="defaultViewType"
-                (selectedChange)="onViewTypeChange()"
-                placeholder="Select view type"
-              >
-                <nb-option value="netflix">Netflix Style</nb-option>
-                <nb-option value="tinder">Tinder Style</nb-option>
-                <nb-option value="list">List View</nb-option>
-              </nb-select>
-            </nb-form-field>
+    selector: 'app-preferences-demo',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [NebularModule, CommonModule,;
+        FormsModule,;
+        ReactiveFormsModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbSelectModule,;
+        NbFormFieldModule,;
+        NbLayoutModule,;
+        AdCardComponent,;
+    ],;
+    template: `;`
+    ;
+      ;
+        ;
+          User Preferences Demo;
+          Customize your viewing experience;
+        ;
+        ;
+          ;
+            ;
+              Default View Type;
+              ;
+                Netflix Style;
+                Tinder Style;
+                List View;
+              ;
+            ;
 
-            <nb-form-field>
-              <label>Content Density</label>
-              <nb-select
-                fullWidth
-                [(ngModel)]="contentDensity"
-                (selectedChange)="onContentDensityChange()"
-                placeholder="Select content density"
-              >
-                <nb-option *ngFor="let option of contentDensityOptions" [value]="option.value">
+            ;
+              Content Density;
+              ;
+                ;
                   {{ option.label }}
-                </nb-option>
-              </nb-select>
-            </nb-form-field>
+                ;
+              ;
+            ;
 
-            <nb-form-field>
-              <label>Card Size</label>
-              <nb-select
-                fullWidth
-                [(ngModel)]="cardSize"
-                (selectedChange)="onCardSizeChange()"
-                placeholder="Select card size"
-              >
-                <nb-option *ngFor="let option of cardSizeOptions" [value]="option.value">
+            ;
+              Card Size;
+              ;
+                ;
                   {{ option.label }}
-                </nb-option>
-              </nb-select>
-            </nb-form-field>
+                ;
+              ;
+            ;
 
-            <div class="settings-info">
-              <p>
-                Current Settings:
-                <span class="setting-value">{{ getContentDensityLabel() }}</span> density,
-                <span class="setting-value">{{ getCardSizeLabel() }}</span> cards
-              </p>
-            </div>
+            ;
+              ;
+                Current Settings:;
+                {{ getContentDensityLabel() }} density,;
+                {{ getCardSizeLabel() }} cards;
+              ;
+            ;
 
-            <button nbButton status="basic" (click)="resetPreferences()">
-              <nb-icon icon="refresh-outline"></nb-icon>
-              Reset to Defaults
-            </button>
-          </div>
-        </nb-card-body>
-      </nb-card>
+            ;
+              ;
+              Reset to Defaults;
+            ;
+          ;
+        ;
+      ;
 
-      <!-- Preview Section -->
-      <nb-card class="preview-card">
-        <nb-card-header>
-          <h3>Preview</h3>
-          <p class="subtitle">See how your content will look with these settings</p>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="preview-grid" [class]="contentDensity + ' ' + cardSize">
-            <app-ad-card
-              *ngFor="let ad of mockAds"
-              [ad]="ad"
-              [cardSize]="cardSize"
-              [contentDensity]="contentDensity"
-              (viewDetails)="onViewDetails($event)"
-              (like)="onLike($event)"
-              (chat)="onChat($event)"
-            ></app-ad-card>
-          </div>
-        </nb-card-body>
-      </nb-card>
-    </div>
-  `,
-    styles: [
-        `
+      ;
+      ;
+        ;
+          Preview;
+          See how your content will look with these settings;
+        ;
+        ;
+          ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -343,10 +321,10 @@ const MOCK_ADS: Ad[] = [
           grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         }
       }
-    `,
-    ]
-})
-export class PreferencesDemoComponent implements OnInit, OnDestroy {
+    `,;`
+    ];
+});
+export class PreferencesDemoComponen {t implements OnInit, OnDestroy {
   // User preferences
   defaultViewType: 'netflix' | 'tinder' | 'list' = 'netflix';
   contentDensity: ContentDensity['value'] = 'comfortable';
@@ -374,12 +352,12 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
     this.cardSize = preferences.cardSize;
 
     // Subscribe to preference changes
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.userPreferencesService.preferences$.subscribe((prefs) => {
         this.defaultViewType = prefs.defaultViewType;
         this.contentDensity = prefs.contentDensity;
         this.cardSize = prefs.cardSize;
-      }),
+      }),;
     );
   }
 
@@ -389,35 +367,35 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle view type change
+   * Handle view type change;
    */
   onViewTypeChange(): void {
     this.userPreferencesService.setDefaultViewType(this.defaultViewType);
   }
 
   /**
-   * Handle content density change
+   * Handle content density change;
    */
   onContentDensityChange(): void {
     this.userPreferencesService.setContentDensity(this.contentDensity);
   }
 
   /**
-   * Handle card size change
+   * Handle card size change;
    */
   onCardSizeChange(): void {
     this.userPreferencesService.setCardSize(this.cardSize);
   }
 
   /**
-   * Reset preferences to defaults
+   * Reset preferences to defaults;
    */
   resetPreferences(): void {
     this.userPreferencesService.resetPreferences();
   }
 
   /**
-   * Get the label for the current content density
+   * Get the label for the current content density;
    */
   getContentDensityLabel(): string {
     const option = this.contentDensityOptions.find((opt) => opt.value === this.contentDensity);
@@ -425,7 +403,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get the label for the current card size
+   * Get the label for the current card size;
    */
   getCardSizeLabel(): string {
     const option = this.cardSizeOptions.find((opt) => opt.value === this.cardSize);
@@ -433,7 +411,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle view details click
+   * Handle view details click;
    */
   onViewDetails(adId: string): void {
     // eslint-disable-next-line no-console
@@ -441,7 +419,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle like click
+   * Handle like click;
    */
   onLike(adId: string): void {
     // eslint-disable-next-line no-console
@@ -449,7 +427,7 @@ export class PreferencesDemoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle chat click
+   * Handle chat click;
    */
   onChat(adId: string): void {
     // eslint-disable-next-line no-console

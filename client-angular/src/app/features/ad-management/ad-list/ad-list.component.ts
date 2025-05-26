@@ -1,12 +1,3 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (ad-list.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -16,28 +7,36 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Ad } from '../../../core/models/ad.model';
 import { ButtonModule } from 'primeng/button';
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (ad-list.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 
-
-@Component({
-  selector: 'app-ad-list',
-  templateUrl: './ad-list.component.html',
-  styleUrls: ['./ad-list.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule, RouterModule, SharedModule,
-    ButtonModule
-  ],
-})
-export class AdListComponent implements OnInit {
+@Component({';
+  selector: 'app-ad-list',;
+  templateUrl: './ad-list.component.html',;
+  styleUrls: ['./ad-list.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule, RouterModule, SharedModule,;
+    ButtonModule;
+  ],;
+});
+export class AdListComponen {t implements OnInit {
   ads: Ad[] = [];
   loading = false;
   error = '';
 
-  constructor(
-    private adService: AdService,
-    private authService: AuthService,
-    private router: Router,
-    private notificationService: NotificationService,
+  constructor(;
+    private adService: AdService,;
+    private authService: AuthService,;
+    private router: Router,;
+    private notificationService: NotificationService,;
   ) {}
 
   ngOnInit(): void {
@@ -57,13 +56,13 @@ export class AdListComponent implements OnInit {
       next: (ads) => {
         this.ads = ads;
         this.loading = false;
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
         this.notificationService.error('Failed to load your ads');
         console.error(err);
-      },
+      },;
     });
   }
 
@@ -85,11 +84,11 @@ export class AdListComponent implements OnInit {
         next: () => {
           this.notificationService.success('Ad deleted successfully');
           this.loadAds(); // Reload the list
-        },
+        },;
         error: (err) => {
           this.notificationService.error('Failed to delete ad');
           console.error(err);
-        },
+        },;
       });
     }
   }

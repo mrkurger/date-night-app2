@@ -1,9 +1,10 @@
 import { EventEmitter } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,59 +14,37 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'app-image-gallery',
-  standalone: true,
-  imports: [CommonModule, NbIconModule, NbButtonModule],
-  template: `
-    <div class="gallery-container">
-      <div class="gallery-main" *ngIf="images.length > 0">
-        <img
-          [src]="images[currentIndex]"
-          [alt]="'Image ' + (currentIndex + 1)"
-          class="main-image"
-        />
-        <div class="gallery-controls" *ngIf="images.length > 1">
-          <button
-            nbButton
-            ghost
-            class="nav-button prev"
-            (click)="prevImage()"
-            [disabled]="currentIndex === 0"
-          >
-            <nb-icon icon="chevron-left"></nb-icon>
-          </button>
-          <button
-            nbButton
-            ghost
-            class="nav-button next"
-            (click)="nextImage()"
-            [disabled]="currentIndex === images.length - 1"
-          >
-            <nb-icon icon="chevron-right"></nb-icon>
-          </button>
-        </div>
-      </div>
-      <div class="gallery-empty" *ngIf="images.length === 0">
-        <nb-icon icon="image-outline"></nb-icon>
-        <p>No images available</p>
-      </div>
-      <div class="gallery-thumbnails" *ngIf="showThumbnails && images.length > 1">
-        <div
-          *ngFor="let image of images; let i = index"
-          class="thumbnail"
-          [class.active]="i === currentIndex"
-          (click)="selectImage(i)"
-        >
-          <img [src]="image" [alt]="'Thumbnail ' + (i + 1)" />
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-image-gallery',;
+  standalone: true,;
+  imports: [CommonModule, NbIconModule, NbButtonModule],;
+  template: `;`
+    ;
+       0">;
+        ;
+         1">;
+          ;
+            ;
+          ;
+          ;
+            ;
+          ;
+        ;
+      ;
+      ;
+        ;
+        No images available;
+      ;
+       1">;
+        ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .gallery-container {
         display: flex;
         flex-direction: column;
@@ -146,25 +125,18 @@ import { CommonModule } from '@angular/common';
         width: 48px;
         margin-bottom: 16px;
       }
-    `,
-  ],
-})
-export class ImageGalleryComponent {
+    `,;`
+  ],;
+});
+export class ImageGalleryComponen {t {
   @Input() images: string[] = [];
   @Input() showThumbnails = true;
-  @Output() imageChange = new EventEmitter<number>();
+  @Output() imageChange = new EventEmitter();
 
   currentIndex = 0;
 
   nextImage(): void {
-    if (this.currentIndex < this.images.length - 1) {
-      this.currentIndex++;
-      this.imageChange.emit(this.currentIndex);
-    }
-  }
-
-  prevImage(): void {
-    if (this.currentIndex > 0) {
+    if (this.currentIndex  0) {
       this.currentIndex--;
       this.imageChange.emit(this.currentIndex);
     }

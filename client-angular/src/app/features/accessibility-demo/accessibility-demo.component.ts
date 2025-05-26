@@ -1,121 +1,122 @@
+import {
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbAccordionModule,
-  NbTabsetModule,
-  NbButtonModule,
-  NbIconModule,
-  NbListModule,
-  NbBadgeModule,
-} from '@nebular/theme';
-
-/**
- * Accessibility Demo Component
- *
- * This component demonstrates accessibility best practices for the DateNight.io application.
- * It includes examples of keyboard navigation, focus management, ARIA attributes, and more.
- */
-@Component({
-    selector: 'app-accessibility-demo',
-    imports: [
-    NebularModule, CommonModule,
-        NbCardModule,
-        NbAccordionModule,
-        NbTabsetModule,
-        NbButtonModule,
-        NbIconModule,
-        NbListModule,
-        NbBadgeModule,,
-    TabViewModule
-  ],
-    templateUrl: './accessibility-demo.component.html',
-    styleUrls: ['./accessibility-demo.component.scss']
-})
-export class AccessibilityDemoComponent {
-  bem = new BemUtil('a11y-demo');
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
+  NbCardModule,;
+  NbAccordionModule,;
+  NbTabsetModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbListModule,;
+  NbBadgeModule,';
+} from '@nebular/theme';
 
-
+/**
+ * Accessibility Demo Component;
+ *;
+ * This component demonstrates accessibility best practices for the DateNight.io application.;
+ * It includes examples of keyboard navigation, focus management, ARIA attributes, and more.;
+ */
+@Component({
+  selector: 'app-accessibility-demo',;
+  imports: [;
+    NebularModule,;
+    CommonModule,;
+    NbCardModule,;
+    NbAccordionModule,;
+    NbTabsetModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbListModule,;
+    NbBadgeModule,;
+    CardModule,;
+    TabViewModule,;
+    AccordionModule,;
+  ],;
+  templateUrl: './accessibility-demo.component.html',;
+  styleUrls: ['./accessibility-demo.component.scss'],;
+});
+export class AccessibilityDemoComponen {t {
+  bem = new BemUtil('a11y-demo');
 
   // Sample data for the demo
-  focusableElements = [
-    { name: 'Button', description: 'Focusable by default', code: '<button>Click me</button>' },
-    { name: 'Link', description: 'Focusable by default', code: '<a href="#">Link text</a>' },
-    { name: 'Input', description: 'Focusable by default', code: '<input type="text">' },
-    { name: 'Textarea', description: 'Focusable by default', code: '<textarea></textarea>' },
+  focusableElements = [;
+    { name: 'Button', description: 'Focusable by default', code: 'Click me' },;
+    { name: 'Link', description: 'Focusable by default', code: 'Link text' },;
+    { name: 'Input', description: 'Focusable by default', code: '' },;
+    { name: 'Textarea', description: 'Focusable by default', code: '' },;
     {
-      name: 'Select',
-      description: 'Focusable by default',
-      code: '<select><option>Option</option></select>',
-    },
+      name: 'Select',;
+      description: 'Focusable by default',;
+      code: 'Option',;
+    },;
     {
-      name: 'Div with tabindex',
-      description: 'Made focusable with tabindex',
-      code: '<div tabindex="0">Focusable div</div>',
-    },
+      name: 'Div with tabindex',;
+      description: 'Made focusable with tabindex',;
+      code: 'Focusable div',;
+    },;
   ];
 
-  ariaExamples = [
+  ariaExamples = [;
     {
-      name: 'aria-label',
-      description: 'Provides an accessible name for an element when visible text is not available',
-      code: '<button aria-label="Close dialog">×</button>',
-    },
+      name: 'aria-label',;
+      description: 'Provides an accessible name for an element when visible text is not available',;
+      code: '×',;
+    },;
     {
-      name: 'aria-labelledby',
-      description: 'References another element that provides the accessible name',
-      code: '<div id="label">Name</div>\n<input aria-labelledby="label">',
-    },
+      name: 'aria-labelledby',;
+      description: 'References another element that provides the accessible name',;
+      code: 'Name\n',;
+    },;
     {
-      name: 'aria-describedby',
-      description: 'References another element that provides a description',
-      code: '<input aria-describedby="hint">\n<div id="hint">Enter your username</div>',
-    },
+      name: 'aria-describedby',;
+      description: 'References another element that provides a description',;
+      code: '\nEnter your username',;
+    },;
     {
-      name: 'aria-expanded',
-      description: 'Indicates if a control is expanded or collapsed',
-      code: '<button aria-expanded="false">Show more</button>',
-    },
+      name: 'aria-expanded',;
+      description: 'Indicates if a control is expanded or collapsed',;
+      code: 'Show more',;
+    },;
     {
-      name: 'aria-controls',
-      description: 'Identifies the element controlled by the current element',
-      code: '<button aria-controls="panel">Toggle panel</button>\n<div id="panel">Panel content</div>',
-    },
+      name: 'aria-controls',;
+      description: 'Identifies the element controlled by the current element',;
+      code: 'Toggle panel\nPanel content',;
+    },;
     {
-      name: 'aria-live',
-      description: 'Indicates that an element will be updated dynamically',
-      code: '<div aria-live="polite">Content that updates</div>',
-    },
+      name: 'aria-live',;
+      description: 'Indicates that an element will be updated dynamically',;
+      code: 'Content that updates',;
+    },;
   ];
 
-  focusManagementExamples = [
+  focusManagementExamples = [;
     {
-      name: 'Return focus after dialog close',
-      description: 'When a dialog is closed, focus should return to the element that opened it',
-      code: `// Open dialog
+      name: 'Return focus after dialog close',;
+      description: 'When a dialog is closed, focus should return to the element that opened it',;
+      code: `// Open dialog`
 const opener = document.activeElement;
 dialog.show();
 
 // Close dialog
 dialog.close();
-opener.focus();`,
-    },
+opener.focus();`,;`
+    },;
     {
-      name: 'Focus trapping in modals',
-      description: 'Keep focus within a modal dialog when it is open',
-      code: `// Trap focus in modal
+      name: 'Focus trapping in modals',;
+      description: 'Keep focus within a modal dialog when it is open',;
+      code: `// Trap focus in modal`
 modal.addEventListener('keydown', (e) => {
   if (e.key === 'Tab') {
     // Get all focusable elements
     const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     const firstFocusable = focusable[0];
     const lastFocusable = focusable[focusable.length - 1];
-    
+
     // Handle tab and shift+tab
     if (e.shiftKey && document.activeElement === firstFocusable) {
       e.preventDefault();
@@ -125,51 +126,51 @@ modal.addEventListener('keydown', (e) => {
       firstFocusable.focus();
     }
   }
-});`,
-    },
+});`,;`
+    },;
     {
-      name: 'Skip link',
-      description: 'Allow keyboard users to skip navigation and go directly to main content',
-      code: `<a class="skip-link" href="#main-content">Skip to main content</a>
+      name: 'Skip link',;
+      description: 'Allow keyboard users to skip navigation and go directly to main content',;
+      code: `Skip to main content;`
 
-<nav><!-- Navigation content --></nav>
+;
 
-<main id="main-content">
-  <!-- Main content -->
-</main>`,
-    },
+;
+  ;
+`,;`
+    },;
   ];
 
-  colorContrastExamples = [
+  colorContrastExamples = [;
     {
-      name: 'Normal text (4.5:1)',
-      description: 'Normal text should have a contrast ratio of at least 4.5:1',
-      foreground: '#333333',
-      background: '#FFFFFF',
-      ratio: '12.6:1',
-      passes: true,
-    },
+      name: 'Normal text (4.5:1)',;
+      description: 'Normal text should have a contrast ratio of at least 4.5:1',;
+      foreground: '#333333',;
+      background: '#FFFFFF',;
+      ratio: '12.6:1',;
+      passes: true,;
+    },;
     {
-      name: 'Large text (3:1)',
-      description: 'Large text (18pt or 14pt bold) should have a contrast ratio of at least 3:1',
-      foreground: '#767676',
-      background: '#FFFFFF',
-      ratio: '4.6:1',
-      passes: true,
-    },
+      name: 'Large text (3:1)',;
+      description: 'Large text (18pt or 14pt bold) should have a contrast ratio of at least 3:1',;
+      foreground: '#767676',;
+      background: '#FFFFFF',;
+      ratio: '4.6:1',;
+      passes: true,;
+    },;
     {
-      name: 'Insufficient contrast',
-      description: 'This example fails WCAG AA requirements',
-      foreground: '#AAAAAA',
-      background: '#FFFFFF',
-      ratio: '2.3:1',
-      passes: false,
-    },
+      name: 'Insufficient contrast',;
+      description: 'This example fails WCAG AA requirements',;
+      foreground: '#AAAAAA',;
+      background: '#FFFFFF',;
+      ratio: '2.3:1',;
+      passes: false,;
+    },;
   ];
 
   /**
-   * Demonstrates keyboard handling for a custom component
-   * @param event Keyboard event
+   * Demonstrates keyboard handling for a custom component;
+   * @param event Keyboard event;
    */
   handleKeyDown(event: KeyboardEvent): void {
     const target = event.target as HTMLElement;
@@ -189,8 +190,8 @@ modal.addEventListener('keydown', (e) => {
   }
 
   /**
-   * Focus the next element in a group
-   * @param currentElement The currently focused element
+   * Focus the next element in a group;
+   * @param currentElement The currently focused element;
    */
   private focusNextElement(currentElement: HTMLElement): void {
     const focusableElements = this.getFocusableElements(currentElement.parentElement);
@@ -200,8 +201,8 @@ modal.addEventListener('keydown', (e) => {
   }
 
   /**
-   * Focus the previous element in a group
-   * @param currentElement The currently focused element
+   * Focus the previous element in a group;
+   * @param currentElement The currently focused element;
    */
   private focusPreviousElement(currentElement: HTMLElement): void {
     const focusableElements = this.getFocusableElements(currentElement.parentElement);
@@ -211,23 +212,23 @@ modal.addEventListener('keydown', (e) => {
   }
 
   /**
-   * Get all focusable elements within a container
-   * @param container The container element
-   * @returns Array of focusable elements
+   * Get all focusable elements within a container;
+   * @param container The container element;
+   * @returns Array of focusable elements;
    */
   private getFocusableElements(container: HTMLElement | null): HTMLElement[] {
     if (!container) return [];
 
-    return Array.from(
-      container.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      ),
+    return Array.from(;
+      container.querySelectorAll(;
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',;
+      ),;
     ) as HTMLElement[];
   }
 
   /**
-   * Handle item click
-   * @param index The index of the clicked item
+   * Handle item click;
+   * @param index The index of the clicked item;
    */
   handleItemClick(index: number): void {
     alert('Item clicked: Item ' + index);

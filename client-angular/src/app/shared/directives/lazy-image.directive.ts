@@ -1,32 +1,24 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2, NgZone } from '@angular/core';
 
 /**
- * LazyImageDirective
- *
- * This directive implements lazy loading for images to improve performance.
- * It uses the Intersection Observer API to load images only when they enter the viewport.
- *
- * Usage:
- * ```html
- * <img appLazyImage [src]="imageUrl" [placeholder]="placeholderUrl" />
- * ```
- *
- * @example
- * <img
- *   appLazyImage
- *   src="https://example.com/large-image.jpg"
- *   placeholder="https://example.com/placeholder.jpg"
- *   [threshold]="0.1"
- *   [loadingClass]="'image-loading'"
- *   [loadedClass]="'image-loaded'"
- *   [errorClass]="'image-error'"
- * />
+ * LazyImageDirective;
+ *;
+ * This directive implements lazy loading for images to improve performance.;
+ * It uses the Intersection Observer API to load images only when they enter the viewport.;
+ *;
+ * Usage:;
+ * ```html;`
+ * ;
+ * ```;`
+ *;
+ * @example;
+ * ;
  */
 @Directive({
-  selector: '[appLazyImage]',
-  standalone: true,
-})
-export class LazyImageDirective implements OnInit, OnDestroy {
+  selector: '[appLazyImage]',;
+  standalone: true,;
+});
+export class LazyImageDirectiv {e implements OnInit, OnDestroy {
   @Input() src!: string;
   @Input() placeholder?: string;
   @Input() threshold = 0.1;
@@ -39,10 +31,10 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   private isLoaded = false;
   private hasError = false;
 
-  constructor(
-    private el: ElementRef<HTMLImageElement>,
-    private renderer: Renderer2,
-    private ngZone: NgZone,
+  constructor(;
+    private el: ElementRef,;
+    private renderer: Renderer2,;
+    private ngZone: NgZone,;
   ) {}
 
   ngOnInit(): void {
@@ -51,9 +43,9 @@ export class LazyImageDirective implements OnInit, OnDestroy {
       this.renderer.setAttribute(this.el.nativeElement, 'src', this.placeholder);
     } else {
       // Use a transparent pixel as default placeholder
-      this.renderer.setAttribute(
-        this.el.nativeElement,
-        'src',
+      this.renderer.setAttribute(;
+        this.el.nativeElement,;
+        'src',;
         'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
       );
     }
@@ -73,24 +65,24 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   }
 
   /**
-   * Sets up the Intersection Observer to detect when the image enters the viewport
+   * Sets up the Intersection Observer to detect when the image enters the viewport;
    */
   private setupIntersectionObserver(): void {
     // Run outside Angular zone for better performance
     this.ngZone.runOutsideAngular(() => {
       if ('IntersectionObserver' in window) {
-        this.observer = new IntersectionObserver(
+        this.observer = new IntersectionObserver(;
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting && !this.isLoaded && !this.hasError) {
                 this.loadImage();
               }
             });
-          },
+          },;
           {
-            threshold: this.threshold,
-            rootMargin: this.rootMargin,
-          },
+            threshold: this.threshold,;
+            rootMargin: this.rootMargin,;
+          },;
         );
 
         this.observer.observe(this.el.nativeElement);
@@ -102,7 +94,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   }
 
   /**
-   * Loads the actual image
+   * Loads the actual image;
    */
   private loadImage(): void {
     const img = new Image();
@@ -133,7 +125,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   }
 
   /**
-   * Cleans up the Intersection Observer
+   * Cleans up the Intersection Observer;
    */
   private cleanupIntersectionObserver(): void {
     if (this.observer) {

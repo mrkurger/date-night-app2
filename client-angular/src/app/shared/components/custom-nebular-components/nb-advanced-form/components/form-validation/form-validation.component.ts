@@ -1,19 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
-@Component({
-    selector: 'nb-form-validation',
-    template: `
-    <div class="validation-messages" *ngIf="shouldShowErrors">
-      <nb-alert status="danger" size="tiny">
-        <ul class="validation-list">
-          <li *ngFor="let error of getErrors()">{{ error }}</li>
-        </ul>
-      </nb-alert>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'nb-form-validation',;
+    template: `;`
+    ;
+      ;
+        ;
+          {{ error }};
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .validation-messages {
         margin-top: 0.5rem;
       }
@@ -30,20 +30,20 @@ import { AbstractControl } from '@angular/forms';
           }
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbFormValidationComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbFormValidationComponen {t {
   @Input() control!: AbstractControl;
   @Input() errorMessages: { [key: string]: string } = {
-    required: 'This field is required',
-    email: 'Please enter a valid email address',
-    min: 'Value is too small',
-    max: 'Value is too large',
-    minlength: 'Value is too short',
-    maxlength: 'Value is too long',
-    pattern: 'Invalid format',
+    required: 'This field is required',;
+    email: 'Please enter a valid email address',;
+    min: 'Value is too small',;
+    max: 'Value is too large',;
+    minlength: 'Value is too short',;
+    maxlength: 'Value is too long',;
+    pattern: 'Invalid format',;
   };
 
   get shouldShowErrors(): boolean {
@@ -53,8 +53,8 @@ export class NbFormValidationComponent {
   getErrors(): string[] {
     if (!this.control || !this.control.errors) return [];
 
-    return Object.keys(this.control.errors).map(
-      (key) => this.errorMessages[key] || `Invalid value: ${key}`,
+    return Object.keys(this.control.errors).map(;
+      (key) => this.errorMessages[key] || `Invalid value: ${key}`,;`
     );
   }
 }

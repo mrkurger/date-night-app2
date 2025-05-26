@@ -8,41 +8,43 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  AfterViewInit,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-// Nebular imports
-
 import { PaymentService, SubscriptionPrice } from '../../core/services/payment.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserSubscription } from '../../core/models/user.interface';
+import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+  Component,;
+  OnInit,;
+  ViewChild,;
+  ElementRef,;
+  OnDestroy,;
+  AfterViewInit,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
+
+import {
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,;
+} from '@nebular/theme';
+
+// Nebular imports
 
 // Stripe interfaces
 interface StripeError {
@@ -60,23 +62,19 @@ interface StripeCardElement {
 }
 
 @Component({
-    selector: 'app-payment',
-    templateUrl: './payment.component.html',
-    styleUrls: ['./payment.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    NebularModule, CommonModule, ReactiveFormsModule,
-    CardModule,
-    MessageModule,
-    InputTextModule
-  ]
-})
-export class PaymentComponent implements OnInit, OnDestroy, AfterViewInit {
+    selector: 'app-payment',;
+    templateUrl: './payment.component.html',;
+    styleUrls: ['./payment.component.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    NebularModule, CommonModule, ReactiveFormsModule,;
+    CardModule,;
+    MessageModule,;
+    InputTextModule;
+  ];
+});
+export class PaymentComponen {t implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('cardElement') cardElement: ElementRef;
-import { CardModule } from 'primeng/card';
-import { MessageModule } from 'primeng/message';
-import { InputTextModule } from 'primeng/inputtext';
-
 
   subscriptionPrices: SubscriptionPrice[] = [];
   paymentForm: FormGroup;
@@ -87,12 +85,12 @@ import { InputTextModule } from 'primeng/inputtext';
   currentSubscription: UserSubscription | null = null;
   private subscriptions = new Subscription();
 
-  constructor(
-    private paymentService: PaymentService,
-    private notificationService: NotificationService,
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private router: Router,
+  constructor(;
+    private paymentService: PaymentService,;
+    private notificationService: NotificationService,;
+    private authService: AuthService,;
+    private formBuilder: FormBuilder,;
+    private router: Router,;
   ) {}
 
   ngOnInit(): void {
@@ -113,26 +111,26 @@ import { InputTextModule } from 'primeng/inputtext';
   }
 
   /**
-   * Initialize the payment form
+   * Initialize the payment form;
    */
   private initForm(): void {
     this.paymentForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      priceId: ['', [Validators.required]],
+      name: ['', [Validators.required]],;
+      email: ['', [Validators.required, Validators.email]],;
+      priceId: ['', [Validators.required]],;
     });
 
     // Pre-fill email from authenticated user
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.paymentForm.patchValue({
-        email: currentUser.email,
+        email: currentUser.email,;
       });
     }
   }
 
   /**
-   * Initialize Stripe card element
+   * Initialize Stripe card element;
    */
   private initializeStripeElement(): void {
     setTimeout(() => {
@@ -145,61 +143,61 @@ import { InputTextModule } from 'primeng/inputtext';
   }
 
   /**
-   * Load subscription prices from the API
+   * Load subscription prices from the API;
    */
   private loadSubscriptionPrices(): void {
     this.loading = true;
-    const sub = this.paymentService.getSubscriptionPrices().subscribe(
+    const sub = this.paymentService.getSubscriptionPrices().subscribe(;
       (response) => {
         this.subscriptionPrices = response.prices;
         this.loading = false;
-      },
+      },;
       (error) => {
         this.notificationService.error('Failed to load subscription options');
         console.error('Error loading subscription prices:', error);
         this.loading = false;
-      },
+      },;
     );
     this.subscriptions.add(sub);
   }
 
   /**
-   * Load current user's subscription
+   * Load current user's subscription;
    */
   private loadCurrentSubscription(): void {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.currentSubscription = {
-        tier: currentUser.subscription?.tier || 'free',
-        expires: currentUser.subscription?.expires || '',
-        status: currentUser.subscription?.status || 'inactive',
+        tier: currentUser.subscription?.tier || 'free',;
+        expires: currentUser.subscription?.expires || '',;
+        status: currentUser.subscription?.status || 'inactive',;
       };
     }
   }
 
   /**
-   * Handle price selection
-   * @param price Selected subscription price
+   * Handle price selection;
+   * @param price Selected subscription price;
    */
   selectPrice(price: SubscriptionPrice): void {
     this.selectedPrice = price;
     this.paymentForm.patchValue({
-      priceId: price.id,
+      priceId: price.id,;
     });
   }
 
   /**
-   * Format price for display
-   * @param price Subscription price object
+   * Format price for display;
+   * @param price Subscription price object;
    */
   formatPrice(price: SubscriptionPrice): string {
-    return `${this.paymentService.formatCurrency(price.unitAmount, price.currency)} / ${price.interval}`;
+    return `${this.paymentService.formatCurrency(price.unitAmount, price.currency)} / ${price.interval}`;`
   }
 
   /**
-   * Handle form submission
+   * Handle form submission;
    */
-  async onSubmit(): Promise<void> {
+  async onSubmit(): Promise {
     if (this.paymentForm.invalid || !this.stripeCardElement) {
       return;
     }
@@ -211,25 +209,25 @@ import { InputTextModule } from 'primeng/inputtext';
       const clientSecret = await this.paymentService.createSetupIntent();
 
       // Confirm card setup with Stripe
-      const paymentMethod = await this.paymentService.confirmCardSetup(
-        clientSecret,
-        this.stripeCardElement,
+      const paymentMethod = await this.paymentService.confirmCardSetup(;
+        clientSecret,;
+        this.stripeCardElement,;
       );
 
       // Create subscription with the payment method
-      const sub = this.paymentService
-        .createSubscription(this.paymentForm.value.priceId, paymentMethod.id)
-        .subscribe(
+      const sub = this.paymentService;
+        .createSubscription(this.paymentForm.value.priceId, paymentMethod.id);
+        .subscribe(;
           () => {
             this.notificationService.success('Subscription created successfully');
             this.loading = false;
             this.router.navigate(['/profile']);
-          },
+          },;
           (error) => {
             this.notificationService.error('Failed to create subscription');
             console.error('Subscription error:', error);
             this.loading = false;
-          },
+          },;
         );
       this.subscriptions.add(sub);
     } catch (error) {
@@ -240,7 +238,7 @@ import { InputTextModule } from 'primeng/inputtext';
   }
 
   /**
-   * Cancel current subscription
+   * Cancel current subscription;
    */
   cancelSubscription(): void {
     if (!confirm('Are you sure you want to cancel your subscription?')) {
@@ -248,21 +246,21 @@ import { InputTextModule } from 'primeng/inputtext';
     }
 
     this.loading = true;
-    const sub = this.paymentService.cancelSubscription().subscribe(
+    const sub = this.paymentService.cancelSubscription().subscribe(;
       (result) => {
         this.notificationService.success('Subscription cancelled successfully');
         this.loading = false;
         this.currentSubscription = {
-          ...this.currentSubscription,
-          cancelAtPeriodEnd: true,
-          currentPeriodEnd: result.currentPeriodEnd,
+          ...this.currentSubscription,;
+          cancelAtPeriodEnd: true,;
+          currentPeriodEnd: result.currentPeriodEnd,;
         };
-      },
+      },;
       (error) => {
         this.notificationService.error('Failed to cancel subscription');
         console.error('Cancellation error:', error);
         this.loading = false;
-      },
+      },;
     );
     this.subscriptions.add(sub);
   }

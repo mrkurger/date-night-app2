@@ -1,4 +1,11 @@
-/// <reference types="jasmine" />
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { NbToastrService, NbToastrRef, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { of } from 'rxjs';
+import { NotificationService, NotificationType, ToastNotification } from './notification.service';
+import { environment } from '../../../environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+/// 
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -9,22 +16,14 @@
 // - NOTIFICATION_DURATION: Duration for notifications in milliseconds
 //   Related to: client-angular/src/app/core/services/notification.service.ts
 // ===================================================
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { NbToastrService, NbToastrRef, NbGlobalPhysicalPosition } from '@nebular/theme';
-import { of } from 'rxjs';
-
-import { NotificationService, NotificationType, ToastNotification } from './notification.service';
-import { environment } from '../../../environments/environment';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
+';
 describe('NotificationService', () => {
   let service: NotificationService;
   let httpMock: HttpTestingController;
-  let snackBarSpy: jasmine.SpyObj<NbToastrService>;
-  let snackBarRefSpy: jasmine.SpyObj<NbToastrRef<any>>;
-  let toastrSpy: jasmine.SpyObj<NbToastrService>;
+  let snackBarSpy: jasmine.SpyObj;
+  let snackBarRefSpy: jasmine.SpyObj>;
+  let toastrSpy: jasmine.SpyObj;
 
   const apiUrl = environment.apiUrl + '/notifications';
 
@@ -37,14 +36,14 @@ describe('NotificationService', () => {
     toastrSpy = jasmine.createSpyObj('NbToastrService', ['show']);
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
-        NotificationService,
-        { provide: NbToastrService, useValue: snackBarSpy },
-        { provide: NbToastrService, useValue: toastrSpy },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-    ]
+    imports: [],;
+    providers: [;
+        NotificationService,;
+        { provide: NbToastrService, useValue: snackBarSpy },;
+        { provide: NbToastrService, useValue: toastrSpy },;
+        provideHttpClient(withInterceptorsFromDi()),;
+        provideHttpClientTesting(),;
+    ];
 });
 
     service = TestBed.inject(NotificationService);
@@ -83,15 +82,15 @@ describe('NotificationService', () => {
 
       const result = service.success(message, action, options);
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith(
-        message,
-        action,
+      expect(snackBarSpy.open).toHaveBeenCalledWith(;
+        message,;
+        action,;
         jasmine.objectContaining({
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'],
-          duration: 2000,
-        }),
+          horizontalPosition: 'end',;
+          verticalPosition: 'top',;
+          panelClass: ['success-snackbar'],;
+          duration: 2000,;
+        }),;
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -103,15 +102,15 @@ describe('NotificationService', () => {
 
       const result = service.error(message, action, options);
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith(
-        message,
-        action,
+      expect(snackBarSpy.open).toHaveBeenCalledWith(;
+        message,;
+        action,;
         jasmine.objectContaining({
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-          duration: 2000,
-        }),
+          horizontalPosition: 'end',;
+          verticalPosition: 'top',;
+          panelClass: ['error-snackbar'],;
+          duration: 2000,;
+        }),;
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -123,15 +122,15 @@ describe('NotificationService', () => {
 
       const result = service.warning(message, action, options);
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith(
-        message,
-        action,
+      expect(snackBarSpy.open).toHaveBeenCalledWith(;
+        message,;
+        action,;
         jasmine.objectContaining({
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['warning-snackbar'],
-          duration: 2000,
-        }),
+          horizontalPosition: 'end',;
+          verticalPosition: 'top',;
+          panelClass: ['warning-snackbar'],;
+          duration: 2000,;
+        }),;
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -143,15 +142,15 @@ describe('NotificationService', () => {
 
       const result = service.info(message, action, options);
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith(
-        message,
-        action,
+      expect(snackBarSpy.open).toHaveBeenCalledWith(;
+        message,;
+        action,;
         jasmine.objectContaining({
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['info-snackbar'],
-          duration: 2000,
-        }),
+          horizontalPosition: 'end',;
+          verticalPosition: 'top',;
+          panelClass: ['info-snackbar'],;
+          duration: 2000,;
+        }),;
       );
       expect(result).toBe(snackBarRefSpy);
     });
@@ -249,7 +248,7 @@ describe('NotificationService', () => {
         expect(count).toBe(mockCount);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/unread-count`);
+      const req = httpMock.expectOne(`${apiUrl}/unread-count`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockCount);
     });
@@ -271,13 +270,13 @@ describe('NotificationService', () => {
       const errorResponse = { status: 500, statusText: 'Server Error' };
 
       service.getUnreadNotificationsCount().subscribe({
-        next: () => fail('should have failed with a 500 error'),
+        next: () => fail('should have failed with a 500 error'),;
         error: (error) => {
           expect(error.status).toBe(500);
-        },
+        },;
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/unread-count`);
+      const req = httpMock.expectOne(`${apiUrl}/unread-count`);`
       req.flush('Server error', errorResponse);
     });
   });
@@ -287,9 +286,9 @@ describe('NotificationService', () => {
       const message = 'Success message';
       service.success(message);
       expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Success', {
-        status: 'success',
-        duration: 3000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        status: 'success',;
+        duration: 3000,;
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,;
       });
     });
 
@@ -297,9 +296,9 @@ describe('NotificationService', () => {
       const message = 'Error message';
       service.error(message);
       expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Error', {
-        status: 'danger',
-        duration: 5000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        status: 'danger',;
+        duration: 5000,;
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,;
       });
     });
 
@@ -307,9 +306,9 @@ describe('NotificationService', () => {
       const message = 'Warning message';
       service.warning(message);
       expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Warning', {
-        status: 'warning',
-        duration: 4000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        status: 'warning',;
+        duration: 4000,;
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,;
       });
     });
 
@@ -317,9 +316,9 @@ describe('NotificationService', () => {
       const message = 'Info message';
       service.info(message);
       expect(toastrSpy.show).toHaveBeenCalledWith(message, 'Info', {
-        status: 'info',
-        duration: 3000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        status: 'info',;
+        duration: 3000,;
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,;
       });
     });
   });

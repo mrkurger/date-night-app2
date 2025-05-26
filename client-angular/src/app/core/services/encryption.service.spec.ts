@@ -1,25 +1,25 @@
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { EncryptionService, EncryptedData, EncryptedAttachmentData } from './encryption.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the encryption service
 //
-// COMMON CUSTOMIZATIONS:
+// COMMON CUSTOMIZATIONS:';
 // - KEY_STORAGE_PREFIX: Prefix for keys stored in localStorage (default: 'chat_keys_')
 // - ENABLE_ENCRYPTION: Enable end-to-end encryption (default: true)
 // - KEY_PAIR_ALGORITHM: Algorithm used for key pair generation (default: 'RSA-OAEP')
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { EncryptionService, EncryptedData, EncryptedAttachmentData } from './encryption.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('EncryptionService', () => {
   let service: EncryptionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [EncryptionService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [EncryptionService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     service = TestBed.inject(EncryptionService);
@@ -75,12 +75,12 @@ describe('EncryptionService', () => {
     it('should decrypt a file', async () => {
       const roomId = 'test-room-id';
       const mockResponse = {
-        data: new ArrayBuffer(10),
+        data: new ArrayBuffer(10),;
         metadata: {
-          originalName: 'test.txt',
-          originalType: 'text/plain',
-          size: 10,
-        },
+          originalName: 'test.txt',;
+          originalType: 'text/plain',;
+          size: 10,;
+        },;
       };
 
       const result = await service.decryptFile(roomId, mockResponse);

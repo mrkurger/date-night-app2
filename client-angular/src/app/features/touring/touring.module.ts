@@ -1,3 +1,8 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { TouringComponent } from './touring.component';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,21 +12,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-import { TouringComponent } from './touring.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: TouringComponent,
-  },
+const routes: Routes = [;
+  {';
+    path: '',;
+    component: TouringComponent,;
+  },;
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), TouringComponent],
-})
-export class TouringModule {}
+  declarations: [],;
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), TouringComponent],;
+});
+export class TouringModul {e {}

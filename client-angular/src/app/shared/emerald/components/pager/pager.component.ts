@@ -1,4 +1,7 @@
-
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { _NebularModule } from '../../../shared/nebular.module';
+import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -11,102 +14,96 @@
 // - SHOW_FIRST_LAST: Whether to show first/last page buttons (default: true)
 //   Related to: pager.component.html
 // ===================================================
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { _NebularModule } from '../../../shared/nebular.module';
-
-import { CommonModule } from '@angular/common';
 
 /**
- * Pagination Component
- *
- * A wrapper around Nebular's button and icon components that provides a flexible pagination system
- * with various styles and options.
+ * Pagination Component;
+ *';
+ * A wrapper around Nebular's button and icon components that provides a flexible pagination system;
+ * with various styles and options.;
  */
 @Component({
-    selector: 'nb-paginator',
-    templateUrl: './pager.component.html',
-    styleUrls: ['./pager.component.scss'],
-    imports: [
-    CommonModule,
-        NbSelectModule,
-        NbIconModule,
-        NbButtonModule,
-    DropdownModule
-  ]
-})
-export class PaginatorModule implements OnChanges {
+    selector: 'nb-paginator',;
+    templateUrl: './pager.component.html',;
+    styleUrls: ['./pager.component.scss'],;
+    imports: [;
+    CommonModule,;
+        NbSelectModule,;
+        NbIconModule,;
+        NbButtonModule,;
+    DropdownModule;
+  ];
+});
+export class PaginatorModul {e implements OnChanges {
   /**
-   * The current page number (1-based)
+   * The current page number (1-based);
    */
   @Input() currentPage = 1;
-import { DropdownModule } from 'primeng/dropdown';
-
 
   /**
-   * The total number of pages
+   * The total number of pages;
    */
   @Input() totalPages = 1;
 
   /**
-   * The maximum number of page buttons to show
+   * The maximum number of page buttons to show;
    */
   @Input() maxVisiblePages = 5;
 
   /**
-   * Whether to show first/last page buttons
+   * Whether to show first/last page buttons;
    */
   @Input() showFirstLast = true;
 
   /**
-   * Whether to show previous/next page buttons
+   * Whether to show previous/next page buttons;
    */
   @Input() showPrevNext = true;
 
   /**
-   * Whether to show the page size selector
+   * Whether to show the page size selector;
    */
   @Input() showPageSize = false;
 
   /**
-   * The available page sizes
+   * The available page sizes;
    */
   @Input() pageSizes: number[] = [10, 25, 50, 100];
 
   /**
-   * The current page size
+   * The current page size;
    */
   @Input() pageSize = 10;
 
   /**
-   * The style of the pager
-   * - 'default': Standard pagination with page numbers
-   * - 'simple': Simple previous/next buttons
-   * - 'compact': Compact pagination with limited page numbers
+   * The style of the pager;
+   * - 'default': Standard pagination with page numbers;
+   * - 'simple': Simple previous/next buttons;
+   * - 'compact': Compact pagination with limited page numbers;
    */
   @Input() style: 'default' | 'simple' | 'compact' = 'default';
 
   /**
-   * The size of the pager
+   * The size of the pager;
    */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
-   * The alignment of the pager
+   * The alignment of the pager;
    */
   @Input() align: 'left' | 'center' | 'right' = 'center';
 
   /**
-   * Emitted when the page changes
+   * Emitted when the page changes;
    */
-  @Output() pageChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter();
 
   /**
-   * Emitted when the page size changes
+   * Emitted when the page size changes;
    */
-  @Output() pageSizeChange = new EventEmitter<number>();
+  @Output() pageSizeChange = new EventEmitter();
 
   /**
-   * The range of visible pages
+   * The range of visible pages;
    */
   visiblePages: number[] = [];
 
@@ -117,11 +114,10 @@ import { DropdownModule } from 'primeng/dropdown';
   }
 
   /**
-   * Calculate the visible page numbers based on the current page and total pages
+   * Calculate the visible page numbers based on the current page and total pages;
    */
   calculateVisiblePages(): void {
-    if (this.totalPages <= this.maxVisiblePages) {
-      this.visiblePages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    if (this.totalPages  i + 1);
     } else {
       const halfVisible = Math.floor(this.maxVisiblePages / 2);
       let start = Math.max(this.currentPage - halfVisible, 1);
@@ -136,17 +132,17 @@ import { DropdownModule } from 'primeng/dropdown';
   }
 
   /**
-   * Go to a specific page
+   * Go to a specific page;
    */
   goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages || page === this.currentPage) {
+    if (page  this.totalPages || page === this.currentPage) {
       return;
     }
     this.pageChange.emit(page);
   }
 
   /**
-   * Handle page size change
+   * Handle page size change;
    */
   onPageSizeChange(newSize: number): void {
     if (newSize !== this.pageSize) {

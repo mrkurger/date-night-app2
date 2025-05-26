@@ -20,34 +20,13 @@ export interface SafetyCheckin {
   expectedEndTime: Date;
   actualEndTime?: Date;
   status: 'scheduled' | 'active' | 'completed' | 'missed' | 'emergency';
-  checkInReminders: Array<{
-    _id: string;
-    scheduledTime: Date;
-    sent: boolean;
-    sentAt?: Date;
-  }>;
-  emergencyContacts: Array<{
-    _id: string;
-    name: string;
-    phone?: string;
-    email?: string;
-    relationship?: string;
-    notified: boolean;
-    notifiedAt?: Date;
-  }>;
+  checkInReminders: Array;
+  emergencyContacts: Array;
   safetyNotes?: string;
   safetyCode?: string; // Only included when first created
   distressCode?: string; // Only included when first created
   checkInMethod: 'app' | 'sms' | 'email';
-  checkInResponses: Array<{
-    _id: string;
-    time: Date;
-    response: 'safe' | 'need_more_time' | 'distress';
-    location?: {
-      type: 'Point';
-      coordinates: [number, number]; // [longitude, latitude]
-    };
-  }>;
+  checkInResponses: Array;
   autoCheckInSettings: {
     enabled: boolean;
     intervalMinutes: number;
@@ -78,12 +57,7 @@ export interface SafetyCheckinCreateData {
     intervalMinutes: number;
     missedCheckInsBeforeAlert: number;
   };
-  emergencyContacts?: Array<{
-    name: string;
-    phone?: string;
-    email?: string;
-    relationship?: string;
-  }>;
+  emergencyContacts?: Array;
 }
 
 export interface SafetyCheckinUpdateData {
@@ -122,13 +96,7 @@ export interface EmergencyContact {
 }
 
 export interface SafetySettings {
-  emergencyContacts: Array<{
-    _id?: string;
-    name: string;
-    phone?: string;
-    email?: string;
-    relationship?: string;
-  }>;
+  emergencyContacts: Array;
   safetyCode?: string;
   distressCode?: string;
   autoCheckIn: {
@@ -139,13 +107,7 @@ export interface SafetySettings {
 }
 
 export interface SafetySettingsUpdateData {
-  emergencyContacts?: Array<{
-    _id?: string;
-    name: string;
-    phone?: string;
-    email?: string;
-    relationship?: string;
-  }>;
+  emergencyContacts?: Array;
   autoCheckIn?: {
     enabled: boolean;
     intervalMinutes: number;

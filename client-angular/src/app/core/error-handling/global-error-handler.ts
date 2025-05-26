@@ -3,16 +3,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
-@Injectable()
-export class GlobalErrorHandler implements ErrorHandler {
-  constructor(
-    private zone: NgZone,
-    private router: Router,
+@Injectable();
+export class GlobalErrorHandle {r implements ErrorHandler {
+  constructor(;
+    private zone: NgZone,;
+    private router: Router,;
   ) {}
 
   handleError(error: Error | HttpErrorResponse): void {
     // Log the error to console in development mode
-    if (!environment.production) {
+    if (!environment.production) {';
       console.error('Error caught by Global Error Handler:', error);
     }
 
@@ -32,39 +32,39 @@ export class GlobalErrorHandler implements ErrorHandler {
   private handleHttpError(error: HttpErrorResponse): void {
     // Handle HTTP errors based on status code
     switch (error.status) {
-      case 0:
+      case 0:;
         // Connection error
-        this.showErrorMessage(
-          'Could not connect to the server. Please check your internet connection.',
+        this.showErrorMessage(;
+          'Could not connect to the server. Please check your internet connection.',;
         );
         break;
-      case 401:
+      case 401:;
         // Unauthorized
         this.showErrorMessage('You are not authorized to access this resource.');
         this.zone.run(() => this.router.navigate(['/auth/login']));
         break;
-      case 403:
+      case 403:;
         // Forbidden
         this.showErrorMessage('You do not have permission to access this resource.');
         break;
-      case 404:
+      case 404:;
         // Not found
         this.showErrorMessage('The requested resource was not found.');
         break;
-      case 500:
+      case 500:;
         // Server error
         this.showErrorMessage('An error occurred on the server. Please try again later.');
         break;
-      default:
+      default:;
         // Other errors
-        this.showErrorMessage(`An error occurred: ${error.message}`);
+        this.showErrorMessage(`An error occurred: ${error.message}`);`
         break;
     }
   }
 
   private handleClientError(error: Error): void {
     // Handle client-side errors
-    this.showErrorMessage(`An application error occurred: ${error.message}`);
+    this.showErrorMessage(`An application error occurred: ${error.message}`);`
   }
 
   private showErrorMessage(message: string): void {

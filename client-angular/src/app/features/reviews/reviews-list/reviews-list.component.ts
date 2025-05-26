@@ -1,21 +1,17 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { NebularModule } from '../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-
-
+  Component,;
+  OnInit,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
 
 export interface Review {
   _id: string;
@@ -35,161 +31,111 @@ export interface Review {
 }
 
 @Component({
-    selector: 'app-reviews-list',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    CommonModule, RouterModule, NebularModule,
-    ButtonModule,
-    MenuModule
-  ],
-    template: `
-    <div class="reviews-list-container">
-      <!-- Loading State -->
-      <div class="loading-container" *ngIf="loading">
-        <nb-spinner status="primary"></nb-spinner>
-        <p>Loading reviews...</p>
-      </div>
+    selector: 'app-reviews-list',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    CommonModule, RouterModule, NebularModule,;
+    ButtonModule,;
+    MenuModule;
+  ],;
+    template: `;`
+    ;
+      ;
+      ;
+        ;
+        Loading reviews...;
+      ;
 
-      <!-- Empty State -->
-      <div class="empty-state" *ngIf="!loading && reviews.length === 0">
-        <nb-icon icon="message-square-outline" class="empty-icon"></nb-icon>
-        <h3>No Reviews Yet</h3>
-        <p>Be the first to share your experience!</p>
-      </div>
+      ;
+      ;
+        ;
+        No Reviews Yet;
+        Be the first to share your experience!;
+      ;
 
-      <!-- Reviews List -->
-      <div class="reviews-list" *ngIf="!loading && reviews.length > 0">
-        <nb-card *ngFor="let review of reviews" class="review-item">
-          <nb-card-header>
-            <div class="review-header">
-              <div class="user-info">
-                <nb-user
-                  *ngIf="!review.anonymous"
-                  [name]="review.userName"
-                  [picture]="review.userAvatar || '/assets/img/default-avatar.png'"
-                  size="medium"
-                ></nb-user>
-                <nb-user
-                  *ngIf="review.anonymous"
-                  name="Anonymous User"
-                  icon="person-outline"
-                  size="medium"
-                ></nb-user>
-                <span class="review-date">{{ formatDate(review.createdAt) }}</span>
-              </div>
+      ;
+       0">;
+        ;
+          ;
+            ;
+              ;
+                ;
+                ;
+                {{ formatDate(review.createdAt) }};
+              ;
 
-              <!-- Review Actions -->
-              <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
-                <button
-                  nbButton
-                  ghost
-                  [nbContextMenu]="reviewActions"
-                  [nbContextMenuTag]="review._id"
-                  aria-label="Review actions"
-                >
-                  <nb-icon icon="more-vertical-outline"></nb-icon>
-                </button>
-              </div>
-            </div>
-          </nb-card-header>
+              ;
+              ;
+                ;
+                  ;
+                ;
+              ;
+            ;
+          ;
 
-          <nb-card-body>
-            <!-- Review Content -->
-            <div class="review-content">
-              <div class="rating">
-                <div class="stars">
-                  <nb-icon
-                    *ngFor="let star of getStars(review.rating)"
-                    [icon]="star ? 'star' : 'star-outline'"
-                    [status]="star ? 'warning' : 'basic'"
-                  ></nb-icon>
-                </div>
-                <nb-badge [text]="review.rating + '/5'" status="primary"></nb-badge>
-              </div>
+          ;
+            ;
+            ;
+              ;
+                ;
+                  ;
+                ;
+                ;
+              ;
 
-              <h3 class="review-title">{{ review.title }}</h3>
-              <p class="review-text">{{ review.content }}</p>
+              {{ review.title }};
+              {{ review.content }};
 
-              <!-- Ad Info (if showing) -->
-              <div class="ad-info" *ngIf="showAdInfo">
-                <a [routerLink]="['/ad-details', review.adId]" class="ad-link">
-                  View Ad
-                  <nb-icon icon="external-link-outline"></nb-icon>
-                </a>
-              </div>
+              ;
+              ;
+                ;
+                  View Ad;
+                  ;
+                ;
+              ;
 
-              <!-- Review Feedback -->
-              <div class="review-feedback">
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  [status]="review.userReaction === 'helpful' ? 'success' : 'basic'"
-                  (click)="onReactionClick(review._id, 'helpful')"
-                >
-                  <nb-icon icon="thumbs-up-outline"></nb-icon>
-                </button>
-                <button
-                  nbButton
-                  ghost
-                  size="small"
-                  [status]="review.userReaction === 'unhelpful' ? 'danger' : 'basic'"
-                  (click)="onReactionClick(review._id, 'unhelpful')"
-                >
-                  <nb-icon icon="thumbs-down-outline"></nb-icon>
-                  Not Helpful ({{ review.unhelpful }})
-                </button>
-              </div>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
+              ;
+              ;
+                ;
+                  ;
+                ;
+                ;
+                  ;
+                  Not Helpful ({{ review.unhelpful }});
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <!-- Pagination -->
-      <div class="pagination-container" *ngIf="showPagination && totalPages > 1 && !loading">
-        <div class="pagination">
-          <button
-            nbButton
-            ghost
-            [disabled]="currentPage === 1"
-            (click)="changePage(currentPage - 1)"
-            aria-label="Previous page"
-          >
-            <nb-icon icon="arrow-left"></nb-icon>
-          </button>
+      ;
+       1 && !loading">;
+        ;
+          ;
+            ;
+          ;
 
-          <ng-container *ngFor="let page of pageNumbers">
-            <ng-container *ngIf="page !== -1; else ellipsis">
-              <button
-                nbButton
-                [ghost]="page !== currentPage"
-                [status]="page === currentPage ? 'primary' : 'basic'"
-                (click)="changePage(page)"
-                [attr.aria-current]="page === currentPage ? 'page' : null"
-              >
+          ;
+            
+              ;
                 {{ page }}
-              </button>
-            </ng-container>
-            <ng-template #ellipsis>
-              <span class="ellipsis">...</span>
-            </ng-template>
-          </ng-container>
+              ;
+            ;
+            ;
+              ...;
+            ;
+          ;
 
-          <button
-            nbButton
-            ghost
-            [disabled]="currentPage === totalPages"
-            (click)="changePage(currentPage + 1)"
-            aria-label="Next page"
-          >
-            <nb-icon icon="arrow-right"></nb-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-  `,
-    styles: [
-        `
+          ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -311,10 +257,10 @@ export interface Review {
         color: var(--text-hint-color);
         padding: 0 0.5rem;
       }
-    `,
-    ]
-})
-export class ReviewsListComponent implements OnInit {
+    `,;`
+    ];
+});
+export class ReviewsListComponen {t implements OnInit {
   @Input() reviews: Review[] = [];
   @Input() loading = false;
   @Input() showAdInfo = false;
@@ -324,18 +270,15 @@ export class ReviewsListComponent implements OnInit {
   @Input() currentPage = 1;
   @Input() pageSize = 10;
 
-  @Output() pageChange = new EventEmitter<number>();
-  @Output() editReview = new EventEmitter<Review>();
-  @Output() deleteReview = new EventEmitter<string>();
-  @Output() reactionChange = new EventEmitter<{
-    reviewId: string;
-    reaction: 'helpful' | 'unhelpful' | null;
-  }>();
+  @Output() pageChange = new EventEmitter();
+  @Output() editReview = new EventEmitter();
+  @Output() deleteReview = new EventEmitter();
+  @Output() reactionChange = new EventEmitter();
 
   currentUserId: string | null = null;
-  reviewActions = [
-    { title: 'Edit Review', icon: 'edit-outline', action: 'edit' },
-    { title: 'Delete Review', icon: 'trash-2-outline', action: 'delete' },
+  reviewActions = [;
+    { title: 'Edit Review', icon: 'edit-outline', action: 'edit' },;
+    { title: 'Delete Review', icon: 'trash-2-outline', action: 'delete' },;
   ];
 
   constructor(private authService: AuthService) {}
@@ -346,36 +289,20 @@ export class ReviewsListComponent implements OnInit {
   }
 
   /**
-   * Get the total number of pages
+   * Get the total number of pages;
    */
   get totalPages(): number {
     return Math.ceil(this.totalReviews / this.pageSize);
   }
 
   /**
-   * Get an array of page numbers for pagination
+   * Get an array of page numbers for pagination;
    */
   get pageNumbers(): number[] {
     const pages = [];
     const maxVisiblePages = 5;
 
-    if (this.totalPages <= maxVisiblePages) {
-      // Show all pages if there are 5 or fewer
-      for (let i = 1; i <= this.totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      // Always show first page
-      pages.push(1);
-
-      // Calculate start and end of visible pages
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.totalPages - 1, this.currentPage + 1);
-
-      // Adjust if we're near the beginning or end
-      if (this.currentPage <= 2) {
-        end = 4;
-      } else if (this.currentPage >= this.totalPages - 1) {
+    if (this.totalPages = this.totalPages - 1) {
         start = this.totalPages - 3;
       }
 
@@ -385,71 +312,7 @@ export class ReviewsListComponent implements OnInit {
       }
 
       // Add middle pages
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
-
-      // Add ellipsis if needed
-      if (end < this.totalPages - 1) {
-        pages.push(-1); // -1 represents ellipsis
-      }
-
-      // Always show last page
-      pages.push(this.totalPages);
-    }
-
-    return pages;
-  }
-
-  /**
-   * Change the current page
-   */
-  changePage(page: number): void {
-    if (page !== this.currentPage && page > 0 && page <= this.totalPages) {
-      this.pageChange.emit(page);
-    }
-  }
-
-  /**
-   * Format the date to a readable string
-   */
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  }
-
-  /**
-   * Check if the current user is the author of a review
-   */
-  isReviewAuthor(review: Review): boolean {
-    return this.currentUserId === review.userId;
-  }
-
-  /**
-   * Handle edit review action
-   */
-  onEditReview(review: Review): void {
-    this.editReview.emit(review);
-  }
-
-  /**
-   * Handle delete review action
-   */
-  onDeleteReview(reviewId: string): void {
-    if (confirm('Are you sure you want to delete this review?')) {
-      this.deleteReview.emit(reviewId);
-    }
-  }
-
-  /**
-   * Handle helpful/unhelpful reaction
-   */
-  onReactionClick(reviewId: string, reaction: 'helpful' | 'unhelpful'): void {
-    const review = this.reviews.find((r) => r._id === reviewId);
+      for (let i = start; i  0 && page  r._id === reviewId);
     if (!review) return;
 
     // Toggle the reaction
@@ -458,11 +321,11 @@ export class ReviewsListComponent implements OnInit {
   }
 
   /**
-   * Get star array for rating display
+   * Get star array for rating display;
    */
   getStars(rating: number): number[] {
-    return Array(5)
-      .fill(0)
+    return Array(5);
+      .fill(0);
       .map((_, i) => (i < rating ? 1 : 0));
   }
 }

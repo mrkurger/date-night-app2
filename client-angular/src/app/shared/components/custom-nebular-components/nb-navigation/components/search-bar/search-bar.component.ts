@@ -2,19 +2,15 @@ import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-@Component({
-    selector: 'nb-search-bar',
-    template: `
-    <div class="search-bar">
-      <nb-search
-        type="modal-half"
-        placeholder="Search..."
-        (search)="onSearchSubmit($event)"
-      ></nb-search>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'nb-search-bar',;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .search-bar {
         display: flex;
         align-items: center;
@@ -71,19 +67,19 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
           }
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbSearchBarComponent implements OnDestroy {
-  @Output() search = new EventEmitter<string>();
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbSearchBarComponen {t implements OnDestroy {
+  @Output() search = new EventEmitter();
 
-  private searchTerms = new Subject<string>();
-  private destroy$ = new Subject<void>();
+  private searchTerms = new Subject();
+  private destroy$ = new Subject();
 
   constructor() {
-    this.searchTerms
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    this.searchTerms;
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$));
       .subscribe((term) => {
         this.search.emit(term);
       });

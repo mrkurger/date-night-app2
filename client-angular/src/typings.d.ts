@@ -1,12 +1,13 @@
 import { Output } from '@angular/core';
-/// <reference types="@types/jasmine" />
 
-/// <reference types="@types/jasmine" />
-/// <reference types="jasmine" />
+/// 
+
+/// 
+/// 
 
 declare global {
   namespace jasmine {
-    interface Matchers<T> {
+    interface Matchers {
       toBe(expected: T, expectationFailOutput?: any): boolean;
       toBeDefined(expectationFailOutput?: any): boolean;
       toBeFalse(expectationFailOutput?: any): boolean;
@@ -30,9 +31,10 @@ declare global {
       toMatch(expected: string | RegExp, expectationFailOutput?: any): boolean;
       toThrow(expected?: any, expectationFailOutput?: any): boolean;
       toThrowError(expected?: any, message?: string, expectationFailOutput?: any): boolean;
-      not: Matchers<T>;
+      not: Matchers;
     }
   }
 
-  function expect<T>(actual: T): jasmine.Matchers<T>;
+  function expect(actual: T): jasmine.Matchers;
 }
+';

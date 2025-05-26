@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { By } from '@angular/platform-browser'; // Commented out as it's currently unused
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ChatMessageComponent } from './chat-message.component';
 import { EncryptionService } from '../../../core/services/encryption.service';
@@ -7,15 +6,18 @@ import { AuthService } from '../../../core/services/auth.service';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { LinkifyPipe } from '../../pipes/linkify.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
+';
+// import { By } from '@angular/platform-browser'; // Commented out as it's currently unused
 
+';
 describe('ChatMessageComponent', () => {
   let component: ChatMessageComponent;
-  let fixture: ComponentFixture<ChatMessageComponent>;
-  let encryptionServiceSpy: jasmine.SpyObj<EncryptionService>;
+  let fixture: ComponentFixture;
+  let encryptionServiceSpy: jasmine.SpyObj;
   // These spies are created but not used in current tests
   // Will be used in future test implementations
-  // let authServiceSpy: jasmine.SpyObj<AuthService>;
-  // let changeDetectorRefSpy: jasmine.SpyObj<ChangeDetectorRef>;
+  // let authServiceSpy: jasmine.SpyObj;
+  // let changeDetectorRefSpy: jasmine.SpyObj;
 
   beforeEach(async () => {
     const encryptionSpy = jasmine.createSpyObj('EncryptionService', ['decryptMessage']);
@@ -25,33 +27,33 @@ describe('ChatMessageComponent', () => {
     authSpy.getCurrentUserId.and.returnValue('current-user-id');
 
     await TestBed.configureTestingModule({
-      imports: [ChatMessageComponent, TimeAgoPipe],
-      providers: [
-        { provide: EncryptionService, useValue: encryptionSpy },
-        { provide: AuthService, useValue: authSpy },
-        { provide: ChangeDetectorRef, useValue: cdrSpy },
+      imports: [ChatMessageComponent, TimeAgoPipe],;
+      providers: [;
+        { provide: EncryptionService, useValue: encryptionSpy },;
+        { provide: AuthService, useValue: authSpy },;
+        { provide: ChangeDetectorRef, useValue: cdrSpy },;
         {
-          provide: LinkifyPipe,
-          useFactory: () => new LinkifyPipe(TestBed.inject(DomSanitizer)),
-        },
-      ],
+          provide: LinkifyPipe,;
+          useFactory: () => new LinkifyPipe(TestBed.inject(DomSanitizer)),;
+        },;
+      ],;
     }).compileComponents();
 
-    encryptionServiceSpy = TestBed.inject(EncryptionService) as jasmine.SpyObj<EncryptionService>;
-    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    changeDetectorRefSpy = TestBed.inject(ChangeDetectorRef) as jasmine.SpyObj<ChangeDetectorRef>;
+    encryptionServiceSpy = TestBed.inject(EncryptionService) as jasmine.SpyObj;
+    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj;
+    changeDetectorRefSpy = TestBed.inject(ChangeDetectorRef) as jasmine.SpyObj;
 
     fixture = TestBed.createComponent(ChatMessageComponent);
     component = fixture.componentInstance;
 
     // Set up default message
     component.message = {
-      _id: 'msg-1',
-      roomId: 'room-1',
-      sender: { id: 'sender-1', username: 'TestUser' },
-      message: 'Hello, world!',
-      timestamp: new Date(),
-      read: false,
+      _id: 'msg-1',;
+      roomId: 'room-1',;
+      sender: { id: 'sender-1', username: 'TestUser' },;
+      message: 'Hello, world!',;
+      timestamp: new Date(),;
+      read: false,;
     };
 
     component.roomId = 'room-1';
@@ -95,8 +97,8 @@ describe('ChatMessageComponent', () => {
     component.message.isEncrypted = true;
     component.message.message = 'encrypted-content';
     component.message.encryptionData = {
-      iv: 'test-iv',
-      authTag: 'test-auth-tag',
+      iv: 'test-iv',;
+      authTag: 'test-auth-tag',;
     };
 
     // Mock successful decryption
@@ -110,9 +112,9 @@ describe('ChatMessageComponent', () => {
     fixture.detectChanges();
 
     expect(encryptionServiceSpy.decryptMessage).toHaveBeenCalledWith('room-1', {
-      ciphertext: 'encrypted-content',
-      iv: 'test-iv',
-      authTag: 'test-auth-tag',
+      ciphertext: 'encrypted-content',;
+      iv: 'test-iv',;
+      authTag: 'test-auth-tag',;
     });
 
     expect(component.decryptedContent).toBe('Decrypted message');
@@ -124,8 +126,8 @@ describe('ChatMessageComponent', () => {
     component.message.isEncrypted = true;
     component.message.message = 'encrypted-content';
     component.message.encryptionData = {
-      iv: 'test-iv',
-      authTag: 'test-auth-tag',
+      iv: 'test-iv',;
+      authTag: 'test-auth-tag',;
     };
 
     // Mock failed decryption

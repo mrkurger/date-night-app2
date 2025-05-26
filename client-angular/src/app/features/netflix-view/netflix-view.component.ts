@@ -10,31 +10,14 @@
 //   Related to: netflix-view.component.scss:$card-animation-duration
 // ===================================================
 import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChildren,
-  QueryList,
-  ViewChild,
-  TemplateRef,
-  Input,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-// PrimeNG Modules
-// Application Services
 import { AdService } from '../../core/services/ad.service';
 import { NotificationPrimeNGService } from '../../core/services/notification.primeng.service';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
-
-// Application Models
 import { Ad } from '../../core/models/ad.interface';
-
-// Layout Components
 import { MainLayoutComponent } from '../../shared/components/main-layout/main-layout.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -49,6 +32,24 @@ import { RippleModule } from 'primeng/ripple';
 import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
+  Component,;
+  OnInit,;
+  ElementRef,;
+  ViewChildren,;
+  QueryList,;
+  ViewChild,;
+  TemplateRef,;
+  Input,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
+
+// PrimeNG Modules
+// Application Services
+
+// Application Models
+
+// Layout Components
 
 interface GetAdsResponse {
   ads: Ad[];
@@ -58,39 +59,37 @@ interface GetAdsResponse {
 }
 
 @Component({
-  selector: 'app-netflix-view',
-  templateUrl: './netflix-view.component.html',
-  styleUrls: ['./netflix-view.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  standalone: true,
-  imports: [
-    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
+  selector: 'app-netflix-view',;
+  templateUrl: './netflix-view.component.html',;
+  styleUrls: ['./netflix-view.component.scss'],;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  standalone: true,;
+  imports: [;
+    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule,; 
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    MainLayoutComponent,;
     // PrimeNG Modules
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    AvatarModule,
-    BadgeModule,
-    ProgressSpinnerModule,
-    DialogModule,
-    DropdownModule,
-    InputSwitchModule,
-    RippleModule,
-    DataViewModule,
-    TooltipModule,
-    TagModule,,
-    ToastModule
-  ],
-})
-export class NetflixViewComponent implements OnInit {
+    CardModule,;
+    ButtonModule,;
+    InputTextModule,;
+    AvatarModule,;
+    BadgeModule,;
+    ProgressSpinnerModule,;
+    DialogModule,;
+    DropdownModule,;
+    InputSwitchModule,;
+    RippleModule,;
+    DataViewModule,;
+    TooltipModule,;
+    TagModule,,;
+    ToastModule;
+  ],;
+});
+export class NetflixViewComponen {t implements OnInit {
   // Define categories for Netflix-style rows
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring'];
-import { ToastModule } from 'primeng/toast';
-
 
   // Store ads by category
   adsByCategory: { [key: string]: Ad[] } = {};
@@ -106,40 +105,40 @@ import { ToastModule } from 'primeng/toast';
 
   // CardGrid configuration
   cardGridConfig = {
-    layout: 'netflix' as 'netflix' | 'grid' | 'masonry',
-    gap: 16,
-    animated: true,
+    layout: 'netflix' as 'netflix' | 'grid' | 'masonry',;
+    gap: 16,;
+    animated: true,;
     itemsPerRow: {
       xs: 2, // Extra small devices (phones)
       sm: 3, // Small devices (tablets)
       md: 4, // Medium devices (small laptops)
       lg: 5, // Large devices (desktops)
       xl: 6, // Extra large devices (large desktops)
-    },
+    },;
   };
 
   // PrimeNG-specific properties
   showFiltersDialog = false; // For PrimeNG dialog visibility
 
-  constructor(
-    private adService: AdService,
-    private notificationService: NotificationPrimeNGService,
-    private chatService: ChatService,
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router,
+  constructor(;
+    private adService: AdService,;
+    private notificationService: NotificationPrimeNGService,;
+    private chatService: ChatService,;
+    private authService: AuthService,;
+    private fb: FormBuilder,;
+    private router: Router,;
   ) {
     this.filterForm = this.fb.group({
-      category: [''],
-      location: [''],
-      touringOnly: [false],
+      category: [''],;
+      location: [''],;
+      touringOnly: [false],;
     });
   }
 
   /**
-   * Initialize the component
-   * - Load ads from the service
-   * - Check authentication status
+   * Initialize the component;
+   * - Load ads from the service;
+   * - Check authentication status;
    */
   ngOnInit(): void {
     // Load ads for all categories
@@ -182,12 +181,12 @@ import { ToastModule } from 'primeng/toast';
                   }
 
                   // Set New Arrivals (sort by creation date)
-                  const newArrivals = [...allAds]
+                  const newArrivals = [...allAds];
                     .sort((a, b) => {
                       const dateA = new Date(a.createdAt || 0);
                       const dateB = new Date(b.createdAt || 0);
                       return dateB.getTime() - dateA.getTime();
-                    })
+                    });
                     .slice(0, 10);
                   this.adsByCategory['New Arrivals'] = newArrivals;
 
@@ -196,9 +195,9 @@ import { ToastModule } from 'primeng/toast';
 
                   // Set Touring (filter by isTouring flag)
                   const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
-                  this.adsByCategory['Touring'] =
-                    touringAds.length > 0
-                      ? touringAds
+                  this.adsByCategory['Touring'] =;
+                    touringAds.length > 0;
+                      ? touringAds;
                       : this.shuffleArray([...allAds]).slice(0, 10);
                 } else {
                   // If no ads found, set empty arrays for remaining categories
@@ -210,23 +209,23 @@ import { ToastModule } from 'primeng/toast';
                 }
 
                 this.loading = false;
-              },
+              },;
               error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
-              },
+              },;
             });
-          },
+          },;
           error: (err) => {
             this.error = 'Failed to load trending ads. Please try again.';
             this.loading = false;
-          },
+          },;
         });
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load featured ads. Please try again.';
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -235,11 +234,11 @@ import { ToastModule } from 'primeng/toast';
       next: (trendingAds) => {
         this.adsByCategory['Most Popular'] = trendingAds;
         this.loadRemainingCategories();
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load trending ads. Please try again.';
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -247,11 +246,11 @@ import { ToastModule } from 'primeng/toast';
     this.adService.getAds().subscribe({
       next: (response: GetAdsResponse) => {
         this.processAllAds(response.ads);
-      },
+      },;
       error: (err) => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -263,12 +262,12 @@ import { ToastModule } from 'primeng/toast';
       }
 
       // Set New Arrivals (sort by creation date)
-      const newArrivals = [...allAds]
+      const newArrivals = [...allAds];
         .sort((a, b) => {
           const dateA = new Date(a.createdAt || 0);
           const dateB = new Date(b.createdAt || 0);
           return dateB.getTime() - dateA.getTime();
-        })
+        });
         .slice(0, 10);
       this.adsByCategory['New Arrivals'] = newArrivals;
 
@@ -277,7 +276,7 @@ import { ToastModule } from 'primeng/toast';
 
       // Set Touring (filter by isTouring flag)
       const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10);
-      this.adsByCategory['Touring'] =
+      this.adsByCategory['Touring'] =;
         touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10);
     } else {
       // If no ads found, set empty arrays for remaining categories
@@ -292,9 +291,9 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Helper method to shuffle array for demo purposes
-   * @param array The array to shuffle
-   * @returns A new shuffled array
+   * Helper method to shuffle array for demo purposes;
+   * @param array The array to shuffle;
+   * @returns A new shuffled array;
    */
   private shuffleArray(array: any[]): any[] {
     const newArray = [...array];
@@ -306,18 +305,18 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Navigate to ad details page
-   * @param adId The ID of the ad to view
+   * Navigate to ad details page;
+   * @param adId The ID of the ad to view;
    */
   viewAdDetails(adId: string): void {
     // Navigate to ad details page using Angular Router
-    this.router.navigateByUrl(`/ad-details/${adId}`);
+    this.router.navigateByUrl(`/ad-details/${adId}`);`
   }
 
   /**
-   * Add an ad to favorites
-   * @param adId The ID of the ad to like
-   * @param event Optional event to stop propagation
+   * Add an ad to favorites;
+   * @param adId The ID of the ad to like;
+   * @param event Optional event to stop propagation;
    */
   likeAd(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
@@ -332,18 +331,18 @@ import { ToastModule } from 'primeng/toast';
     this.adService.recordSwipe(adId, 'right').subscribe({
       next: () => {
         this.notificationService.success('Added to your favorites');
-      },
+      },;
       error: (err) => {
         this.notificationService.error('Failed to like ad');
         console.error('Error liking ad:', err);
-      },
+      },;
     });
   }
 
   /**
-   * Start a chat with an advertiser
-   * @param adId The ID of the ad to chat about
-   * @param event Optional event to stop propagation
+   * Start a chat with an advertiser;
+   * @param adId The ID of the ad to chat about;
+   * @param event Optional event to stop propagation;
    */
   startChat(adId: string, event?: Event): void {
     if (event) event.stopPropagation();
@@ -357,64 +356,64 @@ import { ToastModule } from 'primeng/toast';
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        this.router.navigateByUrl(`/chat/${room.id}`);
-      },
+        this.router.navigateByUrl(`/chat/${room.id}`);`
+      },;
       error: (err) => {
         this.notificationService.error('Failed to start chat');
         console.error('Error starting chat:', err);
-      },
+      },;
     });
   }
 
   /**
-   * Handle actions from the hero section
-   * @param action The action object from the PageHeader component
-   * @param adId The ID of the ad
+   * Handle actions from the hero section;
+   * @param action The action object from the PageHeader component;
+   * @param adId The ID of the ad;
    */
   onHeroAction(action: any, adId: string): void {
     switch (action.id) {
-      case 'view':
+      case 'view':;
         this.viewAdDetails(adId);
         break;
-      case 'favorite':
+      case 'favorite':;
         this.likeAd(adId);
         break;
-      case 'chat':
+      case 'chat':;
         this.startChat(adId);
         break;
-      default:
+      default:;
         console.warn('Unknown action:', action.id);
     }
   }
 
   /**
-   * Handle actions from card components
-   * @param event The action event from the AppCard component
-   * @param adId The ID of the ad
+   * Handle actions from card components;
+   * @param event The action event from the AppCard component;
+   * @param adId The ID of the ad;
    */
   onCardAction(event: { id: string; itemId?: string }): void {
     // Use the itemId from the event
     const targetAdId = event.itemId;
 
     switch (event.id) {
-      case 'view':
+      case 'view':;
         this.viewAdDetails(targetAdId);
         break;
-      case 'favorite':
+      case 'favorite':;
         this.likeAd(targetAdId);
         break;
-      case 'chat':
+      case 'chat':;
         this.startChat(targetAdId);
         break;
-      default:
+      default:;
         console.warn('Unknown card action:', event.id);
     }
   }
 
   /**
-   * Get the media URL for an ad
-   * @param ad The ad object
-   * @returns The URL of the first image or a default image
+   * Get the media URL for an ad;
+   * @param ad The ad object;
+   * @returns The URL of the first image or a default image;
    */
   getMediaUrl(ad: Ad): string {
     if (!ad) {
@@ -433,22 +432,22 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Get a formatted location string from an ad
-   * @param ad The ad object
-   * @returns A formatted location string
+   * Get a formatted location string from an ad;
+   * @param ad The ad object;
+   * @returns A formatted location string;
    */
   getLocationString(ad: Ad): string {
     if (!ad || !ad.location) {
       return '';
     }
 
-    return `${ad.location.city}, ${ad.location.county}`;
+    return `${ad.location.city}, ${ad.location.county}`;`
   }
 
   /**
-   * Get the advertiser image for an ad
-   * @param ad The ad object
-   * @returns The advertiser image URL or a default image
+   * Get the advertiser image for an ad;
+   * @param ad The ad object;
+   * @returns The advertiser image URL or a default image;
    */
   getAdvertiserImage(ad: Ad): string {
     if (!ad) {
@@ -467,9 +466,9 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Get the advertiser name for an ad
-   * @param ad The ad object
-   * @returns The advertiser name or a default name
+   * Get the advertiser name for an ad;
+   * @param ad The ad object;
+   * @returns The advertiser name or a default name;
    */
   getAdvertiserName(ad: Ad): string {
     if (!ad) {
@@ -488,7 +487,7 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Apply filters and reload ads
+   * Apply filters and reload ads;
    */
   applyFilters(): void {
     // TODO: Implement filter logic based on filterForm values
@@ -500,20 +499,20 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Open the filters dialog
+   * Open the filters dialog;
    */
   openFilters(): void {
     this.showFiltersDialog = true;
   }
 
   /**
-   * Reset filters to default values
+   * Reset filters to default values;
    */
   resetFilters(): void {
     this.filterForm.reset({
-      category: '',
-      location: '',
-      touringOnly: false,
+      category: '',;
+      location: '',;
+      touringOnly: false,;
     });
 
     // Apply the reset filters
@@ -521,7 +520,7 @@ import { ToastModule } from 'primeng/toast';
   }
 
   /**
-   * Convert ad ID to string regardless of its type
+   * Convert ad ID to string regardless of its type;
    */
   getAdIdAsString(adId: string | { city: string; county: string }): string {
     return typeof adId === 'string' ? adId : JSON.stringify(adId);

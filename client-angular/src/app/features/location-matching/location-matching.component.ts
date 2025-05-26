@@ -1,5 +1,5 @@
+import {
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -8,20 +8,18 @@ import { GeocodingService } from '../../core/services/geocoding.service';
 import { LocationService } from '../../core/services/location.service';
 import { AdService } from '../../core/services/ad.service';
 import { NotificationService } from '../../core/services/notification.service';
-import {
-  Observable,
-  Subscription,
-  catchError,
-  finalize,
-  of,
-  distinctUntilChanged,
-  take,
-  map,
-} from 'rxjs';
 import { NorwayCity, NorwayCounty } from '../../core/constants/norway-locations';
 import { ClusterModule } from '../../shared/modules/cluster/cluster.module';
 import { ButtonModule } from 'primeng/button';
-
+  Observable,;
+  Subscription,;
+  catchError,;
+  finalize,;
+  of,;
+  distinctUntilChanged,;
+  take,;
+  map,';
+} from 'rxjs';
 
 interface LocationMatchResult {
   _id: string;
@@ -40,16 +38,16 @@ interface LocationMatchResult {
 }
 
 @Component({
-    selector: 'app-location-matching',
-    templateUrl: './location-matching.component.html',
-    styleUrls: ['./location-matching.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    CommonModule, ReactiveFormsModule, RouterModule, MapComponent,
-    ButtonModule
-  ]
-})
-export class LocationMatchingComponent implements OnInit, OnDestroy {
+    selector: 'app-location-matching',;
+    templateUrl: './location-matching.component.html',;
+    styleUrls: ['./location-matching.component.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    CommonModule, ReactiveFormsModule, RouterModule, MapComponent,;
+    ButtonModule;
+  ];
+});
+export class LocationMatchingComponen {t implements OnInit, OnDestroy {
   searchForm: FormGroup;
   loading = false;
   results: LocationMatchResult[] = [];
@@ -62,34 +60,34 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   selectedDateRange: { start: Date | null; end: Date | null } = { start: null, end: null };
   locationSubscription: Subscription | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private adService: AdService,
-    private geocodingService: GeocodingService,
-    private locationService: LocationService,
-    private notificationService: NotificationService,
+  constructor(;
+    private fb: FormBuilder,;
+    private adService: AdService,;
+    private geocodingService: GeocodingService,;
+    private locationService: LocationService,;
+    private notificationService: NotificationService,;
   ) {
     this.searchForm = this.fb.group({
       location: this.fb.group({
-        city: ['', Validators.required],
-        county: ['', Validators.required],
-        country: ['Norway'],
-        coordinates: [null],
-      }),
-      radius: [25, [Validators.required, Validators.min(1), Validators.max(500)]],
-      categories: [[]],
-      useCurrentLocation: [false],
+        city: ['', Validators.required],;
+        county: ['', Validators.required],;
+        country: ['Norway'],;
+        coordinates: [null],;
+      }),;
+      radius: [25, [Validators.required, Validators.min(1), Validators.max(500)]],;
+      categories: [[]],;
+      useCurrentLocation: [false],;
       dateRange: this.fb.group({
-        start: [null],
-        end: [null],
-      }),
+        start: [null],;
+        end: [null],;
+      }),;
     });
   }
 
   // Map configuration
   mapConfig = {
-    showHeatmap: false,
-    enableClustering: true,
+    showHeatmap: false,;
+    enableClustering: true,;
   };
 
   // Reference to the map component
@@ -152,8 +150,8 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
       if (coordinates) {
         this.searchForm.get('location.coordinates')?.setValue(coordinates);
         this.selectedLocation = {
-          latitude: coordinates[1],
-          longitude: coordinates[0],
+          latitude: coordinates[1],;
+          longitude: coordinates[0],;
         };
         this.updateMapMarkers();
       } else {
@@ -162,8 +160,8 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
           if (result && result.coordinates) {
             this.searchForm.get('location.coordinates')?.setValue(result.coordinates);
             this.selectedLocation = {
-              latitude: result.coordinates[1],
-              longitude: result.coordinates[0],
+              latitude: result.coordinates[1],;
+              longitude: result.coordinates[0],;
             };
             this.updateMapMarkers();
           }
@@ -179,34 +177,30 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.locationSubscription = new Observable<GeolocationPosition>((observer) => {
-      const watchId = navigator.geolocation.watchPosition(
-        (position) => observer.next(position),
-        (error) => observer.error(error),
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
+    this.locationSubscription = new Observable((observer) => {
+      const watchId = navigator.geolocation.watchPosition(;
+        (position) => observer.next(position),;
+        (error) => observer.error(error),;
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },;
       );
 
       return () => navigator.geolocation.clearWatch(watchId);
-    })
-      .pipe(
+    });
+      .pipe(;
         // Only emit when location has changed significantly (> 100m)
         distinctUntilChanged((prev, curr) => {
-          const distance = this.calculateDistance(
-            prev.coords.latitude,
-            prev.coords.longitude,
-            curr.coords.latitude,
-            curr.coords.longitude,
+          const distance = this.calculateDistance(;
+            prev.coords.latitude,;
+            prev.coords.longitude,;
+            curr.coords.latitude,;
+            curr.coords.longitude,;
           );
-          return distance < 0.1; // 100 meters
-        }),
-      )
-      .subscribe({
-        next: (position) => {
+          return distance  {
           const { latitude, longitude } = position.coords;
           this.updateLocation(latitude, longitude);
           this.checkForNearbyMatches(latitude, longitude);
-        },
-        error: (error) => this.handleLocationError(error),
+        },;
+        error: (error) => this.handleLocationError(error),;
       });
   }
 
@@ -219,14 +213,14 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
 
   checkForNearbyMatches(latitude: number, longitude: number): void {
     const radius = this.searchForm.get('radius')?.value || 25;
-    this.searchLocationMatches(longitude, latitude, radius)
-      .pipe(take(1))
+    this.searchLocationMatches(longitude, latitude, radius);
+      .pipe(take(1));
       .subscribe((matches) => {
-        const newMatches = matches.filter(
-          (match) => !this.results.find((r) => r._id === match._id),
+        const newMatches = matches.filter(;
+          (match) => !this.results.find((r) => r._id === match._id),;
         );
         if (newMatches.length > 0) {
-          this.notificationService.info(`Found ${newMatches.length} new matches nearby!`);
+          this.notificationService.info(`Found ${newMatches.length} new matches nearby!`);`
           this.results = [...this.results, ...newMatches];
           this.updateMapMarkers();
         }
@@ -237,11 +231,11 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     const R = 6371; // Earth's radius in km
     const dLat = this.toRad(lat2 - lat1);
     const dLon = this.toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRad(lat1)) *
-        Math.cos(this.toRad(lat2)) *
-        Math.sin(dLon / 2) *
+    const a =;
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +;
+      Math.cos(this.toRad(lat1)) *;
+        Math.cos(this.toRad(lat2)) *;
+        Math.sin(dLon / 2) *;
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
@@ -259,9 +253,9 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
         this.searchForm.get('location.city')?.setValue(result.city);
         this.searchForm.get('location.county')?.setValue(result.county);
         this.selectedLocation = {
-          latitude,
-          longitude,
-          address: result.address,
+          latitude,;
+          longitude,;
+          address: result.address,;
         };
       }
     });
@@ -274,7 +268,7 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(;
       (position) => {
         const { latitude, longitude } = position.coords;
 
@@ -289,32 +283,32 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
             this.searchForm.get('location.county')?.setValue(result.county);
             this.searchForm.get('location.country')?.setValue(result.country || 'Norway');
             this.selectedLocation = {
-              latitude,
-              longitude,
-              address: result.address,
+              latitude,;
+              longitude,;
+              address: result.address,;
             };
             this.updateMapMarkers();
           }
         });
-      },
+      },;
       (error) => {
         this.searchForm.get('useCurrentLocation')?.setValue(false);
 
         switch (error.code) {
-          case error.PERMISSION_DENIED:
+          case error.PERMISSION_DENIED:;
             this.notificationService.error('Location permission denied');
             break;
-          case error.POSITION_UNAVAILABLE:
+          case error.POSITION_UNAVAILABLE:;
             this.notificationService.error('Location information is unavailable');
             break;
-          case error.TIMEOUT:
+          case error.TIMEOUT:;
             this.notificationService.error('Location request timed out');
             break;
-          default:
+          default:;
             this.notificationService.error('An unknown error occurred');
             break;
         }
-      },
+      },;
     );
   }
 
@@ -326,8 +320,8 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     this.searchForm.get('location.coordinates')?.setValue(coordinates);
 
     // Try to get city and county information
-    this.geocodingService
-      .reverseGeocode(location.longitude, location.latitude)
+    this.geocodingService;
+      .reverseGeocode(location.longitude, location.latitude);
       .subscribe((result) => {
         if (result) {
           this.searchForm.get('location.city')?.setValue(result.city);
@@ -344,14 +338,14 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
 
     if (this.selectedLocation) {
       this.mapMarkers.push({
-        id: 'selected-location',
-        latitude: this.selectedLocation.latitude,
-        longitude: this.selectedLocation.longitude,
-        title: 'Selected Location',
-        description: this.selectedLocation.address || 'Your search location',
-        color: 'blue',
-        icon: 'location_on',
-        tooltip: 'Your selected search location',
+        id: 'selected-location',;
+        latitude: this.selectedLocation.latitude,;
+        longitude: this.selectedLocation.longitude,;
+        title: 'Selected Location',;
+        description: this.selectedLocation.address || 'Your search location',;
+        color: 'blue',;
+        icon: 'location_on',;
+        tooltip: 'Your selected search location',;
       });
     }
 
@@ -359,16 +353,16 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     this.results.forEach((result) => {
       if (result.location && result.location.coordinates) {
         this.mapMarkers.push({
-          id: result._id,
-          latitude: result.location.coordinates[1],
-          longitude: result.location.coordinates[0],
-          title: result.title,
-          description: `${result.city}, ${result.county} (${this.formatDistance(result.distance)})`,
-          color: 'red',
-          icon: 'place',
-          tooltip: `${result.title}\n${this.formatDistance(result.distance)} away`,
-          cluster: true,
-          rating: result.rating,
+          id: result._id,;
+          latitude: result.location.coordinates[1],;
+          longitude: result.location.coordinates[0],;
+          title: result.title,;
+          description: `${result.city}, ${result.county} (${this.formatDistance(result.distance)})`,;`
+          color: 'red',;
+          icon: 'place',;
+          tooltip: `${result.title}\n${this.formatDistance(result.distance)} away`,;`
+          cluster: true,;
+          rating: result.rating,;
         });
       }
     });
@@ -376,14 +370,14 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
 
   onMapControlClick(action: string): void {
     switch (action) {
-      case 'locate':
+      case 'locate':;
         this.getCurrentLocation();
         break;
-      case 'heatmap':
+      case 'heatmap':;
         this.mapConfig.showHeatmap = !this.mapConfig.showHeatmap;
         this.updateMapMarkers();
         break;
-      case 'clusters':
+      case 'clusters':;
         this.mapConfig.enableClustering = !this.mapConfig.enableClustering;
         this.updateMapMarkers();
         break;
@@ -400,10 +394,10 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     const lats = markers.map((m) => m.latitude);
     const lngs = markers.map((m) => m.longitude);
     return {
-      north: Math.max(...lats),
-      south: Math.min(...lats),
-      east: Math.max(...lngs),
-      west: Math.min(...lngs),
+      north: Math.max(...lats),;
+      south: Math.min(...lats),;
+      east: Math.max(...lngs),;
+      west: Math.min(...lngs),;
     };
   }
 
@@ -427,22 +421,22 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
 
     this.loading = true;
 
-    this.searchLocationMatches(
-      coordinates[0],
-      coordinates[1],
-      formValue.radius,
-      formValue.categories,
-    )
-      .pipe(
+    this.searchLocationMatches(;
+      coordinates[0],;
+      coordinates[1],;
+      formValue.radius,;
+      formValue.categories,;
+    );
+      .pipe(;
         catchError((error) => {
           this.notificationService.error('Failed to find location matches');
           console.error('Error searching for location matches:', error);
           return of([]);
-        }),
+        }),;
         finalize(() => {
           this.loading = false;
-        }),
-      )
+        }),;
+      );
       .subscribe((results) => {
         this.results = results;
         this.updateMapMarkers();
@@ -454,61 +448,61 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Search for location matches based on coordinates and radius
-   * @param longitude Longitude coordinate
-   * @param latitude Latitude coordinate
-   * @param radius Search radius in kilometers
-   * @param categories Optional categories to filter by
-   * @returns Observable of location match results
+   * Search for location matches based on coordinates and radius;
+   * @param longitude Longitude coordinate;
+   * @param latitude Latitude coordinate;
+   * @param radius Search radius in kilometers;
+   * @param categories Optional categories to filter by;
+   * @returns Observable of location match results;
    */
-  searchLocationMatches(
-    longitude: number,
-    latitude: number,
-    radius: number,
-    categories?: string[],
-  ): Observable<LocationMatchResult[]> {
+  searchLocationMatches(;
+    longitude: number,;
+    latitude: number,;
+    radius: number,;
+    categories?: string[],;
+  ): Observable {
     this.loading = true;
-    return categories
-      ? this.adService.searchByLocation(longitude, latitude, radius, categories)
-      : this.locationService.findNearestCity(longitude, latitude).pipe(
-          map((result) =>
-            result
-              ? [
+    return categories;
+      ? this.adService.searchByLocation(longitude, latitude, radius, categories);
+      : this.locationService.findNearestCity(longitude, latitude).pipe(;
+          map((result) =>;
+            result;
+              ? [;
                   {
-                    ...result,
-                    _id: '',
-                    title: '',
-                    description: '',
-                    location: { type: '', coordinates: [longitude, latitude] },
-                    imageUrl: '',
-                    rating: 0,
-                    availableDates: [],
-                    city: result.city,
-                    county: result.county,
-                    distance: result.distance,
-                  },
-                ]
-              : [],
-          ),
+                    ...result,;
+                    _id: '',;
+                    title: '',;
+                    description: '',;
+                    location: { type: '', coordinates: [longitude, latitude] },;
+                    imageUrl: '',;
+                    rating: 0,;
+                    availableDates: [],;
+                    city: result.city,;
+                    county: result.county,;
+                    distance: result.distance,;
+                  },;
+                ];
+              : [],;
+          ),;
           catchError((error) => {
             this.notificationService.error('Error searching for locations');
             console.error('Location search error:', error);
             return of([]);
-          }),
+          }),;
           finalize(() => {
             this.loading = false;
-          }),
+          }),;
         );
   }
 
   clearSearch(): void {
     this.searchForm.reset({
       location: {
-        country: 'Norway',
-      },
-      radius: 25,
-      categories: [],
-      useCurrentLocation: false,
+        country: 'Norway',;
+      },;
+      radius: 25,;
+      categories: [],;
+      useCurrentLocation: false,;
     });
     this.results = [];
     this.selectedLocation = null;
@@ -516,30 +510,15 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Format distance for display
-   * @param distance Distance in kilometers
-   * @returns Formatted distance string
+   * Format distance for display;
+   * @param distance Distance in kilometers;
+   * @returns Formatted distance string;
    */
   formatDistance(distance: number): string {
-    if (distance < 1) {
-      return `${Math.round(distance * 1000)} m`;
-    }
-    return `${distance.toFixed(1)} km`;
-  }
-
-  /**
-   * Handle marker click events on the map
-   * @param marker The marker that was clicked
-   */
-  onMarkerClick(marker: any): void {
-    if (marker.id === 'selected-location') {
-      return;
-    }
-
-    const result = this.results.find((r) => r._id === marker.id);
+    if (distance  r._id === marker.id);
     if (result) {
       // Highlight result in list
-      const resultElement = document.getElementById(`result-${result._id}`);
+      const resultElement = document.getElementById(`result-${result._id}`);`
       if (resultElement) {
         resultElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         resultElement.classList.add('highlight');
@@ -547,9 +526,9 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
       }
 
       // Show detailed info in tooltip
-      this.notificationService.info(
-        `${result.title}\n${result.description}\nRating: ${result.rating || 'N/A'}\n${this.formatDistance(result.distance)} away`,
-        'View Details',
+      this.notificationService.info(;
+        `${result.title}\n${result.description}\nRating: ${result.rating || 'N/A'}\n${this.formatDistance(result.distance)} away`,;`
+        'View Details',;
       );
     }
   }
@@ -559,20 +538,20 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
     if (bounds && this.selectedLocation) {
       // Update search if viewport changed significantly
       const center = {
-        lat: (bounds.north + bounds.south) / 2,
-        lng: (bounds.east + bounds.west) / 2,
+        lat: (bounds.north + bounds.south) / 2,;
+        lng: (bounds.east + bounds.west) / 2,;
       };
-      const distance = this.calculateDistance(
-        center.lat,
-        center.lng,
-        this.selectedLocation.latitude,
-        this.selectedLocation.longitude,
+      const distance = this.calculateDistance(;
+        center.lat,;
+        center.lng,;
+        this.selectedLocation.latitude,;
+        this.selectedLocation.longitude,;
       );
       if (distance > this.searchForm.get('radius')?.value) {
         this.searchForm.patchValue({
           location: {
-            coordinates: [center.lng, center.lat],
-          },
+            coordinates: [center.lng, center.lat],;
+          },;
         });
         this.onSearch();
       }
@@ -580,7 +559,7 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Update matches based on current search criteria
+   * Update matches based on current search criteria;
    */
   updateMatches(): void {
     if (!this.selectedLocation) {
@@ -597,22 +576,22 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle location errors
+   * Handle location errors;
    */
   handleLocationError(error: GeolocationPositionError): void {
     this.searchForm.get('useCurrentLocation')?.setValue(false);
 
     switch (error.code) {
-      case error.PERMISSION_DENIED:
+      case error.PERMISSION_DENIED:;
         this.notificationService.error('Location permission denied');
         break;
-      case error.POSITION_UNAVAILABLE:
+      case error.POSITION_UNAVAILABLE:;
         this.notificationService.error('Location information is unavailable');
         break;
-      case error.TIMEOUT:
+      case error.TIMEOUT:;
         this.notificationService.error('Location request timed out');
         break;
-      default:
+      default:;
         this.notificationService.error('An unknown error occurred');
         break;
     }
@@ -621,16 +600,16 @@ export class LocationMatchingComponent implements OnInit, OnDestroy {
   // Methods moved to avoid duplication
 
   /**
-   * Fit map to bounds
+   * Fit map to bounds;
    */
   fitMapToBounds(): void {
     if (this.mapMarkers.length === 0) return;
 
     const bounds = {
-      north: Math.max(...this.mapMarkers.map((m) => m.latitude)),
-      south: Math.min(...this.mapMarkers.map((m) => m.latitude)),
-      east: Math.max(...this.mapMarkers.map((m) => m.longitude)),
-      west: Math.min(...this.mapMarkers.map((m) => m.longitude)),
+      north: Math.max(...this.mapMarkers.map((m) => m.latitude)),;
+      south: Math.min(...this.mapMarkers.map((m) => m.latitude)),;
+      east: Math.max(...this.mapMarkers.map((m) => m.longitude)),;
+      west: Math.min(...this.mapMarkers.map((m) => m.longitude)),;
     };
 
     this.mapComponent.fitBounds(bounds);

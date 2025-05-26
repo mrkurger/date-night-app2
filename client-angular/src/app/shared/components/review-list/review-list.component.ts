@@ -1,9 +1,18 @@
 import { Input } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Review } from '../../../core/models/review.interface';
+import { ReviewService } from '../../../core/services/review.service';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
+import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { DialogService } from '../../../core/services/dialog.service';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -14,154 +23,106 @@ import { Subscription } from 'rxjs';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 
-import { CommonModule } from '@angular/common';
+@Component({';
+  selector: 'app-review-list',;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbTagModule,;
+    NbTooltipModule,;
+    RouterModule,;
+    StarRatingComponent,;
+    TimeAgoPipe,;
+  ],;
+  template: `;`
+    ;
+      ;
+      ;
 
-import { RouterModule } from '@angular/router';
+      ;
+        No reviews yet. Be the first to leave a review!;
+      ;
 
-import { Review } from '../../../core/models/review.interface';
-import { ReviewService } from '../../../core/services/review.service';
-import { StarRatingComponent } from '../star-rating/star-rating.component';
-import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
-import { AuthService } from '../../../core/services/auth.service';
-import { NotificationService } from '../../../core/services/notification.service';
-import { DialogService } from '../../../core/services/dialog.service';
+      ;
+        ;
+          ;
+          ;
+            {{ review.reviewer.username }};
+          ;
+          ;
+            ;
+            {{ review.createdAt | timeAgo }};
+          ;
+        ;
 
-@Component({
-  selector: 'app-review-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbTagModule,
-    NbTooltipModule,
-    RouterModule,
-    StarRatingComponent,
-    TimeAgoPipe,
-  ],
-  template: `
-    <div class="reviews-container">
-      <h3 class="reviews-title">
-      </h3>
+        ;
+          {{ review.title }};
+          {{ review.content }};
 
-      <div *ngIf="reviews.length === 0" class="no-reviews">
-        <p>No reviews yet. Be the first to leave a review!</p>
-      </div>
+          ;
+            ;
+              Communication:;
+              ;
+            ;
+            ;
+              Appearance:;
+              ;
+            ;
+            ;
+              Location:;
+              ;
+            ;
+            ;
+              Value:;
+              ;
+            ;
+          ;
 
-      <nb-card *ngFor="let review of reviews" class="review-card">
-        <nb-card-header>
-          <img
-            mat-card-avatar
-            [src]="review.reviewer.profileImage || 'assets/images/default-avatar.png'"
-            [alt]="review.reviewer.username"
-            class="reviewer-avatar"
-          />
-          <nb-card-title>
-            <a [routerLink]="['/profile', review.reviewer._id]">{{ review.reviewer.username }}</a>
-          </mat-card-title>
-          <nb-card-subtitle>
-            <app-star-rating [rating]="review.rating" [readonly]="true"></app-star-rating>
-            <span class="review-date">{{ review.createdAt | timeAgo }}</span>
-          </mat-card-subtitle>
-        </nb-card-header>
+          ;
+            ;
+            Verified Meeting;
+          ;
+        ;
 
-        <nb-card-content>
-          <h4 class="review-title">{{ review.title }}</h4>
-          <p class="review-content">{{ review.content }}</p>
+        ;
 
-          <div class="category-ratings" *ngIf="showCategoryRatings">
-            <div class="category-rating" *ngIf="review.categories?.communication">
-              <span class="category-label">Communication:</span>
-              <app-star-rating
-                [rating]="review.categories.communication"
-                [readonly]="true"
-                [small]="true"
-              ></app-star-rating>
-            </div>
-            <div class="category-rating" *ngIf="review.categories?.appearance">
-              <span class="category-label">Appearance:</span>
-              <app-star-rating
-                [rating]="review.categories.appearance"
-                [readonly]="true"
-                [small]="true"
-              ></app-star-rating>
-            </div>
-            <div class="category-rating" *ngIf="review.categories?.location">
-              <span class="category-label">Location:</span>
-              <app-star-rating
-                [rating]="review.categories.location"
-                [readonly]="true"
-                [small]="true"
-              ></app-star-rating>
-            </div>
-            <div class="category-rating" *ngIf="review.categories?.value">
-              <span class="category-label">Value:</span>
-              <app-star-rating
-                [rating]="review.categories.value"
-                [readonly]="true"
-                [small]="true"
-              ></app-star-rating>
-            </div>
-          </div>
+        ;
+          Response from advertiser;
+          {{ review.advertiserResponse.content }};
+          {{ review.advertiserResponse.date | timeAgo }};
+        ;
 
-          <div class="verified-badge" *ngIf="review.isVerifiedMeeting">
-            <nb-icon icon="verified"></nb-icon>
-            <span>Verified Meeting</span>
-          </div>
-        </nb-card-body>
+        ;
+          ;
+            ;
+            Helpful ({{ review.helpfulVotes }});
+          ;
 
-        <hr *ngIf="review.advertiserResponse"></hr>
+          ;
+            ;
+            Report;
+          ;
 
-        <div class="advertiser-response" *ngIf="review.advertiserResponse">
-          <h5>Response from advertiser</h5>
-          <p>{{ review.advertiserResponse.content }}</p>
-          <small>{{ review.advertiserResponse.date | timeAgo }}</small>
-        </div>
+          ;
+            ;
+            Respond;
+          ;
+        ;
+      ;
 
-        <nb-card-actions align="end">
-          <button
-            mat-button
-            color="primary"
-            (click)="markHelpful(review._id)"
-            [disabled]="!isAuthenticated || helpfulMarked.includes(review._id)"
-          >
-            <nb-icon icon="thumb_up"></nb-icon>
-            Helpful ({{ review.helpfulVotes }})
-          </button>
-
-          <button
-            mat-button
-            color="warn"
-            (click)="openReportDialog(review._id)"
-            [disabled]="!isAuthenticated || reportedReviews.includes(review._id)"
-          >
-            <nb-icon icon="flag"></nb-icon>
-            Report
-          </button>
-
-          <button
-            mat-button
-            *ngIf="canRespond(review)"
-            color="accent"
-            (click)="openResponseDialog(review._id)"
-          >
-            <nb-icon icon="reply"></nb-icon>
-            Respond
-          </button>
-        </nb-card-footer>
-      </nb-card>
-
-      <div class="load-more" *ngIf="hasMoreReviews">
-        <button mat-button color="primary" (click)="loadMoreReviews()" [disabled]="loading">
-          <nb-icon icon="more_horiz"></nb-icon>
-          Load More Reviews
-        </button>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+      ;
+        ;
+          ;
+          Load More Reviews;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .reviews-container {
         margin: 20px 0;
       }
@@ -258,10 +219,10 @@ import { DialogService } from '../../../core/services/dialog.service';
         text-align: center;
         margin-top: 20px;
       }
-    `,
-  ],
-})
-export class ReviewListComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class ReviewListComponen {t implements OnInit {
   @Input() advertiserId = '';
   @Input() adId = '';
   @Input() title = 'Reviews';
@@ -277,11 +238,11 @@ export class ReviewListComponent implements OnInit {
   private currentUserId: string | null = null;
   private userSub: Subscription | null = null;
 
-  constructor(
-    private reviewService: ReviewService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private dialogService: DialogService,
+  constructor(;
+    private reviewService: ReviewService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private dialogService: DialogService,;
   ) {}
 
   ngOnInit(): void {
@@ -325,12 +286,12 @@ export class ReviewListComponent implements OnInit {
         }
         this.hasMoreReviews = data.totalPages > this.page;
         this.loading = false;
-      },
+      },;
       error: (error) => {
         console.error('Error loading reviews:', error);
         this.notificationService.error('Failed to load reviews');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -358,11 +319,11 @@ export class ReviewListComponent implements OnInit {
         localStorage.setItem('helpfulReviews', JSON.stringify(this.helpfulMarked));
 
         this.notificationService.success('Review marked as helpful');
-      },
+      },;
       error: (error) => {
         console.error('Error marking review as helpful:', error);
         this.notificationService.error('Failed to mark review as helpful');
-      },
+      },;
     });
   }
 
@@ -387,11 +348,11 @@ export class ReviewListComponent implements OnInit {
         localStorage.setItem('reportedReviews', JSON.stringify(this.reportedReviews));
 
         this.notificationService.success('Review reported successfully');
-      },
+      },;
       error: (error) => {
         console.error('Error reporting review:', error);
         this.notificationService.error('Failed to report review');
-      },
+      },;
     });
   }
 
@@ -399,8 +360,8 @@ export class ReviewListComponent implements OnInit {
     const review = this.reviews.find((r) => r._id === reviewId);
     if (!review) return;
 
-    this.dialogService
-      .respondToReview(reviewId, review.title, review.content)
+    this.dialogService;
+      .respondToReview(reviewId, review.title, review.content);
       .subscribe((response) => {
         if (response) {
           this.respondToReview(reviewId,_response));
@@ -415,17 +376,17 @@ export class ReviewListComponent implements OnInit {
         const reviewIndex = this.reviews.findIndex((r) => r._id === reviewId);
         if (reviewIndex !== -1) {
           this.reviews[reviewIndex].advertiserResponse = {
-            content: response,
-            date: new Date(),
+            content: response,;
+            date: new Date(),;
           };
         }
 
         this.notificationService.success('Response added successfully');
-      },
+      },;
       error: (error) => {
         console.error('Error responding to review:', error);
         this.notificationService.error('Failed to add response');
-      },
+      },;
     });
   }
 

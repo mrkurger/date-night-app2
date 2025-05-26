@@ -1,17 +1,21 @@
+import {
 import { _Input } from '@angular/core';
 import { NebularModule } from '../../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,';
 } from '@nebular/theme';
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -21,111 +25,67 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, ReactiveFormsModule,
-    CommonModule,
-    RouterLink,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-  ],
-  template: `
-    <div class="login-container">
-      <nb-card>
-        <nb-card-header>
-          <h3 class="title">Login</h3>
-        </nb-card-header>
-        <nb-card-body>
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <nb-form-field>
-              <nb-icon nbPrefix icon="email-outline"></nb-icon>
-              <input
-                nbInput
-                fullWidth
-                type="email"
-                formControlName="email"
-                placeholder="Email"
-                [status]="
-                  loginForm.get('email')?.touched && loginForm.get('email')?.invalid
-                    ? 'danger'
-                    : 'basic'
-                "
-              />
-              <span
-                nbSuffix
-                *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
-                class="error-icon"
-              >
-                <nb-icon icon="alert-circle-outline" status="danger"></nb-icon>
-              </span>
-            </nb-form-field>
+  selector: 'app-login',;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [NebularModule, ReactiveFormsModule,;
+    CommonModule,;
+    RouterLink,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbInputModule,;
+    NbFormFieldModule,;
+    NbIconModule,;
+    NbSpinnerModule,;
+    NbAlertModule,;
+    NbTooltipModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+        ;
+          Login;
+        ;
+        ;
+          ;
+            ;
+              ;
+              ;
+              ;
+                ;
+              ;
+            ;
 
-            <nb-form-field>
-              <nb-icon nbPrefix icon="lock-outline"></nb-icon>
-              <input
-                nbInput
-                fullWidth
-                [type]="showPassword ? 'text' : 'password'"
-                formControlName="password"
-                placeholder="Password"
-                [status]="
-                  loginForm.get('password')?.touched && loginForm.get('password')?.invalid
-                    ? 'danger'
-                    : 'basic'
-                "
-              />
-              <button
-                nbSuffix
-                nbButton
-                ghost
-                (click)="showPassword = !showPassword"
-                type="button"
-                [attr.aria-label]="showPassword ? 'hide password' : 'show password'"
-              >
-                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"></nb-icon>
-              </button>
-            </nb-form-field>
+            ;
+              ;
+              ;
+              ;
+                ;
+              ;
+            ;
 
-            <nb-alert *ngIf="error" status="danger" class="error-alert">
+            ;
               {{ error }}
-            </nb-alert>
+            ;
 
-            <button
-              nbButton
-              status="primary"
-              fullWidth
-              type="submit"
-              [disabled]="loginForm.invalid || isLoading"
-              size="large"
-            >
-              <nb-icon icon="log-in-outline"></nb-icon>
-              <span>Login</span>
-              <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
-            </button>
-          </form>
+            ;
+              ;
+              Login;
+              ;
+            ;
+          ;
 
-          <div class="register-link">
-            <a routerLink="/auth/register">Need an account? Register</a>
-          </div>
-        </nb-card-body>
-      </nb-card>
-    </div>
-  `,
-  styles: [
-    `
+          ;
+            Need an account? Register;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
       }
@@ -190,23 +150,23 @@ import { CommonModule } from '@angular/common';
       .error-icon nb-icon {
         color: var(--color-danger-default);
       }
-    `,
-  ],
-})
-export class LoginComponent {
+    `,;`
+  ],;
+});
+export class LoginComponen {t {
   loginForm: FormGroup;
   error = '';
   isLoading = false;
   showPassword = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router,
+  constructor(;
+    private fb: FormBuilder,;
+    private auth: AuthService,;
+    private router: Router,;
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],;
+      password: ['', Validators.required],;
     });
   }
 
@@ -219,11 +179,11 @@ export class LoginComponent {
         next: () => {
           this.isLoading = false;
           this.router.navigate(['/ads']);
-        },
+        },;
         error: (err) => {
           this.isLoading = false;
           this.error = err.error.message || 'Login failed';
-        },
+        },;
       });
     }
   }

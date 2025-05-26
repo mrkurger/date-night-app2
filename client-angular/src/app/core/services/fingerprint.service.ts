@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class FingerprintService {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class FingerprintServic {e {
   constructor() {}
 
-  async collectFingerprint(): Promise<Record<string, any>> {
-    const fingerprint: Record<string, any> = {};
+  async collectFingerprint(): Promise> {
+    const fingerprint: Record = {};
 
     // Browser and OS
     fingerprint['userAgent'] = navigator.userAgent;
@@ -18,8 +18,8 @@ export class FingerprintService {
     fingerprint['doNotTrack'] = navigator.doNotTrack || 'unspecified';
 
     // Screen
-    fingerprint['screenResolution'] = `${screen.width}x${screen.height}x${screen.colorDepth}`;
-    fingerprint['availableScreenResolution'] = `${screen.availWidth}x${screen.availHeight}`;
+    fingerprint['screenResolution'] = `${screen.width}x${screen.height}x${screen.colorDepth}`;`
+    fingerprint['availableScreenResolution'] = `${screen.availWidth}x${screen.availHeight}`;`
     fingerprint['pixelRatio'] = window.devicePixelRatio;
 
     // Timezone
@@ -33,9 +33,9 @@ export class FingerprintService {
     // Plugins (limited information available for privacy reasons)
     try {
       fingerprint['plugins'] = Array.from(navigator.plugins || []).map((p) => ({
-        name: p.name,
-        filename: p.filename,
-        description: p.description,
+        name: p.name,;
+        filename: p.filename,;
+        description: p.description,;
       }));
     } catch (e) {
       fingerprint['plugins'] = 'error_collecting_plugins';
@@ -46,7 +46,7 @@ export class FingerprintService {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        const txt = 'DateNight.io <canvas> fingerprint ?¿!@#£$%^&*()_+';
+        const txt = 'DateNight.io  fingerprint ?¿!@#£$%^&*()_+';
         ctx.textBaseline = 'top';
         ctx.font = "14px 'Arial'";
         ctx.textBaseline = 'alphabetic';
@@ -69,11 +69,11 @@ export class FingerprintService {
       const gl = document.createElement('canvas').getContext('webgl');
       if (gl) {
         const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        fingerprint['webglVendor'] = debugInfo
-          ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)
+        fingerprint['webglVendor'] = debugInfo;
+          ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
           : 'not_supported';
-        fingerprint['webglRenderer'] = debugInfo
-          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+        fingerprint['webglRenderer'] = debugInfo;
+          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
           : 'not_supported';
       } else {
         fingerprint['webglVendor'] = 'not_supported';
@@ -101,13 +101,13 @@ export class FingerprintService {
         oscillator.connect(compressor);
         compressor.connect(context.destination);
         oscillator.start(0);
-        const buffer = await new Promise<AudioBuffer>((resolve) => {
+        const buffer = await new Promise((resolve) => {
           context.oncomplete = (event) => resolve(event.renderedBuffer);
           context.startRendering();
         });
-        const output = buffer
-          .getChannelData(0)
-          .slice(4500, 5000)
+        const output = buffer;
+          .getChannelData(0);
+          .slice(4500, 5000);
           .reduce((acc, val) => acc + Math.abs(val), 0);
         fingerprint['audioFingerprint'] = output.toString();
       } else {
@@ -129,16 +129,16 @@ export class FingerprintService {
 
     // Fonts (basic check, more advanced techniques are complex and privacy-sensitive)
     // This is a very basic check and not a full font fingerprint
-    const testFonts = [
-      'Arial',
-      'Verdana',
-      'Helvetica',
-      'Times New Roman',
-      'Courier New',
-      'Georgia',
-      'Palatino',
-      'Garamond',
-      'Comic Sans MS',
+    const testFonts = [;
+      'Arial',;
+      'Verdana',;
+      'Helvetica',;
+      'Times New Roman',;
+      'Courier New',;
+      'Georgia',;
+      'Palatino',;
+      'Garamond',;
+      'Comic Sans MS',;
     ];
     let availableFonts = 0;
     const fontProbe = document.createElement('span');
@@ -147,8 +147,8 @@ export class FingerprintService {
     testFonts.forEach((font) => {
       fontProbe.style.fontFamily = font;
       if (
-        document.body.offsetWidth !== fontProbe.offsetWidth ||
-        document.body.offsetHeight !== fontProbe.offsetHeight
+        document.body.offsetWidth !== fontProbe.offsetWidth ||;
+        document.body.offsetHeight !== fontProbe.offsetHeight;
       ) {
         availableFonts++;
       }

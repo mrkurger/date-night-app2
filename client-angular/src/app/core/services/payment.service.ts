@@ -1,3 +1,7 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,10 +11,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
 
 // Stripe types
 declare global {
@@ -65,11 +65,11 @@ export interface PaymentMethod {
   };
 }
 
-@Injectable({
-  providedIn: 'root',
-})
-export class PaymentService {
-  private apiUrl = `${environment.apiUrl}/payments`;
+@Injectable({';
+  providedIn: 'root',;
+});
+export class PaymentServic {e {
+  private apiUrl = `${environment.apiUrl}/payments`;`
   private stripe: any;
 
   constructor(private http: HttpClient) {
@@ -77,16 +77,16 @@ export class PaymentService {
   }
 
   /**
-   * Initialize Stripe
+   * Initialize Stripe;
    */
-  private async initStripe(): Promise<void> {
+  private async initStripe(): Promise {
     if (!window.Stripe) {
       const script = document.createElement('script');
       script.src = 'https://js.stripe.com/v3/';
       script.async = true;
       document.body.appendChild(script);
 
-      await new Promise<void>((resolve) => {
+      await new Promise((resolve) => {
         script.onload = () => resolve();
       });
     }
@@ -95,7 +95,7 @@ export class PaymentService {
   }
 
   /**
-   * Get Stripe instance
+   * Get Stripe instance;
    */
   getStripe(): any {
     if (!this.stripe) {
@@ -105,125 +105,125 @@ export class PaymentService {
   }
 
   /**
-   * Create a payment intent
-   * @param amount Amount in smallest currency unit (e.g., cents)
-   * @param currency Currency code (e.g., 'usd', 'nok')
-   * @param metadata Additional metadata for the payment
+   * Create a payment intent;
+   * @param amount Amount in smallest currency unit (e.g., cents);
+   * @param currency Currency code (e.g., 'usd', 'nok');
+   * @param metadata Additional metadata for the payment;
    */
-  createPaymentIntent(
-    amount: number,
-    currency = 'nok',
-    metadata: any = {},
-  ): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(`${this.apiUrl}/create-payment-intent`, {
-      amount,
-      currency,
-      metadata,
+  createPaymentIntent(;
+    amount: number,;
+    currency = 'nok',;
+    metadata: any = {},;
+  ): Observable {
+    return this.http.post(`${this.apiUrl}/create-payment-intent`, {`
+      amount,;
+      currency,;
+      metadata,;
     });
   }
 
   /**
-   * Get subscription prices
+   * Get subscription prices;
    */
-  getSubscriptionPrices(): Observable<{ prices: SubscriptionPrice[] }> {
-    return this.http.get<{ prices: SubscriptionPrice[] }>(`${this.apiUrl}/subscription-prices`);
+  getSubscriptionPrices(): Observable {
+    return this.http.get(`${this.apiUrl}/subscription-prices`);`
   }
 
   /**
-   * Create a subscription
-   * @param priceId Stripe price ID
-   * @param paymentMethodId Stripe payment method ID
+   * Create a subscription;
+   * @param priceId Stripe price ID;
+   * @param paymentMethodId Stripe payment method ID;
    */
-  createSubscription(priceId: string, paymentMethodId: string): Observable<Subscription> {
-    return this.http.post<Subscription>(`${this.apiUrl}/create-subscription`, {
-      priceId,
-      paymentMethodId,
+  createSubscription(priceId: string, paymentMethodId: string): Observable {
+    return this.http.post(`${this.apiUrl}/create-subscription`, {`
+      priceId,;
+      paymentMethodId,;
     });
   }
 
   /**
-   * Cancel a subscription
+   * Cancel a subscription;
    */
-  cancelSubscription(): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/cancel-subscription`, {});
+  cancelSubscription(): Observable {
+    return this.http.post(`${this.apiUrl}/cancel-subscription`, {});`
   }
 
   /**
-   * Boost an ad
-   * @param adId Ad ID
-   * @param days Number of days to boost
-   * @param paymentMethodId Stripe payment method ID
+   * Boost an ad;
+   * @param adId Ad ID;
+   * @param days Number of days to boost;
+   * @param paymentMethodId Stripe payment method ID;
    */
-  boostAd(adId: string, days = 7, paymentMethodId: string): Observable<BoostAdResult> {
-    return this.http.post<BoostAdResult>(`${this.apiUrl}/boost-ad`, {
-      adId,
-      days,
-      paymentMethodId,
+  boostAd(adId: string, days = 7, paymentMethodId: string): Observable {
+    return this.http.post(`${this.apiUrl}/boost-ad`, {`
+      adId,;
+      days,;
+      paymentMethodId,;
     });
   }
 
   /**
-   * Feature an ad
-   * @param adId Ad ID
-   * @param paymentMethodId Stripe payment method ID
+   * Feature an ad;
+   * @param adId Ad ID;
+   * @param paymentMethodId Stripe payment method ID;
    */
-  featureAd(adId: string, paymentMethodId: string): Observable<FeatureAdResult> {
-    return this.http.post<FeatureAdResult>(`${this.apiUrl}/feature-ad`, {
-      adId,
-      paymentMethodId,
+  featureAd(adId: string, paymentMethodId: string): Observable {
+    return this.http.post(`${this.apiUrl}/feature-ad`, {`
+      adId,;
+      paymentMethodId,;
     });
   }
 
   /**
-   * Create a payment method setup
+   * Create a payment method setup;
    */
-  async createSetupIntent(): Promise<string> {
-    const response = await this.http
-      .post<{ clientSecret: string }>(`${this.apiUrl}/create-setup-intent`, {})
+  async createSetupIntent(): Promise {
+    const response = await this.http;
+      .post(`${this.apiUrl}/create-setup-intent`, {});`
       .toPromise();
     return response.clientSecret;
   }
 
   /**
-   * Create a card payment method element
-   * @param elementId HTML element ID to mount the card element
+   * Create a card payment method element;
+   * @param elementId HTML element ID to mount the card element;
    */
   createCardElement(elementId: string): any {
     const elements = this.getStripe().elements();
     const style = {
       base: {
-        color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        color: '#32325d',;
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',;
+        fontSmoothing: 'antialiased',;
+        fontSize: '16px',;
         '::placeholder': {
-          color: '#aab7c4',
-        },
-      },
+          color: '#aab7c4',;
+        },;
+      },;
       invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-      },
+        color: '#fa755a',;
+        iconColor: '#fa755a',;
+      },;
     };
 
     const cardElement = elements.create('card', { style });
-    cardElement.mount(`#${elementId}`);
+    cardElement.mount(`#${elementId}`);`
     return cardElement;
   }
 
   /**
-   * Confirm card setup with the Stripe API
-   * @param clientSecret Setup intent client secret
-   * @param cardElement Stripe card element
+   * Confirm card setup with the Stripe API;
+   * @param clientSecret Setup intent client secret;
+   * @param cardElement Stripe card element;
    */
-  async confirmCardSetup(clientSecret: string, cardElement: any): Promise<PaymentMethod> {
+  async confirmCardSetup(clientSecret: string, cardElement: any): Promise {
     const result = await this.getStripe().confirmCardSetup(clientSecret, {
       payment_method: {
-        card: cardElement,
+        card: cardElement,;
         billing_details: {
           // You can add billing details here if needed
-        },
-      },
+        },;
+      },;
     });
 
     if (result.error) {
@@ -234,15 +234,15 @@ export class PaymentService {
   }
 
   /**
-   * Format currency amount for display
-   * @param amount Amount in smallest currency unit (e.g., cents)
-   * @param currency Currency code (e.g., 'usd', 'nok')
+   * Format currency amount for display;
+   * @param amount Amount in smallest currency unit (e.g., cents);
+   * @param currency Currency code (e.g., 'usd', 'nok');
    */
   formatCurrency(amount: number, currency = 'nok'): string {
     return new Intl.NumberFormat('no-NO', {
-      style: 'currency',
-      currency: currency.toUpperCase(),
-      minimumFractionDigits: 0,
+      style: 'currency',;
+      currency: currency.toUpperCase(),;
+      minimumFractionDigits: 0,;
     }).format(amount / 100);
   }
 }

@@ -8,26 +8,26 @@ export interface AlertDialogData {
   buttonText: string;
 }
 
-@Component({
-    selector: 'nb-alert-dialog',
-    imports: [CommonModule, NbCardModule, NbButtonModule],
-    template: `
-    <nb-card>
-      <nb-card-header>
-        <h4 class="dialog-title">{{ data.title }}</h4>
-      </nb-card-header>
-      <nb-card-body>
-        <p class="dialog-message">{{ data.message }}</p>
-      </nb-card-body>
-      <nb-card-footer class="dialog-actions">
-        <button nbButton status="primary" (click)="close()">
+@Component({';
+    selector: 'nb-alert-dialog',;
+    imports: [CommonModule, NbCardModule, NbButtonModule],;
+    template: `;`
+    ;
+      ;
+        {{ data.title }};
+      ;
+      ;
+        {{ data.message }};
+      ;
+      ;
+        ;
           {{ data.buttonText }}
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -45,13 +45,13 @@ export interface AlertDialogData {
         display: flex;
         justify-content: flex-end;
       }
-    `,
-    ]
-})
-export class AlertDialogComponent {
-  constructor(
-    private dialogRef: NbDialogRef<AlertDialogComponent>,
-    @Inject('ALERT_DIALOG_DATA') public data: AlertDialogData,
+    `,;`
+    ];
+});
+export class AlertDialogComponen {t {
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    @Inject('ALERT_DIALOG_DATA') public data: AlertDialogData,;
   ) {}
 
   close() {

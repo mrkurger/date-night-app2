@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-// PrimeNG Components
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ThemeService } from '../../core/services/theme.service';
@@ -27,47 +26,50 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessagesModule } from 'primeng/messages';
 
+// PrimeNG Components
+
+';
 type ThemeName = 'light' | 'dark' | 'system';
 
 @Component({
-  selector: 'app-user-settings',
-  standalone: true,
-  imports: [MessagesModule, ProgressSpinnerModule, InputTextareaModule, TabViewModule, RadioButtonModule, CheckboxModule, DropdownModule, ButtonModule, InputTextModule, InputGroupModule, CardModule, MessageService, Message, 
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    CardModule,
-    InputGroupModule,
-    InputTextModule,
-    ButtonModule,
-    DropdownModule,
-    CheckboxModule,
-    RadioButtonModule,
-    TabViewModule,
-    InputTextareaModule,
-    ProgressSpinnerModule,
-    MessagesModule,
-  ],
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.scss'],
-  providers: [MessageService],
-    CardModule,
-    InputGroupModule,
-    InputTextModule,
-    ButtonModule,
-    DropdownModule,
-    CheckboxModule,
-    RadioButtonModule,
-    TabViewModule,
-    InputTextareaModule,
-    ProgressSpinnerModule,
-    MessagesModule,
-  ],
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.scss'],
-  providers: [MessageService],
-})
-export class UserSettingsComponent implements OnInit, OnDestroy {
+  selector: 'app-user-settings',;
+  standalone: true,;
+  imports: [MessagesModule, ProgressSpinnerModule, InputTextareaModule, TabViewModule, RadioButtonModule, CheckboxModule, DropdownModule, ButtonModule, InputTextModule, InputGroupModule, CardModule, MessageService, Message,; 
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    CardModule,;
+    InputGroupModule,;
+    InputTextModule,;
+    ButtonModule,;
+    DropdownModule,;
+    CheckboxModule,;
+    RadioButtonModule,;
+    TabViewModule,;
+    InputTextareaModule,;
+    ProgressSpinnerModule,;
+    MessagesModule,;
+  ],;
+  templateUrl: './user-settings.component.html',;
+  styleUrls: ['./user-settings.component.scss'],;
+  providers: [MessageService],;
+    CardModule,;
+    InputGroupModule,;
+    InputTextModule,;
+    ButtonModule,;
+    DropdownModule,;
+    CheckboxModule,;
+    RadioButtonModule,;
+    TabViewModule,;
+    InputTextareaModule,;
+    ProgressSpinnerModule,;
+    MessagesModule,;
+  ],;
+  templateUrl: './user-settings.component.html',;
+  styleUrls: ['./user-settings.component.scss'],;
+  providers: [MessageService],;
+});
+export class UserSettingsComponen {t implements OnInit, OnDestroy {
   user: User | null = null;
   profileForm: FormGroup;
   passwordForm: FormGroup;
@@ -80,35 +82,35 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   cardSizeOptions: { value: CardSize['value']; label: string }[] = [];
   activeTab: string = 'profile';
   error: string | null = null;
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject();
 
   private subscriptions: Subscription[] = [];
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private themeService: ThemeService,
-    private userPreferencesService: UserPreferencesService,
-    private router: Router,
+  constructor(;
+    private fb: FormBuilder,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private themeService: ThemeService,;
+    private userPreferencesService: UserPreferencesService,;
+    private router: Router,;
   ) {
     this.initializeForms();
     this.initializeOptions();
@@ -116,46 +118,46 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private initializeForms(): void {
     this.profileForm = this.fb.group({
-      profileVisibility: ['public'],
-      allowFriendRequests: [true],
-      allowMessagesFromUnknown: [true],
+      profileVisibility: ['public'],;
+      allowFriendRequests: [true],;
+      allowMessagesFromUnknown: [true],;
     });
 
     this.notificationForm = this.fb.group({
-      emailNotifications: [false],
-      pushNotifications: [false],
-      smsNotifications: [false],
+      emailNotifications: [false],;
+      pushNotifications: [false],;
+      smsNotifications: [false],;
     });
 
     this.privacyForm = this.fb.group({
-      dataSharing: [false],
-      activityVisibility: ['friends'],
+      dataSharing: [false],;
+      activityVisibility: ['friends'],;
     });
 
     this.passwordForm = this.fb.group({
-      currentPassword: [''],
-      newPassword: ['', [Validators.minLength(8)]],
-      confirmNewPassword: [''],
+      currentPassword: [''],;
+      newPassword: ['', [Validators.minLength(8)]],;
+      confirmNewPassword: [''],;
     });
 
     this.displayForm = this.fb.group({
-      defaultViewType: ['netflix'],
-      contentDensity: ['comfortable'],
-      cardSize: ['medium'],
+      defaultViewType: ['netflix'],;
+      contentDensity: ['comfortable'],;
+      cardSize: ['medium'],;
     });
   }
 
   private initializeOptions(): void {
-    this.contentDensityOptions = [
-      { value: 'compact', label: 'Compact' },
-      { value: 'comfortable', label: 'Comfortable' },
-      { value: 'condensed', label: 'Condensed' },
+    this.contentDensityOptions = [;
+      { value: 'compact', label: 'Compact' },;
+      { value: 'comfortable', label: 'Comfortable' },;
+      { value: 'condensed', label: 'Condensed' },;
     ];
 
-    this.cardSizeOptions = [
-      { value: 'small', label: 'Small' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'large', label: 'Large' },
+    this.cardSizeOptions = [;
+      { value: 'small', label: 'Small' },;
+      { value: 'medium', label: 'Medium' },;
+      { value: 'large', label: 'Large' },;
     ];
   }
 
@@ -171,9 +173,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private loadUserData(): void {
     this.loading = true;
-    this.authService
-      .getCurrentUser()
-      .pipe(takeUntil(this.destroy$))
+    this.authService;
+      .getCurrentUser();
+      .pipe(takeUntil(this.destroy$));
       .subscribe({
         next: (user) => {
           if (user) {
@@ -181,58 +183,58 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
             this.updateFormsWithUserData(user);
           }
           this.loading = false;
-        },
+        },;
         error: (error) => {
           this.notificationService.error('Failed to load user data');
           this.loading = false;
-        },
+        },;
       });
   }
 
   private updateFormsWithUserData(user: User): void {
     this.profileForm.patchValue({
-      profileVisibility: user.privacySettings?.profileVisibility || 'public',
-      allowFriendRequests: user.privacySettings?.allowFriendRequests !== false,
-      allowMessagesFromUnknown: user.privacySettings?.allowMessagesFromUnknown !== false,
+      profileVisibility: user.privacySettings?.profileVisibility || 'public',;
+      allowFriendRequests: user.privacySettings?.allowFriendRequests !== false,;
+      allowMessagesFromUnknown: user.privacySettings?.allowMessagesFromUnknown !== false,;
     });
 
     this.notificationForm.patchValue({
-      emailNotifications: user.notificationSettings?.emailNotifications ?? false,
-      pushNotifications: user.notificationSettings?.pushNotifications ?? false,
-      smsNotifications: user.notificationSettings?.sms ?? false,
+      emailNotifications: user.notificationSettings?.emailNotifications ?? false,;
+      pushNotifications: user.notificationSettings?.pushNotifications ?? false,;
+      smsNotifications: user.notificationSettings?.sms ?? false,;
     });
 
     this.privacyForm.patchValue({
-      dataSharing: user.privacySettings?.dataSharing ?? false,
-      activityVisibility: user.privacySettings?.activityVisibility || 'friends',
+      dataSharing: user.privacySettings?.dataSharing ?? false,;
+      activityVisibility: user.privacySettings?.activityVisibility || 'friends',;
     });
 
     this.passwordForm.patchValue({
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      currentPassword: '',;
+      newPassword: '',;
+      confirmNewPassword: '',;
     });
 
     this.displayForm.patchValue({
-      defaultViewType: user.preferences?.defaultViewType || 'netflix',
-      contentDensity: user.preferences?.contentDensity || 'comfortable',
-      cardSize: user.preferences?.cardSize || 'medium',
+      defaultViewType: user.preferences?.defaultViewType || 'netflix',;
+      contentDensity: user.preferences?.contentDensity || 'comfortable',;
+      cardSize: user.preferences?.cardSize || 'medium',;
     });
   }
 
   private loadThemeSettings(): void {
     this.currentTheme = this.themeService.getCurrentTheme();
     this.displayForm.patchValue({ theme: this.currentTheme }, { emitEvent: false });
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.themeService.theme$.subscribe((themeName) => {
         this.currentTheme = themeName;
         this.displayForm.get('theme')?.setValue(themeName, { emitEvent: false });
-      }),
+      }),;
       this.displayForm.get('theme')!.valueChanges.subscribe((themeValue) => {
         if (this.isValidThemeName(themeValue)) {
           this.themeService.setTheme(themeValue);
         }
-      }),
+      }),;
     );
   }
 
@@ -251,22 +253,22 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   private loadDisplaySettings(): void {
     const preferences = this.userPreferencesService.getPreferences();
     this.displayForm.patchValue({
-      defaultViewType: preferences.defaultViewType,
-      contentDensity: preferences.contentDensity,
-      cardSize: preferences.cardSize,
+      defaultViewType: preferences.defaultViewType,;
+      contentDensity: preferences.contentDensity,;
+      cardSize: preferences.cardSize,;
     });
 
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.userPreferencesService.preferences$.subscribe((prefs) => {
-        this.displayForm.patchValue(
+        this.displayForm.patchValue(;
           {
-            defaultViewType: prefs.defaultViewType,
-            contentDensity: prefs.contentDensity,
-            cardSize: prefs.cardSize,
-          },
-          { emitEvent: false },
+            defaultViewType: prefs.defaultViewType,;
+            contentDensity: prefs.contentDensity,;
+            cardSize: prefs.cardSize,;
+          },;
+          { emitEvent: false },;
         );
-      }),
+      }),;
     );
   }
 
@@ -281,11 +283,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       next: () => {
         this.notificationService.success('Profile updated successfully');
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.notificationService.error('Failed to update profile');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -301,11 +303,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         this.notificationService.success('Password updated successfully');
         this.passwordForm.reset();
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.notificationService.error('Failed to update password');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -315,11 +317,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       next: () => {
         this.notificationService.success('Notification settings updated');
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.notificationService.error('Failed to update notification settings');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -329,11 +331,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       next: () => {
         this.notificationService.success('Privacy settings updated');
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.notificationService.error('Failed to update privacy settings');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -345,9 +347,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         // this.themeService.setTheme(displaySettings.theme); // Already handled by valueChanges or direct setTheme call
       }
       this.userPreferencesService.updatePreferences({
-        defaultViewType: displaySettings.defaultViewType,
-        contentDensity: displaySettings.contentDensity,
-        cardSize: displaySettings.cardSize,
+        defaultViewType: displaySettings.defaultViewType,;
+        contentDensity: displaySettings.contentDensity,;
+        cardSize: displaySettings.cardSize,;
         // Persist theme via userPreferencesService if it's responsible for that
         // theme: displaySettings.theme
       });
@@ -362,9 +364,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   resetDisplaySettings(): void {
     const defaultSettings = {
-      defaultViewType: 'netflix' as const,
-      contentDensity: 'comfortable' as const,
-      cardSize: 'medium' as const,
+      defaultViewType: 'netflix' as const,;
+      contentDensity: 'comfortable' as const,;
+      cardSize: 'medium' as const,;
     };
 
     this.displayForm.patchValue(defaultSettings);

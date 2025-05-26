@@ -6,33 +6,33 @@ export interface ConfirmDialogData {
   title: string;
   message: string;
   confirmText: string;
-  cancelText: string;
+  cancelText: string;';
   status: 'primary' | 'success' | 'warning' | 'danger';
 }
 
 @Component({
-    selector: 'nb-confirm-dialog',
-    imports: [CommonModule, NbCardModule, NbButtonModule],
-    template: `
-    <nb-card [status]="data.status" accent="true">
-      <nb-card-header>
-        <h4 class="dialog-title">{{ data.title }}</h4>
-      </nb-card-header>
-      <nb-card-body>
-        <p class="dialog-message">{{ data.message }}</p>
-      </nb-card-body>
-      <nb-card-footer class="dialog-actions">
-        <button nbButton ghost (click)="cancel()">
+    selector: 'nb-confirm-dialog',;
+    imports: [CommonModule, NbCardModule, NbButtonModule],;
+    template: `;`
+    ;
+      ;
+        {{ data.title }};
+      ;
+      ;
+        {{ data.message }};
+      ;
+      ;
+        ;
           {{ data.cancelText }}
-        </button>
-        <button nbButton [status]="data.status" (click)="confirm()">
+        ;
+        ;
           {{ data.confirmText }}
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -51,13 +51,13 @@ export interface ConfirmDialogData {
         justify-content: flex-end;
         gap: 1rem;
       }
-    `,
-    ]
-})
-export class ConfirmDialogComponent {
-  constructor(
-    private dialogRef: NbDialogRef<ConfirmDialogComponent>,
-    @Inject('CONFIRM_DIALOG_DATA') public data: ConfirmDialogData,
+    `,;`
+    ];
+});
+export class ConfirmDialogComponen {t {
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    @Inject('CONFIRM_DIALOG_DATA') public data: ConfirmDialogData,;
   ) {}
 
   confirm() {

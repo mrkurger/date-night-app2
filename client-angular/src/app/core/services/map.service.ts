@@ -6,17 +6,17 @@ export interface MapMarker {
   latitude: number;
   longitude: number;
   title?: string;
-  description?: string;
+  description?: string;';
   status?: 'planned' | 'active' | 'completed' | 'cancelled';
   icon?: string;
 }
 
 @Injectable({
-  providedIn: 'root',
-})
-export class MapService {
-  private markersSubject = new BehaviorSubject<MapMarker[]>([]);
-  private selectedMarkerSubject = new BehaviorSubject<MapMarker | null>(null);
+  providedIn: 'root',;
+});
+export class MapServic {e {
+  private markersSubject = new BehaviorSubject([]);
+  private selectedMarkerSubject = new BehaviorSubject(null);
 
   markers$ = this.markersSubject.asObservable();
   selectedMarker$ = this.selectedMarkerSubject.asObservable();
@@ -31,53 +31,53 @@ export class MapService {
 
   getMarkerIcon(status: string): string {
     switch (status) {
-      case 'planned':
+      case 'planned':;
         return '/assets/icons/marker-planned.svg';
-      case 'active':
+      case 'active':;
         return '/assets/icons/marker-active.svg';
-      case 'completed':
+      case 'completed':;
         return '/assets/icons/marker-completed.svg';
-      case 'cancelled':
+      case 'cancelled':;
         return '/assets/icons/marker-cancelled.svg';
-      default:
+      default:;
         return '/assets/icons/marker-default.svg';
     }
   }
 
   generateMarkerStyle(status: string): { [key: string]: string } {
     const colors = {
-      planned: '#2196F3',
-      active: '#4CAF50',
-      completed: '#9E9E9E',
-      cancelled: '#F44336',
+      planned: '#2196F3',;
+      active: '#4CAF50',;
+      completed: '#9E9E9E',;
+      cancelled: '#F44336',;
     };
 
     return {
-      backgroundColor: colors[status] || '#757575',
-      border: '2px solid white',
-      borderRadius: '50%',
-      width: '30px',
-      height: '30px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'white',
-      fontWeight: 'bold',
+      backgroundColor: colors[status] || '#757575',;
+      border: '2px solid white',;
+      borderRadius: '50%',;
+      width: '30px',;
+      height: '30px',;
+      display: 'flex',;
+      alignItems: 'center',;
+      justifyContent: 'center',;
+      color: 'white',;
+      fontWeight: 'bold',;
     };
   }
 
   // Convert travel itineraries to map markers
   convertItinerariesToMarkers(itineraries: any[]): MapMarker[] {
-    return itineraries
+    return itineraries;
       .map((itinerary) => ({
-        id: itinerary._id,
-        latitude: itinerary.destination?.location?.coordinates[1] || 0,
-        longitude: itinerary.destination?.location?.coordinates[0] || 0,
-        title: `${itinerary.destination?.city}, ${itinerary.destination?.county}`,
-        description: `${new Date(itinerary.arrivalDate).toLocaleDateString()} - ${new Date(itinerary.departureDate).toLocaleDateString()}`,
-        status: itinerary.status,
-        icon: this.getMarkerIcon(itinerary.status),
-      }))
+        id: itinerary._id,;
+        latitude: itinerary.destination?.location?.coordinates[1] || 0,;
+        longitude: itinerary.destination?.location?.coordinates[0] || 0,;
+        title: `${itinerary.destination?.city}, ${itinerary.destination?.county}`,;`
+        description: `${new Date(itinerary.arrivalDate).toLocaleDateString()} - ${new Date(itinerary.departureDate).toLocaleDateString()}`,;`
+        status: itinerary.status,;
+        icon: this.getMarkerIcon(itinerary.status),;
+      }));
       .filter((marker) => marker.latitude !== 0 && marker.longitude !== 0);
   }
 
@@ -88,9 +88,9 @@ export class MapService {
     const lats = markers.map((m) => m.latitude);
     const lngs = markers.map((m) => m.longitude);
 
-    return [
-      [Math.min(...lats), Math.min(...lngs)],
-      [Math.max(...lats), Math.max(...lngs)],
+    return [;
+      [Math.min(...lats), Math.min(...lngs)],;
+      [Math.max(...lats), Math.max(...lngs)],;
     ];
   }
 
@@ -105,8 +105,8 @@ export class MapService {
     const lngs = markers.map((m) => m.longitude);
 
     return {
-      latitude: (Math.min(...lats) + Math.max(...lats)) / 2,
-      longitude: (Math.min(...lngs) + Math.max(...lngs)) / 2,
+      latitude: (Math.min(...lats) + Math.max(...lats)) / 2,;
+      longitude: (Math.min(...lngs) + Math.max(...lngs)) / 2,;
     };
   }
 }

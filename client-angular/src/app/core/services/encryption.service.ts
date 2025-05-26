@@ -1,20 +1,19 @@
+import { Injectable } from '@angular/core';
+import { Observable, from, of } from 'rxjs';
+import { map,  } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains settings for the encryption service
 //
-// COMMON CUSTOMIZATIONS:
+// COMMON CUSTOMIZATIONS:';
 // - KEY_STORAGE_PREFIX: Prefix for keys stored in localStorage (default: 'chat_keys_')
 // - ENABLE_ENCRYPTION: Enable end-to-end encryption (default: true)
 // - KEY_PAIR_ALGORITHM: Algorithm used for key pair generation (default: 'RSA-OAEP')
 // - MESSAGE_AUTO_DELETION: Enable automatic message deletion (default: true)
 // - DEFAULT_MESSAGE_TTL: Default time-to-live for messages in milliseconds (default: 7 days)
 // ===================================================
-
-import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { map,  } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 
 export interface EncryptedData {
   ciphertext: string;
@@ -38,32 +37,32 @@ export interface EncryptedAttachmentData {
 }
 
 @Injectable({
-  providedIn: 'root',
-})
-export class EncryptionService {
+  providedIn: 'root',;
+});
+export class EncryptionServic {e {
   private initialized = false;
-  private roomKeys = new Map<string, CryptoKey>();
-  private messageExpirySettings = new Map<string, { enabled: boolean; ttl: number }>();
+  private roomKeys = new Map();
+  private messageExpirySettings = new Map();
 
   constructor() {}
 
   /**
-   * Initialize the encryption service
+   * Initialize the encryption service;
    */
-  async initialize(): Promise<void> {
+  async initialize(): Promise {
     // initialization logic or stub
     return;
   }
 
   /**
-   * Check if encryption is available
+   * Check if encryption is available;
    */
   isEncryptionAvailable(): boolean {
     return false;
   }
 
   /**
-   * Get message expiry settings for a room
+   * Get message expiry settings for a room;
    */
   getMessageExpirySettings(roomId: string): any {
     // stub: return default settings
@@ -71,60 +70,60 @@ export class EncryptionService {
   }
 
   /**
-   * Set message expiry settings for a room
+   * Set message expiry settings for a room;
    */
   setMessageExpirySettings(roomId: string, settings: { enabled: boolean; ttl?: number }): void {
     // stub
   }
 
   /**
-   * Encrypt a file
+   * Encrypt a file;
    */
-  async encryptFile(roomId: string, file: File): Promise<EncryptedAttachmentData> {
+  async encryptFile(roomId: string, file: File): Promise {
     // stub: return empty data
     return { data: new ArrayBuffer(0), iv: new Uint8Array(), authTag: new Uint8Array() };
   }
 
   /**
-   * Decrypt a file
+   * Decrypt a file;
    */
-  async decryptFile(roomId: string, response: any, options?: any): Promise<File> {
+  async decryptFile(roomId: string, response: any, options?: any): Promise {
     // Convert Blob to File with all required properties
     const blob = new Blob([response.data], { type: response.metadata.originalType });
     const file = new File([blob], response.metadata.originalName, {
-      type: response.metadata.originalType,
+      type: response.metadata.originalType,;
     });
     return file;
   }
 
   /**
-   * Encrypt a message
+   * Encrypt a message;
    */
-  async encryptMessage(roomId: string, content: string, ttl?: number): Promise<any> {
+  async encryptMessage(roomId: string, content: string, ttl?: number): Promise {
     // stub: return content as-is
     return content;
   }
 
   /**
-   * Decrypt a message
+   * Decrypt a message;
    */
-  async decryptMessage(roomId: string, encrypted: any): Promise<string | null> {
+  async decryptMessage(roomId: string, encrypted: any): Promise {
     // stub: return encrypted if string
     return typeof encrypted === 'string' ? encrypted : null;
   }
 
   /**
-   * Get or generate a room key
+   * Get or generate a room key;
    */
-  public async getRoomKey(roomId: string): Promise<string> {
+  public async getRoomKey(roomId: string): Promise {
     // stub: return empty key
     return '';
   }
 
   /**
-   * Setup room encryption
+   * Setup room encryption;
    */
-  setupRoomEncryption(roomId: string): Observable<any> {
+  setupRoomEncryption(roomId: string): Observable {
     // stub implementation
     return new Observable((observer) => {
       observer.next(null);
@@ -133,18 +132,18 @@ export class EncryptionService {
   }
 
   /**
-   * Check and perform key rotations for all rooms
+   * Check and perform key rotations for all rooms;
    */
   checkAndPerformKeyRotations(): void {
     // stub implementation
   }
 
   /**
-   * Rotate the encryption key for a specific room
-   * @param roomId The ID of the room to rotate the key for
-   * @returns Observable that completes when the key rotation is done
+   * Rotate the encryption key for a specific room;
+   * @param roomId The ID of the room to rotate the key for;
+   * @returns Observable that completes when the key rotation is done;
    */
-  rotateRoomKey(roomId: string): Observable<void> {
+  rotateRoomKey(roomId: string): Observable {
     // stub implementation
     return new Observable((observer) => {
       observer.next();

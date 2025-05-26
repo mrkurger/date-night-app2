@@ -1,273 +1,239 @@
+import {
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { BemUtil } from '../../core/utils/bem.util';
 import { ThemeService } from '../../core/services/theme.service';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,';
+} from '@nebular/theme';
 
 /**
- * Micro-interactions Demo Component
- *
- * This component demonstrates micro-interactions used throughout the DateNight.io application.
- * It showcases hover effects, loading states, transitions, and feedback animations.
+ * Micro-interactions Demo Component;
+ *;
+ * This component demonstrates micro-interactions used throughout the DateNight.io application.;
+ * It showcases hover effects, loading states, transitions, and feedback animations.;
  */
 @Component({
-    selector: 'app-micro-interactions-demo',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule],
-    template: `
-    <div [class]="bem.block()">
-      <header [class]="bem.element('header')">
-        <div class="container">
-          <h1 [class]="bem.element('title')">Micro-interactions</h1>
-          <p [class]="bem.element('description')">
-            This page demonstrates micro-interactions used throughout the DateNight.io application.
-            Micro-interactions provide feedback, guide users, and create a more engaging experience.
-          </p>
-          <button nbButton status="primary" (click)="toggleTheme()">
-            <nb-icon [icon]="(isDarkMode$ | async) ? 'sun-outline' : 'moon-outline'"></nb-icon>
-            Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
-          </button>
-        </div>
-      </header>
+    selector: 'app-micro-interactions-demo',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [NebularModule, CommonModule],;
+    template: `;`
+    ;
+      ;
+        ;
+          Micro-interactions;
+          ;
+            This page demonstrates micro-interactions used throughout the DateNight.io application.;
+            Micro-interactions provide feedback, guide users, and create a more engaging experience.;
+          ;
+          ;
+            ;
+            Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode;
+          ;
+        ;
+      ;
 
-      <main class="container">
-        <!-- Introduction -->
-        <nb-card>
-          <nb-card-header>
-            <h2>Introduction</h2>
-          </nb-card-header>
-          <nb-card-body>
-            <p>
-              Micro-interactions are small, subtle animations and effects that provide feedback and
-              enhance the user experience. They help users understand what's happening, guide them
-              through the interface, and make the application feel more responsive and polished.
-            </p>
-            <p>
-              DateNight.io uses a consistent set of micro-interactions throughout the application to
-              create a cohesive and engaging experience. This page showcases these
-              micro-interactions and provides examples of how to implement them.
-            </p>
-          </nb-card-body>
-        </nb-card>
+      ;
+        ;
+        ;
+          ;
+            Introduction;
+          ;
+          ;
+            ;
+              Micro-interactions are small, subtle animations and effects that provide feedback and;
+              enhance the user experience. They help users understand what's happening, guide them;
+              through the interface, and make the application feel more responsive and polished.;
+            ;
+            ;
+              DateNight.io uses a consistent set of micro-interactions throughout the application to;
+              create a cohesive and engaging experience. This page showcases these;
+              micro-interactions and provides examples of how to implement them.;
+            ;
+          ;
+        ;
 
-        <!-- Hover Effects -->
-        <nb-card>
-          <nb-card-header>
-            <h2>Hover Effects</h2>
-          </nb-card-header>
-          <nb-card-body>
-            <p>
-              Hover effects provide feedback when users hover over interactive elements. They help
-              users understand what elements are clickable and what will happen when they click.
-            </p>
+        ;
+        ;
+          ;
+            Hover Effects;
+          ;
+          ;
+            ;
+              Hover effects provide feedback when users hover over interactive elements. They help;
+              users understand what elements are clickable and what will happen when they click.;
+            ;
 
-            <div class="hover-grid">
-              <nb-card *ngFor="let effect of hoverEffects" [class]="effect.class">
-                <nb-card-body>
-                  <h3>{{ effect.name }}</h3>
-                  <p>{{ effect.description }}</p>
-                  <pre *ngIf="effect.code">{{ effect.code }}</pre>
-                </nb-card-body>
-              </nb-card>
-            </div>
-          </nb-card-body>
-        </nb-card>
+            ;
+              ;
+                ;
+                  {{ effect.name }};
+                  {{ effect.description }};
+                  {{ effect.code }};
+                ;
+              ;
+            ;
+          ;
+        ;
 
-        <!-- Loading States -->
-        <nb-card>
-          <nb-card-header>
-            <h2>Loading States</h2>
-          </nb-card-header>
-          <nb-card-body>
-            <p>
-              Loading states provide feedback when the application is processing a request or
-              loading content. They help users understand that something is happening and prevent
-              them from thinking the application is frozen or unresponsive.
-            </p>
+        ;
+        ;
+          ;
+            Loading States;
+          ;
+          ;
+            ;
+              Loading states provide feedback when the application is processing a request or;
+              loading content. They help users understand that something is happening and prevent;
+              them from thinking the application is frozen or unresponsive.;
+            ;
 
-            <div class="loading-demo">
-              <button
-                nbButton
-                status="primary"
-                [disabled]="isLoading"
-                (click)="simulateLoading()"
-                [class.success]="isSuccess"
-                [class.error]="isError"
-              >
-                <span>
+            ;
+              ;
+                ;
                   {{
-                    isLoading
-                      ? 'Loading...'
-                      : isSuccess
-                        ? 'Success!'
-                        : isError
-                          ? 'Error!'
-                          : 'Click to Load'
+                    isLoading;
+                      ? 'Loading...';
+                      : isSuccess;
+                        ? 'Success!';
+                        : isError;
+                          ? 'Error!';
+                          : 'Click to Load';
                   }}
-                </span>
-                <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
-                <nb-icon
-                  *ngIf="isSuccess"
-                  icon="checkmark-circle-2-outline"
-                  status="success"
-                ></nb-icon>
-                <nb-icon *ngIf="isError" icon="close-circle-outline" status="danger"></nb-icon>
-              </button>
+                ;
+                ;
+                ;
+                ;
+              ;
 
-              <button
-                nbButton
-                status="danger"
-                [disabled]="isLoading"
-                (click)="simulateError()"
-                [class.success]="isSuccess"
-                [class.error]="isError"
-              >
-                <span>
+              ;
+                ;
                   {{
-                    isLoading
-                      ? 'Loading...'
-                      : isSuccess
-                        ? 'Success!'
-                        : isError
-                          ? 'Error!'
-                          : 'Simulate Error'
+                    isLoading;
+                      ? 'Loading...';
+                      : isSuccess;
+                        ? 'Success!';
+                        : isError;
+                          ? 'Error!';
+                          : 'Simulate Error';
                   }}
-                </span>
-                <nb-spinner *ngIf="isLoading" size="small"></nb-spinner>
-                <nb-icon
-                  *ngIf="isSuccess"
-                  icon="checkmark-circle-2-outline"
-                  status="success"
-                ></nb-icon>
-                <nb-icon *ngIf="isError" icon="close-circle-outline" status="danger"></nb-icon>
-              </button>
-            </div>
+                ;
+                ;
+                ;
+                ;
+              ;
+            ;
 
-            <div class="loading-grid">
-              <nb-card *ngFor="let state of loadingStates">
-                <nb-card-body>
-                  <h3>{{ state.name }}</h3>
-                  <p>{{ state.description }}</p>
-                  <div [class]="state.class">
-                    <div *ngIf="state.class === 'button-loading'">
-                      <button nbButton status="primary" disabled>
-                        <span>Loading</span>
-                        <nb-spinner size="small"></nb-spinner>
-                      </button>
-                    </div>
+            ;
+              ;
+                ;
+                  {{ state.name }};
+                  {{ state.description }};
+                  ;
+                    
+                      ;
+                        Loading;
+                        ;
+                      ;
+                    ;
 
-                    <div *ngIf="state.class === 'skeleton-loader'" class="skeleton">
-                      <div class="skeleton-line short"></div>
-                      <div class="skeleton-line medium"></div>
-                      <div class="skeleton-line long"></div>
-                      <div class="skeleton-line medium"></div>
-                    </div>
+                      ;
+                      ;
+                      ;
+                      ;
+                    ;
 
-                    <div *ngIf="state.class === 'progress-bar'">
-                      <nb-progress-bar [value]="75" status="primary"></nb-progress-bar>
-                    </div>
+                      ;
+                    ;
 
-                    <div *ngIf="state.class === 'pulse-loading'" class="pulse"></div>
-                  </div>
-                </nb-card-body>
-              </nb-card>
-            </div>
-          </nb-card-body>
-        </nb-card>
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
 
-        <!-- Transition Effects -->
-        <nb-card>
-          <nb-card-header>
-            <h2>Transition Effects</h2>
-          </nb-card-header>
-          <nb-card-body>
-            <p>
-              Transition effects provide smooth animations when elements enter, exit, or change
-              state. They help users understand what's happening and create a more polished
-              experience.
-            </p>
+        ;
+        ;
+          ;
+            Transition Effects;
+          ;
+          ;
+            ;
+              Transition effects provide smooth animations when elements enter, exit, or change;
+              state. They help users understand what's happening and create a more polished;
+              experience.;
+            ;
 
-            <div class="transition-grid">
-              <nb-card *ngFor="let effect of transitionEffects" [class]="effect.class">
-                <nb-card-body>
-                  <h3>{{ effect.name }}</h3>
-                  <p>{{ effect.description }}</p>
-                  <pre *ngIf="effect.code">{{ effect.code }}</pre>
-                </nb-card-body>
-              </nb-card>
-            </div>
-          </nb-card-body>
-        </nb-card>
+            ;
+              ;
+                ;
+                  {{ effect.name }};
+                  {{ effect.description }};
+                  {{ effect.code }};
+                ;
+              ;
+            ;
+          ;
+        ;
 
-        <!-- Feedback Animations -->
-        <nb-card>
-          <nb-card-header>
-            <h2>Feedback Animations</h2>
-          </nb-card-header>
-          <nb-card-body>
-            <p>
-              Feedback animations provide visual cues when users interact with the application. They
-              help users understand the result of their actions and create a more engaging
-              experience.
-            </p>
+        ;
+        ;
+          ;
+            Feedback Animations;
+          ;
+          ;
+            ;
+              Feedback animations provide visual cues when users interact with the application. They;
+              help users understand the result of their actions and create a more engaging;
+              experience.;
+            ;
 
-            <div class="feedback-grid">
-              <nb-card *ngFor="let animation of feedbackAnimations" [class]="animation.class">
-                <nb-card-body>
-                  <h3>{{ animation.name }}</h3>
-                  <p>{{ animation.description }}</p>
+            ;
+              ;
+                ;
+                  {{ animation.name }};
+                  {{ animation.description }};
 
-                  <div class="feedback-demo">
-                    <div *ngIf="animation.class === 'success-animation'">
-                      <button nbButton status="success" (click)="simulateLoading()">
-                        Show Success
-                      </button>
-                    </div>
+                  ;
+                    
+                      ;
+                        Show Success;
+                      ;
+                    ;
 
-                    <div *ngIf="animation.class === 'error-animation'">
-                      <button nbButton status="danger" (click)="simulateError()">Show Error</button>
-                    </div>
+                      Show Error;
+                    ;
 
-                    <div *ngIf="animation.class === 'click-ripple'">
-                      <button nbButton status="primary">Click Me</button>
-                    </div>
+                      Click Me;
+                    ;
 
-                    <div *ngIf="animation.class === 'shake-animation'">
-                      <button
-                        nbButton
-                        status="warning"
-                        #shakeButton
-                        (click)="simulateShake(shakeButton)"
-                      >
-                        Shake Me
-                      </button>
-                    </div>
-                  </div>
-                </nb-card-body>
-              </nb-card>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </main>
-    </div>
-  `,
-    styles: [
-        `
+                      ;
+                        Shake Me;
+                      ;
+                    ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -294,9 +260,9 @@ import { ThemeService } from '../../core/services/theme.service';
         }
       }
 
-      .hover-grid,
-      .loading-grid,
-      .transition-grid,
+      .hover-grid,;
+      .loading-grid,;
+      .transition-grid,;
       .feedback-grid {
         display: grid;
         gap: 1.5rem;
@@ -357,28 +323,28 @@ import { ThemeService } from '../../core/services/theme.service';
       }
 
       @keyframes shake {
-        10%,
+        10%,;
         90% {
           transform: translate3d(-1px, 0, 0);
         }
-        20%,
+        20%,;
         80% {
           transform: translate3d(2px, 0, 0);
         }
-        30%,
-        50%,
+        30%,;
+        50%,;
         70% {
           transform: translate3d(-4px, 0, 0);
         }
-        40%,
+        40%,;
         60% {
           transform: translate3d(4px, 0, 0);
         }
       }
-    `,
-    ]
-})
-export class MicroInteractionsDemoComponent {
+    `,;`
+    ];
+});
+export class MicroInteractionsDemoComponen {t {
   bem = new BemUtil('micro-demo');
   isDarkMode$;
 
@@ -392,119 +358,119 @@ export class MicroInteractionsDemoComponent {
   isError = false;
 
   // Hover effects
-  hoverEffects = [
+  hoverEffects = [;
     {
-      name: 'Scale',
-      description: 'Slightly enlarges the element on hover',
-      class: 'hover-scale',
-      code: '@include mixins.hover-scale;',
-    },
+      name: 'Scale',;
+      description: 'Slightly enlarges the element on hover',;
+      class: 'hover-scale',;
+      code: '@include mixins.hover-scale;',;
+    },;
     {
-      name: 'Lift',
-      description: 'Adds a subtle lift effect with shadow',
-      class: 'hover-lift',
-      code: '@include mixins.hover-lift;',
-    },
+      name: 'Lift',;
+      description: 'Adds a subtle lift effect with shadow',;
+      class: 'hover-lift',;
+      code: '@include mixins.hover-lift;',;
+    },;
     {
-      name: 'Color Shift',
-      description: 'Smoothly transitions between colors',
-      class: 'hover-color',
-      code: '@include mixins.hover-color-shift(color, $color-dark-gray-2, $color-primary);',
-    },
+      name: 'Color Shift',;
+      description: 'Smoothly transitions between colors',;
+      class: 'hover-color',;
+      code: '@include mixins.hover-color-shift(color, $color-dark-gray-2, $color-primary);',;
+    },;
     {
-      name: 'Border Highlight',
-      description: 'Adds a colored border on hover',
-      class: 'hover-border',
-      code: '@include mixins.hover-border($color-primary);',
-    },
+      name: 'Border Highlight',;
+      description: 'Adds a colored border on hover',;
+      class: 'hover-border',;
+      code: '@include mixins.hover-border($color-primary);',;
+    },;
   ];
 
   // Loading states
-  loadingStates = [
+  loadingStates = [;
     {
-      name: 'Button Loading',
-      description: 'Shows a spinner inside a button during loading',
-      class: 'button-loading',
-    },
+      name: 'Button Loading',;
+      description: 'Shows a spinner inside a button during loading',;
+      class: 'button-loading',;
+    },;
     {
-      name: 'Skeleton Loader',
-      description: 'Placeholder for content while loading',
-      class: 'skeleton-loader',
-    },
+      name: 'Skeleton Loader',;
+      description: 'Placeholder for content while loading',;
+      class: 'skeleton-loader',;
+    },;
     {
-      name: 'Progress Bar',
-      description: 'Shows progress for longer operations',
-      class: 'progress-bar',
-    },
+      name: 'Progress Bar',;
+      description: 'Shows progress for longer operations',;
+      class: 'progress-bar',;
+    },;
     {
-      name: 'Pulse Loading',
-      description: 'Subtle pulsing effect for loading states',
-      class: 'pulse-loading',
-    },
+      name: 'Pulse Loading',;
+      description: 'Subtle pulsing effect for loading states',;
+      class: 'pulse-loading',;
+    },;
   ];
 
   // Transition effects
-  transitionEffects = [
+  transitionEffects = [;
     {
-      name: 'Fade In',
-      description: 'Smoothly fades in content',
-      class: 'fade-in',
-      code: '@include mixins.fade-in;',
-    },
+      name: 'Fade In',;
+      description: 'Smoothly fades in content',;
+      class: 'fade-in',;
+      code: '@include mixins.fade-in;',;
+    },;
     {
-      name: 'Slide In Top',
-      description: 'Slides in from the top',
-      class: 'slide-in-top',
-      code: '@include mixins.slide-in-top;',
-    },
+      name: 'Slide In Top',;
+      description: 'Slides in from the top',;
+      class: 'slide-in-top',;
+      code: '@include mixins.slide-in-top;',;
+    },;
     {
-      name: 'Slide In Bottom',
-      description: 'Slides in from the bottom',
-      class: 'slide-in-bottom',
-      code: '@include mixins.slide-in-bottom;',
-    },
+      name: 'Slide In Bottom',;
+      description: 'Slides in from the bottom',;
+      class: 'slide-in-bottom',;
+      code: '@include mixins.slide-in-bottom;',;
+    },;
     {
-      name: 'Scale In',
-      description: 'Scales in from the center',
-      class: 'scale-in',
-      code: '@include mixins.scale-in;',
-    },
+      name: 'Scale In',;
+      description: 'Scales in from the center',;
+      class: 'scale-in',;
+      code: '@include mixins.scale-in;',;
+    },;
   ];
 
   // Feedback animations
-  feedbackAnimations = [
+  feedbackAnimations = [;
     {
-      name: 'Success Animation',
-      description: 'Indicates successful completion',
-      class: 'success-animation',
-    },
+      name: 'Success Animation',;
+      description: 'Indicates successful completion',;
+      class: 'success-animation',;
+    },;
     {
-      name: 'Error Animation',
-      description: 'Indicates an error or failure',
-      class: 'error-animation',
-    },
+      name: 'Error Animation',;
+      description: 'Indicates an error or failure',;
+      class: 'error-animation',;
+    },;
     {
-      name: 'Click Ripple',
-      description: 'Ripple effect on click',
-      class: 'click-ripple',
-      code: '@include mixins.click-ripple;',
-    },
+      name: 'Click Ripple',;
+      description: 'Ripple effect on click',;
+      class: 'click-ripple',;
+      code: '@include mixins.click-ripple;',;
+    },;
     {
-      name: 'Shake Animation',
-      description: 'Shakes to indicate invalid input',
-      class: 'shake-animation',
-    },
+      name: 'Shake Animation',;
+      description: 'Shakes to indicate invalid input',;
+      class: 'shake-animation',;
+    },;
   ];
 
   /**
-   * Toggles the theme between light and dark mode
+   * Toggles the theme between light and dark mode;
    */
   toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
   /**
-   * Simulates a loading state followed by success
+   * Simulates a loading state followed by success;
    */
   simulateLoading(): void {
     this.isLoading = true;
@@ -522,7 +488,7 @@ export class MicroInteractionsDemoComponent {
   }
 
   /**
-   * Simulates a loading state followed by error
+   * Simulates a loading state followed by error;
    */
   simulateError(): void {
     this.isLoading = true;
@@ -540,8 +506,8 @@ export class MicroInteractionsDemoComponent {
   }
 
   /**
-   * Simulates a shake animation for invalid input
-   * @param element The element to shake
+   * Simulates a shake animation for invalid input;
+   * @param element The element to shake;
    */
   simulateShake(element: any): void {
     if (element && element.nativeElement) {

@@ -1,3 +1,10 @@
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { MapComponent } from './map.component';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import * as L from 'leaflet';
+import { MapMonitoringService } from '../../../core/services/map-monitoring.service';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,32 +14,27 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MapComponent } from './map.component';
-import { Component, ViewChild, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-// import { By } from '@angular/platform-browser';
-import * as L from 'leaflet';
-import { MapMonitoringService } from '../../../core/services/map-monitoring.service';
 
-// Create mock for MapMonitoringService
+';
+// import { By } from '@angular/platform-browser';
+
+// Create mock for MapMonitoringService';
 const mockMapMonitoringService = jasmine.createSpyObj('MapMonitoringService', ['trackInteraction']);
 
 // Mock Leaflet to avoid DOM manipulation during tests
-const mockMap = jasmine.createSpyObj('Map', [
-  'setView',
-  'remove',
-  'on',
-  'off',
-  'invalidateSize',
-  'addLayer',
-  'removeLayer',
-  'getZoom',
-  'setZoom',
-  'getCenter',
-  'flyTo',
-  'fitBounds',
+const mockMap = jasmine.createSpyObj('Map', [;
+  'setView',;
+  'remove',;
+  'on',;
+  'off',;
+  'invalidateSize',;
+  'addLayer',;
+  'removeLayer',;
+  'getZoom',;
+  'setZoom',;
+  'getCenter',;
+  'flyTo',;
+  'fitBounds',;
 ]);
 
 const mockLatLng = jasmine.createSpyObj('LatLng', ['lat', 'lng']);
@@ -51,33 +53,22 @@ spyOn(L, 'latLng').and.callFake((lat, lng) => {
   return mockLatLng;
 });
 spyOn(L, 'circle').and.returnValue(jasmine.createSpyObj('Circle', ['addTo', 'remove']));
-spyOn(L, 'icon').and.returnValue(
-  jasmine.createSpyObj('Icon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),
+spyOn(L, 'icon').and.returnValue(;
+  jasmine.createSpyObj('Icon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),;
 );
 spyOn(L, 'tileLayer').and.returnValue(jasmine.createSpyObj('TileLayer', ['addTo']));
-spyOn(L, 'divIcon').and.returnValue(
-  jasmine.createSpyObj('DivIcon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),
+spyOn(L, 'divIcon').and.returnValue(;
+  jasmine.createSpyObj('DivIcon', ['addTo', 'createIcon', 'createShadow'], { options: {} }),;
 );
 
 // Test host component to test @Input and @Output
 @Component({
-    template: `
-    <app-map
-      #mapComponent
-      [height]="height"
-      [initialLatitude]="initialLatitude"
-      [initialLongitude]="initialLongitude"
-      [initialZoom]="initialZoom"
-      [selectable]="selectable"
-      [markers]="markers"
-      [showCurrentLocation]="showCurrentLocation"
-      (locationSelected)="onLocationSelected($event)"
-      (markerClick)="onMarkerClick($event)"
-    ></app-map>
-  `,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule]
-})
-class TestHostComponent {
+    template: `;`
+    ;
+  `,;`
+    imports: [CommonModule, ReactiveFormsModule, FormsModule];
+});
+class TestHostComponen {t {
   @ViewChild('mapComponent') mapComponent!: MapComponent;
   height = '400px';
   initialLatitude = 59.9139;
@@ -101,13 +92,13 @@ class TestHostComponent {
 
 describe('MapComponent', () => {
   let hostComponent: TestHostComponent;
-  let hostFixture: ComponentFixture<TestHostComponent>;
+  let hostFixture: ComponentFixture;
   let component: MapComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapComponent, TestHostComponent],
-      providers: [{ provide: MapMonitoringService, useValue: mockMapMonitoringService }],
+      imports: [MapComponent, TestHostComponent],;
+      providers: [{ provide: MapMonitoringService, useValue: mockMapMonitoringService }],;
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
@@ -169,7 +160,7 @@ describe('MapComponent', () => {
 
     // Trigger ngOnChanges
     component.ngOnChanges({
-      markers: { currentValue: [newMarker], previousValue: [], firstChange: false } as any,
+      markers: { currentValue: [newMarker], previousValue: [], firstChange: false } as any,;
     });
 
     tick();
@@ -197,10 +188,10 @@ describe('MapComponent', () => {
     spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success) => {
       const position = {
         coords: {
-          latitude: 59.9139,
-          longitude: 10.7522,
-          accuracy: 10,
-        },
+          latitude: 59.9139,;
+          longitude: 10.7522,;
+          accuracy: 10,;
+        },;
       } as GeolocationPosition;
       success(position);
     });
@@ -219,9 +210,9 @@ describe('MapComponent', () => {
 
     // Trigger ngOnChanges
     component.ngOnChanges({
-      initialZoom: { currentValue: 15, previousValue: 13, firstChange: false } as any,
-      initialLatitude: { currentValue: 60.0, previousValue: 59.9139, firstChange: false } as any,
-      initialLongitude: { currentValue: 11.0, previousValue: 10.7522, firstChange: false } as any,
+      initialZoom: { currentValue: 15, previousValue: 13, firstChange: false } as any,;
+      initialLatitude: { currentValue: 60.0, previousValue: 59.9139, firstChange: false } as any,;
+      initialLongitude: { currentValue: 11.0, previousValue: 10.7522, firstChange: false } as any,;
     });
 
     expect(mockMap.setView).toHaveBeenCalledWith([60.0, 11.0], 15);

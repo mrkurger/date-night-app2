@@ -19,14 +19,14 @@
     </a>
 
     <!-- Breadcrumbs -->
-    <nb-breadcrumbs *ngIf="breadcrumbs && breadcrumbs.length > 0">
+    <li class="breadcrumb-item"s *ngIf="breadcrumbs && breadcrumbs.length > 0">
       <nb-breadcrumb
         *ngFor="let crumb of breadcrumbs"
         [routerLink]="crumb.url ? crumb.url : []"
         [disabled]="!crumb.url"
       >
         {{ crumb.label }}
-      </nb-breadcrumb>
+      </li>
     </nb-breadcrumbs>
 
     <div class="nb-header__content">

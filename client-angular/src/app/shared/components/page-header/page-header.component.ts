@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NbButtonModule, NbCardModule } from '@nebular/theme';
-
 import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 import { NebularModule } from '../../nebular.module';
 
 /**
- * Interface defining the structure of a header action button
+ * Interface defining the structure of a header action button;
  */
 export interface IHeaderAction {
   /** Unique identifier for the action */
@@ -16,7 +15,7 @@ export interface IHeaderAction {
   label: string;
   /** Optional icon name for the action button */
   icon?: string;
-  /** Optional status for styling the button */
+  /** Optional status for styling the button */';
   status?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic';
   /** Whether this is the primary action */
   primary?: boolean;
@@ -25,101 +24,67 @@ export interface IHeaderAction {
 }
 
 /**
- * Page Header Component
- *
- * A modern page header component using Nebular UI components.
- * Features title, breadcrumbs, actions, and optional user avatar.
- *
- * @example
- * ```html
- * <app-page-header
- *   [title]="'Dashboard'"
- *   [actions]="headerActions"
- *   (actionTriggered)="onActionTriggered($event)">
- * </app-page-header>
- * ```
+ * Page Header Component;
+ *;
+ * A modern page header component using Nebular UI components.;
+ * Features title, breadcrumbs, actions, and optional user avatar.;
+ *;
+ * @example;
+ * ```html;`
+ * ;
+ * ;
+ * ```;`
  */
 @Component({
-  selector: 'app-page-header',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    BreadcrumbsComponent,
-    NebularModule,
-  ],
-  template: `
-    <div
-      class="page-header"
-      [style.backgroundImage]="backgroundImage ? 'url(' + backgroundImage + ')' : ''"
-    >
-      <div class="page-header__content">
-        <!-- Back link -->
-        <a
-          *ngIf="backLink"
-          [routerLink]="backLink"
-          class="page-header__back-link"
-          nbButton
-          ghost
-          size="small"
-        >
-          <nb-icon icon="arrow-back-outline"></nb-icon>
-          Back
-        </a>
+  selector: 'app-page-header',;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    RouterModule,;
+    NbCardModule,;
+    NbButtonModule,;
+    BreadcrumbsComponent,;
+    NebularModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+        ;
+        ;
+          ;
+          Back;
+        ;
 
-        <!-- Breadcrumbs -->
-        <app-breadcrumbs
-          *ngIf="breadcrumbs?.length"
-          [items]="breadcrumbs"
-          class="page-header__breadcrumbs"
-        ></app-breadcrumbs>
+        ;
+        ;
 
-        <div class="page-header__main">
-          <div class="page-header__title-group">
-            <!-- Avatar -->
-            <nb-user
-              *ngIf="avatarUrl"
-              [name]="avatarName"
-              [picture]="avatarUrl"
-              size="large"
-              [showTitle]="false"
-            >
-              <nb-badge
-                *ngIf="avatarIsOnline !== undefined"
-                [status]="avatarIsOnline ? 'success' : 'basic'"
-                position="bottom right"
-                [text]="avatarIsOnline ? 'Online' : 'Offline'"
-              ></nb-badge>
-            </nb-user>
+        ;
+          ;
+            ;
+            ;
+              ;
+            ;
 
-            <!-- Title and subtitle -->
-            <div class="page-header__titles">
-              <h1 class="page-header__title">{{ title }}</h1>
-              <p *ngIf="subtitle" class="page-header__subtitle">{{ subtitle }}</p>
-            </div>
-          </div>
+            ;
+            ;
+              {{ title }};
+              {{ subtitle }};
+            ;
+          ;
 
-          <!-- Actions -->
-          <div class="page-header__actions" *ngIf="actions?.length">
-            <button
-              *ngFor="let action of actions"
-              nbButton
-              [status]="action.status || (action.primary ? 'primary' : 'basic')"
-              [ghost]="!action.primary"
-              (click)="onActionClick(action, $event)"
-            >
-              <nb-icon [icon]="action.icon" *ngIf="action.icon"></nb-icon>
+          ;
+          ;
+            ;
+              ;
               {{ action.label }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .page-header {
         background-color: nb-theme(background-basic-color-1);
         background-size: cover;
@@ -205,10 +170,10 @@ export interface IHeaderAction {
           }
         }
       }
-    `,
-  ],
-})
-export class ToolbarModule {
+    `,;`
+  ],;
+});
+export class ToolbarModul {e {
   @Input() title = '';
   @Input() subtitle?: string;
   @Input() breadcrumbs: { title: string; link?: string[]; icon?: string }[] = [];
@@ -219,12 +184,12 @@ export class ToolbarModule {
   @Input() avatarName?: string;
   @Input() avatarIsOnline?: boolean;
 
-  @Output() actionClick = new EventEmitter<IHeaderAction>();
+  @Output() actionClick = new EventEmitter();
 
   /**
-   * Handle action click
-   * @param action The action that was clicked
-   * @param event The click event
+   * Handle action click;
+   * @param action The action that was clicked;
+   * @param event The click event;
    */
   onActionClick(action: IHeaderAction, _event: Event): void {
     event.preventDefault();

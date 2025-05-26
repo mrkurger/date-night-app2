@@ -1,10 +1,3 @@
-// ===================================================
-// PRIMENG MODULE CONFIGURATION
-// ===================================================
-// This file contains all PrimeNG module imports and exports
-// for consistent UI components across the application
-// ===================================================
-
 import { NgModule } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -47,53 +40,60 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MessageService } from 'primeng/messageservice';
 import { ConfirmationService } from 'primeng/confirmationservice';
+// ===================================================
+// PRIMENG MODULE CONFIGURATION
+// ===================================================
+// This file contains all PrimeNG module imports and exports
+// for consistent UI components across the application
+// ===================================================
 
 // PrimeNG Modules
-const PRIMENG_MODULES = [
-  CardModule,
-  ButtonModule,
-  InputTextModule,
-  InputGroupModule,
-  DropdownModule,
-  TagModule,
-  ListboxModule,
-  BadgeModule,
-  MessageModule,
-  CheckboxModule,
-  RadioButtonModule,
-  CalendarModule,
-  ContextMenuModule,
-  TableModule,
-  TabViewModule,
-  AccordionModule,
-  TreeTableModule,
-  TooltipModule,
-  ToggleButtonModule,
-  PaginatorModule,
-  DialogModule,
-  ProgressSpinnerModule,
-  AutoCompleteModule,
-  ChipModule,
-  MenuModule,
-  TieredMenuModule,
-  ToolbarModule,
-  PanelModule,
-  RippleModule,
-  ScrollerModule,
-  DividerModule,
-  MultiSelectModule,
-  ToastModule,
-  ConfirmDialogModule,
-  AvatarModule,
-  MessagesModule,
-  TextareaModule,
-  InputSwitchModule,
-  OverlayPanelModule,
+const PRIMENG_MODULES = [;
+  CardModule,;
+  ButtonModule,;
+  InputTextModule,;
+  InputGroupModule,;
+  DropdownModule,;
+  TagModule,;
+  ListboxModule,;
+  BadgeModule,;
+  MessageModule,;
+  CheckboxModule,;
+  RadioButtonModule,;
+  CalendarModule,;
+  ContextMenuModule,;
+  TableModule,;
+  TabViewModule,;
+  AccordionModule,;
+  TreeTableModule,;
+  TooltipModule,;
+  ToggleButtonModule,;
+  PaginatorModule,;
+  DialogModule,;
+  ProgressSpinnerModule,;
+  AutoCompleteModule,;
+  ChipModule,;
+  MenuModule,;
+  TieredMenuModule,;
+  ToolbarModule,;
+  PanelModule,;
+  RippleModule,;
+  ScrollerModule,;
+  DividerModule,;
+  MultiSelectModule,;
+  ToastModule,;
+  ConfirmDialogModule,;
+  AvatarModule,;
+  MessagesModule,;
+  TextareaModule,;
+  InputSwitchModule,;
+  OverlayPanelModule,;
 ];
 
 @NgModule({
-  imports: [...PRIMENG_MODULES],
-  exports: [...PRIMENG_MODULES],
+  imports: [...PRIMENG_MODULES],;
+  exports: [...PRIMENG_MODULES],;
   providers: [MessageService, ConfirmationService], // Add PrimeNG services
-})
-export class PrimeNGModule {}
+});
+export class PrimeNGModul {e {}
+';

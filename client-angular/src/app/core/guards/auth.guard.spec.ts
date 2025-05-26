@@ -1,31 +1,30 @@
+import { TestBed } from '@angular/core/testing';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+import { UserService } from '../services/user.service';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
 // This file contains tests for the auth guard
 //
-// COMMON CUSTOMIZATIONS:
+// COMMON CUSTOMIZATIONS:';
 // - LOGIN_ROUTE: Route to redirect to when not authenticated (default: '/login')
 //   Related to: client-angular/src/app/core/guards/auth.guard.ts
 // ===================================================
 
-import { TestBed } from '@angular/core/testing';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-import { UserService } from '../services/user.service';
-
 describe('AuthGuard', () => {
-  let userServiceSpy: jasmine.SpyObj<UserService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let userServiceSpy: jasmine.SpyObj;
+  let routerSpy: jasmine.SpyObj;
 
   beforeEach(() => {
     userServiceSpy = jasmine.createSpyObj('UserService', ['isAuthenticated']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      providers: [
-        { provide: UserService, useValue: userServiceSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
+      providers: [;
+        { provide: UserService, useValue: userServiceSpy },;
+        { provide: Router, useValue: routerSpy },;
+      ],;
     });
   });
 
@@ -57,7 +56,7 @@ describe('AuthGuard', () => {
     expect(result).toBeFalse();
     expect(userServiceSpy.isAuthenticated).toHaveBeenCalled();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'], {
-      queryParams: { returnUrl: '/protected' },
+      queryParams: { returnUrl: '/protected' },;
     });
   });
 });

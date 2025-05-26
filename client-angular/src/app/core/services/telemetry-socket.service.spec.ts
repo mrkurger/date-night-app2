@@ -1,3 +1,6 @@
+import { TestBed } from '@angular/core/testing';
+import { TelemetrySocketService } from './telemetry-socket.service';
+import { environment } from '../../../environments/environment';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,10 +10,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { TelemetrySocketService } from './telemetry-socket.service';
-import { environment } from '../../../environments/environment';
 
+';
 describe('TelemetrySocketService', () => {
   let service: TelemetrySocketService;
   let mockWebSocket: any;
@@ -22,13 +23,13 @@ describe('TelemetrySocketService', () => {
 
     // Create a mock WebSocket class
     mockWebSocket = {
-      CONNECTING: 0,
-      OPEN: 1,
-      CLOSING: 2,
-      CLOSED: 3,
+      CONNECTING: 0,;
+      OPEN: 1,;
+      CLOSING: 2,;
+      CLOSED: 3,;
       readyState: 1, // OPEN
-      send: jasmine.createSpy('send'),
-      close: jasmine.createSpy('close'),
+      send: jasmine.createSpy('send'),;
+      close: jasmine.createSpy('close'),;
     };
 
     // Replace the global WebSocket with our mock
@@ -38,7 +39,7 @@ describe('TelemetrySocketService', () => {
     });
 
     TestBed.configureTestingModule({
-      providers: [TelemetrySocketService],
+      providers: [TelemetrySocketService],;
     });
     service = TestBed.inject(TelemetrySocketService);
   });
@@ -54,7 +55,7 @@ describe('TelemetrySocketService', () => {
 
   it('should connect to the WebSocket server', () => {
     service.connect();
-    expect(window.WebSocket).toHaveBeenCalledWith(`${environment.chatWsUrl}/telemetry`);
+    expect(window.WebSocket).toHaveBeenCalledWith(`${environment.chatWsUrl}/telemetry`);`
   });
 
   it('should update connection status when connected', () => {
@@ -92,17 +93,17 @@ describe('TelemetrySocketService', () => {
     mockWebSocket.onopen();
 
     const errorData = {
-      id: 'test-error-id',
-      errorCode: 'test_error',
-      statusCode: 500,
-      userMessage: 'Test error message',
+      id: 'test-error-id',;
+      errorCode: 'test_error',;
+      statusCode: 500,;
+      userMessage: 'Test error message',;
     };
 
     mockWebSocket.onmessage({
       data: JSON.stringify({
-        type: 'error',
-        payload: errorData,
-      }),
+        type: 'error',;
+        payload: errorData,;
+      }),;
     });
 
     expect(receivedError).toEqual(errorData);
@@ -118,17 +119,17 @@ describe('TelemetrySocketService', () => {
     mockWebSocket.onopen();
 
     const performanceData = {
-      id: 'test-performance-id',
-      url: '/api/test',
-      method: 'GET',
-      duration: 150,
+      id: 'test-performance-id',;
+      url: '/api/test',;
+      method: 'GET',;
+      duration: 150,;
     };
 
     mockWebSocket.onmessage({
       data: JSON.stringify({
-        type: 'performance',
-        payload: performanceData,
-      }),
+        type: 'performance',;
+        payload: performanceData,;
+      }),;
     });
 
     expect(receivedPerformance).toEqual(performanceData);
@@ -144,18 +145,18 @@ describe('TelemetrySocketService', () => {
     mockWebSocket.onopen();
 
     const statsData = {
-      totalErrors: 150,
+      totalErrors: 150,;
       byErrorCode: {
-        network_error: 45,
-        server_error: 65,
-      },
+        network_error: 45,;
+        server_error: 65,;
+      },;
     };
 
     mockWebSocket.onmessage({
       data: JSON.stringify({
-        type: 'error_statistics',
-        payload: statsData,
-      }),
+        type: 'error_statistics',;
+        payload: statsData,;
+      }),;
     });
 
     expect(receivedStats).toEqual(statsData);
@@ -171,19 +172,19 @@ describe('TelemetrySocketService', () => {
     mockWebSocket.onopen();
 
     const statsData = {
-      averageDuration: 320,
-      p95Duration: 750,
-      byEndpoint: [
-        { url: '/api/users', avgDuration: 150 },
-        { url: '/api/products', avgDuration: 450 },
-      ],
+      averageDuration: 320,;
+      p95Duration: 750,;
+      byEndpoint: [;
+        { url: '/api/users', avgDuration: 150 },;
+        { url: '/api/products', avgDuration: 450 },;
+      ],;
     };
 
     mockWebSocket.onmessage({
       data: JSON.stringify({
-        type: 'performance_statistics',
-        payload: statsData,
-      }),
+        type: 'performance_statistics',;
+        payload: statsData,;
+      }),;
     });
 
     expect(receivedStats).toEqual(statsData);
@@ -195,11 +196,11 @@ describe('TelemetrySocketService', () => {
 
     service.subscribe('errors');
 
-    expect(mockWebSocket.send).toHaveBeenCalledWith(
+    expect(mockWebSocket.send).toHaveBeenCalledWith(;
       JSON.stringify({
-        action: 'subscribe',
-        channel: 'errors',
-      }),
+        action: 'subscribe',;
+        channel: 'errors',;
+      }),;
     );
   });
 
@@ -209,11 +210,11 @@ describe('TelemetrySocketService', () => {
 
     service.unsubscribe('errors');
 
-    expect(mockWebSocket.send).toHaveBeenCalledWith(
+    expect(mockWebSocket.send).toHaveBeenCalledWith(;
       JSON.stringify({
-        action: 'unsubscribe',
-        channel: 'errors',
-      }),
+        action: 'unsubscribe',;
+        channel: 'errors',;
+      }),;
     );
   });
 
@@ -245,7 +246,7 @@ describe('TelemetrySocketService', () => {
     service.connect();
     mockWebSocket.onopen();
     mockWebSocket.onmessage({
-      data: 'invalid-json',
+      data: 'invalid-json',;
     });
 
     expect(console.error).toHaveBeenCalled();

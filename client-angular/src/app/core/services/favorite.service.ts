@@ -11,14 +11,14 @@ export interface FavoriteTag {
 }
 
 export interface FavoriteFilterOptions {
-  sort?:
-    | 'newest'
-    | 'oldest'
-    | 'price-asc'
-    | 'price-desc'
-    | 'title-asc'
-    | 'title-desc'
-    | 'priority-high'
+  sort?:';
+    | 'newest';
+    | 'oldest';
+    | 'price-asc';
+    | 'price-desc';
+    | 'title-asc';
+    | 'title-desc';
+    | 'priority-high';
     | 'priority-low';
   category?: string;
   county?: string;
@@ -54,15 +54,15 @@ export interface Favorite {
 }
 
 /**
- * Service for managing user favorites
- * Provides methods for adding, removing, and managing favorite ads
+ * Service for managing user favorites;
+ * Provides methods for adding, removing, and managing favorite ads;
  */
 @Injectable({
-  providedIn: 'root',
-})
-export class FavoriteService {
-  private apiUrl = `${environment.apiUrl}/favorites`;
-  private favoritesSubject = new BehaviorSubject<string[]>([]);
+  providedIn: 'root',;
+});
+export class FavoriteServic {e {
+  private apiUrl = `${environment.apiUrl}/favorites`;`
+  private favoritesSubject = new BehaviorSubject([]);
   private favoritesLoaded = false;
 
   // Observable of favorite ad IDs
@@ -71,23 +71,23 @@ export class FavoriteService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Load all favorite IDs for the current user
-   * This is used to efficiently check if an ad is favorited
+   * Load all favorite IDs for the current user;
+   * This is used to efficiently check if an ad is favorited;
    */
-  loadFavoriteIds(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/ids`).pipe(
+  loadFavoriteIds(): Observable {
+    return this.http.get(`${this.apiUrl}/ids`).pipe(;`
       tap((ids) => {
         this.favoritesSubject.next(ids);
         this.favoritesLoaded = true;
-      }),
+      }),;
     );
   }
 
   /**
-   * Get all favorites for the current user with full ad details
-   * @param options Optional filter and sort options
+   * Get all favorites for the current user with full ad details;
+   * @param options Optional filter and sort options;
    */
-  getFavorites(options?: FavoriteFilterOptions): Observable<Favorite[]> {
+  getFavorites(options?: FavoriteFilterOptions): Observable {
     let params = new HttpParams();
 
     if (options) {
@@ -129,22 +129,22 @@ export class FavoriteService {
       }
     }
 
-    return this.http.get<Favorite[]>(this.apiUrl, { params });
+    return this.http.get(this.apiUrl, { params });
   }
 
   /**
-   * Get all tags used by the current user
-   * @returns Observable of tags with usage counts
+   * Get all tags used by the current user;
+   * @returns Observable of tags with usage counts;
    */
-  getUserTags(): Observable<FavoriteTag[]> {
-    return this.http.get<FavoriteTag[]>(`${this.apiUrl}/tags`);
+  getUserTags(): Observable {
+    return this.http.get(`${this.apiUrl}/tags`);`
   }
 
   /**
-   * Check if an ad is in the user's favorites
-   * @param adId Ad ID to check
+   * Check if an ad is in the user's favorites;
+   * @param adId Ad ID to check;
    */
-  isFavorite(adId: string | { city: string; county: string }): Observable<boolean> {
+  isFavorite(adId: string | { city: string; county: string }): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
 
     // If we've already loaded favorites, check locally
@@ -153,34 +153,34 @@ export class FavoriteService {
     }
 
     // Otherwise, check with the server
-    return this.http.get<boolean>(`${this.apiUrl}/check/${adIdStr}`);
+    return this.http.get(`${this.apiUrl}/check/${adIdStr}`);`
   }
 
   /**
-   * Add an ad to favorites
-   * @param adId Ad ID to add
-   * @param notes Optional notes about this favorite
-   * @param notificationsEnabled Whether to enable notifications for this favorite
-   * @param tags Optional tags for categorizing this favorite
-   * @param priority Optional priority level (low, normal, high)
+   * Add an ad to favorites;
+   * @param adId Ad ID to add;
+   * @param notes Optional notes about this favorite;
+   * @param notificationsEnabled Whether to enable notifications for this favorite;
+   * @param tags Optional tags for categorizing this favorite;
+   * @param priority Optional priority level (low, normal, high);
    */
-  addFavorite(
-    adId: string | { city: string; county: string },
-    notes = '',
-    notificationsEnabled = true,
-    tags: string[] = [],
-    priority: 'low' | 'normal' | 'high' = 'normal',
-  ): Observable<Favorite> {
+  addFavorite(;
+    adId: string | { city: string; county: string },;
+    notes = '',;
+    notificationsEnabled = true,;
+    tags: string[] = [],;
+    priority: 'low' | 'normal' | 'high' = 'normal',;
+  ): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
 
-    return this.http
-      .post<Favorite>(`${this.apiUrl}/${adIdStr}`, {
-        notes,
-        notificationsEnabled,
-        tags,
-        priority,
-      })
-      .pipe(
+    return this.http;
+      .post(`${this.apiUrl}/${adIdStr}`, {`
+        notes,;
+        notificationsEnabled,;
+        tags,;
+        priority,;
+      });
+      .pipe(;
         tap(() => {
           if (this.favoritesLoaded) {
             const currentFavorites = this.favoritesSubject.value;
@@ -188,37 +188,37 @@ export class FavoriteService {
               this.favoritesSubject.next([...currentFavorites, adIdStr]);
             }
           }
-        }),
+        }),;
       );
   }
 
   /**
-   * Add multiple ads to favorites in a batch operation
-   * @param adIds Array of ad IDs to add
-   * @param notes Optional notes to apply to all favorites
-   * @param notificationsEnabled Whether to enable notifications for all favorites
-   * @param tags Optional tags to apply to all favorites
-   * @param priority Optional priority level to apply to all favorites
+   * Add multiple ads to favorites in a batch operation;
+   * @param adIds Array of ad IDs to add;
+   * @param notes Optional notes to apply to all favorites;
+   * @param notificationsEnabled Whether to enable notifications for all favorites;
+   * @param tags Optional tags to apply to all favorites;
+   * @param priority Optional priority level to apply to all favorites;
    */
-  addFavoritesBatch(
-    adIds: (string | { city: string; county: string })[],
-    notes = '',
-    notificationsEnabled = true,
-    tags: string[] = [],
-    priority: 'low' | 'normal' | 'high' = 'normal',
-  ): Observable<FavoriteBatchResult> {
+  addFavoritesBatch(;
+    adIds: (string | { city: string; county: string })[],;
+    notes = '',;
+    notificationsEnabled = true,;
+    tags: string[] = [],;
+    priority: 'low' | 'normal' | 'high' = 'normal',;
+  ): Observable {
     // Convert complex IDs to strings
     const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
 
-    return this.http
-      .post<FavoriteBatchResult>(`${this.apiUrl}/batch`, {
-        adIds: adIdsStr,
-        notes,
-        notificationsEnabled,
-        tags,
-        priority,
-      })
-      .pipe(
+    return this.http;
+      .post(`${this.apiUrl}/batch`, {`
+        adIds: adIdsStr,;
+        notes,;
+        notificationsEnabled,;
+        tags,;
+        priority,;
+      });
+      .pipe(;
         tap((result) => {
           if (this.favoritesLoaded && result.added && result.added > 0) {
             const currentFavorites = this.favoritesSubject.value;
@@ -233,111 +233,111 @@ export class FavoriteService {
 
             this.favoritesSubject.next(newFavorites);
           }
-        }),
+        }),;
       );
   }
 
   /**
-   * Remove an ad from favorites
-   * @param adId Ad ID to remove
+   * Remove an ad from favorites;
+   * @param adId Ad ID to remove;
    */
-  removeFavorite(adId: string | { city: string; county: string }): Observable<{ message: string }> {
+  removeFavorite(adId: string | { city: string; county: string }): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
 
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${adIdStr}`).pipe(
+    return this.http.delete(`${this.apiUrl}/${adIdStr}`).pipe(;`
       tap(() => {
         if (this.favoritesLoaded) {
           const currentFavorites = this.favoritesSubject.value;
           this.favoritesSubject.next(currentFavorites.filter((id) => id !== adIdStr));
         }
-      }),
+      }),;
     );
   }
 
   /**
-   * Remove multiple ads from favorites in a batch operation
-   * @param adIds Array of ad IDs to remove
+   * Remove multiple ads from favorites in a batch operation;
+   * @param adIds Array of ad IDs to remove;
    */
-  removeFavoritesBatch(
-    adIds: (string | { city: string; county: string })[],
-  ): Observable<FavoriteBatchResult> {
+  removeFavoritesBatch(;
+    adIds: (string | { city: string; county: string })[],;
+  ): Observable {
     // Convert complex IDs to strings
     const adIdsStr = adIds.map((id) => (typeof id === 'string' ? id : JSON.stringify(id)));
 
-    return this.http
-      .delete<FavoriteBatchResult>(`${this.apiUrl}/batch`, {
-        body: { adIds: adIdsStr },
-      })
-      .pipe(
+    return this.http;
+      .delete(`${this.apiUrl}/batch`, {`
+        body: { adIds: adIdsStr },;
+      });
+      .pipe(;
         tap(() => {
           if (this.favoritesLoaded) {
             const currentFavorites = this.favoritesSubject.value;
             this.favoritesSubject.next(currentFavorites.filter((id) => !adIdsStr.includes(id)));
           }
-        }),
+        }),;
       );
   }
 
   /**
-   * Update notes for a favorite
-   * @param adId Ad ID
-   * @param notes New notes
+   * Update notes for a favorite;
+   * @param adId Ad ID;
+   * @param notes New notes;
    */
-  updateNotes(
-    adId: string | { city: string; county: string },
-    notes: string,
-  ): Observable<{ message: string }> {
+  updateNotes(;
+    adId: string | { city: string; county: string },;
+    notes: string,;
+  ): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http.patch<{ message: string }>(`${this.apiUrl}/${adIdStr}/notes`, { notes });
+    return this.http.patch(`${this.apiUrl}/${adIdStr}/notes`, { notes });`
   }
 
   /**
-   * Update tags for a favorite
-   * @param adId Ad ID
-   * @param tags New tags array
+   * Update tags for a favorite;
+   * @param adId Ad ID;
+   * @param tags New tags array;
    */
-  updateTags(
-    adId: string | { city: string; county: string },
-    tags: string[],
-  ): Observable<{ message: string; tags: string[] }> {
+  updateTags(;
+    adId: string | { city: string; county: string },;
+    tags: string[],;
+  ): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http.patch<{ message: string; tags: string[] }>(`${this.apiUrl}/${adIdStr}/tags`, {
-      tags,
+    return this.http.patch(`${this.apiUrl}/${adIdStr}/tags`, {`
+      tags,;
     });
   }
 
   /**
-   * Update priority for a favorite
-   * @param adId Ad ID
-   * @param priority New priority (low, normal, high)
+   * Update priority for a favorite;
+   * @param adId Ad ID;
+   * @param priority New priority (low, normal, high);
    */
-  updatePriority(
-    adId: string | { city: string; county: string },
-    priority: 'low' | 'normal' | 'high',
-  ): Observable<{ message: string; priority: 'low' | 'normal' | 'high' }> {
+  updatePriority(;
+    adId: string | { city: string; county: string },;
+    priority: 'low' | 'normal' | 'high',;
+  ): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http.patch<{ message: string; priority: 'low' | 'normal' | 'high' }>(
-      `${this.apiUrl}/${adIdStr}/priority`,
-      { priority },
+    return this.http.patch(;
+      `${this.apiUrl}/${adIdStr}/priority`,;`
+      { priority },;
     );
   }
 
   /**
-   * Toggle notifications for a favorite
-   * @param adId Ad ID
+   * Toggle notifications for a favorite;
+   * @param adId Ad ID;
    */
-  toggleNotifications(
-    adId: string | { city: string; county: string },
-  ): Observable<{ message: string; notificationsEnabled: boolean }> {
+  toggleNotifications(;
+    adId: string | { city: string; county: string },;
+  ): Observable {
     const adIdStr = typeof adId === 'string' ? adId : JSON.stringify(adId);
-    return this.http.patch<{ message: string; notificationsEnabled: boolean }>(
-      `${this.apiUrl}/${adIdStr}/notifications`,
-      {},
+    return this.http.patch(;
+      `${this.apiUrl}/${adIdStr}/notifications`,;`
+      {},;
     );
   }
 
   /**
-   * Clear the cached favorites (e.g., on logout)
+   * Clear the cached favorites (e.g., on logout);
    */
   clearCache(): void {
     this.favoritesSubject.next([]);

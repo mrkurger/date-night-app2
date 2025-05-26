@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 
 /**
- * Service for monitoring map component performance and usage
- *
- * This service tracks various metrics related to map usage:
- * - Initialization time
- * - Render performance
- * - User interactions
- * - Error rates
- *
- * The data is used to optimize the map component and improve user experience.
+ * Service for monitoring map component performance and usage;
+ *;
+ * This service tracks various metrics related to map usage:;
+ * - Initialization time;
+ * - Render performance;
+ * - User interactions;
+ * - Error rates;
+ *;
+ * The data is used to optimize the map component and improve user experience.;
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class MapMonitoringService {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class MapMonitoringServic {e {
   private metrics: {
     initTime: number;
     renderTime: number;
@@ -26,21 +26,21 @@ export class MapMonitoringService {
     locationSelections: number;
     currentLocationUsage: number;
   } = {
-    initTime: 0,
-    renderTime: 0,
-    interactionCount: 0,
-    errorCount: 0,
-    markerCount: 0,
-    viewportChanges: 0,
-    locationSelections: 0,
-    currentLocationUsage: 0,
+    initTime: 0,;
+    renderTime: 0,;
+    interactionCount: 0,;
+    errorCount: 0,;
+    markerCount: 0,;
+    viewportChanges: 0,;
+    locationSelections: 0,;
+    currentLocationUsage: 0,;
   };
 
   constructor(private loggingService: LoggingService) {}
 
   /**
-   * Track map initialization time
-   * @param timeMs - Time in milliseconds to initialize the map
+   * Track map initialization time;
+   * @param timeMs - Time in milliseconds to initialize the map;
    */
   trackInitialization(timeMs: number): void {
     this.metrics.initTime = timeMs;
@@ -48,8 +48,8 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track map render time
-   * @param timeMs - Time in milliseconds to render the map
+   * Track map render time;
+   * @param timeMs - Time in milliseconds to render the map;
    */
   trackRender(timeMs: number): void {
     this.metrics.renderTime = timeMs;
@@ -57,9 +57,9 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track user interaction with the map
-   * @param interactionType - Type of interaction (click, drag, zoom, etc.)
-   * @param details - Additional details about the interaction
+   * Track user interaction with the map;
+   * @param interactionType - Type of interaction (click, drag, zoom, etc.);
+   * @param details - Additional details about the interaction;
    */
   trackInteraction(interactionType: string, details?: any): void {
     this.metrics.interactionCount++;
@@ -67,9 +67,9 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track map errors
-   * @param errorType - Type of error
-   * @param details - Error details
+   * Track map errors;
+   * @param errorType - Type of error;
+   * @param details - Error details;
    */
   trackError(errorType: string, details: any): void {
     this.metrics.errorCount++;
@@ -77,9 +77,9 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track marker operations
-   * @param count - Number of markers
-   * @param operation - Operation type (add, remove, update)
+   * Track marker operations;
+   * @param count - Number of markers;
+   * @param operation - Operation type (add, remove, update);
    */
   trackMarkers(count: number, operation: 'add' | 'remove' | 'update'): void {
     this.metrics.markerCount = count;
@@ -87,9 +87,9 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track viewport changes
-   * @param center - New center coordinates
-   * @param zoom - New zoom level
+   * Track viewport changes;
+   * @param center - New center coordinates;
+   * @param zoom - New zoom level;
    */
   trackViewportChange(center: { lat: number; lng: number }, zoom: number): void {
     this.metrics.viewportChanges++;
@@ -97,8 +97,8 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track location selection
-   * @param location - Selected location
+   * Track location selection;
+   * @param location - Selected location;
    */
   trackLocationSelection(location: { latitude: number; longitude: number }): void {
     this.metrics.locationSelections++;
@@ -106,9 +106,9 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track current location usage
-   * @param success - Whether getting the current location was successful
-   * @param error - Error message if unsuccessful
+   * Track current location usage;
+   * @param success - Whether getting the current location was successful;
+   * @param error - Error message if unsuccessful;
    */
   trackCurrentLocation(success: boolean, error?: string): void {
     this.metrics.currentLocationUsage++;
@@ -121,15 +121,15 @@ export class MapMonitoringService {
   }
 
   /**
-   * Get current metrics
-   * @returns Current map metrics
+   * Get current metrics;
+   * @returns Current map metrics;
    */
   getMetrics(): any {
     return { ...this.metrics };
   }
 
   /**
-   * Reset metrics
+   * Reset metrics;
    */
   resetMetrics(): void {
     Object.keys(this.metrics).forEach((key) => {
@@ -138,12 +138,12 @@ export class MapMonitoringService {
   }
 
   /**
-   * Track performance metrics for map operations
-   * @param operation - The operation being measured
-   * @param timeMs - Time in milliseconds
-   * @param details - Additional details
+   * Track performance metrics for map operations;
+   * @param operation - The operation being measured;
+   * @param timeMs - Time in milliseconds;
+   * @param details - Additional details;
    */
   trackPerformance(operation: string, timeMs: number, details?: any): void {
-    this.loggingService.logPerformance(`Map ${operation}`, timeMs, details);
+    this.loggingService.logPerformance(`Map ${operation}`, timeMs, details);`
   }
 }

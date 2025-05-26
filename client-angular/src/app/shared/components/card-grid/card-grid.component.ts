@@ -1,60 +1,45 @@
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 /**
- * Card Grid Component
- *
- * A modern card grid component using Nebular UI components.
- * Features responsive grid layout, loading state, and customizable item templates.
+ * Card Grid Component;
+ *;
+ * A modern card grid component using Nebular UI components.;
+ * Features responsive grid layout, loading state, and customizable item templates.;
  */
-@Component({
-  selector: 'app-card-grid',
-  standalone: true,
-  imports: [CommonModule, NbCardModule, NbSpinnerModule, LoadingSpinnerComponent],
-  template: `
-    <div
-      class="card-grid"
-      [class]="'card-grid--' + layout"
-      [style.--grid-gap.px]="gap"
-      [style.--min-item-width.px]="minItemWidth"
-      [style.--columns]="columns || 'auto-fit'"
-    >
-      <!-- Loading State -->
-      <div *ngIf="loading" class="card-grid__loading">
-        <app-loading-spinner [message]="loadingMessage"></app-loading-spinner>
-      </div>
+@Component({';
+  selector: 'app-card-grid',;
+  standalone: true,;
+  imports: [CommonModule, NbCardModule, NbSpinnerModule, LoadingSpinnerComponent],;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Grid Items -->
-      <ng-container *ngIf="!loading">
-        <div
-          *ngFor="let item of items; trackBy: trackByFn"
-          class="card-grid__item"
-          [class.card-grid__item--animated]="animated"
-          (click)="onItemClick(item)"
-        >
-          <ng-container
-            *ngTemplateOutlet="itemTemplate || defaultTemplate; context: { $implicit: item }"
-          >
-          </ng-container>
-        </div>
-      </ng-container>
-    </div>
+      ;
+      ;
+        ;
+          ;
+          ;
+        ;
+      ;
+    ;
 
-    <!-- Default Template -->
-    <ng-template #defaultTemplate let-item>
-      <nb-card>
-        <nb-card-body>
+    ;
+    ;
+      ;
+        ;
           {{ item | json }}
-        </nb-card-body>
-      </nb-card>
-    </ng-template>
-  `,
-  styles: [
-    `
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .card-grid {
         display: grid;
         grid-template-columns: repeat(var(--columns, auto-fit), minmax(var(--min-item-width), 1fr));
@@ -104,8 +89,8 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
         }
 
         &__item {
-          transition:
-            transform 0.2s ease-in-out,
+          transition:;
+            transform 0.2s ease-in-out,;
             box-shadow 0.2s ease-in-out;
 
           &:hover {
@@ -142,10 +127,10 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
           --min-item-width: 200px;
         }
       }
-    `,
-  ],
-})
-export class CardGridComponent {
+    `,;`
+  ],;
+});
+export class CardGridComponen {t {
   @Input() items: any[] = [];
   @Input() columns: number | null = null;
   @Input() gap = 16;
@@ -155,19 +140,19 @@ export class CardGridComponent {
   @Input() animated = true;
   @Input() layout: 'grid' | 'masonry' | 'netflix' = 'grid';
 
-  @Output() itemClick = new EventEmitter<any>();
+  @Output() itemClick = new EventEmitter();
 
-  @ContentChild('itemTemplate') itemTemplate!: TemplateRef<any>;
+  @ContentChild('itemTemplate') itemTemplate!: TemplateRef;
 
   /**
-   * Track items by their index or id for better performance
+   * Track items by their index or id for better performance;
    */
   trackByFn(index: number, item: any): any {
     return item.id || index;
   }
 
   /**
-   * Handle item click
+   * Handle item click;
    */
   onItemClick(item: any): void {
     this.itemClick.emit(item);

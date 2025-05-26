@@ -1,3 +1,8 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TelemetryService, ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
+import { environment } from '../../../environments/environment';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,12 +12,8 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TelemetryService, ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
-import { environment } from '../../../environments/environment';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+';
 describe('TelemetryService', () => {
   let service: TelemetryService;
   let httpMock: HttpTestingController;
@@ -20,14 +21,14 @@ describe('TelemetryService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [TelemetryService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [TelemetryService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
     service = TestBed.inject(TelemetryService);
     httpMock = TestBed.inject(HttpTestingController);
 
     // Mock localStorage
-    const store: Record<string, string> = {};
+    const store: Record = {};
     spyOn(localStorage, 'getItem').and.callFake((key) => store[key] || null);
     spyOn(localStorage, 'setItem').and.callFake((key, value) => {
       store[key] = value.toString();
@@ -46,20 +47,20 @@ describe('TelemetryService', () => {
   });
 
   it('should track errors', () => {
-    const errorData: Partial<ErrorTelemetry> = {
-      errorCode: 'test_error',
-      statusCode: 500,
-      userMessage: 'Test error message',
-      technicalMessage: 'Technical details',
+    const errorData: Partial = {
+      errorCode: 'test_error',;
+      statusCode: 500,;
+      userMessage: 'Test error message',;
+      technicalMessage: 'Technical details',;
       url: 'https://example.com/api/test',
-      method: 'GET',
+      method: 'GET',;
     };
 
     service.trackError(errorData).subscribe((response) => {
       expect(response).toBeTruthy();
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/errors`);
+    const req = httpMock.expectOne(`${apiUrl}/errors`);`
     expect(req.request.method).toBe('POST');
 
     const requestBody = req.request.body;
@@ -76,20 +77,20 @@ describe('TelemetryService', () => {
   });
 
   it('should track performance metrics', () => {
-    const performanceData: Partial<PerformanceTelemetry> = {
+    const performanceData: Partial = {
       url: 'https://example.com/api/test',
-      method: 'GET',
-      duration: 250,
-      ttfb: 100,
-      requestSize: 1024,
-      responseSize: 5120,
+      method: 'GET',;
+      duration: 250,;
+      ttfb: 100,;
+      requestSize: 1024,;
+      responseSize: 5120,;
     };
 
     service.trackPerformance(performanceData).subscribe((response) => {
       expect(response).toBeTruthy();
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/performance`);
+    const req = httpMock.expectOne(`${apiUrl}/performance`);`
     expect(req.request.method).toBe('POST');
 
     const requestBody = req.request.body;
@@ -109,12 +110,12 @@ describe('TelemetryService', () => {
     // Set navigator.onLine to false
     Object.defineProperty(navigator, 'onLine', { value: false });
 
-    const errorData: Partial<ErrorTelemetry> = {
-      errorCode: 'offline_error',
-      statusCode: 500,
-      userMessage: 'Offline error message',
+    const errorData: Partial = {
+      errorCode: 'offline_error',;
+      statusCode: 500,;
+      userMessage: 'Offline error message',;
       url: 'https://example.com/api/test',
-      method: 'GET',
+      method: 'GET',;
     };
 
     service.trackError(errorData).subscribe((response) => {
@@ -122,7 +123,7 @@ describe('TelemetryService', () => {
     });
 
     // No HTTP request should be made
-    httpMock.expectNone(`${apiUrl}/errors`);
+    httpMock.expectNone(`${apiUrl}/errors`);`
 
     // Check if data was stored in localStorage
     expect(localStorage.setItem).toHaveBeenCalled();
@@ -130,48 +131,48 @@ describe('TelemetryService', () => {
 
   it('should get error statistics', () => {
     const mockStatistics = {
-      totalErrors: 150,
+      totalErrors: 150,;
       byErrorCode: {
-        network_error: 45,
-        server_error: 65,
-        validation_error: 40,
-      },
-      byTimeRange: [
-        { date: '2023-06-01', count: 25 },
-        { date: '2023-06-02', count: 35 },
-        { date: '2023-06-03', count: 90 },
-      ],
+        network_error: 45,;
+        server_error: 65,;
+        validation_error: 40,;
+      },;
+      byTimeRange: [;
+        { date: '2023-06-01', count: 25 },;
+        { date: '2023-06-02', count: 35 },;
+        { date: '2023-06-03', count: 90 },;
+      ],;
     };
 
     service.getErrorStatistics().subscribe((stats) => {
       expect(stats).toEqual(mockStatistics);
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/errors/statistics`);
+    const req = httpMock.expectOne(`${apiUrl}/errors/statistics`);`
     expect(req.request.method).toBe('GET');
     req.flush(mockStatistics);
   });
 
   it('should get performance statistics', () => {
     const mockStatistics = {
-      averageDuration: 320,
-      p95Duration: 750,
-      byEndpoint: [
-        { url: '/api/users', avgDuration: 150 },
-        { url: '/api/products', avgDuration: 450 },
-      ],
-      byTimeRange: [
-        { date: '2023-06-01', avgDuration: 280 },
-        { date: '2023-06-02', avgDuration: 320 },
-        { date: '2023-06-03', avgDuration: 360 },
-      ],
+      averageDuration: 320,;
+      p95Duration: 750,;
+      byEndpoint: [;
+        { url: '/api/users', avgDuration: 150 },;
+        { url: '/api/products', avgDuration: 450 },;
+      ],;
+      byTimeRange: [;
+        { date: '2023-06-01', avgDuration: 280 },;
+        { date: '2023-06-02', avgDuration: 320 },;
+        { date: '2023-06-03', avgDuration: 360 },;
+      ],;
     };
 
     service.getPerformanceStatistics().subscribe((stats) => {
       expect(stats).toEqual(mockStatistics);
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/performance/statistics`);
+    const req = httpMock.expectOne(`${apiUrl}/performance/statistics`);`
     expect(req.request.method).toBe('GET');
     req.flush(mockStatistics);
   });
@@ -183,7 +184,7 @@ describe('TelemetryService', () => {
     // Track an error to verify the user ID is included
     service.trackError({ errorCode: 'test_error' }).subscribe();
 
-    const req = httpMock.expectOne(`${apiUrl}/errors`);
+    const req = httpMock.expectOne(`${apiUrl}/errors`);`
     expect(req.request.body.userId).toBe(userId);
     req.flush({ success: true });
   });

@@ -6,13 +6,14 @@ import { AvailabilityCalendarComponent } from './availability-calendar.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { expect } from 'chai';
 
+';
 describe('AvailabilityCalendarComponent', () => {
   let component: AvailabilityCalendarComponent;
-  let fixture: ComponentFixture<AvailabilityCalendarComponent>;
+  let fixture: ComponentFixture;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, ReactiveFormsModule, AvailabilityCalendarComponent],
+      imports: [NoopAnimationsModule, ReactiveFormsModule, AvailabilityCalendarComponent],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(AvailabilityCalendarComponent);
@@ -52,8 +53,8 @@ describe('AvailabilityCalendarComponent', () => {
   it('should detect invalid time range', () => {
     const timeSlot = component.timeSlots.at(0);
     timeSlot.patchValue({
-      startTime: '10:00',
-      endTime: '09:00',
+      startTime: '10:00',;
+      endTime: '09:00',;
     });
 
     expect(timeSlot.errors?.invalidTimeRange).to.be.true;
@@ -62,15 +63,15 @@ describe('AvailabilityCalendarComponent', () => {
   it('should detect overlapping time slots', () => {
     // First slot: 9:00 - 11:00
     component.timeSlots.at(0).patchValue({
-      startTime: '09:00',
-      endTime: '11:00',
+      startTime: '09:00',;
+      endTime: '11:00',;
     });
 
     // Add overlapping slot: 10:00 - 12:00
     component.addTimeSlot({
-      dayOfWeek: 1,
-      startTime: '10:00',
-      endTime: '12:00',
+      dayOfWeek: 1,;
+      startTime: '10:00',;
+      endTime: '12:00',;
     });
 
     expect(component.timeSlots.errors?.overlappingSlots).to.be.true;
@@ -81,7 +82,7 @@ describe('AvailabilityCalendarComponent', () => {
 
     // Set invalid date (required field)
     component.availabilityForm.patchValue({
-      date: null,
+      date: null,;
     });
 
     expect(emitSpy.calls.count()).to.equal(0);
@@ -89,9 +90,9 @@ describe('AvailabilityCalendarComponent', () => {
 
   it('should initialize with provided availability', () => {
     const initialAvailability = {
-      date: new Date('2025-05-07'),
-      timeSlots: [{ dayOfWeek: 1, startTime: '10:00', endTime: '18:00' }],
-      isRecurring: true,
+      date: new Date('2025-05-07'),;
+      timeSlots: [{ dayOfWeek: 1, startTime: '10:00', endTime: '18:00' }],;
+      isRecurring: true,;
     };
 
     component.initialAvailability = initialAvailability;
@@ -110,8 +111,8 @@ describe('AvailabilityCalendarComponent', () => {
     const emitSpy = spyOn(component.availabilityChange, 'emit');
 
     component.availabilityForm.patchValue({
-      date: new Date('2025-05-07'),
-      isRecurring: true,
+      date: new Date('2025-05-07'),;
+      isRecurring: true,;
     });
 
     expect(emitSpy.calls.count()).to.be.greaterThan(0);

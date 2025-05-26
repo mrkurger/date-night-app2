@@ -1,32 +1,24 @@
 import { Component, Input } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
 
 /**
- * Label Component
- *
- * A modern label component using Nebular UI components.
- * Features customizable appearance, size, and icon support.
+ * Label Component;
+ *;
+ * A modern label component using Nebular UI components.;
+ * Features customizable appearance, size, and icon support.;
  */
-@Component({
-  selector: 'app-label',
-  standalone: true,
-  imports: [CommonModule, NbTagModule, NbIconModule],
-  template: `
-    <nb-tag
-      [text]="text"
-      [status]="status"
-      [size]="size"
-      [appearance]="appearance"
-      [class]="'label label--' + size"
-      [class.label--pill]="pill"
-    >
-      <nb-icon *ngIf="icon" [icon]="icon"></nb-icon>
-    </nb-tag>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-label',;
+  standalone: true,;
+  imports: [CommonModule, NbTagModule, NbIconModule],;
+  template: `;`
+    ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .label {
         display: inline-flex;
         align-items: center;
@@ -63,10 +55,10 @@ import { CommonModule } from '@angular/common';
           border-radius: 999px;
         }
       }
-    `,
-  ],
-})
-export class TagModule {
+    `,;`
+  ],;
+});
+export class TagModul {e {
   @Input() text = '';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

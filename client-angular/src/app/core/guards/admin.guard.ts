@@ -4,27 +4,27 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AdminGuard  {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
+@Injectable({';
+  providedIn: 'root',;
+});
+export class AdminGuar {d  {
+  constructor(;
+    private authService: AuthService,;
+    private router: Router,;
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.authService.currentUser$.pipe(
-      take(1),
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable {
+    return this.authService.currentUser$.pipe(;
+      take(1),;
       map((user) => {
         const isAdmin = user?.roles?.includes('admin') || false;
         if (!isAdmin) {
           this.router.navigate(['/login'], {
-            queryParams: { returnUrl: state.url },
+            queryParams: { returnUrl: state.url },;
           });
         }
         return isAdmin;
-      }),
+      }),;
     );
   }
 }

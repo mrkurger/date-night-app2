@@ -1,13 +1,14 @@
 import { _Component } from '@angular/core';
+
 /**
  * /*DEPRECATED:Emerald*/.js Components Index
- *
+ *;
  * This file exports all /*DEPRECATED:Emerald*/.js component wrappers for easy importing.
- *
+ *;
  * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/
  */
 
-// Components
+// Components';
 export * from './components/app-card/app-card.component';
 export * from './components/avatar/avatar.component';
 export * from './components/carousel/carousel.component';

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ThemeService } from './theme.service';
 
+';
 describe('ThemeService', () => {
   let service: ThemeService;
   let localStorageSpy: jasmine.Spy;
@@ -15,14 +16,14 @@ describe('ThemeService', () => {
     // Spy on matchMedia
     addEventListenerSpy = jasmine.createSpy('addEventListener');
     matchMediaSpy = spyOn(window, 'matchMedia').and.returnValue({
-      matches: false,
-      addEventListener: addEventListenerSpy,
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      dispatchEvent: jasmine.createSpy('dispatchEvent'),
-      onchange: null,
-      media: '',
-      addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener'),
+      matches: false,;
+      addEventListener: addEventListenerSpy,;
+      removeEventListener: jasmine.createSpy('removeEventListener'),;
+      dispatchEvent: jasmine.createSpy('dispatchEvent'),;
+      onchange: null,;
+      media: '',;
+      addListener: jasmine.createSpy('addListener'),;
+      removeListener: jasmine.createSpy('removeListener'),;
     } as any);
 
     TestBed.configureTestingModule({});
@@ -67,13 +68,13 @@ describe('ThemeService', () => {
     // System theme with light preference
     matchMediaSpy.and.returnValue({
       matches: false, // Light preference
-      addEventListener: addEventListenerSpy,
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      dispatchEvent: jasmine.createSpy('dispatchEvent'),
-      onchange: null,
-      media: '',
-      addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener'),
+      addEventListener: addEventListenerSpy,;
+      removeEventListener: jasmine.createSpy('removeEventListener'),;
+      dispatchEvent: jasmine.createSpy('dispatchEvent'),;
+      onchange: null,;
+      media: '',;
+      addListener: jasmine.createSpy('addListener'),;
+      removeListener: jasmine.createSpy('removeListener'),;
     } as any);
 
     service = TestBed.inject(ThemeService);
@@ -95,14 +96,14 @@ describe('ThemeService', () => {
 
     // System theme with light preference
     matchMediaSpy.and.returnValue({
-      matches: false,
-      addEventListener: addEventListenerSpy,
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      dispatchEvent: jasmine.createSpy('dispatchEvent'),
-      onchange: null,
-      media: '',
-      addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener'),
+      matches: false,;
+      addEventListener: addEventListenerSpy,;
+      removeEventListener: jasmine.createSpy('removeEventListener'),;
+      dispatchEvent: jasmine.createSpy('dispatchEvent'),;
+      onchange: null,;
+      media: '',;
+      addListener: jasmine.createSpy('addListener'),;
+      removeListener: jasmine.createSpy('removeListener'),;
     } as any);
 
     service = TestBed.inject(ThemeService);
@@ -111,14 +112,14 @@ describe('ThemeService', () => {
 
     // System theme with dark preference
     matchMediaSpy.and.returnValue({
-      matches: true,
-      addEventListener: addEventListenerSpy,
-      removeEventListener: jasmine.createSpy('removeEventListener'),
-      dispatchEvent: jasmine.createSpy('dispatchEvent'),
-      onchange: null,
-      media: '',
-      addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener'),
+      matches: true,;
+      addEventListener: addEventListenerSpy,;
+      removeEventListener: jasmine.createSpy('removeEventListener'),;
+      dispatchEvent: jasmine.createSpy('dispatchEvent'),;
+      onchange: null,;
+      media: '',;
+      addListener: jasmine.createSpy('addListener'),;
+      removeListener: jasmine.createSpy('removeListener'),;
     } as any);
 
     service = TestBed.inject(ThemeService);

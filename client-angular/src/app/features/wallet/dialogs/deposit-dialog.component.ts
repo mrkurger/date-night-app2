@@ -1,29 +1,8 @@
 import {
-  Component,
-  OnInit,
-  Inject,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { WalletService, PaymentMethod, WalletBalance } from '../../../core/services/wallet.service';
 import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbToastrService,
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbDialogModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbButtonModule,
-  NbRadioModule,
-  NbSpinnerModule,
-  NbIconModule,
-  NbAlertModule,
-} from '@nebular/theme';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -31,7 +10,28 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
+  Component,;
+  OnInit,;
+  Inject,;
+  ChangeDetectionStrategy,;
+  ChangeDetectorRef,';
+} from '@angular/core';
 
+import {
+  NbToastrService,;
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  NbDialogModule,;
+  NbCardModule,;
+  NbFormFieldModule,;
+  NbInputModule,;
+  NbSelectModule,;
+  NbButtonModule,;
+  NbRadioModule,;
+  NbSpinnerModule,;
+  NbIconModule,;
+  NbAlertModule,;
+} from '@nebular/theme';
 
 interface DepositRequest {
   amount: number;
@@ -49,78 +49,78 @@ interface DepositDialogConfig {
 }
 
 @Component({
-  selector: 'app-deposit-dialog',
-  templateUrl: './deposit-dialog.component.html',
-  styleUrls: ['./deposit-dialog.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    NebularModule, CommonModule,
-    ReactiveFormsModule,
-    NbDialogModule,
-    NbCardModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbButtonModule,
-    NbRadioModule,
-    NbSpinnerModule,
-    NbIconModule,
-    NbAlertModule,,
-    DropdownModule,
-    RadioButtonModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DepositDialogComponent implements OnInit {
+  selector: 'app-deposit-dialog',;
+  templateUrl: './deposit-dialog.component.html',;
+  styleUrls: ['./deposit-dialog.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    NebularModule, CommonModule,;
+    ReactiveFormsModule,;
+    NbDialogModule,;
+    NbCardModule,;
+    NbFormFieldModule,;
+    NbInputModule,;
+    NbSelectModule,;
+    NbButtonModule,;
+    NbRadioModule,;
+    NbSpinnerModule,;
+    NbIconModule,;
+    NbAlertModule,,;
+    DropdownModule,;
+    RadioButtonModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+});
+export class DepositDialogComponen {t implements OnInit {
   depositForm: FormGroup;
   isSubmitting = false;
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  contentDensityOptions = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Normal', value: 'normal' },
+  contentDensityOptions = [;
+    { label: 'Compact', value: 'compact' },;
+    { label: 'Normal', value: 'normal' },;
     { label: 'Comfortable', value: 'comfortable' }
   ];
 
-  cardSizeOptions = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
+  cardSizeOptions = [;
+    { label: 'Small', value: 'small' },;
+    { label: 'Medium', value: 'medium' },;
     { label: 'Large', value: 'large' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    protected ref: NbDialogRef<DepositDialogComponent>,
-    private fb: FormBuilder,
-    private walletService: WalletService,
-    private notificationService: NbToastrService,
-    @Inject(NB_DIALOG_CONFIG) public context: DepositDialogConfig,
-    private cdr: ChangeDetectorRef,
+  constructor(;
+    protected ref: NbDialogRef,;
+    private fb: FormBuilder,;
+    private walletService: WalletService,;
+    private notificationService: NbToastrService,;
+    @Inject(NB_DIALOG_CONFIG) public context: DepositDialogConfig,;
+    private cdr: ChangeDetectorRef,;
   ) {
     this.depositForm = this.fb.group({
-      currency: [this.context.selectedCurrency || '', Validators.required],
-      amount: ['', [Validators.required, Validators.min(0.01)]],
-      paymentMethodId: ['', Validators.required],
+      currency: [this.context.selectedCurrency || '', Validators.required],;
+      amount: ['', [Validators.required, Validators.min(0.01)]],;
+      paymentMethodId: ['', Validators.required],;
     });
   }
 
@@ -146,10 +146,10 @@ export class DepositDialogComponent implements OnInit {
     this.cdr.markForCheck();
 
     const formData: DepositRequest = {
-      amount: this.depositForm.value.amount,
-      currency: this.depositForm.value.currency,
-      paymentMethodId: this.depositForm.value.paymentMethodId,
-      description: 'Wallet deposit',
+      amount: this.depositForm.value.amount,;
+      currency: this.depositForm.value.currency,;
+      paymentMethodId: this.depositForm.value.paymentMethodId,;
+      description: 'Wallet deposit',;
     };
 
     try {
@@ -158,8 +158,8 @@ export class DepositDialogComponent implements OnInit {
         this.notificationService.success('Deposit successful!');
         this.ref.close({ success: true, amount: formData.amount, currency: formData.currency });
       } else {
-        this.notificationService.danger(
-          result?.error || 'Failed to process deposit. Please try again.',
+        this.notificationService.danger(;
+          result?.error || 'Failed to process deposit. Please try again.',;
         );
       }
     } catch (error: unknown) {
@@ -191,21 +191,21 @@ export class DepositDialogComponent implements OnInit {
   }
 
   getPaymentMethodLabel(method: PaymentMethod): string {
-    const idSuffix = `...${method._id.slice(-4)}`;
+    const idSuffix = `...${method._id.slice(-4)}`;`
     if (method.type === 'card' && method.cardDetails) {
-      return `${method.cardDetails.brand || 'Card'} ending in ${method.cardDetails.lastFour} (${idSuffix})`;
+      return `${method.cardDetails.brand || 'Card'} ending in ${method.cardDetails.lastFour} (${idSuffix})`;`
     }
     if (method.type === 'bank_account' && method.bankDetails) {
-      return `${method.bankDetails.bankName || 'Bank'} ending in ${method.bankDetails.lastFour} (${idSuffix})`;
+      return `${method.bankDetails.bankName || 'Bank'} ending in ${method.bankDetails.lastFour} (${idSuffix})`;`
     }
     if (method.type === 'crypto_address' && method.cryptoDetails) {
       const address = method.cryptoDetails.address || '';
-      const shortAddress =
-        address.length > 10 ? `${address.substring(0, 6)}...${address.slice(-4)}` : address;
-      return `${method.cryptoDetails.currency} ${shortAddress} (${idSuffix})`;
+      const shortAddress =;
+        address.length > 10 ? `${address.substring(0, 6)}...${address.slice(-4)}` : address;`
+      return `${method.cryptoDetails.currency} ${shortAddress} (${idSuffix})`;`
     }
     const typeDisplay = method.type.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
-    return `${method.provider || 'Unknown'} ${typeDisplay} (${idSuffix})`;
+    return `${method.provider || 'Unknown'} ${typeDisplay} (${idSuffix})`;`
   }
 
   get f() {

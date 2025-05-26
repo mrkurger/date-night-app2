@@ -1,36 +1,28 @@
 import { EventEmitter, Output, Input, Component } from '@angular/core';
-// NebularModule is imported but not used in the imports array
 import { NebularModule as __NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 
-@Component({
-  selector: 'app-star-rating',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="star-rating" [class.small]="small" [class.readonly]="readonly">
-      <span
-        *ngFor="let star of stars; let i = index"
-        class="star"
-        [class.filled]="star.filled"
-        [class.half]="star.half"
-        (click)="onRatingChange(i + 1)"
-        (mouseenter)="onStarHover(i + 1)"
-        (mouseleave)="onStarLeave()"
-        [nbTooltip]="getTooltip(i + 1)"
-      >
-        <nb-icon *ngIf="star.filled" icon="star"></nb-icon>
-        <nb-icon *ngIf="star.half" icon="star-half-2"></nb-icon>
-        <nb-icon *ngIf="!star.filled && !star.half" icon="star-outline"></nb-icon>
-      </span>
+// NebularModule is imported but not used in the imports array
 
-      <span class="rating-text" *ngIf="showRatingText">
+@Component({';
+  selector: 'app-star-rating',;
+  standalone: true,;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+      ;
+        ;
+        ;
+        ;
+      ;
+
+      ;
         {{ rating | number: '1.1-1' }}
-      </span>
-    </div>
-  `,
-  styles: [
-    `
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .star-rating {
         display: inline-flex;
         align-items: center;
@@ -65,27 +57,27 @@ import { CommonModule } from '@angular/common';
         font-weight: 500;
         color: var(--text-basic-color);
       }
-    `,
-  ],
-})
-export class StarRatingComponent {
+    `,;`
+  ],;
+});
+export class StarRatingComponen {t {
   @Input() rating = 0;
   @Input() readonly = false;
   @Input() small = false;
   @Input() showRatingText = false;
-  @Output() ratingChange = new EventEmitter<number>();
+  @Output() ratingChange = new EventEmitter();
 
   private hoveredRating: number | null = null;
 
   get stars(): { filled: boolean; half: boolean }[] {
     const rating = this.hoveredRating ?? this.rating;
-    return Array(5)
-      .fill(0)
+    return Array(5);
+      .fill(0);
       .map((_,_index)=> {
         const position = index + 1;
         return {
-          filled: rating >= position,
-          half: rating + 0.5 >= position && rating < position,
+          filled: rating >= position,;
+          half: rating + 0.5 >= position && rating < position,;
         };
       });
   }
@@ -109,6 +101,6 @@ export class StarRatingComponent {
 
   getTooltip(rating: number): string {
     if (this.readonly) return '';
-    return `Rate ${rating} star${rating !== 1 ? 's' : ''}`;
+    return `Rate ${rating} star${rating !== 1 ? 's' : ''}`;`
   }
 }

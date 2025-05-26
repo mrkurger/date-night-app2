@@ -1,6 +1,16 @@
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { AdvertiserProfileComponent } from './advertiser-profile.component';
+import { AdService } from '../../core/services/ad.service';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,30 +20,20 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
-import { of, throwError } from 'rxjs';
-
-import { AdvertiserProfileComponent } from './advertiser-profile.component';
-import { AdService } from '../../core/services/ad.service';
-import { AuthService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
 
 // Mock MainLayoutComponent
-@Component({
-    selector: 'app-main-layout',
-    template: '<ng-content></ng-content>',
-    imports: [ReactiveFormsModule]
-})
-class MockMainLayoutComponent {
+@Component({';
+    selector: 'app-main-layout',;
+    template: '',;
+    imports: [ReactiveFormsModule];
+});
+class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
 
 describe('AdvertiserProfileComponent', () => {
   let component: AdvertiserProfileComponent;
-  let fixture: ComponentFixture<AdvertiserProfileComponent>;
+  let fixture: ComponentFixture;
   let adService: AdService;
   let authService: AuthService;
   let notificationService: NotificationService;
@@ -41,35 +41,35 @@ describe('AdvertiserProfileComponent', () => {
 
   // Mock data
   const mockAd = {
-    _id: 'ad1',
-    title: 'Test Ad',
-    description: 'Test description',
-    location: { city: 'Oslo', county: 'Oslo' },
-    price: 100,
-    category: 'Dinner',
-    isTouring: false,
-    tags: ['tag1', 'tag2'],
-    userId: 'user1',
-    advertiser: 'Test User',
-    isActive: true,
-    isFeatured: false,
-    isTrending: false,
-    viewCount: 0,
-    clickCount: 0,
-    inquiryCount: 0,
-    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],
-    images: ['/assets/images/test-image-1.jpg'],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    _id: 'ad1',;
+    title: 'Test Ad',;
+    description: 'Test description',;
+    location: { city: 'Oslo', county: 'Oslo' },;
+    price: 100,;
+    category: 'Dinner',;
+    isTouring: false,;
+    tags: ['tag1', 'tag2'],;
+    userId: 'user1',;
+    advertiser: 'Test User',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: false,;
+    viewCount: 0,;
+    clickCount: 0,;
+    inquiryCount: 0,;
+    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],;
+    images: ['/assets/images/test-image-1.jpg'],;
+    createdAt: new Date().toISOString(),;
+    updatedAt: new Date().toISOString(),;
   };
 
   const mockUser = {
-    _id: 'user1',
-    name: 'Test User',
+    _id: 'user1',;
+    name: 'Test User',;
   };
 
   // Mock services
-  class MockAdService {
+  class MockAdServic {e {
     getAdById() {
       return of(mockAd);
     }
@@ -83,11 +83,11 @@ describe('AdvertiserProfileComponent', () => {
     }
   }
 
-  class MockAuthService {
+  class MockAuthServic {e {
     currentUser$ = of(mockUser);
   }
 
-  class MockNotificationService {
+  class MockNotificationServic {e {
     success(message: string): void {
       // Mock success notification
       console.log('Success:', message);
@@ -101,21 +101,21 @@ describe('AdvertiserProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,
-    ReactiveFormsModule,
-    AdvertiserProfileComponent],
-      declarations: [MockMainLayoutComponent],
-      providers: [
+      imports: [RouterTestingModule,;
+    ReactiveFormsModule,;
+    AdvertiserProfileComponent],;
+      declarations: [MockMainLayoutComponent],;
+      providers: [;
         {
-          provide: ActivatedRoute,
+          provide: ActivatedRoute,;
           useValue: {
-            paramMap: of(convertToParamMap({ id: 'ad1' })),
-          },
-        },
-        { provide: AdService, useClass: MockAdService },
-        { provide: AuthService, useClass: MockAuthService },
-        { provide: NotificationService, useClass: MockNotificationService },
-      ],
+            paramMap: of(convertToParamMap({ id: 'ad1' })),;
+          },;
+        },;
+        { provide: AdService, useClass: MockAdService },;
+        { provide: AuthService, useClass: MockAuthService },;
+        { provide: NotificationService, useClass: MockNotificationService },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdvertiserProfileComponent);
@@ -147,19 +147,19 @@ describe('AdvertiserProfileComponent', () => {
 
       // Check form values
       expect(component.adForm.value).toEqual({
-        title: 'Test Ad',
-        description: 'Test description',
-        location: { city: 'Oslo', county: 'Oslo' },
-        price: 100,
-        category: 'Dinner',
-        isTouring: false,
-        tags: 'tag1, tag2',
+        title: 'Test Ad',;
+        description: 'Test description',;
+        location: { city: 'Oslo', county: 'Oslo' },;
+        price: 100,;
+        category: 'Dinner',;
+        isTouring: false,;
+        tags: 'tag1, tag2',;
       });
     }));
 
     it('should handle error when loading ad', fakeAsync(() => {
-      spyOn(adService, 'getAdById').and.returnValue(
-        throwError(() => new Error('Failed to load ad')),
+      spyOn(adService, 'getAdById').and.returnValue(;
+        throwError(() => new Error('Failed to load ad')),;
       );
       spyOn(console, 'error').and.callThrough();
 
@@ -194,8 +194,8 @@ describe('AdvertiserProfileComponent', () => {
 
       component.toggleEditMode();
       component.adForm.patchValue({
-        title: 'Updated Title',
-        description: 'Updated description',
+        title: 'Updated Title',;
+        description: 'Updated description',;
       });
 
       component.saveChanges();
@@ -212,34 +212,34 @@ describe('AdvertiserProfileComponent', () => {
       component.toggleEditMode();
       component.adForm.patchValue({
         title: '', // Invalid - required field
-        description: 'Updated description',
+        description: 'Updated description',;
       });
 
       component.saveChanges();
 
-      expect(notificationService.error).toHaveBeenCalledWith(
-        'Please fix the form errors before submitting',
+      expect(notificationService.error).toHaveBeenCalledWith(;
+        'Please fix the form errors before submitting',;
       );
     });
 
     it('should cancel edit and reset form', () => {
       component.toggleEditMode();
       component.adForm.patchValue({
-        title: 'Changed Title',
-        description: 'Changed description',
+        title: 'Changed Title',;
+        description: 'Changed description',;
       });
 
       component.cancelEdit();
 
       expect(component.editMode).toBeFalse();
       expect(component.adForm.value).toEqual({
-        title: 'Test Ad',
-        description: 'Test description',
-        location: 'Oslo',
-        price: 100,
-        category: 'Dinner',
-        isTouring: false,
-        tags: 'tag1, tag2',
+        title: 'Test Ad',;
+        description: 'Test description',;
+        location: 'Oslo',;
+        price: 100,;
+        category: 'Dinner',;
+        isTouring: false,;
+        tags: 'tag1, tag2',;
       });
     });
 

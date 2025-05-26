@@ -1,3 +1,18 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../../shared/nebular.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
+import { LoginComponent } from '../../features/auth/login/login.component';
+import { UserService } from '../../core/services/user.service';
+import { AuthService } from '../../core/services/auth.service';
+import { User } from '../../core/models/user.interface';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,94 +23,75 @@
 //   Related to: client-angular/src/app/core/services/auth.service.ts
 // ===================================================
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NebularModule } from '../../../shared/nebular.module';
-
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
-
 // Nebular imports
 
-
-import { NbAuthService, NbAuthResult } from '@nebular/auth';
-
-import { LoginComponent } from '../../features/auth/login/login.component';
-import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../core/models/user.interface';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
+';
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-  let userService: jasmine.SpyObj<UserService>;
-  let authService: jasmine.SpyObj<AuthService>;
-  let nbAuthService: jasmine.SpyObj<NbAuthService>;
+  let fixture: ComponentFixture;
+  let userService: jasmine.SpyObj;
+  let authService: jasmine.SpyObj;
+  let nbAuthService: jasmine.SpyObj;
   let router: Router;
 
   const mockUser: User = {
-    _id: 'user123',
-    id: 'user123',
-    username: 'testuser',
-    email: 'test@example.com',
-    roles: ['user'],
-    status: 'active',
-    createdAt: new Date(),
+    _id: 'user123',;
+    id: 'user123',;
+    username: 'testuser',;
+    email: 'test@example.com',;
+    roles: ['user'],;
+    status: 'active',;
+    createdAt: new Date(),;
   };
 
   const mockAuthResponse = {
-    token: 'mock-token',
-    refreshToken: 'mock-refresh-token',
-    expiresIn: 86400,
-    user: mockUser,
+    token: 'mock-token',;
+    refreshToken: 'mock-refresh-token',;
+    expiresIn: 86400,;
+    user: mockUser,;
   };
 
   beforeEach(async () => {
     // Create spies for services
-    const userServiceSpy = jasmine.createSpyObj<UserService>('UserService', [
-      'login',
-      'isAuthenticated',
+    const userServiceSpy = jasmine.createSpyObj('UserService', [;
+      'login',;
+      'isAuthenticated',;
     ]);
     userServiceSpy.isAuthenticated.and.returnValue(false); // Default to not authenticated
 
-    const authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', [
-      'login',
-      'isAuthenticated',
+    const authServiceSpy = jasmine.createSpyObj('AuthService', [;
+      'login',;
+      'isAuthenticated',;
     ]);
     authServiceSpy.isAuthenticated.and.returnValue(false);
 
-    const nbAuthServiceSpy = jasmine.createSpyObj<NbAuthService>('NbAuthService', ['authenticate']);
+    const nbAuthServiceSpy = jasmine.createSpyObj('NbAuthService', ['authenticate']);
 
     await TestBed.configureTestingModule({
-    imports: [
-        ReactiveFormsModule,
-        FormsModule,
-        RouterTestingModule.withRoutes([
-            { path: 'browse', },
+    imports: [;
+        ReactiveFormsModule,;
+        FormsModule,;
+        RouterTestingModule.withRoutes([;
+            { path: 'browse', },;
             { path: 'dashboard' }
-        ]),
-        BrowserAnimationsModule,
-        NebularModule,
-        CommonModule
-    ],
-    providers: [
-        { provide: UserService, useValue: userServiceSpy },
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: NbAuthService, useValue: nbAuthServiceSpy },
-        LoginComponent,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-    ]
+        ]),;
+        BrowserAnimationsModule,;
+        NebularModule,;
+        CommonModule;
+    ],;
+    providers: [;
+        { provide: UserService, useValue: userServiceSpy },;
+        { provide: AuthService, useValue: authServiceSpy },;
+        { provide: NbAuthService, useValue: nbAuthServiceSpy },;
+        LoginComponent,;
+        provideHttpClient(withInterceptorsFromDi()),;
+        provideHttpClientTesting(),;
+    ];
 }).compileComponents();
 
-    userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj<NbAuthService>;
+    userService = TestBed.inject(UserService) as jasmine.SpyObj;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj;
+    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj;
     router = TestBed.inject(Router);
   });
 
@@ -121,8 +117,8 @@ describe('LoginComponent', () => {
 
   it('should mark form as valid when all fields are filled', () => {
     component.loginForm.patchValue({
-      email: 'test@example.com',
-      password: 'Password123!',
+      email: 'test@example.com',;
+      password: 'Password123!',;
     });
 
     expect(component.loginForm.valid).toBeTruthy();
@@ -131,8 +127,8 @@ describe('LoginComponent', () => {
   it('should call UserService.login when form is submitted', () => {
     // Setup form with valid data
     const loginData = {
-      email: 'test@example.com',
-      password: 'Password123!',
+      email: 'test@example.com',;
+      password: 'Password123!',;
     };
 
     component.loginForm.patchValue(loginData);
@@ -156,8 +152,8 @@ describe('LoginComponent', () => {
   it('should display error message on login failure', () => {
     // Setup form with valid data
     component.loginForm.patchValue({
-      email: 'test@example.com',
-      password: 'wrongpassword',
+      email: 'test@example.com',;
+      password: 'wrongpassword',;
     });
 
     // Mock failed login
@@ -179,9 +175,9 @@ describe('LoginComponent', () => {
   it('should handle social login', () => {
     // Mock successful social login
     const mockAuthResult = {
-      isSuccess: () => true,
-      getRedirect: () => '/dashboard',
-      getErrors: () => [],
+      isSuccess: () => true,;
+      getRedirect: () => '/dashboard',;
+      getErrors: () => [],;
     } as NbAuthResult;
 
     nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
@@ -203,9 +199,9 @@ describe('LoginComponent', () => {
   it('should handle social login failure', () => {
     // Mock failed social login
     const mockAuthResult = {
-      isSuccess: () => false,
-      getRedirect: () => null,
-      getErrors: () => ['Authentication failed'],
+      isSuccess: () => false,;
+      getRedirect: () => null,;
+      getErrors: () => ['Authentication failed'],;
     } as NbAuthResult;
 
     nbAuthService.authenticate.and.returnValue(of(mockAuthResult));

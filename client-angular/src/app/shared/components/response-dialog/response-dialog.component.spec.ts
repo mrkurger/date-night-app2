@@ -1,44 +1,43 @@
+/// 
+
+import {
 import { Input } from '@angular/core';
 import { NebularModule } from '../../nebular.module';
-
 import { Component } from '@angular/core';
-/// <reference types="jasmine" />
-
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  
-} from '@nebular/theme';
 import { ResponseDialogComponent, ResponseDialogData } from './response-dialog.component';
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  ';
+} from '@nebular/theme';
 
 describe('ResponseDialogComponent', () => {
   let component: ResponseDialogComponent;
-  let fixture: ComponentFixture<ResponseDialogComponent>;
-  let dialogRefSpy: jasmine.SpyObj<NbDialogRef<ResponseDialogComponent>>;
+  let fixture: ComponentFixture;
+  let dialogRefSpy: jasmine.SpyObj>;
   const mockData: ResponseDialogData = {
-    title: 'Test Title',
-    reviewTitle: 'Test Review',
-    reviewContent: 'Test Content',
+    title: 'Test Title',;
+    reviewTitle: 'Test Review',;
+    reviewContent: 'Test Content',;
   };
 
   beforeEach(async () => {
     dialogRefSpy = jasmine.createSpyObj('NbDialogRef', ['close']);
 
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbFormFieldModule,
-        NbInputModule,
-      ],
-      providers: [
-        { provide: NbDialogRef, useValue: dialogRefSpy },
-        { provide: NB_DIALOG_CONFIG, useValue: { data: mockData } },
-      ],
+      imports: [;
+        ReactiveFormsModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbFormFieldModule,;
+        NbInputModule,;
+      ],;
+      providers: [;
+        { provide: NbDialogRef, useValue: dialogRefSpy },;
+        { provide: NB_DIALOG_CONFIG, useValue: { data: mockData } },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResponseDialogComponent);

@@ -10,7 +10,7 @@ export interface Favorite {
   dateAdded?: Date | string; // Alias for createdAt
   notes?: string;
   notificationsEnabled: boolean;
-  tags: string[];
+  tags: string[];';
   priority: 'low' | 'normal' | 'high';
   lastViewed?: Date | string;
   lastNotified?: Date | string;

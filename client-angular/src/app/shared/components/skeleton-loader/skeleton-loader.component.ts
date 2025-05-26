@@ -2,33 +2,21 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * Skeleton Loader Component
- *
- * A modern skeleton loader component for content placeholders.
- * Features customizable appearance, animation, and various shapes.
+ * Skeleton Loader Component;
+ *;
+ * A modern skeleton loader component for content placeholders.;
+ * Features customizable appearance, animation, and various shapes.;
  */
-@Component({
-    selector: 'app-skeleton',
-    imports: [CommonModule],
-    template: `
-    <div
-      class="skeleton"
-      [class]="'skeleton--' + variant"
-      [style.width]="width"
-      [style.height]="height"
-      [class.skeleton--animated]="animated"
-    >
-      <div
-        *ngFor="let i of getArray(); trackBy: trackByFn"
-        class="skeleton__item"
-        [class]="'skeleton__item--' + type"
-        [style.width]="itemWidth"
-        [style.height]="itemHeight"
-      ></div>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-skeleton',;
+    imports: [CommonModule],;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .skeleton {
         display: flex;
         flex-direction: column;
@@ -50,11 +38,11 @@ import { CommonModule } from '@angular/common';
 
       /* Animation */
       .skeleton--animated .skeleton__item {
-        background: linear-gradient(
-          90deg,
-          nb-theme(background-basic-color-2) 25%,
-          nb-theme(background-basic-color-3) 37%,
-          nb-theme(background-basic-color-2) 63%
+        background: linear-gradient(;
+          90deg,;
+          nb-theme(background-basic-color-2) 25%,;
+          nb-theme(background-basic-color-3) 37%,;
+          nb-theme(background-basic-color-2) 63%;
         );
         background-size: 400% 100%;
         animation: skeleton-loading 1.4s ease infinite;
@@ -106,21 +94,21 @@ import { CommonModule } from '@angular/common';
 
       /* Dark theme adjustments */
       :host-context([data-theme='dark']) .skeleton--animated .skeleton__item {
-        background: linear-gradient(
-          90deg,
-          nb-theme(background-basic-color-3) 25%,
-          nb-theme(background-basic-color-4) 37%,
-          nb-theme(background-basic-color-3) 63%
+        background: linear-gradient(;
+          90deg,;
+          nb-theme(background-basic-color-3) 25%,;
+          nb-theme(background-basic-color-4) 37%,;
+          nb-theme(background-basic-color-3) 63%;
         );
       }
 
       :host-context([data-theme='dark']) .skeleton__item {
         background-color: nb-theme(background-basic-color-3);
       }
-    `,
-    ]
-})
-export class SkeletonModule {
+    `,;`
+    ];
+});
+export class SkeletonModul {e {
   @Input() type: 'text' | 'title' | 'avatar' | 'thumbnail' | 'button' = 'text';
   @Input() variant: 'text' | 'card' | 'circle' = 'text';
   @Input() width?: string;
@@ -131,16 +119,16 @@ export class SkeletonModule {
   @Input() animated = true;
 
   /**
-   * Get array of items based on count
+   * Get array of items based on count;
    */
   getArray(): number[] {
-    return Array(this.count)
-      .fill(0)
+    return Array(this.count);
+      .fill(0);
       .map((_, i) => i);
   }
 
   /**
-   * Track items by index for better performance
+   * Track items by index for better performance;
    */
   trackByFn(index: number): number {
     return index;

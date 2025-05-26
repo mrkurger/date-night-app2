@@ -1,20 +1,7 @@
-/// <reference path="../../../types/jasmine.d.ts" />
-/// <reference path="../../../types/jasmine.d.ts" />
+/// 
+/// 
 
 import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  discardPeriodicTasks,
-} from '@angular/core/testing';
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  discardPeriodicTasks,
-} from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 import { Component } from '@angular/core';
@@ -26,8 +13,6 @@ import { By } from '@angular/platform-browser';
 import { of, Subject, throwError, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
-
-// PrimeNG imports and types
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -42,7 +27,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FileUploadModule, FileUploadEvent } from 'primeng/fileupload';
 import { MessageService, ConfirmationService } from 'primeng/api';
-
 import { ChatComponent } from './chat.component';
 import { ChatService } from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -50,6 +34,21 @@ import { NotificationService } from '../../core/services/notification.service';
 import { AvatarModule } from '../../shared/components/avatar/avatar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../core/models/user.interface';
+  ComponentFixture,;
+  TestBed,;
+  fakeAsync,;
+  tick,;
+  discardPeriodicTasks,';
+} from '@angular/core/testing';
+import {
+  ComponentFixture,;
+  TestBed,;
+  fakeAsync,;
+  tick,;
+  discardPeriodicTasks,;
+} from '@angular/core/testing';
+
+// PrimeNG imports and types
 
 // Mock interfaces and data
 interface ChatMessage {
@@ -85,282 +84,282 @@ interface ChatParticipant {
 interface ChatServiceMethods {
   connectSocket: () => void;
   disconnectSocket: () => void;
-  getMessages: (roomId: string, limit?: number, before?: string) => Observable<ChatMessage[]>;
-  sendMessage: (
-    roomId: string,
-    content: string,
-    type?: string,
-    file?: File,
-  ) => Observable<ChatMessage>;
-  getRoom: (roomId: string) => Observable<ChatRoom>;
-  getRooms: () => Observable<ChatRoom[]>;
-  markAsRead: (messageId: string) => Observable<void>;
-  onNewMessage: () => Observable<ChatMessage>;
-  onTyping: () => Observable<{ roomId: string; userId: string; isTyping: boolean }>;
-  onUserStatusChange: () => Observable<{ userId: string; status: 'online' | 'offline' }>;
-  onMessageDeleted: () => Observable<{ messageId: string; roomId: string }>;
-  uploadFile: (file: File, roomId: string) => Observable<HttpEvent<any>>;
+  getMessages: (roomId: string, limit?: number, before?: string) => Observable;
+  sendMessage: (;
+    roomId: string,;
+    content: string,;
+    type?: string,;
+    file?: File,;
+  ) => Observable;
+  getRoom: (roomId: string) => Observable;
+  getRooms: () => Observable;
+  markAsRead: (messageId: string) => Observable;
+  onNewMessage: () => Observable;
+  onTyping: () => Observable;
+  onUserStatusChange: () => Observable;
+  onMessageDeleted: () => Observable;
+  uploadFile: (file: File, roomId: string) => Observable>;
 }
 
 const mockUser: User = {
-  id: 'test-user-id',
-  username: 'testuser',
-  email: 'test@example.com',
-  roles: ['user'],
-  status: 'active',
-  createdAt: new Date(),
+  id: 'test-user-id',;
+  username: 'testuser',;
+  email: 'test@example.com',;
+  roles: ['user'],;
+  status: 'active',;
+  createdAt: new Date(),;
   profile: {
-    firstName: 'Test',
-    lastName: 'User',
-    avatar: 'test-avatar.jpg',
-  },
+    firstName: 'Test',;
+    lastName: 'User',;
+    avatar: 'test-avatar.jpg',;
+  },;
 };
 
 const mockRoom: ChatRoom = {
-  id: 'room-1',
-  name: 'Test Room',
-  participants: [
-    { id: 'test-user-id', username: 'Test User', status: 'online' },
-    { id: 'other-user-id', username: 'Other User', status: 'offline' },
-  ],
+  id: 'room-1',;
+  name: 'Test Room',;
+  participants: [;
+    { id: 'test-user-id', username: 'Test User', status: 'online' },;
+    { id: 'other-user-id', username: 'Other User', status: 'offline' },;
+  ],;
   lastMessage: {
-    id: 'msg-1',
-    roomId: 'room-1',
-    senderId: 'other-user-id',
-    content: 'Hello!',
-    timestamp: new Date(),
-    type: 'text',
-  },
-  unreadCount: 0,
-  createdAt: new Date(),
+    id: 'msg-1',;
+    roomId: 'room-1',;
+    senderId: 'other-user-id',;
+    content: 'Hello!',;
+    timestamp: new Date(),;
+    type: 'text',;
+  },;
+  unreadCount: 0,;
+  createdAt: new Date(),;
 };
 const mockRoom: ChatRoom = {
-  id: 'room-1',
-  name: 'Test Room',
-  participants: [
-    { id: 'test-user-id', username: 'Test User', status: 'online' },
-    { id: 'other-user-id', username: 'Other User', status: 'offline' },
-  ],
+  id: 'room-1',;
+  name: 'Test Room',;
+  participants: [;
+    { id: 'test-user-id', username: 'Test User', status: 'online' },;
+    { id: 'other-user-id', username: 'Other User', status: 'offline' },;
+  ],;
   lastMessage: {
-    id: 'msg-1',
-    roomId: 'room-1',
-    senderId: 'other-user-id',
-    content: 'Hello!',
-    timestamp: new Date(),
-    type: 'text',
-  },
-  unreadCount: 0,
-  createdAt: new Date(),
+    id: 'msg-1',;
+    roomId: 'room-1',;
+    senderId: 'other-user-id',;
+    content: 'Hello!',;
+    timestamp: new Date(),;
+    type: 'text',;
+  },;
+  unreadCount: 0,;
+  createdAt: new Date(),;
 };
 
-const mockMessages: ChatMessage[] = [
+const mockMessages: ChatMessage[] = [;
   {
-    id: 'msg-1',
-    roomId: 'room-1',
-    senderId: 'other-user-id',
-    content: 'Hello!',
-    timestamp: new Date(),
-    type: 'text',
-  },
+    id: 'msg-1',;
+    roomId: 'room-1',;
+    senderId: 'other-user-id',;
+    content: 'Hello!',;
+    timestamp: new Date(),;
+    type: 'text',;
+  },;
   {
-    id: 'msg-2',
-    roomId: 'room-1',
-    senderId: 'test-user-id',
-    content: 'Hi there!',
-const mockMessages: ChatMessage[] = [
+    id: 'msg-2',;
+    roomId: 'room-1',;
+    senderId: 'test-user-id',;
+    content: 'Hi there!',;
+const mockMessages: ChatMessage[] = [;
   {
-    id: 'msg-1',
-    roomId: 'room-1',
-    senderId: 'other-user-id',
-    content: 'Hello!',
-    timestamp: new Date(),
-    type: 'text',
-  },
+    id: 'msg-1',;
+    roomId: 'room-1',;
+    senderId: 'other-user-id',;
+    content: 'Hello!',;
+    timestamp: new Date(),;
+    type: 'text',;
+  },;
   {
-    id: 'msg-2',
-    roomId: 'room-1',
-    senderId: 'test-user-id',
-    content: 'Hi there!',
-    timestamp: new Date(),
-    type: 'text',
-  },
+    id: 'msg-2',;
+    roomId: 'room-1',;
+    senderId: 'test-user-id',;
+    content: 'Hi there!',;
+    timestamp: new Date(),;
+    type: 'text',;
+  },;
 ];
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
-  let fixture: ComponentFixture<ChatComponent>;
-  let chatServiceSpy: jasmine.SpyObj<ChatServiceMethods>;
-  let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
-  let messageServiceSpy: jasmine.SpyObj<MessageService>;
-  let confirmationServiceSpy: jasmine.SpyObj<ConfirmationService>;
-  let authServiceSpy: jasmine.SpyObj<Partial<AuthService>>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let fixture: ComponentFixture;
+  let chatServiceSpy: jasmine.SpyObj;
+  let notificationServiceSpy: jasmine.SpyObj;
+  let messageServiceSpy: jasmine.SpyObj;
+  let confirmationServiceSpy: jasmine.SpyObj;
+  let authServiceSpy: jasmine.SpyObj>;
+  let routerSpy: jasmine.SpyObj;
   let debugElement: DebugElement;
-  },
+  },;
 ];
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
-  let fixture: ComponentFixture<ChatComponent>;
-  let chatServiceSpy: jasmine.SpyObj<ChatServiceMethods>;
-  let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
-  let messageServiceSpy: jasmine.SpyObj<MessageService>;
-  let confirmationServiceSpy: jasmine.SpyObj<ConfirmationService>;
-  let authServiceSpy: jasmine.SpyObj<Partial<AuthService>>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let fixture: ComponentFixture;
+  let chatServiceSpy: jasmine.SpyObj;
+  let notificationServiceSpy: jasmine.SpyObj;
+  let messageServiceSpy: jasmine.SpyObj;
+  let confirmationServiceSpy: jasmine.SpyObj;
+  let authServiceSpy: jasmine.SpyObj>;
+  let routerSpy: jasmine.SpyObj;
   let debugElement: DebugElement;
 
   beforeEach(async () => {
-    chatServiceSpy = jasmine.createSpyObj<ChatServiceMethods>('ChatService', {
-      getRooms: of([mockRoom]),
-      getMessages: of([mockMessages]),
-      sendMessage: of(mockMessages[0]),
-      markAsRead: of(undefined),
+    chatServiceSpy = jasmine.createSpyObj('ChatService', {
+      getRooms: of([mockRoom]),;
+      getMessages: of([mockMessages]),;
+      sendMessage: of(mockMessages[0]),;
+      markAsRead: of(undefined),;
       uploadFiles: of({
-        files: [
+        files: [;
           {
-            name: 'test.jpg',
-            type: 'image/jpeg',
-            url: 'test-url.com',
-          },
-        ],
-      }),
-      disconnectSocket: undefined,
+            name: 'test.jpg',;
+            type: 'image/jpeg',;
+            url: 'test-url.com',;
+          },;
+        ],;
+      }),;
+      disconnectSocket: undefined,;
     });
-    chatServiceSpy = jasmine.createSpyObj<ChatServiceMethods>('ChatService', {
-      getRooms: of([mockRoom]),
-      getMessages: of([mockMessages]),
-      sendMessage: of(mockMessages[0]),
-      markAsRead: of(undefined),
+    chatServiceSpy = jasmine.createSpyObj('ChatService', {
+      getRooms: of([mockRoom]),;
+      getMessages: of([mockMessages]),;
+      sendMessage: of(mockMessages[0]),;
+      markAsRead: of(undefined),;
       uploadFiles: of({
-        files: [
+        files: [;
           {
-            name: 'test.jpg',
-            type: 'image/jpeg',
-            url: 'test-url.com',
-          },
-        ],
-      }),
-      disconnectSocket: undefined,
+            name: 'test.jpg',;
+            type: 'image/jpeg',;
+            url: 'test-url.com',;
+          },;
+        ],;
+      }),;
+      disconnectSocket: undefined,;
     });
 
     // Add subject properties
     Object.assign(chatServiceSpy, {
-      onlineUsers$: new Subject<string[]>(),
-      newMessage$: new Subject<ChatMessage>(),
-      typingStatus$: new Subject<{ roomId: string; userId: string; typing: boolean }>(),
+      onlineUsers$: new Subject(),;
+      newMessage$: new Subject(),;
+      typingStatus$: new Subject(),;
     });
 
-    notificationServiceSpy = jasmine.createSpyObj<NotificationService>('NotificationService', [
-      'showSuccess',
-      'showError',
-      'showInfo',
-      'showWarning',
-      'clear',
+    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [;
+      'showSuccess',;
+      'showError',;
+      'showInfo',;
+      'showWarning',;
+      'clear',;
     ]);
 
-    messageServiceSpy = jasmine.createSpyObj<MessageService>('MessageService', [
-      'add',
-      'addAll',
-      'clear',
+    messageServiceSpy = jasmine.createSpyObj('MessageService', [;
+      'add',;
+      'addAll',;
+      'clear',;
     ]);
-    confirmationServiceSpy = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', [
-      'confirm',
-      'close',
+    confirmationServiceSpy = jasmine.createSpyObj('ConfirmationService', [;
+      'confirm',;
+      'close',;
     ]);
-    routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
-    authServiceSpy = jasmine.createSpyObj<Partial<AuthService>>(
-      'AuthService',
-      ['getCurrentUserId'],
+    authServiceSpy = jasmine.createSpyObj>(;
+      'AuthService',;
+      ['getCurrentUserId'],;
       {
-        currentUser$: of(mockUser),
-      },
+        currentUser$: of(mockUser),;
+      },;
     );
     authServiceSpy.getCurrentUserId.and.returnValue('user1');
     // Add subject properties
     Object.assign(chatServiceSpy, {
-      onlineUsers$: new Subject<string[]>(),
-      newMessage$: new Subject<ChatMessage>(),
-      typingStatus$: new Subject<{ roomId: string; userId: string; typing: boolean }>(),
+      onlineUsers$: new Subject(),;
+      newMessage$: new Subject(),;
+      typingStatus$: new Subject(),;
     });
 
-    notificationServiceSpy = jasmine.createSpyObj<NotificationService>('NotificationService', [
-      'showSuccess',
-      'showError',
-      'showInfo',
-      'showWarning',
-      'clear',
+    notificationServiceSpy = jasmine.createSpyObj('NotificationService', [;
+      'showSuccess',;
+      'showError',;
+      'showInfo',;
+      'showWarning',;
+      'clear',;
     ]);
 
-    messageServiceSpy = jasmine.createSpyObj<MessageService>('MessageService', [
-      'add',
-      'addAll',
-      'clear',
+    messageServiceSpy = jasmine.createSpyObj('MessageService', [;
+      'add',;
+      'addAll',;
+      'clear',;
     ]);
-    confirmationServiceSpy = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', [
-      'confirm',
-      'close',
+    confirmationServiceSpy = jasmine.createSpyObj('ConfirmationService', [;
+      'confirm',;
+      'close',;
     ]);
-    routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
-    authServiceSpy = jasmine.createSpyObj<Partial<AuthService>>(
-      'AuthService',
-      ['getCurrentUserId'],
+    authServiceSpy = jasmine.createSpyObj>(;
+      'AuthService',;
+      ['getCurrentUserId'],;
       {
-        currentUser$: of(mockUser),
-      },
+        currentUser$: of(mockUser),;
+      },;
     );
     authServiceSpy.getCurrentUserId.and.returnValue('user1');
 
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        RouterModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        BadgeModule,
-        TooltipModule,
-        MenuModule,
-        DialogModule,
-        TabViewModule,
-        AvatarModule,
-        SkeletonModule,
-        ConfirmDialogModule,
-        ProgressSpinnerModule,
-        FileUploadModule,
-        RouterModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        BadgeModule,
-        TooltipModule,
-        MenuModule,
-        DialogModule,
-        TabViewModule,
-        AvatarModule,
-        SkeletonModule,
-        ConfirmDialogModule,
-        ProgressSpinnerModule,
-        FileUploadModule,
-        ChatComponent,
-        AvatarModule,
-      ],
-      providers: [
-        { provide: ChatService, useValue: chatServiceSpy },
-        { provide: NotificationService, useValue: notificationServiceSpy },
-        { provide: MessageService, useValue: messageServiceSpy },
-        { provide: ConfirmationService, useValue: confirmationServiceSpy },
-        { provide: Router, useValue: routerSpy },
+      imports: [;
+        CommonModule,;
+        FormsModule,;
+        BrowserAnimationsModule,;
+        RouterModule,;
+        CardModule,;
+        ButtonModule,;
+        InputTextModule,;
+        BadgeModule,;
+        TooltipModule,;
+        MenuModule,;
+        DialogModule,;
+        TabViewModule,;
+        AvatarModule,;
+        SkeletonModule,;
+        ConfirmDialogModule,;
+        ProgressSpinnerModule,;
+        FileUploadModule,;
+        RouterModule,;
+        CardModule,;
+        ButtonModule,;
+        InputTextModule,;
+        BadgeModule,;
+        TooltipModule,;
+        MenuModule,;
+        DialogModule,;
+        TabViewModule,;
+        AvatarModule,;
+        SkeletonModule,;
+        ConfirmDialogModule,;
+        ProgressSpinnerModule,;
+        FileUploadModule,;
+        ChatComponent,;
+        AvatarModule,;
+      ],;
+      providers: [;
+        { provide: ChatService, useValue: chatServiceSpy },;
+        { provide: NotificationService, useValue: notificationServiceSpy },;
+        { provide: MessageService, useValue: messageServiceSpy },;
+        { provide: ConfirmationService, useValue: confirmationServiceSpy },;
+        { provide: Router, useValue: routerSpy },;
         {
-          provide: ActivatedRoute,
-          useValue: { params: of({}), snapshot: { params: { id: 'room1' } } },
-        },
-        { provide: AuthService, useValue: authServiceSpy },
-      ],
+          provide: ActivatedRoute,;
+          useValue: { params: of({}), snapshot: { params: { id: 'room1' } } },;
+        },;
+        { provide: AuthService, useValue: authServiceSpy },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatComponent);
@@ -397,12 +396,12 @@ describe('ChatComponent', () => {
 
     // Verify message is added to local messages and Toast notification is shown
     tick();
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'success',
-        summary: 'Success',
-        detail: jasmine.any(String),
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'success',;
+        summary: 'Success',;
+        detail: jasmine.any(String),;
+      }),;
     );
   }));
 
@@ -413,11 +412,11 @@ describe('ChatComponent', () => {
     // Call remove message
     component.removeMessage(message);
 
-    expect(confirmationServiceSpy.confirm).toHaveBeenCalledWith(
+    expect(confirmationServiceSpy.confirm).toHaveBeenCalledWith(;
       jasmine.objectContaining({
-        message: jasmine.any(String),
-        accept: jasmine.any(Function),
-      }),
+        message: jasmine.any(String),;
+        accept: jasmine.any(Function),;
+      }),;
     );
   });
 
@@ -425,20 +424,20 @@ describe('ChatComponent', () => {
     fixture.detectChanges();
     const mockFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
     const mockUploadEvent = {
-      files: [mockFile],
-      currentFiles: [mockFile],
-      originalEvent: { type: HttpEventType.Response } as HttpEvent<any>,
+      files: [mockFile],;
+      currentFiles: [mockFile],;
+      originalEvent: { type: HttpEventType.Response } as HttpEvent,;
     } as FileUploadEvent;
 
     component.onFileUpload(mockUploadEvent);
     tick();
 
     expect(chatServiceSpy.uploadFiles).toHaveBeenCalledWith([mockFile]);
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'success',
-        summary: 'Success',
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'success',;
+        summary: 'Success',;
+      }),;
     );
   }));
 
@@ -455,9 +454,9 @@ describe('ChatComponent', () => {
 
     // Verify typing status is emitted
     expect(chatServiceSpy.typingStatus$.next).toHaveBeenCalledWith({
-      roomId: 'room1',
-      userId: 'user1',
-      typing: true,
+      roomId: 'room1',;
+      userId: 'user1',;
+      typing: true,;
     });
 
     // Wait for debounce
@@ -499,12 +498,12 @@ describe('ChatComponent', () => {
     tick();
 
     // Verify error toast is shown
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'error',
-        summary: 'Error',
-        detail: errorMessage,
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'error',;
+        summary: 'Error',;
+        detail: errorMessage,;
+      }),;
     );
 
     // Verify loading state is reset
@@ -517,37 +516,37 @@ describe('ChatComponent', () => {
     // Test file size validation
     const largeFile = new File(['x'.repeat(11 * 1024 * 1024)], 'large.jpg', { type: 'image/jpeg' });
     const event: FileUploadEvent = {
-      files: [largeFile],
-      currentFiles: [largeFile],
+      files: [largeFile],;
+      currentFiles: [largeFile],;
     };
 
     component.onFileUpload(event);
     tick();
 
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'File size exceeds the maximum limit',
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'error',;
+        summary: 'Error',;
+        detail: 'File size exceeds the maximum limit',;
+      }),;
     );
 
     // Test file type validation
     const invalidFile = new File(['test'], 'test.exe', { type: 'application/x-msdownload' });
     const invalidEvent: FileUploadEvent = {
-      files: [invalidFile],
-      currentFiles: [invalidFile],
+      files: [invalidFile],;
+      currentFiles: [invalidFile],;
     };
 
     component.onFileUpload(invalidEvent);
     tick();
 
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Invalid file type',
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'error',;
+        summary: 'Error',;
+        detail: 'Invalid file type',;
+      }),;
     );
   }));
 
@@ -572,12 +571,12 @@ describe('ChatComponent', () => {
     tick();
 
     // Verify success message
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Message deleted successfully',
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'success',;
+        summary: 'Success',;
+        detail: 'Message deleted successfully',;
+      }),;
     );
 
     // Simulate reject on another delete
@@ -586,12 +585,12 @@ describe('ChatComponent', () => {
     tick();
 
     // Verify cancel message
-    expect(messageServiceSpy.add).toHaveBeenCalledWith(
-      jasmine.objectContaining<Message>({
-        severity: 'info',
-        summary: 'Cancelled',
-        detail: 'Message deletion cancelled',
-      }),
+    expect(messageServiceSpy.add).toHaveBeenCalledWith(;
+      jasmine.objectContaining({
+        severity: 'info',;
+        summary: 'Cancelled',;
+        detail: 'Message deletion cancelled',;
+      }),;
     );
   }));
 
@@ -617,10 +616,10 @@ describe('ChatComponent', () => {
       component.rooms = [mockRoom];
 
       const newMessage = {
-        ...mockMessages[0],
-        id: 'msg2',
-        content: 'New test message',
-        timestamp: new Date(),
+        ...mockMessages[0],;
+        id: 'msg2',;
+        content: 'New test message',;
+        timestamp: new Date(),;
       };
 
       chatServiceSpy.newMessage$.next(newMessage);
@@ -636,9 +635,9 @@ describe('ChatComponent', () => {
       component['selectedRoomId'] = 'room2'; // Different from incoming message room
 
       const newMessage = {
-        ...mockMessages[0],
-        id: 'msg2',
-        content: 'New message',
+        ...mockMessages[0],;
+        id: 'msg2',;
+        content: 'New message',;
       };
 
       chatServiceSpy.newMessage$.next(newMessage);
@@ -661,7 +660,7 @@ describe('ChatComponent', () => {
       component.onTyping();
       tick();
 
-      let hasTypingIndicator =
+      let hasTypingIndicator =;
         fixture.debugElement.query(By.css('[data-test="typing-indicator"]')) !== null;
       expect(hasTypingIndicator).equal(true);
 
@@ -669,7 +668,7 @@ describe('ChatComponent', () => {
       tick(5000);
       fixture.detectChanges();
 
-      hasTypingIndicator =
+      hasTypingIndicator =;
         fixture.debugElement.query(By.css('[data-test="typing-indicator"]')) !== null;
       expect(hasTypingIndicator).equal(false);
     }));
@@ -714,19 +713,19 @@ describe('ChatComponent', () => {
 
       const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
       const event = {
-        originalEvent: new Event('change'),
-        files: [file],
-        currentFiles: [file],
+        originalEvent: new Event('change'),;
+        files: [file],;
+        currentFiles: [file],;
       } as unknown as FileUploadEvent;
 
       component.onFileUpload(event);
       tick();
 
       expect(chatServiceSpy.uploadFiles).toHaveBeenCalled();
-      expect(messageServiceSpy.add).toHaveBeenCalledWith(
+      expect(messageServiceSpy.add).toHaveBeenCalledWith(;
         jasmine.objectContaining({
-          severity: 'success',
-        }),
+          severity: 'success',;
+        }),;
       );
     }));
 
@@ -735,19 +734,19 @@ describe('ChatComponent', () => {
 
       const file = new File(['test'], 'test.exe', { type: 'application/x-msdownload' });
       const event = {
-        originalEvent: new Event('change'),
-        files: [file],
-        currentFiles: [file],
+        originalEvent: new Event('change'),;
+        files: [file],;
+        currentFiles: [file],;
       } as unknown as FileUploadEvent;
 
       component.onFileUpload(event);
       tick();
 
-      expect(messageServiceSpy.add).toHaveBeenCalledWith(
+      expect(messageServiceSpy.add).toHaveBeenCalledWith(;
         jasmine.objectContaining({
-          severity: 'error',
-          detail: jasmine.stringMatching(/invalid file type/i),
-        }),
+          severity: 'error',;
+          detail: jasmine.stringMatching(/invalid file type/i),;
+        }),;
       );
     }));
   });
@@ -785,9 +784,9 @@ describe('ChatComponent', () => {
 
       // Simulate receiving typing status
       chatServiceSpy.typingStatus$.next({
-        roomId: roomId,
-        userId: 'other-user',
-        isTyping: true,
+        roomId: roomId,;
+        userId: 'other-user',;
+        isTyping: true,;
       });
 
       fixture.detectChanges();
@@ -803,9 +802,9 @@ describe('ChatComponent', () => {
 
       // Show typing indicator
       chatServiceSpy.typingStatus$.next({
-        roomId: roomId,
-        userId: 'other-user',
-        isTyping: true,
+        roomId: roomId,;
+        userId: 'other-user',;
+        isTyping: true,;
       });
 
       fixture.detectChanges();
@@ -832,9 +831,9 @@ describe('ChatComponent', () => {
 
       // Simulate typing in another room
       chatServiceSpy.typingStatus$.next({
-        roomId: otherRoomId,
-        userId: 'other-user',
-        isTyping: true,
+        roomId: otherRoomId,;
+        userId: 'other-user',;
+        isTyping: true,;
       });
 
       fixture.detectChanges();

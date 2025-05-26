@@ -1,0 +1,79 @@
+<!-- Page Header Component -->
+<!-- Using Nebular components -->
+
+<div class="nb-header" [ngClass]="{ 'nb-header--with-background': backgroundImage }">
+  <!-- Background Image -->
+  <div
+    *ngIf="backgroundImage"
+    class="nb-header__background"
+    [style.background-image]="'url(' + backgroundImage + ')'"
+  >
+    <div class="nb-header__overlay"></div>
+  </div>
+
+  <div class="nb-header__container">
+    <!-- Back Link -->
+    <a *ngIf="backLink" [routerLink]="backLink" class="nb-header__back-link">
+      <i class="pi pi-arrow-left"></i>
+      <span>Back</span>
+    </a>
+
+    <!-- Breadcrumbs -->
+    <nb-breadcrumbs *ngIf="breadcrumbs && breadcrumbs.length > 0">
+      <nb-breadcrumb
+        *ngFor="let crumb of breadcrumbs"
+        [routerLink]="crumb.url ? crumb.url : []"
+        [disabled]="!crumb.url"
+      >
+        {{ crumb.label }}
+      </nb-breadcrumb>
+    </nb-breadcrumbs>
+
+    <div class="nb-header__content">
+      <!-- Avatar (if provided) -->
+      <div *ngIf="avatarUrl || avatarName" class="nb-header__avatar-container">
+        <p-avatar
+          [name]="avatarName"
+          [picture]="avatarUrl"
+          [title]="subtitle"
+          size="large"
+          [showTitle]="false"
+          [showName]="false"
+        ></p-avatar>
+
+        <span
+          *ngIf="avatarIsOnline !== undefined"
+          class="nb-header__avatar-status"
+          [ngClass]="{
+            'nb-header__avatar-status--online': avatarIsOnline,
+            'nb-header__avatar-status--offline': !avatarIsOnline,
+          }"
+        ></span>
+      </div>
+
+      <!-- Title and Subtitle -->
+      <div class="nb-header__titles">
+        <h1 class="nb-header__title">{{ title }}</h1>
+        <p *ngIf="subtitle" class="nb-header__subtitle">{{ subtitle }}</p>
+      </div>
+
+      <!-- Actions -->
+      <div *ngIf="actions && actions.length > 0" class="nb-header__actions">
+        <button
+          *ngFor="let action of actions"
+          nbButton
+          [status]="action.variant"
+          [size]="'small'"
+          (click)="onActionClick(action, $event)"
+        >
+          <nb-icon
+            *ngIf="action.icon"
+            [icon]="getIconName(action.icon)"
+            class="nb-header__action-icon"
+          ></nb-icon>
+          <span class="nb-header__action-label">{{ action.label }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

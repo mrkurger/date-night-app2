@@ -1,58 +1,34 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
-@Component({
-    selector: 'nb-top-menu',
-    template: `
-    <nav class="top-menu">
-      <ul class="menu-items">
-        <li
-          *ngFor="let item of items"
-          class="menu-item"
-          [class.has-submenu]="item.children?.length"
-        >
-          <!-- Menu Item with Children -->
-          <div
-            *ngIf="item.children?.length; else singleItem"
-            [nbContextMenu]="item.children"
-            [nbContextMenuTag]="item.tag || 'top-menu'"
-            class="menu-trigger"
-            [class.active]="item.selected"
-          >
-            <nb-icon *ngIf="item.icon" [icon]="item.icon" [status]="item.iconStatus"></nb-icon>
-            <span class="menu-title">{{ item.title }}</span>
-            <nb-icon class="expand-state" icon="chevron-down-outline"></nb-icon>
-            <nb-badge
-              *ngIf="item.badge"
-              [text]="item.badge.text"
-              [status]="item.badge.status"
-            ></nb-badge>
-          </div>
+@Component({';
+    selector: 'nb-top-menu',;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+          ;
+            ;
+            {{ item.title }};
+            ;
+            ;
+          ;
 
-          <!-- Single Menu Item -->
-          <ng-template #singleItem>
-            <a
-              [routerLink]="item.link"
-              [queryParams]="item.queryParams"
-              [fragment]="item.fragment"
-              [class.active]="item.selected"
-              (click)="onItemClick(item)"
-            >
-              <nb-icon *ngIf="item.icon" [icon]="item.icon" [status]="item.iconStatus"></nb-icon>
-              <span class="menu-title">{{ item.title }}</span>
-              <nb-badge
-                *ngIf="item.badge"
-                [text]="item.badge.text"
-                [status]="item.badge.status"
-              ></nb-badge>
-            </a>
-          </ng-template>
-        </li>
-      </ul>
-    </nav>
-  `,
-    styles: [
-        `
+          ;
+          ;
+            ;
+              ;
+              {{ item.title }};
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .top-menu {
         display: flex;
         align-items: center;
@@ -77,7 +53,7 @@ import { NbMenuItem } from '@nebular/theme';
           }
         }
 
-        a,
+        a,;
         .menu-trigger {
           display: flex;
           align-items: center;
@@ -143,13 +119,13 @@ import { NbMenuItem } from '@nebular/theme';
           }
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbTopMenuComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbTopMenuComponen {t {
   @Input() items: NbMenuItem[] = [];
-  @Output() itemClick = new EventEmitter<NbMenuItem>();
+  @Output() itemClick = new EventEmitter();
 
   onItemClick(item: NbMenuItem) {
     if (!item.children?.length) {

@@ -1,15 +1,15 @@
+import {
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbCardModule,
-  NbProgressBarModule,
-  NbTabsetModule,
-  NbSelectModule,
-  NbListModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbToastrService,
+  NbCardModule,;
+  NbProgressBarModule,;
+  NbTabsetModule,;
+  NbSelectModule,;
+  NbListModule,;
+  NbBadgeModule,;
+  NbAlertModule,;
+  NbToastrService,';
 } from '@nebular/theme';
 
 export interface ErrorLog {
@@ -62,226 +62,201 @@ interface SecurityMetrics {
 }
 
 @Component({
-  selector: 'app-error-security-dashboard',
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbCardModule,
-    NbProgressBarModule,
-    NbTabsetModule,
-    NbSelectModule,
-    NbListModule,
-    NbBadgeModule,
-    NbAlertModule,
-  ],
-  template: `
-    <div class="error-security-dashboard">
-      <!-- Security Metrics Overview -->
-      <div class="metrics-grid">
-        <nb-card>
-          <nb-card-body>
-            <div class="metric">
-              <div class="metric-title">Failed Login Attempts (24h)</div>
-              <div class="metric-value">{{ metrics.failedLogins }}</div>
-              <nb-progress-bar
-                [value]="(metrics.failedLogins / 1000) * 100"
-                status="danger"
-                size="tiny"
-              ></nb-progress-bar>
-            </div>
-          </nb-card-body>
-        </nb-card>
+  selector: 'app-error-security-dashboard',;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    NbCardModule,;
+    NbProgressBarModule,;
+    NbTabsetModule,;
+    NbSelectModule,;
+    NbListModule,;
+    NbBadgeModule,;
+    NbAlertModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+          ;
+            ;
+              Failed Login Attempts (24h);
+              {{ metrics.failedLogins }};
+              ;
+            ;
+          ;
+        ;
 
-        <nb-card>
-          <nb-card-body>
-            <div class="metric">
-              <div class="metric-title">Active Users</div>
-              <div class="metric-value">{{ metrics.activeUsers }}</div>
-              <nb-progress-bar
-                [value]="(metrics.activeUsers / 5000) * 100"
-                status="success"
-                size="tiny"
-              ></nb-progress-bar>
-            </div>
-          </nb-card-body>
-        </nb-card>
+        ;
+          ;
+            ;
+              Active Users;
+              {{ metrics.activeUsers }};
+              ;
+            ;
+          ;
+        ;
 
-        <nb-card>
-          <nb-card-body>
-            <div class="metric">
-              <div class="metric-title">Blocked IPs</div>
-              <div class="metric-value">{{ metrics.blockedIPs }}</div>
-              <nb-progress-bar
-                [value]="(metrics.blockedIPs / 500) * 100"
-                status="warning"
-                size="tiny"
-              ></nb-progress-bar>
-            </div>
-          </nb-card-body>
-        </nb-card>
+        ;
+          ;
+            ;
+              Blocked IPs;
+              {{ metrics.blockedIPs }};
+              ;
+            ;
+          ;
+        ;
 
-        <nb-card>
-          <nb-card-body>
-            <div class="metric">
-              <div class="metric-title">Critical Vulnerabilities</div>
-              <div class="metric-value">{{ metrics.vulnerabilities.critical }}</div>
-              <nb-progress-bar
-                [value]="metrics.vulnerabilities.critical * 10"
-                status="danger"
-                size="tiny"
-              ></nb-progress-bar>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
+        ;
+          ;
+            ;
+              Critical Vulnerabilities;
+              {{ metrics.vulnerabilities.critical }};
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <nb-tabset>
-        <!-- Error Logs Tab -->
-        <nb-tab tabTitle="Error Logs">
-          <nb-card>
-            <nb-card-header class="d-flex justify-content-between align-items-center">
-              <h6>Application Errors</h6>
-              <div class="filters">
-                <nb-select [(ngModel)]="selectedErrorLevel" (selectedChange)="filterErrors()">
-                  <nb-option value="all">All Levels</nb-option>
-                  <nb-option value="error">Errors</nb-option>
-                  <nb-option value="warning">Warnings</nb-option>
-                  <nb-option value="critical">Critical</nb-option>
-                </nb-select>
-              </div>
-            </nb-card-header>
-            <nb-card-body>
-              <nb-list>
-                <nb-list-item *ngFor="let error of filteredErrors">
-                  <div class="error-item">
-                    <div class="error-header">
-                      <nb-badge [text]="error.level" [status]="getErrorStatus(error.level)">
-                      </nb-badge>
-                      <span class="timestamp">{{ error.timestamp | date: 'medium' }}</span>
-                    </div>
-                    <div class="error-message">{{ error.message }}</div>
-                    <div class="error-details" *ngIf="error.component || error.url">
-                      <small>
+      ;
+        ;
+        ;
+          ;
+            ;
+              Application Errors;
+              ;
+                ;
+                  All Levels;
+                  Errors;
+                  Warnings;
+                  Critical;
+                ;
+              ;
+            ;
+            ;
+              ;
+                ;
+                  ;
+                    ;
+                      ;
+                      ;
+                      {{ error.timestamp | date: 'medium' }};
+                    ;
+                    {{ error.message }};
+                    ;
+                      ;
                         {{ error.component }}
-                        <span *ngIf="error.url"> - {{ error.url }}</span>
-                      </small>
-                    </div>
-                    <div class="error-count" *ngIf="error.count > 1">
-                      Occurred {{ error.count }} times
-                    </div>
-                  </div>
-                </nb-list-item>
-              </nb-list>
-            </nb-card-body>
-          </nb-card>
-        </nb-tab>
+                         - {{ error.url }};
+                      ;
+                    ;
+                     1">;
+                      Occurred {{ error.count }} times;
+                    ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
 
-        <!-- Security Alerts Tab -->
-        <nb-tab tabTitle="Security Alerts">
-          <nb-card>
-            <nb-card-header class="d-flex justify-content-between align-items-center">
-              <h6>Security Incidents</h6>
-              <div class="filters">
-                <nb-select [(ngModel)]="selectedAlertType" (selectedChange)="filterAlerts()">
-                  <nb-option value="all">All Types</nb-option>
-                  <nb-option value="intrusion">Intrusion Attempts</nb-option>
-                  <nb-option value="authentication">Authentication</nb-option>
-                  <nb-option value="vulnerability">Vulnerabilities</nb-option>
-                  <nb-option value="malware">Malware</nb-option>
-                </nb-select>
-              </div>
-            </nb-card-header>
-            <nb-card-body>
-              <nb-list>
-                <nb-list-item *ngFor="let alert of filteredAlerts">
-                  <div class="alert-item">
-                    <div class="alert-header">
-                      <nb-badge
-                        [text]="alert.severity"
-                        [status]="getAlertSeverityStatus(alert.severity)"
-                      >
-                      </nb-badge>
-                      <span class="alert-type">{{ alert.type }}</span>
-                      <span class="timestamp">{{ alert.timestamp | date: 'medium' }}</span>
-                    </div>
-                    <div class="alert-description">{{ alert.description }}</div>
-                    <div class="alert-details">
-                      <small>
+        ;
+        ;
+          ;
+            ;
+              Security Incidents;
+              ;
+                ;
+                  All Types;
+                  Intrusion Attempts;
+                  Authentication;
+                  Vulnerabilities;
+                  Malware;
+                ;
+              ;
+            ;
+            ;
+              ;
+                ;
+                  ;
+                    ;
+                      ;
+                      ;
+                      {{ alert.type }};
+                      {{ alert.timestamp | date: 'medium' }};
+                    ;
+                    {{ alert.description }};
+                    ;
+                      ;
                         Source: {{ alert.source }}
-                        <span *ngIf="alert.ipAddress">
+                        ;
                           | IP: {{ alert.ipAddress }}
-                          <span *ngIf="alert.location">({{ alert.location }})</span>
-                        </span>
-                      </small>
-                    </div>
-                    <div class="alert-status">
-                      <nb-badge [text]="alert.status" [status]="getAlertStatusBadge(alert.status)">
-                      </nb-badge>
-                    </div>
-                  </div>
-                </nb-list-item>
-              </nb-list>
-            </nb-card-body>
-          </nb-card>
-        </nb-tab>
+                          ({{ alert.location }});
+                        ;
+                      ;
+                    ;
+                    ;
+                      ;
+                      ;
+                    ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
 
-        <!-- Vulnerabilities Tab -->
-        <nb-tab tabTitle="Vulnerabilities">
-          <nb-card>
-            <nb-card-header class="d-flex justify-content-between align-items-center">
-              <h6>Package Vulnerabilities</h6>
-              <div class="filters">
-                <nb-select
-                  [(ngModel)]="selectedVulnSeverity"
-                  (selectedChange)="filterVulnerabilities()"
-                >
-                  <nb-option value="all">All Severities</nb-option>
-                  <nb-option value="critical">Critical</nb-option>
-                  <nb-option value="high">High</nb-option>
-                  <nb-option value="medium">Medium</nb-option>
-                  <nb-option value="low">Low</nb-option>
-                </nb-select>
-              </div>
-            </nb-card-header>
-            <nb-card-body>
-              <nb-list>
-                <nb-list-item *ngFor="let vuln of filteredVulnerabilities">
-                  <div class="vuln-item">
-                    <div class="vuln-header">
-                      <nb-badge
-                        [text]="vuln.severity"
-                        [status]="getVulnerabilitySeverityStatus(vuln.severity)"
-                      >
-                      </nb-badge>
-                      <span class="package-name">{{ vuln.package }}</span>
-                      <span class="version">v{{ vuln.currentVersion }}</span>
-                    </div>
-                    <div class="vuln-description">{{ vuln.description }}</div>
-                    <div class="vuln-details">
-                      <small>
+        ;
+        ;
+          ;
+            ;
+              Package Vulnerabilities;
+              ;
+                ;
+                  All Severities;
+                  Critical;
+                  High;
+                  Medium;
+                  Low;
+                ;
+              ;
+            ;
+            ;
+              ;
+                ;
+                  ;
+                    ;
+                      ;
+                      ;
+                      {{ vuln.package }};
+                      v{{ vuln.currentVersion }};
+                    ;
+                    {{ vuln.description }};
+                    ;
+                      ;
                         Vulnerable versions: {{ vuln.vulnerableVersions }}
-                        <span *ngIf="vuln.cveId"> | CVE: {{ vuln.cveId }}</span>
-                      </small>
-                    </div>
-                    <div class="vuln-fix" *ngIf="vuln.fixedInVersion">
-                      <nb-alert status="success" size="tiny">
+                         | CVE: {{ vuln.cveId }};
+                      ;
+                    ;
+                    ;
+                      ;
                         Fixed in version {{ vuln.fixedInVersion }}
-                      </nb-alert>
-                    </div>
-                    <div class="vuln-recommendation">
-                      <strong>Recommendation:</strong> {{ vuln.recommendation }}
-                    </div>
-                  </div>
-                </nb-list-item>
-              </nb-list>
-            </nb-card-body>
-          </nb-card>
-        </nb-tab>
-      </nb-tabset>
-    </div>
-  `,
-  styles: [
-    `
+                      ;
+                    ;
+                    ;
+                      Recommendation: {{ vuln.recommendation }}
+                    ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
         max-width: 100%;
@@ -320,14 +295,14 @@ interface SecurityMetrics {
         align-items: center;
       }
 
-      .error-item,
-      .alert-item,
+      .error-item,;
+      .alert-item,;
       .vuln-item {
         width: 100%;
       }
 
-      .error-header,
-      .alert-header,
+      .error-header,;
+      .alert-header,;
       .vuln-header {
         display: flex;
         align-items: center;
@@ -335,14 +310,14 @@ interface SecurityMetrics {
         margin-bottom: 0.5rem;
       }
 
-      .error-message,
-      .alert-description,
+      .error-message,;
+      .alert-description,;
       .vuln-description {
         margin-bottom: 0.5rem;
       }
 
-      .error-details,
-      .alert-details,
+      .error-details,;
+      .alert-details,;
       .vuln-details {
         color: nb-theme(text-hint-color);
         margin-bottom: 0.5rem;
@@ -371,10 +346,10 @@ interface SecurityMetrics {
         background: nb-theme(background-basic-color-2);
         border-radius: nb-theme(border-radius);
       }
-    `,
-  ],
-})
-export class ErrorSecurityDashboardComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class ErrorSecurityDashboardComponen {t implements OnInit {
   // Filters
   selectedErrorLevel = 'all';
   selectedAlertType = 'all';
@@ -382,15 +357,15 @@ export class ErrorSecurityDashboardComponent implements OnInit {
 
   // Data
   metrics: SecurityMetrics = {
-    failedLogins: 0,
-    activeUsers: 0,
-    blockedIPs: 0,
+    failedLogins: 0,;
+    activeUsers: 0,;
+    blockedIPs: 0,;
     vulnerabilities: {
-      critical: 0,
-      high: 0,
-      medium: 0,
-      low: 0,
-    },
+      critical: 0,;
+      high: 0,;
+      medium: 0,;
+      low: 0,;
+    },;
   };
 
   errors: ErrorLog[] = [];
@@ -416,176 +391,149 @@ export class ErrorSecurityDashboardComponent implements OnInit {
 
   loadMetrics() {
     this.metrics = {
-      failedLogins: 247,
-      activeUsers: 1532,
-      blockedIPs: 43,
+      failedLogins: 247,;
+      activeUsers: 1532,;
+      blockedIPs: 43,;
       vulnerabilities: {
-        critical: 2,
-        high: 5,
-        medium: 12,
-        low: 8,
-      },
+        critical: 2,;
+        high: 5,;
+        medium: 12,;
+        low: 8,;
+      },;
     };
   }
 
   loadErrors() {
-    this.errors = [
+    this.errors = [;
       {
-        id: '1',
-        timestamp: new Date(),
-        level: 'critical',
-        message: 'Database connection timeout in user authentication service',
-        component: 'AuthService',
-        userId: 'system',
-        url: '/api/auth',
-        count: 3,
-      },
+        id: '1',;
+        timestamp: new Date(),;
+        level: 'critical',;
+        message: 'Database connection timeout in user authentication service',;
+        component: 'AuthService',;
+        userId: 'system',;
+        url: '/api/auth',;
+        count: 3,;
+      },;
       {
-        id: '2',
-        timestamp: new Date(Date.now() - 3600000),
-        level: 'error',
-        message: 'Failed to process payment transaction',
-        component: 'PaymentService',
-        userId: 'user123',
-        url: '/api/payments',
-        count: 1,
-      },
+        id: '2',;
+        timestamp: new Date(Date.now() - 3600000),;
+        level: 'error',;
+        message: 'Failed to process payment transaction',;
+        component: 'PaymentService',;
+        userId: 'user123',;
+        url: '/api/payments',;
+        count: 1,;
+      },;
       // Add more mock error data
     ];
     this.filterErrors();
   }
 
   loadSecurityAlerts() {
-    this.alerts = [
+    this.alerts = [;
       {
-        id: '1',
-        timestamp: new Date(),
-        type: 'intrusion',
-        severity: 'high',
-        source: 'Firewall',
-        description: 'Multiple failed SSH attempts detected',
-        status: 'investigating',
-        ipAddress: '192.168.1.100',
-        location: 'Russia',
-      },
+        id: '1',;
+        timestamp: new Date(),;
+        type: 'intrusion',;
+        severity: 'high',;
+        source: 'Firewall',;
+        description: 'Multiple failed SSH attempts detected',;
+        status: 'investigating',;
+        ipAddress: '192.168.1.100',;
+        location: 'Russia',;
+      },;
       {
-        id: '2',
-        timestamp: new Date(Date.now() - 1800000),
-        type: 'authentication',
-        severity: 'medium',
-        source: 'Auth Service',
-        description: 'Unusual login pattern detected',
-        status: 'new',
-        ipAddress: '10.0.0.50',
-        location: 'United States',
-      },
+        id: '2',;
+        timestamp: new Date(Date.now() - 1800000),;
+        type: 'authentication',;
+        severity: 'medium',;
+        source: 'Auth Service',;
+        description: 'Unusual login pattern detected',;
+        status: 'new',;
+        ipAddress: '10.0.0.50',;
+        location: 'United States',;
+      },;
       // Add more mock alert data
     ];
     this.filterAlerts();
   }
 
   loadVulnerabilities() {
-    this.vulnerabilities = [
+    this.vulnerabilities = [;
       {
-        id: '1',
-        package: 'lodash',
-        currentVersion: '4.17.15',
-        vulnerableVersions: '<4.17.21',
-        severity: 'critical',
-        description: 'Prototype Pollution in lodash',
-        cveId: 'CVE-2021-23337',
-        fixedInVersion: '4.17.21',
-        recommendation: 'Update to version 4.17.21 or later',
-      },
-      {
-        id: '2',
-        package: 'node-fetch',
-        currentVersion: '2.6.0',
-        vulnerableVersions: '<2.6.1',
-        severity: 'high',
-        description: 'Denial of Service in node-fetch',
-        cveId: 'CVE-2020-15168',
-        fixedInVersion: '2.6.1',
-        recommendation: 'Update to version 2.6.1 or later',
-      },
-      // Add more mock vulnerability data
-    ];
-    this.filterVulnerabilities();
-  }
-
-  filterErrors() {
-    this.filteredErrors =
-      this.selectedErrorLevel === 'all'
-        ? this.errors
-        : this.errors.filter((error) => error.level === this.selectedErrorLevel);
+        id: '1',;
+        package: 'lodash',;
+        currentVersion: '4.17.15',;
+        vulnerableVersions: ' error.level === this.selectedErrorLevel);
   }
 
   filterAlerts() {
-    this.filteredAlerts =
-      this.selectedAlertType === 'all'
-        ? this.alerts
+    this.filteredAlerts =;
+      this.selectedAlertType === 'all';
+        ? this.alerts;
         : this.alerts.filter((alert) => alert.type === this.selectedAlertType);
   }
 
   filterVulnerabilities() {
-    this.filteredVulnerabilities =
-      this.selectedVulnSeverity === 'all'
-        ? this.vulnerabilities
+    this.filteredVulnerabilities =;
+      this.selectedVulnSeverity === 'all';
+        ? this.vulnerabilities;
         : this.vulnerabilities.filter((vuln) => vuln.severity === this.selectedVulnSeverity);
   }
 
   getErrorStatus(level: string): string {
     switch (level) {
-      case 'critical':
+      case 'critical':;
         return 'danger';
-      case 'error':
+      case 'error':;
         return 'warning';
-      case 'warning':
+      case 'warning':;
         return 'basic';
-      default:
+      default:;
         return 'basic';
     }
   }
 
   getAlertSeverityStatus(severity: string): string {
     switch (severity) {
-      case 'critical':
+      case 'critical':;
         return 'danger';
-      case 'high':
+      case 'high':;
         return 'warning';
-      case 'medium':
+      case 'medium':;
         return 'info';
-      case 'low':
+      case 'low':;
         return 'basic';
-      default:
+      default:;
         return 'basic';
     }
   }
 
   getAlertStatusBadge(status: string): string {
     switch (status) {
-      case 'new':
+      case 'new':;
         return 'danger';
-      case 'investigating':
+      case 'investigating':;
         return 'warning';
-      case 'resolved':
+      case 'resolved':;
         return 'success';
-      default:
+      default:;
         return 'basic';
     }
   }
 
   getVulnerabilitySeverityStatus(severity: string): string {
     switch (severity) {
-      case 'critical':
+      case 'critical':;
         return 'danger';
-      case 'high':
+      case 'high':;
         return 'warning';
-      case 'medium':
+      case 'medium':;
         return 'info';
-      case 'low':
+      case 'low':;
         return 'basic';
-      default:
+      default:;
         return 'basic';
     }
   }

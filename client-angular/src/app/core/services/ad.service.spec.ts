@@ -1,3 +1,9 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { AdService } from './ad.service';
+import { environment } from '../../../environments/environment';
+import { Ad } from '../models/ad.interface';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,92 +14,87 @@
 //   Related to: client-angular/src/app/core/models/ad.interface.ts
 // ===================================================
 
-import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { AdService } from './ad.service';
-import { environment } from '../../../environments/environment';
-import { Ad } from '../models/ad.interface';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+';
 // import { of } from 'rxjs'; // Unused import
-
+';
 describe('AdService', () => {
   let service: AdService;
   let httpMock: HttpTestingController;
 
   // Create complete mock ads that match the Ad interface
-  const mockAds: Ad[] = [
+  const mockAds: Ad[] = [;
     {
-      _id: '1',
-      title: 'Test Ad 1',
-      description: 'Test description 1',
-      category: 'Escort',
-      price: 1000,
-      location: { city: 'Oslo', county: 'Oslo' },
-      images: ['/assets/img/profile1.jpg'],
-      media: [{ type: 'image', url: '/assets/img/profile1.jpg' }],
-      advertiser: 'advertiser-1',
-      userId: 'user1',
-      isActive: true,
-      isFeatured: false,
-      isTrending: false,
-      isTouring: false,
-      viewCount: 100,
-      clickCount: 50,
-      inquiryCount: 10,
-      createdAt: '2023-01-01T00:00:00.000Z',
-      updatedAt: '2023-01-01T00:00:00.000Z',
-      tags: ['Escort', 'Oslo'],
-    },
+      _id: '1',;
+      title: 'Test Ad 1',;
+      description: 'Test description 1',;
+      category: 'Escort',;
+      price: 1000,;
+      location: { city: 'Oslo', county: 'Oslo' },;
+      images: ['/assets/img/profile1.jpg'],;
+      media: [{ type: 'image', url: '/assets/img/profile1.jpg' }],;
+      advertiser: 'advertiser-1',;
+      userId: 'user1',;
+      isActive: true,;
+      isFeatured: false,;
+      isTrending: false,;
+      isTouring: false,;
+      viewCount: 100,;
+      clickCount: 50,;
+      inquiryCount: 10,;
+      createdAt: '2023-01-01T00:00:00.000Z',;
+      updatedAt: '2023-01-01T00:00:00.000Z',;
+      tags: ['Escort', 'Oslo'],;
+    },;
     {
-      _id: '2',
-      title: 'Test Ad 2',
-      description: 'Test description 2',
-      category: 'Massage',
-      price: 800,
-      location: { city: 'Bergen', county: 'Vestland' },
-      images: ['/assets/img/profile2.jpg'],
-      media: [{ type: 'image', url: '/assets/img/profile2.jpg' }],
-      advertiser: 'advertiser-2',
-      userId: 'user1',
-      isActive: true,
-      isFeatured: true,
-      isTrending: true,
-      isTouring: false,
-      viewCount: 200,
-      clickCount: 100,
-      inquiryCount: 20,
-      createdAt: '2023-01-02T00:00:00.000Z',
-      updatedAt: '2023-01-02T00:00:00.000Z',
-      tags: ['Massage', 'Bergen', 'Featured'],
-    },
+      _id: '2',;
+      title: 'Test Ad 2',;
+      description: 'Test description 2',;
+      category: 'Massage',;
+      price: 800,;
+      location: { city: 'Bergen', county: 'Vestland' },;
+      images: ['/assets/img/profile2.jpg'],;
+      media: [{ type: 'image', url: '/assets/img/profile2.jpg' }],;
+      advertiser: 'advertiser-2',;
+      userId: 'user1',;
+      isActive: true,;
+      isFeatured: true,;
+      isTrending: true,;
+      isTouring: false,;
+      viewCount: 200,;
+      clickCount: 100,;
+      inquiryCount: 20,;
+      createdAt: '2023-01-02T00:00:00.000Z',;
+      updatedAt: '2023-01-02T00:00:00.000Z',;
+      tags: ['Massage', 'Bergen', 'Featured'],;
+    },;
     {
-      _id: '3',
-      title: 'Test Ad 3',
-      description: 'Test description 3',
-      category: 'Striptease',
-      price: 1200,
-      location: { city: 'Trondheim', county: 'Trøndelag' },
-      images: ['/assets/img/profile3.jpg'],
-      media: [{ type: 'image', url: '/assets/img/profile3.jpg' }],
-      advertiser: 'advertiser-3',
-      userId: 'user2',
-      isActive: true,
-      isFeatured: false,
-      isTrending: false,
-      isTouring: true,
-      viewCount: 150,
-      clickCount: 75,
-      inquiryCount: 15,
-      createdAt: '2023-01-03T00:00:00.000Z',
-      updatedAt: '2023-01-03T00:00:00.000Z',
-      tags: ['Striptease', 'Trondheim', 'Touring'],
-    },
+      _id: '3',;
+      title: 'Test Ad 3',;
+      description: 'Test description 3',;
+      category: 'Striptease',;
+      price: 1200,;
+      location: { city: 'Trondheim', county: 'Trøndelag' },;
+      images: ['/assets/img/profile3.jpg'],;
+      media: [{ type: 'image', url: '/assets/img/profile3.jpg' }],;
+      advertiser: 'advertiser-3',;
+      userId: 'user2',;
+      isActive: true,;
+      isFeatured: false,;
+      isTrending: false,;
+      isTouring: true,;
+      viewCount: 150,;
+      clickCount: 75,;
+      inquiryCount: 15,;
+      createdAt: '2023-01-03T00:00:00.000Z',;
+      updatedAt: '2023-01-03T00:00:00.000Z',;
+      tags: ['Striptease', 'Trondheim', 'Touring'],;
+    },;
   ];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [AdService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [AdService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     service = TestBed.inject(AdService);
@@ -114,7 +115,7 @@ describe('AdService', () => {
         expect(ads).toEqual(mockAds);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockAds);
     });
@@ -126,8 +127,8 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(
-        `${environment.apiUrl}/ads?category=Escort&city=Oslo&county=Oslo`,
+      const req = httpMock.expectOne(;
+        `${environment.apiUrl}/ads?category=Escort&city=Oslo&county=Oslo`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
@@ -138,7 +139,7 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[0], mockAds[1]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/user/user1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/user/user1`);`
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0], mockAds[1]]);
     });
@@ -150,19 +151,19 @@ describe('AdService', () => {
         expect(ad).toEqual(mockAd);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockAd);
     });
 
     it('should create a new ad', () => {
       const newAd = {
-        title: 'New Ad',
-        description: 'New description',
-        category: 'Escort',
-        price: 1200,
-        location: { city: 'Oslo', county: 'Oslo' },
-        isActive: true,
+        title: 'New Ad',;
+        description: 'New description',;
+        category: 'Escort',;
+        price: 1200,;
+        location: { city: 'Oslo', county: 'Oslo' },;
+        isActive: true,;
       };
 
       service.createAd(newAd).subscribe((ad) => {
@@ -170,26 +171,26 @@ describe('AdService', () => {
         expect(ad.title).toBe(newAd.title);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(newAd);
 
       req.flush({
-        ...newAd,
-        _id: '4',
-        userId: 'user1',
-        advertiser: 'advertiser-4',
-        images: [],
-        media: [],
-        isFeatured: false,
-        isTrending: false,
-        isTouring: false,
-        viewCount: 0,
-        clickCount: 0,
-        inquiryCount: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        tags: ['Escort', 'Oslo'],
+        ...newAd,;
+        _id: '4',;
+        userId: 'user1',;
+        advertiser: 'advertiser-4',;
+        images: [],;
+        media: [],;
+        isFeatured: false,;
+        isTrending: false,;
+        isTouring: false,;
+        viewCount: 0,;
+        clickCount: 0,;
+        inquiryCount: 0,;
+        createdAt: new Date().toISOString(),;
+        updatedAt: new Date().toISOString(),;
+        tags: ['Escort', 'Oslo'],;
       });
     });
 
@@ -209,35 +210,35 @@ describe('AdService', () => {
         expect(ad.images.length).toBeGreaterThan(0);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/with-images`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/with-images`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(formData);
 
       req.flush({
-        _id: '5',
-        title: 'New Ad With Images',
-        description: 'New description',
-        category: 'Escort',
-        userId: 'user1',
-        advertiser: 'advertiser-5',
-        images: ['/uploads/example.jpg'],
-        media: [{ type: 'image', url: '/uploads/example.jpg' }],
-        isFeatured: false,
-        isTrending: false,
-        isTouring: false,
-        viewCount: 0,
-        clickCount: 0,
-        inquiryCount: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        tags: ['Escort'],
+        _id: '5',;
+        title: 'New Ad With Images',;
+        description: 'New description',;
+        category: 'Escort',;
+        userId: 'user1',;
+        advertiser: 'advertiser-5',;
+        images: ['/uploads/example.jpg'],;
+        media: [{ type: 'image', url: '/uploads/example.jpg' }],;
+        isFeatured: false,;
+        isTrending: false,;
+        isTouring: false,;
+        viewCount: 0,;
+        clickCount: 0,;
+        inquiryCount: 0,;
+        createdAt: new Date().toISOString(),;
+        updatedAt: new Date().toISOString(),;
+        tags: ['Escort'],;
       });
     });
 
     it('should update an existing ad', () => {
       const updateData = {
-        title: 'Updated Title',
-        price: 1500,
+        title: 'Updated Title',;
+        price: 1500,;
       };
 
       service.updateAd('1', updateData).subscribe((ad) => {
@@ -245,14 +246,14 @@ describe('AdService', () => {
         expect(ad.price).toBe(updateData.price);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);`
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(updateData);
 
       const updatedAd = {
-        ...mockAds[0],
-        ...updateData,
-        updatedAt: new Date().toISOString(),
+        ...mockAds[0],;
+        ...updateData,;
+        updatedAt: new Date().toISOString(),;
       };
 
       req.flush(updatedAd);
@@ -270,15 +271,15 @@ describe('AdService', () => {
         expect(ad.images).toContain('/uploads/new-image.jpg');
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/images`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/images`);`
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(formData);
 
       const updatedAd = {
-        ...mockAds[0],
-        images: [...mockAds[0].images, '/uploads/new-image.jpg'],
-        media: [...mockAds[0].media, { type: 'image', url: '/uploads/new-image.jpg' }],
-        updatedAt: new Date().toISOString(),
+        ...mockAds[0],;
+        images: [...mockAds[0].images, '/uploads/new-image.jpg'],;
+        media: [...mockAds[0].media, { type: 'image', url: '/uploads/new-image.jpg' }],;
+        updatedAt: new Date().toISOString(),;
       };
 
       req.flush(updatedAd);
@@ -290,7 +291,7 @@ describe('AdService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1`);`
       expect(req.request.method).toBe('DELETE');
       req.flush(null);
     });
@@ -300,7 +301,7 @@ describe('AdService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/images/image1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/images/image1`);`
       expect(req.request.method).toBe('DELETE');
       req.flush(null);
     });
@@ -312,25 +313,25 @@ describe('AdService', () => {
         expect(ads).toEqual(mockAds);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/swipe`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/swipe`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockAds);
     });
 
     it('should fetch swipe ads with filters', () => {
       const filters = {
-        category: 'Escort',
-        city: 'Oslo',
-        county: 'Oslo',
-        touringOnly: true,
+        category: 'Escort',;
+        city: 'Oslo',;
+        county: 'Oslo',;
+        touringOnly: true,;
       };
 
       service.getSwipeAds(filters).subscribe((ads) => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(
-        `${environment.apiUrl}/ads/swipe?category=Escort&city=Oslo&county=Oslo&touringOnly=true`,
+      const req = httpMock.expectOne(;
+        `${environment.apiUrl}/ads/swipe?category=Escort&city=Oslo&county=Oslo&touringOnly=true`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
@@ -341,7 +342,7 @@ describe('AdService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/swipe`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/swipe`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ direction: 'right' });
       req.flush(null);
@@ -354,7 +355,7 @@ describe('AdService', () => {
         expect(result).toEqual(categories);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/categories`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/categories`);`
       expect(req.request.method).toBe('GET');
       req.flush(categories);
     });
@@ -364,7 +365,7 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[1]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/category/Massage`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/category/Massage`);`
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[1]]);
     });
@@ -378,8 +379,8 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[0]]);
       });
 
-      const req = httpMock.expectOne(
-        `${environment.apiUrl}/ads/nearby?longitude=10.7522&latitude=59.9139&radius=10000`,
+      const req = httpMock.expectOne(;
+        `${environment.apiUrl}/ads/nearby?longitude=10.7522&latitude=59.9139&radius=10000`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[0]]);
@@ -390,7 +391,7 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[1]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/trending`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/trending`);`
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[1]]);
     });
@@ -400,7 +401,7 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[1]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/featured`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/featured`);`
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[1]]);
     });
@@ -410,7 +411,7 @@ describe('AdService', () => {
         expect(ads).toEqual([mockAds[1]]);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/search?q=massage`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/search?q=massage`);`
       expect(req.request.method).toBe('GET');
       req.flush([mockAds[1]]);
     });
@@ -420,7 +421,7 @@ describe('AdService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/report`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/report`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ reason: 'Inappropriate content' });
       req.flush(null);
@@ -431,7 +432,7 @@ describe('AdService', () => {
         expect(response === undefined || response === null).toBeTrue();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/status`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/1/status`);`
       expect(req.request.method).toBe('PATCH');
       expect(req.request.body).toEqual({ isActive: false });
       req.flush(null);
@@ -449,19 +450,19 @@ describe('AdService', () => {
         expect(ads[0].title).toBeDefined();
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads`);`
       req.error(new ErrorEvent('Network error'));
     });
 
     it('should handle API errors gracefully', () => {
       service.getAdById('999').subscribe({
-        next: () => fail('Should have failed with 404'),
+        next: () => fail('Should have failed with 404'),;
         error: (error) => {
           expect(error.status).toBe(404);
-        },
+        },;
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/ads/999`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/ads/999`);`
       req.flush('Not found', { status: 404, statusText: 'Not Found' });
     });
   });

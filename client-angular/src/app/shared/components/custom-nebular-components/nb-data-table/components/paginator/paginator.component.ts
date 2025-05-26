@@ -1,77 +1,53 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-@Component({
-    selector: 'nb-data-table-paginator',
-    template: `
-    <div class="paginator-container">
-      <div class="page-size">
-        <span class="page-size-label">Items per page:</span>
-        <nb-select size="small" [(ngModel)]="pageSize" (selectedChange)="onPageSizeChange($event)">
-          <nb-option *ngFor="let size of pageSizes" [value]="size">
+@Component({';
+    selector: 'nb-data-table-paginator',;
+    template: `;`
+    ;
+      ;
+        Items per page:;
+        ;
+          ;
             {{ size }}
-          </nb-option>
-        </nb-select>
-      </div>
+          ;
+        ;
+      ;
 
-      <div class="page-info">
+      ;
         {{ getPageInfo() }}
-      </div>
+      ;
 
-      <div class="page-navigation">
-        <button nbButton ghost size="small" [disabled]="page === 1" (click)="onPageChange(1)">
-          <nb-icon icon="chevron-left-outline"></nb-icon>
-          <nb-icon icon="chevron-left-outline"></nb-icon>
-        </button>
+      ;
+        ;
+          ;
+          ;
+        ;
 
-        <button
-          nbButton
-          ghost
-          size="small"
-          [disabled]="page === 1"
-          (click)="onPageChange(page - 1)"
-        >
-          <nb-icon icon="chevron-left-outline"></nb-icon>
-        </button>
+        ;
+          ;
+        ;
 
-        <div class="page-numbers">
-          <ng-container *ngFor="let pageNum of getVisiblePages()">
-            <button
-              nbButton
-              [ghost]="pageNum !== page"
-              [status]="pageNum === page ? 'primary' : 'basic'"
-              size="small"
-              (click)="onPageChange(pageNum)"
-            >
+        ;
+          ;
+            ;
               {{ pageNum }}
-            </button>
-          </ng-container>
-        </div>
+            ;
+          ;
+        ;
 
-        <button
-          nbButton
-          ghost
-          size="small"
-          [disabled]="page === totalPages"
-          (click)="onPageChange(page + 1)"
-        >
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-        </button>
+        ;
+          ;
+        ;
 
-        <button
-          nbButton
-          ghost
-          size="small"
-          [disabled]="page === totalPages"
-          (click)="onPageChange(totalPages)"
-        >
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-          <nb-icon icon="chevron-right-outline"></nb-icon>
-        </button>
-      </div>
-    </div>
-  `,
-    styles: [
-        `
+        ;
+          ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .paginator-container {
         display: flex;
         justify-content: space-between;
@@ -121,18 +97,18 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       nb-icon + nb-icon {
         margin-left: -0.5rem;
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbDataTablePaginatorComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbDataTablePaginatorComponen {t {
   @Input() page = 1;
   @Input() pageSize = 10;
   @Input() total = 0;
   @Input() pageSizes = [5, 10, 20, 50, 100];
 
-  @Output() pageChange = new EventEmitter<number>();
-  @Output() pageSizeChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter();
+  @Output() pageSizeChange = new EventEmitter();
 
   get totalPages(): number {
     return Math.ceil(this.total / this.pageSize);
@@ -141,7 +117,7 @@ export class NbDataTablePaginatorComponent {
   getPageInfo(): string {
     const start = (this.page - 1) * this.pageSize + 1;
     const end = Math.min(this.page * this.pageSize, this.total);
-    return `${start}-${end} of ${this.total}`;
+    return `${start}-${end} of ${this.total}`;`
   }
 
   getVisiblePages(): number[] {
@@ -152,8 +128,7 @@ export class NbDataTablePaginatorComponent {
 
     range.push(1);
 
-    for (let i = this.page - delta; i <= this.page + delta; i++) {
-      if (i < this.totalPages && i > 1) {
+    for (let i = this.page - delta; i  1) {
         range.push(i);
       }
     }

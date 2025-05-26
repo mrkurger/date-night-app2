@@ -1,45 +1,45 @@
 /**
- * Types of alert conditions
+ * Types of alert conditions;
  */
 export enum AlertConditionType {
-  ERROR_COUNT = 'ERROR_COUNT',
-  ERROR_RATE = 'ERROR_RATE',
-  PERFORMANCE_THRESHOLD = 'PERFORMANCE_THRESHOLD',
-  ERROR_PATTERN = 'ERROR_PATTERN',
-  STATUS_CODE = 'STATUS_CODE',
-  ERROR_CATEGORY = 'ERROR_CATEGORY',
+  ERROR_COUNT = 'ERROR_COUNT',;
+  ERROR_RATE = 'ERROR_RATE',;
+  PERFORMANCE_THRESHOLD = 'PERFORMANCE_THRESHOLD',;
+  ERROR_PATTERN = 'ERROR_PATTERN',;
+  STATUS_CODE = 'STATUS_CODE',;
+  ERROR_CATEGORY = 'ERROR_CATEGORY',;
 }
 
 /**
- * Time periods for alert evaluation
+ * Time periods for alert evaluation;
  */
 export enum AlertTimeWindow {
-  MINUTES_5 = '5m',
-  MINUTES_15 = '15m',
-  MINUTES_30 = '30m',
-  HOURS_1 = '1h',
-  HOURS_6 = '6h',
-  HOURS_12 = '12h',
-  HOURS_24 = '24h',
+  MINUTES_5 = '5m',;
+  MINUTES_15 = '15m',;
+  MINUTES_30 = '30m',;
+  HOURS_1 = '1h',;
+  HOURS_6 = '6h',;
+  HOURS_12 = '12h',;
+  HOURS_24 = '24h',;
 }
 
 /**
- * Alert severity levels
+ * Alert severity levels;
  */
 export enum AlertSeverity {
-  INFO = 'INFO',
-  WARNING = 'WARNING',
-  ERROR = 'ERROR',
-  CRITICAL = 'CRITICAL',
+  INFO = 'INFO',;
+  WARNING = 'WARNING',;
+  ERROR = 'ERROR',;
+  CRITICAL = 'CRITICAL',;
 }
 
 /**
- * Alert notification channels
+ * Alert notification channels;
  */
 export type AlertChannel = 'ui' | 'email' | 'slack' | 'webhook';
 
 /**
- * Alert condition configuration
+ * Alert condition configuration;
  */
 export interface AlertCondition {
   type: AlertConditionType;
@@ -51,7 +51,7 @@ export interface AlertCondition {
 }
 
 /**
- * Alert notification configuration
+ * Alert notification configuration;
  */
 export interface AlertNotification {
   channel: AlertChannel;
@@ -66,7 +66,7 @@ export interface AlertNotification {
 }
 
 /**
- * Custom alert definition
+ * Custom alert definition;
  */
 export interface Alert {
   id: string;
@@ -81,7 +81,7 @@ export interface Alert {
 }
 
 /**
- * Alert event triggered when an alert condition is met
+ * Alert event triggered when an alert condition is met;
  */
 export interface AlertEvent {
   id: string;
@@ -93,5 +93,5 @@ export interface AlertEvent {
   acknowledged: boolean;
   acknowledgedAt?: string;
   acknowledgedBy?: string;
-  data?: Record<string, any>;
+  data?: Record;
 }

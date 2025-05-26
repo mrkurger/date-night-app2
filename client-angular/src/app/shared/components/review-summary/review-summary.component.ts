@@ -1,3 +1,10 @@
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { _NebularModule } from '../../nebular.module';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AdvertiserRatings } from '../../../core/models/review.interface';
+import { ReviewService } from '../../../core/services/review.service';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,125 +14,100 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
 
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+@Component({';
+  selector: 'app-review-summary',;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbProgressBarModule,;
+    RouterModule,;
+    StarRatingComponent,;
+    NbCardModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+        {{ title }};
+        {{ ratings.totalReviews }} reviews;
+      ;
 
-import { AdvertiserRatings } from '../../../core/models/review.interface';
-import { ReviewService } from '../../../core/services/review.service';
-import { StarRatingComponent } from '../star-rating/star-rating.component';
+      ;
+        ;
+          ;
+          Loading ratings...;
+        ;
 
-@Component({
-  selector: 'app-review-summary',
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    RouterModule,
-    StarRatingComponent,
-    NbCardModule,
-  ],
-  template: `
-    <nb-card class="review-summary-card">
-      <nb-card-header>
-        <h4>{{ title }}</h4>
-        <p *ngIf="ratings">{{ ratings.totalReviews }} reviews</p>
-      </nb-card-header>
+        ;
+          No reviews yet;
+        ;
 
-      <nb-card-body>
-        <div class="loading-container" *ngIf="loading">
-          <nb-progress-bar mode="indeterminate"></nb-progress-bar>
-          <p>Loading ratings...</p>
-        </div>
-
-        <div class="no-reviews" *ngIf="!loading && (!ratings || ratings.totalReviews === 0)">
-          <p>No reviews yet</p>
-        </div>
-
-        <div class="ratings-container" *ngIf="!loading && ratings && ratings.totalReviews > 0">
-          <div class="overall-rating">
-            <div class="rating-value">{{ ratings.averageRating | number: '1.1-1' }}</div>
-            <app-star-rating
-              [rating]="ratings.averageRating"
-              [readonly]="true"
-              [showRatingText]="false"
-            ></app-star-rating>
-            <div class="rating-count">
+         0">;
+          ;
+            {{ ratings.averageRating | number: '1.1-1' }};
+            ;
+            ;
               {{ ratings.totalReviews }} {{ ratings.totalReviews === 1 ? 'review' : 'reviews' }}
-            </div>
-          </div>
+            ;
+          ;
 
-          <hr />
+          ;
 
-          <div class="category-ratings" *ngIf="showCategoryRatings">
-            <div class="category-rating">
-              <span class="category-label">Communication</span>
-              <div class="rating-bar-container">
-                <div class="rating-bar">
-                  <nb-progress-bar
-                    [value]="(ratings.communicationAvg / 5) * 100"
-                    status="primary"
-                  ></nb-progress-bar>
-                </div>
-                <span class="category-value">{{ ratings.communicationAvg | number: '1.1-1' }}</span>
-              </div>
-            </div>
+          ;
+            ;
+              Communication;
+              ;
+                ;
+                  ;
+                ;
+                {{ ratings.communicationAvg | number: '1.1-1' }};
+              ;
+            ;
 
-            <div class="category-rating">
-              <span class="category-label">Appearance</span>
-              <div class="rating-bar-container">
-                <div class="rating-bar">
-                  <nb-progress-bar
-                    [value]="(ratings.appearanceAvg / 5) * 100"
-                    status="primary"
-                  ></nb-progress-bar>
-                </div>
-                <span class="category-value">{{ ratings.appearanceAvg | number: '1.1-1' }}</span>
-              </div>
-            </div>
+            ;
+              Appearance;
+              ;
+                ;
+                  ;
+                ;
+                {{ ratings.appearanceAvg | number: '1.1-1' }};
+              ;
+            ;
 
-            <div class="category-rating">
-              <span class="category-label">Location</span>
-              <div class="rating-bar-container">
-                <div class="rating-bar">
-                  <nb-progress-bar
-                    [value]="(ratings.locationAvg / 5) * 100"
-                    status="primary"
-                  ></nb-progress-bar>
-                </div>
-                <span class="category-value">{{ ratings.locationAvg | number: '1.1-1' }}</span>
-              </div>
-            </div>
+            ;
+              Location;
+              ;
+                ;
+                  ;
+                ;
+                {{ ratings.locationAvg | number: '1.1-1' }};
+              ;
+            ;
 
-            <div class="category-rating">
-              <span class="category-label">Value</span>
-              <div class="rating-bar-container">
-                <div class="rating-bar">
-                  <nb-progress-bar
-                    [value]="(ratings.valueAvg / 5) * 100"
-                    status="primary"
-                  ></nb-progress-bar>
-                </div>
-                <span class="category-value">{{ ratings.valueAvg | number: '1.1-1' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nb-card-body>
+            ;
+              Value;
+              ;
+                ;
+                  ;
+                ;
+                {{ ratings.valueAvg | number: '1.1-1' }};
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <nb-card-footer *ngIf="showWriteReviewButton">
-        <button nbButton status="primary" (click)="writeReviewClicked.emit()">
-          Write a Review
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-  styles: [
-    `
+      ;
+        ;
+          Write a Review;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .review-summary-card {
         margin-bottom: 20px;
         border-radius: var(--border-radius-lg);
@@ -205,16 +187,16 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
         font-weight: 500;
         color: var(--text-basic-color);
       }
-    `,
-  ],
-})
-export class ReviewSummaryComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class ReviewSummaryComponen {t implements OnInit {
   @Input() advertiserId = '';
   @Input() title = 'Ratings & Reviews';
   @Input() showCategoryRatings = true;
   @Input() showWriteReviewButton = true;
-  @Input() writeReviewClicked = new EventEmitter<void>();
-  @Output() ratingClick = new EventEmitter<number>();
+  @Input() writeReviewClicked = new EventEmitter();
+  @Output() ratingClick = new EventEmitter();
 
   ratings: AdvertiserRatings | null = null;
   loading = false;
@@ -239,19 +221,19 @@ export class ReviewSummaryComponent implements OnInit {
     this.reviewService.getReviewStats(this.advertiserId).subscribe({
       next: (stats) => {
         this.ratings = {
-          averageRating: stats.averageRating,
-          communicationAvg: stats.categoryAverages.communication,
-          appearanceAvg: stats.categoryAverages.appearance,
-          locationAvg: stats.categoryAverages.location,
-          valueAvg: stats.categoryAverages.value,
-          totalReviews: stats.totalReviews,
+          averageRating: stats.averageRating,;
+          communicationAvg: stats.categoryAverages.communication,;
+          appearanceAvg: stats.categoryAverages.appearance,;
+          locationAvg: stats.categoryAverages.location,;
+          valueAvg: stats.categoryAverages.value,;
+          totalReviews: stats.totalReviews,;
         };
         this.loading = false;
-      },
+      },;
       error: (error) => {
         console.error('Error loading ratings:', error);
         this.loading = false;
-      },
+      },;
     });
   }
 }

@@ -1,44 +1,33 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableColumn } from '../../nb-data-table.component';
 
-@Component({
-    selector: 'nb-data-table-header',
-    template: `
-    <div class="header-container">
-      <div class="title-section">
-        <h5 class="title">{{ title }}</h5>
-        <button
-          nbButton
-          ghost
-          size="small"
-          [nbPopover]="columnSelector"
-          nbPopoverPlacement="bottom"
-          nbPopoverTrigger="click"
-        >
-          <nb-icon icon="options-2-outline"></nb-icon>
-        </button>
-      </div>
+@Component({';
+    selector: 'nb-data-table-header',;
+    template: `;`
+    ;
+      ;
+        {{ title }};
+        ;
+          ;
+        ;
+      ;
 
-      <div class="actions-section">
-        <ng-content></ng-content>
-      </div>
-    </div>
+      ;
+        ;
+      ;
+    ;
 
-    <ng-template #columnSelector>
-      <div class="column-selector">
-        <h6 class="column-selector-title">Show/Hide Columns</h6>
-        <nb-checkbox
-          *ngFor="let column of columns"
-          [checked]="isColumnSelected(column)"
-          (checkedChange)="toggleColumn(column)"
-        >
+    ;
+      ;
+        Show/Hide Columns;
+        ;
           {{ column.name }}
-        </nb-checkbox>
-      </div>
-    </ng-template>
-  `,
-    styles: [
-        `
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .header-container {
         display: flex;
         justify-content: space-between;
@@ -83,23 +72,23 @@ import { TableColumn } from '../../nb-data-table.component';
           margin-bottom: 0;
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbDataTableHeaderComponent<T = any> {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbDataTableHeaderComponen {t {
   @Input() title = '';
-  @Input() columns: TableColumn<T>[] = [];
-  @Input() selectedColumns: TableColumn<T>[] = [];
-  @Output() columnsChange = new EventEmitter<TableColumn<T>[]>();
+  @Input() columns: TableColumn[] = [];
+  @Input() selectedColumns: TableColumn[] = [];
+  @Output() columnsChange = new EventEmitter[]>();
 
-  isColumnSelected(column: TableColumn<T>): boolean {
+  isColumnSelected(column: TableColumn): boolean {
     return this.selectedColumns.some((col) => col.prop === column.prop);
   }
 
-  toggleColumn(column: TableColumn<T>) {
+  toggleColumn(column: TableColumn) {
     const isSelected = this.isColumnSelected(column);
-    let newSelectedColumns: TableColumn<T>[];
+    let newSelectedColumns: TableColumn[];
 
     if (isSelected) {
       newSelectedColumns = this.selectedColumns.filter((col) => col.prop !== column.prop);

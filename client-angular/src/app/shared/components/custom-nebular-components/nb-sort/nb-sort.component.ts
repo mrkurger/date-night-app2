@@ -1,19 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NebularModule } from '../../../nebular.module';
 import { CommonModule } from '@angular/common';
-
 import { AppSortEvent } from './nb-sort.module';
 
 // Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)
-@Component({
-  selector: 'app-sort',
-  standalone: true,
-  template: `<ng-content></ng-content>`,
-})
-export class AppSortComponent {
+@Component({';
+  selector: 'app-sort',;
+  standalone: true,;
+  template: ``,;`
+});
+export class AppSortComponen {t {
   @Input() active: string = '';
   @Input() direction: 'asc' | 'desc' | '' = '';
-  @Output() sortChange = new EventEmitter<AppSortEvent>();
+  @Output() sortChange = new EventEmitter();
 
   sort(sortEvent: AppSortEvent): void {
     this.active = sortEvent.active;
@@ -24,20 +23,16 @@ export class AppSortComponent {
 
 // Refactored: Custom sort header component (was /*DEPRECATED:NbSortHeaderComponent*/)
 @Component({
-  selector: 'app-sort-header',
-  imports: [CommonModule],
-  template: `
-    <div class="app-sort-header" (click)="toggleSort()" [class.app-sort-header-sorted]="active">
-      <ng-content></ng-content>
-      <nb-icon
-        *ngIf="active"
-        [icon]="direction === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"
-        class="app-sort-header-icon"
-      ></nb-icon>
-    </div>
-  `,
-  styles: [
-    `
+  selector: 'app-sort-header',;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+      ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .app-sort-header {
         cursor: pointer;
         display: flex;
@@ -52,10 +47,10 @@ export class AppSortComponent {
       .app-sort-header-sorted {
         font-weight: bold;
       }
-    `,
-  ],
-})
-export class AppSortHeaderComponent {
+    `,;`
+  ],;
+});
+export class AppSortHeaderComponen {t {
   @Input() appSortHeaderId!: string;
 
   get active(): boolean {
@@ -71,8 +66,8 @@ export class AppSortHeaderComponent {
   toggleSort(): void {
     const newDirection = this.getNextSortDirection();
     this.sort.sort({
-      active: this.appSortHeaderId,
-      direction: newDirection,
+      active: this.appSortHeaderId,;
+      direction: newDirection,;
     });
   }
 
@@ -82,11 +77,11 @@ export class AppSortHeaderComponent {
     }
 
     switch (this.direction) {
-      case 'asc':
+      case 'asc':;
         return 'desc';
-      case 'desc':
+      case 'desc':;
         return '';
-      default:
+      default:;
         return 'asc';
     }
   }

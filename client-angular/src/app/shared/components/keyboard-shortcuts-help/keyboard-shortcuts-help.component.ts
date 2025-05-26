@@ -1,11 +1,11 @@
+import {
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbListModule,
+  NbDialogRef,;
+  NbCardModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbListModule,';
 } from '@nebular/theme';
 
 interface ShortcutGroup {
@@ -18,50 +18,50 @@ interface ShortcutGroup {
 }
 
 @Component({
-    selector: 'app-keyboard-shortcuts-help',
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbListModule],
-    template: `
-    <nb-card>
-      <nb-card-header class="header">
-        <div class="title">
-          <nb-icon icon="keyboard-outline"></nb-icon>
-          <h4>Keyboard Shortcuts</h4>
-        </div>
-        <button nbButton ghost size="small" (click)="close()">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </nb-card-header>
+    selector: 'app-keyboard-shortcuts-help',;
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbListModule],;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+          Keyboard Shortcuts;
+        ;
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <div class="shortcut-groups">
-          <div *ngFor="let group of shortcutGroups" class="shortcut-group">
-            <div class="group-header">
-              <nb-icon [icon]="group.icon"></nb-icon>
-              <h5>{{ group.name }}</h5>
-            </div>
+      ;
+        ;
+          ;
+            ;
+              ;
+              {{ group.name }};
+            ;
 
-            <div class="shortcuts">
-              <div *ngFor="let shortcut of group.shortcuts" class="shortcut">
-                <div class="keys">
-                  <kbd *ngFor="let key of shortcut.keys">{{ key }}</kbd>
-                </div>
-                <div class="description">{{ shortcut.description }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nb-card-body>
+            ;
+              ;
+                ;
+                  {{ key }};
+                ;
+                {{ shortcut.description }};
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <nb-card-footer>
-        <p class="tip">
-          <nb-icon icon="info-outline"></nb-icon>
-          Press <kbd>?</kbd> anywhere to show this dialog
-        </p>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+      ;
+        ;
+          ;
+          Press ? anywhere to show this dialog;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -155,8 +155,8 @@ interface ShortcutGroup {
         background: nb-theme(background-basic-color-2);
         border: 1px solid nb-theme(border-basic-color-3);
         border-radius: 4px;
-        box-shadow:
-          0 1px 1px rgba(0, 0, 0, 0.1),
+        box-shadow:;
+          0 1px 1px rgba(0, 0, 0, 0.1),;
           inset 0 -1px 0 rgba(0, 0, 0, 0.1);
       }
 
@@ -176,47 +176,47 @@ interface ShortcutGroup {
           margin: 0 0.25rem;
         }
       }
-    `,
-    ]
-})
-export class KeyboardShortcutsHelpComponent {
-  shortcutGroups: ShortcutGroup[] = [
+    `,;`
+    ];
+});
+export class KeyboardShortcutsHelpComponen {t {
+  shortcutGroups: ShortcutGroup[] = [;
     {
-      name: 'Navigation',
-      icon: 'compass-outline',
-      shortcuts: [
-        { keys: ['?'], description: 'Show keyboard shortcuts' },
-        { keys: ['⌘', 'K'], description: 'Open search' },
-        { keys: ['G', 'H'], description: 'Go to home' },
-        { keys: ['G', 'P'], description: 'Go to profile' },
-        { keys: ['G', 'S'], description: 'Go to settings' },
-      ],
-    },
+      name: 'Navigation',;
+      icon: 'compass-outline',;
+      shortcuts: [;
+        { keys: ['?'], description: 'Show keyboard shortcuts' },;
+        { keys: ['⌘', 'K'], description: 'Open search' },;
+        { keys: ['G', 'H'], description: 'Go to home' },;
+        { keys: ['G', 'P'], description: 'Go to profile' },;
+        { keys: ['G', 'S'], description: 'Go to settings' },;
+      ],;
+    },;
     {
-      name: 'Actions',
-      icon: 'flash-outline',
-      shortcuts: [
-        { keys: ['N'], description: 'Create new ad' },
-        { keys: ['F'], description: 'Add to favorites' },
-        { keys: ['L'], description: 'Toggle like' },
-        { keys: ['S'], description: 'Save changes' },
-        { keys: ['Esc'], description: 'Close dialog/menu' },
-      ],
-    },
+      name: 'Actions',;
+      icon: 'flash-outline',;
+      shortcuts: [;
+        { keys: ['N'], description: 'Create new ad' },;
+        { keys: ['F'], description: 'Add to favorites' },;
+        { keys: ['L'], description: 'Toggle like' },;
+        { keys: ['S'], description: 'Save changes' },;
+        { keys: ['Esc'], description: 'Close dialog/menu' },;
+      ],;
+    },;
     {
-      name: 'View',
-      icon: 'eye-outline',
-      shortcuts: [
-        { keys: ['\\'], description: 'Toggle sidebar' },
-        { keys: ['B'], description: 'Toggle breadcrumbs' },
-        { keys: ['T'], description: 'Toggle theme' },
-        { keys: ['+'], description: 'Increase font size' },
-        { keys: ['-'], description: 'Decrease font size' },
-      ],
-    },
+      name: 'View',;
+      icon: 'eye-outline',;
+      shortcuts: [;
+        { keys: ['\\'], description: 'Toggle sidebar' },;
+        { keys: ['B'], description: 'Toggle breadcrumbs' },;
+        { keys: ['T'], description: 'Toggle theme' },;
+        { keys: ['+'], description: 'Increase font size' },;
+        { keys: ['-'], description: 'Decrease font size' },;
+      ],;
+    },;
   ];
 
-  constructor(private dialogRef: NbDialogRef<KeyboardShortcutsHelpComponent>) {}
+  constructor(private dialogRef: NbDialogRef) {}
 
   close() {
     this.dialogRef.close();

@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/messageservice';
 interface AuditLogEntry {
   id: string;
   action: string;
-  performedBy: string;
+  performedBy: string;';
   targetType: 'user' | 'ad' | 'system' | 'payment';
   targetId: string;
   details: string;
@@ -25,102 +25,75 @@ interface AuditLogEntry {
 }
 
 @Component({
-  selector: 'app-audit-log',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    FormsModule,
-    DropdownModule,
-    CalendarModule,
-    TableModule,
-    CardModule,
-    BadgeModule,
-    InputTextModule,
-    ButtonModule,
-    ToastModule,
-  ],
-  providers: [MessageService],
-  template: `
-    <div class="audit-log">
-      <p-toast></p-toast>
-      <p-card>
-        <ng-template pTemplate="title">
-          <div class="p-d-flex p-jc-between p-ai-center">
-            <h5>Audit Log</h5>
-            <div class="filters p-d-flex p-ai-center">
-              <p-dropdown
-                [options]="targetTypesForDropdown"
-                [(ngModel)]="selectedType"
-                (onChange)="filterLogs()"
-                placeholder="All Types"
-                optionLabel="label"
-                optionValue="value"
-                [showClear]="true"
-                styleClass="p-mr-2"
-              ></p-dropdown>
-              <p-calendar
-                [(ngModel)]="selectedDate"
-                (onSelect)="filterLogs()"
-                placeholder="Select Date"
-                [showIcon]="true"
-              ></p-calendar>
-            </div>
-          </div>
-        </ng-template>
+  selector: 'app-audit-log',;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    DropdownModule,;
+    CalendarModule,;
+    TableModule,;
+    CardModule,;
+    BadgeModule,;
+    InputTextModule,;
+    ButtonModule,;
+    ToastModule,;
+  ],;
+  providers: [MessageService],;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+          ;
+            Audit Log;
+            ;
+              ;
+              ;
+            ;
+          ;
+        ;
 
-        <p-table
-          [value]="filteredLogs"
-          [paginator]="true"
-          [rows]="10"
-          [showCurrentPageReport]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [rowsPerPageOptions]="[10, 25, 50]"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Timestamp</th>
-              <th>Action</th>
-              <th>Performed By</th>
-              <th>Target Type</th>
-              <th>Target ID</th>
-              <th>Status</th>
-              <th>Details</th>
-              <th>IP Address</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-entry>
-            <tr>
-              <td>{{ entry.timestamp | date: 'medium' }}</td>
-              <td>{{ entry.action }}</td>
-              <td>{{ entry.performedBy }}</td>
-              <td>
-                <p-badge
-                  [value]="entry.targetType"
-                  [severity]="getTypeSeverity(entry.targetType)"
-                ></p-badge>
-              </td>
-              <td>{{ entry.targetId }}</td>
-              <td>
-                <p-badge
-                  [value]="entry.status"
-                  [severity]="getStatusSeverity(entry.status)"
-                ></p-badge>
-              </td>
-              <td>{{ entry.details }}</td>
-              <td>{{ entry.ipAddress || 'N/A' }}</td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="8">No audit logs found.</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-card>
-    </div>
-  `,
-  styles: [
-    `
+        ;
+          ;
+            ;
+              Timestamp;
+              Action;
+              Performed By;
+              Target Type;
+              Target ID;
+              Status;
+              Details;
+              IP Address;
+            ;
+          ;
+          ;
+            ;
+              {{ entry.timestamp | date: 'medium' }};
+              {{ entry.action }};
+              {{ entry.performedBy }};
+              ;
+                ;
+              ;
+              {{ entry.targetId }};
+              ;
+                ;
+              ;
+              {{ entry.details }};
+              {{ entry.ipAddress || 'N/A' }};
+            ;
+          ;
+          ;
+            ;
+              No audit logs found.;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
         max-width: 100%;
@@ -147,22 +120,22 @@ interface AuditLogEntry {
       p-badge {
         text-transform: capitalize;
       }
-    `,
-  ],
-})
-export class AuditLogComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class AuditLogComponen {t implements OnInit {
   loading = false;
   selectedType = 'all';
   selectedDate: Date | null = null;
   logs: AuditLogEntry[] = [];
   filteredLogs: AuditLogEntry[] = [];
 
-  targetTypesForDropdown = [
-    { label: 'All Types', value: 'all' },
-    { label: 'User', value: 'user' },
-    { label: 'Ad', value: 'ad' },
-    { label: 'System', value: 'system' },
-    { label: 'Payment', value: 'payment' },
+  targetTypesForDropdown = [;
+    { label: 'All Types', value: 'all' },;
+    { label: 'User', value: 'user' },;
+    { label: 'Ad', value: 'ad' },;
+    { label: 'System', value: 'system' },;
+    { label: 'Payment', value: 'payment' },;
   ];
 
   constructor(private messageService: MessageService) {}
@@ -175,29 +148,29 @@ export class AuditLogComponent implements OnInit {
     this.loading = true;
     // TODO: Replace with actual API call
     setTimeout(() => {
-      this.logs = [
+      this.logs = [;
         {
-          id: '1',
-          action: 'User Ban',
-          performedBy: 'admin@example.com',
-          targetType: 'user',
-          targetId: 'user123',
-          details: 'User banned for violating terms of service',
-          timestamp: new Date(),
-          status: 'success',
-          ipAddress: '192.168.1.1',
-        },
+          id: '1',;
+          action: 'User Ban',;
+          performedBy: 'admin@example.com',;
+          targetType: 'user',;
+          targetId: 'user123',;
+          details: 'User banned for violating terms of service',;
+          timestamp: new Date(),;
+          status: 'success',;
+          ipAddress: '192.168.1.1',;
+        },;
         {
-          id: '2',
-          action: 'Ad Removal',
-          performedBy: 'moderator@example.com',
-          targetType: 'ad',
-          targetId: 'ad456',
-          details: 'Advertisement removed due to inappropriate content',
+          id: '2',;
+          action: 'Ad Removal',;
+          performedBy: 'moderator@example.com',;
+          targetType: 'ad',;
+          targetId: 'ad456',;
+          details: 'Advertisement removed due to inappropriate content',;
           timestamp: new Date(Date.now() - 86400000), // 1 day ago
-          status: 'success',
-          ipAddress: '192.168.1.2',
-        },
+          status: 'success',;
+          ipAddress: '192.168.1.2',;
+        },;
         // Add more mock data as needed
       ];
       this.filterLogs();
@@ -214,37 +187,37 @@ export class AuditLogComponent implements OnInit {
   }
 
   isSameDay(date1: Date, date2: Date): boolean {
-    return (
-      date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
+    return (;
+      date1.getFullYear() === date2.getFullYear() &&;
+      date1.getMonth() === date2.getMonth() &&;
+      date1.getDate() === date2.getDate();
     );
   }
 
   getTypeSeverity(type: string): string {
     switch (type) {
-      case 'user':
+      case 'user':;
         return 'info';
-      case 'ad':
+      case 'ad':;
         return 'warning';
-      case 'system':
+      case 'system':;
         return 'info';
-      case 'payment':
+      case 'payment':;
         return 'success';
-      default:
+      default:;
         return 'secondary';
     }
   }
 
   getStatusSeverity(status: string): string {
     switch (status) {
-      case 'success':
+      case 'success':;
         return 'success';
-      case 'failure':
+      case 'failure':;
         return 'danger';
-      case 'pending':
+      case 'pending':;
         return 'warning';
-      default:
+      default:;
         return 'info';
     }
   }

@@ -1,37 +1,6 @@
 import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Inject,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
 import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbTabsetModule,
-  NbInputModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbToastrService,
-} from '@nebular/theme';
-
 import { _SharedModule } from '../../../shared/shared.module';
 import { WalletService } from '../../../core/services/wallet.service';
 import { CardModule } from 'primeng/card';
@@ -40,7 +9,38 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
+  Component,;
+  OnInit,;
+  ChangeDetectionStrategy,;
+  ChangeDetectorRef,;
+  Inject,';
+} from '@angular/core';
 
+import {
+  FormBuilder,;
+  FormGroup,;
+  FormsModule,;
+  ReactiveFormsModule,;
+  Validators,;
+} from '@angular/forms';
+
+import {
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  NbCardModule,;
+  NbTabsetModule,;
+  NbInputModule,;
+  NbButtonModule,;
+  NbSelectModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbTooltipModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbToastrService,;
+} from '@nebular/theme';
 
 export interface WalletBalance {
   currency: string;
@@ -136,35 +136,35 @@ export interface WithdrawalRequest {
 }
 
 @Component({
-  selector: 'app-withdraw-dialog',
-  templateUrl: './withdraw-dialog.component.html',
-  styleUrls: ['./withdraw-dialog.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    NebularModule, CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbTabsetModule,
-    NbInputModule,
-    NbButtonModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbTagModule,,
-    DropdownModule,
-    TabViewModule,
-    MessageModule,
-    InputTextModule
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class WithdrawDialogComponent implements OnInit {
+  selector: 'app-withdraw-dialog',;
+  templateUrl: './withdraw-dialog.component.html',;
+  styleUrls: ['./withdraw-dialog.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    NebularModule, CommonModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
+    NbCardModule,;
+    NbTabsetModule,;
+    NbInputModule,;
+    NbButtonModule,;
+    NbSelectModule,;
+    NbSpinnerModule,;
+    NbAlertModule,;
+    NbFormFieldModule,;
+    NbIconModule,;
+    NbTooltipModule,;
+    NbBadgeModule,;
+    NbTagModule,,;
+    DropdownModule,;
+    TabViewModule,;
+    MessageModule,;
+    InputTextModule;
+  ],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+});
+export class WithdrawDialogComponen {t implements OnInit {
   balances: WalletBalance[] = [];
   paymentMethods: PaymentMethod[] = [];
   selectedCurrency?: string;
@@ -190,43 +190,43 @@ export class WithdrawDialogComponent implements OnInit {
   processingCryptoWithdrawal = false;
   loadingInitialData = false;
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  contentDensityOptions = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Normal', value: 'normal' },
+  contentDensityOptions = [;
+    { label: 'Compact', value: 'compact' },;
+    { label: 'Normal', value: 'normal' },;
     { label: 'Comfortable', value: 'comfortable' }
   ];
 
-  cardSizeOptions = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
+  cardSizeOptions = [;
+    { label: 'Small', value: 'small' },;
+    { label: 'Medium', value: 'medium' },;
     { label: 'Large', value: 'large' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    @Inject(NB_DIALOG_CONFIG) private config: WithdrawalDialogConfig,
-    private dialogRef: NbDialogRef<WithdrawDialogComponent>,
-    private walletService: WalletService,
-    private toastr: NbToastrService,
-    private formBuilder: FormBuilder,
-    private cd: ChangeDetectorRef,
+  constructor(;
+    @Inject(NB_DIALOG_CONFIG) private config: WithdrawalDialogConfig,;
+    private dialogRef: NbDialogRef,;
+    private walletService: WalletService,;
+    private toastr: NbToastrService,;
+    private formBuilder: FormBuilder,;
+    private cd: ChangeDetectorRef,;
   ) {
     this.initForm();
   }
@@ -256,26 +256,26 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Check if a currency is a cryptocurrency
+   * Check if a currency is a cryptocurrency;
    */
   isCryptoCurrency(currency: string): boolean {
-    const cryptoCurrencies = [
-      'BTC',
-      'ETH',
-      'USDT',
-      'XRP',
-      'LTC',
-      'BCH',
-      'BNB',
-      'DOT',
-      'LINK',
-      'ADA',
+    const cryptoCurrencies = [;
+      'BTC',;
+      'ETH',;
+      'USDT',;
+      'XRP',;
+      'LTC',;
+      'BCH',;
+      'BNB',;
+      'DOT',;
+      'LINK',;
+      'ADA',;
     ];
     return cryptoCurrencies.includes(currency);
   }
 
   /**
-   * Filter payment methods based on selected currency
+   * Filter payment methods based on selected currency;
    */
   filterPaymentMethods(): void {
     if (!this.selectedCurrency || !this.paymentMethods.length) {
@@ -286,37 +286,37 @@ export class WithdrawDialogComponent implements OnInit {
     this.filteredPaymentMethods = this.paymentMethods.filter((method) => {
       // For fiat currencies, filter by currency and type
       if (!this.isCryptoCurrency(this.selectedCurrency)) {
-        return (
-          (method.currency === this.selectedCurrency || !method.currency) &&
-          (method.type === 'bank_account' || method.type === 'card')
+        return (;
+          (method.currency === this.selectedCurrency || !method.currency) &&;
+          (method.type === 'bank_account' || method.type === 'card');
         );
       }
 
       // For cryptocurrencies, filter by currency and type
-      return (
-        method.type === 'crypto' && (!method.currency || method.currency === this.selectedCurrency)
+      return (;
+        method.type === 'crypto' && (!method.currency || method.currency === this.selectedCurrency);
       );
     });
   }
 
   /**
-   * Handle tab change
+   * Handle tab change;
    */
   handleTabChange(event: any): void {
     this.selectedTabIndex = event.tabTitle === 'Cryptocurrency' ? 1 : 0;
   }
 
   /**
-   * Handle balance selection
+   * Handle balance selection;
    */
   onBalanceSelect(currency: string): void {
     if (this.selectedTabIndex === 0) {
       // Fiat tab
       this.selectedBalance = this.fiatBalances.find((b) => b.currency === currency) || {
-        currency: '',
-        available: 0,
-        total: 0,
-        pending: 0,
+        currency: '',;
+        available: 0,;
+        total: 0,;
+        pending: 0,;
       };
       this.filterPaymentMethods();
     } else {
@@ -329,23 +329,23 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Get payment method label for display
+   * Get payment method label for display;
    */
   getPaymentMethodLabel(method: PaymentMethod): string {
     if (method.type === 'bank_account' && method.bankDetails) {
-      return `${method.bankDetails.bankName} (${method.bankDetails.lastFour || '****'})`;
+      return `${method.bankDetails.bankName} (${method.bankDetails.lastFour || '****'})`;`
     } else if (method.type === 'card' && method.cardDetails) {
-      return `${method.cardDetails.brand} (${method.cardDetails.last4 || '****'})`;
+      return `${method.cardDetails.brand} (${method.cardDetails.last4 || '****'})`;`
     } else if (method.type === 'crypto' && method.cryptoDetails) {
       const address = method.cryptoDetails.address;
       const shortAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
-      return `${method.cryptoDetails.currency} (${shortAddress})`;
+      return `${method.cryptoDetails.currency} (${shortAddress})`;`
     }
     return method.name || 'Unknown payment method';
   }
 
   /**
-   * Submit fiat withdrawal
+   * Submit fiat withdrawal;
    */
   submitFiatWithdrawal(): void {
     if (this.withdrawForm.invalid) return;
@@ -362,7 +362,7 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Submit crypto withdrawal
+   * Submit crypto withdrawal;
    */
   submitCryptoWithdrawal(): void {
     if (this.cryptoWithdrawForm.invalid) return;
@@ -379,7 +379,7 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Check if a currency requires a memo
+   * Check if a currency requires a memo;
    */
   requiresMemo(currency: string): boolean {
     const memoRequiredCurrencies = ['XRP', 'XLM', 'EOS', 'BNB'];
@@ -387,20 +387,20 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Get memo name for a currency
+   * Get memo name for a currency;
    */
   getMemoName(currency: string): string {
     const memoNames = {
-      XRP: 'Destination Tag',
-      XLM: 'Memo',
-      EOS: 'Memo',
-      BNB: 'Memo',
+      XRP: 'Destination Tag',;
+      XLM: 'Memo',;
+      EOS: 'Memo',;
+      BNB: 'Memo',;
     };
     return memoNames[currency as keyof typeof memoNames] || 'Memo';
   }
 
   /**
-   * Close dialog and open add payment method dialog
+   * Close dialog and open add payment method dialog;
    */
   closeAndOpenAddPaymentMethod(event: Event): void {
     event.preventDefault();
@@ -408,7 +408,7 @@ export class WithdrawDialogComponent implements OnInit {
   }
 
   /**
-   * Close the dialog
+   * Close the dialog;
    */
   closeDialog(): void {
     this.dialogRef.close();
@@ -417,27 +417,27 @@ export class WithdrawDialogComponent implements OnInit {
   private initForm(): void {
     // Initialize the main withdrawal form
     this.withdrawalForm = this.formBuilder.group({
-      amount: ['', [Validators.required, Validators.min(0.01)]],
-      paymentMethodId: ['', Validators.required],
-      memo: [''],
+      amount: ['', [Validators.required, Validators.min(0.01)]],;
+      paymentMethodId: ['', Validators.required],;
+      memo: [''],;
     });
 
     // Initialize fiat withdrawal form
     this.withdrawForm = this.formBuilder.group({
-      currency: ['', Validators.required],
-      amount: ['', [Validators.required, Validators.min(0.01)]],
-      paymentMethodId: ['', Validators.required],
-      description: [''],
+      currency: ['', Validators.required],;
+      amount: ['', [Validators.required, Validators.min(0.01)]],;
+      paymentMethodId: ['', Validators.required],;
+      description: [''],;
     });
 
     // Initialize crypto withdrawal form
     this.cryptoWithdrawForm = this.formBuilder.group({
-      currency: ['', Validators.required],
-      amount: ['', [Validators.required, Validators.min(0.00001)]],
-      network: ['', Validators.required],
-      address: ['', [Validators.required, Validators.minLength(10)]],
-      memo: [''],
-      description: [''],
+      currency: ['', Validators.required],;
+      amount: ['', [Validators.required, Validators.min(0.00001)]],;
+      network: ['', Validators.required],;
+      address: ['', [Validators.required, Validators.minLength(10)]],;
+      memo: [''],;
+      description: [''],;
     });
   }
 
@@ -463,23 +463,23 @@ export class WithdrawDialogComponent implements OnInit {
     switch (method.type) {
       case 'card': {
         const cardDetails = method.details as CardDetails;
-        return `${cardDetails.brand} ending in ${cardDetails.last4}`;
+        return `${cardDetails.brand} ending in ${cardDetails.last4}`;`
       }
       case 'bank_account': {
         const bankDetails = method.details as BankDetails;
-        return `${bankDetails.bankName} ending in ${bankDetails.lastFour || '****'}`;
+        return `${bankDetails.bankName} ending in ${bankDetails.lastFour || '****'}`;`
       }
       case 'crypto': {
         const cryptoDetails = method.details as CryptoDetails;
-        const shortAddress =
+        const shortAddress =;
           cryptoDetails.address.slice(0, 6) + '...' + cryptoDetails.address.slice(-4);
-        return `${cryptoDetails.currency} - ${shortAddress}`;
+        return `${cryptoDetails.currency} - ${shortAddress}`;`
       }
       case 'paypal': {
         const paypalDetails = method.details as PaypalDetails;
-        return `PayPal - ${paypalDetails.email}`;
+        return `PayPal - ${paypalDetails.email}`;`
       }
-      default:
+      default:;
         return method.name;
     }
   }
@@ -492,23 +492,23 @@ export class WithdrawDialogComponent implements OnInit {
     this.loading = true;
     const formValue = this.withdrawalForm.value;
 
-    this.walletService
+    this.walletService;
       .withdraw({
-        amount: formValue.amount,
-        currency: this.selectedCurrency,
-        paymentMethodId: formValue.paymentMethodId,
-        memo: formValue.memo,
-      })
+        amount: formValue.amount,;
+        currency: this.selectedCurrency,;
+        paymentMethodId: formValue.paymentMethodId,;
+        memo: formValue.memo,;
+      });
       .subscribe({
         next: () => {
           this.toastr.success('Withdrawal initiated successfully');
           this.dialogRef.close(true);
-        },
+        },;
         error: (error) => {
           this.toastr.danger(error.message || 'Failed to process withdrawal');
           this.loading = false;
           this.cd.markForCheck();
-        },
+        },;
       });
   }
 

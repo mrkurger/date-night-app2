@@ -1,44 +1,36 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-@Component({
-    selector: 'app-toggle',
-    imports: [CommonModule, NbToggleModule],
-    template: `
-    <nb-toggle
-      [checked]="value"
-      [disabled]="disabled"
-      [status]="status"
-      [labelPosition]="labelPosition"
-      (checkedChange)="onToggleChange($event)"
-    >
-      <ng-content></ng-content>
-    </nb-toggle>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-toggle',;
+    imports: [CommonModule, NbToggleModule],;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: inline-block;
       }
-    `,
-    ],
-    providers: [
+    `,;`
+    ],;
+    providers: [;
         {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputSwitchModule),
-            multi: true,
-        },
-    ]
-})
-export class InputSwitchModule implements ControlValueAccessor {
+            provide: NG_VALUE_ACCESSOR,;
+            useExisting: forwardRef(() => InputSwitchModule),;
+            multi: true,;
+        },;
+    ];
+});
+export class InputSwitchModul {e implements ControlValueAccessor {
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() labelPosition: 'start' | 'end' = 'end';
   @Input() disabled = false;
-  @Output() change = new EventEmitter<boolean>();
+  @Output() change = new EventEmitter();
 
   value = false;
   private onChange: (value: boolean) => void = () => {};

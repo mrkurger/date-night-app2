@@ -8,19 +8,17 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { NebularModule } from '../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-
+  Component,;
+  OnInit,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
 
 export interface ReviewData {
   rating: number;
@@ -30,141 +28,84 @@ export interface ReviewData {
 }
 
 @Component({
-    selector: 'app-review-form',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    CommonModule, ReactiveFormsModule, NebularModule,
-    ButtonModule
-  ],
-    template: `
-    <div class="review-form-container">
-      <h3 class="form-title">{{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}</h3>
+    selector: 'app-review-form',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    CommonModule, ReactiveFormsModule, NebularModule,;
+    ButtonModule;
+  ],;
+    template: `;`
+    ;
+      {{ isEditMode ? 'Edit Your Review' : 'Write a Review' }};
 
-      <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
-        <!-- Rating -->
-        <div class="form-group">
-          <label class="form-label">Rating</label>
-          <div class="star-rating">
-            <button
-              nbButton
-              ghost
-              *ngFor="let star of ratingOptions"
-              class="star-button"
-              [class.filled]="star <= (reviewForm.get('rating')?.value || 0)"
-              (click)="setRating(star)"
-              type="button"
-              [attr.aria-label]="star + ' star' + (star > 1 ? 's' : '')"
-            >
-              <nb-icon
-                [icon]="star <= (reviewForm.get('rating')?.value || 0) ? 'star' : 'star-outline'"
-              ></nb-icon>
-            </button>
-          </div>
-          <span
-            class="validation-error"
-            *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched"
-          >
-            Please select a rating
-          </span>
-        </div>
+      ;
+        ;
+        ;
+          Rating;
+          ;
+             1 ? 's' : '')";
+            >;
+              ;
+            ;
+          ;
+          ;
+            Please select a rating;
+          ;
+        ;
 
-        <!-- Title -->
-        <div class="form-group">
-          <nb-form-field>
-            <label for="title">Title</label>
-            <input
-              nbInput
-              fullWidth
-              id="title"
-              formControlName="title"
-              [status]="
-                reviewForm.get('title')?.invalid && reviewForm.get('title')?.touched
-                  ? 'danger'
-                  : 'basic'
-              "
-              placeholder="Summarize your experience"
-            />
-            <span
-              class="validation-error"
-              *ngIf="reviewForm.get('title')?.invalid && reviewForm.get('title')?.touched"
-            >
-              <span *ngIf="reviewForm.get('title')?.errors?.['required']">Title is required</span>
-              <span *ngIf="reviewForm.get('title')?.errors?.['maxlength']"
-                >Title cannot exceed 100 characters</span
-              >
-            </span>
-          </nb-form-field>
-        </div>
+        ;
+        ;
+          ;
+            Title;
+            ;
+            ;
+              Title is required;
+              Title cannot exceed 100 characters;
+            ;
+          ;
+        ;
 
-        <!-- Content -->
-        <div class="form-group">
-          <nb-form-field>
-            <label for="content">Review</label>
-            <textarea
-              nbInput
-              fullWidth
-              id="content"
-              formControlName="content"
-              [status]="
-                reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched
-                  ? 'danger'
-                  : 'basic'
-              "
-              placeholder="Share details of your experience"
-              rows="5"
-            ></textarea>
-            <span
-              class="validation-error"
-              *ngIf="reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched"
-            >
-              <span *ngIf="reviewForm.get('content')?.errors?.['required']"
-                >Review content is required</span
-              >
-              <span *ngIf="reviewForm.get('content')?.errors?.['minlength']"
-                >Review must be at least 10 characters</span
-              >
-              <span *ngIf="reviewForm.get('content')?.errors?.['maxlength']"
-                >Review cannot exceed 1000 characters</span
-              >
-            </span>
-            <span
-              class="char-count"
-              [class.text-danger]="reviewForm.get('content')?.value?.length > 950"
-            >
-              {{ reviewForm.get('content')?.value?.length || 0 }}/1000
-            </span>
-          </nb-form-field>
-        </div>
+        ;
+        ;
+          ;
+            Review;
+            ;
+            ;
+              Review content is required;
+              Review must be at least 10 characters;
+              Review cannot exceed 1000 characters;
+            ;
+             950";
+            >;
+              {{ reviewForm.get('content')?.value?.length || 0 }}/1000;
+            ;
+          ;
+        ;
 
-        <!-- Anonymous -->
-        <div class="form-group">
-          <nb-checkbox formControlName="anonymous">
-            Post anonymously
-            <span class="text-hint">
-              Your name and profile picture will not be displayed with this review
-            </span>
-          </nb-checkbox>
-        </div>
+        ;
+        ;
+          ;
+            Post anonymously;
+            ;
+              Your name and profile picture will not be displayed with this review;
+            ;
+          ;
+        ;
 
-        <!-- Form Actions -->
-        <div class="form-actions">
-          <button nbButton status="basic" (click)="onCancel()" type="button">Cancel</button>
-          <button
-            nbButton
-            status="primary"
-            type="submit"
-            [disabled]="reviewForm.invalid || submitting"
-          >
-            <nb-icon icon="save-outline"></nb-icon>
+        ;
+        ;
+          Cancel;
+          ;
+            ;
             {{ isEditMode ? 'Update Review' : 'Submit Review' }}
-            <nb-spinner *ngIf="submitting" size="small"></nb-spinner>
-          </button>
-        </div>
-      </form>
-    </div>
-  `,
-    styles: [
-        `
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -228,14 +169,14 @@ export interface ReviewData {
         justify-content: flex-end;
         margin-top: 2rem;
       }
-    `,
-    ]
-})
-export class ReviewFormComponent implements OnInit {
+    `,;`
+    ];
+});
+export class ReviewFormComponen {t implements OnInit {
   @Input() adId!: string;
   @Input() existingReview: any = null;
-  @Output() reviewSubmitted = new EventEmitter<ReviewData>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() reviewSubmitted = new EventEmitter();
+  @Output() cancel = new EventEmitter();
 
   reviewForm!: FormGroup;
   submitting = false;
@@ -250,25 +191,25 @@ export class ReviewFormComponent implements OnInit {
   }
 
   /**
-   * Initialize the review form
+   * Initialize the review form;
    */
   private initForm(): void {
     this.reviewForm = this.fb.group({
-      rating: [
-        this.existingReview?.rating || 5,
-        [Validators.required, Validators.min(1), Validators.max(5)],
-      ],
-      title: [this.existingReview?.title || '', [Validators.required, Validators.maxLength(100)]],
-      content: [
-        this.existingReview?.content || '',
-        [Validators.required, Validators.minLength(10), Validators.maxLength(1000)],
-      ],
-      anonymous: [this.existingReview?.anonymous || false],
+      rating: [;
+        this.existingReview?.rating || 5,;
+        [Validators.required, Validators.min(1), Validators.max(5)],;
+      ],;
+      title: [this.existingReview?.title || '', [Validators.required, Validators.maxLength(100)]],;
+      content: [;
+        this.existingReview?.content || '',;
+        [Validators.required, Validators.minLength(10), Validators.maxLength(1000)],;
+      ],;
+      anonymous: [this.existingReview?.anonymous || false],;
     });
   }
 
   /**
-   * Submit the review form
+   * Submit the review form;
    */
   onSubmit(): void {
     if (this.reviewForm.invalid) {
@@ -291,14 +232,14 @@ export class ReviewFormComponent implements OnInit {
   }
 
   /**
-   * Cancel the review form
+   * Cancel the review form;
    */
   onCancel(): void {
     this.cancel.emit();
   }
 
   /**
-   * Set the rating value
+   * Set the rating value;
    */
   setRating(rating: number): void {
     this.reviewForm.get('rating')?.setValue(rating);

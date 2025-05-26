@@ -10,12 +10,25 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenubarModule } from 'primeng/menubar';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
+
 export interface NavigationConfig {
   showSidebar?: boolean;
   showTopMenu?: boolean;
   showUserMenu?: boolean;
   showSearch?: boolean;
-  showBreadcrumbs?: boolean;
+  showBreadcrumbs?: boolean;';
   sidebarState?: 'expanded' | 'collapsed' | 'compacted';
   theme?: 'light' | 'dark';
   responsive?: boolean;
@@ -31,110 +44,58 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-navigation',
-  template: `
-    <div class="layout-wrapper" [class.layout-sidebar-active]="sidebarVisible">
-      <!-- Sidebar -->
-      <p-sidebar 
-        [(visible)]="sidebarVisible"
-        [position]="config.sidebarRight ? 'right' : 'left'"
-        [showCloseIcon]="false"
-        [modal]="false"
-        [baseZIndex]="1000"
-        styleClass="layout-sidebar"
-      >
-        <p-menu 
-          [model]="menuItems"
-          [styleClass]="config.sidebarState === 'compacted' ? 'layout-menu compact' : 'layout-menu'"
-          (click)="onMenuItemClick($event)"
-        ></p-menu>
-      </p-sidebar>
+  selector: 'app-navigation',;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Header -->
-      <div class="layout-header" [class.fixed]="config.fixed !== false">
-        <div class="header-container">
-          <!-- Sidebar Toggle -->
-          <button 
-            *ngIf="config.showSidebar"
-            pButton
-            icon="pi pi-bars"
-            (click)="toggleSidebar()"
-            class="p-button-text p-button-rounded"
-          ></button>
+      ;
+      ;
+        ;
+          ;
+          ;
 
-          <!-- Top Menu -->
-          <p-menubar
-            *ngIf="config.showTopMenu"
-            [model]="topMenuItems"
-            styleClass="layout-topbar"
-          ></p-menubar>
+          ;
+          ;
 
-          <div class="header-right">
-            <!-- Search -->
-            <p-autoComplete
-              *ngIf="config.showSearch"
-              [(ngModel)]="searchQuery"
-              [suggestions]="[]"
-              (completeMethod)="onSearch($event)"
-              (onSelect)="onSearchSelect($event)"
-              placeholder="Search..."
-              [style]="{ width: '100%', maxWidth: '250px' }"
-            ></p-autoComplete>
+          ;
+            ;
+            ;
 
-            <!-- User Menu -->
-            <div *ngIf="config.showUserMenu && userData" class="user-menu">
-              <button 
-                #userMenuBtn
-                pButton
-                class="p-button-text p-button-rounded user-button"
-                [pTooltip]="userData.name"
-              >
-                <p-avatar 
-                  [image]="userData.picture"
-                  [label]="userData.name?.charAt(0)"
-                  shape="circle"
-                  size="normal"
-                  [style]="{ 'margin-right': '.5rem' }"
-                ></p-avatar>
-                <span class="user-name">{{ userData.name }}</span>
-                <i class="pi pi-angle-down" style="margin-left: .5rem"></i>
-              </button>
-              <p-menu
-                #userMenu
-                [popup]="true"
-                [model]="userMenuItems"
-                [style]="{ width: '200px' }"
-                (click)="onUserMenuItemClick($event)"
-              ></p-menu>
-            </div>
-          </div>
-        </div>
-      </div>
+            ;
+            ;
+              ;
+                ;
+                {{ userData.name }};
+                ;
+              ;
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <!-- Main Content -->
-      <div class="layout-main">
-        <!-- Breadcrumbs -->
-        <p-breadcrumb
-          *ngIf="config.showBreadcrumbs"
-          [model]="breadcrumbItems"
-          [home]="{ icon: 'pi pi-home' }"
-          (onItemClick)="onBreadcrumbClick($event)"
-          styleClass="layout-breadcrumb"
-        ></p-breadcrumb>
+      ;
+      ;
+        ;
+        ;
 
-        <!-- Content -->
-        <div class="layout-content">
-          <ng-content></ng-content>
-        </div>
+        ;
+        ;
+          ;
+        ;
 
-        <!-- Footer -->
-        <div class="layout-footer" [class.fixed]="config.fixed !== false">
-          <ng-content select="[footer]"></ng-content>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
+        ;
+        ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [`;`
     :host {
       display: block;
       height: 100vh;
@@ -240,7 +201,7 @@ export interface UserData {
           padding: 0;
         }
 
-        .p-menuitem-text,
+        .p-menuitem-text,;
         .p-submenu-icon {
           display: none;
         }
@@ -251,30 +212,30 @@ export interface UserData {
         }
       }
     }
-  `],
-  imports: [RippleModule, MenuModule, AvatarModule, AutoCompleteModule, BreadcrumbModule, MenubarModule, SidebarModule, ButtonModule, MenuItem, 
-    CommonModule,
-    RouterModule,
-    ButtonModule,
-    SidebarModule,
-    MenubarModule,
-    BreadcrumbModule,
-    AutoCompleteModule,
-    AvatarModule,
-    MenuModule,
-    RippleModule,
-  ],
-  standalone: true
-})
-export class NavigationComponent {
+  `],;`
+  imports: [RippleModule, MenuModule, AvatarModule, AutoCompleteModule, BreadcrumbModule, MenubarModule, SidebarModule, ButtonModule, MenuItem,; 
+    CommonModule,;
+    RouterModule,;
+    ButtonModule,;
+    SidebarModule,;
+    MenubarModule,;
+    BreadcrumbModule,;
+    AutoCompleteModule,;
+    AvatarModule,;
+    MenuModule,;
+    RippleModule,;
+  ],;
+  standalone: true;
+});
+export class NavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,
-    showTopMenu: true,
-    showUserMenu: true,
-    showSearch: true,
-    showBreadcrumbs: true,
-    sidebarState: 'expanded',
-    theme: 'light',
+    showSidebar: true,;
+    showTopMenu: true,;
+    showUserMenu: true,;
+    showSearch: true,;
+    showBreadcrumbs: true,;
+    sidebarState: 'expanded',;
+    theme: 'light',;
   };
 
   @Input() menuItems: MenuItem[] = [];
@@ -283,12 +244,12 @@ export class NavigationComponent {
   @Input() breadcrumbItems: MenuItem[] = [];
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter<MenuItem>();
-  @Output() topMenuItemClicked = new EventEmitter<MenuItem>();
-  @Output() userMenuItemClicked = new EventEmitter<MenuItem>();
-  @Output() breadcrumbClicked = new EventEmitter<MenuItem>();
-  @Output() searchSubmitted = new EventEmitter<string>();
-  @Output() sidebarStateChanged = new EventEmitter<string>();
+  @Output() menuItemClicked = new EventEmitter();
+  @Output() topMenuItemClicked = new EventEmitter();
+  @Output() userMenuItemClicked = new EventEmitter();
+  @Output() breadcrumbClicked = new EventEmitter();
+  @Output() searchSubmitted = new EventEmitter();
+  @Output() sidebarStateChanged = new EventEmitter();
 
   sidebarVisible = true;
   searchQuery = '';
@@ -336,18 +297,6 @@ export class NavigationComponent {
     this.searchSubmitted.emit(event);
   }
 }
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenubarModule } from 'primeng/menubar';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { AvatarModule } from 'primeng/avatar';
-import { MenuModule } from 'primeng/menu';
-import { RippleModule } from 'primeng/ripple';
 
 export interface NavigationConfig {
   showSidebar?: boolean;
@@ -370,110 +319,58 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-navigation',
-  template: `
-    <div class="layout-wrapper" [class.layout-sidebar-active]="sidebarVisible">
-      <!-- Sidebar -->
-      <p-sidebar 
-        [(visible)]="sidebarVisible"
-        [position]="config.sidebarRight ? 'right' : 'left'"
-        [showCloseIcon]="false"
-        [modal]="false"
-        [baseZIndex]="1000"
-        styleClass="layout-sidebar"
-      >
-        <p-menu 
-          [model]="menuItems"
-          [styleClass]="config.sidebarState === 'compacted' ? 'layout-menu compact' : 'layout-menu'"
-          (click)="onMenuItemClick($event)"
-        ></p-menu>
-      </p-sidebar>
+  selector: 'app-navigation',;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Header -->
-      <div class="layout-header" [class.fixed]="config.fixed !== false">
-        <div class="header-container">
-          <!-- Sidebar Toggle -->
-          <button 
-            *ngIf="config.showSidebar"
-            pButton
-            icon="pi pi-bars"
-            (click)="toggleSidebar()"
-            class="p-button-text p-button-rounded"
-          ></button>
+      ;
+      ;
+        ;
+          ;
+          ;
 
-          <!-- Top Menu -->
-          <p-menubar
-            *ngIf="config.showTopMenu"
-            [model]="topMenuItems"
-            styleClass="layout-topbar"
-          ></p-menubar>
+          ;
+          ;
 
-          <div class="header-right">
-            <!-- Search -->
-            <p-autoComplete
-              *ngIf="config.showSearch"
-              [(ngModel)]="searchQuery"
-              [suggestions]="[]"
-              (completeMethod)="onSearch($event)"
-              (onSelect)="onSearchSelect($event)"
-              placeholder="Search..."
-              [style]="{ width: '100%', maxWidth: '250px' }"
-            ></p-autoComplete>
+          ;
+            ;
+            ;
 
-            <!-- User Menu -->
-            <div *ngIf="config.showUserMenu && userData" class="user-menu">
-              <button 
-                #userMenuBtn
-                pButton
-                class="p-button-text p-button-rounded user-button"
-                [pTooltip]="userData.name"
-              >
-                <p-avatar 
-                  [image]="userData.picture"
-                  [label]="userData.name?.charAt(0)"
-                  shape="circle"
-                  size="normal"
-                  [style]="{ 'margin-right': '.5rem' }"
-                ></p-avatar>
-                <span class="user-name">{{ userData.name }}</span>
-                <i class="pi pi-angle-down" style="margin-left: .5rem"></i>
-              </button>
-              <p-menu
-                #userMenu
-                [popup]="true"
-                [model]="userMenuItems"
-                [style]="{ width: '200px' }"
-                (click)="onUserMenuItemClick($event)"
-              ></p-menu>
-            </div>
-          </div>
-        </div>
-      </div>
+            ;
+            ;
+              ;
+                ;
+                {{ userData.name }};
+                ;
+              ;
+              ;
+            ;
+          ;
+        ;
+      ;
 
-      <!-- Main Content -->
-      <div class="layout-main">
-        <!-- Breadcrumbs -->
-        <p-breadcrumb
-          *ngIf="config.showBreadcrumbs"
-          [model]="breadcrumbItems"
-          [home]="{ icon: 'pi pi-home' }"
-          (onItemClick)="onBreadcrumbClick($event)"
-          styleClass="layout-breadcrumb"
-        ></p-breadcrumb>
+      ;
+      ;
+        ;
+        ;
 
-        <!-- Content -->
-        <div class="layout-content">
-          <ng-content></ng-content>
-        </div>
+        ;
+        ;
+          ;
+        ;
 
-        <!-- Footer -->
-        <div class="layout-footer" [class.fixed]="config.fixed !== false">
-          <ng-content select="[footer]"></ng-content>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
+        ;
+        ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [`;`
     :host {
       display: block;
       height: 100vh;
@@ -579,7 +476,7 @@ export interface UserData {
           padding: 0;
         }
 
-        .p-menuitem-text,
+        .p-menuitem-text,;
         .p-submenu-icon {
           display: none;
         }
@@ -590,30 +487,30 @@ export interface UserData {
         }
       }
     }
-  `],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ButtonModule,
-    SidebarModule,
-    MenubarModule,
-    BreadcrumbModule,
-    AutoCompleteModule,
-    AvatarModule,
-    MenuModule,
-    RippleModule,
-  ],
-  standalone: true
-})
-export class NavigationComponent {
+  `],;`
+  imports: [;
+    CommonModule,;
+    RouterModule,;
+    ButtonModule,;
+    SidebarModule,;
+    MenubarModule,;
+    BreadcrumbModule,;
+    AutoCompleteModule,;
+    AvatarModule,;
+    MenuModule,;
+    RippleModule,;
+  ],;
+  standalone: true;
+});
+export class NavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,
-    showTopMenu: true,
-    showUserMenu: true,
-    showSearch: true,
-    showBreadcrumbs: true,
-    sidebarState: 'expanded',
-    theme: 'light',
+    showSidebar: true,;
+    showTopMenu: true,;
+    showUserMenu: true,;
+    showSearch: true,;
+    showBreadcrumbs: true,;
+    sidebarState: 'expanded',;
+    theme: 'light',;
   };
 
   @Input() menuItems: MenuItem[] = [];
@@ -622,12 +519,12 @@ export class NavigationComponent {
   @Input() breadcrumbItems: MenuItem[] = [];
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter<MenuItem>();
-  @Output() topMenuItemClicked = new EventEmitter<MenuItem>();
-  @Output() userMenuItemClicked = new EventEmitter<MenuItem>();
-  @Output() breadcrumbClicked = new EventEmitter<MenuItem>();
-  @Output() searchSubmitted = new EventEmitter<string>();
-  @Output() sidebarStateChanged = new EventEmitter<string>();
+  @Output() menuItemClicked = new EventEmitter();
+  @Output() topMenuItemClicked = new EventEmitter();
+  @Output() userMenuItemClicked = new EventEmitter();
+  @Output() breadcrumbClicked = new EventEmitter();
+  @Output() searchSubmitted = new EventEmitter();
+  @Output() sidebarStateChanged = new EventEmitter();
 
   sidebarVisible = true;
   searchQuery = '';

@@ -1,3 +1,8 @@
+import { NgModule, Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@nebular/theme';
 // ===================================================
 // COMMON TEST MODULE
 // ===================================================
@@ -15,30 +20,25 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { NgModule, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 
 // Import Nebular modules directly for testing
-import { NbCardModule, NbIconModule, NbButtonModule, NbLayoutModule } from '@nebular/theme';
 
 // Mock components
-@Component({
-    selector: 'app-main-layout',
-    template: '<ng-content></ng-content>',
-    imports: [CommonModule, NbCardModule]
-})
-export class MockMainLayoutComponent {
+@Component({';
+    selector: 'app-main-layout',;
+    template: '',;
+    imports: [CommonModule, NbCardModule];
+});
+export class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 }
 
 @Component({
-    selector: 'nb-card',
-    template: '<div>Mock App Card</div>',
-    imports: [CommonModule]
-})
-export class MockAppCardComponent {
+    selector: 'nb-card',;
+    template: 'Mock App Card',;
+    imports: [CommonModule];
+});
+export class MockAppCardComponen {t {
   @Input() title = '';
   @Input() subtitle = '';
   @Input() description = '';
@@ -57,36 +57,36 @@ export class MockAppCardComponent {
 }
 
 @Component({
-    selector: 'nb-skeleton',
-    template: '<div>Loading...</div>',
-    imports: [CommonModule]
-})
-export class MockSkeletonLoaderComponent {
+    selector: 'nb-skeleton',;
+    template: 'Loading...',;
+    imports: [CommonModule];
+});
+export class MockSkeletonLoaderComponen {t {
   @Input() type: 'text' | 'card' | 'avatar' | 'button' = 'text';
   @Input() lines = 1;
   @Input() animated = true;
 }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MockMainLayoutComponent,
-    MockAppCardComponent,
-    MockSkeletonLoaderComponent,
-    NbCardModule,
-    NbIconModule,
-    NbButtonModule,
-    NbLayoutModule,
-  ],
-  exports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MockMainLayoutComponent,
-    MockAppCardComponent,
-    MockSkeletonLoaderComponent,
-  ],
-})
-export class CommonTestModule {}
+  imports: [;
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    MockMainLayoutComponent,;
+    MockAppCardComponent,;
+    MockSkeletonLoaderComponent,;
+    NbCardModule,;
+    NbIconModule,;
+    NbButtonModule,;
+    NbLayoutModule,;
+  ],;
+  exports: [;
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    MockMainLayoutComponent,;
+    MockAppCardComponent,;
+    MockSkeletonLoaderComponent,;
+  ],;
+});
+export class CommonTestModul {e {}

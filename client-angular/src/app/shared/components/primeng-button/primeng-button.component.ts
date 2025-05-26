@@ -4,51 +4,31 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 
 /**
- * A wrapper component for PrimeNG Button with additional features
- * 
- * This component provides a standardized way to use PrimeNG buttons
- * throughout the application with consistent styling and behavior.
- * 
- * @example
- * <app-primeng-button 
- *   label="Click Me" 
- *   icon="pi pi-check" 
- *   severity="success"
- *   (onClick)="handleClick()">
- * </app-primeng-button>
+ * A wrapper component for PrimeNG Button with additional features;
+ *; 
+ * This component provides a standardized way to use PrimeNG buttons;
+ * throughout the application with consistent styling and behavior.;
+ *; 
+ * @example;
+ * ;
+ * ;
  */
-@Component({
-  selector: 'app-primeng-button',
-  standalone: true,
-  imports: [CommonModule, ButtonModule, TooltipModule],
-  template: `
-    <p-button
-      [label]="label"
-      [icon]="icon"
-      [iconPos]="iconPosition"
-      [disabled]="disabled"
-      [loading]="loading"
-      [severity]="severity"
-      [size]="size"
-      [outlined]="outlined"
-      [rounded]="rounded"
-      [raised]="raised"
-      [text]="text"
-      [pTooltip]="tooltip"
-      tooltipPosition="top"
-      (onClick)="handleClick($event)"
-      [styleClass]="styleClass"
-    >
-      <ng-content></ng-content>
-    </p-button>
-  `,
-  styles: [`
+@Component({';
+  selector: 'app-primeng-button',;
+  standalone: true,;
+  imports: [CommonModule, ButtonModule, TooltipModule],;
+  template: `;`
+    ;
+      ;
+    ;
+  `,;`
+  styles: [`;`
     :host {
       display: inline-block;
     }
-  `]
-})
-export class PrimengButtonComponent {
+  `];`
+});
+export class PrimengButtonComponen {t {
   /** The text to display on the button */
   @Input() label: string = '';
   
@@ -89,11 +69,11 @@ export class PrimengButtonComponent {
   @Input() styleClass: string = '';
   
   /** Event emitted when the button is clicked */
-  @Output() onClick: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() onClick: EventEmitter = new EventEmitter();
   
   /**
-   * Handle button click event
-   * @param event - The click event
+   * Handle button click event;
+   * @param event - The click event;
    */
   handleClick(event: Event): void {
     this.onClick.emit(event);

@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
- * WebSocketFallbackService
- *
- * This service provides a fallback mechanism for handling WebSocket connection failures
- * in development mode. It prevents constant reconnection attempts that can flood the console
- * with error messages.
+ * WebSocketFallbackService;
+ *;
+ * This service provides a fallback mechanism for handling WebSocket connection failures;
+ * in development mode. It prevents constant reconnection attempts that can flood the console;
+ * with error messages.;
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class WebSocketFallbackService {
-  private connectionStatus = new BehaviorSubject<boolean>(false);
+@Injectable({';
+  providedIn: 'root',;
+});
+export class WebSocketFallbackServic {e {
+  private connectionStatus = new BehaviorSubject(false);
   private maxReconnectAttempts = 3;
   private reconnectAttempts = 0;
   private reconnectTimeout: any = null;
   private originalWebSocket: any = null;
 
   /**
-   * Initialize the WebSocket fallback service
-   * This should be called in the app initialization phase
+   * Initialize the WebSocket fallback service;
+   * This should be called in the app initialization phase;
    */
   public initialize(): void {
     // Only apply in development mode
@@ -31,15 +31,15 @@ export class WebSocketFallbackService {
   }
 
   /**
-   * Get the current connection status as an Observable
+   * Get the current connection status as an Observable;
    */
-  public getConnectionStatus(): Observable<boolean> {
+  public getConnectionStatus(): Observable {
     return this.connectionStatus.asObservable();
   }
 
   /**
-   * Setup the WebSocket fallback mechanism
-   * This intercepts WebSocket creation and handles reconnection attempts
+   * Setup the WebSocket fallback mechanism;
+   * This intercepts WebSocket creation and handles reconnection attempts;
    */
   private setupWebSocketFallback(): void {
     // Store the original WebSocket constructor
@@ -69,8 +69,8 @@ export class WebSocketFallbackService {
   }
 
   /**
-   * Restore the original WebSocket constructor
-   * This should be called when the service is destroyed
+   * Restore the original WebSocket constructor;
+   * This should be called when the service is destroyed;
    */
   public restoreOriginalWebSocket(): void {
     if (this.originalWebSocket) {

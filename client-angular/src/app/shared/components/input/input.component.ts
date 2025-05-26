@@ -8,225 +8,226 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ChangeDetectionStrategy,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
+  Component,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  forwardRef,;
+  ChangeDetectionStrategy,';
+} from '@angular/core';
+
+import {
+  ControlValueAccessor,;
+  NG_VALUE_ACCESSOR,;
+  FormsModule,;
+  ReactiveFormsModule,;
+} from '@angular/forms';
 
 /**
- * Input Component
- *
- * A customizable input component that follows the DateNight.io design system.
- * Supports different variants, sizes, and states.
+ * Input Component;
+ *;
+ * A customizable input component that follows the DateNight.io design system.;
+ * Supports different variants, sizes, and states.;
  */
 @Component({
-  selector: 'app-input',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconComponent],
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
+  selector: 'app-input',;
+  standalone: true,;
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconComponent],;
+  templateUrl: './input.component.html',;
+  styleUrls: ['./input.component.scss'],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+  providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
-      multi: true,
-    },
-  ],
-})
-export class InputComponent implements ControlValueAccessor {
+      provide: NG_VALUE_ACCESSOR,;
+      useExisting: forwardRef(() => InputComponent),;
+      multi: true,;
+    },;
+  ],;
+});
+export class InputComponen {t implements ControlValueAccessor {
   /**
-   * The input type.
-   * @default 'text'
+   * The input type.;
+   * @default 'text';
    */
   @Input() type: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search' = 'text';
 
   /**
-   * The input placeholder.
-   * @default ''
+   * The input placeholder.;
+   * @default '';
    */
   @Input() placeholder = '';
 
   /**
-   * The input label.
-   * @default ''
+   * The input label.;
+   * @default '';
    */
   @Input() label = '';
 
   /**
-   * The input helper text.
-   * @default ''
+   * The input helper text.;
+   * @default '';
    */
   @Input() helperText = '';
 
   /**
-   * The input error message.
-   * @default ''
+   * The input error message.;
+   * @default '';
    */
   @Input() errorMessage = '';
 
   /**
-   * Whether the input is required.
-   * @default false
+   * Whether the input is required.;
+   * @default false;
    */
   @Input() required = false;
 
   /**
-   * Whether the input is disabled.
-   * @default false
+   * Whether the input is disabled.;
+   * @default false;
    */
   @Input() disabled = false;
 
   /**
-   * Whether the input is readonly.
-   * @default false
+   * Whether the input is readonly.;
+   * @default false;
    */
   @Input() readonly = false;
 
   /**
-   * The input size.
-   * - 'small': Compact size
-   * - 'medium': Default size
-   * - 'large': Larger size
-   * @default 'medium'
+   * The input size.;
+   * - 'small': Compact size;
+   * - 'medium': Default size;
+   * - 'large': Larger size;
+   * @default 'medium';
    */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
-   * The input variant.
-   * - 'outlined': Outlined input with border
-   * - 'filled': Filled input with background
-   * - 'standard': Standard input with bottom border only
-   * @default 'outlined'
+   * The input variant.;
+   * - 'outlined': Outlined input with border;
+   * - 'filled': Filled input with background;
+   * - 'standard': Standard input with bottom border only;
+   * @default 'outlined';
    */
   @Input() variant: 'outlined' | 'filled' | 'standard' = 'outlined';
 
   /**
-   * Optional icon name to display before the input text.
-   * Uses the app-icon component.
+   * Optional icon name to display before the input text.;
+   * Uses the app-icon component.;
    */
   @Input() iconLeft?: string;
 
   /**
-   * Optional icon name to display after the input text.
-   * Uses the app-icon component.
+   * Optional icon name to display after the input text.;
+   * Uses the app-icon component.;
    */
   @Input() iconRight?: string;
 
   /**
-   * The maximum length of the input.
+   * The maximum length of the input.;
    */
   @Input() maxLength?: number;
 
   /**
-   * The minimum length of the input.
+   * The minimum length of the input.;
    */
   @Input() minLength?: number;
 
   /**
-   * The input pattern for validation.
+   * The input pattern for validation.;
    */
   @Input() pattern?: string;
 
   /**
-   * The input autocomplete attribute.
-   * @default 'off'
+   * The input autocomplete attribute.;
+   * @default 'off';
    */
   @Input() autocomplete = 'off';
 
   /**
-   * The input name attribute.
+   * The input name attribute.;
    */
   @Input() name?: string;
 
   /**
-   * The input id attribute.
+   * The input id attribute.;
    */
   @Input() id?: string;
 
   /**
-   * Event emitted when the input value changes.
+   * Event emitted when the input value changes.;
    */
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter();
 
   /**
-   * Event emitted when the input is focused.
+   * Event emitted when the input is focused.;
    */
-  @Output() focused = new EventEmitter<FocusEvent>();
+  @Output() focused = new EventEmitter();
 
   /**
-   * Event emitted when the input is blurred.
+   * Event emitted when the input is blurred.;
    */
-  @Output() blurred = new EventEmitter<FocusEvent>();
+  @Output() blurred = new EventEmitter();
 
   /**
-   * Event emitted when the input is clicked.
+   * Event emitted when the input is clicked.;
    */
-  @Output() clicked = new EventEmitter<MouseEvent>();
+  @Output() clicked = new EventEmitter();
 
   /**
-   * The input value.
+   * The input value.;
    */
   value = '';
 
   /**
-   * Whether the input is focused.
+   * Whether the input is focused.;
    */
   isFocused = false;
 
   /**
-   * Whether the password is visible (for password inputs).
+   * Whether the password is visible (for password inputs).;
    */
   passwordVisible = false;
 
   /**
-   * Function to call when the input value changes.
+   * Function to call when the input value changes.;
    */
   onChange = (_: unknown): void => {
     // Will be overridden by registerOnChange
   };
 
   /**
-   * Function to call when the input is touched.
+   * Function to call when the input is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
   };
 
   /**
-   * Gets the CSS classes for the input container based on its properties.
+   * Gets the CSS classes for the input container based on its properties.;
    * @returns An object with CSS class names as keys and boolean values
    */
-  get containerClasses(): Record<string, boolean> {
+  get containerClasses(): Record {
     return {
-      input: true,
-      [`input--${this.variant}`]: true,
-      [`input--${this.size}`]: true,
-      'input--disabled': this.disabled,
-      'input--readonly': this.readonly,
-      'input--focused': this.isFocused,
-      'input--error': !!this.errorMessage,
-      'input--with-label': !!this.label,
-      'input--with-icon-left': !!this.iconLeft,
-      'input--with-icon-right': !!this.iconRight || this.type === 'password',
-      'input--required': this.required,
+      input: true,;
+      [`input--${this.variant}`]: true,;`
+      [`input--${this.size}`]: true,;`
+      'input--disabled': this.disabled,;
+      'input--readonly': this.readonly,;
+      'input--focused': this.isFocused,;
+      'input--error': !!this.errorMessage,;
+      'input--with-label': !!this.label,;
+      'input--with-icon-left': !!this.iconLeft,;
+      'input--with-icon-right': !!this.iconRight || this.type === 'password',;
+      'input--required': this.required,;
     };
   }
 
   /**
-   * Gets the input type, handling password visibility.
-   * @returns The input type to use
+   * Gets the input type, handling password visibility.;
+   * @returns The input type to use;
    */
   get inputType(): string {
     if (this.type === 'password' && this.passwordVisible) {
@@ -236,8 +237,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the input focus event.
-   * @param event The focus event
+   * Handles the input focus event.;
+   * @param event The focus event;
    */
   onFocus(event: FocusEvent): void {
     this.isFocused = true;
@@ -245,8 +246,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the input blur event.
-   * @param event The blur event
+   * Handles the input blur event.;
+   * @param event The blur event;
    */
   onBlur(event: FocusEvent): void {
     this.isFocused = false;
@@ -255,16 +256,16 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the input click event.
-   * @param event The mouse event
+   * Handles the input click event.;
+   * @param event The mouse event;
    */
   onClick(event: MouseEvent): void {
     this.clicked.emit(event);
   }
 
   /**
-   * Handles the input value change event.
-   * @param event The input event
+   * Handles the input value change event.;
+   * @param event The input event;
    */
   onInputChange(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -274,15 +275,15 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   /**
-   * Toggles the password visibility.
+   * Toggles the password visibility.;
    */
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 
   /**
-   * Writes a value to the input.
-   * @param value The value to write
+   * Writes a value to the input.;
+   * @param value The value to write;
    */
   writeValue(value: string): void {
     this.value = value || '';
@@ -305,8 +306,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   /**
-   * Sets the disabled state of the input.
-   * @param isDisabled Whether the input is disabled
+   * Sets the disabled state of the input.;
+   * @param isDisabled Whether the input is disabled;
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

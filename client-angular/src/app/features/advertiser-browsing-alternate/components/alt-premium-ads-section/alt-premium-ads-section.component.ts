@@ -20,16 +20,16 @@ interface Advertiser {
   tags?: string[];
 }
 
-@Component({
-  selector: 'app-alt-premium-ads-section',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, CardModule, AltPremiumAdCardComponent],
-  templateUrl: './alt-premium-ads-section.component.html',
-  styleUrls: ['./alt-premium-ads-section.component.scss'],
-})
-export class AltPremiumAdsSectionComponent {
+@Component({';
+  selector: 'app-alt-premium-ads-section',;
+  standalone: true,;
+  imports: [CommonModule, RouterModule, ButtonModule, CardModule, AltPremiumAdCardComponent],;
+  templateUrl: './alt-premium-ads-section.component.html',;
+  styleUrls: ['./alt-premium-ads-section.component.scss'],;
+});
+export class AltPremiumAdsSectionComponen {t {
   @Input() premiumAds: Advertiser[] = [];
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   scroll(direction: 'left' | 'right'): void {
     if (this.scrollContainer) {

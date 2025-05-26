@@ -7,47 +7,49 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+
+import {
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { NbRoleProvider } from '@nebular/security';
-import {
-  User,
-  LoginDTO,
-  RegisterDTO,
-  AuthResponse,
-  NotificationSettings,
-  PrivacySettings,
-} from '../models/user.interface';
 import { Router } from '@angular/router';
+  User,;
+  LoginDTO,;
+  RegisterDTO,;
+  AuthResponse,;
+  NotificationSettings,;
+  PrivacySettings,';
+} from '../models/user.interface';
+
 import { FingerprintService } from './fingerprint.service'; // Import FingerprintService
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthService implements NbRoleProvider {
-  private apiUrl = `${environment.apiUrl}/auth`;
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
+@Injectable({';
+  providedIn: 'root',;
+});
+export class AuthServic {e implements NbRoleProvider {
+  private apiUrl = `${environment.apiUrl}/auth`;`
+  private currentUserSubject = new BehaviorSubject(null);
+  private tokenExpirationTimer: ReturnType | null = null;
 
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
+  constructor(;
+    private http: HttpClient,;
+    private router: Router,;
     private fingerprintService: FingerprintService, // Inject FingerprintService
   ) {
     this.checkAuthStatus();
   }
 
   /**
-   * Implement NbRoleProvider interface
-   * Returns the role of the current user
+   * Implement NbRoleProvider interface;
+   * Returns the role of the current user;
    */
-  getRole(): Observable<string> {
-    return this.currentUser$.pipe(
+  getRole(): Observable {
+    return this.currentUser$.pipe(;
       map((user) => {
         if (!user) return 'guest';
         // Return the highest role based on hierarchy: admin > moderator > user > guest
@@ -55,164 +57,164 @@ export class AuthService implements NbRoleProvider {
         if (user.roles.includes('moderator')) return 'moderator';
         if (user.roles.includes('user')) return 'user';
         return 'guest';
-      }),
+      }),;
     );
   }
 
   /**
-   * Check if user is authenticated on service initialization
+   * Check if user is authenticated on service initialization;
    */
   private checkAuthStatus(): void {
-    this.http
-      .get<{ user: User | null }>(`${this.apiUrl}/status`)
-      .pipe(
-        map((response) => response.user),
-        catchError(() => of(null)),
-      )
+    this.http;
+      .get(`${this.apiUrl}/status`);`
+      .pipe(;
+        map((response) => response.user),;
+        catchError(() => of(null)),;
+      );
       .subscribe((user) => this.currentUserSubject.next(user));
   }
 
   /**
-   * Login with email and password
+   * Login with email and password;
    */
-  login(credentials: LoginDTO): Observable<AuthResponse> {
+  login(credentials: LoginDTO): Observable {
     return new Observable((observer) => {
-      this.fingerprintService
-        .collectFingerprint()
+      this.fingerprintService;
+        .collectFingerprint();
         .then((fingerprint) => {
           const loginPayload = {
-            ...credentials,
-            deviceFingerprint: fingerprint,
-            userAgent: fingerprint['userAgent'],
+            ...credentials,;
+            deviceFingerprint: fingerprint,;
+            userAgent: fingerprint['userAgent'],;
           };
-          this.http
-            .post<AuthResponse>(`${this.apiUrl}/login`, loginPayload, { withCredentials: true })
-            .pipe(tap((response) => this.handleAuthResponse(response)))
+          this.http;
+            .post(`${this.apiUrl}/login`, loginPayload, { withCredentials: true });`
+            .pipe(tap((response) => this.handleAuthResponse(response)));
             .subscribe({
-              next: (response) => observer.next(response),
-              error: (err) => observer.error(err),
-              complete: () => observer.complete(),
+              next: (response) => observer.next(response),;
+              error: (err) => observer.error(err),;
+              complete: () => observer.complete(),;
             });
-        })
+        });
         .catch((err) => {
           console.error('Error collecting fingerprint during login:', err);
-          this.http
-            .post<AuthResponse>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
-            .pipe(tap((response) => this.handleAuthResponse(response)))
+          this.http;
+            .post(`${this.apiUrl}/login`, credentials, { withCredentials: true });`
+            .pipe(tap((response) => this.handleAuthResponse(response)));
             .subscribe({
-              next: (response) => observer.next(response),
-              error: (e) => observer.error(e),
-              complete: () => observer.complete(),
+              next: (response) => observer.next(response),;
+              error: (e) => observer.error(e),;
+              complete: () => observer.complete(),;
             });
         });
     });
   }
 
   /**
-   * Register new user
+   * Register new user;
    */
-  register(userData: RegisterDTO): Observable<AuthResponse> {
+  register(userData: RegisterDTO): Observable {
     return new Observable((observer) => {
-      this.fingerprintService
-        .collectFingerprint()
+      this.fingerprintService;
+        .collectFingerprint();
         .then((fingerprint) => {
           const registerPayload = {
-            ...userData,
-            deviceFingerprint: fingerprint,
-            userAgent: fingerprint['userAgent'],
+            ...userData,;
+            deviceFingerprint: fingerprint,;
+            userAgent: fingerprint['userAgent'],;
           };
-          this.http
-            .post<AuthResponse>(`${this.apiUrl}/register`, registerPayload, {
-              withCredentials: true,
-            })
-            .pipe(tap((response) => this.handleAuthResponse(response)))
-            .subscribe({
-              next: (response) => observer.next(response),
-              error: (err) => observer.error(err),
-              complete: () => observer.complete(),
+          this.http;
+            .post(`${this.apiUrl}/register`, registerPayload, {`
+              withCredentials: true,;
             });
-        })
+            .pipe(tap((response) => this.handleAuthResponse(response)));
+            .subscribe({
+              next: (response) => observer.next(response),;
+              error: (err) => observer.error(err),;
+              complete: () => observer.complete(),;
+            });
+        });
         .catch((err) => {
           console.error('Error collecting fingerprint during registration:', err);
-          this.http
-            .post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true })
-            .pipe(tap((response) => this.handleAuthResponse(response)))
+          this.http;
+            .post(`${this.apiUrl}/register`, userData, { withCredentials: true });`
+            .pipe(tap((response) => this.handleAuthResponse(response)));
             .subscribe({
-              next: (response) => observer.next(response),
-              error: (e) => observer.error(e),
-              complete: () => observer.complete(),
+              next: (response) => observer.next(response),;
+              error: (e) => observer.error(e),;
+              complete: () => observer.complete(),;
             });
         });
     });
   }
 
   /**
-   * Logout user and clear stored data
+   * Logout user and clear stored data;
    */
-  logout(): Observable<void> {
+  logout(): Observable {
     // Send logout request to server to clear cookies
-    return this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(;`
       tap(() => {
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      }),
+      }),;
       catchError((err) => {
         console.error('Logout error:', err);
         // Still clear local state even if server request fails
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
         return throwError(() => err);
-      }),
+      }),;
     );
   }
 
   /**
-   * Handle OAuth callback
-   * The token is now stored in HttpOnly cookies by the server
+   * Handle OAuth callback;
+   * The token is now stored in HttpOnly cookies by the server;
    */
-  handleOAuthCallback(): Observable<User> {
+  handleOAuthCallback(): Observable {
     // No need to store token in localStorage anymore
     // Just validate the token that's in the cookie
     return this.validateToken();
   }
 
   /**
-   * Refresh the access token
+   * Refresh the access token;
    */
-  refreshToken(): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true })
-      .pipe(
-        tap((response) => this.handleAuthResponse(response)),
+  refreshToken(): Observable {
+    return this.http;
+      .post(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true });`
+      .pipe(;
+        tap((response) => this.handleAuthResponse(response)),;
         catchError((error) => {
           // Don't call logout here to avoid infinite loop
           this.currentUserSubject.next(null);
           return throwError(() => error);
-        }),
+        }),;
       );
   }
 
   /**
-   * Check if user is authenticated
-   * @returns Observable<boolean> that emits true if user is authenticated, false otherwise
+   * Check if user is authenticated;
+   * @returns Observable that emits true if user is authenticated, false otherwise;
    */
-  isAuthenticated(): Observable<boolean> {
+  isAuthenticated(): Observable {
     return this.currentUserSubject.pipe(map((user) => !!user));
   }
 
   /**
-   * Get current user
-   * @returns Observable<User | null> that emits the current user or null
+   * Get current user;
+   * @returns Observable that emits the current user or null;
    */
-  getCurrentUser(): Observable<User | null> {
+  getCurrentUser(): Observable {
     return this.currentUserSubject.asObservable();
   }
 
   /**
-   * Get current user ID
+   * Get current user ID;
    */
   getCurrentUserId(): string | null {
     const user = this.currentUserSubject.value;
@@ -220,11 +222,11 @@ export class AuthService implements NbRoleProvider {
   }
 
   /**
-   * Get stored token
-   *
-   * Note: This method is kept for compatibility with existing code,
-   * but it will always return null since we're using HttpOnly cookies now.
-   * The auth interceptor has been updated to handle this.
+   * Get stored token;
+   *;
+   * Note: This method is kept for compatibility with existing code,;
+   * but it will always return null since we're using HttpOnly cookies now.;
+   * The auth interceptor has been updated to handle this.;
    */
   getToken(): string | null {
     // Token is now stored in HttpOnly cookie; not accessible via JS
@@ -232,10 +234,10 @@ export class AuthService implements NbRoleProvider {
   }
 
   /**
-   * Validate the current token
+   * Validate the current token;
    */
-  private validateToken(): Observable<User> {
-    return this.http.get<{ user: User }>(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(
+  private validateToken(): Observable {
+    return this.http.get(`${this.apiUrl}/validate`, { withCredentials: true }).pipe(;`
       map((response) => {
         if (response && response.user) {
           const user = response.user;
@@ -247,16 +249,16 @@ export class AuthService implements NbRoleProvider {
           return user;
         }
         throw new Error('Invalid token');
-      }),
-      catchError((error) =>
+      }),;
+      catchError((error) =>;
         // Don't call logout here to avoid infinite loop
-        throwError(() => error),
-      ),
+        throwError(() => error),;
+      ),;
     );
   }
 
   /**
-   * Handle authentication response
+   * Handle authentication response;
    */
   private handleAuthResponse(response: AuthResponse): void {
     // Token is now stored in HttpOnly cookies by the server
@@ -270,15 +272,15 @@ export class AuthService implements NbRoleProvider {
       this.currentUserSubject.next(response.user);
 
       // Set auto refresh timer
-      const expirationDuration = response.expiresIn
-        ? response.expiresIn * 1000
+      const expirationDuration = response.expiresIn;
+        ? response.expiresIn * 1000;
         : 24 * 60 * 60 * 1000; // Default to 24 hours
       this.setAutoRefresh(expirationDuration * 0.8); // Refresh at 80% of token lifetime
     }
   }
 
   /**
-   * Set timer for automatic token refresh
+   * Set timer for automatic token refresh;
    */
   private setAutoRefresh(refreshDuration: number): void {
     if (this.tokenExpirationTimer) {
@@ -291,22 +293,19 @@ export class AuthService implements NbRoleProvider {
         error: () => {
           // If refresh fails, clear user state
           this.currentUserSubject.next(null);
-        },
+        },;
       });
     }, refreshDuration);
   }
 
   /**
-   * Update user profile information
-   * @param profileData User profile data to update
+   * Update user profile information;
+   * @param profileData User profile data to update;
    */
-  updateProfile(profileData: Partial<User>): Observable<{ user: User; message: string }> {
-    return this.http
-      .put<{
-        user: User;
-        message: string;
-      }>(`${this.apiUrl}/profile`, profileData, { withCredentials: true })
-      .pipe(
+  updateProfile(profileData: Partial): Observable {
+    return this.http;
+      .put(`${this.apiUrl}/profile`, profileData, { withCredentials: true });`
+      .pipe(;
         tap((response) => {
           // Update the current user with new profile data
           if (response && response.user) {
@@ -317,158 +316,155 @@ export class AuthService implements NbRoleProvider {
             this.currentUserSubject.next(response.user);
           }
           return response;
-        }),
+        }),;
       );
   }
 
   /**
-   * Change user password
-   * @param passwordData Object containing currentPassword and newPassword
+   * Change user password;
+   * @param passwordData Object containing currentPassword and newPassword;
    */
   changePassword(passwordData: {
     currentPassword: string;
     newPassword: string;
-  }): Observable<{ message: string }> {
-    return this.http.put<{ message: string }>(`${this.apiUrl}/password`, passwordData, {
-      withCredentials: true,
+  }): Observable {
+    return this.http.put(`${this.apiUrl}/password`, passwordData, {`
+      withCredentials: true,;
     });
   }
 
   /**
-   * Update user notification settings
-   * @param notificationSettings Notification preferences
+   * Update user notification settings;
+   * @param notificationSettings Notification preferences;
    */
-  updateNotificationSettings(
-    notificationSettings: NotificationSettings,
-  ): Observable<{ user: User; message: string }> {
-    return this.http
-      .put<{ user: User; message: string }>(
-        `${this.apiUrl}/notification-settings`,
-        notificationSettings,
+  updateNotificationSettings(;
+    notificationSettings: NotificationSettings,;
+  ): Observable {
+    return this.http;
+      .put(;
+        `${this.apiUrl}/notification-settings`,;`
+        notificationSettings,;
         {
-          withCredentials: true,
-        },
-      )
-      .pipe(
+          withCredentials: true,;
+        },;
+      );
+      .pipe(;
         tap((response) => {
           // Update the current user with new notification settings
           if (response && response.user) {
             const currentUser = this.currentUserSubject.value;
             if (currentUser) {
               const updatedUser = {
-                ...currentUser,
-                notificationSettings: response.user.notificationSettings || notificationSettings,
+                ...currentUser,;
+                notificationSettings: response.user.notificationSettings || notificationSettings,;
               };
               this.currentUserSubject.next(updatedUser);
             }
           }
           return response;
-        }),
+        }),;
       );
   }
 
   /**
-   * Update user privacy settings
-   * @param privacySettings Privacy preferences
+   * Update user privacy settings;
+   * @param privacySettings Privacy preferences;
    */
-  updatePrivacySettings(
-    privacySettings: PrivacySettings,
-  ): Observable<{ user: User; message: string }> {
-    return this.http
-      .put<{
-        user: User;
-        message: string;
-      }>(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true })
-      .pipe(
+  updatePrivacySettings(;
+    privacySettings: PrivacySettings,;
+  ): Observable {
+    return this.http;
+      .put(`${this.apiUrl}/privacy-settings`, privacySettings, { withCredentials: true });`
+      .pipe(;
         tap((response) => {
           // Update the current user with new privacy settings
           if (response && response.user) {
             const currentUser = this.currentUserSubject.value;
             if (currentUser) {
               const updatedUser = {
-                ...currentUser,
-                privacySettings: response.user.privacySettings || privacySettings,
+                ...currentUser,;
+                privacySettings: response.user.privacySettings || privacySettings,;
               };
               this.currentUserSubject.next(updatedUser);
             }
           }
           return response;
-        }),
+        }),;
       );
   }
 
   /**
-   * Delete user account
+   * Delete user account;
    */
-  deleteAccount(): Observable<{ message: string }> {
-    return this.http
-      .delete<{ message: string }>(`${this.apiUrl}/account`, { withCredentials: true })
-      .pipe(
+  deleteAccount(): Observable {
+    return this.http;
+      .delete(`${this.apiUrl}/account`, { withCredentials: true });`
+      .pipe(;
         tap(() => {
           // Clear user state after successful deletion
           this.currentUserSubject.next(null);
           if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
           }
-        }),
+        }),;
       );
   }
 
-  signIn(email: string, password: string): Observable<User> {
-    return this.http.post<{ user: User }>(`${this.apiUrl}/signin`, { email, password }).pipe(
-      map((response) => response.user),
-      tap((user) => this.currentUserSubject.next(user)),
+  signIn(email: string, password: string): Observable {
+    return this.http.post(`${this.apiUrl}/signin`, { email, password }).pipe(;`
+      map((response) => response.user),;
+      tap((user) => this.currentUserSubject.next(user)),;
       catchError((error) => {
         console.error('Sign in error:', error);
         throw error;
-      }),
+      }),;
     );
   }
 
-  signUp(email: string, password: string, displayName: string): Observable<User> {
-    return this.http
-      .post<{ user: User }>(`${this.apiUrl}/signup`, {
-        email,
-        password,
-        displayName,
-      })
-      .pipe(
-        map((response) => response.user),
-        tap((user) => this.currentUserSubject.next(user)),
+  signUp(email: string, password: string, displayName: string): Observable {
+    return this.http;
+      .post(`${this.apiUrl}/signup`, {`
+        email,;
+        password,;
+        displayName,;
+      });
+      .pipe(;
+        map((response) => response.user),;
+        tap((user) => this.currentUserSubject.next(user)),;
         catchError((error) => {
           console.error('Sign up error:', error);
           throw error;
-        }),
+        }),;
       );
   }
 
-  signOut(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/signout`, {}).pipe(
+  signOut(): Observable {
+    return this.http.post(`${this.apiUrl}/signout`, {}).pipe(;`
       tap(() => {
         this.currentUserSubject.next(null);
         this.router.navigate(['/auth/login']);
-      }),
+      }),;
       catchError((error) => {
         console.error('Sign out error:', error);
         throw error;
-      }),
+      }),;
     );
   }
 
   /**
-   * Request password reset
-   * @param email User email
+   * Request password reset;
+   * @param email User email;
    */
-  requestPassword(email: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/request-password`, { email });
+  requestPassword(email: string): Observable {
+    return this.http.post(`${this.apiUrl}/request-password`, { email });`
   }
 
   /**
-   * Reset password with token
-   * @param token Reset token from email
-   * @param password New password
+   * Reset password with token;
+   * @param token Reset token from email;
+   * @param password New password;
    */
-  resetPassword(token: string, password: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/reset-password`, { token, password });
+  resetPassword(token: string, password: string): Observable {
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, password });`
   }
 }

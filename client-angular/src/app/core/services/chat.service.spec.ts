@@ -1,3 +1,10 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { ChatService } from './chat.service';
+import { environment } from '../../../environments/environment';
+import { ChatMessage, ChatMessageRequest } from './chat.service';
+import { firstValueFrom } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,22 +14,16 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ChatService } from './chat.service';
-import { environment } from '../../../environments/environment';
-import { ChatMessage, ChatMessageRequest } from './chat.service';
-import { firstValueFrom } from 'rxjs';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+';
 describe('ChatService', () => {
   let service: ChatService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [ChatService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [ChatService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
 
     service = TestBed.inject(ChatService);
@@ -56,20 +57,20 @@ describe('ChatService', () => {
 
       // Prepare a mock ChatMessage response
       const mockResponse: ChatMessage = {
-        id: 'msg789',
-        roomId,
-        sender: 'alice',
-        receiver: 'bob',
-        content,
-        replyTo,
-        timestamp: new Date(),
-        read: false,
-        createdAt: new Date(),
-        expiresAt: new Date(Date.now() + ttl),
+        id: 'msg789',;
+        roomId,;
+        sender: 'alice',;
+        receiver: 'bob',;
+        content,;
+        replyTo,;
+        timestamp: new Date(),;
+        read: false,;
+        createdAt: new Date(),;
+        expiresAt: new Date(Date.now() + ttl),;
       };
 
       // Expect POST
-      const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages`);`
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(request);
 
@@ -91,7 +92,7 @@ describe('ChatService', () => {
       const resultPromise = service.sendMessageWithAttachments(roomId, content, files);
 
       // Verify the HTTP request
-      const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages/attachments`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/rooms/${roomId}/messages/attachments`);`
       expect(req.request.method).toBe('POST');
 
       // FormData is not easily testable, but we can verify it's a FormData object
@@ -99,23 +100,23 @@ describe('ChatService', () => {
 
       // Respond with mock data (cast to any to allow attachments)
       const mockResponse: any = {
-        id: 'msg789',
-        roomId,
-        sender: 'user123',
+        id: 'msg789',;
+        roomId,;
+        sender: 'user123',;
         receiver: 'user456', // required by ChatMessage interface
-        content,
-        timestamp: new Date(),
-        read: false,
+        content,;
+        timestamp: new Date(),;
+        read: false,;
         createdAt: new Date(), // required by ChatMessage interface
-        attachments: [
+        attachments: [;
           {
-            id: 'att123',
-            name: 'test.txt',
-            type: 'text/plain',
-            size: 12,
+            id: 'att123',;
+            name: 'test.txt',;
+            type: 'text/plain',;
+            size: 12,;
             url: 'https://example.com/files/test.txt',
-          },
-        ],
+          },;
+        ],;
       };
       req.flush(mockResponse);
 

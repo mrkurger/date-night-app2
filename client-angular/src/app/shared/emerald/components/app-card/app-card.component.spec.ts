@@ -11,48 +11,48 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { expect, jest } from '@jest/globals';
-
 import { CardModule } from './app-card.component';
 import { Ad } from '../../../../core/models/ad.interface';
 
+';
 describe('CardModule', () => {
   let component: CardModule;
-  let fixture: ComponentFixture<CardModule>;
+  let fixture: ComponentFixture;
   let debugElement: DebugElement;
 
   // Mock ad data for testing
   const mockAd: Ad = {
-    _id: 'ad123',
-    title: 'Test Ad',
-    description:
+    _id: 'ad123',;
+    title: 'Test Ad',;
+    description:;
       'This is a test ad description that is long enough to test truncation functionality in the component.',
-    category: 'Test Category',
-    price: 100,
+    category: 'Test Category',;
+    price: 100,;
     location: {
-      city: 'Test City',
-      county: 'Test County',
-    },
+      city: 'Test City',;
+      county: 'Test County',;
+    },;
     images: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
-    media: [
+    media: [;
       { type: 'image', url: 'https://example.com/media1.jpg' },
       { type: 'video', url: 'https://example.com/video1.mp4' },
-    ],
-    advertiser: 'Test Advertiser',
-    userId: 'user123',
-    isActive: true,
-    isFeatured: true,
-    isTrending: false,
-    isTouring: false,
-    viewCount: 100,
-    clickCount: 50,
-    inquiryCount: 10,
-    createdAt: '2023-01-01T00:00:00.000Z',
-    updatedAt: '2023-01-02T00:00:00.000Z',
+    ],;
+    advertiser: 'Test Advertiser',;
+    userId: 'user123',;
+    isActive: true,;
+    isFeatured: true,;
+    isTrending: false,;
+    isTouring: false,;
+    viewCount: 100,;
+    clickCount: 50,;
+    inquiryCount: 10,;
+    createdAt: '2023-01-01T00:00:00.000Z',;
+    updatedAt: '2023-01-02T00:00:00.000Z',;
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CardModule, ButtonModule, BadgeModule, CardModule],
+      imports: [CommonModule, CardModule, ButtonModule, BadgeModule, CardModule],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardModule);

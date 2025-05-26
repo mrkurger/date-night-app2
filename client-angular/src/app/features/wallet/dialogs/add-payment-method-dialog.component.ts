@@ -8,42 +8,8 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Input,
-  Inject,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
 import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbRadioModule,
-  NbTabsetModule,
-  NbSpinnerModule,
-  NbStepperModule,
-  NbCheckboxModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbBadgeModule,
-  NbTagModule,
-} from '@nebular/theme';
-
 import { WalletService, PaymentMethod } from '../../../core/services/wallet.service';
 import { PaymentService } from '../../../core/services/payment.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -53,58 +19,92 @@ import { TabViewModule } from 'primeng/tabview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
+  Component,;
+  OnInit,;
+  ChangeDetectionStrategy,;
+  ChangeDetectorRef,;
+  Input,;
+  Inject,';
+} from '@angular/core';
 
+import {
+  FormBuilder,;
+  FormGroup,;
+  Validators,;
+  FormsModule,;
+  ReactiveFormsModule,;
+} from '@angular/forms';
+
+import {
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  NbCardModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbFormFieldModule,;
+  NbInputModule,;
+  NbSelectModule,;
+  NbRadioModule,;
+  NbTabsetModule,;
+  NbSpinnerModule,;
+  NbStepperModule,;
+  NbCheckboxModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+} from '@nebular/theme';
 
 @Component({
-  selector: 'app-add-payment-method-dialog',
-  templateUrl: './add-payment-method-dialog.component.html',
-  styleUrls: ['./add-payment-method-dialog.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    NebularModule, CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbRadioModule,
-    NbTabsetModule,
-    NbSpinnerModule,
-    NbStepperModule,
-    NbCheckboxModule,
-    NbAlertModule,
-    NbTooltipModule,
-    NbBadgeModule,
-    NbTagModule,,
-    TabViewModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class AddPaymentMethodDialogComponent implements OnInit {
+  selector: 'app-add-payment-method-dialog',;
+  templateUrl: './add-payment-method-dialog.component.html',;
+  styleUrls: ['./add-payment-method-dialog.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    NebularModule, CommonModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbFormFieldModule,;
+    NbInputModule,;
+    NbSelectModule,;
+    NbRadioModule,;
+    NbTabsetModule,;
+    NbSpinnerModule,;
+    NbStepperModule,;
+    NbCheckboxModule,;
+    NbAlertModule,;
+    NbTooltipModule,;
+    NbBadgeModule,;
+    NbTagModule,,;
+    TabViewModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+});
+export class AddPaymentMethodDialogComponen {t implements OnInit {
   addPaymentMethodForm: FormGroup;
   paymentMethodType: 'card' | 'bank_account' = 'card';
   isLoading = false;
 
-  constructor(
-    protected dialogRef: NbDialogRef<AddPaymentMethodDialogComponent>,
-    private fb: FormBuilder,
-    private walletService: WalletService,
-    private paymentService: PaymentService,
-    private notificationService: NotificationService,
-    private cdr: ChangeDetectorRef,
+  constructor(;
+    protected dialogRef: NbDialogRef,;
+    private fb: FormBuilder,;
+    private walletService: WalletService,;
+    private paymentService: PaymentService,;
+    private notificationService: NotificationService,;
+    private cdr: ChangeDetectorRef,;
   ) {
     this.addPaymentMethodForm = this.fb.group({
-      nameOnCard: ['', Validators.required],
-      accountHolderName: [''],
-      accountNumber: [''],
-      routingNumber: [''],
+      nameOnCard: ['', Validators.required],;
+      accountHolderName: [''],;
+      accountNumber: [''],;
+      routingNumber: [''],;
     });
   }
 
@@ -145,29 +145,29 @@ export class AddPaymentMethodDialogComponent implements OnInit {
     this.cdr.detectChanges();
 
     try {
-      let paymentMethodData: Partial<PaymentMethod>;
+      let paymentMethodData: Partial;
 
       if (this.paymentMethodType === 'card') {
-        this.notificationService.info(
-          'Card processing logic needs to be implemented with a payment provider.',
+        this.notificationService.info(;
+          'Card processing logic needs to be implemented with a payment provider.',;
         );
         paymentMethodData = {
-          type: 'card',
-          provider: 'stripe',
+          type: 'card',;
+          provider: 'stripe',;
         };
       } else {
         paymentMethodData = {
-          type: 'bank_account',
-          provider: 'manual',
+          type: 'bank_account',;
+          provider: 'manual',;
           bankDetails: {
-            accountHolderName: this.addPaymentMethodForm.value.accountHolderName,
-            lastFour: this.addPaymentMethodForm.value.accountNumber?.slice(-4) || '',
-            accountType: 'checking',
-            bankName: 'Default Bank',
-            country: 'US',
-            currency: 'USD',
+            accountHolderName: this.addPaymentMethodForm.value.accountHolderName,;
+            lastFour: this.addPaymentMethodForm.value.accountNumber?.slice(-4) || '',;
+            accountType: 'checking',;
+            bankName: 'Default Bank',;
+            country: 'US',;
+            currency: 'USD',;
             tokenId: '', // added to satisfy required field
-          } as PaymentMethod['bankDetails'],
+          } as PaymentMethod['bankDetails'],;
         };
       }
 
@@ -175,19 +175,19 @@ export class AddPaymentMethodDialogComponent implements OnInit {
         next: (newMethod) => {
           this.notificationService.success('Payment method added successfully!');
           this.dialogRef.close(newMethod);
-        },
+        },;
         error: (err) => {
           console.error('Error adding payment method:', err);
-          this.notificationService.error(
-            'Failed to add payment method. ' + (err.error?.message || err.message || ''),
+          this.notificationService.error(;
+            'Failed to add payment method. ' + (err.error?.message || err.message || ''),;
           );
           this.isLoading = false;
           this.cdr.detectChanges();
-        },
+        },;
         complete: () => {
           this.isLoading = false;
           this.cdr.detectChanges();
-        },
+        },;
       });
     } catch (error: unknown) {
       console.error('Error saving payment method:', error);

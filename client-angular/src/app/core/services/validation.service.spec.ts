@@ -5,13 +5,14 @@ import { CryptoService } from './crypto.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { describe, expect, it } from '@jest/globals';
 
+';
 describe('ValidationService', () => {
   let service: ValidationService;
   let sanitizerService: ContentSanitizerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ValidationService, ContentSanitizerService, CryptoService],
+      providers: [ValidationService, ContentSanitizerService, CryptoService],;
     });
     service = TestBed.inject(ValidationService);
     sanitizerService = TestBed.inject(ContentSanitizerService);
@@ -89,7 +90,7 @@ describe('ValidationService', () => {
   describe('Secure URL Validation', () => {
     it('should validate secure URLs', () => {
       const validator = service.validateSecureUrl();
-      const validUrls = [
+      const validUrls = [;
         'https://example.com',
         'https://sub.example.com/path',
         'https://example.com?param=value',
@@ -112,23 +113,23 @@ describe('ValidationService', () => {
 
   describe('Field Matching Validation', () => {
     it('should validate matching fields', () => {
-      const form = new FormGroup(
+      const form = new FormGroup(;
         {
-          password: new FormControl('Test123!'),
-          confirmPassword: new FormControl('Test123!'),
-        },
-        [service.validateFieldMatch('password', 'confirmPassword')],
+          password: new FormControl('Test123!'),;
+          confirmPassword: new FormControl('Test123!'),;
+        },;
+        [service.validateFieldMatch('password', 'confirmPassword')],;
       );
       expect(form.errors).toBeNull();
     });
 
     it('should reject non-matching fields', () => {
-      const form = new FormGroup(
+      const form = new FormGroup(;
         {
-          password: new FormControl('Test123!'),
-          confirmPassword: new FormControl('Different123!'),
-        },
-        [service.validateFieldMatch('password', 'confirmPassword')],
+          password: new FormControl('Test123!'),;
+          confirmPassword: new FormControl('Different123!'),;
+        },;
+        [service.validateFieldMatch('password', 'confirmPassword')],;
       );
       expect(form.errors).toEqual({ mismatch: true });
     });
@@ -154,9 +155,9 @@ describe('ValidationService', () => {
     it('should sanitize string values in form data', () => {
       const mockSanitize = spyOn(sanitizerService, 'sanitize').and.callFake((val) => val);
       const data = {
-        name: '<script>alert("xss")</script>John',
-        age: 25,
-        email: 'test@example.com',
+        name: 'alert("xss")John',;
+        age: 25,;
+        email: 'test@example.com',;
       };
 
       service.sanitizeFormData(data);
@@ -184,11 +185,11 @@ describe('ValidationService', () => {
 
       const state = service.getCompleteErrorState(control);
       expect(state).toEqual({
-        invalid: true,
-        dirty: true,
-        touched: true,
-        errors: { required: true },
-        errorMessage: 'This field is required',
+        invalid: true,;
+        dirty: true,;
+        touched: true,;
+        errors: { required: true },;
+        errorMessage: 'This field is required',;
       });
     });
   });
@@ -197,7 +198,7 @@ describe('ValidationService', () => {
   describe('URL Validation', () => {
     it('should validate various HTTPS URL formats', () => {
       const validator = service.validateSecureUrl();
-      const validUrls = [
+      const validUrls = [;
         'https://example.com',
         'https://sub.domain.example.com',
         'https://example.com/path?param=value#hash',
@@ -210,10 +211,10 @@ describe('ValidationService', () => {
 
     it('should reject non-HTTPS and malformed URLs', () => {
       const validator = service.validateSecureUrl();
-      const invalidUrls = [
+      const invalidUrls = [;
         'http://example.com',
         'ftp://example.com',
-        'example.com',
+        'example.com',;
         'https://',
         'https://example',
       ];
@@ -245,19 +246,19 @@ describe('ValidationService', () => {
     let formGroup: FormGroup;
 
     beforeEach(() => {
-      formGroup = new FormGroup(
+      formGroup = new FormGroup(;
         {
-          password: new FormControl(''),
-          confirmPassword: new FormControl(''),
-        },
-        [service.validatePasswordMatch('password', 'confirmPassword')],
+          password: new FormControl(''),;
+          confirmPassword: new FormControl(''),;
+        },;
+        [service.validatePasswordMatch('password', 'confirmPassword')],;
       );
     });
 
     it('should validate matching passwords', () => {
       formGroup.patchValue({
-        password: 'Test123!',
-        confirmPassword: 'Test123!',
+        password: 'Test123!',;
+        confirmPassword: 'Test123!',;
       });
       expect(formGroup.errors).toBeNull();
       expect(formGroup.get('confirmPassword')?.errors).toBeNull();
@@ -265,8 +266,8 @@ describe('ValidationService', () => {
 
     it('should detect non-matching passwords', () => {
       formGroup.patchValue({
-        password: 'Test123!',
-        confirmPassword: 'Different123!',
+        password: 'Test123!',;
+        confirmPassword: 'Different123!',;
       });
       expect(formGroup.errors).toEqual({ passwordMismatch: true });
       expect(formGroup.get('confirmPassword')?.errors).toEqual({ passwordMismatch: true });
@@ -274,13 +275,13 @@ describe('ValidationService', () => {
 
     it('should clear errors when passwords match', () => {
       formGroup.patchValue({
-        password: 'Test123!',
-        confirmPassword: 'Different123!',
+        password: 'Test123!',;
+        confirmPassword: 'Different123!',;
       });
       expect(formGroup.errors).toBeTruthy();
 
       formGroup.patchValue({
-        confirmPassword: 'Test123!',
+        confirmPassword: 'Test123!',;
       });
       expect(formGroup.errors).toBeNull();
     });
@@ -290,35 +291,35 @@ describe('ValidationService', () => {
     let formGroup: FormGroup;
 
     beforeEach(() => {
-      formGroup = new FormGroup(
+      formGroup = new FormGroup(;
         {
-          startDate: new FormControl(''),
-          endDate: new FormControl(''),
-        },
-        [service.validateDateRange('startDate', 'endDate')],
+          startDate: new FormControl(''),;
+          endDate: new FormControl(''),;
+        },;
+        [service.validateDateRange('startDate', 'endDate')],;
       );
     });
 
     it('should validate correct date ranges', () => {
       formGroup.patchValue({
-        startDate: '2023-01-01',
-        endDate: '2023-01-02',
+        startDate: '2023-01-01',;
+        endDate: '2023-01-02',;
       });
       expect(formGroup.errors).toBeNull();
     });
 
     it('should reject invalid date ranges', () => {
       formGroup.patchValue({
-        startDate: '2023-01-02',
-        endDate: '2023-01-01',
+        startDate: '2023-01-02',;
+        endDate: '2023-01-01',;
       });
       expect(formGroup.errors).toEqual({ dateRange: true });
     });
 
     it('should handle same day dates', () => {
       formGroup.patchValue({
-        startDate: '2023-01-01',
-        endDate: '2023-01-01',
+        startDate: '2023-01-01',;
+        endDate: '2023-01-01',;
       });
       expect(formGroup.errors).toEqual({ dateRange: true });
     });
@@ -326,17 +327,17 @@ describe('ValidationService', () => {
 
   describe('Form Data Sanitization', () => {
     it('should sanitize nested objects', () => {
-      const mockSanitize = jest
-        .spyOn(sanitizerService, 'sanitizeText')
+      const mockSanitize = jest;
+        .spyOn(sanitizerService, 'sanitizeText');
         .mockImplementation((val) => val);
 
       const data = {
         user: {
-          name: '<script>alert("xss")</script>John',
+          name: 'alert("xss")John',;
           profile: {
-            bio: '<img src=x onerror=alert(1)>',
-          },
-        },
+            bio: '',;
+          },;
+        },;
       };
 
       service.sanitizeFormData(data);
@@ -345,12 +346,12 @@ describe('ValidationService', () => {
     });
 
     it('should handle arrays of data', () => {
-      const mockSanitize = jest
-        .spyOn(sanitizerService, 'sanitizeText')
+      const mockSanitize = jest;
+        .spyOn(sanitizerService, 'sanitizeText');
         .mockImplementation((val) => val);
 
       const data = {
-        comments: ['<script>alert(1)</script>', 'normal text', '<img src=x>'],
+        comments: ['alert(1)', 'normal text', ''],;
       };
 
       service.sanitizeFormData(data);
@@ -360,10 +361,10 @@ describe('ValidationService', () => {
 
     it('should preserve non-string values', () => {
       const data = {
-        age: 25,
-        active: true,
-        score: 3.14,
-        dates: [new Date(), null, undefined],
+        age: 25,;
+        active: true,;
+        score: 3.14,;
+        dates: [new Date(), null, undefined],;
       };
 
       const result = service.sanitizeFormData(data);

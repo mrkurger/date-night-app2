@@ -2,14 +2,23 @@ import { Input } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+import { AdService } from '../../../core/services/ad.service';
+import { ThemeService } from '../../../core/services/theme.service';
+import { Ad } from '../../../core/models/ad.interface';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { Subscription } from 'rxjs';
+
 // ===================================================
 // DEPRECATION NOTICE
 // ===================================================
 // This MainLayoutComponent is deprecated and scheduled for removal.
 // It uses a custom layout system and non-Nebular components (e.g., Font Awesome icons).
 // The primary application layout is now handled by NavigationComponent (client-angular/src/app/core/components/navigation/navigation.component.ts)
-// which uses Nebular UI components.
-// Feature components should be structured to inject their content into NavigationComponent's <router-outlet>.
+// which uses Nebular UI components.';
+// Feature components should be structured to inject their content into NavigationComponent's .
 // Any unique and still-required functionality from this component should be migrated to Nebular-compatible
 // shared components or services.
 // ===================================================
@@ -21,22 +30,14 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
-import { AdService } from '../../../core/services/ad.service';
-import { ThemeService } from '../../../core/services/theme.service';
-import { Ad } from '../../../core/models/ad.interface';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
-import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-main-layout',
-    templateUrl: './main-layout.component.html',
-    styleUrls: ['./main-layout.component.scss'],
-    imports: [CommonModule, RouterModule, ThemeToggleComponent]
-})
-export class MainLayoutComponent implements OnInit, OnDestroy {
+    selector: 'app-main-layout',;
+    templateUrl: './main-layout.component.html',;
+    styleUrls: ['./main-layout.component.scss'],;
+    imports: [CommonModule, RouterModule, ThemeToggleComponent];
+});
+export class MainLayoutComponen {t implements OnInit, OnDestroy {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
 
   isAuthenticated = false;
@@ -47,28 +48,28 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private adService: AdService,
-    private themeService: ThemeService,
+  constructor(;
+    private authService: AuthService,;
+    private adService: AdService,;
+    private themeService: ThemeService,;
   ) {}
 
   ngOnInit(): void {
     // Check authentication status
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.authService.currentUser$.subscribe((user) => {
         this.isAuthenticated = !!user;
-      }),
+      }),;
     );
 
     // Load premium ads for the sidebar
     this.loadPremiumAds();
 
     // Subscribe to theme changes
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.themeService.isDarkMode$.subscribe((isDarkMode) => {
         this.isDarkMode = isDarkMode;
-      }),
+      }),;
     );
   }
 
@@ -79,17 +80,17 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   loadPremiumAds(): void {
     this.loading = true;
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.adService.getFeaturedAds().subscribe({
         next: (ads) => {
           this.premiumAds = ads.slice(0, 5); // Show top 5 premium ads
           this.loading = false;
-        },
+        },;
         error: (err) => {
           console.error('Error loading premium ads:', err);
           this.loading = false;
-        },
-      }),
+        },;
+      }),;
     );
   }
 
@@ -116,11 +117,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Toggle between light and dark theme
-   * This method is kept for backward compatibility but is no longer needed
-   * as the ThemeToggleComponent now handles theme changes directly
-   * @param value The new theme value (true for dark, false for light)
-   * @deprecated Use ThemeToggleComponent instead
+   * Toggle between light and dark theme;
+   * This method is kept for backward compatibility but is no longer needed;
+   * as the ThemeToggleComponent now handles theme changes directly;
+   * @param value The new theme value (true for dark, false for light);
+   * @deprecated Use ThemeToggleComponent instead;
    */
   onThemeChange(value: boolean): void {
     this.themeService.setTheme(value ? 'dark' : 'light');

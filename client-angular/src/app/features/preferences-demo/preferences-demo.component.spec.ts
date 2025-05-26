@@ -1,3 +1,8 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PreferencesDemoComponent } from './preferences-demo.component';
+import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { BehaviorSubject } from 'rxjs';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,25 +13,20 @@
 //   Related to: user-preferences.service.ts:DEFAULT_PREFERENCES
 // ===================================================
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PreferencesDemoComponent } from './preferences-demo.component';
-import { UserPreferencesService } from '../../core/services/user-preferences.service';
-import { BehaviorSubject } from 'rxjs';
-import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
-
+';
 describe('PreferencesDemoComponent', () => {
   let component: PreferencesDemoComponent;
-  let fixture: ComponentFixture<PreferencesDemoComponent>;
-  let mockUserPreferencesService: jasmine.SpyObj<UserPreferencesService>;
-  let preferencesSubject: BehaviorSubject<any>;
+  let fixture: ComponentFixture;
+  let mockUserPreferencesService: jasmine.SpyObj;
+  let preferencesSubject: BehaviorSubject;
 
   const MOCK_PREFERENCES: any = {
-    defaultViewType: 'netflix' as 'netflix' | 'tinder' | 'list',
-    contentDensity: 'comfortable',
-    cardSize: 'medium',
-    savedFilters: {},
-    recentlyViewed: [],
-    favorites: [],
+    defaultViewType: 'netflix' as 'netflix' | 'tinder' | 'list',;
+    contentDensity: 'comfortable',;
+    cardSize: 'medium',;
+    savedFilters: {},;
+    recentlyViewed: [],;
+    favorites: [],;
   };
 
   beforeEach(async () => {
@@ -34,12 +34,12 @@ describe('PreferencesDemoComponent', () => {
     preferencesSubject = new BehaviorSubject(MOCK_PREFERENCES);
 
     // Create a mock UserPreferencesService
-    mockUserPreferencesService = jasmine.createSpyObj('UserPreferencesService', [
-      'getPreferences',
-      'setDefaultViewType',
-      'setContentDensity',
-      'setCardSize',
-      'resetPreferences',
+    mockUserPreferencesService = jasmine.createSpyObj('UserPreferencesService', [;
+      'getPreferences',;
+      'setDefaultViewType',;
+      'setContentDensity',;
+      'setCardSize',;
+      'resetPreferences',;
     ]);
 
     // Configure the mock service
@@ -48,24 +48,24 @@ describe('PreferencesDemoComponent', () => {
 
     // Create getters for the options
     Object.defineProperty(mockUserPreferencesService, 'contentDensityOptions', {
-      get: () => [
-        { value: 'comfortable', label: 'Comfortable' },
-        { value: 'compact', label: 'Compact' },
-        { value: 'condensed', label: 'Condensed' },
-      ],
+      get: () => [;
+        { value: 'comfortable', label: 'Comfortable' },;
+        { value: 'compact', label: 'Compact' },;
+        { value: 'condensed', label: 'Condensed' },;
+      ],;
     });
 
     Object.defineProperty(mockUserPreferencesService, 'cardSizeOptions', {
-      get: () => [
-        { value: 'small', label: 'Small' },
-        { value: 'medium', label: 'Medium' },
-        { value: 'large', label: 'Large' },
-      ],
+      get: () => [;
+        { value: 'small', label: 'Small' },;
+        { value: 'medium', label: 'Medium' },;
+        { value: 'large', label: 'Large' },;
+      ],;
     });
 
     await TestBed.configureTestingModule({
-      imports: [PreferencesDemoComponent],
-      providers: [{ provide: UserPreferencesService, useValue: mockUserPreferencesService }],
+      imports: [PreferencesDemoComponent],;
+      providers: [{ provide: UserPreferencesService, useValue: mockUserPreferencesService }],;
       schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements like mat-card
     }).compileComponents();
 
@@ -88,10 +88,10 @@ describe('PreferencesDemoComponent', () => {
   it('should update when preferences change', () => {
     // Simulate a preference change
     preferencesSubject.next({
-      ...MOCK_PREFERENCES,
-      defaultViewType: 'tinder',
-      contentDensity: 'compact',
-      cardSize: 'large',
+      ...MOCK_PREFERENCES,;
+      defaultViewType: 'tinder',;
+      contentDensity: 'compact',;
+      cardSize: 'large',;
     });
 
     // Check that the component updated

@@ -6,13 +6,14 @@ import { SidebarModule } from 'primeng/sidebar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/menuitem';
+
 export interface NavigationConfig {
   showSidebar?: boolean;
   showTopMenu?: boolean;
   showUserMenu?: boolean;
   showSearch?: boolean;
   showBreadcrumbs?: boolean;
-  sidebarVisible?: boolean;
+  sidebarVisible?: boolean;';
   theme?: 'default' | 'dark' | 'cosmic' | 'corporate';
 }
 
@@ -24,58 +25,42 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-primeng-navigation',
-  template: `
-    <div class="layout">
-      <!-- Sidebar -->
-      <p-sidebar
-        *ngIf="config.showSidebar"
-        [(visible)]="config.sidebarVisible"
-        [baseZIndex]="1000"
-        [modal]="true"
-      >
-        <p-panelMenu [model]="menuItems"></p-panelMenu>
-      </p-sidebar>
+  selector: 'app-primeng-navigation',;
+  template: `;`
+    ;
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Header -->
-      <div class="header">
-        <button
-          *ngIf="config.showSidebar"
-          pButton
-          icon="pi pi-bars"
-          (click)="toggleSidebar()"
-        ></button>
-        <p-menubar *ngIf="config.showTopMenu" [model]="topMenuItems"></p-menubar>
+      ;
+      ;
+        ;
+        ;
 
-        <div class="header-right">
-          <!-- Search -->
-          <input
-            *ngIf="config.showSearch"
-            type="text"
-            pInputText
-            placeholder="Search..."
-            (input)="onSearch($event.target.value)"
-          />
+        ;
+          ;
+          ;
 
-          <!-- User Menu -->
-          <div *ngIf="config.showUserMenu && userData" class="user-menu">
-            <img [src]="userData.picture" alt="User Picture" class="user-picture" />
-            <span>{{ userData.name }}</span>
-          </div>
-        </div>
-      </div>
+          ;
+          ;
+            ;
+            {{ userData.name }};
+          ;
+        ;
+      ;
 
-      <!-- Breadcrumbs -->
-      <p-breadcrumb *ngIf="config.showBreadcrumbs" [model]="breadcrumbItems"></p-breadcrumb>
+      ;
+      ;
 
-      <!-- Content -->
-      <div class="content">
-        <ng-content></ng-content>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+      ;
+      ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .layout {
         display: flex;
         flex-direction: column;
@@ -104,27 +89,27 @@ export interface UserData {
         height: 32px;
         border-radius: 50%;
       }
-    `,
-  ],
-  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule, 
-    CommonModule,
-    RouterModule,
-    MenubarModule,
-    SidebarModule,
-    BreadcrumbModule,
-    ButtonModule,
-  ],
-  standalone: true,
-})
-export class PrimeNGNavigationComponent {
+    `,;`
+  ],;
+  imports: [MenuItem, ButtonModule, BreadcrumbModule, SidebarModule, MenubarModule,; 
+    CommonModule,;
+    RouterModule,;
+    MenubarModule,;
+    SidebarModule,;
+    BreadcrumbModule,;
+    ButtonModule,;
+  ],;
+  standalone: true,;
+});
+export class PrimeNGNavigationComponen {t {
   @Input() config: NavigationConfig = {
-    showSidebar: true,
-    showTopMenu: true,
-    showUserMenu: true,
-    showSearch: true,
-    showBreadcrumbs: true,
-    sidebarVisible: false,
-    theme: 'default',
+    showSidebar: true,;
+    showTopMenu: true,;
+    showUserMenu: true,;
+    showSearch: true,;
+    showBreadcrumbs: true,;
+    sidebarVisible: false,;
+    theme: 'default',;
   };
 
   @Input() menuItems: MenuItem[] = [];
@@ -132,10 +117,10 @@ export class PrimeNGNavigationComponent {
   @Input() breadcrumbItems: MenuItem[] = [];
   @Input() userData?: UserData;
 
-  @Output() menuItemClicked = new EventEmitter<MenuItem>();
-  @Output() topMenuItemClicked = new EventEmitter<MenuItem>();
-  @Output() breadcrumbClicked = new EventEmitter<MenuItem>();
-  @Output() searchSubmitted = new EventEmitter<string>();
+  @Output() menuItemClicked = new EventEmitter();
+  @Output() topMenuItemClicked = new EventEmitter();
+  @Output() breadcrumbClicked = new EventEmitter();
+  @Output() searchSubmitted = new EventEmitter();
 
   toggleSidebar() {
     this.config.sidebarVisible = !this.config.sidebarVisible;

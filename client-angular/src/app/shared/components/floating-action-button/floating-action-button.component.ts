@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
 
 export interface FabMenuItem extends NbMenuItem {
@@ -8,32 +7,21 @@ export interface FabMenuItem extends NbMenuItem {
 }
 
 /**
- * Floating Action Button Component
- *
- * A modern floating action button using Nebular UI components.
- * Features icon, tooltip, and optional context menu.
+ * Floating Action Button Component;
+ *;
+ * A modern floating action button using Nebular UI components.;
+ * Features icon, tooltip, and optional context menu.;
  */
-@Component({
-    selector: 'app-fab',
-    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],
-    template: `
-    <button
-      nbButton
-      [status]="status"
-      [size]="size"
-      [disabled]="disabled"
-      [nbTooltip]="tooltipText"
-      [nbTooltipStatus]="status"
-      [nbContextMenu]="items"
-      [nbContextMenuTag]="menuTag"
-      [class]="'fab fab--' + position"
-      (click)="onClick($event)"
-    >
-      <nb-icon [icon]="icon"></nb-icon>
-    </button>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-fab',;
+    imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule, NbContextMenuModule],;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         position: fixed;
         z-index: 1000;
@@ -47,8 +35,8 @@ export interface FabMenuItem extends NbMenuItem {
         align-items: center;
         justify-content: center;
         box-shadow: nb-theme(shadow-lg);
-        transition:
-          transform 0.2s ease,
+        transition:;
+          transform 0.2s ease,;
           box-shadow 0.2s ease;
 
         &:hover {
@@ -118,21 +106,21 @@ export interface FabMenuItem extends NbMenuItem {
           font-size: 2rem;
         }
       }
-    `,
-    ]
-})
-export class ButtonModule {
+    `,;`
+    ];
+});
+export class ButtonModul {e {
   @Input() icon = 'plus-outline';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
-  @Input() position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center' =
+  @Input() position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'center' =;
     'bottom-right';
   @Input() tooltipText = '';
   @Input() disabled = false;
   @Input() items: FabMenuItem[] = [];
 
-  @Output() buttonClick = new EventEmitter<void>();
-  @Output() menuItemClick = new EventEmitter<FabMenuItem>();
+  @Output() buttonClick = new EventEmitter();
+  @Output() menuItemClick = new EventEmitter();
 
   readonly menuTag = 'fab-menu-' + Math.random().toString(36).substring(7);
 
@@ -152,7 +140,7 @@ export class ButtonModule {
     }
   }
 
-  @HostListener('document:click')
+  @HostListener('document:click');
   onDocumentClick(): void {
     // Close the menu when clicking outside
     // The menu will close automatically when clicking outside

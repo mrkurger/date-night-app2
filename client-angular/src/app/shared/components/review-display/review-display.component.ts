@@ -1,9 +1,16 @@
 import { EventEmitter } from '@angular/core';
 import { _NebularModule } from '../../nebular.module';
-
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,11 +20,6 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-
-import { CommonModule } from '@angular/common';
-
-import { StarRatingComponent } from '../star-rating/star-rating.component';
-import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 
 export interface Review {
   _id: string;
@@ -43,7 +45,7 @@ export interface Review {
     appearance?: number;
     location?: number;
     value?: number;
-  };
+  };';
   status: 'pending' | 'approved' | 'rejected';
   isVerifiedMeeting?: boolean;
   meetingDate?: string;
@@ -57,41 +59,38 @@ export interface Review {
 }
 
 @Component({
-  selector: 'app-review-display',
-  standalone: true,
-  imports: [
-    CommonModule,
-    StarRatingComponent,
-    TimeAgoPipe,
-    NbButtonModule,
-    NbIconModule,
-    NbCardModule,
-    NbTooltipModule,
-    NbBadgeModule,,
-    DividerModule
-  ],
-  templateUrl: './review-display.component.html',
-  styleUrls: ['./review-display.component.scss'],
-})
-export class ReviewDisplayComponent {
+  selector: 'app-review-display',;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    StarRatingComponent,;
+    TimeAgoPipe,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbCardModule,;
+    NbTooltipModule,;
+    NbBadgeModule,,;
+    DividerModule;
+  ],;
+  templateUrl: './review-display.component.html',;
+  styleUrls: ['./review-display.component.scss'],;
+});
+export class ReviewDisplayComponen {t {
   @Input() review!: Review;
-import { CardModule } from 'primeng/card';
-import { DividerModule } from 'primeng/divider';
-
 
   @Input() isCurrentUserReviewer = false;
   @Input() isCurrentUserAdvertiser = false;
   @Input() showAdvertiserInfo = true;
   @Input() showActions = true;
 
-  @Output() markHelpful = new EventEmitter<string>();
-  @Output() reportReview = new EventEmitter<string>();
-  @Output() respondToReview = new EventEmitter<string>();
-  @Output() editReview = new EventEmitter<string>();
-  @Output() deleteReview = new EventEmitter<string>();
+  @Output() markHelpful = new EventEmitter();
+  @Output() reportReview = new EventEmitter();
+  @Output() respondToReview = new EventEmitter();
+  @Output() editReview = new EventEmitter();
+  @Output() deleteReview = new EventEmitter();
 
   /**
-   * Get the average category rating
+   * Get the average category rating;
    */
   getCategoryAverage(): number {
     if (!this.review.categories) {
@@ -99,11 +98,11 @@ import { DividerModule } from 'primeng/divider';
     }
 
     const categories = this.review.categories;
-    const values = [
-      categories.communication,
-      categories.appearance,
-      categories.location,
-      categories.value,
+    const values = [;
+      categories.communication,;
+      categories.appearance,;
+      categories.location,;
+      categories.value,;
     ].filter((val) => val !== undefined && val > 0) as number[];
 
     if (values.length === 0) {
@@ -115,18 +114,18 @@ import { DividerModule } from 'primeng/divider';
   }
 
   /**
-   * Check if a category has a rating
+   * Check if a category has a rating;
    */
   hasCategoryRating(category: string): boolean {
-    return !!(
-      this.review.categories &&
-      this.review.categories[category as keyof typeof this.review.categories] &&
-      this.review.categories[category as keyof typeof this.review.categories]! > 0
+    return !!(;
+      this.review.categories &&;
+      this.review.categories[category as keyof typeof this.review.categories] &&;
+      this.review.categories[category as keyof typeof this.review.categories]! > 0;
     );
   }
 
   /**
-   * Get a category rating
+   * Get a category rating;
    */
   getCategoryRating(category: string): number {
     if (!this.review.categories) {
@@ -137,35 +136,35 @@ import { DividerModule } from 'primeng/divider';
   }
 
   /**
-   * Handle mark as helpful action
+   * Handle mark as helpful action;
    */
   onMarkHelpful(): void {
     this.markHelpful.emit(this.review._id);
   }
 
   /**
-   * Handle report review action
+   * Handle report review action;
    */
   onReportReview(): void {
     this.reportReview.emit(this.review._id);
   }
 
   /**
-   * Handle respond to review action
+   * Handle respond to review action;
    */
   onRespondToReview(): void {
     this.respondToReview.emit(this.review._id);
   }
 
   /**
-   * Handle edit review action
+   * Handle edit review action;
    */
   onEditReview(): void {
     this.editReview.emit(this.review._id);
   }
 
   /**
-   * Handle delete review action
+   * Handle delete review action;
    */
   onDeleteReview(): void {
     this.deleteReview.emit(this.review._id);

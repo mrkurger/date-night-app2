@@ -1,5 +1,5 @@
 /**
- * Configuration options for the HTTP error interceptor
+ * Configuration options for the HTTP error interceptor;
  */
 export interface HttpErrorInterceptorConfig {
   /** Whether to show notifications for errors */
@@ -31,20 +31,20 @@ export interface HttpErrorInterceptorConfig {
 }
 
 /**
- * Default configuration for the HTTP error interceptor
+ * Default configuration for the HTTP error interceptor;
  */
 export const DEFAULT_HTTP_ERROR_CONFIG: HttpErrorInterceptorConfig = {
-  showNotifications: true,
-  retryFailedRequests: true,
-  maxRetryAttempts: 3,
-  retryDelay: 1000,
-  redirectToLogin: true,
-  logErrors: true,
-  includeRequestDetails: true,
-  trackErrors: true,
-  trackPerformance: true,
-  groupSimilarErrors: true,
-  retryJitter: 300,
-  sanitizeSensitiveData: true,
-  skipUrls: ['/api/health', '/api/metrics', '/api/telemetry'],
+  showNotifications: true,;
+  retryFailedRequests: true,;
+  maxRetryAttempts: 3,;
+  retryDelay: 1000,;
+  redirectToLogin: true,;
+  logErrors: true,;
+  includeRequestDetails: true,;
+  trackErrors: true,;
+  trackPerformance: true,;
+  groupSimilarErrors: true,;
+  retryJitter: 300,;
+  sanitizeSensitiveData: true,;
+  skipUrls: ['/api/health', '/api/metrics', '/api/telemetry'],;
 };

@@ -7,43 +7,44 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+
+import {
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdService } from '../../core/services/ad.service';
 import { CommonModule } from '@angular/common';
 import { Ad } from '../../core/models/ad.model';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbLayoutModule,
+  NbCardModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbLayoutModule,';
 } from '@nebular/theme';
 
 @Component({
-    selector: 'app-ad-browser',
-    templateUrl: './ad-browser.component.html',
-    styleUrls: ['./ad-browser.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
-        NbCardModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbLayoutModule,
-    ]
-})
-export class AdBrowserComponent implements OnInit {
+    selector: 'app-ad-browser',;
+    templateUrl: './ad-browser.component.html',;
+    styleUrls: ['./ad-browser.component.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [NebularModule, CommonModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbSpinnerModule,;
+        NbLayoutModule,;
+    ];
+});
+export class AdBrowserComponen {t implements OnInit {
   ads: Ad[] = [];
   currentIndex = 0;
   loading = false;
   error: string | null = null;
   favorites: string[] = []; // Array of ad IDs
 
-  constructor(
-    private adService: AdService,
-    private router: Router,
+  constructor(;
+    private adService: AdService,;
+    private router: Router,;
   ) {}
 
   ngOnInit(): void {
@@ -60,33 +61,16 @@ export class AdBrowserComponent implements OnInit {
       next: (response) => {
         this.ads = response.ads;
         this.loading = false;
-      },
+      },;
       error: (_err) => {
         this.error = 'Failed to load ads';
         this.loading = false;
-      },
+      },;
     });
   }
 
   swipeLeft(): void {
-    if (this.currentIndex < this.ads.length) {
-      this.currentIndex++;
-    }
-  }
-
-  swipeRight(): void {
-    if (this.currentIndex < this.ads.length) {
-      this.toggleFavorite(this.ads[this.currentIndex]);
-      this.currentIndex++;
-    }
-  }
-
-  getCurrentAd(): Ad | undefined {
-    return this.ads[this.currentIndex];
-  }
-
-  toggleFavorite(ad: Ad): void {
-    const index = this.favorites.findIndex((favId) => favId === ad._id);
+    if (this.currentIndex  favId === ad._id);
     if (index === -1) {
       this.favorites.push(ad._id);
     } else {
@@ -104,7 +88,7 @@ export class AdBrowserComponent implements OnInit {
       this.error = 'Geolocation not supported';
       return;
     }
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(;
       (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
@@ -113,16 +97,16 @@ export class AdBrowserComponent implements OnInit {
           next: (data) => {
             this.ads = data;
             this.loading = false;
-          },
+          },;
           error: (_err) => {
             this.error = 'Failed to find nearby ads';
             this.loading = false;
-          },
+          },;
         });
-      },
+      },;
       (_error) => {
         this.error = 'Unable to retrieve your location';
-      },
+      },;
     );
   }
 

@@ -3,132 +3,132 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SafetyService {
-  private apiUrl = `${environment.apiUrl}/safety`;
+@Injectable({';
+  providedIn: 'root',;
+});
+export class SafetyServic {e {
+  private apiUrl = `${environment.apiUrl}/safety`;`
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Create a new safety check-in
-   * @param checkinData Check-in data
+   * Create a new safety check-in;
+   * @param checkinData Check-in data;
    */
-  createSafetyCheckin(checkinData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin`, checkinData);
+  createSafetyCheckin(checkinData: any): Observable {
+    return this.http.post(`${this.apiUrl}/checkin`, checkinData);`
   }
 
   /**
-   * Get all safety check-ins for the current user
-   * @param status Optional status filter
-   * @param page Page number
-   * @param limit Items per page
+   * Get all safety check-ins for the current user;
+   * @param status Optional status filter;
+   * @param page Page number;
+   * @param limit Items per page;
    */
-  getUserSafetyCheckins(status?: string, page = 1, limit = 10): Observable<any> {
-    let url = `${this.apiUrl}/checkins?page=${page}&limit=${limit}`;
+  getUserSafetyCheckins(status?: string, page = 1, limit = 10): Observable {
+    let url = `${this.apiUrl}/checkins?page=${page}&limit=${limit}`;`
     if (status) {
-      url += `&status=${status}`;
+      url += `&status=${status}`;`
     }
     return this.http.get(url);
   }
 
   /**
-   * Get a specific safety check-in
-   * @param checkinId Check-in ID
+   * Get a specific safety check-in;
+   * @param checkinId Check-in ID;
    */
-  getSafetyCheckin(checkinId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/checkin/${checkinId}`);
+  getSafetyCheckin(checkinId: string): Observable {
+    return this.http.get(`${this.apiUrl}/checkin/${checkinId}`);`
   }
 
   /**
-   * Update a safety check-in
-   * @param checkinId Check-in ID
-   * @param updates Updated check-in data
+   * Update a safety check-in;
+   * @param checkinId Check-in ID;
+   * @param updates Updated check-in data;
    */
-  updateSafetyCheckin(checkinId: string, updates: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/checkin/${checkinId}`, updates);
+  updateSafetyCheckin(checkinId: string, updates: any): Observable {
+    return this.http.put(`${this.apiUrl}/checkin/${checkinId}`, updates);`
   }
 
   /**
-   * Start a safety check-in
-   * @param checkinId Check-in ID
+   * Start a safety check-in;
+   * @param checkinId Check-in ID;
    */
-  startSafetyCheckin(checkinId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/start`, {});
+  startSafetyCheckin(checkinId: string): Observable {
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/start`, {});`
   }
 
   /**
-   * Complete a safety check-in
-   * @param checkinId Check-in ID
+   * Complete a safety check-in;
+   * @param checkinId Check-in ID;
    */
-  completeSafetyCheckin(checkinId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/complete`, {});
+  completeSafetyCheckin(checkinId: string): Observable {
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/complete`, {});`
   }
 
   /**
-   * Record a check-in response
-   * @param checkinId Check-in ID
-   * @param response Response type (safe, need_more_time, distress)
-   * @param coordinates Optional coordinates [longitude, latitude]
+   * Record a check-in response;
+   * @param checkinId Check-in ID;
+   * @param response Response type (safe, need_more_time, distress);
+   * @param coordinates Optional coordinates [longitude, latitude];
    */
-  recordCheckInResponse(
-    checkinId: string,
-    response: 'safe' | 'need_more_time' | 'distress',
-    coordinates?: [number, number],
-  ): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/respond`, {
-      response,
-      coordinates,
+  recordCheckInResponse(;
+    checkinId: string,;
+    response: 'safe' | 'need_more_time' | 'distress',;
+    coordinates?: [number, number],;
+  ): Observable {
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/respond`, {`
+      response,;
+      coordinates,;
     });
   }
 
   /**
-   * Verify check-in with safety code
-   * @param checkinId Check-in ID
-   * @param code Safety or distress code
+   * Verify check-in with safety code;
+   * @param checkinId Check-in ID;
+   * @param code Safety or distress code;
    */
-  verifyWithSafetyCode(checkinId: string, code: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/verify`, { code });
+  verifyWithSafetyCode(checkinId: string, code: string): Observable {
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/verify`, { code });`
   }
 
   /**
-   * Add emergency contact to a check-in
-   * @param checkinId Check-in ID
-   * @param contactData Contact data
+   * Add emergency contact to a check-in;
+   * @param checkinId Check-in ID;
+   * @param contactData Contact data;
    */
-  addEmergencyContact(checkinId: string, contactData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/emergency-contact`, contactData);
+  addEmergencyContact(checkinId: string, contactData: any): Observable {
+    return this.http.post(`${this.apiUrl}/checkin/${checkinId}/emergency-contact`, contactData);`
   }
 
   /**
-   * Remove emergency contact from a check-in
-   * @param checkinId Check-in ID
-   * @param contactId Contact ID
+   * Remove emergency contact from a check-in;
+   * @param checkinId Check-in ID;
+   * @param contactId Contact ID;
    */
-  removeEmergencyContact(checkinId: string, contactId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/checkin/${checkinId}/emergency-contact/${contactId}`);
+  removeEmergencyContact(checkinId: string, contactId: string): Observable {
+    return this.http.delete(`${this.apiUrl}/checkin/${checkinId}/emergency-contact/${contactId}`);`
   }
 
   /**
-   * Get user's safety settings
+   * Get user's safety settings;
    */
-  getUserSafetySettings(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/settings`);
+  getUserSafetySettings(): Observable {
+    return this.http.get(`${this.apiUrl}/settings`);`
   }
 
   /**
-   * Update user's safety settings
-   * @param settings Updated safety settings
+   * Update user's safety settings;
+   * @param settings Updated safety settings;
    */
-  updateSafetySettings(settings: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/settings`, settings);
+  updateSafetySettings(settings: any): Observable {
+    return this.http.put(`${this.apiUrl}/settings`, settings);`
   }
 
   /**
-   * Admin: Get check-ins requiring attention
+   * Admin: Get check-ins requiring attention;
    */
-  getCheckinsRequiringAttention(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/admin/attention-required`);
+  getCheckinsRequiringAttention(): Observable {
+    return this.http.get(`${this.apiUrl}/admin/attention-required`);`
   }
 }

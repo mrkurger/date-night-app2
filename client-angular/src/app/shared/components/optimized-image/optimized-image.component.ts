@@ -1,6 +1,9 @@
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ImageOptimizationService } from '../../../core/services/image-optimization.service';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,31 +13,19 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-import { ImageOptimizationService } from '../../../core/services/image-optimization.service';
 
-@Component({
-  selector: 'app-optimized-image',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <img
-      [src]="optimizedSrc"
-      [srcset]="srcset"
-      [alt]="alt"
-      [width]="width"
-      [height]="height"
-      [ngClass]="{ 'lazy-loaded': loaded }"
-      loading="lazy"
-      (load)="onImageLoad()"
-      class="optimized-image"
-    />
-    <div *ngIf="!loaded" class="placeholder-container">
-      <img [src]="placeholderSrc" [alt]="'Loading ' + alt" class="placeholder-image" />
-    </div>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-optimized-image',;
+  standalone: true,;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+    ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       :host {
         display: block;
         position: relative;
@@ -71,10 +62,10 @@ import { ImageOptimizationService } from '../../../core/services/image-optimizat
         object-fit: cover;
         filter: blur(10px);
       }
-    `,
-  ],
-})
-export class OptimizedImageComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class OptimizedImageComponen {t implements OnInit {
   @Input() src!: string;
   @Input() alt = '';
   @Input() width = 0;
@@ -83,11 +74,11 @@ export class OptimizedImageComponent implements OnInit {
   @Input() priority = false;
 
   @HostBinding('style.width') get hostWidth() {
-    return this.width ? `${this.width}px` : 'auto';
+    return this.width ? `${this.width}px` : 'auto';`
   }
 
   @HostBinding('style.height') get hostHeight() {
-    return this.height ? `${this.height}px` : 'auto';
+    return this.height ? `${this.height}px` : 'auto';`
   }
 
   optimizedSrc = '';

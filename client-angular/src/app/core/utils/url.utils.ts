@@ -1,12 +1,12 @@
 /**
- * URL utilities for common URL operations
- * These utilities can be used across the application to ensure consistent URL handling
+ * URL utilities for common URL operations;
+ * These utilities can be used across the application to ensure consistent URL handling;
  */
 
 /**
- * Checks if a URL is valid
- * @param url The URL to check
- * @returns True if the URL is valid, false otherwise
+ * Checks if a URL is valid;
+ * @param url The URL to check;
+ * @returns True if the URL is valid, false otherwise;
  */
 export function isValidUrl(url: string): boolean {
   if (!url) {
@@ -27,14 +27,14 @@ export function isValidUrl(url: string): boolean {
 }
 
 /**
- * Adds query parameters to a URL
- * @param url The base URL
- * @param params The query parameters to add
- * @returns The URL with query parameters
+ * Adds query parameters to a URL;
+ * @param url The base URL;
+ * @param params The query parameters to add;
+ * @returns The URL with query parameters;
  */
 export function addQueryParams(
-  url: string,
-  params: Record<string, string | number | boolean>,
+  url: string,;
+  params: Record,;
 ): string {
   if (!url) {
     return '';
@@ -59,11 +59,11 @@ export function addQueryParams(
 }
 
 /**
- * Gets query parameters from a URL
- * @param url The URL to parse
- * @returns An object with the query parameters
+ * Gets query parameters from a URL;
+ * @param url The URL to parse;
+ * @returns An object with the query parameters;
  */
-export function getQueryParams(url: string): Record<string, string> {
+export function getQueryParams(url: string): Record {
   if (!url) {
     return {};
   }
@@ -75,7 +75,7 @@ export function getQueryParams(url: string): Record<string, string> {
     }
 
     const urlObj = new URL(url);
-    const params: Record<string, string> = {};
+    const params: Record = {};
 
     urlObj.searchParams.forEach((value, key) => {
       params[key] = value;
@@ -88,12 +88,12 @@ export function getQueryParams(url: string): Record<string, string> {
 }
 
 /**
- * Joins URL path segments
- * @param segments The URL path segments to join
- * @returns The joined URL path
+ * Joins URL path segments;
+ * @param segments The URL path segments to join;
+ * @returns The joined URL path;
  */
 export function joinUrlPaths(...segments: string[]): string {
-  return segments
+  return segments;
     .map((segment) => segment.replace(/^\/+|\/+$/g, '')) // Remove leading/trailing slashes
     .filter(Boolean) // Remove empty segments
     .join('/');

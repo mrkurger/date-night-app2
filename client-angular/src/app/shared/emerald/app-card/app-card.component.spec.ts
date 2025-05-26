@@ -1,3 +1,9 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../nebular.module';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CardModule } from './app-card.component';
+import { TagModule } from '../components/label/label.component';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -7,64 +13,58 @@
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEM: Mock item data for testing
 // ===================================================
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NebularModule } from '../../nebular.module';
 
+';
 // import { By } from '@angular/platform-browser';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { CardModule } from './app-card.component';
-import { TagModule } from '../components/label/label.component';
 
 /**
- * Custom HTML template for testing to avoid using the shared template
- * that requires methods not available in this component
+ * Custom HTML template for testing to avoid using the shared template;
+ * that requires methods not available in this component;
  */
-@Component({
-    selector: 'nb-card-test',
-    template: `
-    <div class="nb-card" [ngClass]="'nb-card--' + layout">
-      <div class="nb-card__content">
-        <h3 class="nb-card__title">{{ title }}</h3>
-        <p class="nb-card__subtitle" *ngIf="subtitle">{{ subtitle }}</p>
-        <p class="nb-card__description" *ngIf="description">{{ description }}</p>
-        <div class="nb-card__tags" *ngIf="visibleTags.length > 0">
-          <nb-tag *ngFor="let tag of visibleTags" [text]="tag"></nb-tag>
-        </div>
-      </div>
-    </div>
-  `,
-    imports: [CommonModule, TagModule,
-        NbTagModule,]
-})
-class TestAppCardComponent extends CardModule {}
+@Component({';
+    selector: 'nb-card-test',;
+    template: `;`
+    ;
+      ;
+        {{ title }};
+        {{ subtitle }};
+        {{ description }};
+         0">;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    imports: [CommonModule, TagModule,;
+        NbTagModule,];
+});
+class TestAppCardComponen {t extends CardModule {}
 
 describe('CardModule (Basic Version)', () => {
   let component: TestAppCardComponent;
-  let fixture: ComponentFixture<TestAppCardComponent>;
+  let fixture: ComponentFixture;
   // let debugElement: DebugElement;
 
   // Mock item data for testing
   const mockItem = {
-    id: 'item123',
-    title: 'Test Item',
-    subtitle: 'Test Subtitle',
-    description: 'This is a test item description',
+    id: 'item123',;
+    title: 'Test Item',;
+    subtitle: 'Test Subtitle',;
+    description: 'This is a test item description',;
     imageUrl: 'https://example.com/image1.jpg',
     avatarUrl: 'https://example.com/avatar1.jpg',
-    avatarName: 'Test User',
-    isOnline: true,
-    tags: ['tag1', 'tag2', 'tag3', 'tag4'],
-    actions: [
-      { id: 'action1', icon: 'heart', tooltip: 'Like' },
-      { id: 'action2', icon: 'comment', tooltip: 'Comment' },
-    ],
+    avatarName: 'Test User',;
+    isOnline: true,;
+    tags: ['tag1', 'tag2', 'tag3', 'tag4'],;
+    actions: [;
+      { id: 'action1', icon: 'heart', tooltip: 'Like' },;
+      { id: 'action2', icon: 'comment', tooltip: 'Comment' },;
+    ],;
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, TestAppCardComponent, TagModule],
+      imports: [CommonModule, TestAppCardComponent, TagModule],;
       schemas: [NO_ERRORS_SCHEMA], // Ignore unknown elements/attributes
     }).compileComponents();
 
@@ -127,8 +127,8 @@ describe('CardModule (Basic Version)', () => {
 
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(component.actionClick.emit).toHaveBeenCalledWith({
-        id: 'action1',
-        itemId: mockItem.id,
+        id: 'action1',;
+        itemId: mockItem.id,;
       });
     });
   });

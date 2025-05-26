@@ -4,19 +4,19 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Profile, ProfileUpdateDTO } from '../models/profile.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ProfileService {
-  private apiUrl = `${environment.apiUrl}/profile`;
+@Injectable({';
+  providedIn: 'root',;
+});
+export class ProfileServic {e {
+  private apiUrl = `${environment.apiUrl}/profile`;`
 
   constructor(private http: HttpClient) {}
 
-  getProfile(): Observable<Profile> {
-    return this.http.get<Profile>(this.apiUrl);
+  getProfile(): Observable {
+    return this.http.get(this.apiUrl);
   }
 
-  updateProfile(data: ProfileUpdateDTO): Observable<Profile> {
+  updateProfile(data: ProfileUpdateDTO): Observable {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === 'avatar' && value instanceof File) {
@@ -25,6 +25,6 @@ export class ProfileService {
         formData.append(key, JSON.stringify(value));
       }
     });
-    return this.http.put<Profile>(this.apiUrl, formData);
+    return this.http.put(this.apiUrl, formData);
   }
 }

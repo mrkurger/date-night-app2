@@ -10,29 +10,29 @@
 //   Related to: client-angular/src/environments/environment.ts
 // ===================================================
 
+import {
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { LocationService } from './location.service';
 import { environment } from '../../../environments/environment';
-import {
-  NORWAY_COUNTIES,
-  getAllCounties,
-  getCitiesByCounty,
-  getCityCoordinates,
-} from '../constants/norway-locations';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+  NORWAY_COUNTIES,;
+  getAllCounties,;
+  getCitiesByCounty,;
+  getCityCoordinates,';
+} from '../constants/norway-locations';
 
 /**
- * Test suite for the LocationService
- *
- * Tests cover:
- * - Getting counties from API and fallback
- * - Getting cities by county from API and fallback
- * - Getting all cities from API and fallback
- * - Getting city coordinates from API and fallback
- * - Getting current location
- * - Finding nearest city
- * - Distance calculation
+ * Test suite for the LocationService;
+ *;
+ * Tests cover:;
+ * - Getting counties from API and fallback;
+ * - Getting cities by county from API and fallback;
+ * - Getting all cities from API and fallback;
+ * - Getting city coordinates from API and fallback;
+ * - Getting current location;
+ * - Finding nearest city;
+ * - Distance calculation;
  */
 describe('LocationService', () => {
   let service: LocationService;
@@ -41,8 +41,8 @@ describe('LocationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [LocationService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    imports: [],;
+    providers: [LocationService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()];
 });
     service = TestBed.inject(LocationService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -64,7 +64,7 @@ describe('LocationService', () => {
         expect(counties).toEqual(mockCounties);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/counties`);
+      const req = httpMock.expectOne(`${apiUrl}/counties`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockCounties);
     });
@@ -76,7 +76,7 @@ describe('LocationService', () => {
         expect(counties).toEqual(expectedCounties);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/counties`);
+      const req = httpMock.expectOne(`${apiUrl}/counties`);`
       req.error(new ErrorEvent('Network error'));
     });
   });
@@ -84,16 +84,16 @@ describe('LocationService', () => {
   describe('getCitiesByCounty', () => {
     it('should return cities for a county from API when request succeeds', () => {
       const countyName = 'Oslo';
-      const mockCities = [
-        { name: 'Oslo', coordinates: [10.7522, 59.9139] as [number, number] },
-        { name: 'Nordstrand', coordinates: [10.8007, 59.8651] as [number, number] },
+      const mockCities = [;
+        { name: 'Oslo', coordinates: [10.7522, 59.9139] as [number, number] },;
+        { name: 'Nordstrand', coordinates: [10.8007, 59.8651] as [number, number] },;
       ];
 
       service.getCitiesByCounty(countyName).subscribe((cities) => {
         expect(cities).toEqual(mockCities);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/counties/${countyName}/cities`);
+      const req = httpMock.expectOne(`${apiUrl}/counties/${countyName}/cities`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockCities);
     });
@@ -106,7 +106,7 @@ describe('LocationService', () => {
         expect(cities).toEqual(expectedCities);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/counties/${countyName}/cities`);
+      const req = httpMock.expectOne(`${apiUrl}/counties/${countyName}/cities`);`
       req.error(new ErrorEvent('Network error'));
     });
   });
@@ -119,7 +119,7 @@ describe('LocationService', () => {
         expect(cities).toEqual(mockCities);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/cities`);
+      const req = httpMock.expectOne(`${apiUrl}/cities`);`
       expect(req.request.method).toBe('GET');
       req.flush(mockCities);
     });
@@ -131,7 +131,7 @@ describe('LocationService', () => {
         expect(typeof cities[0]).toBe('string');
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/cities`);
+      const req = httpMock.expectOne(`${apiUrl}/cities`);`
       req.error(new ErrorEvent('Network error'));
     });
   });
@@ -145,7 +145,7 @@ describe('LocationService', () => {
         expect(coordinates).toEqual(mockCoordinates);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);
+      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);`
       expect(req.request.method).toBe('GET');
       req.flush({ coordinates: mockCoordinates });
     });
@@ -158,7 +158,7 @@ describe('LocationService', () => {
         expect(coordinates).toEqual(expectedCoordinates);
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);
+      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);`
       req.error(new ErrorEvent('Network error'));
     });
 
@@ -169,7 +169,7 @@ describe('LocationService', () => {
         expect(coordinates).toBeNull();
       });
 
-      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);
+      const req = httpMock.expectOne(`${apiUrl}/cities/${cityName}/coordinates`);`
       req.error(new ErrorEvent('Network error'));
     });
   });
@@ -179,15 +179,15 @@ describe('LocationService', () => {
       // Mock the navigator.geolocation
       const mockPosition = {
         coords: {
-          latitude: 59.9139,
-          longitude: 10.7522,
-          accuracy: 10,
-          altitude: null,
-          altitudeAccuracy: null,
-          heading: null,
-          speed: null,
-        },
-        timestamp: Date.now(),
+          latitude: 59.9139,;
+          longitude: 10.7522,;
+          accuracy: 10,;
+          altitude: null,;
+          altitudeAccuracy: null,;
+          heading: null,;
+          speed: null,;
+        },;
+        timestamp: Date.now(),;
       } as GeolocationPosition;
 
       spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((success) => {
@@ -206,14 +206,14 @@ describe('LocationService', () => {
         error(new GeolocationPositionError());
       });
 
-      service.getCurrentLocation().subscribe(
+      service.getCurrentLocation().subscribe(;
         () => {
           fail('Should have failed');
-        },
+        },;
         (error) => {
           expect(error).toBeTruthy();
           done();
-        },
+        },;
       );
     });
   });
@@ -223,17 +223,17 @@ describe('LocationService', () => {
       const latitude = 59.9139;
       const longitude = 10.7522;
       const mockResponse = {
-        city: 'Oslo',
-        county: 'Oslo',
-        distance: 0.5,
+        city: 'Oslo',;
+        county: 'Oslo',;
+        distance: 0.5,;
       };
 
       service.findNearestCity(latitude, longitude).subscribe((result) => {
         expect(result).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,
+      const req = httpMock.expectOne(;
+        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,;`
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
@@ -249,8 +249,8 @@ describe('LocationService', () => {
         expect(typeof result.distance).toBe('number');
       });
 
-      const req = httpMock.expectOne(
-        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,
+      const req = httpMock.expectOne(;
+        `${apiUrl}/nearest-city?latitude=${latitude}&longitude=${longitude}`,;`
       );
       req.error(new ErrorEvent('Network error'));
     });

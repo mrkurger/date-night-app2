@@ -1,6 +1,24 @@
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { expect } from '@jest/globals';
+import { TinderComponent } from './tinder.component';
+import { AdService, GetAdsResponse } from '../../core/services/ad.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { ChatService } from '../../core/services/chat.service';
+import { AuthService } from '../../core/services/auth.service';
+import { Ad } from '../../core/models/ad.interface';
+import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-card.component';
+import { ButtonModule } from '../../shared/components/floating-action-button/floating-action-button.component';
+import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { InputSwitchModule } from '../../shared/components/toggle/toggle.component';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,103 +28,85 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { CommonModule } from '@angular/common';
 
 // Import testing utilities
-import { expect } from '@jest/globals';
-
-import { TinderComponent } from './tinder.component';
-import { AdService, GetAdsResponse } from '../../core/services/ad.service';
-import { NotificationService } from '../../core/services/notification.service';
-import { ChatService } from '../../core/services/chat.service';
-import { AuthService } from '../../core/services/auth.service';
-import { Ad } from '../../core/models/ad.interface';
 
 // Import our Nebular-based components
-import { TinderCardComponent } from '../../shared/components/tinder-card/tinder-card.component';
-import { ButtonModule } from '../../shared/components/floating-action-button/floating-action-button.component';
-import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
-import { InputSwitchModule } from '../../shared/components/toggle/toggle.component';
 
 // Mock MainLayoutComponent
-@Component({
-    selector: 'app-main-layout',
-    template: '<ng-content></ng-content>',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule]
-})
-class MockMainLayoutComponent {
+@Component({';
+    selector: 'app-main-layout',;
+    template: '',;
+    imports: [CommonModule, ReactiveFormsModule, FormsModule];
+});
+class MockMainLayoutComponen {t {
   @Input() activeView: 'netflix' | 'tinder' | 'list' = 'tinder';
 }
 
 // Mock data
-const mockAds: Ad[] = [
+const mockAds: Ad[] = [;
   {
-    _id: 'ad1',
-    title: 'Test Ad 1',
-    description: 'Test description 1',
-    price: 100,
+    _id: 'ad1',;
+    title: 'Test Ad 1',;
+    description: 'Test description 1',;
+    price: 100,;
     location: {
-      city: 'Oslo',
-      county: 'Oslo',
-    },
-    category: 'Dinner',
-    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],
-    images: ['/assets/images/test-image-1.jpg'],
+      city: 'Oslo',;
+      county: 'Oslo',;
+    },;
+    category: 'Dinner',;
+    media: [{ url: '/assets/images/test-image-1.jpg', type: 'image' }],;
+    images: ['/assets/images/test-image-1.jpg'],;
     advertiser: {
-      _id: 'user1',
-      username: 'Test User 1',
-      profileImage: '/assets/images/default-profile.jpg',
-    },
-    userId: 'user1',
-    isActive: true,
-    isFeatured: false,
-    isTrending: false,
-    isTouring: false,
-    viewCount: 0,
-    clickCount: 0,
-    inquiryCount: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    tags: ['tag1', 'tag2'],
-  },
+      _id: 'user1',;
+      username: 'Test User 1',;
+      profileImage: '/assets/images/default-profile.jpg',;
+    },;
+    userId: 'user1',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: false,;
+    isTouring: false,;
+    viewCount: 0,;
+    clickCount: 0,;
+    inquiryCount: 0,;
+    createdAt: new Date().toISOString(),;
+    updatedAt: new Date().toISOString(),;
+    tags: ['tag1', 'tag2'],;
+  },;
   {
-    _id: 'ad2',
-    title: 'Test Ad 2',
-    description: 'Test description 2',
-    price: 200,
+    _id: 'ad2',;
+    title: 'Test Ad 2',;
+    description: 'Test description 2',;
+    price: 200,;
     location: {
-      city: 'Bergen',
-      county: 'Vestland',
-    },
-    category: 'Activity',
-    media: [{ url: '/assets/images/test-image-2.jpg', type: 'image' }],
-    images: ['/assets/images/test-image-2.jpg'],
+      city: 'Bergen',;
+      county: 'Vestland',;
+    },;
+    category: 'Activity',;
+    media: [{ url: '/assets/images/test-image-2.jpg', type: 'image' }],;
+    images: ['/assets/images/test-image-2.jpg'],;
     advertiser: {
-      _id: 'user2',
-      username: 'Test User 2',
-      profileImage: '/assets/images/default-profile.jpg',
-    },
-    userId: 'user2',
-    isActive: true,
-    isFeatured: false,
-    isTrending: false,
-    isTouring: false,
-    viewCount: 0,
-    clickCount: 0,
-    inquiryCount: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    tags: ['tag3', 'tag4'],
-  },
+      _id: 'user2',;
+      username: 'Test User 2',;
+      profileImage: '/assets/images/default-profile.jpg',;
+    },;
+    userId: 'user2',;
+    isActive: true,;
+    isFeatured: false,;
+    isTrending: false,;
+    isTouring: false,;
+    viewCount: 0,;
+    clickCount: 0,;
+    inquiryCount: 0,;
+    createdAt: new Date().toISOString(),;
+    updatedAt: new Date().toISOString(),;
+    tags: ['tag3', 'tag4'],;
+  },;
 ];
 
 // Mock services
-class MockAdService {
+class MockAdServic {e {
   getAds() {
     return of({ ads: mockAds, total: mockAds.length } as GetAdsResponse);
   }
@@ -127,24 +127,24 @@ class MockAdService {
   }
 }
 
-class MockNotificationService {
+class MockNotificationServic {e {
   success() {}
   error() {}
 }
 
-class MockChatService {
+class MockChatServic {e {
   startChat() {
     return of(undefined);
   }
 }
 
-class MockAuthService {
+class MockAuthServic {e {
   currentUser$ = of(null);
 }
 
 describe('TinderComponent', () => {
   let component: TinderComponent;
-  let fixture: ComponentFixture<TinderComponent>;
+  let fixture: ComponentFixture;
   let adService: AdService;
   let notificationService: NotificationService;
   let chatService: ChatService;
@@ -153,23 +153,23 @@ describe('TinderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        FormsModule,
-        TinderComponent,
-        TinderCardComponent,
-        ButtonModule,
-        SkeletonModule,
-        InputSwitchModule,
-      ],
-      declarations: [MockMainLayoutComponent],
-      providers: [
-        { provide: AdService, useClass: MockAdService },
-        { provide: NotificationService, useClass: MockNotificationService },
-        { provide: ChatService, useClass: MockChatService },
-        { provide: AuthService, useClass: MockAuthService },
-      ],
+      imports: [;
+        RouterTestingModule,;
+        ReactiveFormsModule,;
+        FormsModule,;
+        TinderComponent,;
+        TinderCardComponent,;
+        ButtonModule,;
+        SkeletonModule,;
+        InputSwitchModule,;
+      ],;
+      declarations: [MockMainLayoutComponent],;
+      providers: [;
+        { provide: AdService, useClass: MockAdService },;
+        { provide: NotificationService, useClass: MockNotificationService },;
+        { provide: ChatService, useClass: MockChatService },;
+        { provide: AuthService, useClass: MockAuthService },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(TinderComponent);

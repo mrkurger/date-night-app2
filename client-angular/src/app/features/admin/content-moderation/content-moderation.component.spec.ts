@@ -2,6 +2,7 @@
 // New test file:
 /////////////////////////
 
+import {
 import { CommonModule } from '@angular/common';
 import { InjectionToken } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
@@ -14,105 +15,103 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PaginatorModule, PaginatorPageChangeEvent } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
 import { ContentModerationComponent } from './content-moderation.component';
-import {
-  IContentSanitizerService,
-  IMediaService,
-  INotificationService,
-  IPendingMedia,
+  IContentSanitizerService,;
+  IMediaService,;
+  INotificationService,;
+  IPendingMedia,';
 } from './content-moderation.interfaces';
 
 // Injection tokens for our interfaces
-const MEDIA_SERVICE_TOKEN = new InjectionToken<IMediaService>('MEDIA_SERVICE');
-const NOTIFICATION_SERVICE_TOKEN = new InjectionToken<INotificationService>('NOTIFICATION_SERVICE');
-const CONTENT_SANITIZER_TOKEN = new InjectionToken<IContentSanitizerService>('CONTENT_SANITIZER');
+const MEDIA_SERVICE_TOKEN = new InjectionToken('MEDIA_SERVICE');
+const NOTIFICATION_SERVICE_TOKEN = new InjectionToken('NOTIFICATION_SERVICE');
+const CONTENT_SANITIZER_TOKEN = new InjectionToken('CONTENT_SANITIZER');
 
 describe('ContentModerationComponent', () => {
   let component: ContentModerationComponent;
-  let fixture: ComponentFixture<ContentModerationComponent>;
-  let mediaService: jasmine.SpyObj<IMediaService>;
-  let notificationService: jasmine.SpyObj<INotificationService>;
-  let contentSanitizer: jasmine.SpyObj<IContentSanitizerService>;
-  let domSanitizer: jasmine.SpyObj<DomSanitizer>;
+  let fixture: ComponentFixture;
+  let mediaService: jasmine.SpyObj;
+  let notificationService: jasmine.SpyObj;
+  let contentSanitizer: jasmine.SpyObj;
+  let domSanitizer: jasmine.SpyObj;
 
-  const mockMediaItems: IPendingMedia[] = [
+  const mockMediaItems: IPendingMedia[] = [;
     {
-      _id: '1',
-      adId: 'ad1',
-      adTitle: 'Test Ad 1',
-      type: 'image',
+      _id: '1',;
+      adId: 'ad1',;
+      adTitle: 'Test Ad 1',;
+      type: 'image',;
       url: 'http://example.com/image1.jpg',
-      createdAt: new Date('2023-01-01'),
-    },
+      createdAt: new Date('2023-01-01'),;
+    },;
     {
-      _id: '2',
-      adId: 'ad2',
-      adTitle: 'Test Video',
-      type: 'video',
+      _id: '2',;
+      adId: 'ad2',;
+      adTitle: 'Test Video',;
+      type: 'video',;
       url: 'http://example.com/video1.mp4',
-      createdAt: new Date('2023-01-02'),
-    },
+      createdAt: new Date('2023-01-02'),;
+    },;
   ];
 
   beforeEach(async () => {
     const safeUrl: SafeUrl = {} as SafeUrl;
 
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ButtonModule,
-        DialogModule,
-        DropdownModule,
-        InputTextModule,
-        MessageModule,
-        PaginatorModule,
-        ProgressSpinnerModule,
-        ContentModerationComponent,
-      ],
-      providers: [
-        FormBuilder,
+      imports: [;
+        CommonModule,;
+        FormsModule,;
+        ReactiveFormsModule,;
+        ButtonModule,;
+        DialogModule,;
+        DropdownModule,;
+        InputTextModule,;
+        MessageModule,;
+        PaginatorModule,;
+        ProgressSpinnerModule,;
+        ContentModerationComponent,;
+      ],;
+      providers: [;
+        FormBuilder,;
         {
-          provide: MEDIA_SERVICE_TOKEN,
-          useValue: jasmine.createSpyObj<IMediaService>('IMediaService', {
-            getPendingModerationMedia: Promise.resolve(mockMediaItems),
-            moderateMedia: Promise.resolve(void 0),
-          }),
-        },
+          provide: MEDIA_SERVICE_TOKEN,;
+          useValue: jasmine.createSpyObj('IMediaService', {
+            getPendingModerationMedia: Promise.resolve(mockMediaItems),;
+            moderateMedia: Promise.resolve(void 0),;
+          }),;
+        },;
         {
-          provide: NOTIFICATION_SERVICE_TOKEN,
-          useValue: jasmine.createSpyObj<INotificationService>('INotificationService', [
-            'showSuccess',
-            'showError',
-            'showWarning',
-            'showInfo',
-          ]),
-        },
+          provide: NOTIFICATION_SERVICE_TOKEN,;
+          useValue: jasmine.createSpyObj('INotificationService', [;
+            'showSuccess',;
+            'showError',;
+            'showWarning',;
+            'showInfo',;
+          ]),;
+        },;
         {
-          provide: CONTENT_SANITIZER_TOKEN,
-          useValue: jasmine.createSpyObj<IContentSanitizerService>('IContentSanitizerService', {
-            sanitizeUrl: safeUrl,
-          }),
-        },
+          provide: CONTENT_SANITIZER_TOKEN,;
+          useValue: jasmine.createSpyObj('IContentSanitizerService', {
+            sanitizeUrl: safeUrl,;
+          }),;
+        },;
         {
-          provide: DomSanitizer,
-          useValue: jasmine.createSpyObj<DomSanitizer>('DomSanitizer', {
-            bypassSecurityTrustUrl: safeUrl,
-          }),
-        },
-      ],
+          provide: DomSanitizer,;
+          useValue: jasmine.createSpyObj('DomSanitizer', {
+            bypassSecurityTrustUrl: safeUrl,;
+          }),;
+        },;
+      ],;
     }).compileComponents();
 
-    mediaService = TestBed.inject(MEDIA_SERVICE_TOKEN) as jasmine.SpyObj<IMediaService>;
-    notificationService = TestBed.inject(
-      NOTIFICATION_SERVICE_TOKEN,
-    ) as jasmine.SpyObj<INotificationService>;
-    contentSanitizer = TestBed.inject(
-      CONTENT_SANITIZER_TOKEN,
-    ) as jasmine.SpyObj<IContentSanitizerService>;
-    domSanitizer = TestBed.inject(DomSanitizer) as jasmine.SpyObj<DomSanitizer>;
+    mediaService = TestBed.inject(MEDIA_SERVICE_TOKEN) as jasmine.SpyObj;
+    notificationService = TestBed.inject(;
+      NOTIFICATION_SERVICE_TOKEN,;
+    ) as jasmine.SpyObj;
+    contentSanitizer = TestBed.inject(;
+      CONTENT_SANITIZER_TOKEN,;
+    ) as jasmine.SpyObj;
+    domSanitizer = TestBed.inject(DomSanitizer) as jasmine.SpyObj;
 
     fixture = TestBed.createComponent(ContentModerationComponent);
     component = fixture.componentInstance;
@@ -202,21 +201,21 @@ describe('ContentModerationComponent', () => {
 
   describe('Pagination', () => {
     beforeEach(fakeAsync(() => {
-      const extraItems = Array.from(
-        { length: 15 },
-        (_, i) =>
+      const extraItems = Array.from(;
+        { length: 15 },;
+        (_, i) =>;
           ({
-            _id: `${i + 3}`,
-            adId: `ad${i + 3}`,
-            adTitle: `Test Item ${i + 3}`,
-            type: i % 2 === 0 ? 'image' : 'video',
-            url: `http://example.com/media${i + 3}`,
-            createdAt: new Date(`2023-01-${(i + 3).toString().padStart(2, '0')}`),
-          }) as IPendingMedia,
+            _id: `${i + 3}`,;`
+            adId: `ad${i + 3}`,;`
+            adTitle: `Test Item ${i + 3}`,;`
+            type: i % 2 === 0 ? 'image' : 'video',;
+            url: `http://example.com/media${i + 3}`,`
+            createdAt: new Date(`2023-01-${(i + 3).toString().padStart(2, '0')}`),;`
+          }) as IPendingMedia,;
       );
 
-      mediaService.getPendingModerationMedia.and.returnValue(
-        Promise.resolve([...mockMediaItems, ...extraItems]),
+      mediaService.getPendingModerationMedia.and.returnValue(;
+        Promise.resolve([...mockMediaItems, ...extraItems]),;
       );
       component.ngOnInit();
       tick();
@@ -224,10 +223,10 @@ describe('ContentModerationComponent', () => {
 
     it('should handle page changes', () => {
       const pageEvent: PaginatorPageChangeEvent = {
-        page: 1,
-        first: 12,
-        rows: 12,
-        pageCount: 2,
+        page: 1,;
+        first: 12,;
+        rows: 12,;
+        pageCount: 2,;
       };
       component.onPageChange(pageEvent);
 
@@ -280,11 +279,11 @@ describe('ContentModerationComponent', () => {
       component.submitModeration();
       tick();
 
-      expect(mediaService.moderateMedia).toHaveBeenCalledWith(
-        mockMediaItems[0].adId,
-        mockMediaItems[0]._id,
-        'approved',
-        'Looks good',
+      expect(mediaService.moderateMedia).toHaveBeenCalledWith(;
+        mockMediaItems[0].adId,;
+        mockMediaItems[0]._id,;
+        'approved',;
+        'Looks good',;
       );
       expect(notificationService.showSuccess).toHaveBeenCalled();
       expect(component.showModerationDialog).toBeFalse();

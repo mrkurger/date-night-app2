@@ -1,3 +1,6 @@
+import { TestBed } from '@angular/core/testing';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ContentSanitizerService } from './content-sanitizer.service';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,26 +11,22 @@
 //   Related to: client-angular/src/app/core/services/*.ts
 // ===================================================
 
-import { TestBed } from '@angular/core/testing';
-import { DomSanitizer } from '@angular/platform-browser';
-
-import { ContentSanitizerService } from './content-sanitizer.service';
-
+';
 describe('ContentSanitizerService', () => {
   let service: ContentSanitizerService;
-  let sanitizerSpy: jasmine.SpyObj<DomSanitizer>;
+  let sanitizerSpy: jasmine.SpyObj;
 
   beforeEach(() => {
-    sanitizerSpy = jasmine.createSpyObj('DomSanitizer', [
-      'bypassSecurityTrustUrl',
-      'bypassSecurityTrustResourceUrl',
+    sanitizerSpy = jasmine.createSpyObj('DomSanitizer', [;
+      'bypassSecurityTrustUrl',;
+      'bypassSecurityTrustResourceUrl',;
     ]);
 
     sanitizerSpy.bypassSecurityTrustUrl.and.returnValue('sanitized-url' as any);
     sanitizerSpy.bypassSecurityTrustResourceUrl.and.returnValue('sanitized-resource-url' as any);
 
     TestBed.configureTestingModule({
-      providers: [ContentSanitizerService, { provide: DomSanitizer, useValue: sanitizerSpy }],
+      providers: [ContentSanitizerService, { provide: DomSanitizer, useValue: sanitizerSpy }],;
     });
 
     service = TestBed.inject(ContentSanitizerService);

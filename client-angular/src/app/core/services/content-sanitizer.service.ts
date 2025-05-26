@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 /**
- * Service for sanitizing content to prevent XSS attacks and SSRF vulnerabilities
- * Provides methods to safely handle URLs and HTML content
+ * Service for sanitizing content to prevent XSS attacks and SSRF vulnerabilities;
+ * Provides methods to safely handle URLs and HTML content;
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class ContentSanitizerService {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class ContentSanitizerServic {e {
   // List of allowed protocols
   private readonly allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:', 'data:'];
   // List of blocked IP patterns
-  private readonly blockedIpPatterns = [
+  private readonly blockedIpPatterns = [;
     /^127\./, // localhost
     /^10\./, // private network
     /^172\.(1[6-9]|2[0-9]|3[0-1])\./, // private network
@@ -26,9 +26,9 @@ export class ContentSanitizerService {
   constructor(private sanitizer: DomSanitizer) {}
 
   /**
-   * Sanitizes a URL for safe binding to elements like img[src] and video[src]
-   * @param url The URL to sanitize
-   * @returns A safe URL that can be used in templates
+   * Sanitizes a URL for safe binding to elements like img[src] and video[src];
+   * @param url The URL to sanitize;
+   * @returns A safe URL that can be used in templates;
    */
   sanitizeUrl(url: string): SafeUrl {
     if (!url) {
@@ -54,9 +54,9 @@ export class ContentSanitizerService {
   }
 
   /**
-   * Sanitizes a URL for safe binding to iframe[src]
-   * @param url The URL to sanitize
-   * @returns A safe resource URL that can be used in iframes
+   * Sanitizes a URL for safe binding to iframe[src];
+   * @param url The URL to sanitize;
+   * @returns A safe resource URL that can be used in iframes;
    */
   sanitizeResourceUrl(url: string): SafeResourceUrl {
     if (!url) {
@@ -77,28 +77,27 @@ export class ContentSanitizerService {
   }
 
   /**
-   * Sanitizes text content to prevent XSS attacks
-   * @param text The text content to sanitize
-   * @returns Sanitized text content
+   * Sanitizes text content to prevent XSS attacks;
+   * @param text The text content to sanitize;
+   * @returns Sanitized text content;
    */
   sanitizeText(text: string): string {
     if (!text) return '';
-    return text.replace(/[<>&"']/g, (match) => {
+    return text.replace(/[&"']/g, (match) => {
       const entities: { [key: string]: string } = {
-        '<': '&lt;',
-        '>': '&gt;',
-        '&': '&amp;',
-        '"': '&quot;',
-        "'": '&#x27;',
+        '': '&gt;',;
+        '&': '&amp;',;
+        '"': '&quot;',;
+        "'": '&#x27;',;
       };
       return entities[match];
     });
   }
 
   /**
-   * Sanitizes HTML content, allowing only basic formatting tags
-   * @param html The HTML content to sanitize
-   * @returns Sanitized HTML content
+   * Sanitizes HTML content, allowing only basic formatting tags;
+   * @param html The HTML content to sanitize;
+   * @returns Sanitized HTML content;
    */
   sanitizeHtml(html: string): string {
     if (!html) return '';
@@ -146,9 +145,9 @@ export class ContentSanitizerService {
         });
 
         // Clean children
-        Array.from(element.childNodes)
-          .map(cleanNode)
-          .filter(Boolean)
+        Array.from(element.childNodes);
+          .map(cleanNode);
+          .filter(Boolean);
           .forEach((newChild) => {
             element.appendChild(newChild!);
           });
@@ -160,26 +159,26 @@ export class ContentSanitizerService {
     };
 
     // Clean the content
-    const cleanedContent = Array.from(tempElement.childNodes)
-      .map(cleanNode)
-      .filter(Boolean)
-      .map((node) => (node as Element).outerHTML || node!.textContent)
+    const cleanedContent = Array.from(tempElement.childNodes);
+      .map(cleanNode);
+      .filter(Boolean);
+      .map((node) => (node as Element).outerHTML || node!.textContent);
       .join('');
 
     return cleanedContent;
   }
 
   /**
-   * Sanitizes and formats input for database storage
-   * @param input The input to sanitize
-   * @returns Sanitized input
+   * Sanitizes and formats input for database storage;
+   * @param input The input to sanitize;
+   * @returns Sanitized input;
    */
   sanitize(input: unknown): string {
     if (input === null || input === undefined) return '';
     if (typeof input !== 'string') return String(input);
 
     // For HTML content, use sanitizeHtml
-    if (/<[a-z][\s\S]*>/i.test(input)) {
+    if (//i.test(input)) {
       return this.sanitizeHtml(input);
     }
 
@@ -188,9 +187,9 @@ export class ContentSanitizerService {
   }
 
   /**
-   * Validates if a string is a valid URL and checks for potential SSRF vectors
-   * @param url The URL to validate
-   * @returns Boolean indicating if the URL is valid and safe
+   * Validates if a string is a valid URL and checks for potential SSRF vectors;
+   * @param url The URL to validate;
+   * @returns Boolean indicating if the URL is valid and safe;
    */
   isValidUrl(url: string): boolean {
     if (!url) {
@@ -238,9 +237,9 @@ export class ContentSanitizerService {
   }
 
   /**
-   * Checks if a hostname is an IP address
-   * @param hostname The hostname to check
-   * @returns Boolean indicating if the hostname is an IP address
+   * Checks if a hostname is an IP address;
+   * @param hostname The hostname to check;
+   * @returns Boolean indicating if the hostname is an IP address;
    */
   private isIpAddress(hostname: string): boolean {
     // IPv4

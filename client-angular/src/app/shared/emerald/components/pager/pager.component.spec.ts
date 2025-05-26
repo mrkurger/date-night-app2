@@ -5,13 +5,14 @@ import { PaginatorModule } from './pager.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+';
 describe('PaginatorModule', () => {
   let component: PaginatorModule;
-  let fixture: ComponentFixture<PaginatorModule>;
+  let fixture: ComponentFixture;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, PaginatorModule],
+      imports: [CommonModule, FormsModule, PaginatorModule],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginatorModule);
@@ -41,11 +42,11 @@ describe('PaginatorModule', () => {
     component.currentPage = 8;
     component.ngOnChanges({
       currentPage: {
-        currentValue: 8,
-        previousValue: 3,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+        currentValue: 8,;
+        previousValue: 3,;
+        firstChange: false,;
+        isFirstChange: () => false,;
+      },;
     });
 
     // Expected visible pages: [6, 7, 8, 9, 10]
@@ -55,11 +56,11 @@ describe('PaginatorModule', () => {
     component.maxVisiblePages = 3;
     component.ngOnChanges({
       maxVisiblePages: {
-        currentValue: 3,
-        previousValue: 5,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+        currentValue: 3,;
+        previousValue: 5,;
+        firstChange: false,;
+        isFirstChange: () => false,;
+      },;
     });
 
     // Expected visible pages: [7, 8, 9]

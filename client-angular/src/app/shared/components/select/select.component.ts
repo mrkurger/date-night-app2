@@ -8,19 +8,19 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ChangeDetectionStrategy,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
+  Component,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  forwardRef,;
+  ChangeDetectionStrategy,';
+} from '@angular/core';
 
 /**
- * Select Option Interface
+ * Select Option Interface;
  */
 export interface SelectOption {
   value: string | number;
@@ -29,156 +29,156 @@ export interface SelectOption {
 }
 
 /**
- * Select Component
- *
- * A customizable select component that follows the DateNight.io design system.
- * Supports different variants, sizes, and states.
+ * Select Component;
+ *;
+ * A customizable select component that follows the DateNight.io design system.;
+ * Supports different variants, sizes, and states.;
  */
 @Component({
-  selector: 'app-select',
-  standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
+  selector: 'app-select',;
+  standalone: true,;
+  imports: [CommonModule, FormsModule, IconComponent],;
+  templateUrl: './select.component.html',;
+  styleUrls: ['./select.component.scss'],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+  providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true,
-    },
-  ],
-})
-export class SelectComponent implements ControlValueAccessor {
+      provide: NG_VALUE_ACCESSOR,;
+      useExisting: forwardRef(() => SelectComponent),;
+      multi: true,;
+    },;
+  ],;
+});
+export class SelectComponen {t implements ControlValueAccessor {
   /**
-   * The select options.
+   * The select options.;
    */
   @Input() options: SelectOption[] = [];
 
   /**
-   * The select placeholder.
-   * @default 'Select an option'
+   * The select placeholder.;
+   * @default 'Select an option';
    */
   @Input() placeholder = 'Select an option';
 
   /**
-   * The select label.
-   * @default ''
+   * The select label.;
+   * @default '';
    */
   @Input() label = '';
 
   /**
-   * The select helper text.
-   * @default ''
+   * The select helper text.;
+   * @default '';
    */
   @Input() helperText = '';
 
   /**
-   * The select error message.
-   * @default ''
+   * The select error message.;
+   * @default '';
    */
   @Input() errorMessage = '';
 
   /**
-   * Whether the select is required.
-   * @default false
+   * Whether the select is required.;
+   * @default false;
    */
   @Input() required = false;
 
   /**
-   * Whether the select is disabled.
-   * @default false
+   * Whether the select is disabled.;
+   * @default false;
    */
   @Input() disabled = false;
 
   /**
-   * The select size.
-   * - 'small': Compact size
-   * - 'medium': Default size
-   * - 'large': Larger size
-   * @default 'medium'
+   * The select size.;
+   * - 'small': Compact size;
+   * - 'medium': Default size;
+   * - 'large': Larger size;
+   * @default 'medium';
    */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
-   * The select variant.
-   * - 'outlined': Outlined select with border
-   * - 'filled': Filled select with background
-   * - 'standard': Standard select with bottom border only
-   * @default 'outlined'
+   * The select variant.;
+   * - 'outlined': Outlined select with border;
+   * - 'filled': Filled select with background;
+   * - 'standard': Standard select with bottom border only;
+   * @default 'outlined';
    */
   @Input() variant: 'outlined' | 'filled' | 'standard' = 'outlined';
 
   /**
-   * The select name attribute.
+   * The select name attribute.;
    */
   @Input() name?: string;
 
   /**
-   * The select id attribute.
+   * The select id attribute.;
    */
   @Input() id?: string;
 
   /**
-   * Event emitted when the select value changes.
+   * Event emitted when the select value changes.;
    */
-  @Output() valueChange = new EventEmitter<string | number>();
+  @Output() valueChange = new EventEmitter();
 
   /**
-   * Event emitted when the select is focused.
+   * Event emitted when the select is focused.;
    */
-  @Output() focused = new EventEmitter<FocusEvent>();
+  @Output() focused = new EventEmitter();
 
   /**
-   * Event emitted when the select is blurred.
+   * Event emitted when the select is blurred.;
    */
-  @Output() blurred = new EventEmitter<FocusEvent>();
+  @Output() blurred = new EventEmitter();
 
   /**
-   * The select value.
+   * The select value.;
    */
   value: string | number = '';
 
   /**
-   * Whether the select is focused.
+   * Whether the select is focused.;
    */
   isFocused = false;
 
   /**
-   * Function to call when the select value changes.
+   * Function to call when the select value changes.;
    */
   onChange = (_value: unknown): void => {
     // Will be overridden by registerOnChange
   };
 
   /**
-   * Function to call when the select is touched.
+   * Function to call when the select is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
   };
 
   /**
-   * Gets the CSS classes for the select container based on its properties.
+   * Gets the CSS classes for the select container based on its properties.;
    * @returns An object with CSS class names as keys and boolean values
    */
-  get containerClasses(): Record<string, boolean> {
+  get containerClasses(): Record {
     return {
-      select: true,
-      [`select--${this.variant}`]: true,
-      [`select--${this.size}`]: true,
-      'select--disabled': this.disabled,
-      'select--focused': this.isFocused,
-      'select--error': !!this.errorMessage,
-      'select--with-label': !!this.label,
-      'select--required': this.required,
-      'select--has-value': !!this.value,
+      select: true,;
+      [`select--${this.variant}`]: true,;`
+      [`select--${this.size}`]: true,;`
+      'select--disabled': this.disabled,;
+      'select--focused': this.isFocused,;
+      'select--error': !!this.errorMessage,;
+      'select--with-label': !!this.label,;
+      'select--required': this.required,;
+      'select--has-value': !!this.value,;
     };
   }
 
   /**
-   * Handles the select change event.
-   * @param event The change event
+   * Handles the select change event.;
+   * @param event The change event;
    */
   onSelectChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
@@ -188,8 +188,8 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the select focus event.
-   * @param event The focus event
+   * Handles the select focus event.;
+   * @param event The focus event;
    */
   onFocus(event: FocusEvent): void {
     this.isFocused = true;
@@ -197,8 +197,8 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the select blur event.
-   * @param event The blur event
+   * Handles the select blur event.;
+   * @param event The blur event;
    */
   onBlur(event: FocusEvent): void {
     this.isFocused = false;
@@ -207,8 +207,8 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   /**
-   * Writes a value to the select.
-   * @param value The value to write
+   * Writes a value to the select.;
+   * @param value The value to write;
    */
   writeValue(value: string | number): void {
     this.value = value ?? '';
@@ -231,8 +231,8 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   /**
-   * Sets the disabled state of the select.
-   * @param isDisabled Whether the select is disabled
+   * Sets the disabled state of the select.;
+   * @param isDisabled Whether the select is disabled;
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

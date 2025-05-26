@@ -30,7 +30,7 @@
               [nbDatepicker]="startDatePicker"
               placeholder="Select start date"
             />
-            <nb-datepicker #startDatePicker></nb-datepicker>
+            <p-calendar #startDatePicker></p-calendar>
             <div
               *ngIf="
                 travelForm.get('startDate')?.hasError('required') &&
@@ -52,7 +52,7 @@
               [nbDatepicker]="endDatePicker"
               placeholder="Select end date"
             />
-            <nb-datepicker #endDatePicker></nb-datepicker>
+            <p-calendar #endDatePicker></p-calendar>
             <div
               *ngIf="
                 travelForm.get('endDate')?.hasError('required') &&

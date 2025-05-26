@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
+import { NotificationComponent } from './notification.component';
+import { NotificationType, ToastNotification } from './notification.model';
+import { NotificationService } from '../../../core/services/notification.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,36 +16,30 @@ import { Component } from '@angular/core';
 //   Related to: client-angular/src/app/core/services/notification.service.ts
 // ===================================================
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
-import { NotificationComponent } from './notification.component';
-import { NotificationType, ToastNotification } from './notification.model';
-import { NotificationService } from '../../../core/services/notification.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
+';
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
-  let fixture: ComponentFixture<NotificationComponent>;
-  let mockNotificationService: jasmine.SpyObj<NotificationService>;
-  let toastsSubject: BehaviorSubject<ToastNotification[]>;
+  let fixture: ComponentFixture;
+  let mockNotificationService: jasmine.SpyObj;
+  let toastsSubject: BehaviorSubject;
 
   beforeEach(async () => {
     // Create a subject to control the toasts observable
-    toastsSubject = new BehaviorSubject<ToastNotification[]>([]);
+    toastsSubject = new BehaviorSubject([]);
 
     // Create mock notification service
-    mockNotificationService = jasmine.createSpyObj(
-      'NotificationService',
-      ['success', 'error', 'info', 'warning', 'removeToast'],
+    mockNotificationService = jasmine.createSpyObj(;
+      'NotificationService',;
+      ['success', 'error', 'info', 'warning', 'removeToast'],;
       {
         // Mock the toasts$ observable
-        toasts$: toastsSubject.asObservable(),
-      },
+        toasts$: toastsSubject.asObservable(),;
+      },;
     );
 
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NotificationComponent],
-      providers: [{ provide: NotificationService, useValue: mockNotificationService }],
+      imports: [NoopAnimationsModule, NotificationComponent],;
+      providers: [{ provide: NotificationService, useValue: mockNotificationService }],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotificationComponent);
@@ -52,15 +53,15 @@ describe('NotificationComponent', () => {
 
   it('should display notifications when received from service', () => {
     // Arrange
-    const testNotifications: ToastNotification[] = [
+    const testNotifications: ToastNotification[] = [;
       {
-        id: 'test-id-1',
-        message: 'Test notification 1',
-        type: NotificationType.SUCCESS,
-        timestamp: new Date(),
-        autoClose: true,
-        duration: 3000,
-      },
+        id: 'test-id-1',;
+        message: 'Test notification 1',;
+        type: NotificationType.SUCCESS,;
+        timestamp: new Date(),;
+        autoClose: true,;
+        duration: 3000,;
+      },;
     ];
 
     // Act
@@ -76,15 +77,15 @@ describe('NotificationComponent', () => {
 
   it('should remove notification when close button is clicked', () => {
     // Arrange
-    const testNotifications: ToastNotification[] = [
+    const testNotifications: ToastNotification[] = [;
       {
-        id: 'test-id-1',
-        message: 'Test notification 1',
-        type: NotificationType.SUCCESS,
-        timestamp: new Date(),
-        autoClose: true,
-        duration: 3000,
-      },
+        id: 'test-id-1',;
+        message: 'Test notification 1',;
+        type: NotificationType.SUCCESS,;
+        timestamp: new Date(),;
+        autoClose: true,;
+        duration: 3000,;
+      },;
     ];
 
     toastsSubject.next(testNotifications);
@@ -102,23 +103,23 @@ describe('NotificationComponent', () => {
 
   it('should handle multiple notifications', () => {
     // Arrange
-    const testNotifications: ToastNotification[] = [
+    const testNotifications: ToastNotification[] = [;
       {
-        id: 'test-id-1',
-        message: 'Success notification',
-        type: NotificationType.SUCCESS,
-        timestamp: new Date(),
-        autoClose: true,
-        duration: 3000,
-      },
+        id: 'test-id-1',;
+        message: 'Success notification',;
+        type: NotificationType.SUCCESS,;
+        timestamp: new Date(),;
+        autoClose: true,;
+        duration: 3000,;
+      },;
       {
-        id: 'test-id-2',
-        message: 'Error notification',
-        type: NotificationType.ERROR,
-        timestamp: new Date(),
-        autoClose: true,
-        duration: 3000,
-      },
+        id: 'test-id-2',;
+        message: 'Error notification',;
+        type: NotificationType.ERROR,;
+        timestamp: new Date(),;
+        autoClose: true,;
+        duration: 3000,;
+      },;
     ];
 
     // Act
@@ -137,12 +138,12 @@ describe('NotificationComponent', () => {
   it('should not add duplicate notifications with the same id', () => {
     // Arrange
     const initialNotification: ToastNotification = {
-      id: 'test-id-1',
-      message: 'Initial notification',
-      type: NotificationType.SUCCESS,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 3000,
+      id: 'test-id-1',;
+      message: 'Initial notification',;
+      type: NotificationType.SUCCESS,;
+      timestamp: new Date(),;
+      autoClose: true,;
+      duration: 3000,;
     };
 
     // Add initial notification
@@ -151,17 +152,17 @@ describe('NotificationComponent', () => {
 
     // Act - add the same notification again plus a new one
     const duplicateNotification: ToastNotification = {
-      ...initialNotification,
+      ...initialNotification,;
       message: 'Updated message', // Message changed but ID is the same
     };
 
     const newNotification: ToastNotification = {
-      id: 'test-id-2',
-      message: 'New notification',
-      type: NotificationType.INFO,
-      timestamp: new Date(),
-      autoClose: true,
-      duration: 3000,
+      id: 'test-id-2',;
+      message: 'New notification',;
+      type: NotificationType.INFO,;
+      timestamp: new Date(),;
+      autoClose: true,;
+      duration: 3000,;
     };
 
     toastsSubject.next([duplicateNotification, newNotification]);
@@ -179,15 +180,15 @@ describe('NotificationComponent', () => {
 
   it('should clean up timeouts on component destroy', () => {
     // Arrange
-    const testNotifications: ToastNotification[] = [
+    const testNotifications: ToastNotification[] = [;
       {
-        id: 'test-id-1',
-        message: 'Test notification',
-        type: NotificationType.SUCCESS,
-        timestamp: new Date(),
-        autoClose: true,
-        duration: 3000,
-      },
+        id: 'test-id-1',;
+        message: 'Test notification',;
+        type: NotificationType.SUCCESS,;
+        timestamp: new Date(),;
+        autoClose: true,;
+        duration: 3000,;
+      },;
     ];
 
     toastsSubject.next(testNotifications);

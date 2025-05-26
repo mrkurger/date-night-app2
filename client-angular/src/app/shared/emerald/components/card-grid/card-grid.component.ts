@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
+import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
+import { CardModule } from '../app-card/app-card.component';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -12,44 +17,37 @@ import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
 //   Related to: card-grid.component.scss
 // - GRID_COLUMNS: Number of columns in the grid (default: responsive)
 //   Related to: card-grid.component.scss
-// ===================================================
+// ===================================================';
 // import { Ad } from '../../../../core/models/ad.interface';
-import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
-import { CardModule } from '../app-card/app-card.component';
 
 /**
  * /*DEPRECATED:Emerald*/ CardGrid Component
- *
- * A responsive grid layout for displaying multiple cards.
- * This component provides a flexible grid system for displaying ads or other content.
- *
+ *;
+ * A responsive grid layout for displaying multiple cards.;
+ * This component provides a flexible grid system for displaying ads or other content.;
+ *;
  * Documentation: https://docs-/*DEPRECATED:emerald*/.condorlabs.io/CardGrid
  */
-@Component({
-    selector: 'nb-card-grid',
-    template: `
-    <div class="card-grid" [ngStyle]="getGridStyle()">
-      <!-- Loading State -->
-      <div *ngIf="loading" class="loading-container">
-        <nb-spinner size="large"></nb-spinner>
-      </div>
+@Component({';
+    selector: 'nb-card-grid',;
+    template: `;`
+    ;
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Grid Items -->
-      <ng-container *ngIf="!loading">
-        <div
-          *ngFor="let item of items"
-          class="card-grid__item"
-          [ngClass]="{ 'card-grid__item--animated': animated }"
-          (click)="onItemClick(item)"
-        >
-          <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }">
-          </ng-container>
-        </div>
-      </ng-container>
-    </div>
-  `,
-    styles: [
-        `
+      ;
+      ;
+        ;
+          ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(var(--min-item-width, 280px), 1fr));
@@ -87,121 +85,116 @@ import { CardModule } from '../app-card/app-card.component';
           transform: translateY(0);
         }
       }
-    `,
-    ],
-    imports: [
-    CommonModule,
-        NbCardModule,
-        NbSpinnerModule,
-        SkeletonModule,
-        CardModule,
-    BadgeModule,
-    AvatarModule
-  ]
-})
-export class CardGridComponent {
+    `,;`
+    ],;
+    imports: [;
+    CommonModule,;
+        NbCardModule,;
+        NbSpinnerModule,;
+        SkeletonModule,;
+        CardModule,;
+    BadgeModule,;
+    AvatarModule;
+  ];
+});
+export class CardGridComponen {t {
   /**
-   * The items to display in the grid
+   * The items to display in the grid;
    */
   @Input() items: any[] = [];
-import { CardModule } from 'primeng/card';
-import { BadgeModule } from 'primeng/badge';
-import { AvatarModule } from 'primeng/avatar';
-
-
 
   /**
-   * The number of columns in the grid
-   * If not specified, the grid will be responsive based on screen size
+   * The number of columns in the grid;
+   * If not specified, the grid will be responsive based on screen size;
    */
   @Input() columns: number | null = null;
 
   /**
-   * The gap between grid items in pixels
+   * The gap between grid items in pixels;
    */
   @Input() gap = 16;
 
   /**
-   * The minimum width of each grid item in pixels
-   * Used for responsive grids when columns is not specified
+   * The minimum width of each grid item in pixels;
+   * Used for responsive grids when columns is not specified;
    */
   @Input() minItemWidth = 280;
 
   /**
-   * Whether to show a loading skeleton when items are loading
+   * Whether to show a loading skeleton when items are loading;
    */
   @Input() loading = false;
 
   /**
-   * The number of skeleton items to show when loading
+   * The number of skeleton items to show when loading;
    */
   @Input() skeletonCount = 6;
 
   /**
-   * Whether to animate the grid items when they appear
+   * Whether to animate the grid items when they appear;
    */
   @Input() animated = true;
 
   /**
-   * The layout style for the grid
-   * - 'grid': Standard grid layout
-   * - 'masonry': Masonry layout with variable heights
-   * - 'netflix': Netflix-style rows with horizontal scrolling
+   * The layout style for the grid;
+   * - 'grid': Standard grid layout;
+   * - 'masonry': Masonry layout with variable heights;
+   * - 'netflix': Netflix-style rows with horizontal scrolling;
    */
   @Input() layout: 'grid' | 'masonry' | 'netflix' = 'grid';
 
   /**
-   * Emitted when an item is clicked
+   * Emitted when an item is clicked;
    */
-  @Output() itemClick = new EventEmitter<any>();
+  @Output() itemClick = new EventEmitter();
 
   /**
-   * Custom template for rendering grid items
+   * Custom template for rendering grid items;
    */
-  @ContentChild('itemTemplate') itemTemplate!: TemplateRef<any>;
+  @ContentChild('itemTemplate') itemTemplate!: TemplateRef;
 
   /**
-   * Get the grid style based on the inputs
+   * Get the grid style based on the inputs;
    */
   getGridStyle() {
     const styles: any = {
-      '--grid-gap': `${this.gap}px`,
-      '--min-item-width': `${this.minItemWidth}px`,
+      '--grid-gap': `${this.gap}px`,;`
+      '--min-item-width': `${this.minItemWidth}px`,;`
     };
 
     if (this.columns) {
-      styles['grid-template-columns'] = `repeat(${this.columns}, 1fr)`;
+      styles['grid-template-columns'] = `repeat(${this.columns}, 1fr)`;`
     }
 
     return styles;
   }
 
   /**
-   * Handle item click
+   * Handle item click;
    */
   onItemClick(item: any): void {
     this.itemClick.emit(item);
   }
 
   /**
-   * Get skeleton array for loading state
+   * Get skeleton array for loading state;
    */
   getSkeletonArray(): number[] {
-    return Array(this.skeletonCount)
-      .fill(0)
+    return Array(this.skeletonCount);
+      .fill(0);
       .map((_, i) => i);
   }
 
   /**
-   * Card layout for nb-card
+   * Card layout for nb-card;
    */
   get cardLayout(): 'netflix' | 'tinder' | 'list' {
     return this.layout === 'netflix' ? 'netflix' : 'list';
   }
 
   /**
-   * Handle card click event
-   * @param _id The ID of the card that was clicked
+   * Handle card click event;
+   * @param _id The ID of the card that was clicked;
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleCardClick(_id: string): void {
@@ -211,8 +204,8 @@ import { AvatarModule } from 'primeng/avatar';
   }
 
   /**
-   * Handle action click event
-   * @param _actionEvent The event data from the action click
+   * Handle action click event;
+   * @param _actionEvent The event data from the action click;
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleActionClick(_actionEvent: unknown): void {

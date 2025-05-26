@@ -14,27 +14,20 @@ import { MenuStateService } from '../../../core/services/menu-state.service';
 // ===================================================
 
 /**
- * Theme toggle component
- * Provides a toggle button for switching between light and dark themes
- * Can be used in different modes: icon-only, with-label, or as a toggle switch
+ * Theme toggle component;
+ * Provides a toggle button for switching between light and dark themes;
+ * Can be used in different modes: icon-only, with-label, or as a toggle switch;
  */
-@Component({
-    selector: 'app-theme-toggle',
-    imports: [CommonModule, NbIconModule, NbButtonModule, NbTooltipModule],
-    template: `
-    <button
-      nbButton
-      ghost
-      size="small"
-      [nbTooltip]="'Switch to ' + (isDarkTheme ? 'light' : 'dark') + ' theme'"
-      nbTooltipPlacement="bottom"
-      (click)="toggleTheme()"
-    >
-      <nb-icon [icon]="isDarkTheme ? 'sun-outline' : 'moon-outline'"></nb-icon>
-    </button>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-theme-toggle',;
+    imports: [CommonModule, NbIconModule, NbButtonModule, NbTooltipModule],;
+    template: `;`
+    ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -59,10 +52,10 @@ import { MenuStateService } from '../../../core/services/menu-state.service';
           color: nb-theme(text-basic-color);
         }
       }
-    `,
-    ]
-})
-export class ThemeToggleComponent implements OnInit {
+    `,;`
+    ];
+});
+export class ThemeToggleComponen {t implements OnInit {
   isDarkTheme = false;
 
   constructor(private menuStateService: MenuStateService) {}

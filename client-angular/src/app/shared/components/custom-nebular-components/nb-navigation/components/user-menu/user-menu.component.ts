@@ -2,37 +2,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 import { UserData } from '../../nb-navigation.component';
 
-@Component({
-    selector: 'nb-user-menu',
-    template: `
-    <div
-      class="user-menu"
-      [nbContextMenu]="items"
-      nbContextMenuTag="user-menu"
-      [nbContextMenuPlacement]="'bottom-end'"
-    >
-      <div class="user-info">
-        <nb-user
-          [name]="userData.name"
-          [title]="userData.title"
-          [picture]="userData.picture"
-          size="medium"
-        >
-          <div *nbUserPipeMenu class="user-menu-content">
-            <nb-icon icon="chevron-down-outline"></nb-icon>
-            <nb-badge
-              *ngIf="userData.notifications"
-              [text]="userData.notifications.toString()"
-              status="danger"
-              position="top right"
-            ></nb-badge>
-          </div>
-        </nb-user>
-      </div>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'nb-user-menu',;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .user-menu {
         display: flex;
         align-items: center;
@@ -124,14 +109,14 @@ import { UserData } from '../../nb-navigation.component';
           }
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbUserMenuComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbUserMenuComponen {t {
   @Input() userData!: UserData;
   @Input() items: NbMenuItem[] = [];
-  @Output() itemClick = new EventEmitter<NbMenuItem>();
+  @Output() itemClick = new EventEmitter();
 
   onItemClick(item: NbMenuItem) {
     this.itemClick.emit(item);

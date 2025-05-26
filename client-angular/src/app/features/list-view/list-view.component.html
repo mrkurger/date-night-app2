@@ -131,7 +131,7 @@ consistent UI # ===================================================
                       formControlName="dateRange.from"
                       placeholder="From"
                     />
-                    <nb-datepicker #fromPicker></nb-datepicker>
+                    <p-calendar #fromPicker></p-calendar>
                   </div>
 
                   <div class="p-field">
@@ -141,7 +141,7 @@ consistent UI # ===================================================
                       formControlName="dateRange.to"
                       placeholder="To"
                     />
-                    <nb-datepicker #toPicker></nb-datepicker>
+                    <p-calendar #toPicker></p-calendar>
                   </div>
                 </div>
 
@@ -234,22 +234,22 @@ consistent UI # ===================================================
                   <h3>
                     <a [routerLink]="['/ads', ad._id]">{{ ad.title }}</a>
                   </h3>
-                  <nb-actions size="small">
+                  <button class="action-button"s size="small">
                     <nb-action
                       icon="heart-outline"
                       (click)="likeAd(ad._id, $event)"
                       nbTooltip="Add to Favorites"
-                    ></nb-action>
-                    <nb-action
+                    ></button>
+                    <button class="action-button"
                       icon="message-square-outline"
                       (click)="startChat(ad._id, $event)"
                       nbTooltip="Start Chat"
-                    ></nb-action>
-                    <nb-action
+                    ></button>
+                    <button class="action-button"
                       icon="share-outline"
                       (click)="shareAd(ad._id)"
                       nbTooltip="Share"
-                    ></nb-action>
+                    ></button>
                   </nb-actions>
                 </div>
 

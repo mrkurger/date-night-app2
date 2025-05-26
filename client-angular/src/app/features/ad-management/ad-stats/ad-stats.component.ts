@@ -7,38 +7,38 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+
+import {
 import { Component, OnInit, _Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AdService } from '../../../core/services/ad.service';
 import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  _NbTableModule,
-  NbTreeGridDataSourceBuilder,
-  NbSortDirection,
-  NbSortRequest,
-} from '@nebular/theme';
-
-@Component({
-  selector: 'app-ad-stats',
-  templateUrl: './ad-stats.component.html',
-  styleUrls: ['./ad-stats.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule, DatePipe, NebularModule,
-    CardModule,
-    DropdownModule,
-    ProgressSpinnerModule
-  ],
-})
-export class AdStatsComponent implements OnInit {
-  // Make Math available to the template
-  Math = Math;
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+  _NbTableModule,;
+  NbTreeGridDataSourceBuilder,;
+  NbSortDirection,;
+  NbSortRequest,';
+} from '@nebular/theme';
 
+@Component({
+  selector: 'app-ad-stats',;
+  templateUrl: './ad-stats.component.html',;
+  styleUrls: ['./ad-stats.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    CommonModule, DatePipe, NebularModule,;
+    CardModule,;
+    DropdownModule,;
+    ProgressSpinnerModule;
+  ],;
+});
+export class AdStatsComponen {t implements OnInit {
+  // Make Math available to the template
+  Math = Math;
 
   loading = false;
   dataSource: any[] = [];
@@ -59,40 +59,40 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
   rawData: any[] = [];
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  contentDensityOptions = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Normal', value: 'normal' },
+  contentDensityOptions = [;
+    { label: 'Compact', value: 'compact' },;
+    { label: 'Normal', value: 'normal' },;
     { label: 'Comfortable', value: 'comfortable' }
   ];
 
-  cardSizeOptions = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
+  cardSizeOptions = [;
+    { label: 'Small', value: 'small' },;
+    { label: 'Medium', value: 'medium' },;
     { label: 'Large', value: 'large' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private adService: AdService,
-    public dataSourceBuilder: NbTreeGridDataSourceBuilder<any>,
+  constructor(;
+    private route: ActivatedRoute,;
+    private adService: AdService,;
+    public dataSourceBuilder: NbTreeGridDataSourceBuilder,;
   ) {}
 
   getTotalViews(data: any[]): number {
@@ -122,12 +122,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
           this.adTitle = ad.title;
           this.loadSampleData(); // Replace with real data when available
           this.loading = false;
-        },
+        },;
         error: (error) => {
           console.error('Error loading ad:', error);
           this.adTitle = 'Unknown Ad';
           this.loading = false;
-        },
+        },;
       });
     } else {
       this.adTitle = 'Unknown Ad';
@@ -138,15 +138,15 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   getBarHeight(item: any,_data: any[]): string {
     const maxValue = Math.max(...data.map((d) => d.value));
     const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
-    return `${percentage}%`;
+    return `${percentage}%`;`
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource = this.dataSource.filter((item) =>
-      Object.values(item).some(
-        (val) => val && typeof val === 'string' && val.toLowerCase().includes(filterValue),
-      ),
+    this.dataSource = this.dataSource.filter((item) =>;
+      Object.values(item).some(;
+        (val) => val && typeof val === 'string' && val.toLowerCase().includes(filterValue),;
+      ),;
     );
     this.totalItems = this.dataSource.length;
     this.currentPage = 1;
@@ -181,26 +181,26 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   private loadSampleData() {
     const today = new Date();
     const sampleData = Array.from({ length: 7 }, (_, i) => ({
-      date: new Date(today.getTime() - (6 - i) * 24 * 60 * 60 * 1000),
-      views: Math.floor(Math.random() * 100),
-      clicks: Math.floor(Math.random() * 50),
-      inquiries: Math.floor(Math.random() * 10),
-      conversionRate: Math.random() * 100,
+      date: new Date(today.getTime() - (6 - i) * 24 * 60 * 60 * 1000),;
+      views: Math.floor(Math.random() * 100),;
+      clicks: Math.floor(Math.random() * 50),;
+      inquiries: Math.floor(Math.random() * 10),;
+      conversionRate: Math.random() * 100,;
     }));
 
     this.rawData = sampleData;
     this.totalItems = sampleData.length;
 
     this.viewsData = sampleData.map((item) => ({
-      name: item.date,_value: item.views,
+      name: item.date,_value: item.views,;
     }));
     this.clicksData = sampleData.map((item) => ({
-      name: item.date,_value: item.clicks,
+      name: item.date,_value: item.clicks,;
     }));
 
     // Initialize the tree grid data source
     const formattedData = sampleData.map((item) => ({
-      data: item,
+      data: item,;
     }));
 
     // Update dataSource with the correct type

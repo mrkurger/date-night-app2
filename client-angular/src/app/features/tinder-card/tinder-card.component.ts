@@ -8,35 +8,39 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-} from '@angular/core';
 import { NebularModule } from '../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Ad } from '../../core/models/ad.model';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+  Component,;
+  OnInit,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  ElementRef,;
+  ViewChild,;
+  AfterViewInit,;
+  OnDestroy,';
+} from '@angular/core';
+
+import {
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,;
+} from '@nebular/theme';
 
 // Import Hammer types
 declare let Hammer: any;
@@ -48,34 +52,26 @@ interface HammerManager {
 }
 
 @Component({
-  selector: 'app-tinder-card',
-  templateUrl: './tinder-card.component.html',
-  styleUrls: ['./tinder-card.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    RouterModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbTagModule,
-  ],
-})
-export class TinderCardComponent implements OnInit, AfterViewInit, OnDestroy {
+  selector: 'app-tinder-card',;
+  templateUrl: './tinder-card.component.html',;
+  styleUrls: ['./tinder-card.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [NebularModule, CommonModule,;
+    RouterModule,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbBadgeModule,;
+    NbTagModule,;
+  ],;
+});
+export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { BadgeModule } from 'primeng/badge';
-import { TagModule } from 'primeng/tag';
 
-
-  @Output() swiped = new EventEmitter<{
-    direction: 'left' | 'right';
-    adId: string | { city: string; county: string };
-  }>();
-  @Output() viewDetails = new EventEmitter<string | { city: string; county: string }>();
-  @Output() startChat = new EventEmitter<string | { city: string; county: string }>();
+  @Output() swiped = new EventEmitter();
+  @Output() viewDetails = new EventEmitter();
+  @Output() startChat = new EventEmitter();
 
   @ViewChild('card') cardElement!: ElementRef;
 
@@ -130,19 +126,12 @@ import { TagModule } from 'primeng/tag';
         const deltaY = event.center.y - this.initialY;
         const rotation = deltaX * 0.1; // Rotate slightly based on drag distance
 
-        card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+        card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;`
 
         // Show like/dislike indicators based on drag direction
         if (deltaX > 50) {
           this.showLikeIndicator();
-        } else if (deltaX < -50) {
-          this.showDislikeIndicator();
-        } else {
-          this.resetIndicators();
-        }
-      });
-
-      hammer.on('panend', (event) => {
+        } else if (deltaX  {
         if (!this.isDragging) return;
         this.isDragging = false;
 
@@ -151,22 +140,7 @@ import { TagModule } from 'primeng/tag';
 
         if (deltaX > threshold) {
           this.onSwipe('right');
-        } else if (deltaX < -threshold) {
-          this.onSwipe('left');
-        } else {
-          this.resetCard();
-        }
-      });
-
-      this.hammerManager = hammer;
-    } else {
-      // Fallback for when Hammer.js is not available
-      console.warn('Hammer.js is not loaded. Swipe gestures will not work.');
-
-      // Add basic mouse events as fallback
-      const card = this.cardElement.nativeElement;
-
-      const onMouseDown = (e: MouseEvent) => {
+        } else if (deltaX  {
         this.isDragging = true;
         this.cardState = 'swiping';
         this.initialX = e.clientX;
@@ -180,18 +154,11 @@ import { TagModule } from 'primeng/tag';
         const deltaY = e.clientY - this.initialY;
         const rotation = deltaX * 0.1;
 
-        card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+        card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;`
 
         if (deltaX > 50) {
           this.showLikeIndicator();
-        } else if (deltaX < -50) {
-          this.showDislikeIndicator();
-        } else {
-          this.resetIndicators();
-        }
-      };
-
-      const onMouseUp = (e: MouseEvent) => {
+        } else if (deltaX  {
         if (!this.isDragging) return;
         this.isDragging = false;
 
@@ -200,24 +167,11 @@ import { TagModule } from 'primeng/tag';
 
         if (deltaX > threshold) {
           this.onSwipe('right');
-        } else if (deltaX < -threshold) {
-          this.onSwipe('left');
-        } else {
-          this.resetCard();
-        }
-      };
-
-      card.addEventListener('mousedown', onMouseDown);
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-
-      // Clean up event listeners on destroy
-      this.hammerManager = {
-        destroy: () => {
+        } else if (deltaX  {
           card.removeEventListener('mousedown', onMouseDown);
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
-        },
+        },;
       } as any;
     }
   }
@@ -282,7 +236,7 @@ import { TagModule } from 'primeng/tag';
 
   prevMedia(): void {
     if (this.ad.media && this.ad.media.length > 0) {
-      this.currentMediaIndex =
+      this.currentMediaIndex =;
         (this.currentMediaIndex - 1 + this.ad.media.length) % this.ad.media.length;
     }
   }
@@ -304,8 +258,8 @@ import { TagModule } from 'primeng/tag';
 
   getMediaDots(): number[] {
     if (this.ad.media && this.ad.media.length > 0) {
-      return Array(this.ad.media.length)
-        .fill(0)
+      return Array(this.ad.media.length);
+        .fill(0);
         .map((_, i) => i);
     }
     return [];

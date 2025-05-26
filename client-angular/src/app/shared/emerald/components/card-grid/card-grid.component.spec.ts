@@ -1,4 +1,3 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,24 +7,23 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
+
+import { CommonModule
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NebularModule } from '../../../shared/nebular.module';
-
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, Input, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule
-    NbCardModule, } from '@angular/common';
-
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonModule } from '../skeleton-loader/skeleton-loader.component';
+    NbCardModule, } from '@angular/common';
 
 // Mock component for nb-card
 @Component({
-    selector: 'nb-card',
-    template: '<div class="mock-card">{{ title }}</div>',
-    imports: [CommonModule]
-})
-class MockAppCardComponent {
+    selector: 'nb-card',;
+    template: '{{ title }}',;
+    imports: [CommonModule];
+});
+class MockAppCardComponen {t {
   @Input() title = '';
   @Input() subtitle = '';
   @Input() description = '';
@@ -41,34 +39,23 @@ class MockAppCardComponent {
 
 // Test host component with template reference
 @Component({
-    template: `
-    <ng-template #customTemplate let-item>
-      <div class="custom-template">{{ item.title }}</div>
-    </ng-template>
+    template: `;`
+    ;
+      {{ item.title }};
+    ;
 
-    <nb-card-grid
-      [items]="items"
-      [columns]="columns"
-      [gap]="gap"
-      [minItemWidth]="minItemWidth"
-      [loading]="loading"
-      [skeletonCount]="skeletonCount"
-      [animated]="animated"
-      [layout]="layout"
-      [itemTemplate]="useCustomTemplate ? customTemplate : null"
-      (itemClick)="onItemClick($event)"
-    >
-    </nb-card-grid>
-  `,
-    imports: [CommonModule, CardGridComponent]
-})
-class TestHostComponent {
-  @ViewChild('customTemplate') customTemplate!: TemplateRef<any>;
+    ;
+    ;
+  `,;`
+    imports: [CommonModule, CardGridComponent];
+});
+class TestHostComponen {t {
+  @ViewChild('customTemplate') customTemplate!: TemplateRef;
 
-  items: any[] = [
-    { id: '1', title: 'Item 1', description: 'Description 1' },
-    { id: '2', title: 'Item 2', description: 'Description 2' },
-    { id: '3', title: 'Item 3', description: 'Description 3' },
+  items: any[] = [;
+    { id: '1', title: 'Item 1', description: 'Description 1' },;
+    { id: '2', title: 'Item 2', description: 'Description 2' },;
+    { id: '3', title: 'Item 3', description: 'Description 3' },;
   ];
   columns: number | null = null;
   gap = 16;
@@ -88,18 +75,18 @@ class TestHostComponent {
 
 describe('CardGridComponent', () => {
   let hostComponent: TestHostComponent;
-  let hostFixture: ComponentFixture<TestHostComponent>;
+  let hostFixture: ComponentFixture;
   let debugElement: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        CardGridComponent,
-        MockAppCardComponent,
-        SkeletonModule,
-        TestHostComponent,
-      ],
+      imports: [;
+        CommonModule,;
+        CardGridComponent,;
+        MockAppCardComponent,;
+        SkeletonModule,;
+        TestHostComponent,;
+      ],;
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);

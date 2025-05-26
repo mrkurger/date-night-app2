@@ -1,54 +1,53 @@
 import { _NbDialogRef } from '@nebular/theme';
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
 
-@Component({
-    selector: 'app-error-details-dialog',
-    imports: [CommonModule],
-    template: `
-    <div class="error-dialog-container">
-      <h2>Error Details</h2>
-      <mat-dialog-content>
-        <div class="error-details">
-          <div class="detail-row">
-            <strong>Type:</strong>
-            <span>{{ data.type }}</span>
-          </div>
-          <div class="detail-row">
-            <strong>Category:</strong>
-            <span>{{ data.category }}</span>
-          </div>
-          <div class="detail-row">
-            <strong>Status Code:</strong>
-            <span>{{ data.statusCode }}</span>
-          </div>
-          <div class="detail-row">
-            <strong>URL:</strong>
-            <span>{{ data.url }}</span>
-          </div>
-          <div class="detail-row">
-            <strong>Timestamp:</strong>
-            <span>{{ data.timestamp | date: 'medium' }}</span>
-          </div>
-          <div class="detail-row full-width">
-            <strong>Message:</strong>
-            <p>{{ data.message }}</p>
-          </div>
-          <div class="detail-row full-width" *ngIf="data.stackTrace">
-            <strong>Stack Trace:</strong>
-            <pre>{{ data.stackTrace }}</pre>
-          </div>
-        </div>
-      </mat-dialog-content>
-      <mat-dialog-actions align="end">
-        <button mat-button [mat-dialog-close]>Close</button>
-      </mat-dialog-actions>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-error-details-dialog',;
+    imports: [CommonModule],;
+    template: `;`
+    ;
+      Error Details;
+      ;
+        ;
+          ;
+            Type:;
+            {{ data.type }};
+          ;
+          ;
+            Category:;
+            {{ data.category }};
+          ;
+          ;
+            Status Code:;
+            {{ data.statusCode }};
+          ;
+          ;
+            URL:;
+            {{ data.url }};
+          ;
+          ;
+            Timestamp:;
+            {{ data.timestamp | date: 'medium' }};
+          ;
+          ;
+            Message:;
+            {{ data.message }};
+          ;
+          ;
+            Stack Trace:;
+            {{ data.stackTrace }};
+          ;
+        ;
+      ;
+      ;
+        Close;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -97,12 +96,12 @@ import type { ErrorTelemetry } from 'src/app/core/services/telemetry.service';
         margin-top: 1.5rem;
         padding: 0;
       }
-    `,
-    ]
-})
-export class ErrorDetailsDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<ErrorDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ErrorTelemetry,
+    `,;`
+    ];
+});
+export class ErrorDetailsDialogComponen {t {
+  constructor(;
+    public dialogRef: MatDialogRef,;
+    @Inject(MAT_DIALOG_DATA) public data: ErrorTelemetry,;
   ) {}
 }

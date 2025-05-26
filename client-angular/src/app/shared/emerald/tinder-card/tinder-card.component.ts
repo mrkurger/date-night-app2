@@ -1,38 +1,27 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
-<<<<<<< HEAD
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+  Component,;
+  Input,;
+  Output,;
+  EventEmitter,;
+  ElementRef,;
+  AfterViewInit,;
+  OnDestroy,;
+  ViewChild,';
+} from '@angular/core';
+
 import {
-=======
->>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { ChipModule } from 'primeng/chip';
-import { TagModule } from 'primeng/tag';
-<<<<<<< HEAD
-=======
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
->>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
-  faHeart,
-  faTimes,
-  faMessage,
-  faInfoCircle,
-  faMapMarkerAlt,
+  faHeart,;
+  faTimes,;
+  faMessage,;
+  faInfoCircle,;
+  faMapMarkerAlt,;
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
- * Interface for media items in the Tinder card
+ * Interface for media items in the Tinder card;
  */
 export interface TinderCardMedia {
   url: string;
@@ -41,7 +30,7 @@ export interface TinderCardMedia {
 }
 
 /**
- * Interface for the Tinder card data
+ * Interface for the Tinder card data;
  */
 export interface TinderCardData {
   id: string;
@@ -55,123 +44,84 @@ export interface TinderCardData {
 }
 
 @Component({
-  selector: 'app-tinder-card',
-  standalone: true,
-  template: `
-    <p-card
-      #card
-      [ngClass]="{
-        'tinder-card': true,
-        swiping: isSwiping,
-        liked: isLiked,
-        disliked: isDisliked,
-      }"
-      [style]="cardStyle"
-    >
-      <div class="like-indicator" [class.visible]="showLikeIndicator">
-        <fa-icon [icon]="faHeart" class="text-success"></fa-icon>
-        <span>LIKE</span>
-      </div>
-      <div class="dislike-indicator" [class.visible]="showDislikeIndicator">
-        <fa-icon [icon]="faTimes" class="text-danger"></fa-icon>
-        <span>NOPE</span>
-      </div>
+  selector: 'app-tinder-card',;
+  standalone: true,;
+  template: `;`
+    ;
+      ;
+        ;
+        LIKE;
+      ;
+      ;
+        ;
+        NOPE;
+      ;
 
-      <div class="media-container">
-        <div class="media-item" [ngStyle]="mediaStyle">
-          <ng-container [ngSwitch]="currentMediaType">
-            <img
-              *ngSwitchCase="'image'"
-              [src]="currentMediaUrl"
-              [alt]="data.title"
-              class="media-image"
-            />
-            <video *ngSwitchCase="'video'" controls class="media-video">
-              <source [src]="currentMediaUrl" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </ng-container>
-        </div>
+      ;
+        ;
+          ;
+            ;
+            ;
+              ;
+              Your browser does not support the video tag.;
+            ;
+          ;
+        ;
 
-        <!-- Media Navigation Dots -->
-        <div class="media-dots" *ngIf="hasMultipleMedia">
-          <div
-            *ngFor="let _ of data.media; let i = index"
-            class="media-dot"
-            [class.active]="i === currentImage"
-            (click)="$event.stopPropagation(); currentImage = i"
-          ></div>
-        </div>
+        ;
+        ;
+          ;
+        ;
 
-        <div class="card-content">
-          <div class="card-header">
-            <h3 class="card-title">
+        ;
+          ;
+            ;
               {{ data.title }}
-              <span class="card-subtitle" *ngIf="data.distance">
-                <fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{ data.distance }}km
-              </span>
-            </h3>
-            <p class="card-price" *ngIf="data.price">{{ data.price | currency }}</p>
-          </div>
+              ;
+                 {{ data.distance }}km;
+              ;
+            ;
+            {{ data.price | currency }};
+          ;
 
-          <div class="card-body">
-            <p class="card-description">{{ data.description }}</p>
+          ;
+            {{ data.description }};
 
-            <div class="card-tags" *ngIf="data.labels?.length">
-              <p-chip *ngFor="let tag of data.labels" [label]="tag" styleClass="p-mr-2"></p-chip>
-            </div>
-          </div>
+            ;
+              ;
+            ;
+          ;
 
-          <div class="card-footer">
-            <button
-              pButton
-              class="p-button-rounded p-button-info"
-              (click)="$event.stopPropagation(); onInfo()"
-            >
-              <fa-icon [icon]="faInfoCircle"></fa-icon>
-            </button>
-            <button
-              pButton
-              class="p-button-rounded p-button-danger"
-              (click)="$event.stopPropagation(); onDislike()"
-            >
-              <fa-icon [icon]="faTimes"></fa-icon>
-            </button>
-            <button
-              pButton
-              class="p-button-rounded p-button-success"
-              (click)="$event.stopPropagation(); onLike()"
-            >
-              <fa-icon [icon]="faHeart"></fa-icon>
-            </button>
-            <button
-              pButton
-              class="p-button-rounded p-button-primary"
-              (click)="$event.stopPropagation(); onSuperlike()"
-            >
-              <fa-icon [icon]="faMessage"></fa-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-    </p-card>
-  `,
-  styleUrls: ['./tinder-card.component.scss'],
-<<<<<<< HEAD
-  imports: [TagModule, ChipModule, ButtonModule, CardModule, 
-=======
-  imports: [
->>>>>>> 76126a9 (feat: Implement rate limiting middleware for enhanced security)
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    ChipModule,
-    TagModule,
-    SharedModule,
-    FontAwesomeModule,
-  ],
-})
-export class TinderCardComponent implements AfterViewInit, OnDestroy {
+          ;
+            ;
+              ;
+            ;
+            ;
+              ;
+            ;
+            ;
+              ;
+            ;
+            ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styleUrls: ['./tinder-card.component.scss'],;
+imports: [TagModule, ChipModule, ButtonModule, CardModule,;
+    CommonModule,;
+    CardModule,;
+    ButtonModule,;
+    ChipModule,;
+    TagModule,;
+    SharedModule,;
+    FontAwesomeModule,;
+  ],;
+});
+export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
   @ViewChild('card') cardRef!: ElementRef;
 
   // Font Awesome icons
@@ -182,10 +132,10 @@ export class TinderCardComponent implements AfterViewInit, OnDestroy {
   faMapMarkerAlt = faMapMarkerAlt;
   @Input() data!: TinderCardData;
   @Input() index = 0;
-  @Output() like = new EventEmitter<TinderCardData>();
-  @Output() dislike = new EventEmitter<TinderCardData>();
-  @Output() superlike = new EventEmitter<TinderCardData>();
-  @Output() info = new EventEmitter<TinderCardData>();
+  @Output() like = new EventEmitter();
+  @Output() dislike = new EventEmitter();
+  @Output() superlike = new EventEmitter();
+  @Output() info = new EventEmitter();
 
   private element: HTMLElement;
   private hammerManager: any;

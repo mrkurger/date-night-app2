@@ -15,7 +15,6 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 
-
 // TODO: Create User interface if not available
 interface User {
   username?: string;
@@ -25,73 +24,73 @@ interface User {
   roles?: string[];
 }
 
-const mockAdvertisers = [
+const mockAdvertisers = [;
   {
-    id: 1,
-    name: 'Jasmine',
-    age: 25,
-    location: 'Stockholm, Sweden',
-    description: 'Professional dancer...',
-    tags: ['dancer', 'performer'],
-    image: '/placeholder.svg?text=Jasmine',
-    isPremium: true,
-    isOnline: true,
-  },
+    id: 1,';
+    name: 'Jasmine',;
+    age: 25,;
+    location: 'Stockholm, Sweden',;
+    description: 'Professional dancer...',;
+    tags: ['dancer', 'performer'],;
+    image: '/placeholder.svg?text=Jasmine',;
+    isPremium: true,;
+    isOnline: true,;
+  },;
   {
-    id: 2,
-    name: 'Crystal',
-    age: 27,
-    location: 'Oslo, Norway',
-    description: 'Certified massage therapist...',
-    tags: ['massage', 'therapy'],
-    image: '/placeholder.svg?text=Crystal',
-    isPremium: true,
-    isOnline: true,
-  },
+    id: 2,;
+    name: 'Crystal',;
+    age: 27,;
+    location: 'Oslo, Norway',;
+    description: 'Certified massage therapist...',;
+    tags: ['massage', 'therapy'],;
+    image: '/placeholder.svg?text=Crystal',;
+    isPremium: true,;
+    isOnline: true,;
+  },;
   {
-    id: 3,
-    name: 'Destiny',
-    age: 24,
-    location: 'Copenhagen, Denmark',
-    description: 'Experienced entertainer...',
-    tags: ['entertainer'],
-    image: '/placeholder.svg?text=Destiny',
-    isPremium: true,
-    isOnline: false,
-  },
+    id: 3,;
+    name: 'Destiny',;
+    age: 24,;
+    location: 'Copenhagen, Denmark',;
+    description: 'Experienced entertainer...',;
+    tags: ['entertainer'],;
+    image: '/placeholder.svg?text=Destiny',;
+    isPremium: true,;
+    isOnline: false,;
+  },;
   {
-    id: 4,
-    name: 'Amber',
-    age: 26,
-    location: 'Helsinki, Finland',
-    description: 'Professional dancer...',
-    tags: ['dancer'],
-    image: '/placeholder.svg?text=Amber',
-    isPremium: false,
-    isOnline: true,
-  },
+    id: 4,;
+    name: 'Amber',;
+    age: 26,;
+    location: 'Helsinki, Finland',;
+    description: 'Professional dancer...',;
+    tags: ['dancer'],;
+    image: '/placeholder.svg?text=Amber',;
+    isPremium: false,;
+    isOnline: true,;
+  },;
   {
-    id: 5,
-    name: 'Sophia',
-    age: 28,
-    location: 'Gothenburg, Sweden',
-    description: 'Experienced massage therapist...',
-    tags: ['massage'],
-    image: '/placeholder.svg?text=Sophia',
-    isPremium: true,
-    isOnline: true,
-  },
+    id: 5,;
+    name: 'Sophia',;
+    age: 28,;
+    location: 'Gothenburg, Sweden',;
+    description: 'Experienced massage therapist...',;
+    tags: ['massage'],;
+    image: '/placeholder.svg?text=Sophia',;
+    isPremium: true,;
+    isOnline: true,;
+  },;
   {
-    id: 6,
-    name: 'Tiffany',
-    age: 25,
-    location: 'Bergen, Norway',
-    description: 'Professional entertainer...',
-    tags: ['entertainer'],
-    image: '/placeholder.svg?text=Tiffany',
-    isPremium: false,
-    isOnline: false,
-  },
+    id: 6,;
+    name: 'Tiffany',;
+    age: 25,;
+    location: 'Bergen, Norway',;
+    description: 'Professional entertainer...',;
+    tags: ['entertainer'],;
+    image: '/placeholder.svg?text=Tiffany',;
+    isPremium: false,;
+    isOnline: false,;
+  },;
 ];
 
 interface Advertiser {
@@ -108,13 +107,13 @@ interface Advertiser {
 }
 
 @Component({
-  selector: 'app-advertiser-browsing-alternate',
-  templateUrl: './advertiser-browsing-alternate.component.html',
-  styleUrls: ['./advertiser-browsing-alternate.component.scss'],
-})
-export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject<void>();
-  private searchSubject = new Subject<string>();
+  selector: 'app-advertiser-browsing-alternate',;
+  templateUrl: './advertiser-browsing-alternate.component.html',;
+  styleUrls: ['./advertiser-browsing-alternate.component.scss'],;
+});
+export class AdvertiserBrowsingAlternateComponen {t implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
+  private searchSubject = new Subject();
 
   isLoggedIn: boolean = false;
   isAdvertiser: boolean = false;
@@ -141,27 +140,27 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
 
   // PrimeNG Menus
   userMenuAccount: MenuItem[] = [];
-  rankingsMenu: MenuItem[] = [
+  rankingsMenu: MenuItem[] = [;
     {
-      label: 'Top Rated',
-      routerLink: '/advertiser-browsing-alt/rankings',
-      queryParams: { type: 'rating' },
-    },
+      label: 'Top Rated',;
+      routerLink: '/advertiser-browsing-alt/rankings',;
+      queryParams: { type: 'rating' },;
+    },;
     {
-      label: 'Most Popular',
-      routerLink: '/advertiser-browsing-alt/rankings',
-      queryParams: { type: 'popular' },
-    },
+      label: 'Most Popular',;
+      routerLink: '/advertiser-browsing-alt/rankings',;
+      queryParams: { type: 'popular' },;
+    },;
     {
-      label: 'Most Reviewed',
-      routerLink: '/advertiser-browsing-alt/rankings',
-      queryParams: { type: 'reviews' },
-    },
+      label: 'Most Reviewed',;
+      routerLink: '/advertiser-browsing-alt/rankings',;
+      queryParams: { type: 'reviews' },;
+    },;
     {
-      label: 'Newest',
-      routerLink: '/advertiser-browsing-alt/rankings',
-      queryParams: { type: 'new' },
-    },
+      label: 'Newest',;
+      routerLink: '/advertiser-browsing-alt/rankings',;
+      queryParams: { type: 'new' },;
+    },;
   ];
   mobileMenuItems: MenuItem[] = [];
 
@@ -169,35 +168,35 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   activeIndex: number = 0;
   currentYear: number = new Date().getFullYear();
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
+  constructor(;
+    private router: Router,;
+    private authService: AuthService,;
   ) {
-    this.router.events
-      .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        takeUntil(this.ngUnsubscribe),
-      )
+    this.router.events;
+      .pipe(;
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),;
+        takeUntil(this.ngUnsubscribe),;
+      );
       .subscribe((event) => {
         this.currentUrl = event.urlAfterRedirects;
       });
   }
 
   ngOnInit(): void {
-    this.authService
-      .isAuthenticated()
-      .pipe(takeUntil(this.ngUnsubscribe))
+    this.authService;
+      .isAuthenticated();
+      .pipe(takeUntil(this.ngUnsubscribe));
       .subscribe((isAuth) => {
         this.isLoggedIn = isAuth;
         if (isAuth) {
-          this.authService
-            .getCurrentUser()
-            .pipe(takeUntil(this.ngUnsubscribe))
+          this.authService;
+            .getCurrentUser();
+            .pipe(takeUntil(this.ngUnsubscribe));
             .subscribe((user: User | null) => {
               if (user) {
                 this.userName = user.username || 'User';
                 this.userPicture = user.profile?.avatar || 'assets/img/kitten-dark.png';
-                this.isAdvertiser =
+                this.isAdvertiser =;
                   user.roles?.includes('advertiser') || user.roles?.includes('admin') || false;
               }
               this.updateUserMenus();
@@ -216,8 +215,8 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     this.filterAndDisplayAds(); // Initial display
 
     // Debounced search
-    this.searchSubject
-      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.ngUnsubscribe))
+    this.searchSubject;
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.ngUnsubscribe));
       .subscribe((query) => {
         this.performSearch(query);
       });
@@ -229,94 +228,94 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   }
 
   private updateUserMenus(): void {
-    this.userMenuAccount = [
+    this.userMenuAccount = [;
       {
-        label: 'Profile',
-        icon: 'pi pi-user',
-        routerLink: '/advertiser-browsing-alt/user-profile',
-        visible: this.isLoggedIn,
-      },
+        label: 'Profile',;
+        icon: 'pi pi-user',;
+        routerLink: '/advertiser-browsing-alt/user-profile',;
+        visible: this.isLoggedIn,;
+      },;
       {
-        label: 'Wallet',
-        icon: 'pi pi-credit-card',
-        routerLink: '/advertiser-browsing-alt/wallet',
-        visible: this.isLoggedIn,
-      },
+        label: 'Wallet',;
+        icon: 'pi pi-credit-card',;
+        routerLink: '/advertiser-browsing-alt/wallet',;
+        visible: this.isLoggedIn,;
+      },;
     ];
 
     if (this.isLoggedIn && this.isAdvertiser) {
       this.userMenuAccount.push({
-        label: 'Dashboard',
-        icon: 'pi pi-th-large',
-        routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
+        label: 'Dashboard',;
+        icon: 'pi pi-th-large',;
+        routerLink: '/advertiser-browsing-alt/advertiser-dashboard',;
       });
     }
 
     if (this.isLoggedIn) {
       this.userMenuAccount.push({
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command: () => this.handleUserMenuClick('logout'),
+        label: 'Logout',;
+        icon: 'pi pi-sign-out',;
+        command: () => this.handleUserMenuClick('logout'),;
       });
     }
   }
 
   private updateMobileMenuItems(): void {
-    this.mobileMenuItems = [
+    this.mobileMenuItems = [;
       {
-        label: 'Browse',
-        routerLink: '/advertiser-browsing-alt/browse',
-        icon: 'pi pi-search',
-      },
+        label: 'Browse',;
+        routerLink: '/advertiser-browsing-alt/browse',;
+        icon: 'pi pi-search',;
+      },;
       {
-        label: 'Favorites',
-        routerLink: '/advertiser-browsing-alt/favorites',
-        icon: 'pi pi-heart',
-      },
+        label: 'Favorites',;
+        routerLink: '/advertiser-browsing-alt/favorites',;
+        icon: 'pi pi-heart',;
+      },;
       {
-        label: 'Rankings',
-        icon: 'pi pi-chart-bar',
-        items: this.rankingsMenu,
-      },
+        label: 'Rankings',;
+        icon: 'pi pi-chart-bar',;
+        items: this.rankingsMenu,;
+      },;
     ];
 
     if (this.isLoggedIn) {
       if (this.isAdvertiser) {
         this.mobileMenuItems.push({
-          label: 'Dashboard',
-          icon: 'pi pi-th-large',
-          routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
+          label: 'Dashboard',;
+          icon: 'pi pi-th-large',;
+          routerLink: '/advertiser-browsing-alt/advertiser-dashboard',;
         });
       }
-      this.mobileMenuItems.push(
+      this.mobileMenuItems.push(;
         {
-          label: 'Profile',
-          icon: 'pi pi-user',
-          routerLink: '/advertiser-browsing-alt/user-profile',
-        },
+          label: 'Profile',;
+          icon: 'pi pi-user',;
+          routerLink: '/advertiser-browsing-alt/user-profile',;
+        },;
         {
-          label: 'Wallet',
-          icon: 'pi pi-credit-card',
-          routerLink: '/advertiser-browsing-alt/wallet',
-        },
+          label: 'Wallet',;
+          icon: 'pi pi-credit-card',;
+          routerLink: '/advertiser-browsing-alt/wallet',;
+        },;
         {
-          label: 'Logout',
-          icon: 'pi pi-sign-out',
-          command: () => this.handleUserMenuClick('logout'),
-        },
+          label: 'Logout',;
+          icon: 'pi pi-sign-out',;
+          command: () => this.handleUserMenuClick('logout'),;
+        },;
       );
     } else {
-      this.mobileMenuItems.push(
+      this.mobileMenuItems.push(;
         {
-          label: 'Log In',
-          icon: 'pi pi-sign-in',
-          routerLink: '/auth/login',
-        },
+          label: 'Log In',;
+          icon: 'pi pi-sign-in',;
+          routerLink: '/auth/login',;
+        },;
         {
-          label: 'Sign Up',
-          icon: 'pi pi-user-plus',
-          routerLink: '/auth/signup',
-        },
+          label: 'Sign Up',;
+          icon: 'pi pi-user-plus',;
+          routerLink: '/auth/signup',;
+        },;
       );
     }
   }
@@ -362,7 +361,7 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   performSearch(query: string): void {
     this.isSearching = true;
     this.isSearchingResult = true;
-    this.pageTitle = `Search results for "${query}"`;
+    this.pageTitle = `Search results for "${query}"`;`
 
     // Simulate API call delay
     setTimeout(() => {
@@ -372,13 +371,13 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
         this.pageTitle = ''; // Or 'All Advertisers'
       } else {
         const qLower = query.toLowerCase();
-        const results = this.allAdvertisers.filter(
-          (ad) =>
-            !ad.isPremium &&
-            (ad.name.toLowerCase().includes(qLower) ||
-              ad.description.toLowerCase().includes(qLower) ||
-              ad.location.toLowerCase().includes(qLower) ||
-              ad.tags.some((tag) => tag.toLowerCase().includes(qLower))),
+        const results = this.allAdvertisers.filter(;
+          (ad) =>;
+            !ad.isPremium &&;
+            (ad.name.toLowerCase().includes(qLower) ||;
+              ad.description.toLowerCase().includes(qLower) ||;
+              ad.location.toLowerCase().includes(qLower) ||;
+              ad.tags.some((tag) => tag.toLowerCase().includes(qLower))),;
         );
         this.displayedAdvertisers = results;
         this.searchResultCount = results.length;
@@ -408,15 +407,15 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
-        this.displayedAdvertisers = this.allAdvertisers.filter(
-          (ad) =>
-            ad.name.toLowerCase().includes(query) ||
-            ad.location?.toLowerCase().includes(query) ||
-            ad.description?.toLowerCase().includes(query) ||
-            ad.tags?.some((tag) => tag.toLowerCase().includes(query)),
+        this.displayedAdvertisers = this.allAdvertisers.filter(;
+          (ad) =>;
+            ad.name.toLowerCase().includes(query) ||;
+            ad.location?.toLowerCase().includes(query) ||;
+            ad.description?.toLowerCase().includes(query) ||;
+            ad.tags?.some((tag) => tag.toLowerCase().includes(query)),;
         );
         this.searchResultCount = this.displayedAdvertisers.length;
-        this.pageTitle = `Search Results for "${this.searchQuery}"`;
+        this.pageTitle = `Search Results for "${this.searchQuery}"`;`
         this.isSearchingResult = true;
       } else {
         this.displayedAdvertisers = this.allAdvertisers.filter((ad) => !ad.isPremium);
@@ -434,8 +433,8 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     const index = this.displayedAdvertisers.findIndex((ad) => ad.id === advertiser.id);
     if (index !== -1) {
       this.displayedAdvertisers[index] = {
-        ...this.displayedAdvertisers[index],
-        isFavorite: !this.displayedAdvertisers[index].isFavorite,
+        ...this.displayedAdvertisers[index],;
+        isFavorite: !this.displayedAdvertisers[index].isFavorite,;
       };
       // TODO: Call favorite service to persist changes
     }
@@ -445,8 +444,8 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     // Navigate to chat or open chat widget
     this.router.navigate(['/chat'], {
       queryParams: {
-        advertiserId: advertiser.id,
-      },
+        advertiserId: advertiser.id,;
+      },;
     });
   }
 
@@ -461,8 +460,8 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     const index = this.displayedAdvertisers.findIndex((ad) => ad.id === advertiser.id);
     if (index !== -1) {
       this.displayedAdvertisers[index] = {
-        ...this.displayedAdvertisers[index],
-        isFavorite: true,
+        ...this.displayedAdvertisers[index],;
+        isFavorite: true,;
       };
       // TODO: Call favorite/like service to persist changes
     }
@@ -479,8 +478,8 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     // Simulate API call delay
     setTimeout(() => {
       // For now, just shuffle the existing list
-      this.displayedAdvertisers = [...this.allAdvertisers]
-        .sort(() => Math.random() - 0.5)
+      this.displayedAdvertisers = [...this.allAdvertisers];
+        .sort(() => Math.random() - 0.5);
         .filter((ad) => !ad.isPremium);
       this.isLoading = false;
     }, 1000);

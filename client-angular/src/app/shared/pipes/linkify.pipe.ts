@@ -1,20 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-@Pipe({
-  name: 'linkify',
-  standalone: true,
-})
-export class LinkifyPipe implements PipeTransform {
+@Pipe({';
+  name: 'linkify',;
+  standalone: true,;
+});
+export class LinkifyPip {e implements PipeTransform {
   // URL pattern for detecting links in text
   private urlRegex = /(https?:\/\/[^\s]+)/g;
 
   constructor(private sanitizer: DomSanitizer) {}
 
   /**
-   * Transform text by converting URLs to clickable links
-   * @param text The text to transform
-   * @returns HTML with clickable links
+   * Transform text by converting URLs to clickable links;
+   * @param text The text to transform;
+   * @returns HTML with clickable links;
    */
   transform(text: string): SafeHtml {
     if (!text) {
@@ -29,7 +29,7 @@ export class LinkifyPipe implements PipeTransform {
         displayUrl = url.substring(0, 27) + '...';
       }
 
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+      return `${displayUrl}`;`
     });
 
     // Sanitize the HTML to prevent XSS attacks

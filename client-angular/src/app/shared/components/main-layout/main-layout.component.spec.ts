@@ -1,5 +1,14 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of, BehaviorSubject } from 'rxjs';
+import { MainLayoutComponent } from './main-layout.component';
+import { AuthService } from '../../../core/services/auth.service';
+import { AdService } from '../../../core/services/ad.service';
+import { ThemeService } from '../../../core/services/theme.service';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -9,24 +18,16 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { of, BehaviorSubject } from 'rxjs';
-import { MainLayoutComponent } from './main-layout.component';
-import { AuthService } from '../../../core/services/auth.service';
-import { AdService } from '../../../core/services/ad.service';
-import { ThemeService } from '../../../core/services/theme.service';
 
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
-
+';
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
-  let fixture: ComponentFixture<MainLayoutComponent>;
-  let authServiceMock: jasmine.SpyObj<AuthService>;
-  let adServiceMock: jasmine.SpyObj<AdService>;
-  let themeServiceMock: jasmine.SpyObj<ThemeService>;
-  let isDarkModeMock: BehaviorSubject<boolean>;
-  let themeMock: BehaviorSubject<'light' | 'dark' | 'system'>;
+  let fixture: ComponentFixture;
+  let authServiceMock: jasmine.SpyObj;
+  let adServiceMock: jasmine.SpyObj;
+  let themeServiceMock: jasmine.SpyObj;
+  let isDarkModeMock: BehaviorSubject;
+  let themeMock: BehaviorSubject;
   // These spies are set up but not used in tests yet
   // Will be used in future test implementations
   // let localStorageSpy: jasmine.Spy;
@@ -35,26 +36,26 @@ describe('MainLayoutComponent', () => {
   beforeEach(async () => {
     // Create mock services
     authServiceMock = jasmine.createSpyObj('AuthService', [], {
-      currentUser$: of(null),
+      currentUser$: of(null),;
     });
 
     adServiceMock = jasmine.createSpyObj('AdService', ['getFeaturedAds']);
     adServiceMock.getFeaturedAds.and.returnValue(of([]));
 
     // Create mock observables for ThemeService
-    isDarkModeMock = new BehaviorSubject<boolean>(false);
-    themeMock = new BehaviorSubject<'light' | 'dark' | 'system'>('light');
+    isDarkModeMock = new BehaviorSubject(false);
+    themeMock = new BehaviorSubject('light');
 
     // Create ThemeService mock
     themeServiceMock = jasmine.createSpyObj('ThemeService', ['setTheme', 'toggleTheme']);
 
     // Set up mock observables
     Object.defineProperty(themeServiceMock, 'isDarkMode$', {
-      get: () => isDarkModeMock.asObservable(),
+      get: () => isDarkModeMock.asObservable(),;
     });
 
     Object.defineProperty(themeServiceMock, 'theme$', {
-      get: () => themeMock.asObservable(),
+      get: () => themeMock.asObservable(),;
     });
 
     // Spy on localStorage
@@ -63,25 +64,25 @@ describe('MainLayoutComponent', () => {
 
     // Spy on matchMedia
     matchMediaSpy = spyOn(window, 'matchMedia').and.returnValue({
-      matches: false,
-      addEventListener: jasmine.createSpy(),
-      removeEventListener: jasmine.createSpy(),
-      dispatchEvent: jasmine.createSpy(),
-      onchange: null,
-      media: '',
-      addListener: jasmine.createSpy(),
-      removeListener: jasmine.createSpy(),
+      matches: false,;
+      addEventListener: jasmine.createSpy(),;
+      removeEventListener: jasmine.createSpy(),;
+      dispatchEvent: jasmine.createSpy(),;
+      onchange: null,;
+      media: '',;
+      addListener: jasmine.createSpy(),;
+      removeListener: jasmine.createSpy(),;
     } as any);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,
-    MainLayoutComponent,
-    ThemeToggleComponent],
-      providers: [
-        { provide: AuthService, useValue: authServiceMock },
-        { provide: AdService, useValue: adServiceMock },
-        { provide: ThemeService, useValue: themeServiceMock },
-      ],
+      imports: [RouterTestingModule,;
+    MainLayoutComponent,;
+    ThemeToggleComponent],;
+      providers: [;
+        { provide: AuthService, useValue: authServiceMock },;
+        { provide: AdService, useValue: adServiceMock },;
+        { provide: ThemeService, useValue: themeServiceMock },;
+      ],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainLayoutComponent);
@@ -143,70 +144,70 @@ describe('MainLayoutComponent', () => {
   describe('Premium Ads', () => {
     it('should load premium ads on init', () => {
       // Arrange
-      const mockAds = [
+      const mockAds = [;
         {
-          _id: '1',
-          title: 'Ad 1',
-          description: 'Description 1',
-          category: 'Category 1',
-          price: 100,
-          location: 'Location 1',
-          images: [],
-          media: [{ url: 'url1', type: 'image' }],
-          advertiser: 'user1',
-          userId: 'user1',
-          isActive: true,
-          isFeatured: true,
-          isTrending: false,
-          isTouring: false,
-          viewCount: 10,
-          clickCount: 5,
-          inquiryCount: 2,
-          createdAt: '2023-01-01',
-          updatedAt: '2023-01-02',
-        },
+          _id: '1',;
+          title: 'Ad 1',;
+          description: 'Description 1',;
+          category: 'Category 1',;
+          price: 100,;
+          location: 'Location 1',;
+          images: [],;
+          media: [{ url: 'url1', type: 'image' }],;
+          advertiser: 'user1',;
+          userId: 'user1',;
+          isActive: true,;
+          isFeatured: true,;
+          isTrending: false,;
+          isTouring: false,;
+          viewCount: 10,;
+          clickCount: 5,;
+          inquiryCount: 2,;
+          createdAt: '2023-01-01',;
+          updatedAt: '2023-01-02',;
+        },;
         {
-          _id: '2',
-          title: 'Ad 2',
-          description: 'Description 2',
-          category: 'Category 2',
-          price: 200,
-          location: 'Location 2',
-          images: ['url2'],
-          media: [],
-          advertiser: 'user2',
-          userId: 'user2',
-          isActive: true,
-          isFeatured: true,
-          isTrending: false,
-          isTouring: false,
-          viewCount: 20,
-          clickCount: 10,
-          inquiryCount: 4,
-          createdAt: '2023-01-03',
-          updatedAt: '2023-01-04',
-        },
+          _id: '2',;
+          title: 'Ad 2',;
+          description: 'Description 2',;
+          category: 'Category 2',;
+          price: 200,;
+          location: 'Location 2',;
+          images: ['url2'],;
+          media: [],;
+          advertiser: 'user2',;
+          userId: 'user2',;
+          isActive: true,;
+          isFeatured: true,;
+          isTrending: false,;
+          isTouring: false,;
+          viewCount: 20,;
+          clickCount: 10,;
+          inquiryCount: 4,;
+          createdAt: '2023-01-03',;
+          updatedAt: '2023-01-04',;
+        },;
         {
-          _id: '3',
-          title: 'Ad 3',
-          description: 'Description 3',
-          category: 'Category 3',
-          price: 300,
-          location: 'Location 3',
-          images: [],
-          media: [],
-          advertiser: 'user3',
-          userId: 'user3',
-          isActive: true,
-          isFeatured: true,
-          isTrending: false,
-          isTouring: false,
-          viewCount: 30,
-          clickCount: 15,
-          inquiryCount: 6,
-          createdAt: '2023-01-05',
-          updatedAt: '2023-01-06',
-        },
+          _id: '3',;
+          title: 'Ad 3',;
+          description: 'Description 3',;
+          category: 'Category 3',;
+          price: 300,;
+          location: 'Location 3',;
+          images: [],;
+          media: [],;
+          advertiser: 'user3',;
+          userId: 'user3',;
+          isActive: true,;
+          isFeatured: true,;
+          isTrending: false,;
+          isTouring: false,;
+          viewCount: 30,;
+          clickCount: 15,;
+          inquiryCount: 6,;
+          createdAt: '2023-01-05',;
+          updatedAt: '2023-01-06',;
+        },;
       ];
       adServiceMock.getFeaturedAds.and.returnValue(of(mockAds));
 
@@ -227,8 +228,8 @@ describe('MainLayoutComponent', () => {
       // Act & Assert
       expect(component.getMediaUrl(adWithMedia as any)).toBe('media-url');
       expect(component.getMediaUrl(adWithImages as any)).toBe('image-url');
-      expect(component.getMediaUrl(adWithoutMedia as any)).toBe(
-        '/assets/images/default-profile.jpg',
+      expect(component.getMediaUrl(adWithoutMedia as any)).toBe(;
+        '/assets/images/default-profile.jpg',;
       );
     });
   });

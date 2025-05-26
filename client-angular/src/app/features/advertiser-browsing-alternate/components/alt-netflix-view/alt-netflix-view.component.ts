@@ -3,9 +3,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-// PrimeNG imports
-// Core services and interfaces
 import { AdService } from '../../../../core/services/ad.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { ChatService } from '../../../../core/services/chat.service';
@@ -28,8 +25,6 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/menuitem';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-// PrimeNG imports
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
@@ -45,49 +40,54 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
-
-// Core services and interfaces
 import { AdService } from '../../../../core/services/ad.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { ChatService } from '../../../../core/services/chat.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Ad } from '../../../../core/models/ad.interface';
-
-@Component({
-  selector: 'app-alt-netflix-view',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    CardModule,
-    ButtonModule,
-    BadgeModule,
-    TagModule,
-    ProgressSpinnerModule,
-    TooltipModule,
-    DialogModule,
-    RippleModule,
-    ScrollerModule,
-    DividerModule,
-    DropdownModule,
-    InputTextModule,
-    MultiSelectModule,
-    SpeedDialModule,,
-    ChipModule
-  ],
-  templateUrl: './alt-netflix-view.component.html',
-  styleUrls: ['./alt-netflix-view.component.scss'],
-})
-export class AltNetflixViewComponent implements OnInit {
-  // Inputs and Outputs
-  @Input() advertisers: Ad[] = [];
 import { ChipModule } from 'primeng/chip';
 
+// PrimeNG imports
+// Core services and interfaces
+
+// PrimeNG imports
+
+// Core services and interfaces
+
+@Component({';
+  selector: 'app-alt-netflix-view',;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    RouterModule,;
+    ReactiveFormsModule,;
+    CardModule,;
+    ButtonModule,;
+    BadgeModule,;
+    TagModule,;
+    ProgressSpinnerModule,;
+    TooltipModule,;
+    DialogModule,;
+    RippleModule,;
+    ScrollerModule,;
+    DividerModule,;
+    DropdownModule,;
+    InputTextModule,;
+    MultiSelectModule,;
+    SpeedDialModule,,;
+    ChipModule;
+  ],;
+  templateUrl: './alt-netflix-view.component.html',;
+  styleUrls: ['./alt-netflix-view.component.scss'],;
+});
+export class AltNetflixViewComponen {t implements OnInit {
+  // Inputs and Outputs
+  @Input() advertisers: Ad[] = [];
+
   @Input() loading = false;
-  @Output() favorite = new EventEmitter<string>();
-  @Output() chat = new EventEmitter<string>();
-  @Output() viewProfile = new EventEmitter<string>();
+  @Output() favorite = new EventEmitter();
+  @Output() chat = new EventEmitter();
+  @Output() viewProfile = new EventEmitter();
 
   // Component state
   filterDialogVisible = false;
@@ -100,40 +100,40 @@ import { ChipModule } from 'primeng/chip';
   selectedCategories: string[] = [];
 
   // SpeedDial items for floating action button
-  speedDialItems: MenuItem[] = [
+  speedDialItems: MenuItem[] = [;
     {
-      icon: 'pi pi-refresh',
+      icon: 'pi pi-refresh',;
       command: () => {
         this.loadAds();
-      },
+      },;
       tooltipOptions: {
-        tooltipLabel: 'Refresh',
-      },
-    },
+        tooltipLabel: 'Refresh',;
+      },;
+    },;
     {
-      icon: 'pi pi-filter',
+      icon: 'pi pi-filter',;
       command: () => {
         this.openFilters();
-      },
+      },;
       tooltipOptions: {
-        tooltipLabel: 'Filters',
-      },
-    },
+        tooltipLabel: 'Filters',;
+      },;
+    },;
   ];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private adService: AdService,
-    private notificationService: NotificationService,
-    private chatService: ChatService,
+  constructor(;
+    private formBuilder: FormBuilder,;
+    private authService: AuthService,;
+    private adService: AdService,;
+    private notificationService: NotificationService,;
+    private chatService: ChatService,;
   ) {
     // Initialize the filter form
     this.filterForm = this.formBuilder.group({
-      categories: [[]],
-      location: [''],
-      ageRange: [[]],
-      rating: [[]],
+      categories: [[]],;
+      location: [''],;
+      ageRange: [[]],;
+      rating: [[]],;
     });
   }
 
@@ -186,10 +186,10 @@ import { ChipModule } from 'primeng/chip';
 
   resetFilters(): void {
     this.filterForm.reset({
-      categories: [],
-      location: '',
-      ageRange: [],
-      rating: [],
+      categories: [],;
+      location: '',;
+      ageRange: [],;
+      rating: [],;
     });
     this.loadAds();
     this.closeFilters();
@@ -204,12 +204,12 @@ import { ChipModule } from 'primeng/chip';
       next: (response: any) => {
         this.advertisers = Array.isArray(response) ? response : response.ads || [];
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.error = 'Failed to load profiles. Please try again.';
         this.loading = false;
         console.error('Error loading ads:', error);
-      },
+      },;
     });
   }
 

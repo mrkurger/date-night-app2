@@ -1,39 +1,37 @@
+import {
 import { Inject, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
 import { NebularModule } from '../../../../app/shared/nebular.module';
-import {
-  NbDialogRef,
-  NB_DIALOG_CONFIG,
-  NbCardModule,
-  NbButtonModule,
-  NbIconModule,
-  NbBadgeModule,
-  NbToastrService,
-  NbGlobalPosition,
-  NbGlobalPhysicalPosition,
-  NbFormFieldModule,
-  NbInputModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbTagModule,
-} from '@nebular/theme';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-
 import { WalletService } from '../../../core/services/wallet.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
+  FormControl,;
+  FormGroup,;
+  Validators,;
+  FormsModule,;
+  ReactiveFormsModule,';
+} from '@angular/forms';
 
-
+import {
+  NbDialogRef,;
+  NB_DIALOG_CONFIG,;
+  NbCardModule,;
+  NbButtonModule,;
+  NbIconModule,;
+  NbBadgeModule,;
+  NbToastrService,;
+  NbGlobalPosition,;
+  NbGlobalPhysicalPosition,;
+  NbFormFieldModule,;
+  NbInputModule,;
+  NbSelectModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbTagModule,;
+} from '@nebular/theme';
 
 export interface WalletTransaction {
   id: string;
@@ -56,34 +54,34 @@ export interface WalletTransaction {
 }
 
 @Component({
-  selector: 'app-transaction-details-dialog',
-  templateUrl: './transaction-details-dialog.component.html',
-  styleUrls: ['./transaction-details-dialog.component.scss'],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ClipboardModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbBadgeModule,
-    NbFormFieldModule,
-    NbInputModule,
-    NbSelectModule,
-    NbSpinnerModule,
-    NbAlertModule,
-    NbTooltipModule,
-    NbTagModule,
-  ],
-})
-export class TransactionDetailsDialogComponent {
-  constructor(
-    private dialogRef: NbDialogRef<TransactionDetailsDialogComponent>,
-    public walletService: WalletService,
-    private toastrService: NbToastrService,
-    @Inject(NB_DIALOG_CONFIG) private config: { transaction: WalletTransaction },
+  selector: 'app-transaction-details-dialog',;
+  templateUrl: './transaction-details-dialog.component.html',;
+  styleUrls: ['./transaction-details-dialog.component.scss'],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [NebularModule, CommonModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
+    ClipboardModule,;
+    NbCardModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbBadgeModule,;
+    NbFormFieldModule,;
+    NbInputModule,;
+    NbSelectModule,;
+    NbSpinnerModule,;
+    NbAlertModule,;
+    NbTooltipModule,;
+    NbTagModule,;
+  ],;
+});
+export class TransactionDetailsDialogComponen {t {
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    public walletService: WalletService,;
+    private toastrService: NbToastrService,;
+    @Inject(NB_DIALOG_CONFIG) private config: { transaction: WalletTransaction },;
   ) {}
 
   get transaction(): WalletTransaction {
@@ -92,7 +90,7 @@ export class TransactionDetailsDialogComponent {
 
   formatTransactionAmount(transaction: WalletTransaction): string {
     const sign = transaction.amount >= 0 ? '+' : '';
-    return `${sign}${this.walletService.formatCurrency(transaction.amount, transaction.currency)}`;
+    return `${sign}${this.walletService.formatCurrency(transaction.amount, transaction.currency)}`;`
   }
 
   copyToClipboard(text: string): void {
@@ -103,34 +101,34 @@ export class TransactionDetailsDialogComponent {
 
   getTypeStatus(type: string): string {
     switch (type.toLowerCase()) {
-      case 'deposit':
+      case 'deposit':;
         return 'success';
-      case 'withdrawal':
+      case 'withdrawal':;
         return 'warning';
-      case 'transfer':
+      case 'transfer':;
         return 'info';
-      case 'payment':
+      case 'payment':;
         return 'primary';
-      case 'refund':
+      case 'refund':;
         return 'info';
-      case 'fee':
+      case 'fee':;
         return 'basic';
-      default:
+      default:;
         return 'basic';
     }
   }
 
   getStatusStatus(status: string): string {
     switch (status.toLowerCase()) {
-      case 'completed':
+      case 'completed':;
         return 'success';
-      case 'pending':
+      case 'pending':;
         return 'warning';
-      case 'failed':
+      case 'failed':;
         return 'danger';
-      case 'cancelled':
+      case 'cancelled':;
         return 'basic';
-      default:
+      default:;
         return 'basic';
     }
   }
@@ -143,9 +141,9 @@ export class TransactionDetailsDialogComponent {
   }
 
   formatMetadataKey(key: string): string {
-    return key
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (str) => str.toUpperCase())
+    return key;
+      .replace(/([A-Z])/g, ' $1');
+      .replace(/^./, (str) => str.toUpperCase());
       .replace(/Id$/, 'ID');
   }
 

@@ -1,23 +1,12 @@
 import { Input } from '@angular/core';
 import { NebularModule } from '../shared/nebular.module';
-
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (profile.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-
 import { UserService } from '../../core/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 import { UserProfile } from '../../core/models/user.interface';
@@ -29,23 +18,32 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for component configuration (profile.component)
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
 
-@Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  imports: [
-    CommonModule, RouterModule, ReactiveFormsModule, NebularModule,
-    CardModule,
-    ButtonModule,
-    DropdownModule,
-    CheckboxModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ],
-})
-export class ProfileComponent implements OnInit {
+@Component({';
+  selector: 'app-profile',;
+  templateUrl: './profile.component.html',;
+  styleUrls: ['./profile.component.scss'],;
+  imports: [;
+    CommonModule, RouterModule, ReactiveFormsModule, NebularModule,;
+    CardModule,;
+    ButtonModule,;
+    DropdownModule,;
+    CheckboxModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ],;
+});
+export class ProfileComponen {t implements OnInit {
   profileForm: FormGroup;
   userProfile: UserProfile | null = null;
   isLoading = false;
@@ -53,52 +51,52 @@ export class ProfileComponent implements OnInit {
   successMessage = '';
   selectedFile: File | null = null;
 
-  profileVisibilityOptions = [
-    { label: 'Public - Visible to everyone', value: 'public' },
-    { label: 'Registered Users - Only visible to registered users', value: 'registered' },
+  profileVisibilityOptions = [;
+    { label: 'Public - Visible to everyone', value: 'public' },;
+    { label: 'Registered Users - Only visible to registered users', value: 'registered' },;
     { label: 'Private - Only visible to users you\'ve matched with', value: 'private' }
   ];
 
-  allowMessagingOptions = [
-    { label: 'Everyone', value: 'all' },
-    { label: 'Only Matches', value: 'matches' },
+  allowMessagingOptions = [;
+    { label: 'Everyone', value: 'all' },;
+    { label: 'Only Matches', value: 'matches' },;
     { label: 'No One (Disable messaging)', value: 'none' }
   ];
 
-  contentDensityOptions = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Normal', value: 'normal' },
+  contentDensityOptions = [;
+    { label: 'Compact', value: 'compact' },;
+    { label: 'Normal', value: 'normal' },;
     { label: 'Comfortable', value: 'comfortable' }
   ];
 
-  cardSizeOptions = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
+  cardSizeOptions = [;
+    { label: 'Small', value: 'small' },;
+    { label: 'Medium', value: 'medium' },;
     { label: 'Large', value: 'large' }
   ];
 
-  defaultViewTypeOptions = [
-    { label: 'Netflix View', value: 'netflix' },
-    { label: 'Tinder View', value: 'tinder' },
+  defaultViewTypeOptions = [;
+    { label: 'Netflix View', value: 'netflix' },;
+    { label: 'Tinder View', value: 'tinder' },;
     { label: 'List View', value: 'list' }
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private authService: AuthService,
-    private router: Router,
+  constructor(;
+    private fb: FormBuilder,;
+    private userService: UserService,;
+    private authService: AuthService,;
+    private router: Router,;
   ) {
     this.profileForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      bio: [''],
-      phoneNumber: [''],
-      'location.city': [''],
-      'location.country': [''],
-      'preferences.notifications': [true],
-      'preferences.darkMode': [false],
-      'preferences.language': ['en'],
+      firstName: ['', Validators.required],;
+      lastName: ['', Validators.required],;
+      bio: [''],;
+      phoneNumber: [''],;
+      'location.city': [''],;
+      'location.country': [''],;
+      'preferences.notifications': [true],;
+      'preferences.darkMode': [false],;
+      'preferences.language': ['en'],;
     });
   }
 
@@ -108,30 +106,30 @@ export class ProfileComponent implements OnInit {
 
   loadUserProfile(): void {
     this.isLoading = true;
-    this.userService
-      .getCurrentUser()
-      .pipe(
+    this.userService;
+      .getCurrentUser();
+      .pipe(;
         catchError((error) => {
           this.errorMessage = 'Failed to load profile: ' + error.message;
           return of(null);
-        }),
-        finalize(() => (this.isLoading = false)),
-      )
+        }),;
+        finalize(() => (this.isLoading = false)),;
+      );
       .subscribe((user) => {
         if (user) {
           // Convert User to UserProfile
           this.userProfile = {
-            firstName: user.profile?.firstName,
-            lastName: user.profile?.lastName,
-            avatar: user.profile?.avatar,
-            bio: user.profile?.bio,
-            location: user.profile?.location,
+            firstName: user.profile?.firstName,;
+            lastName: user.profile?.lastName,;
+            avatar: user.profile?.avatar,;
+            bio: user.profile?.bio,;
+            location: user.profile?.location,;
             preferences: user.preferences || {
-              emailNotifications: true,
-              pushNotifications: true,
-              theme: 'light',
-              language: 'en',
-            },
+              emailNotifications: true,;
+              pushNotifications: true,;
+              theme: 'light',;
+              language: 'en',;
+            },;
           };
           this.updateFormValues();
         }
@@ -142,15 +140,15 @@ export class ProfileComponent implements OnInit {
     if (!this.userProfile) return;
 
     this.profileForm.patchValue({
-      firstName: this.userProfile.firstName || '',
-      lastName: this.userProfile.lastName || '',
-      bio: this.userProfile.bio || '',
-      phoneNumber: '',
-      'location.city': this.userProfile.location?.city || '',
-      'location.country': this.userProfile.location?.country || '',
-      'preferences.notifications': this.userProfile.preferences?.pushNotifications ?? true,
-      'preferences.darkMode': false,
-      'preferences.language': this.userProfile.preferences?.language || 'en',
+      firstName: this.userProfile.firstName || '',;
+      lastName: this.userProfile.lastName || '',;
+      bio: this.userProfile.bio || '',;
+      phoneNumber: '',;
+      'location.city': this.userProfile.location?.city || '',;
+      'location.country': this.userProfile.location?.country || '',;
+      'preferences.notifications': this.userProfile.preferences?.pushNotifications ?? true,;
+      'preferences.darkMode': false,;
+      'preferences.language': this.userProfile.preferences?.language || 'en',;
     });
   }
 
@@ -206,31 +204,31 @@ export class ProfileComponent implements OnInit {
       formData.append('profileImage', this.selectedFile);
     }
 
-    this.userService
-      .updateProfile(formData)
-      .pipe(
+    this.userService;
+      .updateProfile(formData);
+      .pipe(;
         catchError((error) => {
           this.errorMessage = 'Failed to update profile: ' + error.message;
           return of(null);
-        }),
-        finalize(() => (this.isLoading = false)),
-      )
+        }),;
+        finalize(() => (this.isLoading = false)),;
+      );
       .subscribe((response) => {
         if (response) {
           this.successMessage = 'Profile updated successfully';
           // Convert User to UserProfile
           this.userProfile = {
-            firstName: response.profile?.firstName,
-            lastName: response.profile?.lastName,
-            avatar: response.profile?.avatar,
-            bio: response.profile?.bio,
-            location: response.profile?.location,
+            firstName: response.profile?.firstName,;
+            lastName: response.profile?.lastName,;
+            avatar: response.profile?.avatar,;
+            bio: response.profile?.bio,;
+            location: response.profile?.location,;
             preferences: response.preferences || {
-              emailNotifications: true,
-              pushNotifications: true,
-              theme: 'light',
-              language: 'en',
-            },
+              emailNotifications: true,;
+              pushNotifications: true,;
+              theme: 'light',;
+              language: 'en',;
+            },;
           };
         }
       });

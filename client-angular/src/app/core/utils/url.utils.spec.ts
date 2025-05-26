@@ -1,5 +1,6 @@
 import { isValidUrl, addQueryParams, getQueryParams, joinUrlPaths } from './url.utils';
 
+';
 describe('URL Utilities', () => {
   describe('isValidUrl', () => {
     it('should return true for valid URLs', () => {
@@ -25,7 +26,7 @@ describe('URL Utilities', () => {
         'https://example.com/?param1=value1&param2=value2',
       );
 
-      expect(addQueryParams('example.com', { param1: 'value1', param2: 'value2' })).toBe(
+      expect(addQueryParams('example.com', { param1: 'value1', param2: 'value2' })).toBe(;
         'https://example.com/?param1=value1&param2=value2',
       );
 
@@ -49,13 +50,13 @@ describe('URL Utilities', () => {
   describe('getQueryParams', () => {
     it('should extract query parameters from a URL', () => {
       expect(getQueryParams('https://example.com?param1=value1&param2=value2')).toEqual({
-        param1: 'value1',
-        param2: 'value2',
+        param1: 'value1',;
+        param2: 'value2',;
       });
 
       expect(getQueryParams('example.com?param1=value1&param2=value2')).toEqual({
-        param1: 'value1',
-        param2: 'value2',
+        param1: 'value1',;
+        param2: 'value2',;
       });
     });
 

@@ -1,19 +1,8 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for core.module settings
-//
-// COMMON CUSTOMIZATIONS:
-// - SETTING_NAME: Description of setting (default: value)
-//   Related to: other_file.ts:OTHER_SETTING
-// ===================================================
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NbSecurityModule, NbRoleProvider, NbAclService } from '@nebular/security';
-
-// Services
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { CsrfService } from './services/csrf.service';
@@ -32,27 +21,38 @@ import { MediaService } from './services/media.service';
 import { ProfileService } from './services/profile.service';
 import { SafetyService } from './services/safety.service';
 import { VerificationService } from './services/verification.service';
-
-// Interceptors
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor.simple';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { cspInterceptor } from './interceptors/csp.interceptor';
 import { CsrfInterceptor } from './interceptors/csrf.interceptor';
+// ===================================================
+// CUSTOMIZABLE SETTINGS IN THIS FILE
+// ===================================================
+// This file contains settings for core.module settings
+//
+// COMMON CUSTOMIZATIONS:
+// - SETTING_NAME: Description of setting (default: value)
+//   Related to: other_file.ts:OTHER_SETTING
+// ===================================================
+
+// Services
+
+// Interceptors
 
 /**
  * Factory functions to avoid circular dependencies
- * These create instances of interceptors with their required dependencies
+ * These create instances of interceptors with their required dependencies;
  */
 export function cspInterceptorFactory() {
   return cspInterceptor;
 }
 
 export function authInterceptorFactory(
-  _authService: AuthService,
+  _authService: AuthService,;
 
-  _userService: UserService,
+  _userService: UserService,;
 
-  _router: Router,
+  _router: Router,;
 ) {
   // These services are injected but not directly used in the factory
   // They are needed for the interceptor to work properly
@@ -70,19 +70,19 @@ export function httpErrorInterceptorFactory() {
 
   // Configure the interceptor with default settings
   interceptor.configure({
-    showNotifications: true,
-    retryFailedRequests: true,
-    maxRetryAttempts: 2,
-    retryDelay: 1000,
-    redirectToLogin: true,
-    logErrors: true,
-    includeRequestDetails: false,
-    trackErrors: true,
-    trackPerformance: false,
-    groupSimilarErrors: true,
-    retryJitter: 200,
-    sanitizeSensitiveData: true,
-    skipUrls: ['/assets/', '/api/health'],
+    showNotifications: true,;
+    retryFailedRequests: true,;
+    maxRetryAttempts: 2,;
+    retryDelay: 1000,;
+    redirectToLogin: true,;
+    logErrors: true,;
+    includeRequestDetails: false,;
+    trackErrors: true,;
+    trackPerformance: false,;
+    groupSimilarErrors: true,;
+    retryJitter: 200,;
+    sanitizeSensitiveData: true,';
+    skipUrls: ['/assets/', '/api/health'],;
   });
 
   return interceptor;
@@ -92,92 +92,92 @@ export function httpErrorInterceptorFactory() {
 const securityConfig = {
   accessControl: {
     guest: {
-      view: ['public-content', 'auth-pages'],
-      create: [],
-      edit: [],
-      delete: [],
-    },
+      view: ['public-content', 'auth-pages'],;
+      create: [],;
+      edit: [],;
+      delete: [],;
+    },;
     user: {
-      parent: 'guest',
-      view: ['user-profile', 'matches', 'messages'],
-      create: ['profile', 'messages'],
-      edit: ['own-profile', 'own-messages'],
-      delete: ['own-profile', 'own-messages'],
-    },
+      parent: 'guest',;
+      view: ['user-profile', 'matches', 'messages'],;
+      create: ['profile', 'messages'],;
+      edit: ['own-profile', 'own-messages'],;
+      delete: ['own-profile', 'own-messages'],;
+    },;
     moderator: {
-      parent: 'user',
-      view: ['reported-content', 'user-reports'],
-      create: ['moderation-notes'],
-      edit: ['user-status', 'content-status'],
-      delete: ['reported-content'],
-    },
+      parent: 'user',;
+      view: ['reported-content', 'user-reports'],;
+      create: ['moderation-notes'],;
+      edit: ['user-status', 'content-status'],;
+      delete: ['reported-content'],;
+    },;
     admin: {
-      parent: 'moderator',
-      view: ['*'],
-      create: ['*'],
-      edit: ['*'],
-      delete: ['*'],
-    },
-  },
+      parent: 'moderator',;
+      view: ['*'],;
+      create: ['*'],;
+      edit: ['*'],;
+      delete: ['*'],;
+    },;
+  },;
 };
 
 /**
- * Core Module
- *
- * This module provides all core services and interceptors for the application.
- * Most services are already provided with `providedIn: 'root'` in their definitions,
- * but they are listed here for documentation and clarity.
- *
- * Note: Order matters for interceptors - they are applied in the order listed.
+ * Core Module;
+ *;
+ * This module provides all core services and interceptors for the application.;
+ * Most services are already provided with `providedIn: 'root'` in their definitions,;`
+ * but they are listed here for documentation and clarity.;
+ *;
+ * Note: Order matters for interceptors - they are applied in the order listed.;
  */
-@NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [
+@NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [;
         // Core Services
-        AuthService,
-        UserService,
-        CsrfService,
-        NotificationService,
-        TelemetryService,
+        AuthService,;
+        UserService,;
+        CsrfService,;
+        NotificationService,;
+        TelemetryService,;
         // Feature Services
-        EncryptionService,
-        FavoriteService,
-        GeocodingService,
-        LocationService,
-        TravelService,
-        MapMonitoringService,
+        EncryptionService,;
+        FavoriteService,;
+        GeocodingService,;
+        LocationService,;
+        TravelService,;
+        MapMonitoringService,;
         // Utility Services
-        CachingService,
-        ContentSanitizerService,
-        CryptoService,
-        MediaService,
-        ProfileService,
-        SafetyService,
-        VerificationService,
+        CachingService,;
+        ContentSanitizerService,;
+        CryptoService,;
+        MediaService,;
+        ProfileService,;
+        SafetyService,;
+        VerificationService,;
         // HTTP Interceptors
-        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
+        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },;
         {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: authInterceptorFactory,
-            deps: [AuthService, UserService, Router],
-            multi: true,
-        },
+            provide: HTTP_INTERCEPTORS,;
+            useFactory: authInterceptorFactory,;
+            deps: [AuthService, UserService, Router],;
+            multi: true,;
+        },;
         {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: csrfInterceptorFactory,
-            deps: [CsrfService],
-            multi: true,
-        },
+            provide: HTTP_INTERCEPTORS,;
+            useFactory: csrfInterceptorFactory,;
+            deps: [CsrfService],;
+            multi: true,;
+        },;
         {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: httpErrorInterceptorFactory,
-            deps: [Router, NotificationService, TelemetryService, AuthService],
-            multi: true,
-        },
+            provide: HTTP_INTERCEPTORS,;
+            useFactory: httpErrorInterceptorFactory,;
+            deps: [Router, NotificationService, TelemetryService, AuthService],;
+            multi: true,;
+        },;
         // Security Providers
         {
-            provide: NbRoleProvider,
-            useClass: AuthService,
-        },
-        NbAclService,
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
-export class CoreModule {}
+            provide: NbRoleProvider,;
+            useClass: AuthService,;
+        },;
+        NbAclService,;
+        provideHttpClient(withInterceptorsFromDi()),;
+    ] });
+export class CoreModul {e {}

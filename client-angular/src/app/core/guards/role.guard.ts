@@ -3,19 +3,19 @@ import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { map, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class RoleGuard {
-  constructor(
-    private auth: AuthService,
-    private router: Router,
+@Injectable({';
+  providedIn: 'root',;
+});
+export class RoleGuar {d {
+  constructor(;
+    private auth: AuthService,;
+    private router: Router,;
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    const requiredRoles = route.data['roles'] as Array<string>;
+  canActivate(route: ActivatedRouteSnapshot): Observable {
+    const requiredRoles = route.data['roles'] as Array;
 
-    return this.auth.currentUser$.pipe(
+    return this.auth.currentUser$.pipe(;
       map((user) => {
         if (!user) {
           this.router.navigate(['/auth/login']);
@@ -32,7 +32,7 @@ export class RoleGuard {
         }
 
         return true;
-      }),
+      }),;
     );
   }
 }

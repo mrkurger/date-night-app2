@@ -1,3 +1,7 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IconComponent } from '../icon/icon.component';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,14 +11,9 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { IconComponent } from '../icon/icon.component';
 
 /**
- * Interface for checkbox value change event
+ * Interface for checkbox value change event;
  */
 export interface ICheckboxChangeEvent {
   /** The checked state of the checkbox */
@@ -24,146 +23,142 @@ export interface ICheckboxChangeEvent {
 }
 
 /**
- * Checkbox Component
- *
- * A customizable checkbox component that follows the DateNight.io design system.
- * Supports different sizes, states, and implements ControlValueAccessor for form integration.
- *
+ * Checkbox Component;
+ *;
+ * A customizable checkbox component that follows the DateNight.io design system.;
+ * Supports different sizes, states, and implements ControlValueAccessor for form integration.;
+ *;
  * @implements {ControlValueAccessor}
- * 
- * @example
- * ```html
- * <app-checkbox
- *   [(ngModel)]="isChecked"
- *   [label]="'Remember me'"
- *   [size]="'medium'"
- *   (change)="onCheckboxChange($event)">
- * </app-checkbox>
- * ```
+ *; 
+ * @example;
+ * ```html;`
+ * ;
+ * ;
+ * ```;`
  */
 @Component({
-  selector: 'app-checkbox',
-  standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
+  selector: 'app-checkbox',;
+  standalone: true,;
+  imports: [CommonModule, FormsModule, IconComponent],;
+  changeDetection: ChangeDetectionStrategy.OnPush,;
+  providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
-      multi: true
+      provide: NG_VALUE_ACCESSOR,;
+      useExisting: forwardRef(() => CheckboxComponent),;
+      multi: true;
     }
-  ],
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
-})
-export class CheckboxComponent implements ControlValueAccessor {
+  ],;
+  templateUrl: './checkbox.component.html',;
+  styleUrls: ['./checkbox.component.scss'],;
+});
+export class CheckboxComponen {t implements ControlValueAccessor {
   /**
-   * The checkbox label.
-   * @default ''
+   * The checkbox label.;
+   * @default '';
    */
   @Input() label = '';
 
   /**
-   * Whether the checkbox is required.
-   * @default false
+   * Whether the checkbox is required.;
+   * @default false;
    */
   @Input() required = false;
 
   /**
-   * Whether the checkbox is disabled.
-   * @default false
+   * Whether the checkbox is disabled.;
+   * @default false;
    */
   @Input() disabled = false;
 
   /**
-   * The checkbox size.
-   * - 'small': Compact size
-   * - 'medium': Default size
-   * - 'large': Larger size
-   * @default 'medium'
+   * The checkbox size.;
+   * - 'small': Compact size;
+   * - 'medium': Default size;
+   * - 'large': Larger size;
+   * @default 'medium';
    */
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
-   * The checkbox helper text.
-   * @default ''
+   * The checkbox helper text.;
+   * @default '';
    */
   @Input() helperText = '';
 
   /**
-   * The checkbox error message.
-   * @default ''
+   * The checkbox error message.;
+   * @default '';
    */
   @Input() errorMessage = '';
 
   /**
-   * The checkbox name attribute.
+   * The checkbox name attribute.;
    */
   @Input() name?: string;
 
   /**
-   * The checkbox id attribute.
+   * The checkbox id attribute.;
    */
   @Input() id?: string;
 
   /**
-   * The checkbox value attribute.
+   * The checkbox value attribute.;
    */
   @Input() value?: string;
 
   /**
-   * The checkbox aria-label attribute.
+   * The checkbox aria-label attribute.;
    */
   @Input() ariaLabel?: string;
 
   /**
-   * Event emitted when the checkbox value changes.
+   * Event emitted when the checkbox value changes.;
    */
-  @Output() valueChange = new EventEmitter<boolean>();
+  @Output() valueChange = new EventEmitter();
 
   /**
-   * The @Input() checkbox checked state.
+   * The @Input() checkbox checked state.;
    */
   @Input() @Input() @Input() @Input() checked = false;
 
   /**
-   * Whether the checkbox is focused.
+   * Whether the checkbox is focused.;
    */
   isFocused = false;
 
   /**
-   * Function to call when the checkbox value changes.
+   * Function to call when the checkbox value changes.;
    */
   onChange = (value: unknown): void => {
     // Will be overridden by registerOnChange
   };
 
   /**
-   * Function to call when the checkbox is touched.
+   * Function to call when the checkbox is touched.;
    */
   onTouched = (): void => {
     // Will be overridden by registerOnTouched
   };
 
   /**
-   * Gets the CSS classes for the checkbox container based on its properties.
+   * Gets the CSS classes for the checkbox container based on its properties.;
    * @returns An object with CSS class names as keys and boolean values
    */
-  get containerClasses(): Record<string, boolean> {
+  get containerClasses(): Record {
     return {
-      checkbox: true,
-      [`checkbox--${this.size}`]: true,
-      'checkbox--disabled': this.disabled,
-      'checkbox--checked': this.checked,
-      'checkbox--focused': this.isFocused,
-      'checkbox--error': !!this.errorMessage,
-      'checkbox--required': this.required,
+      checkbox: true,;
+      [`checkbox--${this.size}`]: true,;`
+      'checkbox--disabled': this.disabled,;
+      'checkbox--checked': this.checked,;
+      'checkbox--focused': this.isFocused,;
+      'checkbox--error': !!this.errorMessage,;
+      'checkbox--required': this.required,;
     };
   }
 
   /**
-   * Handles the checkbox change event.
-   * @param event The change event
+   * Handles the checkbox change event.;
+   * @param event The change event;
    */
   onCheckboxChange(event: Event): void {
     if (this.disabled) return;
@@ -175,14 +170,14 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   /**
-   * Handles the checkbox focus event.
+   * Handles the checkbox focus event.;
    */
   onFocus(): void {
     this.isFocused = true;
   }
 
   /**
-   * Handles the checkbox blur event.
+   * Handles the checkbox blur event.;
    */
   onBlur(): void {
     this.isFocused = false;
@@ -190,8 +185,8 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   /**
-   * Writes a value to the checkbox.
-   * @param value The value to write
+   * Writes a value to the checkbox.;
+   * @param value The value to write;
    */
   writeValue(value: boolean): void {
     this.checked = !!value;
@@ -214,8 +209,8 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   /**
-   * Sets the disabled state of the checkbox.
-   * @param isDisabled Whether the checkbox is disabled
+   * Sets the disabled state of the checkbox.;
+   * @param isDisabled Whether the checkbox is disabled;
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

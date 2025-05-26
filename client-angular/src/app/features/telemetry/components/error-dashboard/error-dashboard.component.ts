@@ -1,12 +1,10 @@
+import { ErrorLog } from '../../../admin/components/error-security-dashboard/error-security-dashboard.component'; // Added import';
 import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ErrorCategory } from '../../../../core/interceptors/http-error.interceptor';
 import { TelemetryService, ErrorTelemetry } from '../../../../core/services/telemetry.service';
-import { ErrorLog } from '../../../admin/components/error-security-dashboard/error-security-dashboard.component'; // Added import
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -20,188 +18,137 @@ import { TooltipModule } from 'primeng/tooltip';
 
 // PrimeNG Modules
 /**
- * Error Dashboard Component
- *
- * Displays a dashboard for analyzing and monitoring application errors.
- * Features include:
- * - Filtering by error category, status code, date range
- * - Sorting by various columns
- * - Pagination for large datasets
- * - Detailed error information
+ * Error Dashboard Component;
+ *;
+ * Displays a dashboard for analyzing and monitoring application errors.;
+ * Features include:;
+ * - Filtering by error category, status code, date range;
+ * - Sorting by various columns;
+ * - Pagination for large datasets;
+ * - Detailed error information;
  */
-@Component({
-  selector: 'app-error-dashboard',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    CalendarModule,
-    DropdownModule,
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    PaginatorModule,
-    CardModule,
-    ProgressSpinnerModule,
-    TooltipModule,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
-    <div class="dashboard-container">
-      <h1>Error Monitoring Dashboard</h1>
+@Component({';
+  selector: 'app-error-dashboard',;
+  imports: [;
+    CommonModule,;
+    ReactiveFormsModule,;
+    CalendarModule,;
+    DropdownModule,;
+    InputTextModule,;
+    ButtonModule,;
+    TableModule,;
+    PaginatorModule,;
+    CardModule,;
+    ProgressSpinnerModule,;
+    TooltipModule,;
+  ],;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  template: `;`
+    ;
+      Error Monitoring Dashboard;
 
-      <p-card styleClass="filter-card">
-        <ng-template pTemplate="header">
-          <h5>Filters</h5>
-        </ng-template>
-        <form [formGroup]="filterForm" class="filter-form">
-          <div class="p-fluid p-grid p-formgrid">
-            <div class="p-field p-col-12 p-md-3">
-              <label htmlFor="category">Error Category</label>
-              <p-dropdown
-                inputId="category"
-                [options]="errorCategories"
-                formControlName="category"
-                placeholder="All Categories"
-                optionLabel="label"
-                optionValue="value"
-                [showClear]="true"
-              ></p-dropdown>
-            </div>
+      ;
+        ;
+          Filters;
+        ;
+        ;
+          ;
+            ;
+              Error Category;
+              ;
+            ;
 
-            <div class="p-field p-col-12 p-md-3">
-              <label htmlFor="statusCode">Status Code</label>
-              <input
-                pInputText
-                id="statusCode"
-                type="number"
-                formControlName="statusCode"
-                placeholder="Status Code (e.g., 500)"
-              />
-            </div>
+            ;
+              Status Code;
+              ;
+            ;
 
-            <div class="p-field p-col-12 p-md-3">
-              <label htmlFor="fromDate">From Date</label>
-              <p-calendar
-                inputId="fromDate"
-                formControlName="fromDate"
-                placeholder="From Date"
-                [showIcon]="true"
-              ></p-calendar>
-            </div>
+            ;
+              From Date;
+              ;
+            ;
 
-            <div class="p-field p-col-12 p-md-3">
-              <label htmlFor="toDate">To Date</label>
-              <p-calendar
-                inputId="toDate"
-                formControlName="toDate"
-                placeholder="To Date"
-                [showIcon]="true"
-              ></p-calendar>
-            </div>
-          </div>
+            ;
+              To Date;
+              ;
+            ;
+          ;
 
-          <div class="filter-actions">
-            <p-button
-              label="Apply Filters"
-              icon="pi pi-filter"
-              (click)="applyFilters()"
-              styleClass="p-button-primary"
-            ></p-button>
-            <p-button
-              label="Reset"
-              icon="pi pi-times"
-              (click)="resetFilters()"
-              styleClass="p-button-outlined"
-            ></p-button>
-          </div>
-        </form>
-      </p-card>
+          ;
+            ;
+            ;
+          ;
+        ;
+      ;
 
-      <div class="dashboard-content">
-        <div class="error-stats">
-          <p-card styleClass="stat-card">
-            <div class="stat-value">{{ (errorStats$ | async)?.totalErrors || 0 }}</div>
-            <div class="stat-label">Total Errors</div>
-          </p-card>
+      ;
+        ;
+          ;
+            {{ (errorStats$ | async)?.totalErrors || 0 }};
+            Total Errors;
+          ;
 
-          <p-card styleClass="stat-card">
-            <div class="stat-value">{{ (errorStats$ | async)?.uniqueErrors || 0 }}</div>
-            <div class="stat-label">Unique Error Codes</div>
-          </p-card>
+          ;
+            {{ (errorStats$ | async)?.uniqueErrors || 0 }};
+            Unique Error Codes;
+          ;
 
-          <p-card styleClass="stat-card">
-            <div class="stat-value">{{ (errorStats$ | async)?.serverErrors || 0 }}</div>
-            <div class="stat-label">Server Errors</div>
-          </p-card>
+          ;
+            {{ (errorStats$ | async)?.serverErrors || 0 }};
+            Server Errors;
+          ;
 
-          <p-card styleClass="stat-card">
-            <div class="stat-value">{{ (errorStats$ | async)?.clientErrors || 0 }}</div>
-            <div class="stat-label">Client Errors</div>
-          </p-card>
-        </div>
+          ;
+            {{ (errorStats$ | async)?.clientErrors || 0 }};
+            Client Errors;
+          ;
+        ;
 
-        <p-card styleClass="error-list-card">
-          <ng-template pTemplate="header">
-            <h5>Recent Errors</h5>
-          </ng-template>
-          <div class="loading-container" *ngIf="loading">
-            <p-progressSpinner></p-progressSpinner>
-          </div>
+        ;
+          ;
+            Recent Errors;
+          ;
+          ;
+            ;
+          ;
 
-          <p-table
-            [value]="errors"
-            [paginator]="true"
-            [rows]="pageSize"
-            [totalRecords]="totalErrors"
-            (onPage)="pageChanged($event)"
-            [sortField]="sortField"
-            [sortOrder]="sortDirection === 'desc' ? -1 : 1"
-            (onSort)="sortDataPrime($event)"
-            *ngIf="!loading"
-            responsiveLayout="scroll"
-          >
-            <ng-template pTemplate="header">
-              <tr>
-                <th *ngFor="let col of displayedColumnsPrime" [pSortableColumn]="col.field">
+          ;
+            ;
+              ;
+                ;
                   {{ col.header }}
-                  <p-sortIcon [field]="col.field"></p-sortIcon>
-                </th>
-                <th>Actions</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-error>
-              <tr>
-                <td>{{ error.timestamp | date: 'medium' }}</td>
-                <td>{{ error.statusCode || 'N/A' }}</td>
-                <td>{{ error.category }}</td>
-                <td>{{ error.type }}</td>
-                <td>{{ error.message }}</td>
-                <td>{{ error.count }}</td>
-                <td>
-                  <p-button
-                    icon="pi pi-eye"
-                    styleClass="p-button-text p-button-rounded"
-                    (click)="viewErrorDetails(error)"
-                    pTooltip="View Details"
-                    tooltipPosition="top"
-                  ></p-button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-              <tr>
-                <td [attr.colspan]="displayedColumnsPrime.length + 1">
-                  No errors found matching the current filters.
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </p-card>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
+                  ;
+                ;
+                Actions;
+              ;
+            ;
+            ;
+              ;
+                {{ error.timestamp | date: 'medium' }};
+                {{ error.statusCode || 'N/A' }};
+                {{ error.category }};
+                {{ error.type }};
+                {{ error.message }};
+                {{ error.count }};
+                ;
+                  ;
+                ;
+              ;
+            ;
+            ;
+              ;
+                ;
+                  No errors found matching the current filters.;
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .dashboard-container {
         padding: 20px;
       }
@@ -269,10 +216,10 @@ import { TooltipModule } from 'primeng/tooltip';
         justify-content: center;
         padding: 20px;
       }
-    `,
-  ],
-})
-export class ErrorDashboardComponent implements OnInit {
+    `,;`
+  ],;
+});
+export class ErrorDashboardComponen {t implements OnInit {
   // Error data
   errors: ErrorTelemetry[] = [];
   totalErrors = 0;
@@ -287,13 +234,13 @@ export class ErrorDashboardComponent implements OnInit {
   sortDirection: 'asc' | 'desc' | '' = 'desc';
 
   // Table columns
-  displayedColumnsPrime = [
-    { field: 'timestamp', header: 'Timestamp' },
-    { field: 'statusCode', header: 'Status Code' },
-    { field: 'category', header: 'Category' },
-    { field: 'type', header: 'Type' },
-    { field: 'message', header: 'Message' },
-    { field: 'count', header: 'Count' },
+  displayedColumnsPrime = [;
+    { field: 'timestamp', header: 'Timestamp' },;
+    { field: 'statusCode', header: 'Status Code' },;
+    { field: 'category', header: 'Category' },;
+    { field: 'type', header: 'Type' },;
+    { field: 'message', header: 'Message' },;
+    { field: 'count', header: 'Count' },;
   ];
 
   // Filter form
@@ -301,22 +248,22 @@ export class ErrorDashboardComponent implements OnInit {
 
   // Error categories for filter dropdown
   errorCategories = Object.entries(ErrorCategory).map(([key, value]) => ({
-    label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '),
-    value,
+    label: key.charAt(0) + key.slice(1).toLowerCase().replace('_', ' '),;
+    value,;
   }));
 
   // Error statistics
-  errorStats$: Observable<any>;
+  errorStats$: Observable;
 
-  constructor(
-    private telemetryService: TelemetryService,
-    private fb: FormBuilder,
+  constructor(;
+    private telemetryService: TelemetryService,;
+    private fb: FormBuilder,;
   ) {
     this.filterForm = this.fb.group({
-      category: [''],
-      statusCode: [''],
-      fromDate: [null],
-      toDate: [null],
+      category: [''],;
+      statusCode: [''],;
+      fromDate: [null],;
+      toDate: [null],;
     });
 
     // Initialize error statistics
@@ -328,28 +275,28 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * Load errors with current pagination, sorting, and filtering
+   * Load errors with current pagination, sorting, and filtering;
    */
   loadErrors(): void {
     this.loading = true;
 
     const filters = this.getFilters();
 
-    this.telemetryService
+    this.telemetryService;
       .getErrorStatistics({
-        ...filters,
-        page: this.currentPage,
-        limit: this.pageSize,
-        _sort: this.sortField,
-        order: this.sortDirection,
-      })
-      .pipe(
+        ...filters,;
+        page: this.currentPage,;
+        limit: this.pageSize,;
+        _sort: this.sortField,;
+        order: this.sortDirection,;
+      });
+      .pipe(;
         catchError((error) => {
           console.error('Error loading error data:', error);
           this.loading = false;
           return of({ errors: [], total: 0 });
-        }),
-      )
+        }),;
+      );
       .subscribe((data) => {
         this.errors = data.errors || [];
         this.totalErrors = data.total || 0;
@@ -358,43 +305,43 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * Get error statistics for the dashboard
+   * Get error statistics for the dashboard;
    */
-  getErrorStatistics(): Observable<any> {
-    return this.filterForm.valueChanges.pipe(
-      startWith(this.filterForm.value),
+  getErrorStatistics(): Observable {
+    return this.filterForm.valueChanges.pipe(;
+      startWith(this.filterForm.value),;
       switchMap(() => {
         const filters = this.getFilters();
-        return this.telemetryService
+        return this.telemetryService;
           .getErrorStatistics({
-            ...filters,
-            stats: true,
-          })
-          .pipe(
-            map(
-              (data) =>
+            ...filters,;
+            stats: true,;
+          });
+          .pipe(;
+            map(;
+              (data) =>;
                 data.statistics || {
-                  totalErrors: 0,
-                  uniqueErrors: 0,
-                  serverErrors: 0,
-                  clientErrors: 0,
-                },
-            ),
-            catchError(() =>
+                  totalErrors: 0,;
+                  uniqueErrors: 0,;
+                  serverErrors: 0,;
+                  clientErrors: 0,;
+                },;
+            ),;
+            catchError(() =>;
               of({
-                totalErrors: 0,
-                uniqueErrors: 0,
-                serverErrors: 0,
-                clientErrors: 0,
-              }),
-            ),
+                totalErrors: 0,;
+                uniqueErrors: 0,;
+                serverErrors: 0,;
+                clientErrors: 0,;
+              }),;
+            ),;
           );
-      }),
+      }),;
     );
   }
 
   /**
-   * Handle page change event
+   * Handle page change event;
    */
   pageChanged(event: any): void {
     this.currentPage = event.first / event.rows + 1;
@@ -403,7 +350,7 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * Handle sort change event
+   * Handle sort change event;
    */
   sortDataPrime(event: any): void {
     this.sortField = event.field;
@@ -412,7 +359,7 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * Apply filters from the form
+   * Apply filters from the form;
    */
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filtering
@@ -420,21 +367,21 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * Reset all filters
+   * Reset all filters;
    */
   resetFilters(): void {
     this.filterForm.reset({
-      category: '',
-      statusCode: '',
-      fromDate: null,
-      toDate: null,
+      category: '',;
+      statusCode: '',;
+      fromDate: null,;
+      toDate: null,;
     });
     this.currentPage = 1;
     this.loadErrors();
   }
 
   /**
-   * Get current filters from the form
+   * Get current filters from the form;
    */
   getFilters(): any {
     const filters: any = {};
@@ -460,7 +407,7 @@ export class ErrorDashboardComponent implements OnInit {
   }
 
   /**
-   * View detailed information for an error
+   * View detailed information for an error;
    */
   viewErrorDetails(error: ErrorTelemetry): void {
     // This would typically open a dialog with detailed error information

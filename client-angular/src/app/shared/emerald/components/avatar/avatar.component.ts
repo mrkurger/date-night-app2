@@ -1,28 +1,27 @@
+import {
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { _NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {
-  NbMenuService
+  NbMenuService';
 } from '@nebular/theme';
 
 /**
- * Avatar Component
- *
- * This component displays a user avatar with optional dropdown menu.
- * It uses Nebular UI components for consistent styling.
+ * Avatar Component;
+ *;
+ * This component displays a user avatar with optional dropdown menu.;
+ * It uses Nebular UI components for consistent styling.;
  */
 @Component({
-  selector: 'nb-user',
-  templateUrl: './avatar.component.html',
-  styleUrls: ['./avatar.component.scss'],
-  standalone: true,
-  imports: [CommonModule,
-    RouterModule
-  ],
-})
-export class AvatarModule implements OnInit {
+  selector: 'nb-user',;
+  templateUrl: './avatar.component.html',;
+  styleUrls: ['./avatar.component.scss'],;
+  standalone: true,;
+  imports: [CommonModule,;
+    RouterModule;
+  ],;
+});
+export class AvatarModul {e implements OnInit {
   @Input() imageUrl = '/assets/img/default-profile.jpg';
   @Input() name = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
@@ -31,8 +30,8 @@ export class AvatarModule implements OnInit {
   @Input() dropdownItems: DropdownItem[] = [];
   @Input() useNebularContextMenu = true;
 
-  @Output() avatarClick = new EventEmitter<void>();
-  @Output() itemClick = new EventEmitter<DropdownItem>();
+  @Output() avatarClick = new EventEmitter();
+  @Output() itemClick = new EventEmitter();
 
   isDropdownOpen = false;
   contextMenuItems: any[] = [];
@@ -58,7 +57,7 @@ export class AvatarModule implements OnInit {
   }
 
   /**
-   * Convert dropdown items to Nebular context menu format
+   * Convert dropdown items to Nebular context menu format;
    */
   private convertToContextMenuItems(): any[] {
     return this.dropdownItems.map((item) => {
@@ -67,16 +66,16 @@ export class AvatarModule implements OnInit {
       }
 
       return {
-        id: item.id,
-        title: item.label,
-        icon: item.icon ? this.getIconName(item.icon) : undefined,
-        link: item.route,
+        id: item.id,;
+        title: item.label,;
+        icon: item.icon ? this.getIconName(item.icon) : undefined,;
+        link: item.route,;
       };
     });
   }
 
   /**
-   * Toggle the dropdown menu
+   * Toggle the dropdown menu;
    */
   toggleDropdown(event: Event): void {
     event.stopPropagation();
@@ -93,7 +92,7 @@ export class AvatarModule implements OnInit {
   }
 
   /**
-   * Close the dropdown menu
+   * Close the dropdown menu;
    */
   closeDropdown = (): void => {
     this.isDropdownOpen = false;
@@ -101,7 +100,7 @@ export class AvatarModule implements OnInit {
   };
 
   /**
-   * Handle dropdown item click
+   * Handle dropdown item click;
    */
   onItemClick(item: DropdownItem,_event: Event): void {
     event.stopPropagation();
@@ -114,7 +113,7 @@ export class AvatarModule implements OnInit {
   }
 
   /**
-   * Get initials from name
+   * Get initials from name;
    */
   getInitials(): string {
     if (!this.name) return '';
@@ -128,7 +127,7 @@ export class AvatarModule implements OnInit {
   }
 
   /**
-   * Handle image loading error
+   * Handle image loading error;
    */
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
@@ -137,64 +136,64 @@ export class AvatarModule implements OnInit {
   }
 
   /**
-   * Convert Font Awesome icon classes to Nebular icon names
-   * This method maps Font Awesome icon classes to Nebular's Eva Icons
+   * Convert Font Awesome icon classes to Nebular icon names;
+   * This method maps Font Awesome icon classes to Nebular's Eva Icons;
    */
   getIconName(iconClass: string): string {
     // Map common Font Awesome icons to Eva Icons
-    const iconMap: Record<string, string> = {
-      'fa-user': 'person-outline',
-      'fa-cog': 'settings-outline',
-      'fa-sign-out-alt': 'log-out-outline',
-      'fa-bell': 'bell-outline',
-      'fa-envelope': 'email-outline',
-      'fa-key': 'lock-outline',
-      'fa-heart': 'heart-outline',
-      'fa-star': 'star-outline',
-      'fa-bookmark': 'bookmark-outline',
-      'fa-trash': 'trash-2-outline',
-      'fa-edit': 'edit-outline',
-      'fa-plus': 'plus-outline',
-      'fa-minus': 'minus-outline',
-      'fa-times': 'close-outline',
-      'fa-check': 'checkmark-outline',
-      'fa-info-circle': 'info-outline',
-      'fa-question-circle': 'question-mark-circle-outline',
-      'fa-exclamation-circle': 'alert-circle-outline',
-      'fa-chevron-down': 'chevron-down-outline',
-      'fa-chevron-up': 'chevron-up-outline',
-      'fas fa-user': 'person-outline',
-      'fas fa-cog': 'settings-outline',
-      'fas fa-sign-out-alt': 'log-out-outline',
-      'fas fa-bell': 'bell-outline',
-      'fas fa-envelope': 'email-outline',
-      'fas fa-key': 'lock-outline',
-      'fas fa-heart': 'heart-outline',
-      'fas fa-star': 'star-outline',
-      'fas fa-bookmark': 'bookmark-outline',
-      'fas fa-trash': 'trash-2-outline',
-      'fas fa-edit': 'edit-outline',
-      'fas fa-plus': 'plus-outline',
-      'fas fa-minus': 'minus-outline',
-      'fas fa-times': 'close-outline',
-      'fas fa-check': 'checkmark-outline',
-      'fas fa-info-circle': 'info-outline',
-      'fas fa-question-circle': 'question-mark-circle-outline',
-      'fas fa-exclamation-circle': 'alert-circle-outline',
-      'fas fa-chevron-down': 'chevron-down-outline',
-      'fas fa-chevron-up': 'chevron-up-outline',
+    const iconMap: Record = {
+      'fa-user': 'person-outline',;
+      'fa-cog': 'settings-outline',;
+      'fa-sign-out-alt': 'log-out-outline',;
+      'fa-bell': 'bell-outline',;
+      'fa-envelope': 'email-outline',;
+      'fa-key': 'lock-outline',;
+      'fa-heart': 'heart-outline',;
+      'fa-star': 'star-outline',;
+      'fa-bookmark': 'bookmark-outline',;
+      'fa-trash': 'trash-2-outline',;
+      'fa-edit': 'edit-outline',;
+      'fa-plus': 'plus-outline',;
+      'fa-minus': 'minus-outline',;
+      'fa-times': 'close-outline',;
+      'fa-check': 'checkmark-outline',;
+      'fa-info-circle': 'info-outline',;
+      'fa-question-circle': 'question-mark-circle-outline',;
+      'fa-exclamation-circle': 'alert-circle-outline',;
+      'fa-chevron-down': 'chevron-down-outline',;
+      'fa-chevron-up': 'chevron-up-outline',;
+      'fas fa-user': 'person-outline',;
+      'fas fa-cog': 'settings-outline',;
+      'fas fa-sign-out-alt': 'log-out-outline',;
+      'fas fa-bell': 'bell-outline',;
+      'fas fa-envelope': 'email-outline',;
+      'fas fa-key': 'lock-outline',;
+      'fas fa-heart': 'heart-outline',;
+      'fas fa-star': 'star-outline',;
+      'fas fa-bookmark': 'bookmark-outline',;
+      'fas fa-trash': 'trash-2-outline',;
+      'fas fa-edit': 'edit-outline',;
+      'fas fa-plus': 'plus-outline',;
+      'fas fa-minus': 'minus-outline',;
+      'fas fa-times': 'close-outline',;
+      'fas fa-check': 'checkmark-outline',;
+      'fas fa-info-circle': 'info-outline',;
+      'fas fa-question-circle': 'question-mark-circle-outline',;
+      'fas fa-exclamation-circle': 'alert-circle-outline',;
+      'fas fa-chevron-down': 'chevron-down-outline',;
+      'fas fa-chevron-up': 'chevron-up-outline',;
     };
 
     // Extract the icon name from the class (handles both 'fa-icon' and 'fas fa-icon' formats)
     const iconName = iconClass.includes('fa-') ? iconClass.split('fa-')[1].trim() : iconClass;
 
     // Return the mapped icon or a default if not found
-    return iconMap[iconClass] || iconMap[`fa-${iconName}`] || 'question-mark-circle-outline';
+    return iconMap[iconClass] || iconMap[`fa-${iconName}`] || 'question-mark-circle-outline';`
   }
 }
 
 /**
- * Dropdown Item Interface
+ * Dropdown Item Interface;
  */
 export interface DropdownItem {
   id: string;

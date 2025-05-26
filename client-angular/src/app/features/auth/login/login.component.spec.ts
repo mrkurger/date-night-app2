@@ -1,19 +1,5 @@
-import { Input } from '@angular/core';
 import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule
-} from '@nebular/theme';
-
+import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -22,53 +8,65 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-
 import { LoginComponent } from './login.component';
 import { UserService } from '@core/services/user.service';
 import { AuthResponse } from '@core/models/auth.model';
 import { createSpyObject } from '../../../testing/test-utils';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule';
+} from '@nebular/theme';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-  let userService: jasmine.SpyObj<UserService>;
+  let fixture: ComponentFixture;
+  let userService: jasmine.SpyObj;
   let router: Router;
 
   const mockAuthResponse: AuthResponse = {
-    token: 'mock-token',
-    refreshToken: 'mock-refresh-token',
-    expiresIn: 3600,
+    token: 'mock-token',;
+    refreshToken: 'mock-refresh-token',;
+    expiresIn: 3600,;
     user: {
-      _id: '1',
-      username: 'testuser',
-      email: 'test@example.com',
-      role: 'user',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
+      _id: '1',;
+      username: 'testuser',;
+      email: 'test@example.com',;
+      role: 'user',;
+      createdAt: new Date(),;
+      updatedAt: new Date(),;
+    },;
   };
 
   beforeEach(async () => {
     userService = createSpyObject({
-      login: of(mockAuthResponse),
-      isAuthenticated: false,
+      login: of(mockAuthResponse),;
+      isAuthenticated: false,;
     });
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        NbCardModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbButtonModule,
-        NbIconModule,
-        NbSpinnerModule,
-        NbTooltipModule,
-      ],
-      declarations: [],
-      providers: [{ provide: UserService, useValue: userService }],
+      imports: [;
+        RouterTestingModule,;
+        ReactiveFormsModule,;
+        BrowserAnimationsModule,;
+        NbCardModule,;
+        NbFormFieldModule,;
+        NbInputModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbSpinnerModule,;
+        NbTooltipModule,;
+      ],;
+      declarations: [],;
+      providers: [{ provide: UserService, useValue: userService }],;
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -104,8 +102,8 @@ describe('LoginComponent', () => {
 
   it('should call login service and navigate on successful login', () => {
     const testCredentials = {
-      email: 'test@example.com',
-      password: 'password123',
+      email: 'test@example.com',;
+      password: 'password123',;
     };
 
     userService.login.and.returnValue(of(mockAuthResponse));
@@ -123,8 +121,8 @@ describe('LoginComponent', () => {
     userService.login.and.returnValue(throwError(() => new Error(errorMessage)));
 
     component.loginForm.patchValue({
-      email: 'test@example.com',
-      password: 'wrongpassword',
+      email: 'test@example.com',;
+      password: 'wrongpassword',;
     });
     component.onSubmit();
     fixture.detectChanges();
@@ -156,8 +154,8 @@ describe('LoginComponent', () => {
     userService.login.and.returnValue(of(mockAuthResponse));
 
     component.loginForm.patchValue({
-      email: 'test@example.com',
-      password: 'password123',
+      email: 'test@example.com',;
+      password: 'password123',;
     });
 
     component.onSubmit();

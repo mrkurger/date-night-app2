@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NbToastrService } from '@nebular/theme';
 
-@Component({
-  selector: 'app-alert-notifications',
-  standalone: true,
-  imports: [CommonModule, NebularModule],
-  template: '',
-  styles: [],
-})
-export class AlertNotificationsComponent implements OnInit {
+@Component({';
+  selector: 'app-alert-notifications',;
+  standalone: true,;
+  imports: [CommonModule, NebularModule],;
+  template: '',;
+  styles: [],;
+});
+export class AlertNotificationsComponen {t implements OnInit {
   constructor(private toastrService: NbToastrService) {}
 
   ngOnInit() {
@@ -20,10 +20,10 @@ export class AlertNotificationsComponent implements OnInit {
 
   private showAlert(message: string, title: string = '', config: any = {}) {
     const defaultConfig = {
-      duration: 3000,
-      position: 'top-right',
-      status: 'info',
-      ...config,
+      duration: 3000,;
+      position: 'top-right',;
+      status: 'info',;
+      ...config,;
     };
 
     this.toastrService.show(message, title, defaultConfig);

@@ -9,30 +9,30 @@ import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 
 /**
- * AppCard Component
- *
- * This component displays an advertiser card with various layouts and features.
- * It uses PrimeNG UI components for consistent styling.
+ * AppCard Component;
+ *;
+ * This component displays an advertiser card with various layouts and features.;
+ * It uses PrimeNG UI components for consistent styling.;
  */
-@Component({
-  selector: 'app-card',
-  templateUrl: './app-card.component.html',
-  styleUrls: ['./app-card.component.scss'],
-  imports: [CommonModule, CardModule, ButtonModule, BadgeModule],
-  standalone: true,
-})
-export class CardModule implements OnInit {
+@Component({';
+  selector: 'app-card',;
+  templateUrl: './app-card.component.html',;
+  styleUrls: ['./app-card.component.scss'],;
+  imports: [CommonModule, CardModule, ButtonModule, BadgeModule],;
+  standalone: true,;
+});
+export class CardModul {e implements OnInit {
   @Input() ad!: Ad;
   @Input() layout: 'tinder' | 'netflix' | 'list' = 'netflix';
   @Input() showActions = true;
   @Input() showDescription = true;
   @Input() isOnline = false; // Whether the advertiser is online or offline
 
-  @Output() viewDetails = new EventEmitter<string>();
-  @Output() like = new EventEmitter<string>();
-  @Output() chat = new EventEmitter<string>();
-  @Output() share = new EventEmitter<string>();
-  @Output() swiped = new EventEmitter<{ direction: 'left' | 'right'; adId: string }>();
+  @Output() viewDetails = new EventEmitter();
+  @Output() like = new EventEmitter();
+  @Output() chat = new EventEmitter();
+  @Output() share = new EventEmitter();
+  @Output() swiped = new EventEmitter();
 
   // Background image URL for the card
   backgroundImageUrl = '';
@@ -54,7 +54,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Get the primary image URL for the ad
+   * Get the primary image URL for the ad;
    */
   getPrimaryImage(): string {
     // Check if ad is defined
@@ -89,7 +89,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Get the current media URL for the carousel
+   * Get the current media URL for the carousel;
    */
   getCurrentMediaUrl(): string {
     // Check if ad is defined
@@ -108,7 +108,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Get all media URLs from the ad
+   * Get all media URLs from the ad;
    */
   private getMediaUrls(): string[] {
     if (!this.ad) return [];
@@ -139,14 +139,14 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Get media count
+   * Get media count;
    */
   getMediaCount(): number {
     return this.getMediaUrls().length;
   }
 
   /**
-   * Get media navigation dots
+   * Get media navigation dots;
    */
   getMediaDots(): any[] {
     const count = this.getMediaCount();
@@ -154,7 +154,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Navigate to previous media
+   * Navigate to previous media;
    */
   prevMedia(event: Event): void {
     event.stopPropagation();
@@ -166,7 +166,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Navigate to next media
+   * Navigate to next media;
    */
   nextMedia(event: Event): void {
     event.stopPropagation();
@@ -178,27 +178,27 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Format price for display
+   * Format price for display;
    */
   formatPrice(price: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+      style: 'currency',;
+      currency: 'USD',;
     }).format(price);
   }
 
   /**
-   * Get truncated description
+   * Get truncated description;
    */
   getTruncatedDescription(): string {
     if (!this.ad?.description) return '';
-    return this.ad.description.length > 100
-      ? `${this.ad.description.slice(0, 100)}...`
+    return this.ad.description.length > 100;
+      ? `${this.ad.description.slice(0, 100)}...`;`
       : this.ad.description;
   }
 
   /**
-   * Handle like button click
+   * Handle like button click;
    */
   onLike(event: Event): void {
     event.stopPropagation();
@@ -208,7 +208,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Handle chat button click
+   * Handle chat button click;
    */
   onChat(event: Event): void {
     event.stopPropagation();
@@ -218,7 +218,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Handle share button click
+   * Handle share button click;
    */
   onShare(event: Event): void {
     event.stopPropagation();
@@ -228,7 +228,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Handle view details click
+   * Handle view details click;
    */
   onViewDetails(event?: Event): void {
     if (event) event.stopPropagation();
@@ -238,7 +238,7 @@ export class CardModule implements OnInit {
   }
 
   /**
-   * Handle swipe action
+   * Handle swipe action;
    */
   onSwipe(direction: 'left' | 'right', event?: Event): void {
     if (event) event.stopPropagation();

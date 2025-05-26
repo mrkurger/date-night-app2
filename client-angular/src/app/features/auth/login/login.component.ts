@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
-
 import { UserService } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NebularModule } from '../../../shared/nebular.module';
@@ -13,7 +12,6 @@ import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
-
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -25,38 +23,38 @@ import { InputTextModule } from 'primeng/inputtext';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 
-@Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss', './social-login.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    NebularModule, ReactiveFormsModule, RouterLink,
-    CardModule,
-    ButtonModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ]
-})
-export class LoginComponent implements OnInit {
+@Component({';
+    selector: 'app-login',;
+    templateUrl: './login.component.html',;
+    styleUrls: ['./login.component.scss', './social-login.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    NebularModule, ReactiveFormsModule, RouterLink,;
+    CardModule,;
+    ButtonModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ];
+});
+export class LoginComponen {t implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
   errorMessage = '';
   returnUrl = '/dashboard';
   hidePassword = true;
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private authService: AuthService,
-    private nbAuthService: NbAuthService,
-    private router: Router,
-    private route: ActivatedRoute,
+  constructor(;
+    private fb: FormBuilder,;
+    private userService: UserService,;
+    private authService: AuthService,;
+    private nbAuthService: NbAuthService,;
+    private router: Router,;
+    private route: ActivatedRoute,;
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email]],;
+      password: ['', [Validators.required, Validators.minLength(6)]],;
     });
   }
 
@@ -80,16 +78,16 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.userService
-      .login({ email, password })
-      .pipe(finalize(() => (this.isLoading = false)))
+    this.userService;
+      .login({ email, password });
+      .pipe(finalize(() => (this.isLoading = false)));
       .subscribe({
         next: () => {
           this.router.navigate([this.returnUrl]);
-        },
+        },;
         error: (error) => {
           this.errorMessage = error.message || 'Login failed. Please check your credentials.';
-        },
+        },;
       });
   }
 
@@ -102,18 +100,18 @@ export class LoginComponent implements OnInit {
         // Only allow redirects to internal routes for security
         const redirect = result.getRedirect();
         if (
-          redirect &&
-          redirect.startsWith('/') &&
+          redirect &&;
+          redirect.startsWith('/') &&;
           !redirect.startsWith('//') &&
-          !redirect.includes(':')
+          !redirect.includes(':');
         ) {
           this.router.navigateByUrl(redirect);
         } else {
           this.router.navigateByUrl(this.returnUrl);
         }
       } else {
-        this.errorMessage =
-          result.getErrors()[0] || `Login with ${provider} failed. Please try again.`;
+        this.errorMessage =;
+          result.getErrors()[0] || `Login with ${provider} failed. Please try again.`;`
       }
     });
   }

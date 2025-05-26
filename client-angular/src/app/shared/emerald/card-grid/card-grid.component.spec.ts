@@ -1,4 +1,3 @@
-
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,44 +6,34 @@
 // COMMON CUSTOMIZATIONS:
 // - MOCK_ITEMS: Mock items data for testing
 // ===================================================
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NebularModule } from '../../nebular.module';
 
 // import { By } from '@angular/platform-browser';
-import {
-  // DebugElement, // Commented out as it's currently unused
-  Component,
-  NO_ERRORS_SCHEMA,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-
+import {';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NebularModule } from '../../nebular.module';
 import { CardGridComponent } from './card-grid.component';
 import { SkeletonModule } from '../components/skeleton-loader/skeleton-loader.component';
 import { CommonTestModule, MockAppCardComponent } from '../../../testing/common-test.module';
+  // DebugElement, // Commented out as it's currently unused
+  Component,;
+  NO_ERRORS_SCHEMA,;
+  ViewChild,;
+  TemplateRef,;
+} from '@angular/core';
 
 // Test host component to test CardGridComponent in a realistic scenario
 @Component({
-    template: `
-    <nb-card-grid
-      [items]="items"
-      [layout]="layout"
-      [columns]="columns"
-      [gap]="gap"
-      [animated]="animated"
-      [isLoading]="isLoading"
-      (cardClick)="onCardClick($event)"
-      (actionClick)="onActionClick($event)"
-    >
-      <ng-template #itemTemplate let-item>
-        <div class="custom-item">{{ item.title }}</div>
-      </ng-template>
-    </nb-card-grid>
-  `,
-    imports: [CardGridComponent, CommonTestModule,
-        NbCardModule,]
-})
-class TestHostComponent {
+    template: `;`
+    ;
+      ;
+        {{ item.title }};
+      ;
+    ;
+  `,;`
+    imports: [CardGridComponent, CommonTestModule,;
+        NbCardModule,];
+});
+class TestHostComponen {t {
   items = MOCK_ITEMS;
   layout: 'default' | 'compact' | 'masonry' = 'default';
   cardLayout: 'default' | 'netflix' | 'tinder' = 'default';
@@ -53,7 +42,7 @@ class TestHostComponent {
   animated = true;
   isLoading = false;
 
-  @ViewChild('itemTemplate') itemTemplate!: TemplateRef<unknown>;
+  @ViewChild('itemTemplate') itemTemplate!: TemplateRef;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onCardClick(_itemId: string): void {
@@ -66,55 +55,55 @@ class TestHostComponent {
 }
 
 // Mock items for testing
-const MOCK_ITEMS = [
+const MOCK_ITEMS = [;
   {
-    id: 'item1',
-    title: 'Item 1',
-    subtitle: 'Subtitle 1',
-    description: 'Description for item 1',
+    id: 'item1',;
+    title: 'Item 1',;
+    subtitle: 'Subtitle 1',;
+    description: 'Description for item 1',;
     imageUrl: 'https://example.com/image1.jpg',
     avatarUrl: 'https://example.com/avatar1.jpg',
-    avatarName: 'User 1',
-    isOnline: true,
-    tags: ['tag1', 'tag2'],
-    actions: [
-      { id: 'action1', icon: 'heart', tooltip: 'Like' },
-      { id: 'action2', icon: 'comment', tooltip: 'Comment' },
-    ],
-  },
+    avatarName: 'User 1',;
+    isOnline: true,;
+    tags: ['tag1', 'tag2'],;
+    actions: [;
+      { id: 'action1', icon: 'heart', tooltip: 'Like' },;
+      { id: 'action2', icon: 'comment', tooltip: 'Comment' },;
+    ],;
+  },;
   {
-    id: 'item2',
-    title: 'Item 2',
-    description: 'Description for item 2',
+    id: 'item2',;
+    title: 'Item 2',;
+    description: 'Description for item 2',;
     imageUrl: 'https://example.com/image2.jpg',
-    tags: ['tag3', 'tag4'],
-  },
+    tags: ['tag3', 'tag4'],;
+  },;
   {
-    id: 'item3',
-    title: 'Item 3',
-    subtitle: 'Subtitle 3',
+    id: 'item3',;
+    title: 'Item 3',;
+    subtitle: 'Subtitle 3',;
     imageUrl: 'https://example.com/image3.jpg',
-  },
+  },;
 ];
 
 describe('CardGridComponent', () => {
   let component: CardGridComponent;
-  let fixture: ComponentFixture<CardGridComponent>;
+  let fixture: ComponentFixture;
   // let debugElement: DebugElement;
 
   // let hostComponent: TestHostComponent;
-  let hostFixture: ComponentFixture<TestHostComponent>;
+  let hostFixture: ComponentFixture;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonTestModule, CardGridComponent, MockAppCardComponent, TestHostComponent],
+      imports: [CommonTestModule, CardGridComponent, MockAppCardComponent, TestHostComponent],;
       schemas: [NO_ERRORS_SCHEMA], // Add this to ignore unknown properties
-    })
+    });
       .overrideComponent(CardGridComponent, {
         set: {
-          imports: [CommonTestModule, MockAppCardComponent, SkeletonModule],
-        },
-      })
+          imports: [CommonTestModule, MockAppCardComponent, SkeletonModule],;
+        },;
+      });
       .compileComponents();
 
     // Create the host component first

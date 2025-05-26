@@ -3,33 +3,34 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UserMenuComponent, UserData } from './user-menu.component';
 import { MenuItem } from 'primeng/api';
 
+';
 describe('UserMenuComponent', () => {
   let component: UserMenuComponent;
-  let fixture: ComponentFixture<UserMenuComponent>;
+  let fixture: ComponentFixture;
 
   const mockUserData: UserData = {
-    name: 'John Doe',
-    title: 'Software Engineer',
-    picture: 'path/to/picture.jpg',
-    notifications: 3,
+    name: 'John Doe',;
+    title: 'Software Engineer',;
+    picture: 'path/to/picture.jpg',;
+    notifications: 3,;
   };
 
-  const mockMenuItems: MenuItem[] = [
+  const mockMenuItems: MenuItem[] = [;
     {
-      label: 'Profile',
-      icon: 'pi pi-user',
-      command: () => {},
-    },
+      label: 'Profile',;
+      icon: 'pi pi-user',;
+      command: () => {},;
+    },;
     {
-      label: 'Settings',
-      icon: 'pi pi-cog',
-      command: () => {},
-    },
+      label: 'Settings',;
+      icon: 'pi pi-cog',;
+      command: () => {},;
+    },;
   ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, UserMenuComponent],
+      imports: [NoopAnimationsModule, UserMenuComponent],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserMenuComponent);

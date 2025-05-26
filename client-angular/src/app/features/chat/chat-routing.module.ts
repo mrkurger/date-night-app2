@@ -4,25 +4,25 @@ import { ChatComponent } from './chat.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: ChatComponent,
-    children: [
+const routes: Routes = [;
+  {';
+    path: '',;
+    component: ChatComponent,;
+    children: [;
       {
-        path: '',
-        component: ChatListComponent,
-      },
+        path: '',;
+        component: ChatListComponent,;
+      },;
       {
-        path: ':id',
-        component: ChatRoomComponent,
-      },
-    ],
-  },
+        path: ':id',;
+        component: ChatRoomComponent,;
+      },;
+    ],;
+  },;
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class ChatRoutingModule {}
+  imports: [RouterModule.forChild(routes)],;
+  exports: [RouterModule],;
+});
+export class ChatRoutingModul {e {}

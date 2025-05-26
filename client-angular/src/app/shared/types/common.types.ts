@@ -1,19 +1,20 @@
 import { _Component } from '@angular/core';
+
 /**
- * Common types used throughout the application
+ * Common types used throughout the application;
  */
 
 /**
- * Generic dictionary type for key-value pairs
+ * Generic dictionary type for key-value pairs;
  */
-export type Dictionary<T = any> = {
+export type Dictionary = {
   [key: string]: T;
 };
 
 /**
- * Type for API responses
+ * Type for API responses;
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse {
   success: boolean;
   data?: T;
   message?: string;
@@ -21,21 +22,21 @@ export interface ApiResponse<T = any> {
 }
 
 /**
- * Type for event handlers
+ * Type for event handlers;
  */
-export type EventHandler<T = any> = (event: T) => void;
+export type EventHandler = (event: T) => void;
 
 /**
  * Type for callback functions
  */
-export type Callback<T = any> = (data: T) => void;
+export type Callback = (data: T) => void;
 
 /**
- * Type for HTTP request options
+ * Type for HTTP request options;
  */
 export interface HttpOptions {
-  headers?: Dictionary<string>;
-  params?: Dictionary<string | number | boolean>;
+  headers?: Dictionary;
+  params?: Dictionary;';
   responseType?: 'json' | 'text' | 'blob' | 'arraybuffer';
   observe?: 'body' | 'response' | 'events';
   reportProgress?: boolean;
@@ -43,7 +44,7 @@ export interface HttpOptions {
 }
 
 /**
- * Type for component configuration options
+ * Type for component configuration options;
  */
 export interface ComponentConfig {
   [key: string]: any;

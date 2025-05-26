@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { LoggingService, LogLevel } from './logging.service';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -8,12 +11,11 @@ import { Component } from '@angular/core';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { TestBed } from '@angular/core/testing';
-import { LoggingService, LogLevel } from './logging.service';
 
+';
 describe('LoggingService', () => {
   let service: LoggingService;
-  let consoleSpy: jasmine.SpyObj<Console>;
+  let consoleSpy: jasmine.SpyObj;
 
   beforeEach(() => {
     // Create spy for console methods
@@ -25,7 +27,7 @@ describe('LoggingService', () => {
     spyOn(console, 'log').and.callFake(consoleSpy.log);
 
     TestBed.configureTestingModule({
-      providers: [LoggingService],
+      providers: [LoggingService],;
     });
 
     service = TestBed.inject(LoggingService);

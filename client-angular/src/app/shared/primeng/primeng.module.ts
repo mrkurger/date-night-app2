@@ -46,71 +46,72 @@ import { AccordionModule } from 'primeng/accordion';
 // Feedback & Overlays
 // Services
 // Others
-const PRIME_MODULES = [
+const PRIME_MODULES = [;
   // Layout & Navigation
-  ButtonModule,
-  RippleModule,
-  MenuModule,
-  MenubarModule,
-  SidebarModule,
-  PanelModule,
-  PanelMenuModule,
-  ToolbarModule,
-  DividerModule,
+  ButtonModule,;
+  RippleModule,;
+  MenuModule,;
+  MenubarModule,;
+  SidebarModule,;
+  PanelModule,;
+  PanelMenuModule,;
+  ToolbarModule,;
+  DividerModule,;
 
   // Data Display
-  TableModule,
-  PaginatorModule,
-  BadgeModule,
-  CardModule,
-  TagModule,
+  TableModule,;
+  PaginatorModule,;
+  BadgeModule,;
+  CardModule,;
+  TagModule,;
 
   // Forms & Input
-  InputTextModule,
-  InputNumberModule,
-  CheckboxModule,
-  RadioButtonModule,
-  DropdownModule,
-  CalendarModule,
-  AutoCompleteModule,
-  InputSwitchModule,
-  InputMaskModule,
-  SelectButtonModule,
+  InputTextModule,;
+  InputNumberModule,;
+  CheckboxModule,;
+  RadioButtonModule,;
+  DropdownModule,;
+  CalendarModule,;
+  AutoCompleteModule,;
+  InputSwitchModule,;
+  InputMaskModule,;
+  SelectButtonModule,;
 
   // Feedback & Overlays
-  ToastModule,
-  DialogModule,
-  ProgressSpinnerModule,
-  TooltipModule,
-  MessagesModule,
-  MessageModule,
-  ConfirmDialogModule,
-  OverlayPanelModule,
+  ToastModule,;
+  DialogModule,;
+  ProgressSpinnerModule,;
+  TooltipModule,;
+  MessagesModule,;
+  MessageModule,;
+  ConfirmDialogModule,;
+  OverlayPanelModule,;
 
   // Others
-  AvatarModule,
-  AvatarGroupModule,
-  ChipModule,
-  TabViewModule,
-  AccordionModule,
+  AvatarModule,;
+  AvatarGroupModule,;
+  ChipModule,;
+  TabViewModule,;
+  AccordionModule,;
 ];
 
 /**
- * PrimeNGModule
- *
- * This module provides all PrimeNG components, directives, and services needed
- * throughout the application. Import this module in SharedModule.
- *
- * Features:
- * - Layout components (Panel, Toolbar, Sidebar, etc.)
- * - Data display components (Table, Paginator, etc.)
- * - Form controls (Input, Dropdown, Calendar, etc.)
- * - Feedback components (Toast, Dialog, etc.)
- * - Other utilities (Avatar, Chip, etc.)
+ * PrimeNGModule;
+ *;
+ * This module provides all PrimeNG components, directives, and services needed;
+ * throughout the application. Import this module in SharedModule.;
+ *;
+ * Features:;
+ * - Layout components (Panel, Toolbar, Sidebar, etc.);
+ * - Data display components (Table, Paginator, etc.);
+ * - Form controls (Input, Dropdown, Calendar, etc.);
+ * - Feedback components (Toast, Dialog, etc.);
+ * - Other utilities (Avatar, Chip, etc.);
  */
 @NgModule({
-  imports: [CommonModule, ...PRIME_MODULES],
-  exports: [...PRIME_MODULES],
-  providers: [ConfirmationService, MessageService],
-})
-export class PrimeNgModule {}
+  imports: [CommonModule, ...PRIME_MODULES],;
+  exports: [...PRIME_MODULES],;
+  providers: [ConfirmationService, MessageService],;
+});
+export class PrimeNgModul {e {}
+';

@@ -1,35 +1,14 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  TemplateRef,
-  AfterViewChecked,
-  Input,
-  CUSTOM_ELEMENTS_SCHEMA,
-  Inject,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
-// Custom Components
 import { AvatarModule } from '../../shared/components/avatar/avatar.component';
 import { SkeletonModule } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
 import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
-
-// Services
-import {
-  ChatService,
-  ChatMessage,
-  ChatRoom,
-  ChatParticipant,
-} from '../../core/services/chat.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { CardModule } from 'primeng/card';
@@ -42,6 +21,28 @@ import { MenuModule } from 'primeng/menu';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
+  Component,;
+  OnInit,;
+  OnDestroy,;
+  ViewChild,;
+  ElementRef,;
+  TemplateRef,;
+  AfterViewChecked,;
+  Input,;
+  CUSTOM_ELEMENTS_SCHEMA,;
+  Inject,';
+} from '@angular/core';
+
+// Custom Components
+
+// Services
+import {
+  ChatService,;
+  ChatMessage,;
+  ChatRoom,;
+  ChatParticipant,;
+} from '../../core/services/chat.service';
+
 // // Alternative for NbMenuModule if a panel structure is needed
 // // For p-float-label if used
 // // For input groups
@@ -57,12 +58,12 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const TYPING_INDICATOR_DELAY = 500; // ms
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule, 
-    CommonModule,
-    FormsModule,
+  selector: 'app-chat',;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [InputGroupModule, FloatLabelModule, PanelMenuModule, MenuModule, ContextMenuModule, BadgeModule, TooltipModule, InputTextModule, ButtonModule, CardModule,; 
+    CommonModule,;
+    FormsModule,;
     // Nebular Modules to be replaced:
     // NbCardModule,
     // NbButtonModule,
@@ -75,33 +76,33 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     // NbMenuModule,
 
     // PrimeNG Modules:
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    TooltipModule,
-    BadgeModule,
-    ContextMenuModule,
-    MenuModule,
+    CardModule,;
+    ButtonModule,;
+    InputTextModule,;
+    TooltipModule,;
+    BadgeModule,;
+    ContextMenuModule,;
+    MenuModule,;
     // FloatLabelModule, // Uncomment if p-float-label is used for form fields
     // InputGroupModule, // Uncomment if input groups are used
 
     // Existing non-Nebular imports:
-    AvatarModule,
+    AvatarModule,;
     SkeletonModule, // Assuming this is not Nebular's or already handled
-    AppSortComponent,
-    AppSortHeaderComponent,
-  ],
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
-})
-export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
+    AppSortComponent,;
+    AppSortHeaderComponent,;
+  ],;
+  templateUrl: './chat.component.html',;
+  styleUrls: ['./chat.component.scss'],;
+});
+export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
   @ViewChild('messageList') messageList!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
-  @ViewChild('newMessageDialog') newMessageDialog!: TemplateRef<any>;
-  @ViewChild('imagePreviewDialog') imagePreviewDialog!: TemplateRef<any>;
-  @ViewChild('searchInChatDialog') searchInChatDialog!: TemplateRef<any>;
-  @ViewChild('mediaGalleryDialog') mediaGalleryDialog!: TemplateRef<any>;
+  @ViewChild('newMessageDialog') newMessageDialog!: TemplateRef;
+  @ViewChild('imagePreviewDialog') imagePreviewDialog!: TemplateRef;
+  @ViewChild('searchInChatDialog') searchInChatDialog!: TemplateRef;
+  @ViewChild('mediaGalleryDialog') mediaGalleryDialog!: TemplateRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   // Chat data
@@ -132,11 +133,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   temporaryMessageMode = false;
 
   // Chat menu items
-  chatMenuItems = [
-    { title: 'View Profile', icon: 'person-outline', data: { action: 'viewProfile' } },
-    { title: 'Clear History', icon: 'trash-2-outline', data: { action: 'clearHistory' } },
-    { title: 'Block User', icon: 'slash-outline', data: { action: 'blockUser' } },
-    { title: 'Report', icon: 'alert-triangle-outline', data: { action: 'report' } },
+  chatMenuItems = [;
+    { title: 'View Profile', icon: 'person-outline', data: { action: 'viewProfile' } },;
+    { title: 'Clear History', icon: 'trash-2-outline', data: { action: 'clearHistory' } },;
+    { title: 'Block User', icon: 'slash-outline', data: { action: 'blockUser' } },;
+    { title: 'Report', icon: 'alert-triangle-outline', data: { action: 'report' } },;
   ];
 
   // Current messages
@@ -188,90 +189,90 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   galleryLinks: { url: string; title?: string; timestamp: Date }[] = [];
 
   // Emoji picker
-  emojiCategories: EmojiCategory[] = [
+  emojiCategories: EmojiCategory[] = [;
     {
-      name: 'Smileys & Emotion',
-      icon: 'sentiment_satisfied_alt',
-      emojis: [
-        '😀',
-        '😃',
-        '😄',
-        '😁',
-        '😆',
-        '😅',
-        '😂',
-        '🤣',
-        '😊',
-        '😇',
-        '🙂',
-        '🙃',
-        '😉',
-        '😌',
-        '😍',
-        '🥰',
-        '😘',
-      ],
-    },
+      name: 'Smileys & Emotion',;
+      icon: 'sentiment_satisfied_alt',;
+      emojis: [;
+        '😀',;
+        '😃',;
+        '😄',;
+        '😁',;
+        '😆',;
+        '😅',;
+        '😂',;
+        '🤣',;
+        '😊',;
+        '😇',;
+        '🙂',;
+        '🙃',;
+        '😉',;
+        '😌',;
+        '😍',;
+        '🥰',;
+        '😘',;
+      ],;
+    },;
     {
-      name: 'People & Body',
-      icon: 'person',
-      emojis: [
-        '👍',
-        '👎',
-        '👌',
-        '✌️',
-        '🤞',
-        '🤟',
-        '🤘',
-        '🤙',
-        '👈',
-        '👉',
-        '👆',
-        '👇',
-        '👋',
-        '🤚',
-        '🖐️',
-        '✋',
-        '🖖',
-      ],
-    },
+      name: 'People & Body',;
+      icon: 'person',;
+      emojis: [;
+        '👍',;
+        '👎',;
+        '👌',;
+        '✌️',;
+        '🤞',;
+        '🤟',;
+        '🤘',;
+        '🤙',;
+        '👈',;
+        '👉',;
+        '👆',;
+        '👇',;
+        '👋',;
+        '🤚',;
+        '🖐️',;
+        '✋',;
+        '🖖',;
+      ],;
+    },;
     {
-      name: 'Objects',
-      icon: 'emoji_objects',
-      emojis: [
-        '❤️',
-        '🧡',
-        '💛',
-        '💚',
-        '💙',
-        '💜',
-        '🖤',
-        '💔',
-        '❣️',
-        '💕',
-        '💞',
-        '💓',
-        '💗',
-        '💖',
-        '💘',
-        '💝',
-        '💟',
-      ],
-    },
+      name: 'Objects',;
+      icon: 'emoji_objects',;
+      emojis: [;
+        '❤️',;
+        '🧡',;
+        '💛',;
+        '💚',;
+        '💙',;
+        '💜',;
+        '🖤',;
+        '💔',;
+        '❣️',;
+        '💕',;
+        '💞',;
+        '💓',;
+        '💗',;
+        '💖',;
+        '💘',;
+        '💝',;
+        '💟',;
+      ],;
+    },;
   ];
   currentCategoryEmojis: string[] = this.emojiCategories[0].emojis;
 
   // Subscriptions
   private subscriptions: Subscription[] = [];
-  private typingSubject = new Subject<string>();
+  private typingSubject = new Subject();
   private shouldScrollToBottom = true;
 
-  constructor(
-    private chatService: ChatService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private router: Router,
-    private route: ActivatedRoute,
+  constructor(;
+    private chatService: ChatService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private router: Router,;
+    private route: ActivatedRoute,;
   ) {
     this.currentUserId = this.authService.getCurrentUserId();
   }
@@ -311,11 +312,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     const currentDate = new Date(message.timestamp);
 
     // Show date if it's a different day or more than 1 hour apart
-    return (
-      prevDate.getDate() !== currentDate.getDate() ||
-      prevDate.getMonth() !== currentDate.getMonth() ||
-      prevDate.getFullYear() !== currentDate.getFullYear() ||
-      currentDate.getTime() - prevDate.getTime() > 60 * 60 * 1000
+    return (;
+      prevDate.getDate() !== currentDate.getDate() ||;
+      prevDate.getMonth() !== currentDate.getMonth() ||;
+      prevDate.getFullYear() !== currentDate.getFullYear() ||;
+      currentDate.getTime() - prevDate.getTime() > 60 * 60 * 1000;
     );
   }
 
@@ -323,8 +324,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   highlightSearchText(text: string): string {
     if (!this.searchQuery || !text) return text;
 
-    const regex = new RegExp(`(${this.escapeRegExp(this.searchQuery)})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
+    const regex = new RegExp(`(${this.escapeRegExp(this.searchQuery)})`, 'gi');`
+    return text.replace(regex, '$1');
   }
 
   // Helper method to escape special characters in regex
@@ -369,10 +370,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     const query = this.searchQuery.toLowerCase();
-    this.filteredContacts = this.contacts.filter(
-      (contact) =>
-        contact.name?.toLowerCase().includes(query) ||
-        contact.lastMessage?.content?.toLowerCase().includes(query),
+    this.filteredContacts = this.contacts.filter(;
+      (contact) =>;
+        contact.name?.toLowerCase().includes(query) ||;
+        contact.lastMessage?.content?.toLowerCase().includes(query),;
     );
   }
 
@@ -398,11 +399,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       next: (rooms) => {
         this.rooms = rooms;
         this.loadingContacts = false;
-      },
+      },;
       error: (err) => {
         console.error('Error loading chat rooms:', err);
         this.loadingContacts = false;
-      },
+      },;
     });
   }
 

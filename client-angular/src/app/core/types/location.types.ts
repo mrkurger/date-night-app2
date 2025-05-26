@@ -1,5 +1,5 @@
 /**
- * Represents a geographic location with address information
+ * Represents a geographic location with address information;
  */
 export interface Location {
   id?: string;
@@ -11,7 +11,7 @@ export interface Location {
 }
 
 /**
- * Geographic coordinates
+ * Geographic coordinates;
  */
 export interface Coordinates {
   latitude: number;
@@ -19,7 +19,7 @@ export interface Coordinates {
 }
 
 /**
- * Location verification status and details
+ * Location verification status and details;
  */
 export interface LocationVerification {
   timestamp: number;
@@ -31,7 +31,7 @@ export interface LocationVerification {
 }
 
 /**
- * Location selection event
+ * Location selection event;
  */
 export interface LocationSelectionEvent {
   coordinates: Coordinates;
@@ -40,7 +40,7 @@ export interface LocationSelectionEvent {
 }
 
 /**
- * Location search filters
+ * Location search filters;
  */
 export interface LocationSearchFilters {
   radius?: number;
@@ -50,7 +50,7 @@ export interface LocationSearchFilters {
 }
 
 /**
- * Location search result
+ * Location search result;
  */
 export interface LocationSearchResult {
   locations: Location[];

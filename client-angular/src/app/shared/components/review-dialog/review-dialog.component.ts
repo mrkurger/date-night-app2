@@ -35,32 +35,25 @@ export interface ReviewDialogData {
   existingReview?: ReviewData;
 }
 
-@Component({
-    selector: 'app-review-dialog',
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],
-    template: `
-    <nb-card class="review-dialog-container">
-      <nb-card-header class="dialog-header">
-        <h2>{{ data.existingReview ? 'Edit Review' : 'Write a Review' }}</h2>
-        <button nbButton ghost (click)="onClose()">
-          <nb-icon icon="close"></nb-icon>
-        </button>
-      </nb-card-header>
+@Component({';
+    selector: 'app-review-dialog',;
+    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, ReviewFormComponent],;
+    template: `;`
+    ;
+      ;
+        {{ data.existingReview ? 'Edit Review' : 'Write a Review' }};
+        ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <app-review-form
-          [advertiserId]="data.advertiserId"
-          [advertiserName]="data.advertiserName"
-          [adId]="data.adId"
-          [existingReview]="data.existingReview"
-          (submitted)="onReviewSubmitted($event)"
-          (cancelled)="onClose()"
-        ></app-review-form>
-      </nb-card-body>
-    </nb-card>
-  `,
-    styles: [
-        `
+      ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .review-dialog-container {
         max-width: 800px;
         width: 100%;
@@ -71,17 +64,17 @@ export interface ReviewDialogData {
         justify-content: space-between;
         align-items: center;
       }
-    `,
-    ]
-})
-export class ReviewDialogComponent {
-  constructor(
-    private dialogRef: NbDialogRef<ReviewDialogComponent>,
-    @Inject('REVIEW_DIALOG_DATA')
+    `,;`
+    ];
+});
+export class ReviewDialogComponen {t {
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    @Inject('REVIEW_DIALOG_DATA');
     public data: ReviewDialogData = {
-      advertiserId: '',
-      advertiserName: '',
-    },
+      advertiserId: '',;
+      advertiserName: '',;
+    },;
   ) {}
 
   onReviewSubmitted(review: ReviewData): void {

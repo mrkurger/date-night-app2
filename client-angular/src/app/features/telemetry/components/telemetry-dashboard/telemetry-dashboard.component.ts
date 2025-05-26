@@ -1,5 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NebularModule } from '../../../shared/nebular.module';
+import { CommonModule } from '@angular/common';
+import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
+import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -10,40 +13,36 @@ import { NebularModule } from '../../../shared/nebular.module';
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { CommonModule } from '@angular/common';
-
-import { ErrorDashboardComponent } from '../error-dashboard/error-dashboard.component';
-import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 /**
- * Telemetry Dashboard Component
- *
- * A unified dashboard that combines error monitoring and performance monitoring
- * into a single tabbed interface.
+ * Telemetry Dashboard Component;
+ *;
+ * A unified dashboard that combines error monitoring and performance monitoring;
+ * into a single tabbed interface.;
  */
-@Component({
-    selector: 'app-telemetry-dashboard',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],
-    template: `
-    <nb-card>
-      <nb-card-header>
-        <h1>Application Telemetry Dashboard</h1>
-      </nb-card-header>
-      <nb-card-body>
-        <nb-tabset>
-          <nb-tab tabTitle="Error Monitoring">
-            <app-error-dashboard></app-error-dashboard>
-          </nb-tab>
-          <nb-tab tabTitle="Performance Monitoring">
-            <app-performance-dashboard></app-performance-dashboard>
-          </nb-tab>
-        </nb-tabset>
-      </nb-card-body>
-    </nb-card>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-telemetry-dashboard',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [CommonModule, NebularModule, ErrorDashboardComponent, PerformanceDashboardComponent],;
+    template: `;`
+    ;
+      ;
+        Application Telemetry Dashboard;
+      ;
+      ;
+        ;
+          ;
+            ;
+          ;
+          ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       h1 {
         margin: 0;
         color: nb-theme(text-basic-color);
@@ -59,9 +58,9 @@ import { PerformanceDashboardComponent } from '../performance-dashboard/performa
           padding: 1rem;
         }
       }
-    `,
-    ]
-})
-export class TelemetryDashboardComponent {
+    `,;`
+    ];
+});
+export class TelemetryDashboardComponen {t {
   // This component is primarily a container for the tab components
 }

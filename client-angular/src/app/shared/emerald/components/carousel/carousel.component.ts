@@ -1,26 +1,25 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { _NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 
 /**
- * Carousel Component
- *
- * This component displays a carousel of images or other content.
- * It uses Nebular UI components for consistent styling.
+ * Carousel Component;
+ *;
+ * This component displays a carousel of images or other content.;
+ * It uses Nebular UI components for consistent styling.;
  */
-@Component({
-  selector: 'nb-carousel',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbButtonModule,
-    NbIconModule
-  ],
-})
-export class CarouselModule implements OnInit, OnDestroy {
+@Component({';
+  selector: 'nb-carousel',;
+  templateUrl: './carousel.component.html',;
+  styleUrls: ['./carousel.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    NbButtonModule,;
+    NbIconModule;
+  ],;
+});
+export class CarouselModul {e implements OnInit, OnDestroy {
   @Input() items: CarouselItem[] = [];
   @Input() showDots = true;
   @Input() showArrows = true;
@@ -29,7 +28,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   @Input() aspectRatio: '1:1' | '4:3' | '16:9' | '21:9' = '16:9';
   @Input() thumbnails = false;
 
-  @Output() itemChange = new EventEmitter<number>();
+  @Output() itemChange = new EventEmitter();
 
   currentIndex = 0;
   autoPlayTimer: any;
@@ -45,7 +44,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigate to the next item
+   * Navigate to the next item;
    */
   next(event?: Event): void {
     if (event) event.stopPropagation();
@@ -56,7 +55,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigate to the previous item
+   * Navigate to the previous item;
    */
   prev(event?: Event): void {
     if (event) event.stopPropagation();
@@ -67,7 +66,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigate to a specific item
+   * Navigate to a specific item;
    */
   goTo(index: number, event?: Event): void {
     if (event) event.stopPropagation();
@@ -78,7 +77,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Start auto play
+   * Start auto play;
    */
   private startAutoPlay(): void {
     this.autoPlayTimer = setInterval(() => {
@@ -87,7 +86,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Stop auto play
+   * Stop auto play;
    */
   private stopAutoPlay(): void {
     if (this.autoPlayTimer) {
@@ -96,7 +95,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Reset auto play timer
+   * Reset auto play timer;
    */
   private resetAutoPlay(): void {
     if (this.autoPlay) {
@@ -106,7 +105,7 @@ export class CarouselModule implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle image loading error
+   * Handle image loading error;
    */
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
@@ -115,7 +114,7 @@ export class CarouselModule implements OnInit, OnDestroy {
 }
 
 /**
- * Carousel Item Interface
+ * Carousel Item Interface;
  */
 export interface CarouselItem {
   id: string;

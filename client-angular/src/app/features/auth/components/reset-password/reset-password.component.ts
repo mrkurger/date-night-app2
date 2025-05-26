@@ -1,12 +1,5 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  ValidationErrors,
-} from '@angular/forms';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { finalize } from 'rxjs/operators';
@@ -15,7 +8,13 @@ import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
-
+  ReactiveFormsModule,;
+  FormBuilder,;
+  FormGroup,;
+  Validators,;
+  AbstractControl,;
+  ValidationErrors,';
+} from '@angular/forms';
 
 // Custom validator for password matching
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -31,19 +30,19 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 }
 
 @Component({
-    selector: 'app-reset-password',
-    templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss'],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    NebularModule, ReactiveFormsModule, RouterLink,
-    CardModule,
-    ProgressSpinnerModule,
-    MessageModule,
-    InputTextModule
-  ]
-})
-export class ResetPasswordComponent implements OnInit {
+    selector: 'app-reset-password',;
+    templateUrl: './reset-password.component.html',;
+    styleUrls: ['./reset-password.component.scss'],;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    NebularModule, ReactiveFormsModule, RouterLink,;
+    CardModule,;
+    ProgressSpinnerModule,;
+    MessageModule,;
+    InputTextModule;
+  ];
+});
+export class ResetPasswordComponen {t implements OnInit {
   resetForm: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -52,18 +51,18 @@ export class ResetPasswordComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
+  constructor(;
+    private fb: FormBuilder,;
+    private authService: AuthService,;
+    private router: Router,;
+    private route: ActivatedRoute,;
   ) {
-    this.resetForm = this.fb.group(
+    this.resetForm = this.fb.group(;
       {
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required],
-      },
-      { validators: passwordMatchValidator },
+        password: ['', [Validators.required, Validators.minLength(8)]],;
+        confirmPassword: ['', Validators.required],;
+      },;
+      { validators: passwordMatchValidator },;
     );
   }
 
@@ -88,19 +87,19 @@ export class ResetPasswordComponent implements OnInit {
 
     const { password } = this.resetForm.value;
 
-    this.authService
-      .resetPassword(this.token, password)
-      .pipe(finalize(() => (this.isLoading = false)))
+    this.authService;
+      .resetPassword(this.token, password);
+      .pipe(finalize(() => (this.isLoading = false)));
       .subscribe({
         next: () => {
           this.successMessage = 'Your password has been reset successfully.';
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 3000);
-        },
+        },;
         error: (error) => {
           this.errorMessage = error.message || 'Failed to reset password.';
-        },
+        },;
       });
   }
 }

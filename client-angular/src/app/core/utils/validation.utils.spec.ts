@@ -1,16 +1,16 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  isValidEmail,
-  isValidUrl,
-  isValidNorwegianPhone,
-  isValidPassword,
-  matchingFieldsValidator,
-  passwordMatchValidator,
-  isValidNorwegianPostalCode,
-  isValidISODate,
-  isInRange,
-  isAlphanumeric,
-  isValidCreditCard,
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+  isValidEmail,;
+  isValidUrl,;
+  isValidNorwegianPhone,;
+  isValidPassword,;
+  matchingFieldsValidator,;
+  passwordMatchValidator,;
+  isValidNorwegianPostalCode,;
+  isValidISODate,;
+  isInRange,;
+  isAlphanumeric,;
+  isValidCreditCard,';
 } from './validation.utils';
 
 describe('Validation Utilities', () => {
@@ -85,21 +85,21 @@ describe('Validation Utilities', () => {
 
     it('should validate passwords with custom requirements', () => {
       // Only require minimum length
-      expect(
+      expect(;
         isValidPassword('password12', {
-          minLength: 8,
-          requireUppercase: false,
-          requireLowercase: true,
-          requireNumbers: true,
-          requireSpecialChars: false,
-        }),
+          minLength: 8,;
+          requireUppercase: false,;
+          requireLowercase: true,;
+          requireNumbers: true,;
+          requireSpecialChars: false,;
+        }),;
       ).toBe(true);
 
       // Shorter minimum length
-      expect(
+      expect(;
         isValidPassword('Pass1!', {
-          minLength: 6,
-        }),
+          minLength: 6,;
+        }),;
       ).toBe(true);
     });
   });
@@ -110,21 +110,21 @@ describe('Validation Utilities', () => {
 
     beforeEach(() => {
       formBuilder = new FormBuilder();
-      form = formBuilder.group(
+      form = formBuilder.group(;
         {
-          field1: ['', Validators.required],
-          field2: ['', Validators.required],
-        },
+          field1: ['', Validators.required],;
+          field2: ['', Validators.required],;
+        },;
         {
-          validators: matchingFieldsValidator('field1', 'field2', 'fieldsMismatch'),
-        },
+          validators: matchingFieldsValidator('field1', 'field2', 'fieldsMismatch'),;
+        },;
       );
     });
 
     it('should not return error when fields match', () => {
       form.patchValue({
-        field1: 'test',
-        field2: 'test',
+        field1: 'test',;
+        field2: 'test',;
       });
       expect(form.valid).toBe(true);
       expect(form.get('field2')?.errors).toBeNull();
@@ -132,8 +132,8 @@ describe('Validation Utilities', () => {
 
     it('should return error when fields do not match', () => {
       form.patchValue({
-        field1: 'test1',
-        field2: 'test2',
+        field1: 'test1',;
+        field2: 'test2',;
       });
       expect(form.valid).toBe(false);
       expect(form.get('field2')?.errors?.['fieldsMismatch']).toBe(true);
@@ -146,21 +146,21 @@ describe('Validation Utilities', () => {
 
     beforeEach(() => {
       formBuilder = new FormBuilder();
-      form = formBuilder.group(
+      form = formBuilder.group(;
         {
-          password: ['', Validators.required],
-          confirmPassword: ['', Validators.required],
-        },
+          password: ['', Validators.required],;
+          confirmPassword: ['', Validators.required],;
+        },;
         {
-          validators: passwordMatchValidator(),
-        },
+          validators: passwordMatchValidator(),;
+        },;
       );
     });
 
     it('should not return error when passwords match', () => {
       form.patchValue({
-        password: 'test123',
-        confirmPassword: 'test123',
+        password: 'test123',;
+        confirmPassword: 'test123',;
       });
       expect(form.valid).toBe(true);
       expect(form.get('confirmPassword')?.errors).toBeNull();
@@ -168,8 +168,8 @@ describe('Validation Utilities', () => {
 
     it('should return error when passwords do not match', () => {
       form.patchValue({
-        password: 'test123',
-        confirmPassword: 'test456',
+        password: 'test123',;
+        confirmPassword: 'test456',;
       });
       expect(form.valid).toBe(false);
       expect(form.get('confirmPassword')?.errors?.['passwordMismatch']).toBe(true);

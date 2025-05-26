@@ -6,63 +6,41 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ContextMenuModule, ContextMenu } from 'primeng/contextmenu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+
 export interface AvatarMenuItem extends MenuItem {
   data?: any;
 }
 
 /**
- * Avatar Component
- *
- * A modern avatar component using PrimeNG UI components.
- * Features user image, name, online status, and optional context menu.
+ * Avatar Component;
+ *;
+ * A modern avatar component using PrimeNG UI components.;
+ * Features user image, name, online status, and optional context menu.;
  */
-@Component({
-  selector: 'app-avatar',
-  standalone: true,
-  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem, 
-    CommonModule,
-    RouterModule,
-    AvatarModule,
-    BadgeModule,
-    ContextMenuModule,
-    TieredMenuModule,
-  ],
-  template: `
-    <div
-      #avatarContainer
-      class="avatar-container"
-      [class]="'avatar--' + size"
-      (click)="menu && menuItems?.length && menu.toggle($event)"
-      [class.avatar--clickable]="menuItems?.length"
-    >
-      <p-avatar
-        [image]="imageUrl"
-        [label]="!imageUrl ? getInitials() : undefined"
-        [size]="mapNebularSizeToPrimeNG(size)"
-        shape="circle"
-        (onImageError)="handleImageError($event)"
-        styleClass="user-avatar"
-      ></p-avatar>
-      <p-badge
-        *ngIf="showOnlineStatus"
-        [severity]="isOnline ? 'success' : 'danger'"
-        styleClass="online-status-badge"
-        [class.offline]="!isOnline"
-      ></p-badge>
-      <div *ngIf="showName || showTitle" class="avatar-info">
-        <div *ngIf="showName" class="avatar-name">{{ name }}</div>
-        <div *ngIf="showTitle" class="avatar-title">{{ title }}</div>
-      </div>
-      <p-contextMenu
-        #menu
-        [model]="processedMenuItems"
-        [target]="avatarContainer"
-        triggerEvent="click"
-      ></p-contextMenu>
-    </div>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-avatar',;
+  standalone: true,;
+  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem,; 
+    CommonModule,;
+    RouterModule,;
+    AvatarModule,;
+    BadgeModule,;
+    ContextMenuModule,;
+    TieredMenuModule,;
+  ],;
+  template: `;`
+    ;
+      ;
+      ;
+      ;
+        {{ name }};
+        {{ title }};
+      ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .avatar-container {
         display: inline-flex;
         align-items: center;
@@ -125,10 +103,10 @@ export interface AvatarMenuItem extends MenuItem {
 
       .avatar--small .user-avatar {
       }
-    `,
-  ],
-})
-export class AvatarModule {
+    `,;`
+  ],;
+});
+export class AvatarModul {e {
   @Input() imageUrl: string | undefined = '/assets/img/default-profile.jpg';
   @Input() name = '';
   @Input() title = '';
@@ -139,7 +117,7 @@ export class AvatarModule {
   @Input() showTitle = false;
 
   private _menuItems: AvatarMenuItem[] = [];
-  @Input()
+  @Input();
   set menuItems(items: AvatarMenuItem[]) {
     this._menuItems = items;
     this.processedMenuItems = this.processMenuItems(items);
@@ -150,36 +128,36 @@ export class AvatarModule {
 
   processedMenuItems: MenuItem[] = [];
 
-  @Output() menuItemClick = new EventEmitter<AvatarMenuItem>();
+  @Output() menuItemClick = new EventEmitter();
 
   constructor() {}
 
   processMenuItems(items: AvatarMenuItem[]): MenuItem[] {
     if (!items) return [];
     return items.map((item) => ({
-      ...item,
+      ...item,;
       command: (event?: { originalEvent?: Event; item?: MenuItem }) => {
         if (event && event.item) {
           this.menuItemClick.emit(event.item as AvatarMenuItem);
         }
-      },
+      },;
     }));
   }
 
-  mapNebularSizeToPrimeNG(
-    nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',
+  mapNebularSizeToPrimeNG(;
+    nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',;
   ): 'normal' | 'large' | 'xlarge' {
     switch (nebSize) {
-      case 'tiny':
-      case 'small':
+      case 'tiny':;
+      case 'small':;
         return 'normal';
-      case 'medium':
+      case 'medium':;
         return 'normal';
-      case 'large':
+      case 'large':;
         return 'large';
-      case 'giant':
+      case 'giant':;
         return 'xlarge';
-      default:
+      default:;
         return 'normal';
     }
   }

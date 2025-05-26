@@ -1,33 +1,32 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { _NebularModule } from '../../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
- * Toggle Component
- *
- * A wrapper for Nebular's NbToggleComponent.
- * This component displays a toggle switch for boolean values.
+ * Toggle Component;
+ *';
+ * A wrapper for Nebular's NbToggleComponent.;
+ * This component displays a toggle switch for boolean values.;
  */
 @Component({
-  selector: 'app-toggle',
-  templateUrl: './toggle.component.html',
-  styleUrls: ['./toggle.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NbToggleModule
-  ],
-  providers: [
+  selector: 'app-toggle',;
+  templateUrl: './toggle.component.html',;
+  styleUrls: ['./toggle.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    NbToggleModule;
+  ],;
+  providers: [;
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputSwitchModule),
-      multi: true,
-    },
-  ],
-})
-export class InputSwitchModule implements ControlValueAccessor {
+      provide: NG_VALUE_ACCESSOR,;
+      useExisting: forwardRef(() => InputSwitchModule),;
+      multi: true,;
+    },;
+  ],;
+});
+export class InputSwitchModul {e implements ControlValueAccessor {
   @Input() label?: string;
   @Input() labelPosition: 'left' | 'right' = 'right';
   @Input() color: 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'primary';
@@ -36,7 +35,7 @@ export class InputSwitchModule implements ControlValueAccessor {
   @Input() required = false;
   @Input() ariaLabel?: string;
 
-  @Output() change = new EventEmitter<boolean>();
+  @Output() change = new EventEmitter();
 
   value = false;
 
@@ -45,7 +44,7 @@ export class InputSwitchModule implements ControlValueAccessor {
   onTouched = (value: any): void => {};
 
   /**
-   * Toggle the value
+   * Toggle the value;
    */
   toggle(checked: boolean): void {
     if (this.disabled) return;
@@ -57,28 +56,28 @@ export class InputSwitchModule implements ControlValueAccessor {
   }
 
   /**
-   * Write value to the component
+   * Write value to the component;
    */
   writeValue(value: boolean): void {
     this.value = value;
   }
 
   /**
-   * Register change handler
+   * Register change handler;
    */
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
   /**
-   * Register touched handler
+   * Register touched handler;
    */
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   /**
-   * Set disabled state
+   * Set disabled state;
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

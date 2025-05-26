@@ -1,3 +1,8 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { _NebularModule } from '../../nebular.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -7,12 +12,6 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 export interface OnboardingStep {
   id: string;
@@ -25,21 +24,21 @@ export interface OnboardingStep {
   ctaAction?: () => void;
 }
 
-@Component({
-  selector: 'app-onboarding',
-  templateUrl: './onboarding.component.html',
-  styleUrls: ['./onboarding.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    RouterModule,
-  ],
-})
-export class OnboardingComponent implements OnInit {
+@Component({';
+  selector: 'app-onboarding',;
+  templateUrl: './onboarding.component.html',;
+  styleUrls: ['./onboarding.component.scss'],;
+  standalone: true,;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    NbButtonModule,;
+    NbIconModule,;
+    NbProgressBarModule,;
+    RouterModule,;
+  ],;
+});
+export class OnboardingComponen {t implements OnInit {
   @Input() steps: OnboardingStep[] = [];
   @Input() showSkip = true;
   @Input() showProgress = true;
@@ -47,9 +46,9 @@ export class OnboardingComponent implements OnInit {
   @Input() autoShowOnFirstVisit = false;
   @Input() storageKey = 'onboarding-completed';
 
-  @Output() complete = new EventEmitter<void>();
-  @Output() skip = new EventEmitter<void>();
-  @Output() stepChange = new EventEmitter<number>();
+  @Output() complete = new EventEmitter();
+  @Output() skip = new EventEmitter();
+  @Output() stepChange = new EventEmitter();
 
   currentStepIndex = 0;
   isVisible = false;
@@ -82,16 +81,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   nextStep(): void {
-    if (this.currentStepIndex < this.steps.length - 1) {
-      this.currentStepIndex++;
-      this.stepChange.emit(this.currentStepIndex);
-    } else {
-      this.completeOnboarding();
-    }
-  }
-
-  previousStep(): void {
-    if (this.currentStepIndex > 0) {
+    if (this.currentStepIndex  0) {
       this.currentStepIndex--;
       this.stepChange.emit(this.currentStepIndex);
     }

@@ -1,34 +1,24 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
-@Component({
-    selector: 'nb-side-menu',
-    template: `
-    <div class="side-menu" [class.compact]="compact">
-      <nb-menu
-        [items]="items"
-        [autoCollapse]="true"
-        [tag]="menuTag"
-        (itemClick)="onItemClick($event)"
-      >
-        <ng-template nbMenuItemIcon let-item="item">
-          <nb-icon *ngIf="item.icon" [icon]="item.icon" [status]="item.iconStatus"></nb-icon>
-        </ng-template>
+@Component({';
+    selector: 'nb-side-menu',;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+        ;
 
-        <ng-template nbMenuItemTitle let-item="item">
-          <span class="menu-title">{{ item.title }}</span>
-          <nb-badge
-            *ngIf="item.badge"
-            [text]="item.badge.text"
-            [status]="item.badge.status"
-            [position]="compact ? 'top right' : 'centered'"
-          ></nb-badge>
-        </ng-template>
-      </nb-menu>
-    </div>
-  `,
-    styles: [
-        `
+        ;
+          {{ item.title }};
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .side-menu {
         height: 100%;
         padding: 0.5rem;
@@ -135,16 +125,16 @@ import { NbMenuItem } from '@nebular/theme';
           }
         }
       }
-    `,
-    ],
-    standalone: false
-})
-export class NbSideMenuComponent {
+    `,;`
+    ],;
+    standalone: false;
+});
+export class NbSideMenuComponen {t {
   @Input() items: NbMenuItem[] = [];
   @Input() compact = false;
   @Input() menuTag = 'side-menu';
 
-  @Output() itemClick = new EventEmitter<NbMenuItem>();
+  @Output() itemClick = new EventEmitter();
 
   onItemClick(item: NbMenuItem) {
     this.itemClick.emit(item);

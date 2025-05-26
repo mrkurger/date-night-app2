@@ -1,40 +1,39 @@
+import {
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NebularModule } from '../../../../../app/shared/nebular.module';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-} from '@nebular/theme';
-
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule,';
+} from '@nebular/theme';
 
 @Component({
-  selector: 'app-auth-callback',
-  template: `
-    <div class="callback-container">
-      <nb-card>
-        <nb-card-body>
-          <div class="text-center">
-            <nb-spinner status="primary" size="large"></nb-spinner>
-            <p>Processing your authentication...</p>
-          </div>
-        </nb-card-body>
-      </nb-card>
-    </div>
-  `,
-  styles: [
-    `
+  selector: 'app-auth-callback',;
+  template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            Processing your authentication...;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .callback-container {
         max-width: 500px;
         margin: 100px auto;
@@ -54,17 +53,17 @@ import { NbAuthService, NbAuthResult } from '@nebular/auth';
         margin-top: 20px;
         font-size: 1.1rem;
       }
-    `,
-  ],
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NebularModule, CommonModule, NbCardModule, NbSpinnerModule],
-})
-export class AuthCallbackComponent implements OnInit {
-  constructor(
-    private authService: NbAuthService,
-    private router: Router,
-    private route: ActivatedRoute,
+    `,;`
+  ],;
+  standalone: true,;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [NebularModule, CommonModule, NbCardModule, NbSpinnerModule],;
+});
+export class AuthCallbackComponen {t implements OnInit {
+  constructor(;
+    private authService: NbAuthService,;
+    private router: Router,;
+    private route: ActivatedRoute,;
   ) {}
 
   ngOnInit(): void {
@@ -80,10 +79,10 @@ export class AuthCallbackComponent implements OnInit {
           const redirect = authResult.getRedirect();
           setTimeout(() => {
             if (
-              redirect &&
-              redirect.startsWith('/') &&
+              redirect &&;
+              redirect.startsWith('/') &&;
               !redirect.startsWith('//') &&
-              !redirect.includes(':')
+              !redirect.includes(':');
             ) {
               this.router.navigateByUrl(redirect);
             } else {

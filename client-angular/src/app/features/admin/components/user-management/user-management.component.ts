@@ -1,89 +1,71 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { UserService } from '../../../../core/services/user.service';
 import { User } from '../../../../core/models/user.model';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 
-@Component({
-    selector: 'app-user-management',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, FormsModule],
-    template: `
-    <nb-card>
-      <nb-card-header class="d-flex justify-content-between align-items-center">
-        <h5>User Management</h5>
-        <div>
-          <nb-select [(ngModel)]="filterRole" (selectedChange)="filterUsers()">
-            <nb-option value="all">All Roles</nb-option>
-            <nb-option value="user">Users</nb-option>
-            <nb-option value="admin">Admins</nb-option>
-            <nb-option value="moderator">Moderators</nb-option>
-          </nb-select>
-          <input
-            nbInput
-            placeholder="Search users..."
-            [(ngModel)]="searchTerm"
-            (ngModelChange)="filterUsers()"
-          />
-        </div>
-      </nb-card-header>
+@Component({';
+    selector: 'app-user-management',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [CommonModule, FormsModule],;
+    template: `;`
+    ;
+      ;
+        User Management;
+        ;
+          ;
+            All Roles;
+            Users;
+            Admins;
+            Moderators;
+          ;
+          ;
+        ;
+      ;
 
-      <nb-card-body>
-        <table class="table" [class.loading]="loading">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Roles</th>
-              <th>Status</th>
-              <th>Last Login</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of filteredUsers">
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                <nb-tag
-                  *ngFor="let role of user.roles"
-                  [text]="role"
-                  [status]="getRoleStatus(role)"
-                >
-                </nb-tag>
-              </td>
-              <td>
-                <nb-tag [text]="user.status" [status]="getStatusBadge(user.status)"> </nb-tag>
-              </td>
-              <td>{{ user.lastLogin | date: 'short' }}</td>
-              <td>
-                <nb-actions size="small">
-                  <nb-action icon="edit-outline" (click)="editUser(user)"></nb-action>
-                  <nb-action icon="trash-outline" (click)="deleteUser(user)"></nb-action>
-                  <nb-action
-                    icon="lock-outline"
-                    (click)="banUser(user)"
-                    *ngIf="user.status !== 'banned'"
-                  >
-                  </nb-action>
-                  <nb-action
-                    icon="unlock-outline"
-                    (click)="unbanUser(user)"
-                    *ngIf="user.status === 'banned'"
-                  >
-                  </nb-action>
-                </nb-actions>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </nb-card-body>
-    </nb-card>
-  `,
-    styles: [
-        `
+      ;
+        ;
+          ;
+            ;
+              Username;
+              Email;
+              Roles;
+              Status;
+              Last Login;
+              Actions;
+            ;
+          ;
+          ;
+            ;
+              {{ user.username }};
+              {{ user.email }};
+              ;
+                ;
+                ;
+              ;
+              ;
+                 ;
+              ;
+              {{ user.lastLogin | date: 'short' }};
+              ;
+                ;
+                  ;
+                  ;
+                  ;
+                  ;
+                  ;
+                  ;
+                ;
+              ;
+            ;
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
         max-width: 100%;
@@ -112,20 +94,20 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
         display: flex;
         gap: 0.5rem;
       }
-    `,
-    ]
-})
-export class UserManagementComponent implements OnInit {
+    `,;`
+    ];
+});
+export class UserManagementComponen {t implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
   loading = false;
   filterRole = 'all';
   searchTerm = '';
 
-  constructor(
-    private userService: UserService,
-    private dialogService: NbDialogService,
-    private toastrService: NbToastrService,
+  constructor(;
+    private userService: UserService,;
+    private dialogService: NbDialogService,;
+    private toastrService: NbToastrService,;
   ) {}
 
   ngOnInit() {
@@ -139,20 +121,20 @@ export class UserManagementComponent implements OnInit {
         this.users = users;
         this.filterUsers();
         this.loading = false;
-      },
+      },;
       error: (error) => {
         this.toastrService.danger('Failed to load users', 'Error');
         this.loading = false;
-      },
+      },;
     });
   }
 
   filterUsers() {
     this.filteredUsers = this.users.filter((user) => {
       const roleMatch = this.filterRole === 'all' || user.roles.includes(this.filterRole);
-      const searchMatch =
-        !this.searchTerm ||
-        user.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      const searchMatch =;
+        !this.searchTerm ||;
+        user.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||;
         user.email.toLowerCase().includes(this.searchTerm.toLowerCase());
       return roleMatch && searchMatch;
     });
@@ -160,24 +142,24 @@ export class UserManagementComponent implements OnInit {
 
   getRoleStatus(role: string): string {
     switch (role) {
-      case 'admin':
+      case 'admin':;
         return 'success';
-      case 'moderator':
+      case 'moderator':;
         return 'info';
-      default:
+      default:;
         return 'basic';
     }
   }
 
   getStatusBadge(status: string): string {
     switch (status) {
-      case 'active':
+      case 'active':;
         return 'success';
-      case 'banned':
+      case 'banned':;
         return 'danger';
-      case 'suspended':
+      case 'suspended':;
         return 'warning';
-      default:
+      default:;
         return 'basic';
     }
   }
@@ -199,10 +181,10 @@ export class UserManagementComponent implements OnInit {
           this.filterUsers();
         }
         this.toastrService.success('User banned successfully');
-      },
+      },;
       error: (error) => {
         this.toastrService.danger('Failed to ban user', 'Error');
-      },
+      },;
     });
   }
 
@@ -215,10 +197,10 @@ export class UserManagementComponent implements OnInit {
           this.filterUsers();
         }
         this.toastrService.success('User unbanned successfully');
-      },
+      },;
       error: (error) => {
         this.toastrService.danger('Failed to unban user', 'Error');
-      },
+      },;
     });
   }
 }

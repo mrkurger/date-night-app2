@@ -11,57 +11,57 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 // PrimeNG imports
-@Component({
-  selector: 'app-wallet',
-  templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  standalone: true,
-  imports: [ProgressSpinnerModule, SelectButtonModule, TagModule, BadgeModule, ListboxModule, InputTextModule, ButtonModule, CardModule, 
-    CommonModule,
-    RouterModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    ListboxModule,
-    BadgeModule,
-    TagModule,
-    SelectButtonModule,
-    ProgressSpinnerModule,
-  ],
-})
-export class WalletComponent {
+@Component({';
+  selector: 'app-wallet',;
+  templateUrl: './wallet.component.html',;
+  styleUrls: ['./wallet.component.scss'],;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  standalone: true,;
+  imports: [ProgressSpinnerModule, SelectButtonModule, TagModule, BadgeModule, ListboxModule, InputTextModule, ButtonModule, CardModule,; 
+    CommonModule,;
+    RouterModule,;
+    CardModule,;
+    ButtonModule,;
+    InputTextModule,;
+    ListboxModule,;
+    BadgeModule,;
+    TagModule,;
+    SelectButtonModule,;
+    ProgressSpinnerModule,;
+  ],;
+});
+export class WalletComponen {t {
   // Simplified component for demonstration
   balance = 1000;
-  transactions = [
+  transactions = [;
     {
-      _id: '1',
-      type: 'deposit',
-      amount: 500,
-      status: 'completed',
-      createdAt: new Date().toISOString(),
-    },
+      _id: '1',;
+      type: 'deposit',;
+      amount: 500,;
+      status: 'completed',;
+      createdAt: new Date().toISOString(),;
+    },;
     {
-      _id: '2',
-      type: 'withdrawal',
-      amount: -200,
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-    },
+      _id: '2',;
+      type: 'withdrawal',;
+      amount: -200,;
+      status: 'pending',;
+      createdAt: new Date().toISOString(),;
+    },;
   ];
-  paymentMethods = [
+  paymentMethods = [;
     {
-      id: '1',
-      name: 'Visa Card',
-      type: 'credit_card',
-      isDefault: true,
+      id: '1',;
+      name: 'Visa Card',;
+      type: 'credit_card',;
+      isDefault: true,;
       cardDetails: {
-        brand: 'visa',
-        last4: '4242',
-        expiryMonth: 12,
-        expiryYear: 2025,
-      },
-    },
+        brand: 'visa',;
+        last4: '4242',;
+        expiryMonth: 12,;
+        expiryYear: 2025,;
+      },;
+    },;
   ];
   loading = false;
   _error: string | null = null;
@@ -98,13 +98,13 @@ export class WalletComponent {
 
   getTransactionStatusClass(status: string): string {
     switch (status.toLowerCase()) {
-      case 'completed':
+      case 'completed':;
         return 'success';
-      case 'pending':
+      case 'pending':;
         return 'warning';
-      case 'failed':
+      case 'failed':;
         return 'danger';
-      default:
+      default:;
         return 'info';
         return 'info';
     }
@@ -112,114 +112,114 @@ export class WalletComponent {
 
   getTransactionTypeIcon(type: string): string {
     switch (type.toLowerCase()) {
-      case 'deposit':
+      case 'deposit':;
         return 'arrow-downward-outline';
-      case 'withdrawal':
+      case 'withdrawal':;
         return 'arrow-upward-outline';
-      case 'transfer':
+      case 'transfer':;
         return 'swap-outline';
-      case 'payment':
+      case 'payment':;
         return 'shopping-cart-outline';
-      case 'refund':
+      case 'refund':;
         return 'undo-outline';
-      default:
+      default:;
         return 'file-text-outline';
     }
   }
 
   getTransactionTypeIconPrime(type: string): string {
     switch (type.toLowerCase()) {
-      case 'deposit':
+      case 'deposit':;
         return 'pi-arrow-down';
-      case 'withdrawal':
+      case 'withdrawal':;
         return 'pi-arrow-up';
-      case 'transfer':
+      case 'transfer':;
         return 'pi-sync';
-      case 'payment':
+      case 'payment':;
         return 'pi-shopping-cart';
-      case 'refund':
+      case 'refund':;
         return 'pi-replay';
-      default:
+      default:;
         return 'pi-file';
     }
   }
 
   getTransactionTypeIconPrime(type: string): string {
     switch (type.toLowerCase()) {
-      case 'deposit':
+      case 'deposit':;
         return 'pi-arrow-down';
-      case 'withdrawal':
+      case 'withdrawal':;
         return 'pi-arrow-up';
-      case 'transfer':
+      case 'transfer':;
         return 'pi-sync';
-      case 'payment':
+      case 'payment':;
         return 'pi-shopping-cart';
-      case 'refund':
+      case 'refund':;
         return 'pi-replay';
-      default:
+      default:;
         return 'pi-file';
     }
   }
 
   getPaymentMethodIcon(type: string): string {
     switch (type.toLowerCase()) {
-      case 'credit_card':
+      case 'credit_card':;
         return 'credit-card-outline';
-      case 'bank_account':
+      case 'bank_account':;
         return 'home-outline';
-      case 'paypal':
+      case 'paypal':;
         return 'at-outline';
-      case 'crypto':
+      case 'crypto':;
         return 'flash-outline';
-      default:
+      default:;
         return 'options-2-outline';
     }
   }
 
   getPaymentMethodIconPrime(type: string): string {
     switch (type.toLowerCase()) {
-      case 'credit_card':
+      case 'credit_card':;
         return 'pi-credit-card';
-      case 'bank_account':
+      case 'bank_account':;
         return 'pi-home';
-      case 'paypal':
+      case 'paypal':;
         return 'pi-paypal';
-      case 'crypto':
+      case 'crypto':;
         return 'pi-bitcoin';
-      default:
+      default:;
         return 'pi-wallet';
     }
   }
 
   getPaymentMethodIconPrime(type: string): string {
     switch (type.toLowerCase()) {
-      case 'credit_card':
+      case 'credit_card':;
         return 'pi-credit-card';
-      case 'bank_account':
+      case 'bank_account':;
         return 'pi-home';
-      case 'paypal':
+      case 'paypal':;
         return 'pi-paypal';
-      case 'crypto':
+      case 'crypto':;
         return 'pi-bitcoin';
-      default:
+      default:;
         return 'pi-wallet';
     }
   }
 
   formatCurrency(amount: number): string {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+      style: 'currency',;
+      currency: 'USD',;
     }).format(amount);
   }
 
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      year: 'numeric',;
+      month: 'short',;
+      day: 'numeric',;
+      hour: '2-digit',;
+      minute: '2-digit',;
     });
   }
 }

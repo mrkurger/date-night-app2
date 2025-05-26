@@ -209,9 +209,9 @@
                     : 'basic'
                 "
                [options]="options" optionLabel="label" optionValue="value">
-                <nb-option *ngFor="let network of availableCryptoNetworks" [value]="network.value">
+                <!-- TODO: Convert to options array: 
                   {{ network.name }} <span *ngIf="network.fee">(Fee: {{ network.fee }})</span>
-                </nb-option>
+                 -->
               </p-dropdown>
 
               Network is required.

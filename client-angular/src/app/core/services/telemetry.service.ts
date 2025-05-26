@@ -13,7 +13,7 @@ export interface TelemetryMetadata {
 }
 
 /**
- * Interface for error telemetry data
+ * Interface for error telemetry data;
  */
 export interface ErrorTelemetry {
   timestamp: string;
@@ -30,7 +30,7 @@ export interface ErrorTelemetry {
 }
 
 /**
- * Interface for performance telemetry data
+ * Interface for performance telemetry data;
  */
 export interface PerformanceTelemetry {
   timestamp: string;
@@ -108,14 +108,8 @@ export interface PerformanceStatistics {
 }
 
 export interface ErrorDashboardData {
-  trends: Array<{
-    timestamp: string;
-    count: number;
-  }>;
-  distribution: Array<{
-    category: ErrorCategory;
-    count: number;
-  }>;
+  trends: Array;
+  distribution: Array;
   errors: ErrorTelemetry[];
   total: number;
 }
@@ -132,12 +126,12 @@ export interface ErrorDashboardFilters {
 }
 
 /**
- * Service for tracking application telemetry including errors and performance metrics
+ * Service for tracking application telemetry including errors and performance metrics;
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class TelemetryService {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class TelemetryServic {e {
   private readonly apiUrl = environment.apiUrl + '/telemetry';
   private readonly appVersion = '1.0.0'; // Fixed version since environment.version is not defined
   private sessionId: string;
@@ -154,35 +148,35 @@ export class TelemetryService {
   }
 
   /**
-   * Set the current user ID
-   * @param userId The user ID
+   * Set the current user ID;
+   * @param userId The user ID;
    */
   setUserId(userId: string | null): void {
     this.userId = userId;
   }
 
   /**
-   * Track an error event
-   * @param error Error details
-   * @returns Observable of the tracking result
+   * Track an error event;
+   * @param error Error details;
+   * @returns Observable of the tracking result;
    */
-  trackError(error: Partial<ErrorTelemetry>): Observable<ErrorTelemetry> {
+  trackError(error: Partial): Observable {
     const errorData: ErrorTelemetry = {
-      timestamp: new Date().toISOString(),
-      type: 'error',
-      message: error.message || 'Unknown error',
-      url: error.url && this.sanitizeUrlForTelemetry(error.url),
-      stackTrace: error.stackTrace,
-      name: error.name,
-      category: error.category,
-      statusCode: error.statusCode,
+      timestamp: new Date().toISOString(),;
+      type: 'error',;
+      message: error.message || 'Unknown error',;
+      url: error.url && this.sanitizeUrlForTelemetry(error.url),;
+      stackTrace: error.stackTrace,;
+      name: error.name,;
+      category: error.category,;
+      statusCode: error.statusCode,;
       metadata: {
-        ...error.metadata,
-        appVersion: this.appVersion,
-        sessionId: this.sessionId,
-        userId: this.userId,
-      },
-      count: 1,
+        ...error.metadata,;
+        appVersion: this.appVersion,;
+        sessionId: this.sessionId,;
+        userId: this.userId,;
+      },;
+      count: 1,;
     };
 
     if (!this.isOnline) {
@@ -190,32 +184,32 @@ export class TelemetryService {
       return of(errorData);
     }
 
-    return this.http.post<ErrorTelemetry>(`${this.apiUrl}/errors`, errorData).pipe(
+    return this.http.post(`${this.apiUrl}/errors`, errorData).pipe(;`
       catchError((err) => {
         console.error('Failed to send error telemetry:', err);
         this.offlineErrorQueue.push(errorData);
         return of(errorData);
-      }),
+      }),;
     );
   }
 
   /**
-   * Track a performance event
-   * @param data Performance details
-   * @returns Observable of the tracking result
+   * Track a performance event;
+   * @param data Performance details;
+   * @returns Observable of the tracking result;
    */
-  trackPerformance(data: Partial<PerformanceTelemetry>): Observable<PerformanceTelemetry> {
+  trackPerformance(data: Partial): Observable {
     const perfData: PerformanceTelemetry = {
-      timestamp: new Date().toISOString(),
-      type: 'performance',
-      duration: data.duration || 0,
-      url: data.url && this.sanitizeUrlForTelemetry(data.url),
+      timestamp: new Date().toISOString(),;
+      type: 'performance',;
+      duration: data.duration || 0,;
+      url: data.url && this.sanitizeUrlForTelemetry(data.url),;
       metadata: {
-        ...data.metadata,
-        appVersion: this.appVersion,
-        sessionId: this.sessionId,
-        userId: this.userId,
-      },
+        ...data.metadata,;
+        appVersion: this.appVersion,;
+        sessionId: this.sessionId,;
+        userId: this.userId,;
+      },;
     };
 
     if (!this.isOnline) {
@@ -223,85 +217,85 @@ export class TelemetryService {
       return of(perfData);
     }
 
-    return this.http.post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perfData).pipe(
+    return this.http.post(`${this.apiUrl}/performance`, perfData).pipe(;`
       catchError((err) => {
         console.error('Failed to send performance telemetry:', err);
         this.offlinePerformanceQueue.push(perfData);
         return of(perfData);
-      }),
+      }),;
     );
   }
 
   /**
-   * Get error statistics
-   * @param filters Optional filters for the statistics
-   * @returns Observable of error statistics
+   * Get error statistics;
+   * @param filters Optional filters for the statistics;
+   * @returns Observable of error statistics;
    */
-  getErrorStatistics(filters?: TelemetryFilters): Observable<ErrorStatistics> {
-    return this.http
-      .get<ErrorStatistics>(`${this.apiUrl}/errors/statistics`, { params: { ...filters } })
-      .pipe(
+  getErrorStatistics(filters?: TelemetryFilters): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/errors/statistics`, { params: { ...filters } });`
+      .pipe(;
         catchError((err) => {
           console.error('Failed to get error statistics:', err);
           return of({
-            totalErrors: 0,
-            uniqueErrors: 0,
-            recentErrors: [],
-            byType: [],
-            byCategory: [],
-            byStatusCode: [],
-            byDate: [],
-            totalCount: 0,
-            errors: [],
-            total: 0,
+            totalErrors: 0,;
+            uniqueErrors: 0,;
+            recentErrors: [],;
+            byType: [],;
+            byCategory: [],;
+            byStatusCode: [],;
+            byDate: [],;
+            totalCount: 0,;
+            errors: [],;
+            total: 0,;
             statistics: {
-              byHour: [],
-              byDay: [],
-              byCategory: [],
-              byStatusCode: [],
-            },
+              byHour: [],;
+              byDay: [],;
+              byCategory: [],;
+              byStatusCode: [],;
+            },;
           });
-        }),
+        }),;
       );
   }
 
   /**
-   * Get performance statistics
-   * @param filters Optional filters for the statistics
-   * @returns Observable of performance statistics
+   * Get performance statistics;
+   * @param filters Optional filters for the statistics;
+   * @returns Observable of performance statistics;
    */
-  getPerformanceStatistics(filters?: TelemetryFilters): Observable<PerformanceStatistics> {
-    return this.http
-      .get<PerformanceStatistics>(`${this.apiUrl}/performance/statistics`, {
-        params: { ...filters },
-      })
-      .pipe(
+  getPerformanceStatistics(filters?: TelemetryFilters): Observable {
+    return this.http;
+      .get(`${this.apiUrl}/performance/statistics`, {`
+        params: { ...filters },;
+      });
+      .pipe(;
         catchError((err) => {
           console.error('Failed to get performance statistics:', err);
           return of({
-            avgDuration: 0,
-            p95Duration: 0,
-            byEndpoint: [],
-            byTimeRange: [],
-            distribution: [],
-            byDate: [],
-            slowestEndpoints: [],
-            totalCount: 0,
-            data: [],
-            total: 0,
+            avgDuration: 0,;
+            p95Duration: 0,;
+            byEndpoint: [],;
+            byTimeRange: [],;
+            distribution: [],;
+            byDate: [],;
+            slowestEndpoints: [],;
+            totalCount: 0,;
+            data: [],;
+            total: 0,;
             statistics: {
-              byHour: [],
-              byDay: [],
-              byEndpoint: [],
-            },
+              byHour: [],;
+              byDay: [],;
+              byEndpoint: [],;
+            },;
           });
-        }),
+        }),;
       );
   }
 
   /**
-   * Generates a unique session ID
-   * @returns A unique session ID
+   * Generates a unique session ID;
+   * @returns A unique session ID;
    */
   private generateSessionId(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -312,7 +306,7 @@ export class TelemetryService {
   }
 
   /**
-   * Sets up online/offline event listeners
+   * Sets up online/offline event listeners;
    */
   private setupOnlineListener(): void {
     window.addEventListener('online', () => {
@@ -326,22 +320,22 @@ export class TelemetryService {
   }
 
   /**
-   * Sends queued telemetry data when back online
+   * Sends queued telemetry data when back online;
    */
   private flushOfflineQueue(): void {
     // Process error queue
     while (this.offlineErrorQueue.length > 0) {
       const error = this.offlineErrorQueue.shift();
       if (error) {
-        this.http
-          .post<ErrorTelemetry>(`${this.apiUrl}/errors`, error)
-          .pipe(
+        this.http;
+          .post(`${this.apiUrl}/errors`, error);`
+          .pipe(;
             catchError((err) => {
               console.error('Failed to send queued error telemetry:', err);
               this.offlineErrorQueue.unshift(error);
               return of(null);
-            }),
-          )
+            }),;
+          );
           .subscribe();
       }
     }
@@ -350,24 +344,24 @@ export class TelemetryService {
     while (this.offlinePerformanceQueue.length > 0) {
       const perf = this.offlinePerformanceQueue.shift();
       if (perf) {
-        this.http
-          .post<PerformanceTelemetry>(`${this.apiUrl}/performance`, perf)
-          .pipe(
+        this.http;
+          .post(`${this.apiUrl}/performance`, perf);`
+          .pipe(;
             catchError((err) => {
               console.error('Failed to send queued performance telemetry:', err);
               this.offlinePerformanceQueue.unshift(perf);
               return of(null);
-            }),
-          )
+            }),;
+          );
           .subscribe();
       }
     }
   }
 
   /**
-   * Sanitizes a URL specifically for telemetry to prevent SSRF and remove sensitive data
-   * @param url The URL to sanitize
-   * @returns A sanitized URL safe for telemetry
+   * Sanitizes a URL specifically for telemetry to prevent SSRF and remove sensitive data;
+   * @param url The URL to sanitize;
+   * @returns A sanitized URL safe for telemetry;
    */
   private sanitizeUrlForTelemetry(url: string): string {
     if (!url) {
@@ -415,13 +409,13 @@ export class TelemetryService {
     }
   }
 
-  getErrorDashboardData(filters: ErrorDashboardFilters): Observable<ErrorDashboardData> {
-    return this.http.get<ErrorDashboardData>(`${this.apiUrl}/errors/dashboard`, {
+  getErrorDashboardData(filters: ErrorDashboardFilters): Observable {
+    return this.http.get(`${this.apiUrl}/errors/dashboard`, {`
       params: {
-        ...filters,
-        startDate: filters.startDate?.toISOString(),
-        endDate: filters.endDate?.toISOString(),
-      },
+        ...filters,;
+        startDate: filters.startDate?.toISOString(),;
+        endDate: filters.endDate?.toISOString(),;
+      },;
     });
   }
 }

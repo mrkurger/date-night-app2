@@ -1,45 +1,43 @@
-import { Input } from '@angular/core';
 import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule
-} from '@nebular/theme';
-
+import { Input } from '@angular/core';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { RegisterComponent } from './register.component';
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,;
+  NbIconModule,;
+  NbSpinnerModule,;
+  NbAlertModule,;
+  NbTooltipModule,;
+  NbLayoutModule,;
+  NbBadgeModule,;
+  NbTagModule,;
+  NbSelectModule';
+} from '@nebular/theme';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
-  let fixture: ComponentFixture<RegisterComponent>;
+  let fixture: ComponentFixture;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        RouterTestingModule,
-        NbCardModule,
-        NbFormFieldModule,
-        NbInputModule,
-        NbButtonModule,
-        NbIconModule,
-        NbCheckboxModule,
-        NbRadioModule,
-        NbSpinnerModule,
-      ],
-      declarations: [],
+      imports: [;
+        ReactiveFormsModule,;
+        RouterTestingModule,;
+        NbCardModule,;
+        NbFormFieldModule,;
+        NbInputModule,;
+        NbButtonModule,;
+        NbIconModule,;
+        NbCheckboxModule,;
+        NbRadioModule,;
+        NbSpinnerModule,;
+      ],;
+      declarations: [],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);

@@ -4,10 +4,10 @@ import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SocketService {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class SocketServic {e {
   private socket: Socket | null = null;
   private connected = false;
 
@@ -22,7 +22,7 @@ export class SocketService {
   }
 
   /**
-   * Connect to the WebSocket server
+   * Connect to the WebSocket server;
    */
   private connect(): void {
     if (this.connected) {
@@ -38,12 +38,12 @@ export class SocketService {
 
     this.socket = io(environment.apiUrl, {
       auth: {
-        token,
-      },
-      transports: ['websocket'],
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
+        token,;
+      },;
+      transports: ['websocket'],;
+      reconnection: true,;
+      reconnectionAttempts: 5,;
+      reconnectionDelay: 1000,;
     });
 
     this.socket.on('connect', () => {
@@ -63,7 +63,7 @@ export class SocketService {
   }
 
   /**
-   * Disconnect from the WebSocket server
+   * Disconnect from the WebSocket server;
    */
   disconnect(): void {
     if (this.socket) {
@@ -74,19 +74,19 @@ export class SocketService {
   }
 
   /**
-   * Check if socket is connected
+   * Check if socket is connected;
    */
   isConnected(): boolean {
     return this.connected && !!this.socket;
   }
 
   /**
-   * Listen for events from the server
-   * @param eventName Event name
-   * @returns Observable that emits when the event occurs
+   * Listen for events from the server;
+   * @param eventName Event name;
+   * @returns Observable that emits when the event occurs;
    */
-  on<T>(eventName: string): Observable<T> {
-    return new Observable<T>((observer) => {
+  on(eventName: string): Observable {
+    return new Observable((observer) => {
       if (!this.socket) {
         observer.error('Socket not connected');
         return;
@@ -105,9 +105,9 @@ export class SocketService {
   }
 
   /**
-   * Emit an event to the server
-   * @param eventName Event name
-   * @param data Event data
+   * Emit an event to the server;
+   * @param eventName Event name;
+   * @param data Event data;
    */
   emit(eventName: string, data?: any): void {
     if (!this.socket) {
@@ -119,61 +119,61 @@ export class SocketService {
   }
 
   /**
-   * Join a chat room
-   * @param roomId Room ID
+   * Join a chat room;
+   * @param roomId Room ID;
    */
   joinChatRoom(roomId: string): void {
     this.emit('chat:join', roomId);
   }
 
   /**
-   * Leave a chat room
-   * @param roomId Room ID
+   * Leave a chat room;
+   * @param roomId Room ID;
    */
   leaveChatRoom(roomId: string): void {
     this.emit('chat:leave', roomId);
   }
 
   /**
-   * Send a chat message
-   * @param roomId Room ID
-   * @param message Message text
-   * @param recipientId Optional recipient ID
+   * Send a chat message;
+   * @param roomId Room ID;
+   * @param message Message text;
+   * @param recipientId Optional recipient ID;
    */
   sendChatMessage(roomId: string, message: string, recipientId?: string): void {
     this.emit('chat:message', {
-      roomId,
-      message,
-      recipientId,
+      roomId,;
+      message,;
+      recipientId,;
     });
   }
 
   /**
-   * Send typing indicator
-   * @param roomId Room ID
-   * @param isTyping Whether the user is typing
+   * Send typing indicator;
+   * @param roomId Room ID;
+   * @param isTyping Whether the user is typing;
    */
   sendTypingIndicator(roomId: string, isTyping: boolean): void {
     this.emit('chat:typing', {
-      roomId,
-      isTyping,
+      roomId,;
+      isTyping,;
     });
   }
 
   /**
-   * Mark a notification as read
-   * @param notificationId Notification ID
+   * Mark a notification as read;
+   * @param notificationId Notification ID;
    */
   markNotificationRead(notificationId: string): void {
     this.emit('notification:read', notificationId);
   }
 
   /**
-   * Handle a specific event
-   * @param event Event name
-   * @returns Observable that emits when the event occurs
+   * Handle a specific event;
+   * @param event Event name;
+   * @returns Observable that emits when the event occurs;
    */
-  private handleEvent(event: string): Observable<any> {
+  private handleEvent(event: string): Observable {
     return new Observable((observer) => {
       if (!this.socket) {
         observer.error('Socket not connected');

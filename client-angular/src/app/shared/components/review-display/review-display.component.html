@@ -1,35 +1,33 @@
-<p-card class="review-card" [class.pending]="review.status === 'pending'" >
+<p-card class="review-card" [class.pending]="review.status === 'pending'">
   <!-- Review Header -->
-  <p-card-header >
+  <ng-template pTemplate="header">
     <img
-      nb-card-avatar
+      class="card-avatar"
       [src]="review.reviewer.profileImage || '/assets/img/default-profile.jpg'"
       [alt]="review.reviewer.username"
     />
-    <p-card-title >
+    <div class="card-title">
       {{ review.title }}
-      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" nbTooltip="Verified Meeting">
+      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" pTooltip="Verified Meeting">
         <i class="pi pi-verified"></i>
       </span>
-    </nb-card-title>
-    <p-card-subtitle >
+    </div>
+    <div class="card-subtitle">
       <span class="reviewer-name">{{ review.reviewer.username }}</span>
       <span class="review-date">{{ review.createdAt | timeAgo }}</span>
 
       <span class="status-badge" *ngIf="review.status === 'pending'"> Pending Approval </span>
-    </nb-card-subtitle>
+    </div>
 
     <div class="review-rating">
-      <app-star-rating
-        [rating]="review.rating"
-        [readonly]="true"
-        [showRatingText]="true"
-      ></app-star-rating>
+      <p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" [cancel]="false">
+      </p-rating>
+      <span class="rating-text">{{ review.rating }}/5</span>
     </div>
   </ng-template>
 
   <!-- Review Content -->
-  <p-card-body >
+  <ng-template pTemplate="content">
     <div class="review-content">
       {{ review.content }}
     </div>
@@ -49,38 +47,50 @@
       <div class="category-grid">
         <div class="category-item" *ngIf="hasCategoryRating('communication')">
           <div class="category-label">Communication</div>
-          <app-star-rating
-            [rating]="getCategoryRating('communication')"
+          <p-rating
+            [ngModel]="getCategoryRating('communication')"
             [readonly]="true"
-            [small]="true"
-          ></app-star-rating>
+            [stars]="5"
+            [cancel]="false"
+            styleClass="small-rating"
+          >
+          </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('appearance')">
           <div class="category-label">Appearance</div>
-          <app-star-rating
-            [rating]="getCategoryRating('appearance')"
+          <p-rating
+            [ngModel]="getCategoryRating('appearance')"
             [readonly]="true"
-            [small]="true"
-          ></app-star-rating>
+            [stars]="5"
+            [cancel]="false"
+            styleClass="small-rating"
+          >
+          </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('location')">
           <div class="category-label">Location</div>
-          <app-star-rating
-            [rating]="getCategoryRating('location')"
+          <p-rating
+            [ngModel]="getCategoryRating('location')"
             [readonly]="true"
-            [small]="true"
-          ></app-star-rating>
+            [stars]="5"
+            [cancel]="false"
+            styleClass="small-rating"
+          >
+          </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('value')">
           <div class="category-label">Value</div>
-          <app-star-rating
-            [rating]="getCategoryRating('value')"
+          <p-rating
+            [ngModel]="getCategoryRating('value')"
             [readonly]="true"
-            [small]="true"
-          ></app-star-rating>
+            [stars]="5"
+            [cancel]="false"
+            styleClass="small-rating"
+          >
+          </p-rating>
         </div>
       </div>
     </div>
@@ -114,59 +124,56 @@
   </ng-template>
 
   <!-- Review Actions -->
-  <p-card-actions *ngIf="showActions && review.status === 'approved'" >
-    <button nbButton
-      color="primary"
+  <ng-template pTemplate="footer" *ngIf="showActions && review.status === 'approved'">
+    <p-button
+      label="Helpful ({{ review.helpfulVotes }})"
+      icon="pi pi-thumbs-up"
       (click)="onMarkHelpful()"
       [disabled]="isCurrentUserReviewer"
-      nbTooltip="Mark this review as helpful"
+      pTooltip="Mark this review as helpful"
     >
-      <i class="pi pi-thumb_up"></i>
-      Helpful ({{ review.helpfulVotes }})
-    </button>
+    </p-button>
 
-    <button nbButton
-      color="warn"
+    <p-button
+      label="Report"
+      icon="pi pi-flag"
+      severity="danger"
       (click)="onReportReview()"
       [disabled]="isCurrentUserReviewer"
-      nbTooltip="Report this review"
+      pTooltip="Report this review"
     >
-      <i class="pi pi-flag"></i>
-      Report
-    </button>
+    </p-button>
 
     <span class="spacer"></span>
 
     <!-- Advertiser Actions -->
-    <button nbButton
-      color="primary"
+    <p-button
+      label="Respond"
+      icon="pi pi-reply"
       *ngIf="isCurrentUserAdvertiser && !review.advertiserResponse"
       (click)="onRespondToReview()"
-      nbTooltip="Respond to this review"
+      pTooltip="Respond to this review"
     >
-      <i class="pi pi-reply"></i>
-      Respond
-    </button>
+    </p-button>
 
     <!-- Reviewer Actions -->
-    <button nbButton
-      color="primary"
+    <p-button
+      label="Edit"
+      icon="pi pi-pencil"
       *ngIf="isCurrentUserReviewer"
       (click)="onEditReview()"
-      nbTooltip="Edit your review"
+      pTooltip="Edit your review"
     >
-      <i class="pi pi-pencil"></i>
-      Edit
-    </button>
+    </p-button>
 
-    <button nbButton
-      color="warn"
+    <p-button
+      label="Delete"
+      icon="pi pi-trash"
+      severity="danger"
       *ngIf="isCurrentUserReviewer"
       (click)="onDeleteReview()"
-      nbTooltip="Delete your review"
+      pTooltip="Delete your review"
     >
-      <i class="pi pi-delete"></i>
-      Delete
-    </button>
+    </p-button>
   </ng-template>
 </p-card>

@@ -3,22 +3,22 @@ import { NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
 
 /**
- * Loading Spinner Component
- *
- * A modern loading spinner component using Nebular UI components.
- * Features customizable size, message, and appearance.
+ * Loading Spinner Component;
+ *;
+ * A modern loading spinner component using Nebular UI components.;
+ * Features customizable size, message, and appearance.;
  */
-@Component({
-  selector: 'app-loading-spinner',
-  imports: [CommonModule],
-  template: `
-    <div class="loading-spinner" [class]="'loading-spinner--' + size">
-      <nb-spinner [size]="spinnerSize" [status]="status"></nb-spinner>
-      <p *ngIf="message" class="loading-spinner__message">{{ message }}</p>
-    </div>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-loading-spinner',;
+  imports: [CommonModule],;
+  template: `;`
+    ;
+      ;
+      {{ message }};
+    ;
+  `,;`
+  styles: [;
+    `;`
       .loading-spinner {
         display: flex;
         flex-direction: column;
@@ -46,24 +46,24 @@ import { CommonModule } from '@angular/common';
         line-height: nb-theme(text-subtitle-2-line-height);
         text-align: center;
       }
-    `,
-  ],
-})
-export class LoadingSpinnerComponent {
+    `,;`
+  ],;
+});
+export class LoadingSpinnerComponen {t {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() message = '';
   @Input() status: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'basic' = 'primary';
 
   /**
-   * Get the spinner size based on the component size
+   * Get the spinner size based on the component size;
    */
   get spinnerSize(): 'tiny' | 'small' | 'medium' | 'large' | 'giant' {
     switch (this.size) {
-      case 'small':
+      case 'small':;
         return 'small';
-      case 'large':
+      case 'large':;
         return 'large';
-      default:
+      default:;
         return 'medium';
     }
   }

@@ -1,12 +1,12 @@
+import {
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NbDialogRef,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
+  NbDialogRef,;
+  NbCardModule,;
+  NbButtonModule,;
+  NbInputModule,;
+  NbFormFieldModule,';
 } from '@nebular/theme';
 
 export interface PromptDialogData {
@@ -20,44 +20,38 @@ export interface PromptDialogData {
 }
 
 @Component({
-    selector: 'nb-prompt-dialog',
-    imports: [
-        CommonModule,
-        FormsModule,
-        NbCardModule,
-        NbButtonModule,
-        NbInputModule,
-        NbFormFieldModule,
-    ],
-    template: `
-    <nb-card>
-      <nb-card-header>
-        <h4 class="dialog-title">{{ data.title }}</h4>
-      </nb-card-header>
-      <nb-card-body>
-        <p class="dialog-message">{{ data.message }}</p>
-        <nb-form-field>
-          <input
-            nbInput
-            fullWidth
-            [(ngModel)]="value"
-            [placeholder]="data.placeholder || ''"
-            [required]="data.required"
-          />
-        </nb-form-field>
-      </nb-card-body>
-      <nb-card-footer class="dialog-actions">
-        <button nbButton ghost (click)="cancel()">
+    selector: 'nb-prompt-dialog',;
+    imports: [;
+        CommonModule,;
+        FormsModule,;
+        NbCardModule,;
+        NbButtonModule,;
+        NbInputModule,;
+        NbFormFieldModule,;
+    ],;
+    template: `;`
+    ;
+      ;
+        {{ data.title }};
+      ;
+      ;
+        {{ data.message }};
+        ;
+          ;
+        ;
+      ;
+      ;
+        ;
           {{ data.cancelText }}
-        </button>
-        <button nbButton status="primary" (click)="confirm()" [disabled]="data.required && !value">
+        ;
+        ;
           {{ data.confirmText }}
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  `,
-    styles: [
-        `
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .dialog-title {
         margin: 0;
         font-size: 1.25rem;
@@ -76,15 +70,15 @@ export interface PromptDialogData {
         justify-content: flex-end;
         gap: 1rem;
       }
-    `,
-    ]
-})
-export class PromptDialogComponent {
+    `,;`
+    ];
+});
+export class PromptDialogComponen {t {
   value: string;
 
-  constructor(
-    private dialogRef: NbDialogRef<PromptDialogComponent>,
-    @Inject('PROMPT_DIALOG_DATA') public data: PromptDialogData,
+  constructor(;
+    private dialogRef: NbDialogRef,;
+    @Inject('PROMPT_DIALOG_DATA') public data: PromptDialogData,;
   ) {
     this.value = data.defaultValue;
   }

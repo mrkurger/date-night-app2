@@ -3,23 +3,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ThemeService } from '../../../../core/services/theme.service';
 
-@Component({
-  selector: 'app-primeng-theme-toggle',
-  template: `
-    <div class="theme-toggle">
-      <button
-        pButton
-        icon="pi pi-{{ isDarkMode ? 'sun' : 'moon' }}"
-        class="p-button-rounded p-button-text"
-        [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-        (click)="toggleTheme()"
-        [ngClass]="{ rotate: isAnimating }"
-        (animationend)="onAnimationEnd()"
-      ></button>
-    </div>
-  `,
-  styles: [
-    `
+@Component({';
+  selector: 'app-primeng-theme-toggle',;
+  template: `;`
+    ;
+      ;
+    ;
+  `,;`
+  styles: [;
+    `;`
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -43,21 +35,21 @@ import { ThemeService } from '../../../../core/services/theme.service';
           transform: rotate(360deg);
         }
       }
-    `,
-  ],
-  standalone: true,
-})
-export class PrimeNGThemeToggleComponent implements OnInit, OnDestroy {
+    `,;`
+  ],;
+  standalone: true,;
+});
+export class PrimeNGThemeToggleComponen {t implements OnInit, OnDestroy {
   isDarkMode = false;
   isAnimating = false;
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject();
 
   constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
-    this.themeService
-      .getDarkMode()
-      .pipe(takeUntil(this.destroy$))
+    this.themeService;
+      .getDarkMode();
+      .pipe(takeUntil(this.destroy$));
       .subscribe((isDark) => {
         this.isDarkMode = isDark;
       });

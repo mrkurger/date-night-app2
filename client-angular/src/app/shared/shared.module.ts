@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-// PrimeNG Modules
-// Font Awesome for icons (replacement for Eva Icons)
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -29,64 +26,68 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { PaginatorModule } from 'primeng/paginator';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
-const PRIMENG_MODULES = [
-  CardModule,
-  ButtonModule,
-  InputTextModule,
-  InputGroupModule,
-  DropdownModule,
-  TagModule,
-  ListboxModule,
-  BadgeModule,
-  MessageModule,
-  CheckboxModule,
-  RadioButtonModule,
-  CalendarModule,
-  ContextMenuModule,
-  TableModule,
-  TabViewModule,
-  AccordionModule,
-  TreeTableModule,
-  TooltipModule,
-  ToggleButtonModule,
-  PaginatorModule,
-  DialogModule,
-  ProgressSpinnerModule,
-  AutoCompleteModule,
-  FontAwesomeModule,
+// PrimeNG Modules
+// Font Awesome for icons (replacement for Eva Icons)
+
+const PRIMENG_MODULES = [;
+  CardModule,;
+  ButtonModule,;
+  InputTextModule,;
+  InputGroupModule,;
+  DropdownModule,;
+  TagModule,;
+  ListboxModule,;
+  BadgeModule,;
+  MessageModule,;
+  CheckboxModule,;
+  RadioButtonModule,;
+  CalendarModule,;
+  ContextMenuModule,;
+  TableModule,;
+  TabViewModule,;
+  AccordionModule,;
+  TreeTableModule,;
+  TooltipModule,;
+  ToggleButtonModule,;
+  PaginatorModule,;
+  DialogModule,;
+  ProgressSpinnerModule,;
+  AutoCompleteModule,;
+  FontAwesomeModule,;
 ];
 
-const PRIMENG_MODULES = [
-  CardModule,
-  ButtonModule,
-  InputTextModule,
-  InputGroupModule,
-  DropdownModule,
-  TagModule,
-  ListboxModule,
-  BadgeModule,
-  MessageModule,
-  CheckboxModule,
-  RadioButtonModule,
-  CalendarModule,
-  ContextMenuModule,
-  TableModule,
-  TabViewModule,
-  AccordionModule,
-  TreeTableModule,
-  TooltipModule,
-  ToggleButtonModule,
-  PaginatorModule,
-  DialogModule,
-  ProgressSpinnerModule,
-  AutoCompleteModule,
-  FontAwesomeModule,
+const PRIMENG_MODULES = [;
+  CardModule,;
+  ButtonModule,;
+  InputTextModule,;
+  InputGroupModule,;
+  DropdownModule,;
+  TagModule,;
+  ListboxModule,;
+  BadgeModule,;
+  MessageModule,;
+  CheckboxModule,;
+  RadioButtonModule,;
+  CalendarModule,;
+  ContextMenuModule,;
+  TableModule,;
+  TabViewModule,;
+  AccordionModule,;
+  TreeTableModule,;
+  TooltipModule,;
+  ToggleButtonModule,;
+  PaginatorModule,;
+  DialogModule,;
+  ProgressSpinnerModule,;
+  AutoCompleteModule,;
+  FontAwesomeModule,;
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],
-})
-export class SharedModule {}
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, ...PRIMENG_MODULES],;
+});
+export class SharedModul {e {}
+';

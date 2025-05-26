@@ -1,8 +1,6 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NebularModule } from '../../shared/nebular.module';
-
 import { CommonModule } from '@angular/common';
-
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ReviewsListComponent, Review } from '../reviews-list/reviews-list.component';
 import { ReviewFormComponent, ReviewData } from '../review-form/review-form.component';
@@ -14,73 +12,56 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 
+@Component({';
+    selector: 'app-reviews-page',;
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+    imports: [;
+    CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent,;
+    ButtonModule;
+  ],;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+              ;
+                ;
+              ;
+              ;
+                {{ adTitle }};
+                ;
+                  View Ad;
+                  ;
+                ;
+              ;
+            ;
 
-@Component({
-    selector: 'app-reviews-page',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-    CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent,
-    ButtonModule
-  ],
-    template: `
-    <div class="reviews-page-container">
-      <nb-card class="reviews-header-card">
-        <nb-card-body>
-          <div class="reviews-header">
-            <div class="ad-info" *ngIf="adTitle">
-              <div class="ad-image" *ngIf="adImage">
-                <img [src]="adImage" [alt]="adTitle" loading="lazy" />
-              </div>
-              <div class="ad-details">
-                <h2 class="ad-title">{{ adTitle }}</h2>
-                <a [routerLink]="['/ad-details', adId]" class="ad-link">
-                  View Ad
-                  <nb-icon icon="external-link-outline"></nb-icon>
-                </a>
-              </div>
-            </div>
+            ;
+              ;
+                ;
+                Write a Review;
+              ;
+            ;
+          ;
+        ;
+      ;
 
-            <div class="reviews-actions" *ngIf="!showReviewForm">
-              <button nbButton status="primary" (click)="showAddReviewForm()" *ngIf="!hasReviewed">
-                <nb-icon icon="star"></nb-icon>
-                Write a Review
-              </button>
-            </div>
-          </div>
-        </nb-card-body>
-      </nb-card>
+      ;
+      ;
+        ;
+      ;
 
-      <!-- Review Form -->
-      <div class="review-form-wrapper" *ngIf="showReviewForm">
-        <app-review-form
-          [adId]="adId"
-          [existingReview]="editingReview"
-          (reviewSubmitted)="onReviewSubmitted($event)"
-          (cancel)="onCancelReview()"
-        ></app-review-form>
-      </div>
+      ;
+      ;
+        Reviews;
 
-      <!-- Reviews List -->
-      <div class="reviews-content" *ngIf="!showReviewForm">
-        <h3 class="section-title">Reviews</h3>
-
-        <app-reviews-list
-          [reviews]="reviews"
-          [loading]="loading"
-          [totalReviews]="totalReviews"
-          [currentPage]="currentPage"
-          [pageSize]="pageSize"
-          [canManage]="false"
-          (pageChange)="onPageChange($event)"
-          (editReview)="onEditReview($event)"
-          (deleteReview)="onDeleteReview($event)"
-          (reactionChange)="onReactionChange($event)"
-        ></app-reviews-list>
-      </div>
-    </div>
-  `,
-    styles: [
-        `
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       :host {
         display: block;
       }
@@ -146,10 +127,10 @@ import { ButtonModule } from 'primeng/button';
       .review-form-wrapper {
         margin-bottom: 2rem;
       }
-    `,
-    ]
-})
-export class ReviewsPageComponent implements OnInit {
+    `,;`
+    ];
+});
+export class ReviewsPageComponen {t implements OnInit {
   adId = '';
   adTitle = '';
   adImage = '';
@@ -166,12 +147,12 @@ export class ReviewsPageComponent implements OnInit {
   currentUserId: string | null = null;
   hasReviewed = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private reviewsService: ReviewsService,
-    private adService: AdService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
+  constructor(;
+    private route: ActivatedRoute,;
+    private reviewsService: ReviewsService,;
+    private adService: AdService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
   ) {}
 
   ngOnInit(): void {
@@ -185,20 +166,20 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   /**
-   * Load ad details
+   * Load ad details;
    */
   loadAdDetails(): void {
     if (!this.adId) return;
 
-    this.adService
-      .getAdById(this.adId)
-      .pipe(
+    this.adService;
+      .getAdById(this.adId);
+      .pipe(;
         catchError((error) => {
           console.error('Error loading ad details:', error);
           this.notificationService.error('Failed to load ad details');
           return of(null);
-        }),
-      )
+        }),;
+      );
       .subscribe((ad) => {
         if (ad) {
           this.adTitle = ad.title || '';
@@ -220,16 +201,16 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   /**
-   * Load reviews for the ad
+   * Load reviews for the ad;
    */
   loadReviews(): void {
     if (!this.adId) return;
 
     this.loading = true;
 
-    this.reviewsService
-      .getAdReviews(this.adId, this.currentPage, this.pageSize)
-      .pipe(
+    this.reviewsService;
+      .getAdReviews(this.adId, this.currentPage, this.pageSize);
+      .pipe(;
         tap((response) => {
           this.reviews = response.reviews;
           this.totalReviews = response.total;
@@ -239,21 +220,21 @@ export class ReviewsPageComponent implements OnInit {
           if (this.currentUserId) {
             this.hasReviewed = this.reviews.some((review) => review.userId === this.currentUserId);
           }
-        }),
+        }),;
         catchError((error) => {
           console.error('Error loading reviews:', error);
           this.notificationService.error('Failed to load reviews');
           return of(null);
-        }),
+        }),;
         tap(() => {
           this.loading = false;
-        }),
-      )
+        }),;
+      );
       .subscribe();
   }
 
   /**
-   * Handle page change in the reviews list
+   * Handle page change in the reviews list;
    */
   onPageChange(page: number): void {
     this.currentPage = page;
@@ -261,7 +242,7 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   /**
-   * Show the review form
+   * Show the review form;
    */
   showAddReviewForm(): void {
     if (!this.authService.isAuthenticated()) {
@@ -274,7 +255,7 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   /**
-   * Show the edit review form
+   * Show the edit review form;
    */
   onEditReview(review: Review): void {
     this.editingReview = review;
@@ -282,69 +263,69 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   /**
-   * Handle review submission
+   * Handle review submission;
    */
   onReviewSubmitted(reviewData: ReviewData): void {
     if (this.editingReview) {
       // Update existing review
-      this.reviewsService
-        .updateReview(this.editingReview._id, reviewData)
-        .pipe(
+      this.reviewsService;
+        .updateReview(this.editingReview._id, reviewData);
+        .pipe(;
           tap(() => {
             this.notificationService.success('Review updated successfully');
             this.showReviewForm = false;
             this.editingReview = null;
             this.loadReviews();
-          }),
+          }),;
           catchError((error) => {
             console.error('Error updating review:', error);
             this.notificationService.error('Failed to update review');
             return of(null);
-          }),
-        )
+          }),;
+        );
         .subscribe();
     } else {
       // Create new review
-      this.reviewsService
-        .createReview(this.adId, reviewData)
-        .pipe(
+      this.reviewsService;
+        .createReview(this.adId, reviewData);
+        .pipe(;
           tap(() => {
             this.notificationService.success('Review submitted successfully');
             this.showReviewForm = false;
             this.loadReviews();
-          }),
+          }),;
           catchError((error) => {
             console.error('Error submitting review:', error);
             this.notificationService.error('Failed to submit review');
             return of(null);
-          }),
-        )
+          }),;
+        );
         .subscribe();
     }
   }
 
   /**
-   * Handle review deletion
+   * Handle review deletion;
    */
   onDeleteReview(reviewId: string): void {
-    this.reviewsService
-      .deleteReview(reviewId)
-      .pipe(
+    this.reviewsService;
+      .deleteReview(reviewId);
+      .pipe(;
         tap(() => {
           this.notificationService.success('Review deleted successfully');
           this.loadReviews();
-        }),
+        }),;
         catchError((error) => {
           console.error('Error deleting review:', error);
           this.notificationService.error('Failed to delete review');
           return of(null);
-        }),
-      )
+        }),;
+      );
       .subscribe();
   }
 
   /**
-   * Handle review reaction change
+   * Handle review reaction change;
    */
   onReactionChange(event: { reviewId: string; reaction: 'helpful' | 'unhelpful' | null }): void {
     if (!this.authService.isAuthenticated()) {
@@ -352,24 +333,24 @@ export class ReviewsPageComponent implements OnInit {
       return;
     }
 
-    this.reviewsService
-      .rateReview(event.reviewId, event.reaction)
-      .pipe(
+    this.reviewsService;
+      .rateReview(event.reviewId, event.reaction);
+      .pipe(;
         tap(() => {
           // Update the review in the list
           this.loadReviews();
-        }),
+        }),;
         catchError((error) => {
           console.error('Error rating review:', error);
           this.notificationService.error('Failed to rate review');
           return of(null);
-        }),
-      )
+        }),;
+      );
       .subscribe();
   }
 
   /**
-   * Cancel review form
+   * Cancel review form;
    */
   onCancelReview(): void {
     this.showReviewForm = false;

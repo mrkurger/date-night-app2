@@ -10,20 +10,20 @@ export interface ShortcutEvent {
   meta?: boolean;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
-export class KeyboardShortcutsService {
-  private shortcuts = new Map<string, () => void>();
-  private destroy$ = new Subject<void>();
+@Injectable({';
+  providedIn: 'root',;
+});
+export class KeyboardShortcutsServic {e {
+  private shortcuts = new Map void>();
+  private destroy$ = new Subject();
 
   constructor() {
     this.initializeKeyboardListener();
   }
 
   /**
-   * Register a keyboard shortcut
-   * @param shortcut The shortcut configuration
+   * Register a keyboard shortcut;
+   * @param shortcut The shortcut configuration;
    * @param callback The function to call when the shortcut is triggered
    */
   register(shortcut: ShortcutEvent, callback: () => void): void {
@@ -32,8 +32,8 @@ export class KeyboardShortcutsService {
   }
 
   /**
-   * Unregister a keyboard shortcut
-   * @param shortcut The shortcut configuration to remove
+   * Unregister a keyboard shortcut;
+   * @param shortcut The shortcut configuration to remove;
    */
   unregister(shortcut: ShortcutEvent): void {
     const shortcutKey = this.createShortcutKey(shortcut);
@@ -41,7 +41,7 @@ export class KeyboardShortcutsService {
   }
 
   /**
-   * Clean up resources
+   * Clean up resources;
    */
   destroy(): void {
     this.destroy$.next();
@@ -50,18 +50,18 @@ export class KeyboardShortcutsService {
   }
 
   /**
-   * Initialize keyboard event listener
+   * Initialize keyboard event listener;
    */
   private initializeKeyboardListener(): void {
-    fromEvent<KeyboardEvent>(document, 'keydown')
-      .pipe(
+    fromEvent(document, 'keydown');
+      .pipe(;
         filter((event) => {
           // Ignore keyboard events when typing in input fields
           const target = event.target as HTMLElement;
           return !['INPUT', 'TEXTAREA'].includes(target.tagName);
-        }),
-        takeUntil(this.destroy$),
-      )
+        }),;
+        takeUntil(this.destroy$),;
+      );
       .subscribe((event) => {
         const shortcutKey = this.createShortcutKeyFromEvent(event);
         const callback = this.shortcuts.get(shortcutKey);
@@ -74,7 +74,7 @@ export class KeyboardShortcutsService {
   }
 
   /**
-   * Create a unique key for a shortcut
+   * Create a unique key for a shortcut;
    */
   private createShortcutKey(shortcut: ShortcutEvent): string {
     const modifiers = [];
@@ -87,7 +87,7 @@ export class KeyboardShortcutsService {
   }
 
   /**
-   * Create a shortcut key from a keyboard event
+   * Create a shortcut key from a keyboard event;
    */
   private createShortcutKeyFromEvent(event: KeyboardEvent): string {
     const modifiers = [];

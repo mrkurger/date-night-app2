@@ -1,16 +1,16 @@
+import { Subject, BehaviorSubject, Observable } from 'rxjs'; // Removed Observable';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject, BehaviorSubject, Observable } from 'rxjs'; // Removed Observable
 import { environment } from '../../../environments/environment';
 import { ErrorTelemetry, PerformanceTelemetry } from './telemetry.service';
 import { AlertEvent } from '../models/alert.model';
 
 /**
- * Service for real-time telemetry updates using WebSockets
+ * Service for real-time telemetry updates using WebSockets;
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class TelemetrySocketService implements OnDestroy {
+@Injectable({';
+  providedIn: 'root',;
+});
+export class TelemetrySocketServic {e implements OnDestroy {
   private socket: WebSocket | null = null;
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 5;
@@ -18,26 +18,26 @@ export class TelemetrySocketService implements OnDestroy {
   private reconnectTimeoutId: any = null;
 
   // Connection status
-  private connectionStatus = new BehaviorSubject<boolean>(false);
+  private connectionStatus = new BehaviorSubject(false);
   public connectionStatus$ = this.connectionStatus.asObservable();
 
   // Telemetry data streams
-  private errorTelemetry = new Subject<ErrorTelemetry>();
+  private errorTelemetry = new Subject();
   public errorTelemetry$ = this.errorTelemetry.asObservable();
 
-  private performanceTelemetry = new Subject<PerformanceTelemetry>();
+  private performanceTelemetry = new Subject();
   public performanceTelemetry$ = this.performanceTelemetry.asObservable();
 
   // Error statistics updates
-  private errorStatisticsUpdate = new Subject<any>();
+  private errorStatisticsUpdate = new Subject();
   public errorStatisticsUpdate$ = this.errorStatisticsUpdate.asObservable();
 
   // Performance statistics updates
-  private performanceStatisticsUpdate = new Subject<any>();
+  private performanceStatisticsUpdate = new Subject();
   public performanceStatisticsUpdate$ = this.performanceStatisticsUpdate.asObservable();
 
   // Alert events
-  private alertEvents = new Subject<AlertEvent>();
+  private alertEvents = new Subject();
   public alertEvents$ = this.alertEvents.asObservable();
 
   // Public property to check connection status
@@ -50,15 +50,15 @@ export class TelemetrySocketService implements OnDestroy {
   }
 
   /**
-   * Connect to the telemetry WebSocket server
+   * Connect to the telemetry WebSocket server;
    */
-  public connect(): Observable<void> {
+  public connect(): Observable {
     if (this.socket) {
-      return new Observable<void>();
+      return new Observable();
     }
 
     try {
-      const wsUrl = `${environment.chatWsUrl}/telemetry`;
+      const wsUrl = `${environment.chatWsUrl}/telemetry`;`
       this.socket = new WebSocket(wsUrl);
 
       this.socket.onopen = () => {
@@ -92,11 +92,11 @@ export class TelemetrySocketService implements OnDestroy {
       this.connectionStatus.next(false);
       this.attemptReconnect();
     }
-    return new Observable<void>();
+    return new Observable();
   }
 
   /**
-   * Disconnect from the telemetry WebSocket server
+   * Disconnect from the telemetry WebSocket server;
    */
   public disconnect(): void {
     if (this.socket) {
@@ -113,8 +113,8 @@ export class TelemetrySocketService implements OnDestroy {
   }
 
   /**
-   * Handle incoming WebSocket messages
-   * @param data The message data
+   * Handle incoming WebSocket messages;
+   * @param data The message data;
    */
   private handleMessage(data: any): void {
     if (!data || !data.type) {
@@ -122,28 +122,28 @@ export class TelemetrySocketService implements OnDestroy {
     }
 
     switch (data.type) {
-      case 'error':
+      case 'error':;
         this.errorTelemetry.next(data.payload);
         break;
-      case 'performance':
+      case 'performance':;
         this.performanceTelemetry.next(data.payload);
         break;
-      case 'error_statistics':
+      case 'error_statistics':;
         this.errorStatisticsUpdate.next(data.payload);
         break;
-      case 'performance_statistics':
+      case 'performance_statistics':;
         this.performanceStatisticsUpdate.next(data.payload);
         break;
-      case 'alert':
+      case 'alert':;
         this.alertEvents.next(data.payload);
         break;
-      default:
+      default:;
         console.warn('Unknown telemetry message type:', data.type);
     }
   }
 
   /**
-   * Attempt to reconnect to the WebSocket server
+   * Attempt to reconnect to the WebSocket server;
    */
   private attemptReconnect(): void {
     if (this.reconnectAttempts >= this.maxReconnectAttempts) {
@@ -154,8 +154,8 @@ export class TelemetrySocketService implements OnDestroy {
     this.reconnectAttempts++;
     const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
 
-    console.log(
-      `Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`,
+    console.log(;
+      `Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`,;`
     );
 
     this.reconnectTimeoutId = setTimeout(() => {
@@ -164,8 +164,8 @@ export class TelemetrySocketService implements OnDestroy {
   }
 
   /**
-   * Subscribe to a specific telemetry channel
-   * @param channel The channel to subscribe to
+   * Subscribe to a specific telemetry channel;
+   * @param channel The channel to subscribe to;
    */
   public subscribe(channel: string): void {
     if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
@@ -173,40 +173,40 @@ export class TelemetrySocketService implements OnDestroy {
       return;
     }
 
-    this.socket.send(
+    this.socket.send(;
       JSON.stringify({
-        action: 'subscribe',
-        channel,
-      }),
+        action: 'subscribe',;
+        channel,;
+      }),;
     );
   }
 
   /**
-   * Unsubscribe from a specific telemetry channel
-   * @param channel The channel to unsubscribe from
+   * Unsubscribe from a specific telemetry channel;
+   * @param channel The channel to unsubscribe from;
    */
   public unsubscribe(channel: string): void {
     if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
       return;
     }
 
-    this.socket.send(
+    this.socket.send(;
       JSON.stringify({
-        action: 'unsubscribe',
-        channel,
-      }),
+        action: 'unsubscribe',;
+        channel,;
+      }),;
     );
   }
 
   /**
-   * Clean up resources when the service is destroyed
+   * Clean up resources when the service is destroyed;
    */
   ngOnDestroy(): void {
     this.disconnect();
   }
 
-  onErrorUpdate(): Observable<any> {
+  onErrorUpdate(): Observable {
     // Implementation details
-    return new Observable<any>();
+    return new Observable();
   }
 }

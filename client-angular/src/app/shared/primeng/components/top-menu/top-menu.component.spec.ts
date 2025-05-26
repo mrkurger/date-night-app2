@@ -3,34 +3,35 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TopMenuComponent } from './top-menu.component';
 import { MenuItem } from 'primeng/api';
 
+';
 describe('TopMenuComponent', () => {
   let component: TopMenuComponent;
-  let fixture: ComponentFixture<TopMenuComponent>;
+  let fixture: ComponentFixture;
 
-  const mockMenuItems: MenuItem[] = [
+  const mockMenuItems: MenuItem[] = [;
     {
-      label: 'Home',
-      icon: 'pi pi-home',
-    },
+      label: 'Home',;
+      icon: 'pi pi-home',;
+    },;
     {
-      label: 'Features',
-      icon: 'pi pi-star',
-      items: [
+      label: 'Features',;
+      icon: 'pi pi-star',;
+      items: [;
         {
-          label: 'New',
-          icon: 'pi pi-plus',
-        },
+          label: 'New',;
+          icon: 'pi pi-plus',;
+        },;
         {
-          label: 'Popular',
-          icon: 'pi pi-chart-line',
-        },
-      ],
-    },
+          label: 'Popular',;
+          icon: 'pi pi-chart-line',;
+        },;
+      ],;
+    },;
   ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TopMenuComponent],
+      imports: [NoopAnimationsModule, TopMenuComponent],;
     }).compileComponents();
 
     fixture = TestBed.createComponent(TopMenuComponent);

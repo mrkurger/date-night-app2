@@ -4,31 +4,26 @@ import { NebularModule } from '../../../../app/shared/nebular.module';
 import { NotificationMessage } from './notification.model';
 import { ButtonModule } from 'primeng/button';
 
-
-@Component({
-    selector: 'app-notification',
-    imports: [
-    CommonModule, NebularModule,
-    ButtonModule
-  ],
-    template: `
-    <div class="notifications-container">
-      <nb-card
-        *ngFor="let notification of notifications"
-        [status]="getNotificationStatus(notification)"
-        class="notification-card"
-      >
-        <nb-card-body>
-          <div class="notification-content">
-            <nb-icon [icon]="getNotificationIcon(notification)"></nb-icon>
-            <span class="notification-message">{{ notification.message }}</span>
-          </div>
-        </nb-card-body>
-      </nb-card>
-    </div>
-  `,
-    styles: [
-        `
+@Component({';
+    selector: 'app-notification',;
+    imports: [;
+    CommonModule, NebularModule,;
+    ButtonModule;
+  ],;
+    template: `;`
+    ;
+      ;
+        ;
+          ;
+            ;
+            {{ notification.message }};
+          ;
+        ;
+      ;
+    ;
+  `,;`
+    styles: [;
+        `;`
       .notifications-container {
         position: fixed;
         top: 20px;
@@ -61,10 +56,10 @@ import { ButtonModule } from 'primeng/button';
       nb-icon {
         font-size: 1.5rem;
       }
-    `,
-    ]
-})
-export class NotificationComponent implements OnDestroy {
+    `,;`
+    ];
+});
+export class NotificationComponen {t implements OnDestroy {
   @Input() notifications: NotificationMessage[] = [];
 
   // This property is used in tests
@@ -81,28 +76,28 @@ export class NotificationComponent implements OnDestroy {
 
   getNotificationStatus(notification: NotificationMessage): string {
     switch (notification.type) {
-      case 'success':
+      case 'success':;
         return 'success';
-      case 'error':
+      case 'error':;
         return 'danger';
-      case 'warning':
+      case 'warning':;
         return 'warning';
-      case 'info':
-      default:
+      case 'info':;
+      default:;
         return 'info';
     }
   }
 
   getNotificationIcon(notification: NotificationMessage): string {
     switch (notification.type) {
-      case 'success':
+      case 'success':;
         return 'checkmark-circle-2-outline';
-      case 'error':
+      case 'error':;
         return 'alert-circle-outline';
-      case 'warning':
+      case 'warning':;
         return 'alert-triangle-outline';
-      case 'info':
-      default:
+      case 'info':;
+      default:;
         return 'info-outline';
     }
   }

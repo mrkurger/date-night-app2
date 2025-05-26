@@ -1,26 +1,8 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  AfterViewChecked,
-  ChangeDetectorRef,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
-// PrimeNG imports
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -35,13 +17,6 @@ import { DialogModule } from 'primeng/dialog';
 import { ChipModule } from 'primeng/chip';
 import { RippleModule } from 'primeng/ripple';
 import { MenuItem } from 'primeng/api';
-
-import {
-  ChatService,
-  ChatMessage,
-  ChatRoom,
-  ChatMessageRequest,
-} from '../../../core/services/chat.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ChatMessageComponent } from '../../../shared/components/chat-message/chat-message.component';
@@ -57,6 +32,32 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { MenuItem } from 'primeng/menuitem';
+  Component,;
+  OnInit,;
+  OnDestroy,;
+  ViewChild,;
+  ElementRef,;
+  AfterViewChecked,;
+  ChangeDetectorRef,;
+  CUSTOM_ELEMENTS_SCHEMA,';
+} from '@angular/core';
+
+import {
+  FormsModule,;
+  ReactiveFormsModule,;
+  FormControl,;
+  FormGroup,;
+  Validators,;
+} from '@angular/forms';
+
+// PrimeNG imports
+
+import {
+  ChatService,;
+  ChatMessage,;
+  ChatRoom,;
+  ChatMessageRequest,;
+} from '../../../core/services/chat.service';
 
 interface ChatUser {
   id: string;
@@ -71,33 +72,33 @@ interface User {
 }
 
 @Component({
-  selector: 'app-chat-room',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    InputGroupModule,
-    AvatarModule,
-    MenuModule,
-    CheckboxModule,
-    DropdownModule,
-    ProgressSpinnerModule,
-    TooltipModule,
-    DialogModule,
-    ChipModule,
-    RippleModule,
-    ChatMessageComponent,
-  ],
-  templateUrl: './chat-room.component.html',
-  styleUrls: ['./chat-room.component.scss'],
-  standalone: true,
-})
-export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
+  selector: 'app-chat-room',;
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],;
+  imports: [;
+    CommonModule,;
+    FormsModule,;
+    ReactiveFormsModule,;
+    RouterModule,;
+    CardModule,;
+    ButtonModule,;
+    InputTextModule,;
+    InputGroupModule,;
+    AvatarModule,;
+    MenuModule,;
+    CheckboxModule,;
+    DropdownModule,;
+    ProgressSpinnerModule,;
+    TooltipModule,;
+    DialogModule,;
+    ChipModule,;
+    RippleModule,;
+    ChatMessageComponent,;
+  ],;
+  templateUrl: './chat-room.component.html',;
+  styleUrls: ['./chat-room.component.scss'],;
+  standalone: true,;
+});
+export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
 
@@ -122,57 +123,57 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   private typingTimeout: any;
   hasMoreMessages = true;
   isTyping = false;
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject();
 
   messageForm = new FormGroup({
-    message: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required]),;
   });
 
-  chatActions: MenuItem[] = [
+  chatActions: MenuItem[] = [;
     {
-      label: 'View Profile',
-      icon: 'pi pi-user',
-      command: () => this.viewProfile(),
-    },
+      label: 'View Profile',;
+      icon: 'pi pi-user',;
+      command: () => this.viewProfile(),;
+    },;
     {
-      label: 'Pin Chat',
-      icon: 'pi pi-bookmark',
-      command: () => this.pinChat(),
-    },
+      label: 'Pin Chat',;
+      icon: 'pi pi-bookmark',;
+      command: () => this.pinChat(),;
+    },;
     {
-      label: 'Settings',
-      icon: 'pi pi-cog',
-      command: () => this.toggleSettings(),
-    },
+      label: 'Settings',;
+      icon: 'pi pi-cog',;
+      command: () => this.toggleSettings(),;
+    },;
     {
-      separator: true,
-    },
+      separator: true,;
+    },;
     {
-      label: 'Clear Chat',
-      icon: 'pi pi-trash',
-      command: () => this.clearChat(),
-    },
+      label: 'Clear Chat',;
+      icon: 'pi pi-trash',;
+      command: () => this.clearChat(),;
+    },;
     {
-      label: 'Block User',
-      icon: 'pi pi-ban',
-      command: () => this.blockUser(),
-      styleClass: 'text-danger',
-    },
+      label: 'Block User',;
+      icon: 'pi pi-ban',;
+      command: () => this.blockUser(),;
+      styleClass: 'text-danger',;
+    },;
     {
-      label: 'Report',
-      icon: 'pi pi-exclamation-triangle',
-      command: () => this.reportUser(),
-      styleClass: 'text-danger',
-    },
+      label: 'Report',;
+      icon: 'pi pi-exclamation-triangle',;
+      command: () => this.reportUser(),;
+      styleClass: 'text-danger',;
+    },;
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private chatService: ChatService,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private cdr: ChangeDetectorRef,
+  constructor(;
+    private route: ActivatedRoute,;
+    private router: Router,;
+    private chatService: ChatService,;
+    private authService: AuthService,;
+    private notificationService: NotificationService,;
+    private cdr: ChangeDetectorRef,;
   ) {
     this.authService.getCurrentUser().subscribe((user) => {
       this.currentUserId = user?._id || '';
@@ -202,9 +203,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private initializeUser(): void {
-    this.authService
-      .getCurrentUser()
-      .pipe(takeUntil(this.destroy$))
+    this.authService;
+      .getCurrentUser();
+      .pipe(takeUntil(this.destroy$));
       .subscribe((user) => {
         if (user) {
           this.currentUserId = user._id;
@@ -229,8 +230,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private setupTypingListener(): void {
-    this.chatService.typingStatus$
-      .pipe(takeUntil(this.destroy$), debounceTime(300))
+    this.chatService.typingStatus$;
+      .pipe(takeUntil(this.destroy$), debounceTime(300));
       .subscribe((isTyping) => {
         this.isTyping = isTyping;
         if (isTyping) {
@@ -242,7 +243,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   loadRoom(): void {
     this.loading = true;
 
-    this.chatService.getRooms().subscribe(
+    this.chatService.getRooms().subscribe(;
       (rooms) => {
         const room = rooms.find((r) => r.id === this.roomId);
         if (room) {
@@ -259,12 +260,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.router.navigate(['/chat']);
         }
         this.loading = false;
-      },
+      },;
       (error) => {
         console.error('Error loading room:', error);
         this.notificationService.error('Failed to load chat room');
         this.loading = false;
-      },
+      },;
     );
   }
 
@@ -273,9 +274,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       const otherParticipant = this.room.participants.find((p) => p.id !== this.currentUserId);
       if (otherParticipant) {
         this.contact = {
-          id: otherParticipant.id,
-          username: otherParticipant.username,
-          avatar: otherParticipant.avatar || '/assets/img/default-profile.jpg',
+          id: otherParticipant.id,;
+          username: otherParticipant.username,;
+          avatar: otherParticipant.avatar || '/assets/img/default-profile.jpg',;
         };
       }
     }
@@ -295,12 +296,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
 
         this.hasMoreMessages = messages.length >= 50;
-      },
+      },;
       error: (error) => {
         console.error('Error loading messages:', error);
         this.notificationService.error('Failed to load messages');
         this.loading = false;
-      },
+      },;
     });
   }
 
@@ -317,12 +318,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
         this.hasMoreMessages = messages.length >= 50;
         this.loadingMore = false;
-      },
+      },;
       error: (error) => {
         console.error('Error loading more messages:', error);
         this.notificationService.error('Failed to load more messages');
         this.loadingMore = false;
-      },
+      },;
     });
   }
 
@@ -330,7 +331,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.connectSocket();
 
     // New message handler
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe((message) => {
         if (message.roomId === this.roomId) {
           this.messages = [message, ...this.messages];
@@ -340,18 +341,18 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.chatService.markMessageAsRead(message.id).subscribe();
           }
         }
-      }),
+      }),;
     );
 
     // Message read handler
-    this.subscriptions.push(
+    this.subscriptions.push(;
       this.chatService.messageRead$.pipe(takeUntil(this.destroy$)).subscribe((messageId) => {
         const message = this.messages.find((m) => m.id === messageId);
         if (message) {
           message.read = true;
           this.cdr.detectChanges();
         }
-      }),
+      }),;
     );
   }
 
@@ -369,36 +370,36 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   /**
-   * Send a new message
+   * Send a new message;
    */
   sendMessage(): void {
     if (this.messageForm.valid) {
       const message = this.messageForm.get('message')?.value;
       if (message) {
         const payload: ChatMessageRequest = {
-          roomId: this.roomId,
-          content: message,
+          roomId: this.roomId,;
+          content: message,;
           ...(this.isMessageExpiryEnabled && {
             ttl: this.messageExpiryTime * 60 * 60, // Convert hours to seconds
-          }),
+          }),;
         };
 
-        this.chatService.sendMessage(payload).subscribe(
+        this.chatService.sendMessage(payload).subscribe(;
           () => {
             this.messageForm.reset();
             this.scrollToBottomIfNeeded();
-          },
+          },;
           (error) => {
             this.notificationService.error('Failed to send message');
             console.error('Error sending message:', error);
-          },
+          },;
         );
       }
     }
   }
 
   /**
-   * Menu action methods
+   * Menu action methods;
    */
   viewProfile(): void {
     if (this.otherUser) {
@@ -408,64 +409,64 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   pinChat(): void {
     if (this.room) {
-      this.chatService.pinRoom(this.room.id).subscribe(
+      this.chatService.pinRoom(this.room.id).subscribe(;
         () => {
           this.notificationService.success('Chat pinned successfully');
-        },
+        },;
         (error) => {
           console.error('Error pinning chat:', error);
           this.notificationService.error('Failed to pin chat');
-        },
+        },;
       );
     }
   }
 
   clearChat(): void {
     if (this.room) {
-      this.chatService.clearRoom(this.room.id).subscribe(
+      this.chatService.clearRoom(this.room.id).subscribe(;
         () => {
           this.messages = [];
           this.notificationService.success('Chat cleared successfully');
-        },
+        },;
         (error) => {
           console.error('Error clearing chat:', error);
           this.notificationService.error('Failed to clear chat');
-        },
+        },;
       );
     }
   }
 
   blockUser(): void {
     if (this.otherUser) {
-      this.chatService.blockUser(this.otherUser.id).subscribe(
+      this.chatService.blockUser(this.otherUser.id).subscribe(;
         () => {
           this.notificationService.success('User blocked successfully');
           this.router.navigate(['/chat']);
-        },
+        },;
         (error) => {
           console.error('Error blocking user:', error);
           this.notificationService.error('Failed to block user');
-        },
+        },;
       );
     }
   }
 
   reportUser(): void {
     if (this.otherUser) {
-      this.chatService.reportUser(this.otherUser.id).subscribe(
+      this.chatService.reportUser(this.otherUser.id).subscribe(;
         () => {
           this.notificationService.success('User reported successfully');
-        },
+        },;
         (error) => {
           console.error('Error reporting user:', error);
           this.notificationService.error('Failed to report user');
-        },
+        },;
       );
     }
   }
 
   /**
-   * Handle file selection for attachments
+   * Handle file selection for attachments;
    */
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -477,23 +478,23 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       const oversizedFiles = fileArray.filter((file) => file.size > maxFileSize);
 
       if (oversizedFiles.length > 0) {
-        this.notificationService.error(
-          `Some files exceed the 10MB size limit: ${oversizedFiles.map((f) => f.name).join(', ')}`,
+        this.notificationService.error(;
+          `Some files exceed the 10MB size limit: ${oversizedFiles.map((f) => f.name).join(', ')}`,;`
         );
         return;
       }
 
       // Send message with attachments
-      this.chatService
-        .sendMessageWithAttachments(
-          this.roomId,
-          this.messageForm.get('message')?.value || '',
-          fileArray,
-        )
+      this.chatService;
+        .sendMessageWithAttachments(;
+          this.roomId,;
+          this.messageForm.get('message')?.value || '',;
+          fileArray,;
+        );
         .then(() => {
           this.messageForm.reset();
           this.scrollToBottomIfNeeded();
-        })
+        });
         .catch((error) => {
           this.notificationService.error('Failed to send files');
           console.error('Error sending files:', error);
@@ -518,18 +519,18 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   toggleMessageExpiry(): void {
     if (this.room) {
       const settings = {
-        messageExpiryEnabled: this.isMessageExpiryEnabled,
-        messageExpiryTime: this.isMessageExpiryEnabled ? this.messageExpiryTime : 0,
+        messageExpiryEnabled: this.isMessageExpiryEnabled,;
+        messageExpiryTime: this.isMessageExpiryEnabled ? this.messageExpiryTime : 0,;
       };
 
       this.chatService.updateRoomSettings(this.room.id, settings).subscribe({
         next: () => {
           this.notificationService.success('Message expiry settings updated');
-        },
+        },;
         error: (error) => {
           console.error('Error updating message expiry:', error);
           this.notificationService.error('Failed to update message expiry settings');
-        },
+        },;
       });
     }
   }
@@ -537,21 +538,21 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   toggleEncryption(): void {
     if (this.room) {
       const settings: any = {
-        encryptionEnabled: this.isEncryptionEnabled,
+        encryptionEnabled: this.isEncryptionEnabled,;
       };
 
       this.chatService.updateRoomSettings(this.room.id, settings).subscribe({
         next: () => {
-          this.notificationService.success(
-            this.isEncryptionEnabled
-              ? 'End-to-end encryption enabled'
-              : 'End-to-end encryption disabled',
+          this.notificationService.success(;
+            this.isEncryptionEnabled;
+              ? 'End-to-end encryption enabled';
+              : 'End-to-end encryption disabled',;
           );
-        },
+        },;
         error: (error) => {
           console.error('Error toggling encryption:', error);
           this.notificationService.error('Failed to update encryption settings');
-        },
+        },;
       });
     }
   }
@@ -569,11 +570,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         next: () => {
           this.room!.pinned = !this.room!.pinned;
           this.notificationService.success(this.room!.pinned ? 'Chat pinned' : 'Chat unpinned');
-        },
+        },;
         error: (error) => {
           console.error('Error pinning chat:', error);
           this.notificationService.error('Failed to pin chat');
-        },
+        },;
       });
     }
   }
@@ -584,11 +585,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         next: () => {
           this.messages = [];
           this.notificationService.success('Chat cleared');
-        },
+        },;
         error: (error) => {
           console.error('Error clearing chat:', error);
           this.notificationService.error('Failed to clear chat');
-        },
+        },;
       });
     }
   }
@@ -599,11 +600,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
         next: () => {
           this.notificationService.success('User blocked');
           this.router.navigate(['/chat']);
-        },
+        },;
         error: (error) => {
           console.error('Error blocking user:', error);
           this.notificationService.error('Failed to block user');
-        },
+        },;
       });
     }
   }
@@ -613,11 +614,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.chatService.reportUser(this.contact.id).subscribe({
         next: () => {
           this.notificationService.success('User reported');
-        },
+        },;
         error: (error) => {
           console.error('Error reporting user:', error);
           this.notificationService.error('Failed to report user');
-        },
+        },;
       });
     }
   }
@@ -638,10 +639,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
     try {
       if (this.messageContainer) {
         const element = this.messageContainer.nativeElement;
-        const atBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 100;
-
-        if (atBottom) {
-          setTimeout(() => {
+        const atBottom = element.scrollHeight - element.scrollTop  {
             element.scrollTop = element.scrollHeight;
             this.cdr.detectChanges();
           }, 0);

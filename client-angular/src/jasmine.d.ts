@@ -2,9 +2,10 @@ import { Observable } from 'rxjs';
 import { Message } from 'primeng/message';
 import { MessageService } from 'primeng/messageservice';
 import { ConfirmationService } from 'primeng/confirmationservice';
+
 declare global {
   namespace jasmine {
-    interface Matchers<T> {
+    interface Matchers {
       // Basic matchers
       toBe(expected: T): boolean;
       toBeDefined(): boolean;
@@ -35,53 +36,53 @@ declare global {
       toThrow(expected?: any): boolean;
       toThrowError(expected?: any, message?: string): boolean;
 
-      not: jasmine.Matchers<T>;
+      not: jasmine.Matchers;
     }
 
-    interface SpyAnd<T = any> {
-      callThrough(): Spy<T>;
-      returnValue(value: T): Spy<T>;
-      returnValues(...args: T[]): Spy<T>;
-      callFake(fn: (...args: any[]) => T): Spy<T>;
-      throwError(error: any): Spy<T>;
-      stub(): Spy<T>;
+    interface SpyAnd {
+      callThrough(): Spy;
+      returnValue(value: T): Spy;
+      returnValues(...args: T[]): Spy;
+      callFake(fn: (...args: any[]) => T): Spy;
+      throwError(error: any): Spy;
+      stub(): Spy;
     }
-    interface SpyAnd<T = any> {
-      callThrough(): Spy<T>;
-      returnValue(value: T): Spy<T>;
-      returnValues(...args: T[]): Spy<T>;
-      callFake(fn: (...args: any[]) => T): Spy<T>;
-      throwError(error: any): Spy<T>;
-      stub(): Spy<T>;
+    interface SpyAnd {
+      callThrough(): Spy;
+      returnValue(value: T): Spy;
+      returnValues(...args: T[]): Spy;
+      callFake(fn: (...args: any[]) => T): Spy;
+      throwError(error: any): Spy;
+      stub(): Spy;
     }
 
-    interface Spy<T = any> extends Function {
+    interface Spy extends Function {
       (...params: any[]): T;
-      and: SpyAnd<T>;
+      and: SpyAnd;
       calls: Calls;
-      withArgs(...args: any[]): Spy<T>;
+      withArgs(...args: any[]): Spy;
     }
-    interface Spy<T = any> extends Function {
+    interface Spy extends Function {
       (...params: any[]): T;
-      and: SpyAnd<T>;
+      and: SpyAnd;
       calls: Calls;
-      withArgs(...args: any[]): Spy<T>;
+      withArgs(...args: any[]): Spy;
     }
 
-    interface SpyObj<T> {
+    interface SpyObj {
       [k: string]: Spy;
     }
 
     // PrimeNG specific spy types
-    interface MessageServiceSpyObj extends SpyObj<MessageService> {
-      add: Spy<void>;
-      addAll: Spy<void>;
-      clear: Spy<void>;
+    interface MessageServiceSpyObj extends SpyObj {
+      add: Spy;
+      addAll: Spy;
+      clear: Spy;
     }
 
-    interface ConfirmationServiceSpyObj extends SpyObj<ConfirmationService> {
-      confirm: Spy<void>;
-      close: Spy<void>;
+    interface ConfirmationServiceSpyObj extends SpyObj {
+      confirm: Spy;
+      close: Spy;
     }
 
     // PrimeNG specific types
@@ -116,26 +117,26 @@ declare global {
     // Helper functions
     function createSpy(name?: string, originalFn?: Function): Spy;
     function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy };
-    function createSpyObj<T>(baseName: string, methodNames: string[]): SpyObj<T>;
+    function createSpyObj(baseName: string, methodNames: string[]): SpyObj;
     function createSpyObj(
-      baseName: string,
-      methodNames: string[],
-      properties?: { [key: string]: any },
+      baseName: string,;
+      methodNames: string[],;
+      properties?: { [key: string]: any },;
     ): any;
-    interface SpyObj<T> {
+    interface SpyObj {
       [k: string]: Spy;
     }
 
     // PrimeNG specific spy types
-    interface MessageServiceSpyObj extends SpyObj<MessageService> {
-      add: Spy<void>;
-      addAll: Spy<void>;
-      clear: Spy<void>;
+    interface MessageServiceSpyObj extends SpyObj {
+      add: Spy;
+      addAll: Spy;
+      clear: Spy;
     }
 
-    interface ConfirmationServiceSpyObj extends SpyObj<ConfirmationService> {
-      confirm: Spy<void>;
-      close: Spy<void>;
+    interface ConfirmationServiceSpyObj extends SpyObj {
+      confirm: Spy;
+      close: Spy;
     }
 
     // PrimeNG specific types
@@ -170,11 +171,11 @@ declare global {
     // Helper functions
     function createSpy(name?: string, originalFn?: Function): Spy;
     function createSpyObj(baseName: string, methodNames: string[]): { [key: string]: Spy };
-    function createSpyObj<T>(baseName: string, methodNames: string[]): SpyObj<T>;
+    function createSpyObj(baseName: string, methodNames: string[]): SpyObj;
     function createSpyObj(
-      baseName: string,
-      methodNames: string[],
-      properties?: { [key: string]: any },
+      baseName: string,;
+      methodNames: string[],;
+      properties?: { [key: string]: any },;
     ): any;
 
     interface Clock {
@@ -196,7 +197,7 @@ declare global {
   }
 
   // Global expect function
-  function expect<T>(actual: T): jasmine.Matchers<T>;
+  function expect(actual: T): jasmine.Matchers;
     interface Clock {
       install(): void;
       uninstall(): void;
@@ -216,5 +217,6 @@ declare global {
   }
 
   // Global expect function
-  function expect<T>(actual: T): jasmine.Matchers<T>;
+  function expect(actual: T): jasmine.Matchers;
 }
+';
