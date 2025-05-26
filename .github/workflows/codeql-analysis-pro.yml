@@ -156,49 +156,55 @@ jobs:
         echo "✅ Analysis complete!"
 
     # Step 7: Convert CodeQL results to readable format
+    # This step processes the SARIF output from CodeQL and converts it to human-readable formats
+    # We handle both successful analysis (with SARIF file) and failed analysis (no SARIF file)
     - name: Process CodeQL Results
       id: process-results
       run: |
         echo "📊 Processing CodeQL results for JavaScript/TypeScript..."
         
-        # Create results directory
+        # Create directory for processed results
         mkdir -p processed-results
         
-        # Check if SARIF file exists
+        # Define the expected SARIF file location from CodeQL analysis
         SARIF_FILE="codeql-results/javascript.sarif"
         
+        # Check if CodeQL successfully generated a SARIF file
         if [ -f "$SARIF_FILE" ]; then
           echo "Found SARIF file: $SARIF_FILE"
           
-          # Create a markdown report from SARIF using ESModules syntax
+          # Process SARIF file using Node.js with ESModules syntax
+          # The --input-type=module flag enables ESModules in Node.js eval
           node --input-type=module --eval "
+          // Import required modules using ESModules syntax
           import { readFileSync, writeFileSync } from 'fs';
           
-          // Read SARIF file
+          // Read the SARIF (Static Analysis Results Interchange Format) file
           const sarifContent = readFileSync('$SARIF_FILE', 'utf8');
           const sarif = JSON.parse(sarifContent);
           
-          // Initialize counters
-          let criticalCount = 0;
-          let highCount = 0;
-          let mediumCount = 0;
-          let lowCount = 0;
-          const findings = [];
+          // Initialize severity counters for summary statistics
+          let criticalCount = 0;  // CVSS 9.0-10.0
+          let highCount = 0;      // CVSS 7.0-8.9 or error level
+          let mediumCount = 0;    // CVSS 4.0-6.9 or warning level
+          let lowCount = 0;       // CVSS 0.0-3.9 or note level
+          const findings = [];    // Array to store all security findings
           
-          // Process each run in the SARIF file
+          // Process each run in the SARIF file (usually one per language/tool)
           for (const run of sarif.runs || []) {
             const tool = run.tool?.driver?.name || 'CodeQL';
             
-            // Process results
+            // Process each security finding result
             for (const result of run.results || []) {
-              // Determine severity based on CodeQL levels
+              // Determine severity based on CodeQL levels and security scores
               const level = result.level || 'warning';
               let severity = 'MEDIUM';
               
-              // Check for security severity in properties
+              // Check for CVSS-based security severity score (more accurate)
               const securitySeverity = result.properties?.['security-severity'];
               if (securitySeverity !== undefined) {
                 // Convert CVSS score to severity level
+                // Based on CVSS v3.1 severity ratings
                 if (securitySeverity >= 9.0) {
                   severity = 'CRITICAL';
                   criticalCount++;
@@ -213,7 +219,7 @@ jobs:
                   lowCount++;
                 }
               } else {
-                // Fall back to level-based severity
+                // Fall back to basic level-based severity if no CVSS score
                 if (level === 'error') {
                   severity = 'HIGH';
                   highCount++;
@@ -226,13 +232,13 @@ jobs:
                 }
               }
               
-              // Extract location information
+              // Extract location information for the finding
               const location = result.locations?.[0]?.physicalLocation;
               const file = location?.artifactLocation?.uri || 'unknown';
               const line = location?.region?.startLine || '?';
               const snippet = location?.region?.snippet?.text || '';
               
-              // Add to findings array
+              // Add finding to array with all relevant information
               findings.push({
                 severity,
                 rule: result.ruleId || 'unknown',
@@ -245,16 +251,17 @@ jobs:
             }
           }
           
-          // Sort findings by severity
+          // Sort findings by severity (most severe first)
           const severityOrder = { 'CRITICAL': 0, 'HIGH': 1, 'MEDIUM': 2, 'LOW': 3 };
           findings.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
           
-          // Generate markdown report
+          // Generate markdown report with proper escaping for shell
           let markdown = '# CodeQL Security Analysis Results\\n\\n';
           markdown += '**Language:** JavaScript/TypeScript\\n';
           markdown += '**Date:** ' + new Date().toISOString() + '\\n';
           markdown += '**Triggered by:** @${{ github.actor }}\\n\\n';
           
+          // Add summary table
           markdown += '## 📊 Summary\\n\\n';
           markdown += '| Severity | Count |\\n';
           markdown += '|----------|-------|\\n';
@@ -264,17 +271,18 @@ jobs:
           markdown += '| 🔵 LOW | ' + lowCount + ' |\\n';
           markdown += '| **TOTAL** | **' + findings.length + '** |\\n\\n';
           
+          // Add detailed findings section if issues were found
           if (findings.length > 0) {
             markdown += '## 🔍 Detailed Findings\\n\\n';
             
-            // Group by severity
+            // Group findings by severity for organized output
             const grouped = findings.reduce((acc, finding) => {
               if (!acc[finding.severity]) acc[finding.severity] = [];
               acc[finding.severity].push(finding);
               return acc;
             }, {});
             
-            // Output findings by severity
+            // Output findings by severity level
             for (const [severity, items] of Object.entries(grouped)) {
               markdown += '### ' + severity + ' Severity Issues\\n\\n';
               
@@ -295,16 +303,18 @@ jobs:
                 markdown += '\\n';
               }
               
+              // Indicate if there are more findings than shown
               if (items.length > 10) {
                 markdown += '*... and ' + (items.length - 10) + ' more ' + severity + ' issues*\\n\\n';
               }
             }
           } else {
+            // No issues found - success message
             markdown += '## ✅ No Security Issues Found!\\n\\n';
             markdown += 'Great job! CodeQL analysis found no security vulnerabilities in your JavaScript/TypeScript code.\\n';
           }
           
-          // Add recommendations section
+          // Add recommendations section based on findings
           markdown += '## 💡 Recommendations\\n\\n';
           if (criticalCount > 0 || highCount > 0) {
             markdown += '1. **Immediate Action:** Fix all CRITICAL and HIGH severity issues before deployment\\n';
@@ -323,10 +333,10 @@ jobs:
             markdown += '3. Regular security scanning is working well!\\n';
           }
           
-          // Save markdown report
+          // Save markdown report to file
           writeFileSync('processed-results/codeql-javascript-typescript.md', markdown);
           
-          // Save JSON report for programmatic access
+          // Create JSON report for programmatic access and integrations
           const jsonReport = {
             language: 'javascript-typescript',
             timestamp: new Date().toISOString(),
@@ -341,21 +351,29 @@ jobs:
             findings: findings.slice(0, 100) // Limit to first 100 for file size
           };
           
+          // Save JSON report
           writeFileSync('processed-results/codeql-javascript-typescript.json', JSON.stringify(jsonReport, null, 2));
           
-          // Set outputs for GitHub Actions
+          // Set GitHub Actions outputs for use in subsequent steps
           console.log('::set-output name=total_issues::' + findings.length);
           console.log('::set-output name=critical_issues::' + criticalCount);
           console.log('::set-output name=high_issues::' + highCount);
           console.log('::set-output name=has_issues::' + (findings.length > 0));
           "
         else
+          # No SARIF file found - create fallback reports
           echo "No SARIF file found, creating empty report..."
-          # Create a minimal report when no SARIF is generated
+          
+          # Capture current date in ISO format for use in heredoc
+          # This avoids the syntax error from direct command substitution in heredoc
+          CURRENT_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          
+          # Create a minimal markdown report when no SARIF is generated
+          # Using heredoc with proper variable substitution
           cat > processed-results/codeql-javascript-typescript.md << EOF
 # CodeQL Security Analysis Results
 
-**Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)
+**Date:** $CURRENT_DATE
 **Language:** JavaScript/TypeScript
 
 ⚠️ No results file generated. This might indicate:
@@ -366,11 +384,12 @@ jobs:
 Please check the workflow logs for more details.
 EOF
           
-          # Create minimal JSON report
+          # Create minimal JSON report with proper date
+          # This ensures downstream steps have valid JSON even if analysis failed
           cat > processed-results/codeql-javascript-typescript.json << EOF
 {
   "language": "javascript-typescript",
-  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "timestamp": "$CURRENT_DATE",
   "triggeredBy": "${{ github.actor }}",
   "summary": {
     "total": 0,
@@ -383,7 +402,8 @@ EOF
 }
 EOF
           
-          # Set safe default outputs
+          # Set safe default outputs for GitHub Actions
+          # These prevent errors in subsequent steps that depend on these outputs
           echo "::set-output name=total_issues::0"
           echo "::set-output name=critical_issues::0"
           echo "::set-output name=high_issues::0"
