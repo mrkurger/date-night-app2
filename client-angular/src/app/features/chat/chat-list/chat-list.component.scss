@@ -1,5 +1,5 @@
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/global/breakpoints' as *;
+
+
 @use '../../../core/styles/breakpoints' as bp;
 
 .chat-list-container {
@@ -73,8 +73,8 @@
 .spinner {
   width: 2.5rem;
   height: 2.5rem;
-  border: 3px solid rgba(nb-theme(color-primary-500), 0.2);
-  border-top-color: nb-theme(color-primary-500);
+  border: 3px solid rgba(var(--primary-color), 0.2);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -83,7 +83,7 @@
 .error-message {
   background-color: nb-theme(color-danger-100);
   border: 1px solid nb-theme(color-danger-500);
-  border-radius: nb-theme(border-radius);
+  border-radius: var(--border-radius);
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -98,21 +98,21 @@
 
   p {
     margin-bottom: 1.5rem;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 }
 
 .chat-list__empty-icon {
   font-size: 3.5rem;
   margin-bottom: 1rem;
-  color: nb-theme(text-hint-color);
+  color: var(--text-color-secondary);
   opacity: 0.5;
 }
 
 .chat-list__empty-text {
   font-size: 1.125rem;
   margin-bottom: 1.5rem;
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
 }
 
 .btn {

@@ -1,4 +1,4 @@
-@use '@nebular/theme/styles/theming' as *;
+
 
 :host {
   display: block;
@@ -14,11 +14,11 @@
   width: 100%;
   min-height: 100vh;
   padding: 1rem;
-  background: nb-theme(background-basic-color-2);
+  background: var(--surface-section);
   transition: background-color 0.3s ease;
 
   &.dark-theme {
-    background: nb-theme(background-basic-color-3);
+    background: var(--surface-card);
   }
 }
 
@@ -42,7 +42,7 @@
   .tinder-title {
     font-size: 2rem;
     font-weight: 700;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
     margin: 0;
   }
 
@@ -106,7 +106,7 @@
 
   .loading-text {
     font-size: 1.25rem;
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
     margin: 0;
   }
 }
@@ -117,7 +117,7 @@
   max-width: var(--card-width);
   padding: 2rem;
   text-align: center;
-  background: nb-theme(background-basic-color-1);
+  background: var(--surface-ground);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
   transform-origin: center;
@@ -136,7 +136,7 @@
   }
 
   .empty-subtext {
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
   }
 
@@ -188,7 +188,7 @@
   height: 100%;
   border-radius: var(--card-border-radius);
   overflow: hidden;
-  background: nb-theme(background-basic-color-1);
+  background: var(--surface-ground);
   box-shadow: var(--card-shadow);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
@@ -276,8 +276,8 @@
     overflow-y: auto;
     background: linear-gradient(
       to bottom,
-      nb-theme(background-basic-color-1) 0%,
-      nb-theme(background-basic-color-2) 100%
+      var(--surface-ground) 0%,
+      var(--surface-section) 100%
     );
     scrollbar-width: thin;
     scrollbar-color: nb-theme(scrollbar-color) transparent;
@@ -305,7 +305,7 @@
 
         .age {
           font-weight: normal;
-          color: nb-theme(text-hint-color);
+          color: var(--text-color-secondary);
           margin-left: 0.25rem;
         }
       }
@@ -314,7 +314,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: nb-theme(text-hint-color);
+        color: var(--text-color-secondary);
         margin-bottom: 0.5rem;
 
         nb-icon {
@@ -330,7 +330,7 @@
       .description {
         font-size: 0.875rem;
         line-height: 1.5;
-        color: nb-theme(text-basic-color);
+        color: var(--text-color);
         margin-bottom: 0.75rem;
       }
     }
@@ -578,6 +578,6 @@
 }
 
 :focus-visible {
-  outline: 2px solid nb-theme(color-primary-500);
+  outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }

@@ -35,7 +35,7 @@
 
 .metric-item {
   background: nb-theme(card-background-color);
-  border-radius: nb-theme(border-radius);
+  border-radius: var(--border-radius);
   padding: 1rem;
 }
 
@@ -48,7 +48,7 @@
 
 .metric-name {
   font-weight: bold;
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
 }
 
 .server-grid {
@@ -59,7 +59,7 @@
 
 .server-item {
   background: nb-theme(card-background-color);
-  border-radius: nb-theme(border-radius);
+  border-radius: var(--border-radius);
   padding: 1rem;
 }
 
@@ -72,7 +72,7 @@
 
 .server-name {
   font-weight: bold;
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
 }
 
 .server-metrics {
@@ -84,19 +84,19 @@
 .server-metric {
   text-align: center;
   padding: 0.5rem;
-  background: nb-theme(background-basic-color-2);
-  border-radius: nb-theme(border-radius);
+  background: var(--surface-section);
+  border-radius: var(--border-radius);
 
   span:first-child {
     display: block;
     font-size: 0.875rem;
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
     margin-bottom: 0.25rem;
   }
 
   span:last-child {
     font-weight: bold;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 }
 

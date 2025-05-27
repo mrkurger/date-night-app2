@@ -8,7 +8,7 @@
      Related to: other_file.scss:OTHER_SETTING
    =================================================== */
 
-@use '@nebular/theme/styles/theming' as *;
+
 @use '../../../core/design/typography-mixins' as typography;
 
 .chat-settings-card {
@@ -32,7 +32,7 @@
 
   .settings-group {
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid nb-theme(divider-color);
+    border-bottom: 1px solid var(--surface-border);
     &:last-of-type {
       border-bottom: none;
       padding-bottom: 0;
@@ -53,7 +53,7 @@
 
     .settings-group-description {
       font-size: nb-theme(text-paragraph-2-font-size);
-      color: nb-theme(text-hint-color);
+      color: var(--text-color-secondary);
       margin-bottom: 1rem;
     }
 
@@ -71,7 +71,7 @@
       align-items: center;
       gap: 0.75rem;
       padding: nb-theme(card-padding-medium);
-      background-color: nb-theme(background-basic-color-2);
+      background-color: var(--surface-section);
       border-radius: nb-theme(card-border-radius);
       margin-top: 0.5rem;
 
@@ -80,7 +80,7 @@
       }
       p {
         font-size: nb-theme(text-paragraph-2-font-size);
-        color: nb-theme(text-basic-color);
+        color: var(--text-color);
         margin: 0;
       }
     }

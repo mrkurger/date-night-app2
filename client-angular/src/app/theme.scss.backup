@@ -1,0 +1,8 @@
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+
+@include nb-install {
+  @include nb-theme-global;
+  @include nb-auth-global;
+}

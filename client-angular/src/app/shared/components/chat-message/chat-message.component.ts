@@ -1,4 +1,10 @@
 import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
 import { EncryptionService } from '../../../core/services/encryption.service';
@@ -12,23 +18,10 @@ import { BadgeModule } from 'primeng/badge';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
 import { TooltipModule } from 'primeng/tooltip';
-  Component,
-  Input,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,';
-} from '@angular/core';
-
-// PrimeNG imports
-// Services and Models
-
-// Pipes
-
-// Pipes
 
 @Component({
   selector: 'app-chat-message',
-  imports: [TooltipModule, AvatarModule, ProgressSpinnerModule, BadgeModule, ButtonModule, CardModule, 
+  imports: [
     CommonModule,
     CardModule,
     ButtonModule,
@@ -45,7 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class ChatMessageComponen {t implements OnInit {
+export class ChatMessageComponent implements OnInit {
   @Input() message!: ChatMessage;
   @Input() roomId!: string;
   @Input() showSender = true;
@@ -55,7 +48,7 @@ export class ChatMessageComponen {t implements OnInit {
   isDecrypting = false;
   decryptionFailed = false;
 
-  constructor(;
+  constructor(
     private encryptionService: EncryptionService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
@@ -63,17 +56,16 @@ export class ChatMessageComponen {t implements OnInit {
 
   ngOnInit(): void {
     // Check if this message is from the current user
-    this.isCurrentUser = this.checkIfCurrentUser()
-    this.isCurrentUser = this.checkIfCurrentUser()
+    this.isCurrentUser = this.checkIfCurrentUser();
 
     // Handle message content
-    this.processMessageContent()
+    this.processMessageContent();
   }
 
   /**
-   * Process the message content, decrypting if necessary;
+   * Process the message content, decrypting if necessary
    */
-  private async processMessageContent(): Promise {
+  private async processMessageContent(): Promise<void> {
     // If the message is not encrypted, use the content directly
     if (!this.message.isEncrypted) {
       this.decryptedContent = this.message.message || this.message.content || '';
@@ -82,22 +74,22 @@ export class ChatMessageComponen {t implements OnInit {
 
     // If the message is encrypted, try to decrypt it
     this.isDecrypting = true;
-    this.cdr.markForCheck()
+    this.cdr.markForCheck();
 
     try {
       // Ensure we have the necessary encryption data
       if (!this.message.encryptionData || !this.message.encryptionData.iv) {
-        throw new Error('Missing encryption data')
+        throw new Error('Missing encryption data');
       }
 
       const encryptedData = {
         ciphertext: this.message.message || '',
         iv: this.message.encryptionData.iv,
         authTag: this.message.encryptionData.authTag,
-      }
+      };
 
       // Decrypt the message
-      const decrypted = await this.encryptionService.decryptMessage(this.roomId, encryptedData)
+      const decrypted = await this.encryptionService.decryptMessage(this.roomId, encryptedData);
 
       if (decrypted) {
         this.decryptedContent = decrypted;
@@ -106,43 +98,30 @@ export class ChatMessageComponen {t implements OnInit {
         this.decryptedContent = '[Encrypted message - Unable to decrypt]';
       }
     } catch (error) {
-      console.error('Error decrypting message:', error)
+      console.error('Error decrypting message:', error);
       this.decryptionFailed = true;
       this.decryptedContent = '[Encrypted message - Unable to decrypt]';
     } finally {
       this.isDecrypting = false;
-      this.cdr.markForCheck()
+      this.cdr.markForCheck();
     }
   }
 
   /**
-   * Check if the message is from the current user;
+   * Check if the message is from the current user
    */
   private checkIfCurrentUser(): boolean {
-    const currentUser = this.authService.getCurrentUser()
+    const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !this.message.sender) return false;
 
-    const senderId =;
+    const senderId =
       typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
 
     return senderId === currentUser.id;
   }
 
   /**
-   * Check if the message is from the current user;
-   */
-  private checkIfCurrentUser(): boolean {
-    const currentUser = this.authService.getCurrentUser()
-    if (!currentUser || !this.message.sender) return false;
-
-    const senderId =;
-      typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
-
-    return senderId === currentUser.id;
-  }
-
-  /**
-   * Get the display name for the message sender;
+   * Get the display name for the message sender
    */
   getSenderName(): string {
     if (typeof this.message.sender === 'string') {
@@ -152,21 +131,17 @@ export class ChatMessageComponen {t implements OnInit {
   }
 
   /**
-   * Get the profile image for the message sender;
-   * Get the profile image for the message sender;
+   * Get the profile image for the message sender
    */
   getSenderProfileImage(): string {
     if (typeof this.message.sender === 'string') {
       return '/assets/img/default-profile.jpg';
     }
     return this.message.sender.profileImage || '/assets/img/default-profile.jpg';
-      return '/assets/img/default-profile.jpg';
-    }
-    return this.message.sender.profileImage || '/assets/img/default-profile.jpg';
   }
 
   /**
-   * Get the CSS classes for the message;
+   * Get the CSS classes for the message
    */
   getMessageClasses(): { [key: string]: boolean } {
     return {
@@ -176,32 +151,24 @@ export class ChatMessageComponen {t implements OnInit {
       'message--encrypted': this.message.isEncrypted,
       'message--decryption-failed': this.decryptionFailed,
       'message--system': this.message.type === 'system',
-    }
+    };
   }
 
   /**
    * Open an attachment (for images)
-   * Open an attachment (for images)
    */
   openAttachment(attachment: Attachment): void {
     if (attachment.type === 'image' && attachment.url) {
-      window.open(attachment.url, '_blank')
-    }
-  openAttachment(attachment: Attachment): void {
-    if (attachment.type === 'image' && attachment.url) {
-      window.open(attachment.url, '_blank')
+      window.open(attachment.url, '_blank');
     }
   }
 
   /**
-   * Download an attachment;
+   * Download an attachment
    */
   downloadAttachment(attachment: Attachment): void {
     if (attachment.url) {
-      window.open(attachment.url, '_blank')
-  downloadAttachment(attachment: Attachment): void {
-    if (attachment.url) {
-      window.open(attachment.url, '_blank')
+      window.open(attachment.url, '_blank');
     }
   }
 }

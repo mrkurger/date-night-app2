@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subject } from 'rxjs';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
-import { MenuItem } from 'primeng/menuitem';
 import { ButtonModule } from 'primeng/button';
 import { TabViewModule } from 'primeng/tabview';
 import { MenuModule } from 'primeng/menu';
@@ -110,8 +109,20 @@ interface Advertiser {
   selector: 'app-advertiser-browsing-alternate',
   templateUrl: './advertiser-browsing-alternate.component.html',
   styleUrls: ['./advertiser-browsing-alternate.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonModule,
+    TabViewModule,
+    MenuModule,
+    PanelModule,
+    ToolbarModule,
+    TieredMenuModule,
+    InputTextModule,
+    TooltipModule,
+  ],
 })
-export class AdvertiserBrowsingAlternateComponen {t implements OnInit, OnDestroy {
+export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject()
   private searchSubject = new Subject()
 

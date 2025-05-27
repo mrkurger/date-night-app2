@@ -1,7 +1,13 @@
-import {
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -11,12 +17,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Observable, Subject, from, of } from 'rxjs';
 import { catchError, finalize, retry, takeUntil } from 'rxjs/operators';
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,';
-} from '@angular/forms';
 
 import {
   IContentSanitizerService,
@@ -36,7 +36,7 @@ import {
   templateUrl: './content-moderation.component.html',
   styleUrls: ['./content-moderation.component.scss'],
   standalone: true,
-  imports: [;
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -49,7 +49,7 @@ import {
     ProgressSpinnerModule,
   ],
 })
-export class ContentModerationComponen {t implements OnInit, OnDestroy {
+export class ContentModerationComponent implements OnInit, OnDestroy {
   /**
    * UI state properties;
    */

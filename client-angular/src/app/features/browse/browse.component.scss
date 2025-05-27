@@ -6,7 +6,7 @@
 
 /* Layout customization */
 nb-layout-header {
-  background-color: nb-theme(color-primary-500);
+  background-color: var(--primary-color);
   color: white;
 }
 
@@ -48,13 +48,13 @@ nb-layout-footer {
 }
 
 .footer-links a {
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
-  color: nb-theme(color-primary-500);
+  color: var(--primary-color);
   text-decoration: underline;
 }
 

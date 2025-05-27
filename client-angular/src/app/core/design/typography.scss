@@ -1,5 +1,5 @@
 // Typography utilities using Nebular theme variables
-@use '@nebular/theme/styles/theming' as *;
+
 
 // Font families
 .nb-font-primary {
@@ -84,7 +84,7 @@
 
 // Text colors
 .nb-text-basic {
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
 }
 
 .nb-text-alternate {
@@ -96,7 +96,7 @@
 }
 
 .nb-text-hint {
-  color: nb-theme(text-hint-color);
+  color: var(--text-color-secondary);
 }
 
 // Text transforms

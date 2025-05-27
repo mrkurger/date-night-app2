@@ -1,16 +1,16 @@
-@use '@nebular/theme/styles/theming' as *;
+
 
 .paid-placement-sidebar {
   padding: nb-theme(card-padding-medium);
-  background-color: nb-theme(background-basic-color-1); // Or a slightly different shade
+  background-color: var(--surface-ground); // Or a slightly different shade
   border-radius: nb-theme(card-border-radius);
-  // border: 1px solid nb-theme(divider-color); // Optional border
+  // border: 1px solid var(--surface-border); // Optional border
   min-width: 250px; // Ensure it has some width
 
   h4 {
     font-size: nb-theme(text-subtitle-2-font-size);
     font-weight: nb-theme(text-subtitle-2-font-weight);
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
     margin-bottom: nb-theme(spacing-md);
     text-transform: uppercase;
   }
@@ -39,12 +39,12 @@
       h6 {
         font-size: nb-theme(text-paragraph-font-size);
         font-weight: nb-theme(text-paragraph-font-weight);
-        color: nb-theme(text-basic-color);
+        color: var(--text-color);
         margin: 0 0 nb-theme(spacing-xxs) 0;
       }
       .ad-location-small {
         font-size: nb-theme(text-caption-2-font-size);
-        color: nb-theme(text-hint-color);
+        color: var(--text-color-secondary);
         margin: 0;
       }
     }

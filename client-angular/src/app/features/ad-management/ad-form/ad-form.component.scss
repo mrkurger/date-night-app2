@@ -56,7 +56,7 @@ nb-error {
 
 // Icon prefixes
 nb-icon[nbPrefix] {
-  color: nb-theme(text-hint-color);
+  color: var(--text-color-secondary);
   font-size: 1.25rem;
   margin-right: 0.5rem;
 }
@@ -68,7 +68,7 @@ nb-icon[nbPrefix] {
 
   h2 {
     margin-bottom: 20px;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 
   .loading-spinner {

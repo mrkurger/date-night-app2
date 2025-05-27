@@ -22,7 +22,7 @@ nb-layout-footer {
   padding: 1rem;
   text-align: center;
   background-color: nb-theme(footer-background-color);
-  border-top: 1px solid nb-theme(border-basic-color-3);
+  border-top: 1px solid var(--surface-border);
 }
 
 nb-user {

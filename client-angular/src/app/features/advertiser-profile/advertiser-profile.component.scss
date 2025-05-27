@@ -20,7 +20,7 @@
 
 .loading-text {
   margin-top: nb-theme(margin);
-  color: nb-theme(text-hint-color);
+  color: var(--text-color-secondary);
   font-weight: 500;
 }
 
@@ -32,7 +32,7 @@
 .error-text {
   font-size: nb-theme(text-heading-4-font-size);
   font-weight: 500;
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
   margin-bottom: nb-theme(margin-lg);
 }
 
@@ -42,8 +42,8 @@
 
 /* Profile Content */
 .profile-content {
-  background-color: nb-theme(background-basic-color-1);
-  border-radius: nb-theme(border-radius);
+  background-color: var(--surface-ground);
+  border-radius: var(--border-radius);
   overflow: hidden;
 }
 
@@ -115,14 +115,14 @@
   display: flex;
   overflow-x: auto;
   padding: nb-theme(padding-sm);
-  background-color: nb-theme(background-basic-color-2);
+  background-color: var(--surface-section);
   gap: nb-theme(spacing-sm);
 }
 
 .thumbnail {
   flex: 0 0 80px;
   height: 60px;
-  border-radius: nb-theme(border-radius);
+  border-radius: var(--border-radius);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -154,7 +154,7 @@
 .profile-title {
   font-size: nb-theme(text-heading-2-font-size);
   font-weight: 700;
-  color: nb-theme(text-basic-color);
+  color: var(--text-color);
   margin: 0;
 }
 
@@ -173,12 +173,12 @@
 .profile-meta-item {
   display: flex;
   align-items: center;
-  color: nb-theme(text-hint-color);
+  color: var(--text-color-secondary);
   font-size: nb-theme(text-subtitle-font-size);
   gap: nb-theme(spacing-xs);
 
   nb-icon {
-    color: nb-theme(color-primary-500);
+    color: var(--primary-color);
   }
 }
 
@@ -192,12 +192,12 @@
   .section-title {
     font-size: nb-theme(text-heading-6-font-size);
     font-weight: 600;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
     margin: 0 0 nb-theme(margin-sm);
   }
 
   p {
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
     line-height: nb-theme(text-line-height);
     margin: 0;
   }
@@ -312,19 +312,19 @@
 // Dark theme adjustments
 :host-context([data-theme='dark']) {
   .profile-content {
-    background-color: nb-theme(background-basic-color-1);
+    background-color: var(--surface-ground);
   }
 
   .thumbnail-row {
-    background-color: nb-theme(background-basic-color-2);
+    background-color: var(--surface-section);
   }
 
   .profile-title,
   .profile-description .section-title {
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 
   .profile-meta-item {
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
   }
 }

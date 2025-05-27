@@ -2,10 +2,17 @@
 // DESIGN SYSTEM ENTRY POINT
 // ===================================================
 // This file is the main entry point for the design system.
-// It combines PrimeNG themes with our design tokens.
+// It combines Nebular theme variables with our design tokens.
 // ===================================================
 
-/* Forward rules must come first in SCSS */
+/* Import Nebular Theme */
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/dark' as dark-theme;
+
+/* Import Design Tokens */
+
+@use '../../app/core/design/nebular-theme-customization' as theme;
 
 /* Forward Base Styles */
 @forward '../variables';
@@ -14,6 +21,9 @@
 @forward './colors';
 @forward './spacing';
 @forward './breakpoints';
+
+/* Register Themes */
+@use '@nebular/theme/styles/themes/default' as nb-default;
 
 /* Forward core design tokens and variables */
 @forward '../../app/core/design/design-tokens' as tokens-*;
@@ -40,8 +50,5 @@
 /* Forward micro-interactions */
 @forward '../../app/core/design/micro-interactions';
 
-/* Import PrimeNG Themes - must come after @forward rules */
-@import 'primeng/resources/themes/lara-light-blue/theme.css';
-@import 'primeng/resources/primeng.css';
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
+/* Forward Nebular theme customization */
+@forward '../../app/core/design/nebular-theme-customization';

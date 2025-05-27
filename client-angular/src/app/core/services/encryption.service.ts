@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map,  } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -33,23 +33,23 @@ export interface EncryptedAttachmentData {
     size: number;
     iv: Uint8Array;
     authTag: Uint8Array;
-  } // Add metadata property for compatibility
+  }; // Add metadata property for compatibility
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class EncryptionServic {e {
+export class EncryptionService {
   private initialized = false;
-  private roomKeys = new Map()
-  private messageExpirySettings = new Map()
+  private roomKeys = new Map<string, string>();
+  private messageExpirySettings = new Map<string, any>();
 
   constructor() {}
 
   /**
    * Initialize the encryption service;
    */
-  async initialize(): Promise {
+  async initialize(): Promise<void> {
     // initialization logic or stub
     return;
   }
@@ -66,7 +66,7 @@ export class EncryptionServic {e {
    */
   getMessageExpirySettings(roomId: string): any {
     // stub: return default settings
-    return { enabled: false }
+    return { enabled: false };
   }
 
   /**
@@ -79,27 +79,27 @@ export class EncryptionServic {e {
   /**
    * Encrypt a file;
    */
-  async encryptFile(roomId: string, file: File): Promise {
+  async encryptFile(roomId: string, file: File): Promise<any> {
     // stub: return empty data
-    return { data: new ArrayBuffer(0), iv: new Uint8Array(), authTag: new Uint8Array() }
+    return { data: new ArrayBuffer(0), iv: new Uint8Array(), authTag: new Uint8Array() };
   }
 
   /**
    * Decrypt a file;
    */
-  async decryptFile(roomId: string, response: any, options?: any): Promise {
+  async decryptFile(roomId: string, response: any, options?: any): Promise<File> {
     // Convert Blob to File with all required properties
-    const blob = new Blob([response.data], { type: response.metadata.originalType })
+    const blob = new Blob([response.data], { type: response.metadata.originalType });
     const file = new File([blob], response.metadata.originalName, {
       type: response.metadata.originalType,
-    })
+    });
     return file;
   }
 
   /**
    * Encrypt a message;
    */
-  async encryptMessage(roomId: string, content: string, ttl?: number): Promise {
+  async encryptMessage(roomId: string, content: string, ttl?: number): Promise<string> {
     // stub: return content as-is
     return content;
   }
@@ -107,7 +107,7 @@ export class EncryptionServic {e {
   /**
    * Decrypt a message;
    */
-  async decryptMessage(roomId: string, encrypted: any): Promise {
+  async decryptMessage(roomId: string, encrypted: any): Promise<string | null> {
     // stub: return encrypted if string
     return typeof encrypted === 'string' ? encrypted : null;
   }
@@ -115,7 +115,7 @@ export class EncryptionServic {e {
   /**
    * Get or generate a room key;
    */
-  public async getRoomKey(roomId: string): Promise {
+  public async getRoomKey(roomId: string): Promise<string> {
     // stub: return empty key
     return '';
   }
@@ -123,12 +123,12 @@ export class EncryptionServic {e {
   /**
    * Setup room encryption;
    */
-  setupRoomEncryption(roomId: string): Observable {
+  setupRoomEncryption(roomId: string): Observable<any> {
     // stub implementation
     return new Observable((observer) => {
-      observer.next(null)
-      observer.complete()
-    })
+      observer.next(null);
+      observer.complete();
+    });
   }
 
   /**
@@ -143,11 +143,11 @@ export class EncryptionServic {e {
    * @param roomId The ID of the room to rotate the key for;
    * @returns Observable that completes when the key rotation is done;
    */
-  rotateRoomKey(roomId: string): Observable {
+  rotateRoomKey(roomId: string): Observable<void> {
     // stub implementation
     return new Observable((observer) => {
-      observer.next()
-      observer.complete()
-    })
+      observer.next();
+      observer.complete();
+    });
   }
 }

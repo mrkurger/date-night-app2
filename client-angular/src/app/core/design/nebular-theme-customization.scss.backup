@@ -5,7 +5,7 @@
  * Uses CSS variables for theming to maintain consistency with the design system.
  */
 
-
+@use '@nebular/theme/styles/theming' as *;
 @use '../../../styles/variables.css' as *;
 @use 'sass:color';
 @use 'sass:map';

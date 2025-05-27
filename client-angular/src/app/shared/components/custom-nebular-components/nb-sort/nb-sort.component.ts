@@ -4,20 +4,20 @@ import { CommonModule } from '@angular/common';
 import { AppSortEvent } from './nb-sort.module';
 
 // Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)
-@Component({';
+@Component({
   selector: 'app-sort',
   standalone: true,
-  template: ``,`
+  template: ``,
 })
-export class AppSortComponen {t {
+export class AppSortComponent {
   @Input() active: string = '';
   @Input() direction: 'asc' | 'desc' | '' = '';
-  @Output() sortChange = new EventEmitter()
+  @Output() sortChange = new EventEmitter<AppSortEvent>();
 
   sort(sortEvent: AppSortEvent): void {
     this.active = sortEvent.active;
     this.direction = sortEvent.direction;
-    this.sortChange.emit(sortEvent)
+    this.sortChange.emit(sortEvent);
   }
 }
 
@@ -25,14 +25,16 @@ export class AppSortComponen {t {
 @Component({
   selector: 'app-sort-header',
   imports: [CommonModule],
-  template: `;`
-    ;
-      ;
-      ;
-    ;
-  `,`
-  styles: [;
-    `;`
+  template: `
+    <div class="app-sort-header" (click)="toggleSort()">
+      <ng-content></ng-content>
+      <span class="app-sort-header-icon" *ngIf="active">
+        {{ direction === 'asc' ? '↑' : direction === 'desc' ? '↓' : '' }}
+      </span>
+    </div>
+  `,
+  styles: [
+    `
       .app-sort-header {
         cursor: pointer;
         display: flex;
@@ -47,10 +49,10 @@ export class AppSortComponen {t {
       .app-sort-header-sorted {
         font-weight: bold;
       }
-    `,`
+    `,
   ],
 })
-export class AppSortHeaderComponen {t {
+export class AppSortHeaderComponent {
   @Input() appSortHeaderId!: string;
 
   get active(): boolean {
@@ -64,11 +66,11 @@ export class AppSortHeaderComponen {t {
   constructor(private sort: AppSortComponent) {}
 
   toggleSort(): void {
-    const newDirection = this.getNextSortDirection()
+    const newDirection = this.getNextSortDirection();
     this.sort.sort({
       active: this.appSortHeaderId,
       direction: newDirection,
-    })
+    });
   }
 
   private getNextSortDirection(): 'asc' | 'desc' | '' {
@@ -77,11 +79,11 @@ export class AppSortHeaderComponen {t {
     }
 
     switch (this.direction) {
-      case 'asc':;
+      case 'asc':
         return 'desc';
-      case 'desc':;
+      case 'desc':
         return '';
-      default:;
+      default:
         return 'asc';
     }
   }

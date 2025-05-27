@@ -1,8 +1,9 @@
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default';
+// PrimeNG Theme Configuration
+// This file is now handled by the main.scss file with PrimeNG imports
+// Keeping this file for potential future theme customizations
 
-
-@include nb-install {
-  @include nb-theme-global;
-  @include nb-auth-global;
+// CSS Custom Properties for app-specific theming
+:root {
+  // App-specific theme variables can be defined here
+  // These will override or extend the PrimeNG theme variables
 }

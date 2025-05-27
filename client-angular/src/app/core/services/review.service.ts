@@ -3,44 +3,41 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Review } from '../models/review.interface';
-import { AppSortComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import { AppSortHeaderComponent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.component';
-import type { AppSortEvent } from '../../shared/components/custom-nebular-components/nb-sort/nb-sort.module';
 
 // Removed unused catchError import
 
-@Injectable({';
+@Injectable({
   providedIn: 'root',
 })
-export class ReviewServic {e {
-  private apiUrl = `${environment.apiUrl}/reviews`;`
+export class ReviewService {
+  private apiUrl = `${environment.apiUrl}/reviews`;
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Create a new review;
-   * @param reviewData Review data;
+   * Create a new review
+   * @param reviewData Review data
    */
-  createReview(reviewData: any): Observable {
-    return this.http.post(this.apiUrl, reviewData)
+  createReview(reviewData: any): Observable<any> {
+    return this.http.post(this.apiUrl, reviewData);
   }
 
   /**
-   * Get reviews for an advertiser;
-   * @param advertiserId Advertiser ID;
-   * @param page Page number;
-   * @param limit Items per page;
-   * @param sort NbSortEvent option (newest, oldest, highest, lowest, helpful)
+   * Get reviews for an advertiser
+   * @param advertiserId Advertiser ID
+   * @param page Page number
+   * @param limit Items per page
+   * @param sort Sort option (newest, oldest, highest, lowest, helpful)
    */
-  getAdvertiserReviews(;
+  getAdvertiserReviews(
     advertiserId: string,
     page = 1,
     limit = 10,
     sort = 'newest',
-  ): Observable {
-    return this.http.get(;
-      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,`
-    )
+  ): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/advertiser/${advertiserId}?page=${page}&limit=${limit}&sort=${sort}`,
+    );
   }
 
   /**

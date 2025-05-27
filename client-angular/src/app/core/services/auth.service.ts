@@ -26,22 +26,22 @@ import { Router } from '@angular/router';
 
 import { FingerprintService } from './fingerprint.service'; // Import FingerprintService
 
-@Injectable({';
+@Injectable({
   providedIn: 'root',
 })
-export class AuthServic {e implements NbRoleProvider {
-  private apiUrl = `${environment.apiUrl}/auth`;`
-  private currentUserSubject = new BehaviorSubject(null)
-  private tokenExpirationTimer: ReturnType | null = null;
+export class AuthService {
+  private apiUrl = `${environment.apiUrl}/auth`;
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
 
-  public currentUser$ = this.currentUserSubject.asObservable()
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(;
+  constructor(
     private http: HttpClient,
     private router: Router,
     private fingerprintService: FingerprintService, // Inject FingerprintService
   ) {
-    this.checkAuthStatus()
+    this.checkAuthStatus();
   }
 
   /**

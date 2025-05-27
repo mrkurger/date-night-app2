@@ -20,7 +20,7 @@
 
 @use 'sass:color';
 @use 'sass:map';
-@use '@nebular/theme/styles/theming' as *;
+
 
 // Dark mode utilities using Nebular theme variables
 $color-map: (
@@ -175,25 +175,25 @@ $color-map: (
 [data-theme='dark'] {
   // Background colors
   .nb-bg-dark {
-    background-color: nb-theme(background-basic-color-1);
+    background-color: var(--surface-ground);
   }
 
   .nb-bg-dark-accent {
-    background-color: nb-theme(background-basic-color-2);
+    background-color: var(--surface-section);
   }
 
   // Text colors
   .nb-text-dark {
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 
   .nb-text-dark-hint {
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
   }
 
   // Border colors
   .nb-border-dark {
-    border-color: nb-theme(border-basic-color-3);
+    border-color: var(--surface-border);
   }
 
   // Card styles
@@ -244,7 +244,7 @@ $color-map: (
 
   // Icon colors
   nb-icon {
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 }
 

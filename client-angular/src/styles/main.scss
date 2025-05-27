@@ -1,27 +1,54 @@
 // Main Stylesheet
 // This is the main entry point for all styles in the application
 
-// @use rules must come first
-@use '@nebular/theme/styles/theming' as theming;
-@use '@nebular/theme/styles/themes/default' as default-theme;
-@use '@nebular/theme/styles/themes/dark' as dark-theme;
+// PrimeNG Theme Imports
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';
+
+// Import custom mixins
 @use './mixins/index' as mixins;
 
 // Import Leaflet CSS
 @use 'leaflet/dist/leaflet.css' as *;
 
-// Nebular prebuilt theme - use correct path
-@use '@nebular/theme/prebuilt/default.css' as *;
+// CSS Custom Properties for theming
+:root {
+  // Primary colors
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
 
-// Register the default theme
-$nb-themes: theming.nb-register-theme((), default, default-theme.$theme);
+  // Layout variables
+  --padding: 1rem;
+  --padding-lg: 2rem;
+  --layout-z-index: 1000;
 
-// Register the dark theme
-$nb-themes: theming.nb-register-theme((), dark, dark-theme.$theme);
+  // Header
+  --header-background-color: #ffffff;
 
-// Install the themes
-@include theming.nb-install {
-  @include theming.nb-theme-global;
+  // Footer
+  --footer-background-color: #f8fafc;
+  --footer-text-color: #64748b;
+
+  // Dividers
+  --divider-width: 1px;
+  --divider-color: #e2e8f0;
+
+  // Shadows
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+  // Scrollbar
+  --scrollbar-background-color: #f1f5f9;
+  --scrollbar-color: #cbd5e1;
+  --scrollbar-hover-color: #94a3b8;
+
+  // Border radius
+  --border-radius: 0.375rem;
+
+  // Breakpoints
+  --breakpoint-sm: 640px;
+  --breakpoint-xl: 1280px;
 }
 
 // Global styles
@@ -41,34 +68,34 @@ body {
 
 .main-content {
   flex: 1;
-  padding: theming.var(--padding);
+  padding: var(--padding);
 }
 
 // Header
 .app-header {
   position: sticky;
   top: 0;
-  z-index: theming.var(--layout-z-index);
-  background-color: theming.var(--header-background-color);
-  border-bottom: theming.var(--divider-width) solid theming.var(--divider-color);
-  box-shadow: theming.var(--shadow);
+  z-index: var(--layout-z-index);
+  background-color: var(--header-background-color);
+  border-bottom: var(--divider-width) solid var(--divider-color);
+  box-shadow: var(--shadow);
 }
 
 // Footer
 .app-footer {
-  background-color: theming.var(--footer-background-color);
-  color: theming.var(--footer-text-color);
-  padding: theming.var(--padding-lg) 0;
+  background-color: var(--footer-background-color);
+  color: var(--footer-text-color);
+  padding: var(--padding-lg) 0;
 }
 
 // Responsive font sizes
-@media (max-width: theming.var(--breakpoint-sm)) {
+@media (max-width: 640px) {
   :root {
     font-size: 14px;
   }
 }
 
-@media (min-width: theming.var(--breakpoint-xl)) {
+@media (min-width: 1280px) {
   :root {
     font-size: 18px;
   }
@@ -81,21 +108,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: theming.var(--scrollbar-background-color);
+  background: var(--scrollbar-background-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: theming.var(--scrollbar-color);
-  border-radius: theming.var(--border-radius);
+  background: var(--scrollbar-color);
+  border-radius: var(--border-radius);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: theming.var(--scrollbar-hover-color);
+  background: var(--scrollbar-hover-color);
 }
 
 // Focus visible utility
 :focus-visible {
-  outline: 2px solid theming.var(--color-primary-500);
+  outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;
 }
 

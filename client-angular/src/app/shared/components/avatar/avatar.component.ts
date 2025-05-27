@@ -20,7 +20,7 @@ export interface AvatarMenuItem extends MenuItem {
 @Component({';
   selector: 'app-avatar',
   standalone: true,
-  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem, 
+  imports: [TieredMenuModule, ContextMenuModule, BadgeModule, AvatarModule, MenuItem,
     CommonModule,
     RouterModule,
     AvatarModule,
@@ -116,48 +116,48 @@ export class AvatarModul {e {
   @Input() showName = true;
   @Input() showTitle = false;
 
-  private _menuItems: AvatarMenuItem[] = []
+  private _menuItems: AvatarMenuItem[] = [];
   @Input()
   set menuItems(items: AvatarMenuItem[]) {
     this._menuItems = items;
-    this.processedMenuItems = this.processMenuItems(items)
+    this.processedMenuItems = this.processMenuItems(items);
   }
   get menuItems(): AvatarMenuItem[] {
     return this._menuItems;
   }
 
-  processedMenuItems: MenuItem[] = []
+  processedMenuItems: MenuItem[] = [];
 
-  @Output() menuItemClick = new EventEmitter()
+  @Output() menuItemClick = new EventEmitter<AvatarMenuItem>();
 
   constructor() {}
 
   processMenuItems(items: AvatarMenuItem[]): MenuItem[] {
-    if (!items) return []
+    if (!items) return [];
     return items.map((item) => ({
       ...item,
       command: (event?: { originalEvent?: Event; item?: MenuItem }) => {
         if (event && event.item) {
-          this.menuItemClick.emit(event.item as AvatarMenuItem)
+          this.menuItemClick.emit(event.item as AvatarMenuItem);
         }
       },
-    }))
+    }));
   }
 
-  mapNebularSizeToPrimeNG(;
+  mapNebularSizeToPrimeNG(
     nebSize: 'tiny' | 'small' | 'medium' | 'large' | 'giant',
   ): 'normal' | 'large' | 'xlarge' {
     switch (nebSize) {
-      case 'tiny':;
-      case 'small':;
+      case 'tiny':
+      case 'small':
         return 'normal';
-      case 'medium':;
+      case 'medium':
         return 'normal';
-      case 'large':;
+      case 'large':
         return 'large';
-      case 'giant':;
+      case 'giant':
         return 'xlarge';
-      default:;
+      default:
         return 'normal';
     }
   }
@@ -166,11 +166,11 @@ export class AvatarModul {e {
 
   getInitials(): string {
     if (!this.name) return '';
-    const nameParts = this.name.trim().split(/\s+/)
+    const nameParts = this.name.trim().split(/\s+/);
     if (nameParts.length === 0 || nameParts[0] === '') return '';
     if (nameParts.length === 1) {
-      return nameParts[0].charAt(0).toUpperCase()
+      return nameParts[0].charAt(0).toUpperCase();
     }
-    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase()
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
   }
 }

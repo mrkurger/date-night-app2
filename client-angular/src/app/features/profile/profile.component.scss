@@ -1,5 +1,5 @@
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/global/breakpoints' as *;
+
+
 @use '../../core/styles/breakpoints' as bp;
 
 .profile-card {
@@ -47,7 +47,7 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid nb-theme(border-basic-color-3);
+      border: 3px solid var(--surface-border);
       box-shadow: nb-theme(shadow);
     }
 
@@ -84,7 +84,7 @@
       color: nb-theme(text-danger-color);
     }
     .caption:not(.status-danger) {
-      color: nb-theme(text-hint-color);
+      color: var(--text-color-secondary);
     }
   }
 
@@ -93,7 +93,7 @@
   }
 
   .preferences-section {
-    background-color: nb-theme(background-basic-color-2);
+    background-color: var(--surface-section);
     padding: 1.5rem;
     border-radius: nb-theme(card-border-radius);
     margin-top: 1.5rem;
@@ -102,7 +102,7 @@
       margin: 0 0 1.5rem;
       font-size: 1.25rem;
       font-weight: nb-theme(text-subtitle-font-weight);
-      border-bottom: 1px solid nb-theme(divider-color);
+      border-bottom: 1px solid var(--surface-border);
       padding-bottom: 0.75rem;
     }
 
@@ -148,7 +148,7 @@
   }
 
   .profile-subtitle {
-    color: nb-theme(text-hint-color);
+    color: var(--text-color-secondary);
     margin: 0;
   }
 }
@@ -160,8 +160,8 @@
     font-size: nb-theme(text-heading-4-font-size);
     font-weight: nb-theme(text-heading-4-font-weight);
     margin-bottom: nb-theme(spacing-md);
-    color: nb-theme(text-basic-color);
-    border-bottom: 1px solid nb-theme(divider-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--surface-border);
     padding-bottom: nb-theme(spacing-sm);
   }
 }
@@ -173,11 +173,11 @@
   .info-label {
     font-weight: nb-theme(text-font-weight-medium);
     width: 120px;
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
   }
 
   .info-value {
-    color: nb-theme(text-basic-color);
+    color: var(--text-color);
     flex: 1;
   }
 }
@@ -192,7 +192,7 @@
   background-color: nb-theme(color-danger-100);
   color: nb-theme(text-danger-color);
   padding: nb-theme(spacing-sm);
-  border-radius: nb-theme(border-radius);
+  border-radius: var(--border-radius);
   margin-bottom: nb-theme(spacing-md);
 }
 

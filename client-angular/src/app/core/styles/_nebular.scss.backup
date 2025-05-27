@@ -1,10 +1,10 @@
-
-
-
-
-
-
-
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default' as default-theme;
+@use '@nebular/theme/styles/themes/cosmic' as cosmic;
+@use '@nebular/theme/styles/globals' as globals;
+@use '@nebular/theme/styles/core/mixins' as mixins;
+@use '@nebular/theme/styles/core/functions' as functions;
+@use '@nebular/theme/styles/core/breakpoints' as breakpoints;
 
 // Re-export commonly used functions and mixins
 @forward '@nebular/theme/styles/theming';
@@ -22,7 +22,7 @@ $nb-enabled-themes: (default);
   @include nb-theme-global();
 }
 
-
+@use '@nebular/theme/styles/global/breakpoints' as breakpoints;
 
 // Common breakpoint mixins
 @mixin nb-media-breakpoint-down($breakpoint) {
