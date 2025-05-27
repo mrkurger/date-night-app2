@@ -1,7 +1,7 @@
 import { NbJSThemeOptions } from '@nebular/theme';
 
 // Base theme configuration
-const dateNightThemeBase = {';
+const dateNightThemeBase = {
   fontMain: 'Inter, sans-serif',
   fontSecondary: 'Poppins, sans-serif',
 
@@ -42,7 +42,7 @@ const dateNightThemeBase = {';
   // Animation
   animationDuration: '0.2s',
   animationTiming: 'ease-in-out',
-}
+};
 
 // Light theme
 export const dateNightTheme: NbJSThemeOptions = {
@@ -51,7 +51,7 @@ export const dateNightTheme: NbJSThemeOptions = {
   variables: {
     ...dateNightThemeBase,
   },
-}
+};
 
 // Dark theme
 export const dateNightDarkTheme: NbJSThemeOptions = {
@@ -70,4 +70,4 @@ export const dateNightDarkTheme: NbJSThemeOptions = {
     shadow2: '0 4px 8px rgba(0,0,0,0.2)',
     shadow3: '0 8px 16px rgba(0,0,0,0.2)',
   },
-}
+};

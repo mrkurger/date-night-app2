@@ -1,6 +1,5 @@
 import * as L from 'leaflet';
 
-';
 declare module 'leaflet' {
   interface MarkerClusterGroupOptions {
     chunkedLoading?: boolean;
@@ -29,7 +28,7 @@ declare module 'leaflet' {
     max?: number;
     radius?: number;
     blur?: number;
-    gradient?: { [key: number]: string }
+    gradient?: { [key: number]: string };
   }
 
   namespace Control {
@@ -46,11 +45,11 @@ declare module 'leaflet' {
       textPlaceholder?: string;
     }
 
-    class Searc {h extends L.Control {
-      constructor(options?: SearchOptions)
-      setLayer(layer: L.LayerGroup): this;
-      showAlert(text: string): this;
-      setError(text: string): this;
+    class Search extends L.Control {
+      constructor(options?: SearchOptions);
+      setLayer(layer: L.LayerGroup): Search;
+      showAlert(text: string): Search;
+      setError(text: string): Search;
     }
 
     function create(options?: ControlOptions): Control;

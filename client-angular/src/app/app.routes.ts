@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
+
 import { AuthGuard } from './core/guards/auth.guard';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 // Component type is not used in this file
 
 export const routes: Routes = [
   // Primary routes - modern standalone components
-  {';
+  {
     path: '',
-    loadComponent: () =>;
+    loadComponent: () =>
       import('./features/browse/browse.component').then((m) => m.BrowseComponent),
     data: { preload: true, title: 'Browse Ads' },
   },
@@ -23,41 +24,41 @@ export const routes: Routes = [
   },
   {
     path: 'settings',
-    loadComponent: () =>;
-      import('./features/user-settings/user-settings.component').then(;
+    loadComponent: () =>
+      import('./features/user-settings/user-settings.component').then(
         (m) => m.UserSettingsComponent,
       ),
     canActivate: [AuthGuard],
   },
   {
     path: 'ad-details/:id',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/ad-details/ad-details.module').then((m) => m.AdDetailsModule),
   },
   {
     path: 'reviews/:id',
-    loadComponent: () =>;
-      import('./features/reviews/reviews-page/reviews-page.component').then(;
+    loadComponent: () =>
+      import('./features/reviews/reviews-page/reviews-page.component').then(
         (m) => m.ReviewsPageComponent,
       ),
     data: { title: 'Reviews' },
   },
   {
     path: 'advertiser/:id',
-    loadComponent: () =>;
-      import('./features/advertiser-profile/advertiser-profile.component').then(;
+    loadComponent: () =>
+      import('./features/advertiser-profile/advertiser-profile.component').then(
         (m) => m.AdvertiserProfileComponent,
       ),
   },
   {
     path: 'ad-management',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/ad-management/ad-management.module').then((m) => m.AdManagementModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'my-ads',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/ad-management/ad-management.module').then((m) => m.AdManagementModule),
     canActivate: [AuthGuard],
   },
@@ -68,21 +69,21 @@ export const routes: Routes = [
   },
   {
     path: 'favorites',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/favorites/favorites.module').then((m) => m.FavoritesModule),
     canActivate: [AuthGuard],
     data: { title: 'My Favorites' },
   },
   {
     path: 'gallery',
-    loadComponent: () =>;
+    loadComponent: () =>
       import('./features/gallery/gallery.component').then((m) => m.GalleryComponent),
     canActivate: [AuthGuard],
   },
   {
     path: 'location-matching',
-    loadComponent: () =>;
-      import('./features/location-matching/location-matching.component').then(;
+    loadComponent: () =>
+      import('./features/location-matching/location-matching.component').then(
         (m) => m.LocationMatchingComponent,
       ),
     canActivate: [AuthGuard],
@@ -92,19 +93,19 @@ export const routes: Routes = [
   // View-specific routes
   {
     path: 'browse',
-    loadComponent: () =>;
+    loadComponent: () =>
       import('./features/netflix-view/netflix-view.component').then((m) => m.NetflixViewComponent),
     data: { title: 'Browse Ads - Netflix Style' },
   },
   {
     path: 'swipe',
-    loadComponent: () =>;
+    loadComponent: () =>
       import('./features/tinder/tinder.component').then((m) => m.TinderComponent),
     data: { title: 'Swipe Ads - Tinder Style' },
   },
   {
     path: 'list',
-    loadComponent: () =>;
+    loadComponent: () =>
       import('./features/list-view/list-view.component').then((m) => m.ListViewComponent),
     data: { title: 'List View' },
   },
@@ -112,8 +113,8 @@ export const routes: Routes = [
   // Design System Demo
   {
     path: 'design-system',
-    loadComponent: () =>;
-      import('./features/design-system-demo/design-system-demo.component').then(;
+    loadComponent: () =>
+      import('./features/design-system-demo/design-system-demo.component').then(
         (m) => m.DesignSystemDemoComponent,
       ),
     data: { title: 'Design System Demo' },
@@ -122,7 +123,7 @@ export const routes: Routes = [
   // Style Guide
   {
     path: 'style-guide',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/style-guide/style-guide.module').then((m) => m.StyleGuideModule),
     data: { title: 'Style Guide' },
   },
@@ -130,8 +131,8 @@ export const routes: Routes = [
   // Accessibility Demo
   {
     path: 'accessibility',
-    loadComponent: () =>;
-      import('./features/accessibility-demo/accessibility-demo.component').then(;
+    loadComponent: () =>
+      import('./features/accessibility-demo/accessibility-demo.component').then(
         (m) => m.AccessibilityDemoComponent,
       ),
     data: { title: 'Accessibility Best Practices' },
@@ -140,8 +141,8 @@ export const routes: Routes = [
   // Micro-interactions Demo
   {
     path: 'micro-interactions',
-    loadComponent: () =>;
-      import('./features/micro-interactions-demo/micro-interactions-demo.component').then(;
+    loadComponent: () =>
+      import('./features/micro-interactions-demo/micro-interactions-demo.component').then(
         (m) => m.MicroInteractionsDemoComponent,
       ),
     data: { title: 'Micro-interactions' },
@@ -150,8 +151,8 @@ export const routes: Routes = [
   // Preferences Demo
   {
     path: 'preferences-demo',
-    loadComponent: () =>;
-      import('./features/preferences-demo/preferences-demo.component').then(;
+    loadComponent: () =>
+      import('./features/preferences-demo/preferences-demo.component').then(
         (m) => m.PreferencesDemoComponent,
       ),
     data: { title: 'User Preferences Demo' },
@@ -164,7 +165,7 @@ export const routes: Routes = [
   },
   {
     path: 'ad-browser',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/ad-browser/ad-browser.module').then((m) => m.AdBrowserModule),
     data: { preload: true, title: 'Browse Ads' },
   },
@@ -196,15 +197,15 @@ export const routes: Routes = [
   },
   {
     path: 'telemetry',
-    loadChildren: () =>;
+    loadChildren: () =>
       import('./features/telemetry/telemetry.routes').then((m) => m.TELEMETRY_ROUTES),
     canActivate: [AuthGuard],
     data: { roles: ['admin'], title: 'Telemetry Dashboard' },
   },
   {
     path: 'advertiser-browsing-alt',
-    loadChildren: () =>;
-      import('./features/advertiser-browsing-alternate/advertiser-browsing-alternate.module').then(;
+    loadChildren: () =>
+      import('./features/advertiser-browsing-alternate/advertiser-browsing-alternate.module').then(
         (m) => m.AdvertiserBrowsingAlternateModule,
       ),
     data: { title: 'Advertiser Browsing (Alt)' },
@@ -216,7 +217,7 @@ export const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full',
   },
-]
+];
 
 // Export the preloading strategy for use in app.config.ts
-export const routingProviders = [SelectivePreloadingStrategy]
+export const routingProviders = [SelectivePreloadingStrategy];

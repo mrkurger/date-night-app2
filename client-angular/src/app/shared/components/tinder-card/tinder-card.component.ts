@@ -1,433 +1,85 @@
-// ===================================================
-// CUSTOMIZABLE SETTINGS IN THIS FILE
-// ===================================================
-// This file contains settings for component configuration (tinder-card.component)
-//
-// COMMON CUSTOMIZATIONS:
-// - SWIPE_THRESHOLD: Minimum distance to trigger swipe (default: 100)
-//   Related to: tinder-card.component.scss:$swipe-threshold
-// - ROTATION_FACTOR: Rotation angle per pixel swiped (default: 0.1)
-//   Related to: tinder-card.component.scss:$rotation-factor
-// ===================================================
-import {
 import { CommonModule } from '@angular/common';
-import { NbCardModule, NbButtonModule, NbIconModule, NbTagModule } from '@nebular/theme';
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,';
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-export interface TinderCardMedia {
-  type: 'image' | 'video';
-  url: string;
-  thumbnail?: string;
-}
-
-export interface TinderCardAction {
-  id: string;
-  icon: string;
-  label: string;
-  color?: string;
-}
-
-export type TinderCardState = 'default' | 'like' | 'dislike' | 'superlike';
-
+/**
+ *
+ */
 @Component({
-    selector: 'nb-tinder-card',
-    imports: [CommonModule, NbCardModule, NbButtonModule, NbIconModule, NbTagModule],
-    template: `;`
-    ;
-      ;
-        ;
-        LIKE;
-      ;
-      ;
-        ;
-        NOPE;
-      ;
-
-      ;
-        ;
-          ;
-            ;
-            ;
-          ;
-        ;
-
-         1">;
-          ;
-            ;
-          ;
-           0";
-          >;
-            ;
-          ;
-          ;
-            ;
-          ;
-        ;
-      ;
-
-      ;
-        ;
-          {{ title }}
-          {{ age }}
-        ;
-        {{ subtitle }}
-        {{ description }}
-        ;
-          ;
-        ;
-      ;
-
-      ;
-        ;
-          ;
-        ;
-        ;
-          ;
-        ;
-      ;
-    ;
-  `,`
-    styles: [;
-        `;`
-      :host {
-        display: block;
-        position: relative;
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
+  selector: 'app-tinder-card',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <div class="tinder-card" [style]="cardStyle">
+      <div class="card-content">
+        <h3>{{ title }}</h3>
+        <p>{{ description }}</p>
+      </div>
+      <div class="card-actions">
+        <button (click)="onDislike()" class="dislike-btn">👎</button>
+        <button (click)="onLike()" class="like-btn">👍</button>
+      </div>
+    </div>
+  `,
+  styles: [
+    `
       .tinder-card {
+        width: 300px;
+        height: 400px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
         position: relative;
-        border-radius: var(--border-radius)
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        transform-origin: center center;
-        user-select: none;
-        touch-action: none;
-
-        &.swiping {
-          transition: none;
-        }
-
-        &.liked {
-          .like-indicator {
-            opacity: 1;
-          }
-        }
-
-        &.disliked {
-          .dislike-indicator {
-            opacity: 1;
-          }
-        }
       }
-
-      .like-indicator,
-      .dislike-indicator {
+      .card-content {
+        height: calc(100% - 60px);
+      }
+      .card-actions {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%)
-        z-index: 2;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-
-        nb-icon {
-          font-size: 48px;
-          margin-bottom: 8px;
-        }
-
-        span {
-          font-size: 24px;
-          font-weight: bold;
-          text-transform: uppercase;
-        }
+        gap: 20px;
       }
-
-      .like-indicator {
-        right: 24px;
-        color: var(--color-success-500)
-      }
-
-      .dislike-indicator {
-        left: 24px;
-        color: var(--color-danger-500)
-      }
-
-      .media-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 100%;
-      }
-
-      .media-item {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .media-content {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .media-navigation {
-        position: absolute;
-        bottom: 16px;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .media-dots {
-        display: flex;
-        gap: 8px;
-      }
-
-      .media-dot {
-        width: 8px;
-        height: 8px;
+      button {
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.5)
-        cursor: pointer;
-        transition: all 0.3s ease;
-
-        &.active {
-          background-color: var(--color-primary-500)
-          transform: scale(1.2)
-        }
-      }
-
-      .media-nav-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%)
-        background-color: rgba(0, 0, 0, 0.5)
-        border-radius: 50%;
-        padding: 8px;
-
-        &.prev {
-          left: 16px;
-        }
-
-        &.next {
-          right: 16px;
-        }
-
-        nb-icon {
-          color: white;
-        }
-      }
-
-      nb-card-body {
-        padding: 16px;
-      }
-
-      .card-header {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-        margin-bottom: 8px;
-      }
-
-      .title {
-        margin: 0;
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--text-basic-color)
-      }
-
-      .age {
+        border: none;
         font-size: 20px;
-        color: var(--text-hint-color)
+        cursor: pointer;
       }
-
-      .subtitle {
-        font-size: 16px;
-        color: var(--text-hint-color)
-        margin-bottom: 12px;
+      .like-btn {
+        background: #4caf50;
+        color: white;
       }
-
-      .description {
-        font-size: 14px;
-        line-height: 1.5;
-        color: var(--text-basic-color)
-        margin-bottom: 16px;
+      .dislike-btn {
+        background: #f44336;
+        color: white;
       }
-
-      .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      nb-card-footer {
-        display: flex;
-        justify-content: space-around;
-        padding: 16px;
-        background-color: var(--background-basic-color-1)
-
-        button {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          nb-icon {
-            font-size: 24px;
-          }
-        }
-      }
-    `,`
-    ]
+    `,
+  ],
 })
-export class TinderCardComponen {t implements AfterViewInit, OnDestroy {
-  @Input() media: TinderCardMedia[] = []
-  @Input() title = '';
-  @Input() age?: number;
-  @Input() subtitle?: string;
-  @Input() description?: string;
-  @Input() tags: string[] = []
+export class TinderCardComponent {
+  @Input() title: string = '';
+  @Input() description: string = '';
+  @Output() like = new EventEmitter<void>();
+  @Output() dislike = new EventEmitter<void>();
 
-  @Output() like = new EventEmitter()
-  @Output() dislike = new EventEmitter()
-  @Output() superlike = new EventEmitter()
+  cardStyle: any = {};
 
-  @ViewChild('card') cardElement!: ElementRef;
-
-  currentMediaIndex = 0;
-  isSwiping = false;
-  isLiked = false;
-  isDisliked = false;
-  showLikeIndicator = false;
-  showDislikeIndicator = false;
-  cardStyle: any = {}
-  mediaStyle: any = {}
-
-  private startX = 0;
-  private startY = 0;
-  private initialX = 0;
-  private initialY = 0;
-  private xOffset = 0;
-  private yOffset = 0;
-  private swipeThreshold = 100;
-
-  get currentMedia(): TinderCardMedia {
-    return this.media[this.currentMediaIndex]
+  /**
+   *
+   */
+  onLike(): void {
+    this.like.emit();
   }
 
-  ngAfterViewInit(): void {
-    this.setupTouchEvents()
-  }
-
-  ngOnDestroy(): void {
-    this.removeTouchEvents()
-  }
-
-  private setupTouchEvents(): void {
-    const element = this.cardElement.nativeElement;
-    element.addEventListener('mousedown', this.dragStart.bind(this))
-    element.addEventListener('mousemove', this.drag.bind(this))
-    element.addEventListener('mouseup', this.dragEnd.bind(this))
-    element.addEventListener('touchstart', this.dragStart.bind(this))
-    element.addEventListener('touchmove', this.drag.bind(this))
-    element.addEventListener('touchend', this.dragEnd.bind(this))
-  }
-
-  private removeTouchEvents(): void {
-    const element = this.cardElement.nativeElement;
-    element.removeEventListener('mousedown', this.dragStart.bind(this))
-    element.removeEventListener('mousemove', this.drag.bind(this))
-    element.removeEventListener('mouseup', this.dragEnd.bind(this))
-    element.removeEventListener('touchstart', this.dragStart.bind(this))
-    element.removeEventListener('touchmove', this.drag.bind(this))
-    element.removeEventListener('touchend', this.dragEnd.bind(this))
-  }
-
-  private dragStart(e: MouseEvent | TouchEvent): void {
-    if (e instanceof MouseEvent) {
-      this.startX = e.clientX;
-      this.startY = e.clientY;
-    } else {
-      this.startX = e.touches[0].clientX;
-      this.startY = e.touches[0].clientY;
-    }
-
-    this.initialX = this.xOffset;
-    this.initialY = this.yOffset;
-    this.isSwiping = true;
-  }
-
-  private drag(e: MouseEvent | TouchEvent): void {
-    if (!this.isSwiping) return;
-
-    e.preventDefault()
-
-    let currentX: number;
-    let currentY: number;
-
-    if (e instanceof MouseEvent) {
-      currentX = e.clientX;
-      currentY = e.clientY;
-    } else {
-      currentX = e.touches[0].clientX;
-      currentY = e.touches[0].clientY;
-    }
-
-    this.xOffset = currentX - this.startX;
-    this.yOffset = currentY - this.startY;
-
-    const rotate = this.xOffset * 0.1;
-    this.cardStyle = {
-      transform: `translate(${this.xOffset}px, ${this.yOffset}px) rotate(${rotate}deg)`,`
-    }
-
-    this.showLikeIndicator = this.xOffset > this.swipeThreshold;
-    this.showDislikeIndicator = this.xOffset  this.swipeThreshold) {
-      this.onLike()
-    } else if (this.xOffset  this.like.emit(), 300)
-  }
-
+  /**
+   *
+   */
   onDislike(): void {
-    this.isDisliked = true;
-    this.cardStyle = {
-      transform: 'translate(-150%, 0) rotate(-40deg)',
-      transition: 'transform 0.3s ease',
-    }
-    setTimeout(() => this.dislike.emit(), 300)
-  }
-
-  setMediaIndex(index: number): void {
-    this.currentMediaIndex = index;
-  }
-
-  previousMedia(): void {
-    if (this.currentMediaIndex > 0) {
-      this.currentMediaIndex--;
-    }
-  }
-
-  nextMedia(): void {
-    if (this.currentMediaIndex < this.media.length - 1) {
-      this.currentMediaIndex++;
-    }
+    this.dislike.emit();
   }
 }

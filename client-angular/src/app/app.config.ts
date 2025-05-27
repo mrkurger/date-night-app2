@@ -1,19 +1,20 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, withPreloading } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { SocketIoModule } from 'ngx-socket-io';
+import { providePrimeNG } from 'primeng/config';
+
 import { routes } from './app.routes';
-import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
+import { socketConfig } from './core/config/socket.config';
+import { CoreModule } from './core/core.module';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
-import { CoreModule } from './core/core.module';
+import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
 import { NebularModule } from './shared/nebular.module';
-import { SocketIoModule } from 'ngx-socket-io';
-import { socketConfig } from './core/config/socket.config';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -25,10 +26,10 @@ import { socketConfig } from './core/config/socket.config';
 // ===================================================
 
 export const appConfig: ApplicationConfig = {
-  providers: [;
+  providers: [
     provideRouter(routes, withPreloading(SelectivePreloadingStrategy)),
     provideHttpClient(withInterceptors([authInterceptor, cspInterceptor, httpErrorInterceptor])),
-    provideAnimations(),';
+    provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: false, // Disable in development mode to prevent 404 errors
       registrationStrategy: 'registerWhenStable:30000',
@@ -42,10 +43,6 @@ export const appConfig: ApplicationConfig = {
       },
       ripple: true, // Enable ripple effect globally
     }),
-    importProvidersFrom(;
-      CoreModule,
-      NebularModule,
-      SocketIoModule.forRoot(socketConfig),
-    ),
+    importProvidersFrom(CoreModule, NebularModule, SocketIoModule.forRoot(socketConfig)),
   ],
-}
+};

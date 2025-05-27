@@ -1,21 +1,20 @@
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { OnDestroy, OnInit, Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
+
 import { AppComponent } from './app.component';
 import { AuthService } from './core/services/auth.service';
-import { NotificationService } from './core/services/notification.service';
 import { ChatService } from './core/services/chat.service';
 import { CsrfService } from './core/services/csrf.service';
+import { NotificationService } from './core/services/notification.service';
 import { PlatformService } from './core/services/platform.service';
 import { PwaService } from './core/services/pwa.service';
 import { ThemeService } from './core/services/theme.service';
-import { Meta, Title } from '@angular/platform-browser';
-import { NotificationComponent } from './shared/components/notification/notification.component';
 import { DebugInfoComponent } from './shared/components/debug-info/debug-info.component';
+import { NotificationComponent } from './shared/components/notification/notification.component';
 
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
@@ -57,12 +56,12 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     // Create a subject to control the user observable
-    userSubject = new Subject()
+    userSubject = new Subject();
 
     // Create mock services
     mockAuthService = jasmine.createSpyObj('AuthService', ['logout'], {
-      currentUser$: userSubject.asObservable()
-    })
+      currentUser$: userSubject.asObservable(),
+    });
     mockNotificationService = jasmine.createSpyObj(
       'NotificationService',
       ['success', 'error', 'info', 'warning', 'removeToast'],
@@ -70,37 +69,37 @@ describe('AppComponent', () => {
         // Mock the toasts$ observable with empty array
         toasts$: of([]),
         // Mock the unreadCount$ observable
-        unreadCount$: of(0)
-      }
-    )
-    mockChatService = jasmine.createSpyObj('ChatService', ['getRooms', 'getUnreadCounts'])
-    mockCsrfService = jasmine.createSpyObj('CsrfService', ['initializeCsrf'])
-    mockPlatformService = jasmine.createSpyObj('PlatformService', ['runInBrowser', 'isBrowser'])
-    mockPwaService = jasmine.createSpyObj('PwaService', ['checkForUpdate', 'installPwa'])
+        unreadCount$: of(0),
+      },
+    );
+    mockChatService = jasmine.createSpyObj('ChatService', ['getRooms', 'getUnreadCounts']);
+    mockCsrfService = jasmine.createSpyObj('CsrfService', ['initializeCsrf']);
+    mockPlatformService = jasmine.createSpyObj('PlatformService', ['runInBrowser', 'isBrowser']);
+    mockPwaService = jasmine.createSpyObj('PwaService', ['checkForUpdate', 'installPwa']);
     mockThemeService = jasmine.createSpyObj('ThemeService', ['setTheme', 'toggleTheme'], {
       isDarkMode$: of(false),
-      theme$: of('light')
-    })
-    mockTitleService = jasmine.createSpyObj('Title', ['setTitle'])
-    mockMetaService = jasmine.createSpyObj('Meta', ['addTags', 'updateTag'])
+      theme$: of('light'),
+    });
+    mockTitleService = jasmine.createSpyObj('Title', ['setTitle']);
+    mockMetaService = jasmine.createSpyObj('Meta', ['addTags', 'updateTag']);
 
     // Configure mock behavior
-    mockCsrfService.initializeCsrf.and.returnValue(of({}))
-    mockChatService.getRooms.and.returnValue(of([]))
+    mockCsrfService.initializeCsrf.and.returnValue(of({}));
+    mockChatService.getRooms.and.returnValue(of([]));
     mockChatService.getUnreadCounts.and.returnValue(
       of({
         total: 5,
-        rooms: { room1: 3, room2: 2 }
-      })
-    )
-    mockPlatformService.runInBrowser.and.callFake((callback) => callback())
-    mockPlatformService.isBrowser.and.returnValue(true)
+        rooms: { room1: 3, room2: 2 },
+      }),
+    );
+    mockPlatformService.runInBrowser.and.callFake((callback) => callback());
+    mockPlatformService.isBrowser.and.returnValue(true);
 
     // Create a mock component for testing routes
     @Component({
       selector: 'app-mock-component',
       template: 'Mock Component',
-      standalone: true
+      standalone: true,
     })
     class MockComponent {}
 
@@ -108,7 +107,7 @@ describe('AppComponent', () => {
     @Component({
       selector: 'app-root',
       template: 'Mock App Component', // Simple template without aria-label attributes
-      standalone: true
+      standalone: true,
     })
     class TestAppComponent extends AppComponent {
       // Inherit all functionality but use a simplified template
@@ -119,11 +118,11 @@ describe('AppComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'browse', component: TestAppComponent },
           { path: 'login', component: TestAppComponent },
-          { path: 'dashboard', component: TestAppComponent }
+          { path: 'dashboard', component: TestAppComponent },
         ]),
         TestAppComponent, // Use our test component instead of the real one
         NotificationComponent,
-        DebugInfoComponent
+        DebugInfoComponent,
       ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
@@ -134,155 +133,155 @@ describe('AppComponent', () => {
         { provide: PwaService, useValue: mockPwaService },
         { provide: ThemeService, useValue: mockThemeService },
         { provide: Title, useValue: mockTitleService },
-        { provide: Meta, useValue: mockMetaService }
+        { provide: Meta, useValue: mockMetaService },
         // Remove the Router provider since RouterTestingModule provides it
-      ]
-    }).compileComponents()
+      ],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(TestAppComponent)
+    fixture = TestBed.createComponent(TestAppComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router)
-    spyOn(router, 'navigate')
-  })
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate');
+  });
 
   it('should create the app', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
 
   it('should set page title and meta tags on initialization', () => {
-    fixture.detectChanges()
+    fixture.detectChanges();
     expect(mockTitleService.setTitle).toHaveBeenCalledWith(
-      'Date Night App - Find Your Perfect Match'
-    )
-    expect(mockMetaService.addTags).toHaveBeenCalled()
+      'Date Night App - Find Your Perfect Match',
+    );
+    expect(mockMetaService.addTags).toHaveBeenCalled();
 
     // Verify specific meta tags
-    const metaTags = mockMetaService.addTags.calls.first().args[0]
-    expect(metaTags).toContain(;
+    const metaTags = mockMetaService.addTags.calls.first().args[0];
+    expect(metaTags).toContain(
       jasmine.objectContaining({
         name: 'description',
-        content:;
+        content:
           'Date Night App helps you find your perfect match for a memorable date night experience.',
       }),
-    )
-    expect(metaTags).toContain(;
+    );
+    expect(metaTags).toContain(
       jasmine.objectContaining({
         property: 'og:title',
         content: 'Date Night App - Find Your Perfect Match',
       }),
-    )
-  })
+    );
+  });
 
   it('should initialize CSRF protection on init', () => {
-    fixture.detectChanges()
-    expect(mockCsrfService.initializeCsrf).toHaveBeenCalled()
-  })
+    fixture.detectChanges();
+    expect(mockCsrfService.initializeCsrf).toHaveBeenCalled();
+  });
 
   it('should update authentication state when user changes', () => {
-    fixture.detectChanges()
+    fixture.detectChanges();
 
     // Initially not authenticated
-    expect(component.isAuthenticated).toBeFalse()
-    expect(component.isAdvertiser).toBeFalse()
+    expect(component.isAuthenticated).toBeFalse();
+    expect(component.isAdvertiser).toBeFalse();
 
     // Emit a user with advertiser role
     const mockUser = {
       username: 'testuser',
       role: 'advertiser',
       id: '123',
-    }
-    userSubject.next(mockUser)
-    fixture.detectChanges()
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
 
     // Should update authentication state
-    expect(component.isAuthenticated).toBeTrue()
-    expect(component.isAdvertiser).toBeTrue()
-    expect(component.username).toBe('testuser')
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeTrue();
+    expect(component.username).toBe('testuser');
 
     // Should initialize chat
-    expect(mockChatService.getRooms).toHaveBeenCalled()
-  })
+    expect(mockChatService.getRooms).toHaveBeenCalled();
+  });
 
   it('should handle user with non-advertiser role correctly', () => {
-    fixture.detectChanges()
+    fixture.detectChanges();
 
     // Emit a user with regular role
     const mockUser = {
       username: 'regularuser',
       role: 'user',
       id: '456',
-    }
-    userSubject.next(mockUser)
-    fixture.detectChanges()
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
 
     // Should update authentication state
-    expect(component.isAuthenticated).toBeTrue()
-    expect(component.isAdvertiser).toBeFalse()
-    expect(component.username).toBe('regularuser')
-  })
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeFalse();
+    expect(component.username).toBe('regularuser');
+  });
 
   it('should handle admin role as advertiser', () => {
-    fixture.detectChanges()
+    fixture.detectChanges();
 
     // Emit a user with admin role
     const mockUser = {
       username: 'adminuser',
       role: 'admin',
       id: '789',
-    }
-    userSubject.next(mockUser)
-    fixture.detectChanges()
+    };
+    userSubject.next(mockUser);
+    fixture.detectChanges();
 
     // Admin should be treated as advertiser
-    expect(component.isAuthenticated).toBeTrue()
-    expect(component.isAdvertiser).toBeTrue()
-  })
+    expect(component.isAuthenticated).toBeTrue();
+    expect(component.isAdvertiser).toBeTrue();
+  });
 
   it('should handle logout correctly', () => {
     // Setup authenticated state first
-    userSubject.next({ username: 'testuser', role: 'user' })
-    fixture.detectChanges()
+    userSubject.next({ username: 'testuser', role: 'user' });
+    fixture.detectChanges();
 
     // Call logout method
-    component.logout()
+    component.logout();
 
     // Verify service calls
-    expect(mockAuthService.logout).toHaveBeenCalled()
-    expect(router.navigate).toHaveBeenCalledWith(['/auth/login'])
-    expect(mockNotificationService.success).toHaveBeenCalledWith(;
+    expect(mockAuthService.logout).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
+    expect(mockNotificationService.success).toHaveBeenCalledWith(
       'You have been logged out successfully',
-    )
+    );
 
     // Verify counters are reset
-    expect(component.unreadMessages).toBe(0)
-    expect(component.notificationCount).toBe(0)
-  })
+    expect(component.unreadMessages).toBe(0);
+    expect(component.notificationCount).toBe(0);
+  });
 
   it('should unsubscribe from all subscriptions on destroy', () => {
     // Setup spies on subscription unsubscribe methods
-    const authSpy = spyOn(component['authSubscription'], 'unsubscribe')
-    const chatSpy = spyOn(component['chatSubscription'], 'unsubscribe')
-    const notificationSpy = spyOn(component['notificationSubscription'], 'unsubscribe')
-    const themeSpy = spyOn(component['themeSubscription'], 'unsubscribe')
+    const authSpy = spyOn(component['authSubscription'], 'unsubscribe');
+    const chatSpy = spyOn(component['chatSubscription'], 'unsubscribe');
+    const notificationSpy = spyOn(component['notificationSubscription'], 'unsubscribe');
+    const themeSpy = spyOn(component['themeSubscription'], 'unsubscribe');
 
     // Trigger ngOnDestroy
-    component.ngOnDestroy()
+    component.ngOnDestroy();
 
     // Verify all unsubscribe methods were called
-    expect(authSpy).toHaveBeenCalled()
-    expect(chatSpy).toHaveBeenCalled()
-    expect(notificationSpy).toHaveBeenCalled()
-    expect(themeSpy).toHaveBeenCalled()
-  })
+    expect(authSpy).toHaveBeenCalled();
+    expect(chatSpy).toHaveBeenCalled();
+    expect(notificationSpy).toHaveBeenCalled();
+    expect(themeSpy).toHaveBeenCalled();
+  });
 
   it('should add theme-transition class to body on init', () => {
     // Create a spy on the renderer addClass method
-    const addClassSpy = spyOn(component['renderer'], 'addClass')
+    const addClassSpy = spyOn(component['renderer'], 'addClass');
 
     // Call ngOnInit
-    component.ngOnInit()
+    component.ngOnInit();
 
     // Verify addClass was called with the body element and theme-transition class
-    expect(addClassSpy).toHaveBeenCalledWith(component['document'].body, 'theme-transition')
-  })
-})
+    expect(addClassSpy).toHaveBeenCalledWith(component['document'].body, 'theme-transition');
+  });
+});

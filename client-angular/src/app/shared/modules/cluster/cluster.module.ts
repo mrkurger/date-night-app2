@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 /**
  * Module for map marker clustering functionality
@@ -12,5 +12,4 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   exports: [],
 })
-export class ClusterModul {e {}
-';
+export class ClusterModule {}

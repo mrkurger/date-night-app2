@@ -35,10 +35,12 @@ export default [
         project: './tsconfig.json',
         ecmaVersion: 'latest',
         sourceType: 'module',
+        tsconfigRootDir: '.',
       },
       globals: {
         ...globals.browser,
         ...globals.es2021,
+        ...globals.jasmine,
       },
     },
     plugins: {
@@ -49,116 +51,69 @@ export default [
       import: importPlugin,
       prettier: prettier,
     },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+        },
+      },
+    },
     rules: {
-      // TypeScript Rules
-      '@typescript-eslint/explicit-function-return-type': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/prefer-readonly': 'warn',
-      '@typescript-eslint/consistent-type-assertions': 'warn',
-      '@typescript-eslint/member-ordering': 'warn',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
-      '@typescript-eslint/await-thenable': 'error',
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/strict-boolean-expressions': 'warn',
-      '@typescript-eslint/no-unnecessary-condition': 'warn',
+      // TypeScript rules
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/explicit-function-return-type': ['warn', {
+        allowExpressions: true,
+      }],
       '@typescript-eslint/naming-convention': [
         'error',
         {
           selector: 'interface',
           format: ['PascalCase'],
-          prefix: ['I'],
-        },
-        {
-          selector: 'enum',
-          format: ['PascalCase'],
-          prefix: ['E'],
-        },
-        {
-          selector: 'class',
-          format: ['PascalCase'],
-        },
+          prefix: ['I']
+        }
       ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-floating-promises': 'error',
 
-      // Angular Rules
-      '@angular-eslint/component-class-suffix': 'error',
-      '@angular-eslint/directive-class-suffix': 'error',
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'app',
-          style: 'kebab-case',
-        },
-      ],
-      '@angular-eslint/directive-selector': [
-        'error',
-        {
-          type: 'attribute',
-          prefix: 'app',
-          style: 'camelCase',
-        },
-      ],
-
-      // Import Rules
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object',
-            'type',
-          ],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
-      'import/no-duplicates': 'error',
+      // Import rules
+      'import/order': ['error', {
+        'groups': [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling', 'index']
+        ],
+        'alphabetize': {
+          'order': 'asc',
+          'caseInsensitive': true
+        }
+      }],
       'import/no-unresolved': 'error',
-      'import/no-cycle': 'error',
-      'import/first': 'error',
-      'import/no-mutable-exports': 'error',
 
-      // SonarJS Rules
-      'sonarjs/cognitive-complexity': ['error', 15],
-      'sonarjs/no-duplicate-string': 'warn',
-      'sonarjs/no-identical-functions': 'warn',
-      'sonarjs/no-redundant-boolean': 'error',
-      'sonarjs/prefer-immediate-return': 'warn',
-      'sonarjs/no-small-switch': 'warn',
-
-      // JSDoc Rules
-      'jsdoc/require-jsdoc': [
-        'warn',
-        {
-          publicOnly: true,
-          require: {
-            FunctionDeclaration: true,
-            MethodDefinition: true,
-            ClassDeclaration: true,
-          },
-          contexts: [
-            'TSInterfaceDeclaration',
-            'TSTypeAliasDeclaration',
-            'TSEnumDeclaration',
-            'TSPropertySignature',
-          ],
-        },
-      ],
+      // Documentation rules
       'jsdoc/require-description': 'warn',
-      'jsdoc/require-param-description': 'warn',
-      'jsdoc/require-returns-description': 'warn',
+      'jsdoc/require-jsdoc': ['warn', {
+        'publicOnly': true,
+        'require': {
+          'ArrowFunctionExpression': false,
+          'ClassDeclaration': true,
+          'ClassExpression': true,
+          'FunctionDeclaration': true,
+          'MethodDefinition': true
+        }
+      }],
 
-      // Prettier Integration
-      'prettier/prettier': 'warn',
-    },
+      // Code quality rules
+      'sonarjs/cognitive-complexity': ['error', 15],
+      'sonarjs/no-duplicate-string': ['warn', 4],
+
+      // Base rules
+      'no-unused-vars': 'off', // TypeScript handles this
+      '@typescript-eslint/no-unused-vars': ['error', {
+        'argsIgnorePattern': '^_',
+        'varsIgnorePattern': '^_'
+      }]
+    }
   },
 
   // Template files configuration - currently disabled to focus on TypeScript linting

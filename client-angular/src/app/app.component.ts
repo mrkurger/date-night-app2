@@ -1,22 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ThemeService } from './core/services/theme.service';
-import { Subscription } from 'rxjs';
-import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
-import { NavigationComponent } from './shared/components/navigation/navigation.component';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
-import { AvatarModule } from 'primeng/avatar';
-import { PanelModule } from 'primeng/panel';
-import { ToolbarModule } from 'primeng/toolbar';
-import { PanelMenuModule } from 'primeng/panelmenu';
+import { Subscription } from 'rxjs';
 
-@Component({';
+import { ThemeService } from './core/services/theme.service';
+import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
+import { NavigationComponent } from './shared/components/navigation/navigation.component';
+
+import { ToolbarModule } from 'primeng/toolbar';
+
+/**
+ *
+ */
+@Component({
   selector: 'app-root',
-  imports: [;
+  imports: [
     RouterModule,
     NavigationComponent,
     ButtonModule,
@@ -29,50 +34,55 @@ import { PanelMenuModule } from 'primeng/panelmenu';
     ToolbarModule,
     PanelMenuModule,
   ],
-  template: `;`
-    ;
-      ;
-    ;
-  `,`
+  template: ` <router-outlet></router-outlet> `,
   styleUrls: ['./app.component.scss'],
   standalone: true,
 })
-export class AppComponen {t implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
 
-  constructor(;
-    private themeService: ThemeService,
-    private webSocketFallbackService: WebSocketFallbackService,
+  /**
+   *
+   */
+  constructor(
+    private readonly themeService: ThemeService,
+    private readonly webSocketFallbackService: WebSocketFallbackService,
   ) {}
 
+  /**
+   *
+   */
   ngOnInit() {
     // Initialize WebSocket fallback service
-    this.webSocketFallbackService.initialize()
+    this.webSocketFallbackService.initialize();
 
     // Subscribe to theme changes
     this.subscription = this.themeService.theme$.subscribe((theme) => {
       // Set data-theme attribute on document for PrimeNG theming
-      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light')
-    })
+      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    });
 
     // Initialize theme from saved preference
-    const savedTheme = this.themeService.getCurrentTheme()
+    const savedTheme = this.themeService.getCurrentTheme();
     if (savedTheme === 'system') {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.themeService.setTheme(prefersDark ? 'dark' : 'default')
+      this.themeService.setTheme(prefersDark ? 'dark' : 'default');
     } else if (savedTheme) {
-      this.themeService.setTheme(savedTheme)
+      this.themeService.setTheme(savedTheme);
     } else {
-      this.themeService.setTheme('default')
+      this.themeService.setTheme('default');
     }
   }
 
+  /**
+   *
+   */
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe()
+      this.subscription.unsubscribe();
     }
 
     // Restore original WebSocket
-    this.webSocketFallbackService.restoreOriginalWebSocket()
+    this.webSocketFallbackService.restoreOriginalWebSocket();
   }
 }

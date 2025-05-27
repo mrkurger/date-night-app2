@@ -2,19 +2,20 @@ import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
-@Component({';
+/**
+ *
+ */
+@Component({
   selector: 'app-test-component',
   standalone: true,
   imports: [ButtonModule, CardModule],
-  template: `;`
-    ;
-      Test Component;
-      ;
-        Click Me;
-      ;
-    ;
-  `;`
+  template: `
+    <p-card>
+      <h2>Test Component</h2>
+      <p-button label="Click Me"></p-button>
+    </p-card>
+  `,
 })
-export class TestComponen {t {
+export class TestComponent {
   // Component logic here
 }

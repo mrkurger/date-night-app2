@@ -1,18 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NebularModule } from '../../../shared/nebular.module';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { NbAuthService, NbAuthResult } from '@nebular/auth';
-import { LoginComponent } from '../../features/auth/login/login.component';
-import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../core/models/user.interface';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NbAuthService, NbAuthResult } from '@nebular/auth';
+import { of, throwError } from 'rxjs';
+
+import { NebularModule } from '../../../shared/nebular.module';
+import { User } from '../../core/models/user.interface';
+import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
+import { LoginComponent } from '../../features/auth/login/login.component';
+
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -25,13 +27,12 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 // Nebular imports
 
-';
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let fixture: ComponentFixture;
-  let userService: jasmine.SpyObj;
-  let authService: jasmine.SpyObj;
-  let nbAuthService: jasmine.SpyObj;
+  let fixture: ComponentFixture<LoginComponent>;
+  let userService: jasmine.SpyObj<UserService>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let nbAuthService: jasmine.SpyObj<NbAuthService>;
   let router: Router;
 
   const mockUser: User = {
@@ -42,135 +43,129 @@ describe('LoginComponent', () => {
     roles: ['user'],
     status: 'active',
     createdAt: new Date(),
-  }
+  };
 
   const mockAuthResponse = {
     token: 'mock-token',
     refreshToken: 'mock-refresh-token',
     expiresIn: 86400,
     user: mockUser,
-  }
+  };
 
   beforeEach(async () => {
     // Create spies for services
-    const userServiceSpy = jasmine.createSpyObj('UserService', [;
-      'login',
-      'isAuthenticated',
-    ])
-    userServiceSpy.isAuthenticated.and.returnValue(false) // Default to not authenticated
+    const userServiceSpy = jasmine.createSpyObj('UserService', ['login', 'isAuthenticated']);
+    userServiceSpy.isAuthenticated.and.returnValue(false); // Default to not authenticated
 
-    const authServiceSpy = jasmine.createSpyObj('AuthService', [;
-      'login',
-      'isAuthenticated',
-    ])
-    authServiceSpy.isAuthenticated.and.returnValue(false)
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'isAuthenticated']);
+    authServiceSpy.isAuthenticated.and.returnValue(false);
 
-    const nbAuthServiceSpy = jasmine.createSpyObj('NbAuthService', ['authenticate'])
+    const nbAuthServiceSpy = jasmine.createSpyObj('NbAuthService', ['authenticate']);
 
     await TestBed.configureTestingModule({
-    imports: [;
+      imports: [
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule.withRoutes([;
-            { path: 'browse', },
-            { path: 'dashboard' }
+        RouterTestingModule.withRoutes([
+          { path: 'browse', component: LoginComponent },
+          { path: 'dashboard', component: LoginComponent },
         ]),
         BrowserAnimationsModule,
         NebularModule,
-        CommonModule;
-    ],
-    providers: [;
+        CommonModule,
+        LoginComponent,
+      ],
+      providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: NbAuthService, useValue: nbAuthServiceSpy },
-        LoginComponent,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents()
+      ],
+    }).compileComponents();
 
-    userService = TestBed.inject(UserService) as jasmine.SpyObj;
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj;
-    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj;
-    router = TestBed.inject(Router)
-  })
+    userService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    nbAuthService = TestBed.inject(NbAuthService) as jasmine.SpyObj<NbAuthService>;
+    router = TestBed.inject(Router);
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent)
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges()
-  })
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
 
   it('should initialize the login form with empty fields', () => {
-    expect(component.loginForm).toBeDefined()
-    expect(component.loginForm.get('email')?.value).toBe('')
-    expect(component.loginForm.get('password')?.value).toBe('')
-  })
+    expect(component.loginForm).toBeDefined();
+    expect(component.loginForm.get('email')?.value).toBe('');
+    expect(component.loginForm.get('password')?.value).toBe('');
+  });
 
   it('should mark form as invalid when empty', () => {
-    expect(component.loginForm.valid).toBeFalsy()
-  })
+    expect(component.loginForm.valid).toBeFalsy();
+  });
 
   it('should mark form as valid when all fields are filled', () => {
     component.loginForm.patchValue({
       email: 'test@example.com',
       password: 'Password123!',
-    })
+    });
 
-    expect(component.loginForm.valid).toBeTruthy()
-  })
+    expect(component.loginForm.valid).toBeTruthy();
+  });
 
   it('should call UserService.login when form is submitted', () => {
     // Setup form with valid data
     const loginData = {
       email: 'test@example.com',
       password: 'Password123!',
-    }
+    };
 
-    component.loginForm.patchValue(loginData)
+    component.loginForm.patchValue(loginData);
 
     // Mock successful login
-    userService.login.and.returnValue(of(mockAuthResponse))
+    userService.login.and.returnValue(of(mockAuthResponse));
 
     // Spy on router navigation
-    spyOn(router, 'navigate')
+    spyOn(router, 'navigate');
 
     // Submit form
-    component.onSubmit()
+    component.onSubmit();
 
     // Verify service was called with correct parameters
-    expect(userService.login).toHaveBeenCalledWith(loginData)
+    expect(userService.login).toHaveBeenCalledWith(loginData);
 
     // Verify navigation occurred
-    expect(router.navigate).toHaveBeenCalledWith(['/dashboard'])
-  })
+    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
 
   it('should display error message on login failure', () => {
     // Setup form with valid data
     component.loginForm.patchValue({
       email: 'test@example.com',
       password: 'wrongpassword',
-    })
+    });
 
     // Mock failed login
-    const errorResponse = new Error('Invalid credentials')
-    userService.login.and.returnValue(throwError(() => errorResponse))
+    const errorResponse = new Error('Invalid credentials');
+    userService.login.and.returnValue(throwError(() => errorResponse));
 
     // Submit form
-    component.onSubmit()
+    component.onSubmit();
 
     // Verify error is displayed
-    expect(component.errorMessage).toBe('Invalid credentials')
+    expect(component.errorMessage).toBe('Invalid credentials');
 
-    fixture.detectChanges()
+    fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.error-message')).toBeTruthy()
-  })
+    expect(compiled.querySelector('.error-message')).toBeTruthy();
+  });
 
   it('should handle social login', () => {
     // Mock successful social login
@@ -180,21 +175,21 @@ describe('LoginComponent', () => {
       getErrors: () => [],
     } as NbAuthResult;
 
-    nbAuthService.authenticate.and.returnValue(of(mockAuthResult))
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
 
     // Spy on router navigation
-    spyOn(router, 'navigateByUrl')
+    spyOn(router, 'navigateByUrl');
 
     // Call social login
-    component.socialLogin('google')
+    component.socialLogin('google');
 
     // Verify service was called
-    expect(nbAuthService.authenticate).toHaveBeenCalledWith('google')
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('google');
 
     // Verify navigation occurred
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard')
-    expect(component.isLoading).toBeFalse()
-  })
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+    expect(component.isLoading).toBeFalse();
+  });
 
   it('should handle social login failure', () => {
     // Mock failed social login
@@ -204,16 +199,16 @@ describe('LoginComponent', () => {
       getErrors: () => ['Authentication failed'],
     } as NbAuthResult;
 
-    nbAuthService.authenticate.and.returnValue(of(mockAuthResult))
+    nbAuthService.authenticate.and.returnValue(of(mockAuthResult));
 
     // Call social login
-    component.socialLogin('facebook')
+    component.socialLogin('facebook');
 
     // Verify service was called
-    expect(nbAuthService.authenticate).toHaveBeenCalledWith('facebook')
+    expect(nbAuthService.authenticate).toHaveBeenCalledWith('facebook');
 
     // Verify error message is set
-    expect(component.errorMessage).toBe('Authentication failed')
-    expect(component.isLoading).toBeFalse()
-  })
-})
+    expect(component.errorMessage).toBe('Authentication failed');
+    expect(component.isLoading).toBeFalse();
+  });
+});

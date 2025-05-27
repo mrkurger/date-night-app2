@@ -1,24 +1,13 @@
-<<<<<<< HEAD
-// Import PrimeNG styles
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
-@import "primeflex/primeflex.css";
-@import "primeicons/primeicons.css";
-=======
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default';
-@use '@nebular/theme/styles/themes/cosmic' as dark;
-@use './app/core/design/tokens' as tokens;
-@use './app/core/design/utilities' as utils;
-@use '@fontsource/inter' as inter;
-@use '@fontsource/poppins' as poppins;
-@use './app/core/design/responsive' as responsive;
-@use './app/core/design/animations' as animations;
-@use './app/core/design/typography' as typography;
-@use './app/core/design/spacing' as spacing;
-@use './app/core/design/spacing-utilities-fix' as spacing-fix;
-@use '@primeng/themes/aura/light/blue/theme.css' as primeng-aura;
->>>>>>> main
+// PrimeNG styles are imported via angular.json
+// No need to import them here as they're already configured in the build
+
+// Import Nebular styles for compatibility (if needed)
+// @import '@nebular/theme/styles/theming';
+// @import '@nebular/theme/styles/themes/default';
+
+// Import fonts (if needed)
+// @import '@fontsource/inter';
+// @import '@fontsource/poppins';
 
 // Core styles
 @use 'app/core/design/variables';
@@ -34,7 +23,8 @@
   background-color: var(--surface-ground);
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
@@ -42,7 +32,8 @@ html, body {
   background-color: var(--surface-ground);
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -62,36 +53,94 @@ html, body {
 }
 
 // Common margins and paddings
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 1.5rem;
+}
+.mt-4 {
+  margin-top: 2rem;
+}
 
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+.mb-2 {
+  margin-bottom: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+.mb-4 {
+  margin-bottom: 2rem;
+}
 
-.mx-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
-.mx-2 { margin-left: 1rem; margin-right: 1rem; }
-.mx-3 { margin-left: 1.5rem; margin-right: 1.5rem; }
-.mx-4 { margin-left: 2rem; margin-right: 2rem; }
+.mx-1 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.mx-2 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.mx-3 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+.mx-4 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
 
-.my-1 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
-.my-2 { margin-top: 1rem; margin-bottom: 1rem; }
-.my-3 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
-.my-4 { margin-top: 2rem; margin-bottom: 2rem; }
+.my-1 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.my-2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.my-3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.my-4 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
 
 // Flexbox utilities
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
-.gap-3 { gap: 1.5rem; }
-.gap-4 { gap: 2rem; }
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-1 {
+  gap: 0.5rem;
+}
+.gap-2 {
+  gap: 1rem;
+}
+.gap-3 {
+  gap: 1.5rem;
+}
+.gap-4 {
+  gap: 2rem;
+}
 
 // Grid utilities
 .grid {
@@ -99,145 +148,21 @@ html, body {
   gap: 1rem;
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
 
 @media screen and (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(1, 1fr) !important;
-  }
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-// Layout utilities
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-
-  @media screen and (max-width: 1200px) {
-    max-width: 100%;
-  }
-}
-
-// Common margins and paddings
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
-
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
-
-.mx-1 { margin-left: 0.5rem; margin-right: 0.5rem; }
-.mx-2 { margin-left: 1rem; margin-right: 1rem; }
-.mx-3 { margin-left: 1.5rem; margin-right: 1.5rem; }
-.mx-4 { margin-left: 2rem; margin-right: 2rem; }
-
-.my-1 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
-.my-2 { margin-top: 1rem; margin-bottom: 1rem; }
-.my-3 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
-.my-4 { margin-top: 2rem; margin-bottom: 2rem; }
-
-// Flexbox utilities
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
-.gap-3 { gap: 1.5rem; }
-.gap-4 { gap: 2rem; }
-
-// Grid utilities
-.grid {
-  display: grid;
-  gap: 1rem;
-}
-
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
-
-@media screen and (max-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(1, 1fr) !important;
-  }
-}
-
-// Typography utilities
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-
-.text-sm { font-size: 0.875rem; }
-.text-base { font-size: 1rem; }
-.text-lg { font-size: 1.125rem; }
-.text-xl { font-size: 1.25rem; }
-
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }
-.font-medium { font-weight: 500; }
-.font-normal { font-weight: 400; }
-
-// Colors
-.text-primary { color: var(--primary-color); }
-.text-error { color: var(--error-color); }
-.text-success { color: var(--success-color); }
-.text-warning { color: var(--warning-color); }
-
-// Print styles
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  .print-break-before {
-    page-break-before: always;
-  }
-  
-  .print-break-after {
-    page-break-after: always;
-  }
-// Typography utilities
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-
-.text-sm { font-size: 0.875rem; }
-.text-base { font-size: 1rem; }
-.text-lg { font-size: 1.125rem; }
-.text-xl { font-size: 1.25rem; }
-
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }
-.font-medium { font-weight: 500; }
-.font-normal { font-weight: 400; }
-
-// Colors
-.text-primary { color: var(--primary-color); }
-.text-error { color: var(--error-color); }
-.text-success { color: var(--success-color); }
-.text-warning { color: var(--warning-color); }
-
-// Print styles
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  .print-break-before {
-    page-break-before: always;
-  }
-  
-  .print-break-after {
-    page-break-after: always;
   }
 }

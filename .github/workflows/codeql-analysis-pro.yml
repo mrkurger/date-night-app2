@@ -6,7 +6,6 @@ name: "CodeQL Security Analysis (Pro+ Compatible)"
 # Configured for JavaScript/TypeScript ONLY - No Python scanning
 
 on:
-  # Push events on main and develop branches trigger security scanning
   push:
     branches: [ main, develop ]
     paths-ignore:
@@ -15,7 +14,6 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - 'docs/**'
   
-  # Pull requests to main branch get scanned before merge
   pull_request:
     branches: [ main ]
     paths:
@@ -25,13 +23,10 @@ on:
       - '**.tsx'
       - '**.html'
       - 'package*.json'
-      # Removed Python-related paths
   
-  # Weekly deep scans on Monday at 3 AM UTC
   schedule:
     - cron: '0 3 * * 1'
   
-  # Manual trigger for on-demand scanning
   workflow_dispatch:
     inputs:
       output_format:
@@ -44,47 +39,39 @@ on:
           - 'both'
         default: 'markdown'
 
-# Minimal permissions - no security-events write needed
 permissions:
   contents: read
   pull-requests: write
   issues: write
   actions: read
 
-# Cancel in-progress runs when new commits are pushed
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # Job 1: Run CodeQL analysis and save results as artifacts
   analyze:
     name: Analyze Code Security
     runs-on: ubuntu-latest
     timeout-minutes: 30
     
-    # No matrix needed since we're only analyzing JavaScript/TypeScript
     steps:
-    # Step 1: Checkout repository code
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 2
 
-    # Step 2: Setup Node.js for JavaScript/TypeScript analysis
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'  # Matches Angular 19 requirements
+        node-version: '20'
         cache: 'npm'
 
-    # Step 3: Initialize CodeQL for JavaScript/TypeScript only
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: javascript-typescript  # Only JavaScript/TypeScript analysis
+        languages: javascript-typescript
         queries: security-and-quality
-        # Configuration for JavaScript/TypeScript analysis
         config: |
           paths-ignore:
             - node_modules
@@ -98,371 +85,117 @@ jobs:
             - "**/tests/**"
             - "**/e2e/**"
 
-    # Step 4: Install dependencies for better analysis accuracy
     - name: Install dependencies
       run: |
-        echo "📦 Installing JavaScript/TypeScript dependencies for CodeQL analysis..."
-        
-        # Install root dependencies if package.json exists
         if [ -f "package.json" ]; then
-          echo "Installing root dependencies..."
           npm ci --prefer-offline --no-audit || npm install
         fi
-        
-        # Install frontend dependencies if they exist in a subdirectory
         if [ -f "frontend/package.json" ]; then
-          echo "Installing frontend dependencies..."
-          cd frontend && npm ci --prefer-offline --no-audit || npm install
-          cd ..
+          cd frontend && npm ci --prefer-offline --no-audit || npm install && cd ..
         fi
-        
-        # Install any other Node.js project dependencies
-        # TODO: Add additional paths if your project has other package.json locations
         if [ -f "client/package.json" ]; then
-          echo "Installing client dependencies..."
-          cd client && npm ci --prefer-offline --no-audit || npm install
-          cd ..
+          cd client && npm ci --prefer-offline --no-audit || npm install && cd ..
         fi
 
-    # Step 5: Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:javascript-typescript"
-        # Don't upload to code scanning since it's not available for Pro+ users
         upload: false
-        # Output results to a specific directory
         output: codeql-results-js-ts
 
-    # Step 6: Convert CodeQL results to readable format
-    - name: Process CodeQL Results
+    - name: Process Results
       id: process-results
       run: |
-        echo "📊 Processing CodeQL results for JavaScript/TypeScript..."
-        
-        # Create results directory
         mkdir -p processed-results
-        
-        # Find SARIF files in the results directory
         SARIF_FILE=$(find codeql-results-js-ts -name "*.sarif" -type f | head -n 1)
         
         if [ -n "$SARIF_FILE" ]; then
-          echo "Found SARIF file: $SARIF_FILE"
-          
-          # Create a markdown report from SARIF using ESModules syntax
-          node --input-type=module --eval "
-          import { readFileSync, writeFileSync } from 'fs';
-          
-          // Read SARIF file
-          const sarifContent = readFileSync('$SARIF_FILE', 'utf8');
-          const sarif = JSON.parse(sarifContent);
-          
-          // Initialize counters
-          let criticalCount = 0;
-          let highCount = 0;
-          let mediumCount = 0;
-          let lowCount = 0;
-          const findings = [];
-          
-          // Process each run in the SARIF file
-          for (const run of sarif.runs || []) {
-            const tool = run.tool?.driver?.name || 'CodeQL';
+          node --input-type=module << 'EOJS'
+            import { readFileSync, writeFileSync } from 'fs';
             
-            // Process results
-            for (const result of run.results || []) {
-              // Determine severity based on CodeQL levels
-              const level = result.level || 'warning';
-              let severity = 'MEDIUM';
-              
-              if (level === 'error') {
-                severity = 'HIGH';
-                highCount++;
-              } else if (level === 'warning') {
-                severity = 'MEDIUM';
-                mediumCount++;
-              } else {
-                severity = 'LOW';
-                lowCount++;
-              }
-              
-              // Extract location information
-              const location = result.locations?.[0]?.physicalLocation;
-              const file = location?.artifactLocation?.uri || 'unknown';
-              const line = location?.region?.startLine || '?';
-              
-              // Add to findings array
-              findings.push({
-                severity,
-                rule: result.ruleId || 'unknown',
-                message: result.message?.text || 'No description',
-                file,
-                line,
-                tool
-              });
-            }
-          }
-          
-          // Sort findings by severity
-          const severityOrder = { 'CRITICAL': 0, 'HIGH': 1, 'MEDIUM': 2, 'LOW': 3 };
-          findings.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
-          
-          // Generate markdown report
-          let markdown = '# CodeQL Security Analysis Results\\n\\n';
-          markdown += '**Language:** JavaScript/TypeScript\\n';
-          markdown += '**Date:** ' + new Date().toISOString() + '\\n';
-          markdown += '**Triggered by:** @mrkurger\\n\\n';
-          
-          markdown += '## 📊 Summary\\n\\n';
-          markdown += '| Severity | Count |\\n';
-          markdown += '|----------|-------|\\n';
-          markdown += '| 🔴 HIGH | ' + highCount + ' |\\n';
-          markdown += '| 🟡 MEDIUM | ' + mediumCount + ' |\\n';
-          markdown += '| 🔵 LOW | ' + lowCount + ' |\\n';
-          markdown += '| **TOTAL** | **' + findings.length + '** |\\n\\n';
-          
-          if (findings.length > 0) {
-            markdown += '## 🔍 Detailed Findings\\n\\n';
+            const sarifContent = readFileSync(process.env.SARIF_FILE, 'utf8');
+            const sarif = JSON.parse(sarifContent);
             
-            // Group by severity
-            const grouped = findings.reduce((acc, finding) => {
-              if (!acc[finding.severity]) acc[finding.severity] = [];
-              acc[finding.severity].push(finding);
-              return acc;
-            }, {});
+            let highCount = 0, mediumCount = 0, lowCount = 0;
+            const findings = [];
             
-            // Output findings by severity
-            for (const [severity, items] of Object.entries(grouped)) {
-              markdown += '### ' + severity + ' Severity Issues\\n\\n';
-              
-              // Limit to 10 items per severity level for readability
-              for (const item of items.slice(0, 10)) {
-                markdown += '#### ' + item.rule + '\\n';
-                markdown += '- **File:** \`' + item.file + ':' + item.line + '\`\\n';
-                markdown += '- **Message:** ' + item.message + '\\n\\n';
-              }
-              
-              if (items.length > 10) {
-                markdown += '*... and ' + (items.length - 10) + ' more ' + severity + ' issues*\\n\\n';
+            for (const run of sarif.runs || []) {
+              for (const result of run.results || []) {
+                const level = result.level || 'warning';
+                let severity = level === 'error' ? 'HIGH' : level === 'warning' ? 'MEDIUM' : 'LOW';
+                
+                if (severity === 'HIGH') highCount++;
+                else if (severity === 'MEDIUM') mediumCount++;
+                else lowCount++;
+                
+                const location = result.locations?.[0]?.physicalLocation;
+                findings.push({
+                  severity,
+                  rule: result.ruleId || 'unknown',
+                  message: result.message?.text || 'No description',
+                  file: location?.artifactLocation?.uri || 'unknown',
+                  line: location?.region?.startLine || '?',
+                  tool: run.tool?.driver?.name || 'CodeQL'
+                });
               }
             }
-          } else {
-            markdown += '## ✅ No Security Issues Found!\\n\\n';
-            markdown += 'Great job! CodeQL analysis found no security vulnerabilities in your JavaScript/TypeScript code.\\n';
-          }
-          
-          // Add recommendations section
-          markdown += '## 💡 Recommendations\\n\\n';
-          if (highCount > 0) {
-            markdown += '1. **Immediate Action:** Fix all HIGH severity issues before deployment\\n';
-            markdown += '2. Review [CodeQL JavaScript documentation](https://codeql.github.com/docs/codeql-language-guides/codeql-for-javascript/)\\n';
-          } else if (mediumCount > 0) {
-            markdown += '1. Schedule time to address MEDIUM severity issues\\n';
-            markdown += '2. Consider adding suppressions for false positives\\n';
-          } else {
-            markdown += '1. Continue following security best practices\\n';
-            markdown += '2. Keep dependencies updated\\n';
-            markdown += '3. Regular security scanning is working well!\\n';
-          }
-          
-          // Save markdown report
-          writeFileSync('processed-results/codeql-javascript-typescript.md', markdown);
-          
-          // Save JSON report for programmatic access
-          const jsonReport = {
-            language: 'javascript-typescript',
-            timestamp: new Date().toISOString(),
-            triggeredBy: 'mrkurger',
-            summary: {
+            
+            findings.sort((a, b) => {
+              const order = { HIGH: 0, MEDIUM: 1, LOW: 2 };
+              return order[a.severity] - order[b.severity];
+            });
+            
+            const summary = {
               total: findings.length,
               high: highCount,
               medium: mediumCount,
               low: lowCount
-            },
-            findings: findings
-          };
-          
-          writeFileSync('processed-results/codeql-javascript-typescript.json', JSON.stringify(jsonReport, null, 2));
-          
-          // Set outputs for GitHub Actions
-          console.log('::set-output name=total_issues::' + findings.length);
-          console.log('::set-output name=high_issues::' + highCount);
-          console.log('::set-output name=has_issues::' + (findings.length > 0));
-          "
+            };
+            
+            writeFileSync('processed-results/results.json', JSON.stringify({ summary, findings }, null, 2));
+            console.log(`::set-output name=total_issues::${findings.length}`);
+            console.log(`::set-output name=high_issues::${highCount}`);
+            console.log(`::set-output name=has_issues::${findings.length > 0}`);
+          EOJS
         else
-          echo "No SARIF file found, creating empty report..."
-          # Create a minimal report when no SARIF is generated
-          echo "# CodeQL Security Analysis Results" > processed-results/codeql-javascript-typescript.md
-          echo "" >> processed-results/codeql-javascript-typescript.md
-          echo "**Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> processed-results/codeql-javascript-typescript.md
-          echo "" >> processed-results/codeql-javascript-typescript.md
-          echo "⚠️ No results file generated. This might indicate:" >> processed-results/codeql-javascript-typescript.md
-          echo "- The analysis is still being configured" >> processed-results/codeql-javascript-typescript.md
-          echo "- No JavaScript/TypeScript files were found" >> processed-results/codeql-javascript-typescript.md
-          echo "- An error occurred during analysis" >> processed-results/codeql-javascript-typescript.md
-          
-          # Set safe default outputs
+          echo "No SARIF file found"
           echo "::set-output name=total_issues::0"
           echo "::set-output name=high_issues::0"
           echo "::set-output name=has_issues::false"
         fi
 
-    # Step 7: Upload results as artifacts (accessible without Advanced Security)
-    - name: Upload CodeQL Results
+    - name: Upload Results
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: codeql-results-javascript-typescript
+        name: codeql-results
         path: |
           codeql-results-js-ts/
           processed-results/
         retention-days: 30
 
-    # Step 8: Add results to job summary
     - name: Add to Job Summary
       if: always()
       run: |
-        echo "## 🔐 CodeQL Analysis Results for JavaScript/TypeScript" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Workflow run by:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Timestamp:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        if [ -f "processed-results/codeql-javascript-typescript.md" ]; then
-          # Add the generated report to the summary
-          cat "processed-results/codeql-javascript-typescript.md" >> $GITHUB_STEP_SUMMARY
+        if [ -f "processed-results/results.json" ]; then
+          jq -r '
+            "## 🔐 CodeQL Analysis Results\n" +
+            "\nFound \(.summary.total) total issues:\n" +
+            "- 🔴 HIGH: \(.summary.high)\n" +
+            "- 🟡 MEDIUM: \(.summary.medium)\n" +
+            "- 🔵 LOW: \(.summary.low)\n"
+          ' processed-results/results.json >> $GITHUB_STEP_SUMMARY
         else
-          echo "⚠️ No results file found. Check the workflow logs for errors." >> $GITHUB_STEP_SUMMARY
+          echo "## ⚠️ No Analysis Results" >> $GITHUB_STEP_SUMMARY
         fi
-        
-        # Add links to artifacts
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📥 Downloads" >> $GITHUB_STEP_SUMMARY
-        echo "- [Download Full Results](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
-    # Step 9: Comment on PR with results (if applicable)
-    - name: Comment on Pull Request
-      if: github.event_name == 'pull_request' && always()
-      uses: actions/github-script@v7
-      with:
-        script: |
-          // Import fs module for file reading
-          const fs = require('fs');
-          
-          // Initialize comment content
-          let reportContent = '## 🔐 CodeQL Security Analysis Results\n\n';
-          reportContent += '**Language:** JavaScript/TypeScript only (No Python scanning)\n';
-          reportContent += '**Analyzed by:** CodeQL for GitHub Pro+\n\n';
-          
-          // Try to read the results from the JSON report
-          let totalIssues = '0';
-          let highIssues = '0';
-          let hasResults = false;
-          
-          try {
-            if (fs.existsSync('processed-results/codeql-javascript-typescript.json')) {
-              const jsonContent = fs.readFileSync('processed-results/codeql-javascript-typescript.json', 'utf8');
-              const results = JSON.parse(jsonContent);
-              totalIssues = results.summary.total.toString();
-              highIssues = results.summary.high.toString();
-              hasResults = true;
-            }
-          } catch (error) {
-            console.log('Could not read results file:', error);
-          }
-          
-          // Add summary metrics
-          reportContent += `### 📊 Summary\n\n`;
-          reportContent += `| Metric | Value |\n`;
-          reportContent += `|--------|-------|\n`;
-          reportContent += `| **Total Issues Found** | ${totalIssues} |\n`;
-          reportContent += `| **High Severity Issues** | ${highIssues} |\n\n`;
-          
-          // Add status based on findings
-          if (!hasResults) {
-            reportContent += '⚠️ **Status:** Analysis may have encountered issues\n\n';
-          } else if (parseInt(highIssues) > 0) {
-            reportContent += '⚠️ **Status:** Security issues detected that need attention\n\n';
-            reportContent += '### 🚨 Action Required\n';
-            reportContent += 'This PR contains high-severity security issues. Please address them before merging.\n\n';
-          } else if (parseInt(totalIssues) > 0) {
-            reportContent += '⚡ **Status:** Minor security issues detected\n\n';
-            reportContent += '### 💡 Recommendations\n';
-            reportContent += 'Consider addressing the security findings when possible.\n\n';
-          } else {
-            reportContent += '✅ **Status:** No security issues found!\n\n';
-            reportContent += 'Your JavaScript/TypeScript code passed all security checks. Great job! 🎉\n\n';
-          }
-          
-          // Add links and instructions
-          reportContent += `### 📄 Full Report\n\n`;
-          reportContent += `- [View workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n`;
-          reportContent += `- Download the \`codeql-results-javascript-typescript\` artifact for detailed findings\n\n`;
-          
-          // Add next steps
-          reportContent += '### 📋 Next Steps\n\n';
-          if (parseInt(totalIssues) > 0) {
-            reportContent += '1. Download the security report artifact\n';
-            reportContent += '2. Review each finding in detail\n';
-            reportContent += '3. Fix legitimate security vulnerabilities\n';
-            reportContent += '4. Add suppressions for false positives using:\n';
-            reportContent += '   ```javascript\n';
-            reportContent += '   // codeql[rule-id] - Reason for suppression\n';
-            reportContent += '   ```\n';
-          } else {
-            reportContent += '1. Continue following security best practices\n';
-            reportContent += '2. Keep your dependencies up to date\n';
-            reportContent += '3. Monitor for new security patterns\n';
-          }
-          
-          // Add footer with metadata
-          reportContent += '\n---\n';
-          reportContent += `<sub>🤖 Generated by CodeQL Security Workflow (Pro+ Edition)</sub><br>`;
-          reportContent += `<sub>📅 ${new Date().toISOString()}</sub><br>`;
-          reportContent += `<sub>🔧 JavaScript/TypeScript analysis only - Python scanning disabled</sub>`;
-          
-          // Find and update or create comment
-          const { data: comments } = await github.rest.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-          });
-          
-          // Look for existing CodeQL comment
-          const botComment = comments.find(comment => 
-            comment.user.type === 'Bot' && 
-            comment.body.includes('CodeQL Security Analysis Results')
-          );
-          
-          if (botComment) {
-            // Update existing comment
-            await github.rest.issues.updateComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: botComment.id,
-              body: reportContent,
-            });
-          } else {
-            // Create new comment
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: reportContent,
-            });
-          }
-
-    # Step 10: Optional - Fail the workflow if high severity issues found
-    - name: Check Security Status
+    - name: Check High Severity Issues
       if: github.event_name == 'pull_request'
       run: |
-        # Read the high issues count from the previous step
         HIGH_ISSUES="${{ steps.process-results.outputs.high_issues }}"
-        
         if [ "$HIGH_ISSUES" -gt "0" ]; then
-          echo "❌ Found $HIGH_ISSUES high severity security issues!"
-          echo "Please review the security report and fix the issues before merging."
-          # TODO: Uncomment the next line to enforce security checks on PRs
-          # exit 1
+          echo "⚠️ Found $HIGH_ISSUES high severity security issues"
         else
-          echo "✅ Security check passed!"
+          echo "✅ No high severity issues found"
         fi

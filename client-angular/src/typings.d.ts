@@ -1,14 +1,14 @@
 import { Output } from '@angular/core';
 
-/// 
+///
 
-/// 
-/// 
+///
+///
 
 declare global {
   namespace jasmine {
     interface Matchers {
-      toBe(expected: T, expectationFailOutput?: any): boolean;
+      toBe(expected: any, expectationFailOutput?: any): boolean;
       toBeDefined(expectationFailOutput?: any): boolean;
       toBeFalse(expectationFailOutput?: any): boolean;
       toBeFalsy(expectationFailOutput?: any): boolean;
@@ -34,7 +34,4 @@ declare global {
       not: Matchers;
     }
   }
-
-  function expect(actual: T): jasmine.Matchers;
 }
-';

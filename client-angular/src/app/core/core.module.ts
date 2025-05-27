@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbSecurityModule, NbRoleProvider, NbAclService } from '@nebular/security';
+
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { cspInterceptor } from './interceptors/csp.interceptor';
+import { CsrfInterceptor } from './interceptors/csrf.interceptor';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor.simple';
 import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
-import { CsrfService } from './services/csrf.service';
-import { NotificationService } from './services/notification.service';
+import { CachingService } from './services/caching.service';
 import { TelemetryService } from './services/telemetry.service';
 import { EncryptionService } from './services/encryption.service';
 import { FavoriteService } from './services/favorite.service';
@@ -14,17 +17,15 @@ import { GeocodingService } from './services/geocoding.service';
 import { LocationService } from './services/location.service';
 import { TravelService } from './services/travel.service';
 import { MapMonitoringService } from './services/map-monitoring.service';
-import { CachingService } from './services/caching.service';
 import { ContentSanitizerService } from './services/content-sanitizer.service';
 import { CryptoService } from './services/crypto.service';
+import { CsrfService } from './services/csrf.service';
 import { MediaService } from './services/media.service';
+import { NotificationService } from './services/notification.service';
 import { ProfileService } from './services/profile.service';
 import { SafetyService } from './services/safety.service';
+import { UserService } from './services/user.service';
 import { VerificationService } from './services/verification.service';
-import { HttpErrorInterceptor } from './interceptors/http-error.interceptor.simple';
-import { authInterceptor } from './interceptors/auth.interceptor';
-import { cspInterceptor } from './interceptors/csp.interceptor';
-import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -47,6 +48,9 @@ export function cspInterceptorFactory() {
   return cspInterceptor;
 }
 
+/**
+ *
+ */
 export function authInterceptorFactory(
   _authService: AuthService,
 
@@ -59,14 +63,20 @@ export function authInterceptorFactory(
   return authInterceptor;
 }
 
+/**
+ *
+ */
 export function csrfInterceptorFactory(_csrfService: CsrfService) {
   // The csrfService is injected but not directly used in the factory
   // It is needed for the interceptor to work properly
   return CsrfInterceptor;
 }
 
+/**
+ *
+ */
 export function httpErrorInterceptorFactory() {
-  const interceptor = new HttpErrorInterceptor()
+  const interceptor = new HttpErrorInterceptor();
 
   // Configure the interceptor with default settings
   interceptor.configure({
@@ -81,9 +91,9 @@ export function httpErrorInterceptorFactory() {
     trackPerformance: false,
     groupSimilarErrors: true,
     retryJitter: 200,
-    sanitizeSensitiveData: true,';
+    sanitizeSensitiveData: true,
     skipUrls: ['/assets/', '/api/health'],
-  })
+  });
 
   return interceptor;
 }
@@ -119,7 +129,7 @@ const securityConfig = {
       delete: ['*'],
     },
   },
-}
+};
 
 /**
  * Core Module;
@@ -130,54 +140,57 @@ const securityConfig = {
  *;
  * Note: Order matters for interceptors - they are applied in the order listed.;
  */
-@NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [;
-        // Core Services
-        AuthService,
-        UserService,
-        CsrfService,
-        NotificationService,
-        TelemetryService,
-        // Feature Services
-        EncryptionService,
-        FavoriteService,
-        GeocodingService,
-        LocationService,
-        TravelService,
-        MapMonitoringService,
-        // Utility Services
-        CachingService,
-        ContentSanitizerService,
-        CryptoService,
-        MediaService,
-        ProfileService,
-        SafetyService,
-        VerificationService,
-        // HTTP Interceptors
-        { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: authInterceptorFactory,
-            deps: [AuthService, UserService, Router],
-            multi: true,
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: csrfInterceptorFactory,
-            deps: [CsrfService],
-            multi: true,
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: httpErrorInterceptorFactory,
-            deps: [Router, NotificationService, TelemetryService, AuthService],
-            multi: true,
-        },
-        // Security Providers
-        {
-            provide: NbRoleProvider,
-            useClass: AuthService,
-        },
-        NbAclService,
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
-export class CoreModul {e {}
+@NgModule({
+  imports: [CommonModule],
+  providers: [
+    // Core Services
+    AuthService,
+    UserService,
+    CsrfService,
+    NotificationService,
+    TelemetryService,
+    // Feature Services
+    EncryptionService,
+    FavoriteService,
+    GeocodingService,
+    LocationService,
+    TravelService,
+    MapMonitoringService,
+    // Utility Services
+    CachingService,
+    ContentSanitizerService,
+    CryptoService,
+    MediaService,
+    ProfileService,
+    SafetyService,
+    VerificationService,
+    // HTTP Interceptors
+    { provide: HTTP_INTERCEPTORS, useFactory: cspInterceptorFactory, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: authInterceptorFactory,
+      deps: [AuthService, UserService, Router],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: csrfInterceptorFactory,
+      deps: [CsrfService],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: httpErrorInterceptorFactory,
+      deps: [Router, NotificationService, TelemetryService, AuthService],
+      multi: true,
+    },
+    // Security Providers
+    {
+      provide: NbRoleProvider,
+      useClass: AuthService,
+    },
+    NbAclService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+})
+export class CoreModule {}
