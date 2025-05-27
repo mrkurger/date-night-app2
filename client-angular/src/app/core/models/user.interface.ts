@@ -1,7 +1,7 @@
 /**
  *
  */
-export interface UserSubscription {
+export interface IUserSubscription {
   /**
    *
    */
@@ -27,19 +27,11 @@ export interface UserSubscription {
 /**
  *
  */
-export interface User {
+export interface IUser {
   /**
    *
    */
   id: string;
-  /**
-   *
-   */
-  _id?: string; // MongoDB ID field, needed for compatibility with existing code
-  /**
-   *
-   */
-  username: string;
   /**
    *
    */
@@ -47,191 +39,15 @@ export interface User {
   /**
    *
    */
-  roles: string[];
+  firstName: string;
   /**
    *
    */
-  status: 'active' | 'banned' | 'suspended';
+  lastName: string;
   /**
    *
    */
-  createdAt: Date;
-  /**
-   *
-   */
-  lastLogin?: Date;
-  /**
-   *
-   */
-  profile?: {
-    /**
-     *
-     */
-    firstName?: string;
-    /**
-     *
-     */
-    lastName?: string;
-    /**
-     *
-     */
-    avatar?: string;
-    /**
-     *
-     */
-    bio?: string;
-    /**
-     *
-     */
-    location?: {
-      /**
-       *
-       */
-      city?: string;
-      /**
-       *
-       */
-      country?: string;
-    };
-  };
-  /**
-   *
-   */
-  preferences?: {
-    /**
-     *
-     */
-    emailNotifications: boolean;
-    /**
-     *
-     */
-    pushNotifications: boolean;
-    /**
-     *
-     */
-    theme: 'light' | 'dark';
-    /**
-     *
-     */
-    language: string;
-  };
-  /**
-   *
-   */
-  stats?: {
-    /**
-     *
-     */
-    totalLogins: number;
-    /**
-     *
-     */
-    totalPosts: number;
-    /**
-     *
-     */
-    totalLikes: number;
-    /**
-     *
-     */
-    reputation: number;
-  };
-  /**
-   *
-   */
-  metadata?: {
-    /**
-     *
-     */
-    browser?: string;
-    /**
-     *
-     */
-    platform?: string;
-    /**
-     *
-     */
-    lastIp?: string;
-  };
-  /**
-   *
-   */
-  notificationSettings?: NotificationSettings;
-  /**
-   *
-   */
-  privacySettings?: PrivacySettings;
-  /**
-   *
-   */
-  subscription?: UserSubscription;
-}
-
-/**
- *
- */
-export interface PublicProfile {
-  /**
-   *
-   */
-  id: string;
-  /**
-   *
-   */
-  username: string;
-  /**
-   *
-   */
-  profile?: {
-    /**
-     *
-     */
-    avatar?: string;
-    /**
-     *
-     */
-    bio?: string;
-    /**
-     *
-     */
-    location?: {
-      /**
-       *
-       */
-      city?: string;
-      /**
-       *
-       */
-      country?: string;
-    };
-  };
-  /**
-   *
-   */
-  stats?: {
-    /**
-     *
-     */
-    totalPosts: number;
-    /**
-     *
-     */
-    reputation: number;
-  };
-}
-
-/**
- *
- */
-export interface UserProfile {
-  /**
-   *
-   */
-  firstName?: string;
-  /**
-   *
-   */
-  lastName?: string;
+  phone?: string;
   /**
    *
    */
@@ -247,11 +63,24 @@ export interface UserProfile {
     /**
      *
      */
-    city?: string;
+    city: string;
     /**
      *
      */
-    country?: string;
+    country: string;
+    /**
+     *
+     */
+    coordinates?: {
+      /**
+       *
+       */
+      latitude: number;
+      /**
+       *
+       */
+      longitude: number;
+    };
   };
   /**
    *
@@ -260,26 +89,105 @@ export interface UserProfile {
     /**
      *
      */
-    emailNotifications: boolean;
-    /**
-     *
-     */
-    pushNotifications: boolean;
-    /**
-     *
-     */
-    theme: 'light' | 'dark';
+    theme: 'light' | 'dark' | 'system';
     /**
      *
      */
     language: string;
+    /**
+     *
+     */
+    notifications: INotificationSettings;
+    /**
+     *
+     */
+    privacy: IPrivacySettings;
   };
+  /**
+   *
+   */
+  socialProfiles?: {
+    /**
+     *
+     */
+    facebook?: string;
+    /**
+     *
+     */
+    twitter?: string;
+    /**
+     *
+     */
+    instagram?: string;
+    /**
+     *
+     */
+    linkedin?: string;
+  };
+  /**
+   *
+   */
+  subscription?: IUserSubscription;
+  /**
+   *
+   */
+  stats?: {
+    /**
+     *
+     */
+    totalReviews: number;
+    /**
+     *
+     */
+    averageRating: number;
+    /**
+     *
+     */
+    responseRate: number;
+    /**
+     *
+     */
+    responseTime: number;
+  };
+  /**
+   *
+   */
+  verificationStatus: {
+    /**
+     *
+     */
+    email: boolean;
+    /**
+     *
+     */
+    phone: boolean;
+    /**
+     *
+     */
+    documents: boolean;
+    /**
+     *
+     */
+    socialMedia: boolean;
+  };
+  /**
+   *
+   */
+  createdAt: Date;
+  /**
+   *
+   */
+  updatedAt: Date;
+  /**
+   *
+   */
+  lastLogin?: Date;
 }
 
 /**
  *
  */
-export interface TravelPlanItem {
+export interface IPublicProfile {
   /**
    *
    */
@@ -287,11 +195,23 @@ export interface TravelPlanItem {
   /**
    *
    */
-  userId: string;
+  firstName: string;
   /**
    *
    */
-  destination: {
+  lastName: string;
+  /**
+   *
+   */
+  avatar?: string;
+  /**
+   *
+   */
+  bio?: string;
+  /**
+   *
+   */
+  location?: {
     /**
      *
      */
@@ -304,38 +224,158 @@ export interface TravelPlanItem {
   /**
    *
    */
-  dates: {
+  stats?: {
     /**
      *
      */
-    start: Date;
+    totalReviews: number;
     /**
      *
      */
-    end: Date;
+    averageRating: number;
   };
   /**
    *
    */
-  status: 'planned' | 'active' | 'completed' | 'cancelled';
+  verificationStatus: {
+    /**
+     *
+     */
+    email: boolean;
+    /**
+     *
+     */
+    phone: boolean;
+    /**
+     *
+     */
+    documents: boolean;
+    /**
+     *
+     */
+    socialMedia: boolean;
+  };
   /**
    *
    */
-  visibility: 'public' | 'private' | 'connections';
-  /**
-   *
-   */
-  createdAt: Date;
-  /**
-   *
-   */
-  updatedAt: Date;
+  joined: Date;
 }
 
 /**
  *
  */
-export interface LoginDTO {
+export interface IUserProfile extends IUser {
+  /**
+   *
+   */
+  settings: {
+    /**
+     *
+     */
+    notifications: INotificationSettings;
+    /**
+     *
+     */
+    privacy: IPrivacySettings;
+    /**
+     *
+     */
+    marketing: boolean;
+    /**
+     *
+     */
+    twoFactorAuth: boolean;
+  };
+  /**
+   *
+   */
+  travelPlans: ITravelPlanItem[];
+  /**
+   *
+   */
+  favorites: string[];
+  /**
+   *
+   */
+  blockedUsers: string[];
+  /**
+   *
+   */
+  sessions: {
+    /**
+     *
+     */
+    deviceId: string;
+    /**
+     *
+     */
+    lastActive: Date;
+    /**
+     *
+     */
+    location?: string;
+    /**
+     *
+     */
+    deviceInfo?: string;
+  }[];
+}
+
+/**
+ *
+ */
+export interface ITravelPlanItem {
+  /**
+   *
+   */
+  id: string;
+  /**
+   *
+   */
+  destination: string;
+  /**
+   *
+   */
+  startDate: Date;
+  /**
+   *
+   */
+  endDate: Date;
+  /**
+   *
+   */
+  notes?: string;
+  /**
+   *
+   */
+  status: 'planned' | 'confirmed' | 'completed' | 'cancelled';
+  /**
+   *
+   */
+  guests?: number;
+  /**
+   *
+   */
+  budget?: {
+    /**
+     *
+     */
+    min: number;
+    /**
+     *
+     */
+    max: number;
+    /**
+     *
+     */
+    currency: string;
+  };
+}
+
+/**
+ *
+ */
+export interface ILoginDTO {
   /**
    *
    */
@@ -344,38 +384,54 @@ export interface LoginDTO {
    *
    */
   password: string;
+  /**
+   *
+   */
+  rememberMe?: boolean;
 }
 
 /**
  *
  */
-export interface RegisterDTO extends LoginDTO {
+export interface IRegisterDTO {
   /**
    *
    */
-  username: string;
+  email: string;
   /**
    *
    */
-  confirmPassword: string;
+  password: string;
   /**
    *
    */
-  role?: string;
+  firstName: string;
   /**
    *
    */
-  acceptTerms?: boolean;
+  lastName: string;
+  /**
+   *
+   */
+  phone?: string;
+  /**
+   *
+   */
+  acceptTerms: boolean;
+  /**
+   *
+   */
+  marketingConsent?: boolean;
 }
 
 /**
  *
  */
-export interface AuthResponse {
+export interface IAuthResponse {
   /**
    *
    */
-  user: User;
+  user: IUser;
   /**
    *
    */
@@ -387,13 +443,13 @@ export interface AuthResponse {
   /**
    *
    */
-  expiresIn?: number; // Add this to match the AuthService usage
+  expiresIn: number;
 }
 
 /**
  *
  */
-export interface NotificationSettings {
+export interface INotificationSettings {
   /**
    *
    */
@@ -409,35 +465,56 @@ export interface NotificationSettings {
   /**
    *
    */
-  inApp: boolean;
+  frequency: 'realtime' | 'daily' | 'weekly';
   /**
    *
    */
-  marketing: boolean;
+  types: {
+    /**
+     *
+     */
+    messages: boolean;
+    /**
+     *
+     */
+    reviews: boolean;
+    /**
+     *
+     */
+    bookings: boolean;
+    /**
+     *
+     */
+    promotions: boolean;
+    /**
+     *
+     */
+    updates: boolean;
+  };
 }
 
 /**
  *
  */
-export interface PrivacySettings {
+export interface IPrivacySettings {
   /**
    *
    */
-  profileVisibility: 'public' | 'private' | 'connections';
+  profileVisibility: 'public' | 'private' | 'contacts';
   /**
    *
    */
-  showOnlineStatus: boolean;
+  contactInfoVisibility: 'public' | 'private' | 'contacts';
   /**
    *
    */
-  showLastSeen: boolean;
+  calendarVisibility: 'public' | 'private' | 'contacts';
   /**
    *
    */
-  allowDms: 'all' | 'connections' | 'none';
+  locationSharing: 'always' | 'never' | 'while-using';
   /**
    *
    */
-  showEmail: boolean;
+  activityStatus: boolean;
 }

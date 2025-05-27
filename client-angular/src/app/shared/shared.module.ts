@@ -16,15 +16,15 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { ListboxModule } from 'primeng/listbox';
 import { MessageModule } from 'primeng/message';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { TagModule } from 'primeng/tag';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TooltipModule } from 'primeng/tooltip';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TabViewModule } from 'primeng/tabview';
 import { TreeTableModule } from 'primeng/treetable';
-import { PaginatorModule } from 'primeng/paginator';
 
 // PrimeNG Modules
 // Font Awesome for icons (replacement for Eva Icons)

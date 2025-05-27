@@ -1,12 +1,12 @@
 <div class="checklist-container" [class.collapsed]="isCollapsed">
   <div class="checklist-header" (click)="collapsible && toggleCollapse()">
     <div class="header-content">
-      <h3 class="checklist-title">{{ title }}</h3>
-      <p class="checklist-subtitle" *ngIf="!isCollapsed">{{ subtitle }}</p>
+      <h3 class="checklist-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+      <p class="checklist-subtitle" *ngIf="!isCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ subtitle }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div class="progress-container" *ngIf="showProgress && !isCollapsed">
-        <p-progressBar mode="determinate" [value]="progress"></p-progressBar>
-        <span class="progress-text">{{ completedCount }} of {{ items.length }} completed</span>
+        <p-progressBar mode="determinate" i18n-mode [value]="progress"></p-progressBar>
+        <span class="progress-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ completedCount }} of {{ items.length }} completed</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </div>
     </div>
 
@@ -38,18 +38,18 @@
           </div>
 
           <div class="item-text">
-            <h4 class="item-title">{{ item.title }}</h4>
-            <p class="item-description">{{ item.description }}</p>
+            <h4 class="item-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ item.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
+            <p class="item-description"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ item.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
             <div class="item-reward" *ngIf="showRewards && item.reward">
-              <nb-icon *ngIf="item.reward.type === 'badge'">stars"></nb-icon>
-              <nb-icon *ngIf="item.reward.type === 'points'">toll"></nb-icon>
-              <nb-icon *ngIf="item.reward.type === 'feature'">lock_open"></nb-icon>
+              <nb-icon *ngIf="item.reward.type === 'badge'"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>stars"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
+              <nb-icon *ngIf="item.reward.type === 'points'"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>toll"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
+              <nb-icon *ngIf="item.reward.type === 'feature'"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>lock_open"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
               <span class="reward-text">
-                {{
+                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{
                   item.reward.type === 'points' ? item.reward.value + ' points' : item.reward.value
                 }}
-              </span>
+              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </div>
           </div>
 
@@ -60,10 +60,10 @@
               *ngIf="item.route && !item.completed"
               [routerLink]="item.route"
             >
-              Go
-            </button>
+              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Go
+            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
 
-            <nb-icon *ngIf="item.completed" class="completed-icon">check_circle"></nb-icon>
+            <nb-icon *ngIf="item.completed" class="completed-icon"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>check_circle"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
     <div class="checklist-footer" *ngIf="isAllCompleted">
       <div class="completion-message">
         <i class="pi pi-celebration"></i>
-        <span>All tasks completed!</span>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>All tasks completed!</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </div>
     </div>
   </div>

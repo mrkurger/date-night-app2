@@ -1,296 +1,240 @@
 /**
- *
+ * Represents a user in the system with their associated data and preferences.
+ * This interface contains all user-related information including authentication,
+ * preferences, and settings.
  */
-export interface User {
+export interface IUser {
   /**
-   *
+   * Unique identifier for the user.
    */
-  _id: string;
+  id: string;
+
   /**
-   *
-   */
-  id?: string; // Alias for _id for compatibility
-  /**
-   *
-   */
-  username: string;
-  /**
-   *
+   * User's email address, used for authentication and communication.
    */
   email: string;
+
   /**
-   *
+   * User's full name as displayed in the application.
    */
-  firstName?: string;
+  name: string;
+
   /**
-   *
+   * List of roles assigned to the user that determine their permissions.
    */
-  lastName?: string;
+  roles: string[];
+
   /**
-   *
+   * User's application preferences for customization.
    */
-  name?: string; // Full name of the user
+  preferences: {
+    /**
+     * Selected theme for the application interface.
+     */
+    theme: string;
+    /**
+     * Whether the user has enabled notifications.
+     */
+    notifications: boolean;
+  };
+
   /**
-   *
+   * Optional list of travel plans associated with the user.
    */
-  displayName?: string; // Display name for the user
+  travelPlan?: ITravelPlanItem[];
+
   /**
-   *
+   * Optional settings for notification preferences.
    */
-  phone?: string; // Phone number
+  notificationSettings?: INotificationSettings;
+
   /**
-   *
+   * Optional settings for user privacy preferences.
    */
-  bio?: string; // User biography or description
+  privacySettings?: IPrivacySettings;
+
   /**
-   *
-   */
-  role: 'user' | 'advertiser' | 'admin';
-  /**
-   *
-   */
-  roles?: string[]; // For role-based authorization
-  /**
-   *
-   */
-  online?: boolean;
-  /**
-   *
-   */
-  lastActive?: Date;
-  /**
-   *
+   * Timestamp when the user account was created.
    */
   createdAt: Date;
+
   /**
-   *
+   * Timestamp of the last update to the user account.
    */
   updatedAt: Date;
-  /**
-   *
-   */
-  travelPlan?: TravelPlanItem[];
-  /**
-   *
-   */
-  album?: string[];
-  /**
-   *
-   */
-  socialProfiles?: {
-    /**
-     *
-     */
-    github?: {
-      /**
-       *
-       */
-      id: string;
-    };
-    /**
-     *
-     */
-    google?: {
-      /**
-       *
-       */
-      id: string;
-    };
-    /**
-     *
-     */
-    reddit?: {
-      /**
-       *
-       */
-      id: string;
-    };
-    /**
-     *
-     */
-    apple?: {
-      /**
-       *
-       */
-      id: string;
-    };
-  };
-  /**
-   *
-   */
-  subscriptionTier?: 'free' | 'premium' | 'vip';
-  /**
-   *
-   */
-  subscriptionExpires?: Date;
-  /**
-   *
-   */
-  notificationSettings?: NotificationSettings;
-  /**
-   *
-   */
-  privacySettings?: PrivacySettings;
-  /**
-   *
-   */
-  profileImage?: string;
-  /**
-   *
-   */
-  avatarUrl?: string; // Alias for profileImage for compatibility
-  /**
-   *
-   */
-  location?: {
-    /**
-     *
-     */
-    city?: string;
-    /**
-     *
-     */
-    country?: string;
-  };
 }
 
 /**
- *
+ * Represents a single travel plan item in a user's itinerary.
+ * Contains details about a planned trip including dates and location.
  */
-export interface TravelPlanItem {
+export interface ITravelPlanItem {
   /**
-   *
+   * Unique identifier for the travel plan item.
    */
-  location: {
-    /**
-     *
-     */
-    type: 'Point';
-    /**
-     *
-     */
-    coordinates: [number, number]; // [longitude, latitude]
-  };
+  id: string;
+
   /**
-   *
+   * The destination location for the travel plan.
    */
-  county: string;
+  destination: string;
+
   /**
-   *
-   */
-  city: string;
-  /**
-   *
+   * The start date of the planned travel.
    */
   startDate: Date;
+
   /**
-   *
+   * The end date of the planned travel.
    */
   endDate: Date;
+
   /**
-   *
+   * Optional notes or comments about the travel plan.
    */
-  active: boolean;
+  notes?: string;
 }
 
 /**
- *
+ * Defines the notification preferences for a user.
+ * Controls how and when the user receives different types of notifications.
  */
-export interface NotificationSettings {
+export interface INotificationSettings {
   /**
-   *
+   * Whether email notifications are enabled.
    */
-  emailNotifications?: boolean;
+  email: boolean;
+
   /**
-   *
+   * Whether push notifications are enabled.
    */
-  chatNotifications?: boolean;
+  push: boolean;
+
   /**
-   *
+   * Whether SMS notifications are enabled.
    */
-  marketingEmails?: boolean;
+  sms: boolean;
+
   /**
-   *
+   * How frequently notifications should be sent to the user.
    */
-  newMatchNotifications?: boolean;
+  frequency: 'realtime' | 'daily' | 'weekly';
+
+  /**
+   * Settings for different types of notifications.
+   */
+  types: {
+    /**
+     * Whether to receive notifications for new messages.
+     */
+    messages: boolean;
+
+    /**
+     * Whether to receive notifications for new reviews.
+     */
+    reviews: boolean;
+
+    /**
+     * Whether to receive notifications for booking updates.
+     */
+    bookings: boolean;
+  };
 }
 
 /**
- *
+ * Defines the privacy settings for a user's profile and information.
+ * Controls who can see different aspects of the user's profile.
  */
-export interface PrivacySettings {
+export interface IPrivacySettings {
   /**
-   *
+   * Who can view the user's profile information.
    */
-  profileVisibility?: 'public' | 'private' | 'friends';
+  profileVisibility: 'public' | 'private' | 'contacts';
+
   /**
-   *
+   * Who can view the user's contact information.
    */
-  showOnlineStatus?: boolean;
+  contactInfoVisibility: 'public' | 'private' | 'contacts';
+
   /**
-   *
+   * Who can view the user's calendar and availability.
    */
-  allowMessaging?: 'all' | 'friends' | 'none';
-  /**
-   *
-   */
-  dataSharing?: boolean;
+  calendarVisibility: 'public' | 'private' | 'contacts';
 }
 
 /**
- *
+ * Represents the response from a successful authentication attempt.
+ * Contains the user information and authentication tokens.
  */
-export interface AuthResponse {
+export interface IAuthResponse {
   /**
-   *
+   * The authenticated user's information.
+   */
+  user: IUser;
+
+  /**
+   * JWT access token for API requests.
    */
   token: string;
+
   /**
-   *
+   * Token used to obtain new access tokens.
    */
-  refreshToken?: string;
+  refreshToken: string;
+
   /**
-   *
+   * Time in seconds until the access token expires.
    */
-  expiresIn?: number; // Expiration time in seconds
-  /**
-   *
-   */
-  user: User;
+  expiresIn: number;
 }
 
 /**
- *
+ * Represents the credentials required for user login.
  */
-export interface LoginCredentials {
+export interface ILoginCredentials {
   /**
-   *
+   * User's email address.
    */
   email: string;
+
   /**
-   *
+   * User's password.
    */
   password: string;
+
   /**
-   *
+   * Whether to persist the login session.
    */
   rememberMe?: boolean;
 }
 
 /**
- *
+ * Represents the current authentication state in the application.
+ * Used for managing the user's authentication status and related data.
  */
-export interface AuthState {
+export interface IAuthState {
   /**
-   *
+   * Currently authenticated user, or null if not authenticated.
    */
-  isAuthenticated: boolean;
+  user: IUser | null;
+
   /**
-   *
-   */
-  user: User | null;
-  /**
-   *
+   * Current JWT access token, or null if not authenticated.
    */
   token: string | null;
+
+  /**
+   * Whether the user is currently authenticated.
+   */
+  isAuthenticated: boolean;
+
+  /**
+   * Whether authentication operations are in progress.
+   */
+  loading: boolean;
+
+  /**
+   * Error message from the last authentication operation, if any.
+   */
+  error: string | null;
 }

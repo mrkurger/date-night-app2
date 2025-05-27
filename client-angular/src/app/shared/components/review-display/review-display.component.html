@@ -7,30 +7,30 @@
       [alt]="review.reviewer.username"
     />
     <div class="card-title">
-      {{ review.title }}
-      <span class="verified-badge" *ngIf="review.isVerifiedMeeting" pTooltip="Verified Meeting">
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.title }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><span class="verified-badge" *ngIf="review.isVerifiedMeeting" pTooltip="Verified Meeting" i18n-pTooltip>
         <i class="pi pi-verified"></i>
       </span>
     </div>
     <div class="card-subtitle">
-      <span class="reviewer-name">{{ review.reviewer.username }}</span>
-      <span class="review-date">{{ review.createdAt | timeAgo }}</span>
+      <span class="reviewer-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.reviewer.username }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span class="review-date"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.createdAt | timeAgo }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
 
-      <span class="status-badge" *ngIf="review.status === 'pending'"> Pending Approval </span>
+      <span class="status-badge" *ngIf="review.status === 'pending'"> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Pending Approval </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
 
     <div class="review-rating">
       <p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" [cancel]="false">
       </p-rating>
-      <span class="rating-text">{{ review.rating }}/5</span>
+      <span class="rating-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.rating }}/5</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
   </ng-template>
 
   <!-- Review Content -->
   <ng-template pTemplate="content">
     <div class="review-content">
-      {{ review.content }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.content }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
 
     <!-- Category Ratings -->
     <div
@@ -42,53 +42,53 @@
         hasCategoryRating('value')
       "
     >
-      <h4>Category Ratings</h4>
+      <h4><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Category Ratings</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
 
       <div class="category-grid">
         <div class="category-item" *ngIf="hasCategoryRating('communication')">
-          <div class="category-label">Communication</div>
+          <div class="category-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Communication</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           <p-rating
             [ngModel]="getCategoryRating('communication')"
             [readonly]="true"
             [stars]="5"
             [cancel]="false"
-            styleClass="small-rating"
+            styleClass="small-rating" i18n-styleClass
           >
           </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('appearance')">
-          <div class="category-label">Appearance</div>
+          <div class="category-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Appearance</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           <p-rating
             [ngModel]="getCategoryRating('appearance')"
             [readonly]="true"
             [stars]="5"
             [cancel]="false"
-            styleClass="small-rating"
+            styleClass="small-rating" i18n-styleClass
           >
           </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('location')">
-          <div class="category-label">Location</div>
+          <div class="category-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Location</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           <p-rating
             [ngModel]="getCategoryRating('location')"
             [readonly]="true"
             [stars]="5"
             [cancel]="false"
-            styleClass="small-rating"
+            styleClass="small-rating" i18n-styleClass
           >
           </p-rating>
         </div>
 
         <div class="category-item" *ngIf="hasCategoryRating('value')">
-          <div class="category-label">Value</div>
+          <div class="category-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Value</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           <p-rating
             [ngModel]="getCategoryRating('value')"
             [readonly]="true"
             [stars]="5"
             [cancel]="false"
-            styleClass="small-rating"
+            styleClass="small-rating" i18n-styleClass
           >
           </p-rating>
         </div>
@@ -98,7 +98,7 @@
     <!-- Meeting Date -->
     <div class="meeting-date" *ngIf="review.isVerifiedMeeting && review.meetingDate">
       <i class="pi pi-event"></i>
-      <span>Met on {{ review.meetingDate | date: 'mediumDate' }}</span>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Met on {{ review.meetingDate | date: 'mediumDate' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
 
     <!-- Advertiser Response -->
@@ -112,14 +112,14 @@
         />
         <div class="response-meta">
           <div class="response-name">
-            <strong>Response from {{ review.advertiser.username }}</strong>
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Response from {{ review.advertiser.username }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong>
           </div>
-          <div class="response-date">{{ review.advertiserResponse.date | timeAgo }}</div>
+          <div class="response-date"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.advertiserResponse.date | timeAgo }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
         </div>
       </div>
       <div class="response-content">
-        {{ review.advertiserResponse.content }}
-      </div>
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.advertiserResponse.content }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
     </div>
   </ng-template>
 
@@ -127,20 +127,20 @@
   <ng-template pTemplate="footer" *ngIf="showActions && review.status === 'approved'">
     <p-button
       label="Helpful ({{ review.helpfulVotes }})"
-      icon="pi pi-thumbs-up"
+      icon="pi pi-thumbs-up" i18n-icon
       (click)="onMarkHelpful()"
       [disabled]="isCurrentUserReviewer"
-      pTooltip="Mark this review as helpful"
+      pTooltip="Mark this review as helpful" i18n-pTooltip
     >
     </p-button>
 
     <p-button
-      label="Report"
-      icon="pi pi-flag"
-      severity="danger"
+      label="Report" i18n-label
+      icon="pi pi-flag" i18n-icon
+      severity="danger" i18n-severity
       (click)="onReportReview()"
       [disabled]="isCurrentUserReviewer"
-      pTooltip="Report this review"
+      pTooltip="Report this review" i18n-pTooltip
     >
     </p-button>
 
@@ -148,31 +148,31 @@
 
     <!-- Advertiser Actions -->
     <p-button
-      label="Respond"
-      icon="pi pi-reply"
+      label="Respond" i18n-label
+      icon="pi pi-reply" i18n-icon
       *ngIf="isCurrentUserAdvertiser && !review.advertiserResponse"
       (click)="onRespondToReview()"
-      pTooltip="Respond to this review"
+      pTooltip="Respond to this review" i18n-pTooltip
     >
     </p-button>
 
     <!-- Reviewer Actions -->
     <p-button
-      label="Edit"
-      icon="pi pi-pencil"
+      label="Edit" i18n-label
+      icon="pi pi-pencil" i18n-icon
       *ngIf="isCurrentUserReviewer"
       (click)="onEditReview()"
-      pTooltip="Edit your review"
+      pTooltip="Edit your review" i18n-pTooltip
     >
     </p-button>
 
     <p-button
-      label="Delete"
-      icon="pi pi-trash"
-      severity="danger"
+      label="Delete" i18n-label
+      icon="pi pi-trash" i18n-icon
+      severity="danger" i18n-severity
       *ngIf="isCurrentUserReviewer"
       (click)="onDeleteReview()"
-      pTooltip="Delete your review"
+      pTooltip="Delete your review" i18n-pTooltip
     >
     </p-button>
   </ng-template>

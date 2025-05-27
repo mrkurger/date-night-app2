@@ -15,10 +15,10 @@
 <div class="component-name" [class.component-name--enabled]="isEnabled">
   <!-- Component Header -->
   <div class="component-name__header">
-    <h2 class="component-name__title">{{ inputProperty }}</h2>
+    <h2 class="component-name__title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ inputProperty }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
 
     @if (optionalInput) {
-      <div class="component-name__subtitle">{{ optionalInput }}</div>
+      <div class="component-name__subtitle"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ optionalInput }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
     }
   </div>
 
@@ -33,7 +33,7 @@
     @if (isEnabled) {
       <div class="component-name__secondary-content">
         <!-- Secondary content that only appears when enabled -->
-        <p class="component-name__description">Additional content when enabled</p>
+        <p class="component-name__description"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Additional content when enabled</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       </div>
     }
   </div>
@@ -46,15 +46,15 @@
       (click)="handlePrimaryAction()"
       [attr.aria-label]="'Perform primary action for ' + inputProperty"
     >
-      Primary Action
-    </button>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Primary Action
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
 
     <button
       type="button"
       class="component-name__button component-name__button--secondary"
       (click)="handleSecondaryAction()"
     >
-      Secondary Action
-    </button>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Secondary Action
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
   </div>
 </div>

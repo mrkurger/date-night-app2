@@ -1,41 +1,41 @@
 <div class="wallet-container">
   <p-card>
     <ng-template pTemplate="header">
-      <h3>My Wallet</h3>
+      <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>My Wallet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
     </ng-template>
 
     <div class="balance-section">
-      <h4>Current Balance</h4>
-      <div class="balance-amount">{{ formatCurrency(balance) }}</div>
+      <h4><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Current Balance</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
+      <div class="balance-amount"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatCurrency(balance) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
       <div class="action-buttons">
         <p-button
-          icon="pi pi-plus"
-          label="Deposit"
-          severity="success"
+          icon="pi pi-plus" i18n-icon
+          label="Deposit" i18n-label
+          severity="success" i18n-severity
           (onClick)="openDepositDialog()"
         ></p-button>
         <p-button
-          icon="pi pi-arrow-up"
-          label="Withdraw"
-          severity="info"
+          icon="pi pi-arrow-up" i18n-icon
+          label="Withdraw" i18n-label
+          severity="info" i18n-severity
           (onClick)="openWithdrawDialog()"
         ></p-button>
         <p-button
-          icon="pi pi-sync"
-          label="Transfer"
-          severity="primary"
+          icon="pi pi-sync" i18n-icon
+          label="Transfer" i18n-label
+          severity="primary" i18n-severity
           (onClick)="openTransferDialog()"
         ></p-button>
       </div>
     </div>
 
     <div class="transactions-section">
-      <h4>Recent Transactions</h4>
+      <h4><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Recent Transactions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
       <p-card *ngIf="transactions.length > 0">
         <p-listbox
           [options]="transactions"
           [listStyle]="{ 'max-height': '300px' }"
-          styleClass="w-full"
+          styleClass="w-full" i18n-styleClass
         >
           <ng-template let-transaction pTemplate="item">
             <div
@@ -46,12 +46,12 @@
                 <i [class]="'pi ' + getTransactionTypeIconPrime(transaction.type)"></i>
               </div>
               <div class="transaction-details">
-                <div class="transaction-type">{{ transaction.type }}</div>
-                <div class="transaction-date">{{ formatDate(transaction.createdAt) }}</div>
+                <div class="transaction-type"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ transaction.type }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                <div class="transaction-date"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatDate(transaction.createdAt) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
               </div>
               <div class="transaction-amount">
-                {{ formatCurrency(transaction.amount) }}
-              </div>
+                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatCurrency(transaction.amount) }}
+              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
               <div class="transaction-status">
                 <p-tag
                   [value]="transaction.status"
@@ -65,19 +65,19 @@
       <p-card *ngIf="transactions.length === 0">
         <div class="empty-state">
           <i class="pi pi-credit-card text-6xl text-500"></i>
-          <p>No transactions yet</p>
+          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No transactions yet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         </div>
       </p-card>
     </div>
 
     <div class="payment-methods-section">
       <div class="section-header">
-        <h4>Payment Methods</h4>
+        <h4><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Payment Methods</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
         <p-button
-          icon="pi pi-plus"
-          label="Add New"
-          severity="secondary"
-          size="small"
+          icon="pi pi-plus" i18n-icon
+          label="Add New" i18n-label
+          severity="secondary" i18n-severity
+          size="small" i18n-size
           (onClick)="openAddPaymentMethodDialog()"
         ></p-button>
       </div>
@@ -85,7 +85,7 @@
         <p-listbox
           [options]="paymentMethods"
           [listStyle]="{ 'max-height': '300px' }"
-          styleClass="w-full"
+          styleClass="w-full" i18n-styleClass
         >
           <ng-template let-method pTemplate="item">
             <div class="payment-method-item">
@@ -93,24 +93,24 @@
                 <i [class]="'pi ' + getPaymentMethodIconPrime(method.type)"></i>
               </div>
               <div class="payment-method-details">
-                <div class="payment-method-name">{{ method.name }}</div>
+                <div class="payment-method-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ method.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
                 <div class="payment-method-info">
-                  <span *ngIf="method.cardDetails">•••• {{ method.cardDetails.last4 }}</span>
+                  <span *ngIf="method.cardDetails"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>•••• {{ method.cardDetails.last4 }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
                 </div>
               </div>
               <div class="payment-method-actions">
-                <p-tag *ngIf="method.isDefault" value="Default" severity="success"></p-tag>
+                <p-tag *ngIf="method.isDefault" value="Default" severity="success" i18n-severity></p-tag>
                 <p-button
                   *ngIf="!method.isDefault"
-                  label="Set Default"
-                  severity="secondary"
-                  size="small"
+                  label="Set Default" i18n-label
+                  severity="secondary" i18n-severity
+                  size="small" i18n-size
                   (onClick)="setDefaultPaymentMethod(method)"
                 ></p-button>
                 <p-button
-                  icon="pi pi-trash"
-                  severity="danger"
-                  size="small"
+                  icon="pi pi-trash" i18n-icon
+                  severity="danger" i18n-severity
+                  size="small" i18n-size
                   (onClick)="removePaymentMethod(method)"
                 ></p-button>
               </div>
@@ -121,7 +121,7 @@
       <p-card *ngIf="paymentMethods.length === 0">
         <div class="empty-state">
           <i class="pi pi-credit-card text-6xl text-500"></i>
-          <p>No payment methods added yet</p>
+          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No payment methods added yet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         </div>
       </p-card>
     </div>

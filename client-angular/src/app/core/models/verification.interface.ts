@@ -1,367 +1,130 @@
 /**
  *
  */
-export interface VerificationStatus {
-  /**
-   *
-   */
-  overallStatus: 'unverified' | 'partially_verified' | 'verified' | 'rejected';
-  /**
-   *
-   */
-  verificationLevel: number;
-  /**
-   *
-   */
-  verificationTypes: {
-    /**
-     *
-     */
-    identity: VerificationType;
-    /**
-     *
-     */
-    photo: VerificationType;
-    /**
-     *
-     */
-    phone: VerificationType & {
-      /**
-       *
-       */
-      phoneNumber?: string;
-      /**
-       *
-       */
-      verified?: boolean;
-    };
-    /**
-     *
-     */
-    email: VerificationType & {
-      /**
-       *
-       */
-      email?: string;
-      /**
-       *
-       */
-      verified?: boolean;
-    };
-    /**
-     *
-     */
-    address: VerificationType & {
-      /**
-       *
-       */
-      city?: string;
-      /**
-       *
-       */
-      county?: string;
-      /**
-       *
-       */
-      country?: string;
-    };
+export interface IVerificationStatus {
+  id: string;
+  type: IVerificationType;
+  status: 'pending' | 'approved' | 'rejected';
+  submittedAt: Date;
+  processedAt?: Date;
+  expiresAt?: Date;
+  metadata?: {
+    [key: string]: unknown;
+  };
+  notes?: string;
+  reviewedBy?: string;
+}
+
+/**
+ *
+ */
+export interface IVerificationType {
+  id: string;
+  name: string;
+  description: string;
+  required: boolean;
+  expiration?: number;
+  validationRules?: {
+    [key: string]: unknown;
   };
 }
 
 /**
  *
  */
-export interface VerificationType {
-  /**
-   *
-   */
-  status: 'not_submitted' | 'pending' | 'approved' | 'rejected';
-  /**
-   *
-   */
-  submittedDate?: Date;
-  /**
-   *
-   */
-  approvedDate?: Date;
-  /**
-   *
-   */
-  rejectedDate?: Date;
-  /**
-   *
-   */
-  rejectionReason?: string;
-  /**
-   *
-   */
-  notes?: string;
-}
-
-/**
- *
- */
-export interface IdentityVerificationData {
-  /**
-   *
-   */
-  documentType: 'passport' | 'national_id' | 'drivers_license' | 'other';
-  /**
-   *
-   */
+export interface IIdentityVerificationData {
+  documentType: 'passport' | 'drivers_license' | 'id_card';
   documentNumber: string;
-  /**
-   *
-   */
-  expiryDate?: Date;
-  /**
-   *
-   */
-  notes?: string;
+  expiryDate: Date;
+  countryOfIssue: string;
+  documentImages: string[];
 }
 
 /**
  *
  */
-export interface PhotoVerificationData {
-  /**
-   *
-   */
-  notes?: string;
+export interface IPhotoVerificationData {
+  selfie: string;
+  documentPhoto: string;
 }
 
 /**
  *
  */
-export interface PhoneVerificationData {
-  /**
-   *
-   */
+export interface IPhoneVerificationData {
   phoneNumber: string;
+  verificationCode: string;
 }
 
 /**
  *
  */
-export interface PhoneVerificationResponse {
-  /**
-   *
-   */
-  status: 'pending';
-  /**
-   *
-   */
-  submittedDate: Date;
-  /**
-   *
-   */
-  phoneNumber: string;
-  /**
-   *
-   */
-  verificationCode?: string; // Only in development
+export interface IPhoneVerificationResponse {
+  success: boolean;
+  verificationId?: string;
+  error?: string;
+  nextStep?: 'submit_code' | 'verification_complete';
 }
 
 /**
  *
  */
-export interface EmailVerificationData {
-  /**
-   *
-   */
+export interface IEmailVerificationData {
   email: string;
+  verificationCode: string;
 }
 
 /**
  *
  */
-export interface EmailVerificationResponse {
-  /**
-   *
-   */
-  status: 'pending';
-  /**
-   *
-   */
-  submittedDate: Date;
-  /**
-   *
-   */
-  email: string;
-  /**
-   *
-   */
-  verificationCode?: string; // Only in development
+export interface IEmailVerificationResponse {
+  success: boolean;
+  verificationId?: string;
+  error?: string;
+  nextStep?: 'submit_code' | 'verification_complete';
 }
 
 /**
  *
  */
-export interface AddressVerificationData {
-  /**
-   *
-   */
-  street: string;
-  /**
-   *
-   */
+export interface IAddressVerificationData {
+  streetAddress: string;
   city: string;
-  /**
-   *
-   */
+  state: string;
   postalCode: string;
-  /**
-   *
-   */
-  county: string;
-  /**
-   *
-   */
   country: string;
-  /**
-   *
-   */
-  notes?: string;
+  proofOfAddress: string[];
 }
 
 /**
  *
  */
-export interface UserVerificationStatus {
-  /**
-   *
-   */
-  username: string;
-  /**
-   *
-   */
-  verificationLevel: number;
-  /**
-   *
-   */
-  verificationBadges: {
-    /**
-     *
-     */
-    identity: boolean;
-    /**
-     *
-     */
-    photo: boolean;
-    /**
-     *
-     */
-    phone: boolean;
-    /**
-     *
-     */
-    email: boolean;
-    /**
-     *
-     */
-    address: boolean;
-  };
-}
-
-/**
- *
- */
-export interface PendingVerification {
-  /**
-   *
-   */
-  _id: string;
-  /**
-   *
-   */
-  user: {
-    /**
-     *
-     */
-    _id: string;
-    /**
-     *
-     */
-    username: string;
-    /**
-     *
-     */
-    email: string;
-    /**
-     *
-     */
-    role: string;
-  };
-  /**
-   *
-   */
-  overallStatus: string;
-  /**
-   *
-   */
-  verificationLevel: number;
-  /**
-   *
-   */
-  verificationTypes: {
-    /**
-     *
-     */
-    identity: VerificationType;
-    /**
-     *
-     */
-    photo: VerificationType;
-    /**
-     *
-     */
-    phone: VerificationType & {
-      /**
-       *
-       */
-      phoneNumber?: string;
-    };
-    /**
-     *
-     */
-    email: VerificationType & {
-      /**
-       *
-       */
-      email?: string;
-    };
-    /**
-     *
-     */
-    address: VerificationType & {
-      /**
-       *
-       */
-      street?: string;
-      /**
-       *
-       */
-      city?: string;
-      /**
-       *
-       */
-      postalCode?: string;
-      /**
-       *
-       */
-      county?: string;
-      /**
-       *
-       */
-      country?: string;
-    };
-  };
-  /**
-   *
-   */
+export interface IUserVerificationStatus {
+  userId: string;
+  completedVerifications: IVerificationType['id'][];
+  pendingVerifications: IVerificationType['id'][];
+  failedVerifications: Array<{
+    type: IVerificationType['id'];
+    reason: string;
+    failedAt: Date;
+  }>;
   lastUpdated: Date;
-  /**
-   *
-   */
-  createdAt: Date;
+  overallStatus: 'unverified' | 'partially_verified' | 'fully_verified';
+}
+
+/**
+ *
+ */
+export interface IPendingVerification {
+  userId: string;
+  type: IVerificationType;
+  submittedData:
+    | IIdentityVerificationData
+    | IPhotoVerificationData
+    | IPhoneVerificationData
+    | IEmailVerificationData
+    | IAddressVerificationData;
+  status: 'submitted' | 'processing' | 'requires_action';
+  submittedAt: Date;
+  expiresAt?: Date;
 }

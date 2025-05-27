@@ -1,40 +1,40 @@
 <div [class]="bem.block()">
   <header [class]="bem.element('header')">
     <div class="container">
-      <h1 [class]="bem.element('title')">Micro-interactions</h1>
+      <h1 [class]="bem.element('title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Micro-interactions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h1>
       <p [class]="bem.element('description')">
-        This page demonstrates micro-interactions used throughout the DateNight.io application.
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>This page demonstrates micro-interactions used throughout the DateNight.io application.
         Micro-interactions provide feedback, guide users, and create a more engaging experience.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       <button (click)="toggleTheme()" [class]="bem.element('theme-toggle')">
-        Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
-      </button>
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Toggle {{ (isDarkMode$ | async) ? 'Light' : 'Dark' }} Mode
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
     </div>
   </header>
 
   <main class="container">
     <!-- Introduction -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Introduction</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Introduction</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        Micro-interactions are small, subtle animations and effects that provide feedback and
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Micro-interactions are small, subtle animations and effects that provide feedback and
         enhance the user experience. They help users understand what's happening, guide them through
         the interface, and make the application feel more responsive and polished.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       <p>
-        DateNight.io uses a consistent set of micro-interactions throughout the application to
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>DateNight.io uses a consistent set of micro-interactions throughout the application to
         create a cohesive and engaging experience. This page showcases these micro-interactions and
         provides examples of how to implement them.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     </section>
 
     <!-- Hover Effects -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Hover Effects</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Hover Effects</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        Hover effects provide feedback when users hover over interactive elements. They help users
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Hover effects provide feedback when users hover over interactive elements. They help users
         understand what elements are clickable and what will happen when they click.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div [class]="bem.element('example')">
         <div [class]="bem.element('hover-grid')">
@@ -42,9 +42,9 @@
             *ngFor="let effect of hoverEffects"
             [class]="bem.element('hover-item', [effect.class])"
           >
-            <h3 [class]="bem.element('hover-name')">{{ effect.name }}</h3>
-            <p [class]="bem.element('hover-description')">{{ effect.description }}</p>
-            <pre *ngIf="effect.code" [class]="bem.element('code')">{{ effect.code }}</pre>
+            <h3 [class]="bem.element('hover-name')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <p [class]="bem.element('hover-description')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <pre *ngIf="effect.code" [class]="bem.element('code')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.code }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></pre>
           </div>
         </div>
       </div>
@@ -52,12 +52,12 @@
 
     <!-- Loading States -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Loading States</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading States</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        Loading states provide feedback when the application is processing a request or loading
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading states provide feedback when the application is processing a request or loading
         content. They help users understand that something is happening and prevent them from
         thinking the application is frozen or unresponsive.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div [class]="bem.element('example')">
         <div [class]="bem.element('loading-demo')">
@@ -73,7 +73,7 @@
             [disabled]="isLoading"
           >
             <span [class]="bem.element('loading-button-text')">
-              {{
+              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{
                 isLoading
                   ? 'Loading...'
                   : isSuccess
@@ -82,7 +82,7 @@
                       ? 'Error!'
                       : 'Click to Load'
               }}
-            </span>
+            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             <span *ngIf="isLoading" [class]="bem.element('spinner')"></span>
             <span *ngIf="isSuccess" [class]="bem.element('success-icon')">✓</span>
             <span *ngIf="isError" [class]="bem.element('error-icon')">✕</span>
@@ -101,7 +101,7 @@
             [disabled]="isLoading"
           >
             <span [class]="bem.element('loading-button-text')">
-              {{
+              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{
                 isLoading
                   ? 'Loading...'
                   : isSuccess
@@ -110,7 +110,7 @@
                       ? 'Error!'
                       : 'Simulate Error'
               }}
-            </span>
+            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             <span *ngIf="isLoading" [class]="bem.element('spinner')"></span>
             <span *ngIf="isSuccess" [class]="bem.element('success-icon')">✓</span>
             <span *ngIf="isError" [class]="bem.element('error-icon')">✕</span>
@@ -119,14 +119,14 @@
 
         <div [class]="bem.element('loading-grid')">
           <div *ngFor="let state of loadingStates" [class]="bem.element('loading-item')">
-            <h3 [class]="bem.element('loading-name')">{{ state.name }}</h3>
-            <p [class]="bem.element('loading-description')">{{ state.description }}</p>
+            <h3 [class]="bem.element('loading-name')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ state.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <p [class]="bem.element('loading-description')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ state.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
             <div [class]="bem.element('loading-example', [state.class])">
               <div
                 *ngIf="state.class === 'button-loading'"
                 [class]="bem.element('demo-button', ['loading'])"
               >
-                <span>Loading</span>
+                <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
                 <span [class]="bem.element('spinner')"></span>
               </div>
 
@@ -150,11 +150,11 @@
 
     <!-- Transition Effects -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Transition Effects</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Transition Effects</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        Transition effects provide smooth animations when elements enter, exit, or change state.
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Transition effects provide smooth animations when elements enter, exit, or change state.
         They help users understand what's happening and create a more polished experience.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div [class]="bem.element('example')">
         <div [class]="bem.element('transition-grid')">
@@ -162,9 +162,9 @@
             *ngFor="let effect of transitionEffects"
             [class]="bem.element('transition-item', [effect.class])"
           >
-            <h3 [class]="bem.element('transition-name')">{{ effect.name }}</h3>
-            <p [class]="bem.element('transition-description')">{{ effect.description }}</p>
-            <pre *ngIf="effect.code" [class]="bem.element('code')">{{ effect.code }}</pre>
+            <h3 [class]="bem.element('transition-name')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <p [class]="bem.element('transition-description')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <pre *ngIf="effect.code" [class]="bem.element('code')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ effect.code }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></pre>
           </div>
         </div>
       </div>
@@ -172,11 +172,11 @@
 
     <!-- Feedback Animations -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Feedback Animations</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Feedback Animations</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        Feedback animations provide visual cues when users interact with the application. They help
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Feedback animations provide visual cues when users interact with the application. They help
         users understand the result of their actions and create a more engaging experience.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div [class]="bem.element('example')">
         <div [class]="bem.element('feedback-grid')">
@@ -184,8 +184,8 @@
             *ngFor="let animation of feedbackAnimations"
             [class]="bem.element('feedback-item', [animation.class])"
           >
-            <h3 [class]="bem.element('feedback-name')">{{ animation.name }}</h3>
-            <p [class]="bem.element('feedback-description')">{{ animation.description }}</p>
+            <h3 [class]="bem.element('feedback-name')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ animation.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <p [class]="bem.element('feedback-description')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ animation.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
             <div [class]="bem.element('feedback-demo')">
               <div
@@ -193,8 +193,8 @@
                 [class]="bem.element('success-demo')"
               >
                 <button [class]="bem.element('demo-button')" (click)="simulateLoading()">
-                  Show Success
-                </button>
+                  <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Show Success
+                </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
               </div>
 
               <div
@@ -202,12 +202,12 @@
                 [class]="bem.element('error-demo')"
               >
                 <button [class]="bem.element('demo-button')" (click)="simulateError()">
-                  Show Error
-                </button>
+                  <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Show Error
+                </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
               </div>
 
               <div *ngIf="animation.class === 'click-ripple'" [class]="bem.element('ripple-demo')">
-                <button [class]="bem.element('demo-button', ['ripple'])">Click for Ripple</button>
+                <button [class]="bem.element('demo-button', ['ripple'])"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Click for Ripple</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
               </div>
 
               <div
@@ -219,12 +219,12 @@
                   [class]="bem.element('demo-button', ['shake'])"
                   (click)="simulateShake(shakeButton)"
                 >
-                  Click to Shake
-                </button>
+                  <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Click to Shake
+                </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
               </div>
             </div>
 
-            <pre *ngIf="animation.code" [class]="bem.element('code')">{{ animation.code }}</pre>
+            <pre *ngIf="animation.code" [class]="bem.element('code')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ animation.code }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></pre>
           </div>
         </div>
       </div>
@@ -232,107 +232,107 @@
 
     <!-- Accessibility Considerations -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Accessibility Considerations</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Accessibility Considerations</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <p>
-        When implementing micro-interactions, it's important to consider accessibility. Some users
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>When implementing micro-interactions, it's important to consider accessibility. Some users
         may prefer reduced motion or may be using assistive technologies that don't support
         animations.
-      </p>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <div [class]="bem.element('example')">
-        <h3 [class]="bem.element('subsection-title')">Respecting User Preferences</h3>
+        <h3 [class]="bem.element('subsection-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Respecting User Preferences</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
         <p>
-          Use the <code>prefers-reduced-motion</code> media query to respect user preferences for
+          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Use the </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><code><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>prefers-reduced-motion</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></code> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>media query to respect user preferences for
           reduced motion:
-        </p>
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         <pre [class]="bem.element('code')">
-&#64;media (prefers-reduced-motion: reduce) &#123;
+<ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>&#64;media (prefers-reduced-motion: reduce) &#123;
   /* Reduce or eliminate animations */
   .animated-element &#123;
     animation: none;
     transition: none;
   &#125;
-&#125;</pre
+&#125;</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></pre
         >
 
-        <h3 [class]="bem.element('subsection-title')">Providing Alternatives</h3>
+        <h3 [class]="bem.element('subsection-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Providing Alternatives</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
         <p>
-          Ensure that all information conveyed through animations is also available through other
+          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Ensure that all information conveyed through animations is also available through other
           means:
-        </p>
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         <pre [class]="bem.element('code')"><!-- Instead of just a spinner -->
 <button aria-busy="true">
   <span class="spinner" aria-hidden="true"></span>
-  <span>Loading...</span>
+  <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
 </button></pre>
       </div>
     </section>
 
     <!-- Best Practices -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Best Practices</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Best Practices</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
 
       <div [class]="bem.element('example')">
         <ul [class]="bem.element('best-practices-list')">
           <li>
-            <strong>Be subtle:</strong> Micro-interactions should enhance the experience, not
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be subtle:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Micro-interactions should enhance the experience, not
             distract from it. Keep animations short and subtle.
-          </li>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
           <li>
-            <strong>Be consistent:</strong> Use the same micro-interactions for similar actions
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be consistent:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Use the same micro-interactions for similar actions
             throughout the application to create a cohesive experience.
-          </li>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
           <li>
-            <strong>Be purposeful:</strong> Every micro-interaction should serve a purpose, whether
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be purposeful:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Every micro-interaction should serve a purpose, whether
             it's providing feedback, guiding users, or creating delight.
-          </li>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
           <li>
-            <strong>Be accessible:</strong> Respect user preferences for reduced motion and ensure
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be accessible:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Respect user preferences for reduced motion and ensure
             that all information is available through other means.
-          </li>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
           <li>
-            <strong>Be performant:</strong> Optimize animations for performance to ensure a smooth
+            <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be performant:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Optimize animations for performance to ensure a smooth
             experience on all devices.
-          </li>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
         </ul>
       </div>
     </section>
 
     <!-- Resources -->
     <section [class]="bem.element('section')">
-      <h2 [class]="bem.element('section-title')">Resources</h2>
+      <h2 [class]="bem.element('section-title')"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Resources</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
       <ul [class]="bem.element('resources-list')">
         <li>
           <a
             href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations"
             target="_blank"
-            >MDN: Using CSS Animations</a
+            ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>MDN: Using CSS Animations</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
           >
         </li>
         <li>
           <a
             href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions"
             target="_blank"
-            >MDN: Using CSS Transitions</a
+            ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>MDN: Using CSS Transitions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
           >
         </li>
         <li>
           <a href="https://web.dev/prefers-reduced-motion/" target="_blank"
-            >Web.dev: prefers-reduced-motion</a
+            ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Web.dev: prefers-reduced-motion</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
           >
         </li>
         <li>
           <a
             href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html"
             target="_blank"
-            >WCAG: Animation from Interactions</a
+            ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>WCAG: Animation from Interactions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
           >
         </li>
         <li>
           <a
             href="https://www.smashingmagazine.com/2021/10/modern-css-solutions-for-common-problems/"
             target="_blank"
-            >Smashing Magazine: Modern CSS Solutions</a
+            ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Smashing Magazine: Modern CSS Solutions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
           >
         </li>
       </ul>

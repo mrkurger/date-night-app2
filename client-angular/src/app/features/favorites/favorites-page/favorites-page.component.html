@@ -5,12 +5,12 @@
   <p-card class="mb-3">
     <ng-template pTemplate="title">
       <div class="flex justify-content-between align-items-center">
-        <span>My Favorites</span>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>My Favorites</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
         <button
           pButton
           type="button"
-          icon="pi pi-plus"
-          label="Add New Favorite"
+          icon="pi pi-plus" i18n-icon
+          label="Add New Favorite" i18n-label
           class="p-button-sm"
           (click)="navigateToCreateFavorite()"
         ></button>
@@ -24,7 +24,7 @@
           <input
             pInputText
             type="text"
-            placeholder="Search favorites..."
+            placeholder="Search favorites..." i18n-placeholder
             [(ngModel)]="searchTerm"
             (ngModelChange)="onSearchTermChange($event)"
             class="w-full"
@@ -35,28 +35,28 @@
         <p-dropdown
           [options]="priorityOptions"
           [(ngModel)]="priorityFilter"
-          placeholder="Priority"
+          placeholder="Priority" i18n-placeholder
           (onChange)="onFilterChange()"
           [showClear]="true"
-          styleClass="w-full"
+          styleClass="w-full" i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="field col-12 md:col-2">
         <p-dropdown
           [options]="typeOptions"
           [(ngModel)]="typeFilter"
-          placeholder="Type"
+          placeholder="Type" i18n-placeholder
           (onChange)="onFilterChange()"
           [showClear]="true"
-          styleClass="w-full"
+          styleClass="w-full" i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="field col-12 md:col-2">
         <button
           pButton
           type="button"
-          label="Advanced"
-          icon="pi pi-filter"
+          label="Advanced" i18n-label
+          icon="pi pi-filter" i18n-icon
           class="p-button-outlined w-full"
           (click)="toggleAdvancedSearch()"
         ></button>
@@ -65,8 +65,8 @@
         <button
           pButton
           type="button"
-          label="Clear Filters"
-          icon="pi pi-times"
+          label="Clear Filters" i18n-label
+          icon="pi pi-times" i18n-icon
           class="p-button-text w-full"
           (click)="clearFilters()"
         ></button>
@@ -74,7 +74,7 @@
     </div>
 
     <p-dialog
-      header="Advanced Search"
+      header="Advanced Search" i18n-header
       [(visible)]="displayAdvancedSearch"
       [modal]="true"
       [style]="{ width: '50vw' }"
@@ -83,75 +83,75 @@
     >
       <div class="grid formgrid p-fluid">
         <div class="field col-12 md:col-6">
-          <label htmlFor="advName">Name Contains</label>
+          <label htmlFor="advName" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Name Contains</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <input pInputText id="advName" [(ngModel)]="advancedSearchQuery.nameContains" />
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advNotes">Notes Contains</label>
+          <label htmlFor="advNotes" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Notes Contains</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <input pInputText id="advNotes" [(ngModel)]="advancedSearchQuery.notesContains" />
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advUrl">URL Contains</label>
+          <label htmlFor="advUrl" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>URL Contains</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <input pInputText id="advUrl" [(ngModel)]="advancedSearchQuery.urlContains" />
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advTagsAny">Tags (any)</label>
+          <label htmlFor="advTagsAny" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Tags (any)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-multiSelect
-            inputId="advTagsAny"
+            inputId="advTagsAny" i18n-inputId
             [options]="availableTags"
             [(ngModel)]="advancedSearchQuery.tagsIncludeAny"
-            placeholder="Select Tags"
-            optionLabel="label"
-            optionValue="value"
-            display="chip"
+            placeholder="Select Tags" i18n-placeholder
+            optionLabel="label" i18n-optionLabel
+            optionValue="value" i18n-optionValue
+            display="chip" i18n-display
           ></p-multiSelect>
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advTagsAll">Tags (all)</label>
+          <label htmlFor="advTagsAll" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Tags (all)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-multiSelect
-            inputId="advTagsAll"
+            inputId="advTagsAll" i18n-inputId
             [options]="availableTags"
             [(ngModel)]="advancedSearchQuery.tagsIncludeAll"
-            placeholder="Select Tags"
-            optionLabel="label"
-            optionValue="value"
-            display="chip"
+            placeholder="Select Tags" i18n-placeholder
+            optionLabel="label" i18n-optionLabel
+            optionValue="value" i18n-optionValue
+            display="chip" i18n-display
           ></p-multiSelect>
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advDateAddedMin">Date Added (Min)</label>
+          <label htmlFor="advDateAddedMin" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Date Added (Min)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-calendar
-            inputId="advDateAddedMin"
+            inputId="advDateAddedMin" i18n-inputId
             [(ngModel)]="advancedSearchQuery.minDateAdded"
             [showIcon]="true"
-            dateFormat="yy-mm-dd"
+            dateFormat="yy-mm-dd" i18n-dateFormat
           ></p-calendar>
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advDateAddedMax">Date Added (Max)</label>
+          <label htmlFor="advDateAddedMax" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Date Added (Max)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-calendar
-            inputId="advDateAddedMax"
+            inputId="advDateAddedMax" i18n-inputId
             [(ngModel)]="advancedSearchQuery.maxDateAdded"
             [showIcon]="true"
-            dateFormat="yy-mm-dd"
+            dateFormat="yy-mm-dd" i18n-dateFormat
           ></p-calendar>
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advLastAccessedMin">Last Accessed (Min)</label>
+          <label htmlFor="advLastAccessedMin" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Last Accessed (Min)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-calendar
-            inputId="advLastAccessedMin"
+            inputId="advLastAccessedMin" i18n-inputId
             [(ngModel)]="advancedSearchQuery.minLastAccessed"
             [showIcon]="true"
-            dateFormat="yy-mm-dd"
+            dateFormat="yy-mm-dd" i18n-dateFormat
           ></p-calendar>
         </div>
         <div class="field col-12 md:col-6">
-          <label htmlFor="advLastAccessedMax">Last Accessed (Max)</label>
+          <label htmlFor="advLastAccessedMax" i18n-htmlFor><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Last Accessed (Max)</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           <p-calendar
-            inputId="advLastAccessedMax"
+            inputId="advLastAccessedMax" i18n-inputId
             [(ngModel)]="advancedSearchQuery.maxLastAccessed"
             [showIcon]="true"
-            dateFormat="yy-mm-dd"
+            dateFormat="yy-mm-dd" i18n-dateFormat
           ></p-calendar>
         </div>
       </div>
@@ -159,16 +159,16 @@
         <button
           pButton
           type="button"
-          label="Reset"
-          icon="pi pi-refresh"
+          label="Reset" i18n-label
+          icon="pi pi-refresh" i18n-icon
           class="p-button-text"
           (click)="resetAdvancedSearch()"
         ></button>
         <button
           pButton
           type="button"
-          label="Search"
-          icon="pi pi-search"
+          label="Search" i18n-label
+          icon="pi pi-search" i18n-icon
           (click)="performAdvancedSearch()"
         ></button>
       </ng-template>
@@ -179,8 +179,8 @@
       <button
         pButton
         type="button"
-        label="Batch Actions"
-        icon="pi pi-bolt"
+        label="Batch Actions" i18n-label
+        icon="pi pi-bolt" i18n-icon
         (click)="batchMenu.toggle($event)"
         class="p-button-secondary"
       ></button>
@@ -191,13 +191,13 @@
     </div>
 
     <div *ngIf="error" class="p-message p-message-error my-3">
-      {{ error }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ error }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
 
     <div *ngIf="!isLoading && !error && favorites.length === 0" class="text-center my-3">
       <p>
-        No favorites found. Try adjusting your search or filters, or
-        <a href="javascript:void(0)" (click)="navigateToCreateFavorite()">add a new one</a>!
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No favorites found. Try adjusting your search or filters, or
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><a href="javascript:void(0)" (click)="navigateToCreateFavorite()"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>add a new one</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>!
       </p>
     </div>
 
@@ -206,7 +206,7 @@
     <p-table
       #dt
       [value]="favorites"
-      dataKey="id"
+      dataKey="id" i18n-dataKey
       [rows]="itemsPerPage"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="itemsPerPageOptions"
@@ -216,14 +216,14 @@
       (onPage)="onPageChange($event)"
       (onSort)="onPrimeTableSort($event)"
       [customSort]="true"
-      sortMode="single"
+      sortMode="single" i18n-sortMode
       [(selection)]="selectedFavorites"
-      selectionMode="multiple"
+      selectionMode="multiple" i18n-selectionMode
       (onRowSelect)="onFavoriteSelectChange($event.data, true)"
       (onRowUnselect)="onFavoriteSelectChange($event.data, false)"
       (onHeaderCheckboxToggle)="toggleSelectAll()"
       [globalFilterFields]="['name', 'type', 'notes', 'url']"
-      responsiveLayout="scroll"
+      responsiveLayout="scroll" i18n-responsiveLayout
       [contextMenu]="cm"
       [(contextMenuSelection)]="selectedFavoriteForContextMenu"
       (onContextMenuSelect)="onContextMenu($event.originalEvent, $event.data)"
@@ -237,9 +237,9 @@
             ></p-tableHeaderCheckbox>
           </th>
           <th *ngFor="let col of selectedColumns" [pSortableColumn]="col.field">
-            {{ col.header }} <p-sortIcon [field]="col.field"></p-sortIcon>
+            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ col.header }} </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
-          <th style="width: 8rem">Actions</th>
+          <th style="width: 8rem"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Actions</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></th>
         </tr>
       </ng-template>
 
@@ -258,22 +258,22 @@
                 <div class="flex align-items-center">
                   <p-avatar
                     [label]="favorite.name ? favorite.name[0].toUpperCase() : 'N'"
-                    styleClass="mr-2"
-                    size="large"
-                    shape="circle"
+                    styleClass="mr-2" i18n-styleClass
+                    size="large" i18n-size
+                    shape="circle" i18n-shape
                   ></p-avatar>
                   <div>
                     <a
                       href="javascript:void(0)"
                       (click)="viewFavoriteDetails(favorite)"
                       [pTooltip]="favorite.url || 'View details'"
-                      tooltipPosition="top"
-                      >{{ favorite.name }}</a
+                      tooltipPosition="top" i18n-tooltipPosition
+                      ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ favorite.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
                     >
                     <div *ngIf="favorite.notes" class="text-sm text-gray-500">
-                      {{ favorite.notes | slice: 0 : 50
+                      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ favorite.notes | slice: 0 : 50
                       }}{{ favorite.notes.length > 50 ? '...' : '' }}
-                    </div>
+                    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
                   </div>
                 </div>
               </ng-container>
@@ -300,27 +300,27 @@
                   [value]="favorite.priority"
                   [severity]="getSeverityForPriority(favorite.priority)"
                 ></p-tag>
-                <span *ngIf="!favorite.priority">None</span>
+                <span *ngIf="!favorite.priority"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>None</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
               </ng-container>
               <ng-container *ngSwitchCase="'dateAdded'">
-                {{ favorite.dateAdded | date: 'mediumDate' }}
-              </ng-container>
+                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ favorite.dateAdded | date: 'mediumDate' }}
+              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
               <ng-container *ngSwitchCase="'lastAccessed'">
-                {{ favorite.lastAccessed ? (favorite.lastAccessed | date: 'medium') : 'Never' }}
-              </ng-container>
+                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ favorite.lastAccessed ? (favorite.lastAccessed | date: 'medium') : 'Never' }}
+              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
               <ng-container *ngSwitchCase="'tags'">
                 <div *ngIf="favorite.tags && favorite.tags.length > 0" class="flex flex-wrap gap-1">
                   <p-chip
                     *ngFor="let tag of favorite.tags"
                     [label]="tag"
-                    styleClass="p-chip-sm"
+                    styleClass="p-chip-sm" i18n-styleClass
                   ></p-chip>
                 </div>
-                <span *ngIf="!favorite.tags || favorite.tags.length === 0">No tags</span>
+                <span *ngIf="!favorite.tags || favorite.tags.length === 0"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No tags</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
               </ng-container>
               <ng-container *ngSwitchDefault>
-                {{ favorite[col.field] }}
-              </ng-container>
+                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ favorite[col.field] }}
+              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
             </ng-container>
           </td>
           <td>
@@ -328,35 +328,35 @@
               pButton
               pRipple
               type="button"
-              icon="pi pi-pencil"
+              icon="pi pi-pencil" i18n-icon
               class="p-button-rounded p-button-text"
               (click)="editFavorite(favorite)"
-              pTooltip="Edit"
-              tooltipPosition="top"
+              pTooltip="Edit" i18n-pTooltip
+              tooltipPosition="top" i18n-tooltipPosition
             ></button>
             <button
               pButton
               pRipple
               type="button"
-              icon="pi pi-trash"
+              icon="pi pi-trash" i18n-icon
               class="p-button-rounded p-button-text p-button-danger"
               (click)="confirmDeleteFavorite(favorite)"
-              pTooltip="Delete"
-              tooltipPosition="top"
+              pTooltip="Delete" i18n-pTooltip
+              tooltipPosition="top" i18n-tooltipPosition
             ></button>
             <button
               pButton
               pRipple
               type="button"
-              icon="pi pi-ellipsis-v"
+              icon="pi pi-ellipsis-v" i18n-icon
               class="p-button-rounded p-button-text"
               (click)="
                 cm.show($event);
                 selectedFavoriteForContextMenu = favorite;
                 contextMenuItems = generateContextMenuItems(favorite)
               "
-              pTooltip="More Actions"
-              tooltipPosition="top"
+              pTooltip="More Actions" i18n-pTooltip
+              tooltipPosition="top" i18n-tooltipPosition
             ></button>
           </td>
         </tr>
@@ -365,8 +365,8 @@
       <ng-template pTemplate="emptymessage">
         <tr>
           <td [attr.colspan]="selectedColumns.length + 2" class="text-center">
-            No favorites found.
-          </td>
+            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No favorites found.
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></td>
         </tr>
       </ng-template>
       <ng-template pTemplate="paginatorleft">
@@ -380,10 +380,10 @@
         <p-multiSelect
           [options]="cols"
           [(ngModel)]="selectedColumns"
-          optionLabel="header"
-          selectedItemsLabel="{0} columns selected"
+          optionLabel="header" i18n-optionLabel
+          selectedItemsLabel="{0} columns selected" i18n-selectedItemsLabel
           [style]="{ minWidth: '200px' }"
-          placeholder="Choose Columns"
+          placeholder="Choose Columns" i18n-placeholder
         ></p-multiSelect>
       </ng-template>
     </p-table>

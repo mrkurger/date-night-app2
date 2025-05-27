@@ -2,14 +2,14 @@
   <div class="moderation-header">
     <div class="p-grid p-align-items-center">
       <div class="p-col-12 p-md-6">
-        <h2>Content Moderation</h2>
-        <p class="p-text-secondary">Review and moderate user-submitted content</p>
+        <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Content Moderation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
+        <p class="p-text-secondary"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Review and moderate user-submitted content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       </div>
       <div class="p-col-12 p-md-6 p-text-right">
         <p-button
-          label="Refresh"
-          icon="fas fa-sync-alt"
-          styleClass="p-button-outlined p-button-primary"
+          label="Refresh" i18n-label
+          icon="fas fa-sync-alt" i18n-icon
+          styleClass="p-button-outlined p-button-primary" i18n-styleClass
           (click)="loadPendingMedia()"
         >
         </p-button>
@@ -18,17 +18,17 @@
   </div>
 
   <!-- Error Message -->
-  <p-message *ngIf="error" severity="error" [text]="error"></p-message>
+  <p-message *ngIf="error" severity="error" i18n-severity [text]="error"></p-message>
 
   <!-- Loading Spinner -->
   <div class="loading-container" *ngIf="loading">
     <p-progressSpinner
-      styleClass="w-4rem h-4rem"
+      styleClass="w-4rem h-4rem" i18n-styleClass
       strokeWidth="4"
       fill="var(--surface-ground)"
       animationDuration=".5s"
     ></p-progressSpinner>
-    <p>Loading content for moderation...</p>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading content for moderation...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
   </div>
 
   <!-- Filters -->
@@ -42,7 +42,7 @@
           <input
             pInputText
             type="text"
-            placeholder="Search by ad title"
+            placeholder="Search by ad title" i18n-placeholder
             [(ngModel)]="searchTerm"
             (input)="applyFilters()"
           />
@@ -57,10 +57,10 @@
           ]"
           [(ngModel)]="mediaTypeFilter"
           (onChange)="applyFilters()"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select Media Type"
-          styleClass="w-100"
+          optionLabel="label" i18n-optionLabel
+          optionValue="value" i18n-optionValue
+          placeholder="Select Media Type" i18n-placeholder
+          styleClass="w-100" i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="p-col-12 p-md-3 p-mb-2">
@@ -72,16 +72,16 @@
           ]"
           [(ngModel)]="sortOrder"
           (onChange)="applyFilters()"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Sort By"
-          styleClass="w-100"
+          optionLabel="label" i18n-optionLabel
+          optionValue="value" i18n-optionValue
+          placeholder="Sort By" i18n-placeholder
+          styleClass="w-100" i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="p-col-12 p-md-2 p-mb-2">
         <p-button
-          label="Reset"
-          styleClass="p-button-outlined p-button-secondary w-100"
+          label="Reset" i18n-label
+          styleClass="p-button-outlined p-button-secondary w-100" i18n-styleClass
           (click)="resetFilters()"
         ></p-button>
       </div>
@@ -96,13 +96,13 @@
         [ngClass]="{ video: media.type === 'video', image: media.type === 'image' }"
       >
         <i [class]="'fas ' + getMediaTypeIcon(media.type)"></i>
-        {{ media.type }}
-      </div>
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.type }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
       <div class="media-img-container">
         <img
           *ngIf="media.type === 'image'"
           [src]="getSafeUrl(media.url)"
-          alt="Media preview"
+          alt="Media preview" i18n-alt
           class="p-card-img"
           (error)="onMediaLoadError(media)"
         />
@@ -114,16 +114,16 @@
         </div>
       </div>
       <div class="p-card-body">
-        <h5 class="p-card-title">{{ media.adTitle }}</h5>
+        <h5 class="p-card-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.adTitle }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
         <p class="p-card-subtitle">
           <small class="p-text-secondary">
-            <i class="fas fa-clock"></i> {{ media.createdAt | date: 'short' }}
-          </small>
+            <i class="fas fa-clock"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.createdAt | date: 'short' }}
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
         </p>
         <p-button
-          label="Moderate"
-          icon="fas fa-check-square"
-          styleClass="p-button-primary"
+          label="Moderate" i18n-label
+          icon="fas fa-check-square" i18n-icon
+          styleClass="p-button-primary" i18n-styleClass
           (click)="openModerationModal(media)"
         >
         </p-button>
@@ -152,12 +152,12 @@
     <div class="empty-state-icon">
       <i class="fas fa-check-circle"></i>
     </div>
-    <h3>No Pending Content</h3>
-    <p>There are no media items waiting for moderation at this time.</p>
+    <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No Pending Content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>There are no media items waiting for moderation at this time.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     <p-button
-      label="Refresh"
-      icon="fas fa-sync-alt"
-      styleClass="p-button-outlined p-button-primary"
+      label="Refresh" i18n-label
+      icon="fas fa-sync-alt" i18n-icon
+      styleClass="p-button-outlined p-button-primary" i18n-styleClass
       (click)="loadPendingMedia()"
     >
     </p-button>
@@ -171,7 +171,7 @@
   [style]="{ width: '90%', maxWidth: '700px' }"
   [draggable]="false"
   [resizable]="false"
-  header="Moderate Content"
+  header="Moderate Content" i18n-header
   [closeOnEscape]="true"
   (onHide)="closeModerationDialog()"
 >

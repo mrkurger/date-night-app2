@@ -9,19 +9,19 @@
   <div class="map-overlay" *ngIf="selectable">
     <div class="map-instructions">
       <i class="fas fa-info-circle"></i>
-      Click on the map to select a location
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Click on the map to select a location
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
   </div>
 
   <!-- Accessibility Controls -->
-  <div class="map-accessibility-controls" aria-label="Map controls">
-    <button (click)="zoomIn()" aria-label="Zoom in">
+  <div class="map-accessibility-controls" aria-label="Map controls" i18n-aria-label>
+    <button (click)="zoomIn()" aria-label="Zoom in" i18n-aria-label>
       <i class="fas fa-plus"></i>
     </button>
-    <button (click)="zoomOut()" aria-label="Zoom out">
+    <button (click)="zoomOut()" aria-label="Zoom out" i18n-aria-label>
       <i class="fas fa-minus"></i>
     </button>
-    <button *ngIf="showCurrentLocation" (click)="getUserLocation()" aria-label="Show my location">
+    <button *ngIf="showCurrentLocation" (click)="getUserLocation()" aria-label="Show my location" i18n-aria-label>
       <i class="fas fa-location-arrow"></i>
     </button>
   </div>

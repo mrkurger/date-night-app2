@@ -21,15 +21,15 @@
     <!-- Custom checkbox visual -->
     <div class="checkbox__custom">
       @if (checked) {
-        <i name="check" size="small" class="pi pi-{iconName}"></i>
+        <i name="check" size="small" i18n-size class="pi pi-{iconName}"></i>
       }
     </div>
   </div>
 
   @if (label) {
     <label class="checkbox__label" [attr.for]="id || name">
-      {{ label }}
-      @if (required) {
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>@if (required) {
         <span class="checkbox__required-indicator">*</span>
       }
     </label>
@@ -42,7 +42,7 @@
       [class.checkbox__helper-text--error]="!!errorMessage"
       [attr.id]="(id || name) + '-helper'"
     >
-      {{ errorMessage || helperText }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ errorMessage || helperText }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
   }
 </div>

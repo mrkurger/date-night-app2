@@ -41,7 +41,7 @@ export type AlertChannel = 'ui' | 'email' | 'slack' | 'webhook';
 /**
  * Alert condition configuration;
  */
-export interface AlertCondition {
+export interface IAlertCondition {
   /**
    *
    */
@@ -71,7 +71,7 @@ export interface AlertCondition {
 /**
  * Alert notification configuration;
  */
-export interface AlertNotification {
+export interface IAlertNotification {
   /**
    *
    */
@@ -101,7 +101,7 @@ export interface AlertNotification {
 /**
  * Custom alert definition;
  */
-export interface Alert {
+export interface IAlert {
   /**
    *
    */
@@ -121,7 +121,7 @@ export interface Alert {
   /**
    *
    */
-  condition: AlertCondition;
+  condition: IAlertCondition;
   /**
    *
    */
@@ -143,7 +143,7 @@ export interface Alert {
 /**
  * Alert event triggered when an alert condition is met;
  */
-export interface AlertEvent {
+export interface IAlertEvent {
   /**
    *
    */
@@ -183,5 +183,5 @@ export interface AlertEvent {
   /**
    *
    */
-  data?: Record;
+  data?: Record<string, unknown>;
 }

@@ -1,8 +1,8 @@
 <div class="premium-ads-section" *ngIf="premiumAds.length > 0">
   <div class="section-header">
-    <h2 class="section-title">⭐ Premium Advertisers ⭐</h2>
+    <h2 class="section-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>⭐ Premium Advertisers ⭐</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
     <a routerLink="/advertiser-browsing-alt/premium" class="view-all-link">
-      View all premium advertisers <i class="pi pi-angle-right"></i>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>View all premium advertisers </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><i class="pi pi-angle-right"></i>
     </a>
   </div>
 
@@ -12,7 +12,7 @@
       type="button"
       class="scroll-button prev p-button-text p-button-rounded"
       (click)="scroll('left')"
-      aria-label="Scroll left"
+      aria-label="Scroll left" i18n-aria-label
     >
       <i class="pi pi-chevron-left"></i>
     </button>
@@ -30,7 +30,7 @@
       type="button"
       class="scroll-button next p-button-text p-button-rounded"
       (click)="scroll('right')"
-      aria-label="Scroll right"
+      aria-label="Scroll right" i18n-aria-label
     >
       <i class="pi pi-chevron-right"></i>
     </button>

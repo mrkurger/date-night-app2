@@ -2,8 +2,8 @@
   <!-- Label -->
   @if (label) {
     <label class="select__label" [attr.for]="id || name">
-      {{ label }}
-      @if (required) {
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>@if (required) {
         <span class="select__required-indicator">*</span>
       }
     </label>
@@ -26,7 +26,7 @@
     >
       <!-- Placeholder Option -->
       @if (placeholder) {
-        <option value="" [disabled]="required" [selected]="!value">{{ placeholder }}</option>
+        <option value="" [disabled]="required" [selected]="!value"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ placeholder }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
       }
 
       <!-- Options -->
@@ -36,14 +36,14 @@
           [disabled]="option.disabled"
           [selected]="value === option.value"
         >
-          {{ option.label }}
-        </option>
+          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ option.label }}
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
       }
     </select>
 
     <!-- Dropdown Icon -->
     <div class="select__icon">
-      <i name="chevron-down" size="small" class="pi pi-{iconName}"></i>
+      <i name="chevron-down" size="small" i18n-size class="pi pi-{iconName}"></i>
     </div>
   </div>
 
@@ -54,7 +54,7 @@
       [class.select__helper-text--error]="!!errorMessage"
       [attr.id]="(id || name) + '-helper'"
     >
-      {{ errorMessage || helperText }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ errorMessage || helperText }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
   }
 </div>

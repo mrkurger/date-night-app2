@@ -1,9 +1,9 @@
-<p-panel styleClass="layout-main">
+<p-panel styleClass="layout-main" i18n-styleClass>
   <!-- Header -->
   <div class="header-container">
     <!-- Logo -->
     <div class="logo-container">
-      <a routerLink="/" class="logo"> Sensual<span class="text-pink">Meet</span> </a>
+      <a routerLink="/" class="logo"> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Sensual</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><span class="text-pink"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Meet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span> </a>
     </div>
 
     <!-- Desktop Navigation -->
@@ -11,25 +11,25 @@
       <p-toolbar>
         <div class="p-d-flex">
           <p-button
-            styleClass="p-button-text"
+            styleClass="p-button-text" i18n-styleClass
             routerLink="/advertiser-browsing-alt/browse"
             [style]="{ 'margin-right': '.5rem' }"
             routerLinkActive="p-button-secondary"
-            label="Browse"
+            label="Browse" i18n-label
           >
           </p-button>
           <p-button
-            styleClass="p-button-text"
+            styleClass="p-button-text" i18n-styleClass
             routerLink="/advertiser-browsing-alt/favorites"
             [style]="{ 'margin-right': '.5rem' }"
             routerLinkActive="p-button-secondary"
-            label="Favorites"
+            label="Favorites" i18n-label
           >
           </p-button>
           <p-button
-            styleClass="p-button-text"
+            styleClass="p-button-text" i18n-styleClass
             [style]="{ 'margin-right': '.5rem' }"
-            icon="pi pi-chart-bar"
+            icon="pi pi-chart-bar" i18n-icon
             [pTooltip]="'Rankings'"
             (onClick)="menu.toggle($event)"
           >
@@ -39,25 +39,25 @@
           <div class="p-ml-auto">
             <!-- User Profile Menu -->
             <div class="user-menu" *ngIf="isLoggedIn; else loginButtons">
-              <p-menu #userMenu [popup]="true" [model]="userMenuAccount" appendTo="body"></p-menu>
+              <p-menu #userMenu [popup]="true" [model]="userMenuAccount" appendTo="body" i18n-appendTo></p-menu>
               <p-button
-                styleClass="p-button-text p-button-rounded"
+                styleClass="p-button-text p-button-rounded" i18n-styleClass
                 (onClick)="userMenu.toggle($event)"
               >
                 <img [src]="userPicture" class="user-avatar" [alt]="userName" />
-                <span class="username">{{ userName }}</span>
+                <span class="username"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ userName }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
               </p-button>
             </div>
             <ng-template #loginButtons>
               <p-button
-                styleClass="p-button-text"
+                styleClass="p-button-text" i18n-styleClass
                 routerLink="/auth/login"
-                label="Log In"
+                label="Log In" i18n-label
               ></p-button>
               <p-button
-                styleClass="p-button-outlined"
+                styleClass="p-button-outlined" i18n-styleClass
                 routerLink="/auth/signup"
-                label="Sign Up"
+                label="Sign Up" i18n-label
               ></p-button>
             </ng-template>
           </div>
@@ -67,7 +67,7 @@
 
     <!-- Mobile Navigation -->
     <div class="mobile-navigation">
-      <p-button icon="pi pi-bars" styleClass="p-button-text" (onClick)="mobilemenu.toggle($event)">
+      <p-button icon="pi pi-bars" i18n-icon styleClass="p-button-text" i18n-styleClass (onClick)="mobilemenu.toggle($event)">
       </p-button>
       <p-tieredMenu #mobilemenu [popup]="true" [model]="mobileMenuItems"></p-tieredMenu>
     </div>
@@ -89,29 +89,29 @@
               (input)="onSearchInput()"
               [style]="{ width: '100%' }"
             />
-            <label for="search">Search advertisers...</label>
+            <label for="search"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Search advertisers...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
           </span>
           <p-button
             type="submit"
-            icon="pi pi-search"
-            styleClass="p-button-rounded p-button-text"
+            icon="pi pi-search" i18n-icon
+            styleClass="p-button-rounded p-button-text" i18n-styleClass
           ></p-button>
           <p-button
             *ngIf="isSearchingResult"
-            icon="pi pi-times"
-            styleClass="p-button-rounded p-button-text"
+            icon="pi pi-times" i18n-icon
+            styleClass="p-button-rounded p-button-text" i18n-styleClass
             (onClick)="clearSearch()"
-            pTooltip="Clear search"
+            pTooltip="Clear search" i18n-pTooltip
           >
           </p-button>
         </form>
 
         <!-- Title for search/location -->
         <div *ngIf="pageTitle" class="page-context-title">
-          <h2>{{ pageTitle }}</h2>
+          <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ pageTitle }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
           <p *ngIf="searchResultCount !== null" class="text-hint">
-            Found {{ searchResultCount }} advertisers
-          </p>
+            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Found {{ searchResultCount }} advertisers
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         </div>
 
         <!-- Premium Ads Section -->
@@ -125,7 +125,7 @@
 
         <!-- Dynamic View Content -->
         <p-tabView [(activeIndex)]="activeIndex" (activeIndexChange)="onViewChange($event)">
-          <p-tabPanel header="Grid" *ngIf="activeView === 'grid'">
+          <p-tabPanel header="Grid" i18n-header *ngIf="activeView === 'grid'">
             <app-alt-netflix-view
               [advertisers]="displayedAdvertisers"
               [loading]="isLoading"
@@ -136,7 +136,7 @@
             </app-alt-netflix-view>
           </p-tabPanel>
 
-          <p-tabPanel header="Cards" *ngIf="activeView === 'cards'">
+          <p-tabPanel header="Cards" i18n-header *ngIf="activeView === 'cards'">
             <app-alt-tinder-view
               [advertisers]="displayedAdvertisers"
               [loading]="isLoading"
@@ -148,16 +148,16 @@
             </app-alt-tinder-view>
           </p-tabPanel>
 
-          <p-tabPanel header="Map" *ngIf="activeView === 'map'">
-            <p class="placeholder-text">Map view is coming soon!</p>
+          <p-tabPanel header="Map" i18n-header *ngIf="activeView === 'map'">
+            <p class="placeholder-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Map view is coming soon!</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
           </p-tabPanel>
 
-          <p-tabPanel header="Nearby" *ngIf="activeView === 'nearby'">
-            <p class="placeholder-text">Nearby view is coming soon!</p>
+          <p-tabPanel header="Nearby" i18n-header *ngIf="activeView === 'nearby'">
+            <p class="placeholder-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Nearby view is coming soon!</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
           </p-tabPanel>
 
-          <p-tabPanel header="Featured" *ngIf="activeView === 'featured'">
-            <p class="placeholder-text">Featured view is coming soon!</p>
+          <p-tabPanel header="Featured" i18n-header *ngIf="activeView === 'featured'">
+            <p class="placeholder-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Featured view is coming soon!</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
           </p-tabPanel>
         </p-tabView>
       </div>
@@ -172,11 +172,11 @@
 
   <!-- Footer -->
   <div class="footer-container">
-    <p class="footer-copyright-text">© {{ currentYear }} HT Services. All rights reserved.</p>
+    <p class="footer-copyright-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>© {{ currentYear }} HT Services. All rights reserved.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     <div class="footer-links">
-      <a routerLink="/terms-alt" class="footer-link">Terms</a>
-      <a routerLink="/privacy-alt" class="footer-link">Privacy</a>
-      <a routerLink="/contact-alt" class="footer-link">Contact</a>
+      <a routerLink="/terms-alt" class="footer-link"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Terms</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
+      <a routerLink="/privacy-alt" class="footer-link"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Privacy</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
+      <a routerLink="/contact-alt" class="footer-link"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Contact</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
     </div>
   </div>
 </p-panel>

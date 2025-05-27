@@ -2,8 +2,8 @@
   <!-- Label -->
   @if (label) {
     <label class="input__label" [attr.for]="id || name">
-      {{ label }}
-      @if (required) {
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>@if (required) {
         <span class="input__required-indicator">*</span>
       }
     </label>
@@ -13,7 +13,7 @@
     <!-- Left Icon -->
     @if (iconLeft) {
       <span class="input__icon input__icon--left">
-        <i [name]="iconLeft" size="small" class="pi pi-{iconName}"></i>
+        <i [name]="iconLeft" size="small" i18n-size class="pi pi-{iconName}"></i>
       </span>
     }
 
@@ -49,14 +49,14 @@
         [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
         tabindex="-1"
       >
-        <i [name]="passwordVisible ? 'eye-off' : 'eye'" size="small" class="pi pi-{iconName}"> </i>
+        <i [name]="passwordVisible ? 'eye-off' : 'eye'" size="small" i18n-size class="pi pi-{iconName}"> </i>
       </button>
     }
 
     <!-- Right Icon (if not password) -->
     @if (iconRight && type !== 'password') {
       <span class="input__icon input__icon--right">
-        <i [name]="iconRight" size="small" class="pi pi-{iconName}"></i>
+        <i [name]="iconRight" size="small" i18n-size class="pi pi-{iconName}"></i>
       </span>
     }
   </div>
@@ -68,7 +68,7 @@
       [class.input__helper-text--error]="!!errorMessage"
       [attr.id]="(id || name) + '-helper'"
     >
-      {{ errorMessage || helperText }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ errorMessage || helperText }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
   }
 </div>

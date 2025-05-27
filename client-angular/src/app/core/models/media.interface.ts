@@ -1,15 +1,11 @@
 /**
  *
  */
-export interface Media {
+export interface IMedia {
   /**
    *
    */
-  _id: string;
-  /**
-   *
-   */
-  type: 'video' | 'image';
+  id: string;
   /**
    *
    */
@@ -17,41 +13,102 @@ export interface Media {
   /**
    *
    */
-  status?: 'pending' | 'approved' | 'rejected';
+  type: 'image' | 'video';
   /**
    *
    */
-  notes?: string;
+  thumbnailUrl?: string;
+  /**
+   *
+   */
+  title?: string;
+  /**
+   *
+   */
+  description?: string;
+  /**
+   *
+   */
+  uploadedBy: string;
   /**
    *
    */
   createdAt: Date;
+  /**
+   *
+   */
+  updatedAt: Date;
+  /**
+   *
+   */
+  metadata?: {
+    /**
+     *
+     */
+    width: number;
+    /**
+     *
+     */
+    height: number;
+    /**
+     *
+     */
+    duration?: number;
+    /**
+     *
+     */
+    size: number;
+    /**
+     *
+     */
+    format: string;
+  };
 }
 
 /**
  *
  */
-export interface PendingMedia extends Media {
+export interface IPendingMedia {
   /**
    *
    */
-  adId: string;
+  file: File;
   /**
    *
    */
-  adTitle: string;
+  progress: number;
+  /**
+   *
+   */
+  url?: string;
+  /**
+   *
+   */
+  error?: string;
 }
 
 /**
  *
  */
-export interface ModerationRequest {
+export interface IModerationRequest {
   /**
    *
    */
-  status: 'approved' | 'rejected';
+  mediaId: string;
   /**
    *
    */
-  notes: string;
+  reason: string;
+  /**
+   *
+   */
+  status: 'pending' | 'approved' | 'rejected';
+  /**
+   *
+   */
+  reviewedBy?: string;
+  /**
+   *
+   */
+  reviewedAt?: Date;
 }

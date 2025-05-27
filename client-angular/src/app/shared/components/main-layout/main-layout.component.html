@@ -6,7 +6,7 @@
         <i class="fas" [class.fa-bars]="isMenuCollapsed" [class.fa-times]="!isMenuCollapsed"></i>
       </button>
       <div class="logo" *ngIf="!isMenuCollapsed">
-        <a routerLink="/">DateNight.io</a>
+        <a routerLink="/"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>DateNight.io</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
       </div>
     </div>
 
@@ -16,75 +16,75 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/browse" [class.active]="activeView === 'netflix'">
               <i class="fas fa-th-large"></i>
-              <span *ngIf="!isMenuCollapsed">Netflix View</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Netflix View</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/swipe" [class.active]="activeView === 'tinder'">
               <i class="fas fa-heart"></i>
-              <span *ngIf="!isMenuCollapsed">Tinder View</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Tinder View</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/list" [class.active]="activeView === 'list'">
               <i class="fas fa-list"></i>
-              <span *ngIf="!isMenuCollapsed">List View</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>List View</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-divider" *ngIf="!isMenuCollapsed"></li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/chat">
               <i class="fas fa-comment"></i>
-              <span *ngIf="!isMenuCollapsed">Messages</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Messages</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/favorites">
               <i class="fas fa-bookmark"></i>
-              <span *ngIf="!isMenuCollapsed">Favorites</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Favorites</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-divider" *ngIf="!isMenuCollapsed"></li>
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/profile">
               <i class="fas fa-user"></i>
-              <span *ngIf="!isMenuCollapsed">My Profile</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>My Profile</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/settings">
               <i class="fas fa-cog"></i>
-              <span *ngIf="!isMenuCollapsed">Settings</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Settings</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/preferences-demo">
               <i class="fas fa-sliders-h"></i>
-              <span *ngIf="!isMenuCollapsed">Preferences Demo</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Preferences Demo</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/my-ads">
               <i class="fas fa-ad"></i>
-              <span *ngIf="!isMenuCollapsed">My Ads</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>My Ads</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
             <a class="nav-link" routerLink="/wallet">
               <i class="fas fa-wallet"></i>
-              <span *ngIf="!isMenuCollapsed">My Wallet</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>My Wallet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item" *ngIf="!isAuthenticated">
             <a class="nav-link" routerLink="/login">
               <i class="fas fa-sign-in-alt"></i>
-              <span *ngIf="!isMenuCollapsed">Login</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Login</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
           <li class="nav-item" *ngIf="!isAuthenticated">
             <a class="nav-link" routerLink="/register">
               <i class="fas fa-user-plus"></i>
-              <span *ngIf="!isMenuCollapsed">Register</span>
+              <span *ngIf="!isMenuCollapsed"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Register</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </a>
           </li>
         </ul>
@@ -93,25 +93,25 @@
       <div class="sidebar-footer" *ngIf="!isMenuCollapsed">
         <div class="theme-toggle-container">
           <app-theme-toggle
-            mode="toggle"
-            label="Dark Mode"
-            labelPosition="left"
-            ariaLabel="Toggle dark mode"
+            mode="toggle" i18n-mode
+            label="Dark Mode" i18n-label
+            labelPosition="left" i18n-labelPosition
+            ariaLabel="Toggle dark mode" i18n-ariaLabel
           ></app-theme-toggle>
         </div>
         <a class="upgrade-link" routerLink="/upgrade">
-          <i class="fas fa-crown"></i> Upgrade to Premium
-        </a>
+          <i class="fas fa-crown"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Upgrade to Premium
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
       </div>
 
       <!-- Collapsed sidebar footer with just icons -->
       <div class="sidebar-footer sidebar-footer--collapsed" *ngIf="isMenuCollapsed">
-        <app-theme-toggle mode="icon-only" ariaLabel="Toggle dark mode"></app-theme-toggle>
+        <app-theme-toggle mode="icon-only" i18n-mode ariaLabel="Toggle dark mode" i18n-ariaLabel></app-theme-toggle>
         <a
           class="upgrade-link upgrade-link--collapsed"
           routerLink="/upgrade"
-          aria-label="Upgrade to Premium"
-          title="Upgrade to Premium"
+          aria-label="Upgrade to Premium" i18n-aria-label
+          title="Upgrade to Premium" i18n-title
         >
           <i class="fas fa-crown"></i>
         </a>
@@ -127,21 +127,21 @@
   <!-- Right Sidebar for Premium Ads -->
   <aside class="sidebar sidebar-right">
     <div class="sidebar-header">
-      <h3 class="premium-title">Premium Ads</h3>
+      <h3 class="premium-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Premium Ads</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
     </div>
 
     <div class="sidebar-content">
       <!-- Loading State -->
       <div class="premium-loading" *ngIf="loading">
         <div class="spinner-border spinner-border-sm text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
         </div>
       </div>
 
       <!-- Premium Ads List -->
       <div class="premium-ads" *ngIf="!loading">
         <div class="empty-premium" *ngIf="premiumAds.length === 0">
-          <p>No premium ads available</p>
+          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No premium ads available</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         </div>
 
         <div
@@ -156,20 +156,20 @@
             </div>
           </div>
           <div class="premium-ad-info">
-            <h4 class="premium-ad-title">{{ ad.title }}</h4>
+            <h4 class="premium-ad-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
             <p class="premium-ad-location" *ngIf="ad.location">
-              <i class="fas fa-map-marker-alt"></i> {{ ad.location }}
-            </p>
+              <i class="fas fa-map-marker-alt"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.location }}
+            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
           </div>
         </div>
       </div>
 
       <!-- Become Premium CTA -->
       <div class="premium-cta">
-        <p>Want to be featured here?</p>
+        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Want to be featured here?</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         <a routerLink="/upgrade" class="btn btn-premium">
-          <i class="fas fa-crown"></i> Become Premium
-        </a>
+          <i class="fas fa-crown"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Become Premium
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
       </div>
     </div>
   </aside>

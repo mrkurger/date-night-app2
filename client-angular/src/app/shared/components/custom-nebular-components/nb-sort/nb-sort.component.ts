@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NebularModule } from '../../../nebular.module';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AppSortEvent } from './nb-sort.module';
+import { NebularModule } from '../../../nebular.module';
 
 // Refactored: Custom sort component (was /*DEPRECATED:NbSortComponent*/)
+/**
+ *
+ */
 @Component({
   selector: 'app-sort',
   standalone: true,
@@ -14,6 +17,9 @@ export class AppSortComponent {
   @Input() direction: 'asc' | 'desc' | '' = '';
   @Output() sortChange = new EventEmitter<AppSortEvent>();
 
+  /**
+   *
+   */
   sort(sortEvent: AppSortEvent): void {
     this.active = sortEvent.active;
     this.direction = sortEvent.direction;
@@ -22,6 +28,9 @@ export class AppSortComponent {
 }
 
 // Refactored: Custom sort header component (was /*DEPRECATED:NbSortHeaderComponent*/)
+/**
+ *
+ */
 @Component({
   selector: 'app-sort-header',
   imports: [CommonModule],
@@ -55,16 +64,28 @@ export class AppSortComponent {
 export class AppSortHeaderComponent {
   @Input() appSortHeaderId!: string;
 
+  /**
+   *
+   */
   get active(): boolean {
     return this.sort.active === this.appSortHeaderId;
   }
 
+  /**
+   *
+   */
   get direction(): 'asc' | 'desc' | '' {
     return this.active ? this.sort.direction : '';
   }
 
-  constructor(private sort: AppSortComponent) {}
+  /**
+   *
+   */
+  constructor(private readonly sort: AppSortComponent) {}
 
+  /**
+   *
+   */
   toggleSort(): void {
     const newDirection = this.getNextSortDirection();
     this.sort.sort({

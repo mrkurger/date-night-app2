@@ -5,16 +5,16 @@
   </p-sidebar>
 
   <!-- Header -->
-  <p-toolbar styleClass="app-header">
+  <p-toolbar styleClass="app-header" i18n-styleClass>
     <ng-template pTemplate="left">
       <button
         pButton
         type="button"
-        icon="pi pi-bars"
+        icon="pi pi-bars" i18n-icon
         (click)="toggleSidebar()"
         class="p-button-text sidebar-toggle"
       ></button>
-      <span class="app-title">Date Night App</span>
+      <span class="app-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Date Night App</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       <!-- Assuming app-title is styled globally or in navigation.component.scss -->
       <app-breadcrumbs></app-breadcrumbs>
     </ng-template>
@@ -25,7 +25,7 @@
         <button
           pButton
           type="button"
-          icon="pi pi-search"
+          icon="pi pi-search" i18n-icon
           (click)="openSearch()"
           class="p-button-text search-button"
         ></button>
@@ -34,9 +34,9 @@
         <button
           pButton
           type="button"
-          icon="pi pi-keyboard"
-          pTooltip="Keyboard Shortcuts"
-          tooltipPosition="bottom"
+          icon="pi pi-keyboard" i18n-icon
+          pTooltip="Keyboard Shortcuts" i18n-pTooltip
+          tooltipPosition="bottom" i18n-tooltipPosition
           class="p-button-text"
           (click)="openKeyboardShortcuts()"
         ></button>
@@ -55,7 +55,7 @@
             <p-avatar
               [image]="userAvatar"
               [label]="!userAvatar ? userName?.charAt(0) : undefined"
-              shape="circle"
+              shape="circle" i18n-shape
             ></p-avatar>
           </button>
           <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
@@ -70,9 +70,9 @@
   </div>
 
   <!-- Footer -->
-  <p-toolbar styleClass="app-footer">
+  <p-toolbar styleClass="app-footer" i18n-styleClass>
     <ng-template pTemplate="center">
-      <span>&copy; {{ currentYear }} Date Night App. All rights reserved.</span>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>&copy; {{ currentYear }} Date Night App. All rights reserved.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </ng-template>
   </p-toolbar>
 </div>

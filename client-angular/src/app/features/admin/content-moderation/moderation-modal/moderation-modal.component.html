@@ -5,15 +5,15 @@
     <!-- Media Error State -->
     <div *ngIf="mediaError" class="media-error">
       <i class="fas fa-exclamation-triangle"></i>
-      <p>Unable to load media content</p>
-      <small>The media may be unavailable or in an unsupported format</small>
+      <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Unable to load media content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+      <small><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>The media may be unavailable or in an unsupported format</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
     </div>
 
     <!-- Image Preview -->
     <img
       *ngIf="!mediaError && media.type === 'image'"
       [src]="safeMediaUrl"
-      alt="Content preview"
+      alt="Content preview" i18n-alt
       (error)="onMediaError()"
     />
 
@@ -34,55 +34,55 @@
   <!-- Media Information -->
   <div class="media-info" *ngIf="media">
     <div class="media-detail">
-      <label>Ad Title:</label>
-      <span>{{ media.adTitle }}</span>
+      <label><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Ad Title:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.adTitle }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
     <div class="media-detail">
-      <label>Media Type:</label>
-      <span>{{ media.type | titlecase }}</span>
+      <label><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Media Type:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.type | titlecase }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
     <div class="media-detail">
-      <label>Uploaded:</label>
-      <span>{{ media.createdAt | date: 'medium' }}</span>
+      <label><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Uploaded:</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.createdAt | date: 'medium' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
   </div>
 
   <!-- Moderation Form -->
   <form [formGroup]="form" class="moderation-form">
     <div class="p-field">
-      <label class="p-mb-2">Moderation Decision</label>
+      <label class="p-mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Moderation Decision</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
       <div class="p-d-flex p-jc-between p-mb-3">
         <p-button
-          styleClass="p-button-outlined p-button-success status-option"
+          styleClass="p-button-outlined p-button-success status-option" i18n-styleClass
           [ngClass]="{ 'p-button-active': form.get('status')?.value === 'approved' }"
           (onClick)="form.get('status')?.setValue('approved')"
-          label="Approve"
-          icon="fas fa-check-circle"
+          label="Approve" i18n-label
+          icon="fas fa-check-circle" i18n-icon
         >
           <ng-template pTemplate="content">
             <div class="status-option-content">
               <i class="fas fa-check-circle p-mr-2"></i>
               <div>
-                <div class="status-label">Approve</div>
-                <small>Content meets platform guidelines</small>
+                <div class="status-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Approve</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                <small><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Content meets platform guidelines</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
               </div>
             </div>
           </ng-template>
         </p-button>
 
         <p-button
-          styleClass="p-button-outlined p-button-danger status-option"
+          styleClass="p-button-outlined p-button-danger status-option" i18n-styleClass
           [ngClass]="{ 'p-button-active': form.get('status')?.value === 'rejected' }"
           (onClick)="form.get('status')?.setValue('rejected')"
-          label="Reject"
-          icon="fas fa-times-circle"
+          label="Reject" i18n-label
+          icon="fas fa-times-circle" i18n-icon
         >
           <ng-template pTemplate="content">
             <div class="status-option-content">
               <i class="fas fa-times-circle p-mr-2"></i>
               <div>
-                <div class="status-label">Reject</div>
-                <small>Content violates platform guidelines</small>
+                <div class="status-label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Reject</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                <small><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Content violates platform guidelines</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
               </div>
             </div>
           </ng-template>
@@ -91,13 +91,13 @@
     </div>
 
     <div class="p-field notes-field">
-      <label class="p-mb-2">Moderation Notes</label>
+      <label class="p-mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Moderation Notes</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
       <textarea
         pInputTextarea
         formControlName="notes"
         rows="4"
         [autoResize]="true"
-        placeholder="Provide detailed explanation for your decision..."
+        placeholder="Provide detailed explanation for your decision..." i18n-placeholder
       ></textarea>
       <div
         class="p-d-flex p-jc-end p-mt-1 char-count"
@@ -106,52 +106,52 @@
           'p-text-danger': form.get('notes')?.value?.length > 450,
         }"
       >
-        {{ form.get('notes')?.value?.length || 0 }}/500 characters
-      </div>
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ form.get('notes')?.value?.length || 0 }}/500 characters
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
       <small class="p-error" *ngIf="form.get('notes')?.invalid && form.get('notes')?.touched">
-        Notes are required and must be less than 500 characters.
-      </small>
+        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Notes are required and must be less than 500 characters.
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
     </div>
   </form>
 
   <!-- Moderation Guidelines -->
   <div class="moderation-guidelines">
-    <h5><i class="fas fa-info-circle"></i> Moderation Guidelines</h5>
+    <h5><i class="fas fa-info-circle"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Moderation Guidelines</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
     <ul>
       <li>
-        <strong>Reject</strong> content that contains explicit nudity, violence, or illegal
+        <strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Reject</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>content that contains explicit nudity, violence, or illegal
         activities
-      </li>
-      <li><strong>Reject</strong> content that includes minors in inappropriate contexts</li>
-      <li><strong>Reject</strong> content that contains personally identifiable information</li>
-      <li><strong>Approve</strong> content that follows platform guidelines for adult content</li>
-      <li>Always provide clear notes explaining your decision, especially for rejections</li>
+      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
+      <li><strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Reject</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>content that includes minors in inappropriate contexts</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
+      <li><strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Reject</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>content that contains personally identifiable information</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
+      <li><strong><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Approve</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></strong> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>content that follows platform guidelines for adult content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
+      <li><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Always provide clear notes explaining your decision, especially for rejections</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
     </ul>
   </div>
 </div>
 
 <div class="p-dialog-footer">
   <p-button
-    label="Cancel"
-    icon="fas fa-times"
-    styleClass="p-button-secondary"
+    label="Cancel" i18n-label
+    icon="fas fa-times" i18n-icon
+    styleClass="p-button-secondary" i18n-styleClass
     (onClick)="onClose.emit()"
   >
   </p-button>
   <p-button
     *ngIf="form.get('status')?.value === 'rejected'"
-    label="Reject Content"
-    icon="fas fa-ban"
-    styleClass="p-button-danger"
+    label="Reject Content" i18n-label
+    icon="fas fa-ban" i18n-icon
+    styleClass="p-button-danger" i18n-styleClass
     [disabled]="form.invalid"
     (onClick)="validateAndSubmit()"
   >
   </p-button>
   <p-button
     *ngIf="form.get('status')?.value === 'approved'"
-    label="Approve Content"
-    icon="fas fa-check"
-    styleClass="p-button-success"
+    label="Approve Content" i18n-label
+    icon="fas fa-check" i18n-icon
+    styleClass="p-button-success" i18n-styleClass
     [disabled]="form.invalid"
     (onClick)="validateAndSubmit()"
   >

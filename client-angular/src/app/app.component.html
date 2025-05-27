@@ -1,14 +1,14 @@
 <div class="app-layout">
-  <p-toolbar styleClass="app-header">
+  <p-toolbar styleClass="app-header" i18n-styleClass>
     <div class="p-toolbar-group-left header-container-left">
       <button
         pButton
         type="button"
-        icon="pi pi-bars"
+        icon="pi pi-bars" i18n-icon
         class="p-button-text"
         (click)="toggleSidebar()"
       ></button>
-      <span class="app-title">Date Night App</span>
+      <span class="app-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Date Night App</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
     <div class="p-toolbar-group-right header-container-right">
       <div class="action-items">
@@ -27,14 +27,14 @@
         </button>
         <p-overlayPanel #notificationsOverlay [showCloseIcon]="true">
           <ng-template pTemplate>
-            <h5>Notifications</h5>
+            <h5><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Notifications</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
             <div *ngIf="notifications && notifications.length > 0; else noNotifications">
               <ul>
-                <li *ngFor="let notification of notifications">{{ notification.message }}</li>
+                <li *ngFor="let notification of notifications"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ notification.message }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></li>
               </ul>
             </div>
             <ng-template #noNotifications>
-              <p>No new notifications.</p>
+              <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No new notifications.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
             </ng-template>
           </ng-template>
         </p-overlayPanel>
@@ -49,10 +49,10 @@
             <p-avatar
               [image]="userAvatar"
               [label]="!userAvatar && userName ? userName.substring(0, 1) : null"
-              shape="circle"
-              styleClass="user-avatar"
+              shape="circle" i18n-shape
+              styleClass="user-avatar" i18n-styleClass
             ></p-avatar>
-            <span class="user-name">{{ userName }}</span>
+            <span class="user-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ userName }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             <i class="pi pi-angle-down"></i>
           </button>
           <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
@@ -63,16 +63,16 @@
 
   <p-sidebar [(visible)]="isSidebarVisible" [showCloseIcon]="true" [modal]="false">
     <ng-template pTemplate="header">
-      <h3>Menu</h3>
+      <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Menu</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
     </ng-template>
     <p-panelMenu [model]="menuItems" [style]="{ width: '100%' }"></p-panelMenu>
   </p-sidebar>
 
   <div class="main-content" [ngClass]="{ 'sidebar-active': isSidebarVisible }">
-    <p-card *ngIf="isLoading" styleClass="loading-card">
+    <p-card *ngIf="isLoading" styleClass="loading-card" i18n-styleClass>
       <div class="loading-container">
         <p-progressSpinner strokeWidth="4"></p-progressSpinner>
-        <span>Loading...</span>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </div>
     </p-card>
     <router-outlet *ngIf="!isLoading"></router-outlet>
@@ -82,36 +82,36 @@
     <div class="footer-container">
       <div class="footer-content">
         <div class="footer-section">
-          <h5 class="footer-heading">DateNight<span class="text-primary">.io</span></h5>
+          <h5 class="footer-heading"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>DateNight</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><span class="text-primary"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>.io</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span></h5>
           <p class="footer-text">
-            The premier platform for escort, striptease, and massage services in Scandinavia.
-          </p>
+            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>The premier platform for escort, striptease, and massage services in Scandinavia.
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
         </div>
         <div class="footer-section">
-          <h5 class="footer-heading">Quick Links</h5>
+          <h5 class="footer-heading"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Quick Links</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
           <ul class="footer-links">
-            <li><a pButton label="About Us" class="p-button-text" routerLink="/about"></a></li>
+            <li><a pButton label="About Us" i18n-label class="p-button-text" routerLink="/about"></a></li>
             <li>
-              <a pButton label="Terms of Service" class="p-button-text" routerLink="/terms"></a>
+              <a pButton label="Terms of Service" i18n-label class="p-button-text" routerLink="/terms"></a>
             </li>
             <li>
-              <a pButton label="Privacy Policy" class="p-button-text" routerLink="/privacy"></a>
+              <a pButton label="Privacy Policy" i18n-label class="p-button-text" routerLink="/privacy"></a>
             </li>
-            <li><a pButton label="Contact Us" class="p-button-text" routerLink="/contact"></a></li>
+            <li><a pButton label="Contact Us" i18n-label class="p-button-text" routerLink="/contact"></a></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h5 class="footer-heading">Connect With Us</h5>
+          <h5 class="footer-heading"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Connect With Us</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
           <div class="social-links">
-            <a pButton icon="pi pi-facebook" class="p-button-text social-link" href="#"></a>
-            <a pButton icon="pi pi-twitter" class="p-button-text social-link" href="#"></a>
-            <a pButton icon="pi pi-instagram" class="p-button-text social-link" href="#"></a>
-            <a pButton icon="pi pi-send" class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-facebook" i18n-icon class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-twitter" i18n-icon class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-instagram" i18n-icon class="p-button-text social-link" href="#"></a>
+            <a pButton icon="pi pi-send" i18n-icon class="p-button-text social-link" href="#"></a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2024 DateNight.io - All rights reserved</p>
+        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>&copy; 2024 DateNight.io - All rights reserved</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       </div>
     </div>
   </div>

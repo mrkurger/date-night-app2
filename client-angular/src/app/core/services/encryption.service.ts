@@ -36,14 +36,20 @@ export interface EncryptedAttachmentData {
   }; // Add metadata property for compatibility
 }
 
+/**
+ *
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class EncryptionService {
-  private initialized = false;
-  private roomKeys = new Map<string, string>();
-  private messageExpirySettings = new Map<string, any>();
+  private readonly initialized = false;
+  private readonly roomKeys = new Map<string, string>();
+  private readonly messageExpirySettings = new Map<string, any>();
 
+  /**
+   *
+   */
   constructor() {}
 
   /**

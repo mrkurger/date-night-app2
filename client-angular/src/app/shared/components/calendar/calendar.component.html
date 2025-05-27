@@ -1,25 +1,25 @@
 <div class="calendar">
   <div class="calendar-header" *ngIf="showControls">
-    <button type="button" class="btn-nav" (click)="prevMonth()" aria-label="Previous month">
+    <button type="button" class="btn-nav" (click)="prevMonth()" aria-label="Previous month" i18n-aria-label>
       <i class="fas fa-chevron-left"></i>
     </button>
-    <div class="current-month">{{ viewDate | date: 'MMMM yyyy' }}</div>
-    <button type="button" class="btn-nav" (click)="nextMonth()" aria-label="Next month">
+    <div class="current-month"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ viewDate | date: 'MMMM yyyy' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+    <button type="button" class="btn-nav" (click)="nextMonth()" aria-label="Next month" i18n-aria-label>
       <i class="fas fa-chevron-right"></i>
     </button>
   </div>
 
   <div class="calendar-grid">
     <div class="weekdays">
-      <div class="week-number-header" *ngIf="showWeekNumbers">W</div>
-      <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+      <div class="week-number-header" *ngIf="showWeekNumbers"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>W</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+      <div class="weekday" *ngFor="let day of weekDays"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ day }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
     </div>
 
     <div class="weeks">
       <div class="week" *ngFor="let week of weeks">
         <div class="week-number" *ngIf="showWeekNumbers">
-          {{ getWeekNumber(week) }}
-        </div>
+          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getWeekNumber(week) }}
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
         <button
           type="button"
           class="day"
@@ -33,8 +33,8 @@
           [attr.aria-disabled]="date.isDisabled"
           (click)="selectDate(date)"
         >
-          {{ date.date | date: 'd' }}
-        </button>
+          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ date.date | date: 'd' }}
+        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
       </div>
     </div>
   </div>

@@ -2,17 +2,17 @@
   [value]="slowestEndpoints"
   [sortField]="sortColumn"
   [sortOrder]="sortDirection === 'asc' ? 1 : -1"
-  styleClass="p-datatable-sm"
+  styleClass="p-datatable-sm" i18n-styleClass
 >
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="url">URL <p-sortIcon field="url"></p-sortIcon></th>
+      <th pSortableColumn="url" i18n-pSortableColumn><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>URL </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><p-sortIcon field="url" i18n-field></p-sortIcon></th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-endpoint>
     <tr>
-      <td class="url-cell">{{ endpoint.url }}</td>
+      <td class="url-cell"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ endpoint.url }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></td>
     </tr>
   </ng-template>
 </p-table>

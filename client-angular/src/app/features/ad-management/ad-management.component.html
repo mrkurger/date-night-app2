@@ -1,36 +1,36 @@
 <div class="ad-management-container">
   <div class="header">
-    <h1>Ad Management</h1>
-    <p class="subtitle">Manage your advertisements and travel itineraries</p>
+    <h1><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Ad Management</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h1>
+    <p class="subtitle"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Manage your advertisements and travel itineraries</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
   </div>
 
   <p-tabView fullWidth routerLinks >
     <p-tabPanel
-      tabTitle="My Ads"
-      tabIcon="list-outline"
-      route="list"
+      tabTitle="My Ads" i18n-tabTitle
+      tabIcon="list-outline" i18n-tabIcon
+      route="list" i18n-route
       [active]="router.url.includes('/list')"
     >
     </p-tabPanel>
     <p-tabPanel
-      tabTitle="Create New Ad"
-      tabIcon="plus-outline"
-      route="create"
+      tabTitle="Create New Ad" i18n-tabTitle
+      tabIcon="plus-outline" i18n-tabIcon
+      route="create" i18n-route
       [active]="router.url.includes('/create')"
     >
     </p-tabPanel>
     <p-tabPanel
-      tabTitle="Touring Advertisers"
-      tabIcon="globe-outline"
-      route="/touring"
+      tabTitle="Touring Advertisers" i18n-tabTitle
+      tabIcon="globe-outline" i18n-tabIcon
+      route="/touring" i18n-route
       [active]="router.url.includes('/touring')"
     >
     </p-tabPanel>
     <p-tabPanel
       *ngIf="isAdmin"
-      tabTitle="Admin Panel"
-      tabIcon="shield-outline"
-      route="/admin/ads"
+      tabTitle="Admin Panel" i18n-tabTitle
+      tabIcon="shield-outline" i18n-tabIcon
+      route="/admin/ads" i18n-route
       [active]="router.url.includes('/admin/ads')"
     >
     </p-tabPanel>

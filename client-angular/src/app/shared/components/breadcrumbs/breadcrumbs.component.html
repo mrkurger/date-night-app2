@@ -1,4 +1,4 @@
-<nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+<nav class="breadcrumbs" aria-label="Breadcrumb navigation" i18n-aria-label>
   <ol class="breadcrumb-list">
     <li
       *ngFor="let breadcrumb of visibleBreadcrumbs; let last = last"
@@ -6,22 +6,22 @@
       [class.active]="last"
     >
       <a *ngIf="!last && breadcrumb.url" [routerLink]="breadcrumb.url" class="breadcrumb-link">
-        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}"></nb-icon>
-        <span>{{ breadcrumb.label }}</span>
+        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.icon }}"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </a>
 
       <span *ngIf="!last && !breadcrumb.url" class="breadcrumb-text">
-        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}"></nb-icon>
-        <span>{{ breadcrumb.label }}</span>
+        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.icon }}"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </span>
 
       <span *ngIf="last" class="breadcrumb-current">
-        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon">{{ breadcrumb.icon }}"></nb-icon>
-        <span>{{ breadcrumb.label }}</span>
+        <nb-icon *ngIf="breadcrumb.icon" class="breadcrumb-icon"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.icon }}"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon>
+        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ breadcrumb.label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
       </span>
 
       <nb-icon *ngIf="!last" class="breadcrumb-separator" aria-hidden="true"
-        >{{ separator }}"></nb-icon
+        ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ separator }}"></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></nb-icon
       >
     </li>
   </ol>

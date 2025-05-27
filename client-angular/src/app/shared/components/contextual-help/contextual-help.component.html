@@ -11,7 +11,7 @@
         ghost
         color="primary"
         [nbTooltip]="item.title"
-        nbTooltipClass="help-tooltip-preview"
+        nbTooltipClass="help-tooltip-preview" i18n-nbTooltipClass
       >
         <i class="pi pi-{{ item.icon || 'help_outline' }}"></i>
       </button>
@@ -19,19 +19,19 @@
 
     <div class="help-content">
       <div class="help-header">
-        <h4 class="help-title">{{ item.title }}</h4>
+        <h4 class="help-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ item.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
         <button
           *ngIf="item.showDismiss !== false"
           nb-icon-button
           class="help-dismiss"
           (click)="dismissHelp(item.id)"
-          aria-label="Dismiss help"
+          aria-label="Dismiss help" i18n-aria-label
         >
           <i class="pi pi-times"></i>
         </button>
       </div>
       <div class="help-body">
-        <p>{{ item.content }}</p>
+        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ item.content }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
       </div>
     </div>
   </div>

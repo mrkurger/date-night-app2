@@ -11,8 +11,8 @@ export type ThemeName = 'lara-light-blue' | 'lara-dark-blue' | 'system';
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme = new BehaviorSubject<ThemeName>('lara-light-blue');
-  private darkMode = new BehaviorSubject<boolean>(false);
+  private readonly currentTheme = new BehaviorSubject<ThemeName>('lara-light-blue');
+  private readonly darkMode = new BehaviorSubject<boolean>(false);
 
   /**
    * Observable that emits the current theme
@@ -24,6 +24,9 @@ export class ThemeService {
    */
   public isDarkMode$: Observable<boolean> = this.darkMode.asObservable();
 
+  /**
+   *
+   */
   constructor() {
     // Initialize theme from local storage
     const savedTheme = localStorage.getItem('theme') as ThemeName;

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -5,20 +6,22 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
-import { EncryptionService } from '../../../core/services/encryption.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
-import { LinkifyPipe } from '../../pipes/linkify.pipe';
-import { FileSizePipe } from '../../pipes/file-size.pipe';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { BadgeModule } from 'primeng/badge';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
+import { AuthService } from '../../../core/services/auth.service';
+import { EncryptionService } from '../../../core/services/encryption.service';
+import { ChatMessage, Attachment } from '../../../core/services/models/chat.model';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { LinkifyPipe } from '../../pipes/linkify.pipe';
+import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 
+/**
+ *
+ */
 @Component({
   selector: 'app-chat-message',
   imports: [
@@ -48,12 +51,18 @@ export class ChatMessageComponent implements OnInit {
   isDecrypting = false;
   decryptionFailed = false;
 
+  /**
+   *
+   */
   constructor(
-    private encryptionService: EncryptionService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef,
+    private readonly encryptionService: EncryptionService,
+    private readonly authService: AuthService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
+  /**
+   *
+   */
   ngOnInit(): void {
     // Check if this message is from the current user
     this.isCurrentUser = this.checkIfCurrentUser();

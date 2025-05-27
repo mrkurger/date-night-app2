@@ -4,12 +4,12 @@
     <div class="message__avatar">
       <p-avatar
         [image]="getSenderProfileImage()"
-        shape="circle"
-        size="large"
+        shape="circle" i18n-shape
+        size="large" i18n-size
         [label]="getSenderName().charAt(0)"
-        styleClass="mr-2"
+        styleClass="mr-2" i18n-styleClass
       ></p-avatar>
-      <span class="message__sender">{{ getSenderName() }}</span>
+      <span class="message__sender"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getSenderName() }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
   </div>
 
@@ -18,9 +18,9 @@
     <div class="message__loading" *ngIf="isDecrypting">
       <p-progressSpinner
         [style]="{ width: '20px', height: '20px' }"
-        styleClass="custom-spinner"
+        styleClass="custom-spinner" i18n-styleClass
       ></p-progressSpinner>
-      <span>Decrypting message...</span>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Decrypting message...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
 
     <!-- System message -->
@@ -28,8 +28,8 @@
       class="message__text message__text--system"
       *ngIf="message.type === 'system' && !isDecrypting"
     >
-      {{ decryptedContent }}
-    </div>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ decryptedContent }}
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
 
     <!-- Regular message -->
     <div class="message__text" *ngIf="message.type !== 'system' && !isDecrypting">
@@ -37,8 +37,8 @@
       <span
         class="message__encryption-indicator"
         *ngIf="message.isEncrypted && !decryptionFailed"
-        pTooltip="End-to-end encrypted"
-        tooltipPosition="top"
+        pTooltip="End-to-end encrypted" i18n-pTooltip
+        tooltipPosition="top" i18n-tooltipPosition
       >
         <i class="pi pi-lock"></i>
       </span>
@@ -47,8 +47,8 @@
       <span
         class="message__encryption-indicator message__encryption-indicator--failed"
         *ngIf="decryptionFailed"
-        pTooltip="Failed to decrypt message"
-        tooltipPosition="top"
+        pTooltip="Failed to decrypt message" i18n-pTooltip
+        tooltipPosition="top" i18n-tooltipPosition
       >
         <i class="pi pi-lock-open"></i>
       </span>
@@ -76,15 +76,15 @@
             <i class="pi pi-file" aria-hidden="true"></i>
           </div>
           <div class="attachment__details">
-            <div class="attachment__name">{{ attachment.name }}</div>
-            <div class="attachment__size">{{ attachment.size | fileSize }}</div>
+            <div class="attachment__name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ attachment.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+            <div class="attachment__size"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ attachment.size | fileSize }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           </div>
           <p-button
-            icon="pi pi-download"
-            styleClass="p-button-rounded p-button-text"
+            icon="pi pi-download" i18n-icon
+            styleClass="p-button-rounded p-button-text" i18n-styleClass
             (click)="downloadAttachment(attachment)"
-            pTooltip="Download file"
-            tooltipPosition="top"
+            pTooltip="Download file" i18n-pTooltip
+            tooltipPosition="top" i18n-tooltipPosition
           >
           </p-button>
         </div>
@@ -94,6 +94,6 @@
 
   <!-- Message timestamp -->
   <div class="message__footer">
-    <small class="message__time">{{ message.timestamp | timeAgo }}</small>
+    <small class="message__time"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.timestamp | timeAgo }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
   </div>
 </p-card>

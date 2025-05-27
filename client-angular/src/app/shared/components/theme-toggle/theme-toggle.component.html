@@ -18,9 +18,9 @@
   [class.theme-toggle-with-label--label-left]="labelPosition === 'left'"
   [class.theme-toggle-with-label--label-right]="labelPosition === 'right'"
 >
-  <span *ngIf="labelPosition === 'left'" class="theme-toggle-with-label__label">{{ label }}</span>
+  <span *ngIf="labelPosition === 'left'" class="theme-toggle-with-label__label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
   <i class="fas theme-toggle-with-label__icon" [class]="themeIcon"></i>
-  <span *ngIf="labelPosition === 'right'" class="theme-toggle-with-label__label">{{ label }}</span>
+  <span *ngIf="labelPosition === 'right'" class="theme-toggle-with-label__label"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
 </button>
 
 <!-- Toggle mode -->
@@ -34,7 +34,7 @@
     *ngIf="labelPosition === 'left'"
     class="theme-toggle-switch__label"
     [attr.for]="'theme-toggle-' + label"
-    >{{ label }}</label
+    ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label
   >
   <button
     class="theme-toggle-switch"
@@ -54,6 +54,6 @@
     *ngIf="labelPosition === 'right'"
     class="theme-toggle-switch__label"
     [attr.for]="'theme-toggle-' + label"
-    >{{ label }}</label
+    ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ label }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label
   >
 </div>

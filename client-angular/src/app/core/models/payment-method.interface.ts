@@ -17,7 +17,7 @@ export interface PaymentMethod {
   /**
    *
    */
-  type: string;
+  type: 'credit_card' | 'debit_card' | 'bank_account' | 'crypto';
   /**
    *
    */
@@ -25,68 +25,21 @@ export interface PaymentMethod {
   /**
    *
    */
+  lastFourDigits?: string;
+  /**
+   *
+   */
+  expiryDate?: string;
+  /**
+   *
+   */
   isDefault: boolean;
   /**
    *
    */
-  currency: string;
+  createdAt: Date;
   /**
    *
    */
-  provider?: string;
-  /**
-   *
-   */
-  cardDetails?: {
-    /**
-     *
-     */
-    brand: string;
-    /**
-     *
-     */
-    last4: string;
-    /**
-     *
-     */
-    expiryMonth: number;
-    /**
-     *
-     */
-    expiryYear: number;
-  };
-  /**
-   *
-   */
-  bankDetails?: {
-    /**
-     *
-     */
-    bankName: string;
-    /**
-     *
-     */
-    accountType: string;
-    /**
-     *
-     */
-    last4: string;
-    /**
-     *
-     */
-    country?: string;
-  };
-  /**
-   *
-   */
-  cryptoDetails?: {
-    /**
-     *
-     */
-    network: string;
-    /**
-     *
-     */
-    address: string;
-  };
+  updatedAt: Date;
 }

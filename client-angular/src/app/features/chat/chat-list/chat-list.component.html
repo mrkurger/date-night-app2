@@ -1,35 +1,35 @@
 <div class="chat-list-container">
   <!-- Header -->
   <div class="chat-list-header">
-    <h4 class="chat-list-title">Messages</h4>
+    <h4 class="chat-list-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Messages</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
     <button pButton type="button" class="p-button-primary" (click)="createNewChat()">
       <i class="pi pi-plus"></i>
-      <span>New Chat</span>
+      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>New Chat</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </button>
   </div>
 
   <!-- Loading State -->
   <div class="state-container loading-state" *ngIf="loading">
     <p-progressSpinner [style]="{ width: '50px', height: '50px' }"></p-progressSpinner>
-    <p>Loading conversations...</p>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading conversations...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
   </div>
 
   <!-- Error State -->
   <div class="state-container error-state" *ngIf="error && !loading">
     <i class="pi pi-exclamation-circle text-danger" style="font-size: 2rem"></i>
-    <p>Failed to load conversations</p>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Failed to load conversations</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     <button pButton type="button" class="p-button-outlined p-button-primary" (click)="loadRooms()">
-      <i class="pi pi-refresh"></i> Retry
-    </button>
+      <i class="pi pi-refresh"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Retry
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
   </div>
 
   <!-- Empty State -->
   <div class="state-container empty-state" *ngIf="!loading && !error && rooms.length === 0">
     <i class="pi pi-comments" style="font-size: 2rem"></i>
-    <p>No conversations yet</p>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No conversations yet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     <button pButton type="button" class="p-button-primary" (click)="createNewChat()">
-      Start a new conversation
-    </button>
+      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Start a new conversation
+    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
   </div>
 
   <!-- Room List -->
@@ -44,21 +44,21 @@
           [imageUrl]="room.avatar || '/assets/img/default-profile.jpg'"
           [name]="getOtherUserName(room)"
           [status]="isRoomOnline(room) ? 'online' : 'offline'"
-          size="medium"
+          size="medium" i18n-size
         >
         </app-avatar>
 
         <div class="room-details p-d-flex p-flex-column p-flex-grow-1">
           <div class="room-header p-d-flex p-jc-between">
-            <span class="room-name">{{ getOtherUserName(room) }}</span>
-            <span class="room-time">{{ getLastMessageTime(room) | timeAgo }}</span>
+            <span class="room-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getOtherUserName(room) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+            <span class="room-time"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getLastMessageTime(room) | timeAgo }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
           </div>
           <div class="room-message-preview p-d-flex p-ai-center p-jc-between">
-            <p class="last-message-text">{{ getLastMessagePreview(room) }}</p>
+            <p class="last-message-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getLastMessagePreview(room) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
             <p-badge
               *ngIf="hasUnreadMessages(room)"
               [value]="room.unreadCount.toString()"
-              severity="primary"
+              severity="primary" i18n-severity
             >
             </p-badge>
           </div>
@@ -79,7 +79,7 @@
             pButton
             type="button"
             class="p-button-text p-button-rounded p-button-sm"
-            pTooltip="Archive"
+            pTooltip="Archive" i18n-pTooltip
             (click)="archiveRoom($event, room)"
           >
             <i class="pi pi-inbox"></i>

@@ -2,9 +2,9 @@
   <!-- Loading State -->
   <div class="loading-container" *ngIf="loading">
     <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading reviews...</span>
+      <span class="visually-hidden"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading reviews...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
     </div>
-    <p>Loading reviews...</p>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading reviews...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
   </div>
 
   <!-- Empty State -->
@@ -12,8 +12,8 @@
     <div class="empty-icon">
       <i class="pi pi-message-square"></i>
     </div>
-    <h3>No Reviews Yet</h3>
-    <p>Be the first to share your experience!</p>
+    <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No Reviews Yet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Be the first to share your experience!</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
   </div>
 
   <!-- Reviews List -->
@@ -26,29 +26,29 @@
             <img
               [src]="review.userAvatar || '/assets/img/default-avatar.png'"
               [alt]="review.userName"
-              loading="lazy"
+              loading="lazy" i18n-loading
             />
           </div>
           <div class="avatar anonymous" *ngIf="review.anonymous">
             <i class="pi pi-user"></i>
           </div>
           <div class="user-details">
-            <h4 class="user-name">{{ review.anonymous ? 'Anonymous User' : review.userName }}</h4>
-            <div class="review-date">{{ formatDate(review.createdAt) }}</div>
+            <h4 class="user-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.anonymous ? 'Anonymous User' : review.userName }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h4>
+            <div class="review-date"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatDate(review.createdAt) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
           </div>
         </div>
 
         <!-- Review Actions -->
         <div class="review-actions" *ngIf="isReviewAuthor(review) || canManage">
-          <p-button label="" icon="pi pi-more-vertical"></p-button>
+          <p-button label="" icon="pi pi-more-vertical" i18n-icon></p-button>
           <p-menu #reviewMenu="matMenu">
             <button nb-menu-item (click)="onEditReview(review)" *ngIf="isReviewAuthor(review)">
               <i class="pi pi-pencil"></i>
-              <span>Edit Review</span>
+              <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Edit Review</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </button>
             <button nb-menu-item (click)="onDeleteReview(review._id)">
               <i class="pi pi-trash"></i>
-              <span>Delete Review</span>
+              <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Delete Review</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
             </button>
           </p-menu>
         </div>
@@ -64,16 +64,16 @@
               [icon]="star ? 'star' : 'star-outline'"
             ></nb-icon>
           </div>
-          <span class="rating-value">{{ review.rating }}/5</span>
+          <span class="rating-value"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.rating }}/5</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
         </div>
 
-        <h3 class="review-title">{{ review.title }}</h3>
-        <p class="review-text">{{ review.content }}</p>
+        <h3 class="review-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+        <p class="review-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ review.content }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
         <!-- Ad Info (if showing) -->
         <div class="ad-info" *ngIf="showAdInfo">
           <a [routerLink]="['/ad-details', review.adId]" class="ad-link">
-            View Ad <i class="pi pi-external-link"></i>
+            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>View Ad </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><i class="pi pi-external-link"></i>
           </a>
         </div>
 
@@ -85,7 +85,7 @@
             (click)="onReactionClick(review._id, 'helpful')"
           >
             <i class="pi pi-thumbs-up"></i>
-            <span>Helpful ({{ review.helpful }})</span>
+            <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Helpful ({{ review.helpful }})</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
           </button>
           <button
             class="feedback-btn"
@@ -93,7 +93,7 @@
             (click)="onReactionClick(review._id, 'unhelpful')"
           >
             <i class="pi pi-thumbs-down"></i>
-            <span>Not Helpful ({{ review.unhelpful }})</span>
+            <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Not Helpful ({{ review.unhelpful }})</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
           </button>
         </div>
       </div>
@@ -102,14 +102,14 @@
 
   <!-- Pagination -->
   <div class="pagination-container" *ngIf="showPagination && totalPages > 1 && !loading">
-    <nav aria-label="Reviews pagination">
+    <nav aria-label="Reviews pagination" i18n-aria-label>
       <ul class="pagination">
         <li class="page-item" [class.disabled]="currentPage === 1">
           <button
             class="page-link"
             (click)="changePage(currentPage - 1)"
             [disabled]="currentPage === 1"
-            aria-label="Previous page"
+            aria-label="Previous page" i18n-aria-label
           >
             <i class="pi pi-arrow-left"></i>
           </button>
@@ -127,8 +127,8 @@
               (click)="changePage(page)"
               [attr.aria-current]="page === currentPage ? 'page' : null"
             >
-              {{ page }}
-            </button>
+              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ page }}
+            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
           </ng-container>
           <ng-template #ellipsis>
             <span class="page-link ellipsis">...</span>
@@ -140,7 +140,7 @@
             class="page-link"
             (click)="changePage(currentPage + 1)"
             [disabled]="currentPage === totalPages"
-            aria-label="Next page"
+            aria-label="Next page" i18n-aria-label
           >
             <i class="pi pi-arrow-right"></i>
           </button>

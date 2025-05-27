@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.12",
-    "@angular-eslint/eslint-plugin": "^19.4.0",
-    "@angular-eslint/eslint-plugin-template": "^19.4.0",
+    "@angular-eslint/eslint-plugin": "^19.5.0",
+    "@angular-eslint/eslint-plugin-template": "^19.5.0",
     "@angular-eslint/template-parser": "^19.4.0",
     "@angular/cli": "^19.2.12",
     "@angular/common": "^19.2.13",
@@ -59,7 +59,6 @@
     "@angular/language-service": "^19.2.11",
     "@angular/platform-browser": "^19.2.13",
     "@angular/platform-browser-dynamic": "^19.2.13",
-    "@angular/testing": "^0.0.0-0",
     "@eslint/js": "^9.27.0",
     "@faker-js/faker": "^8.4.1",
     "@testing-library/angular": "^17.3.7",
@@ -114,7 +113,7 @@
     "zone.js": "^0.15.1"
   },
   "engines": {
-    "node": "22.14.0",
+    "node": "22.16.0",
     "npm": "10.9.2"
   },
   "resolutions": {

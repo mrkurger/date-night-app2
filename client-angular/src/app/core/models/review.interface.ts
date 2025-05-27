@@ -1,49 +1,19 @@
 /**
  *
  */
-export interface Review {
+export interface IReview {
   /**
    *
    */
-  _id: string;
+  id: string;
   /**
    *
    */
-  reviewer: {
-    /**
-     *
-     */
-    _id: string;
-    /**
-     *
-     */
-    username: string;
-    /**
-     *
-     */
-    profileImage?: string;
-  };
+  advertiserId: string;
   /**
    *
    */
-  advertiser: {
-    /**
-     *
-     */
-    _id: string;
-    /**
-     *
-     */
-    username: string;
-    /**
-     *
-     */
-    profileImage?: string;
-  };
-  /**
-   *
-   */
-  ad?: string;
+  userId: string;
   /**
    *
    */
@@ -51,73 +21,11 @@ export interface Review {
   /**
    *
    */
-  title: string;
+  comment: string;
   /**
    *
    */
-  content: string;
-  /**
-   *
-   */
-  categories?: {
-    /**
-     *
-     */
-    communication?: number;
-    /**
-     *
-     */
-    appearance?: number;
-    /**
-     *
-     */
-    location?: number;
-    /**
-     *
-     */
-    value?: number;
-  };
-  /**
-   *
-   */
-  status: 'pending' | 'approved' | 'rejected';
-  /**
-   *
-   */
-  moderationNotes?: string;
-  /**
-   *
-   */
-  isVerifiedMeeting?: boolean;
-  /**
-   *
-   */
-  meetingDate?: Date;
-  /**
-   *
-   */
-  advertiserResponse?: {
-    /**
-     *
-     */
-    content: string;
-    /**
-     *
-     */
-    date: Date;
-  };
-  /**
-   *
-   */
-  helpfulVotes: number;
-  /**
-   *
-   */
-  reportCount: number;
-  /**
-   *
-   */
-  reports?: Array;
+  experienceDate: Date;
   /**
    *
    */
@@ -126,12 +34,76 @@ export interface Review {
    *
    */
   updatedAt: Date;
+  /**
+   *
+   */
+  attachments?: {
+    /**
+     *
+     */
+    images: string[];
+    /**
+     *
+     */
+    videos: string[];
+  };
+  /**
+   *
+   */
+  verified: boolean;
+  /**
+   *
+   */
+  helpful: {
+    /**
+     *
+     */
+    count: number;
+    /**
+     *
+     */
+    voters: string[];
+  };
+  /**
+   *
+   */
+  response?: {
+    /**
+     *
+     */
+    text: string;
+    /**
+     *
+     */
+    createdAt: Date;
+    /**
+     *
+     */
+    updatedAt: Date;
+  };
+  /**
+   *
+   */
+  flags?: {
+    /**
+     *
+     */
+    inappropriate: boolean;
+    /**
+     *
+     */
+    spam: boolean;
+    /**
+     *
+     */
+    other: boolean;
+  };
 }
 
 /**
  *
  */
-export interface ReviewCreateData {
+export interface IReviewCreateData {
   /**
    *
    */
@@ -139,50 +111,34 @@ export interface ReviewCreateData {
   /**
    *
    */
-  adId?: string;
-  /**
-   *
-   */
   rating: number;
   /**
    *
    */
-  title: string;
+  comment: string;
   /**
    *
    */
-  content: string;
+  experienceDate: Date;
   /**
    *
    */
-  categories?: {
+  attachments?: {
     /**
      *
      */
-    communication?: number;
+    images: File[];
     /**
      *
      */
-    appearance?: number;
-    /**
-     *
-     */
-    location?: number;
-    /**
-     *
-     */
-    value?: number;
+    videos: File[];
   };
-  /**
-   *
-   */
-  meetingDate?: Date;
 }
 
 /**
  *
  */
-export interface ReviewUpdateData {
+export interface IReviewUpdateData {
   /**
    *
    */
@@ -190,115 +146,123 @@ export interface ReviewUpdateData {
   /**
    *
    */
-  title?: string;
+  comment?: string;
   /**
    *
    */
-  content?: string;
+  experienceDate?: Date;
   /**
    *
    */
-  categories?: {
+  attachments?: {
     /**
      *
      */
-    communication?: number;
+    images?: string[];
     /**
      *
      */
-    appearance?: number;
-    /**
-     *
-     */
-    location?: number;
-    /**
-     *
-     */
-    value?: number;
+    videos?: string[];
   };
 }
 
 /**
  *
  */
-export interface ReviewResponse {
+export interface IReviewResponse {
   /**
    *
    */
-  content: string;
+  success: boolean;
+  /**
+   *
+   */
+  reviewId?: string;
+  /**
+   *
+   */
+  error?: string;
 }
 
 /**
  *
  */
-export interface ReviewReport {
+export interface IReviewReport {
+  /**
+   *
+   */
+  reviewId: string;
   /**
    *
    */
   reason: string;
+  /**
+   *
+   */
+  description?: string;
 }
 
 /**
  *
  */
-export interface AdvertiserRatings {
+export interface IAdvertiserRatings {
   /**
    *
    */
   averageRating: number;
-  /**
-   *
-   */
-  communicationAvg: number;
-  /**
-   *
-   */
-  appearanceAvg: number;
-  /**
-   *
-   */
-  locationAvg: number;
-  /**
-   *
-   */
-  valueAvg: number;
   /**
    *
    */
   totalReviews: number;
+  /**
+   *
+   */
+  distribution: {
+    /**
+     *
+     */
+    5: number;
+    /**
+     *
+     */
+    4: number;
+    /**
+     *
+     */
+    3: number;
+    /**
+     *
+     */
+    2: number;
+    /**
+     *
+     */
+    1: number;
+  };
 }
 
 /**
  *
  */
-export interface TopRatedAdvertiser {
+export interface ITopRatedAdvertiser {
   /**
    *
    */
-  _id: string;
+  id: string;
   /**
    *
    */
-  advertiser: {
-    /**
-     *
-     */
-    _id: string;
-    /**
-     *
-     */
-    username: string;
-    /**
-     *
-     */
-    profileImage?: string;
-  };
+  name: string;
   /**
    *
    */
-  averageRating: number;
+  rating: number;
   /**
    *
    */
   reviewCount: number;
+  /**
+   *
+   */
+  recentReviews: IReview[];
 }

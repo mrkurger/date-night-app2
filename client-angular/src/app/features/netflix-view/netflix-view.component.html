@@ -1,6 +1,6 @@
 <div class="netflix-container">
   <!-- Hero Section with PrimeNG Card -->
-  <p-card *ngIf="featuredAd" styleClass="hero-card">
+  <p-card *ngIf="featuredAd" styleClass="hero-card" i18n-styleClass>
     <ng-template pTemplate="header">
       <div class="hero-header">
         <div class="user-info">
@@ -8,38 +8,38 @@
             <p-avatar
               [image]="getAdvertiserImage(featuredAd)"
               [label]="getAdvertiserName(featuredAd) | slice : 0 : 1"
-              shape="circle"
-              size="large"
+              shape="circle" i18n-shape
+              size="large" i18n-size
               [styleClass]="featuredAd.isAdvertiserOnline ? 'online-avatar' : 'offline-avatar'"
             ></p-avatar>
           </div>
           <div class="user-details">
-            <span class="user-name">{{ getAdvertiserName(featuredAd) }}</span>
-            <span class="user-location">{{ getLocationString(featuredAd) }}</span>
+            <span class="user-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getAdvertiserName(featuredAd) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+            <span class="user-location"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getLocationString(featuredAd) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
           </div>
         </div>
         <div class="hero-actions">
           <button
             pButton
             pRipple
-            icon="pi pi-info-circle"
+            icon="pi pi-info-circle" i18n-icon
             (click)="onHeroAction('view', getAdIdAsString(featuredAd._id))"
-            label="View Profile"
+            label="View Profile" i18n-label
           ></button>
           <button
             pButton
             pRipple
-            icon="pi pi-heart"
+            icon="pi pi-heart" i18n-icon
             (click)="onHeroAction('favorite', getAdIdAsString(featuredAd._id))"
-            label="Add to Favorites"
+            label="Add to Favorites" i18n-label
             class="p-button-outlined"
           ></button>
           <button
             pButton
             pRipple
-            icon="pi pi-comments"
+            icon="pi pi-comments" i18n-icon
             (click)="onHeroAction('chat', getAdIdAsString(featuredAd._id))"
-            label="Start Chat"
+            label="Start Chat" i18n-label
             class="p-button-outlined"
           ></button>
         </div>
@@ -47,15 +47,15 @@
     </ng-template>
 
     <div class="hero-content" [style.backgroundImage]="'url(' + getMediaUrl(featuredAd) + ')'">
-      <h1>{{ featuredAd.title }}</h1>
-      <p class="hero-description">{{ featuredAd.description }}</p>
+      <h1><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ featuredAd.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h1>
+      <p class="hero-description"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ featuredAd.description }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
       <!-- Tags -->
       <div class="hero-tags" *ngIf="featuredAd.tags && featuredAd.tags.length > 0">
         <p-tag
           *ngFor="let tag of featuredAd.tags.slice(0, 5)"
           [value]="tag"
-          severity="primary"
+          severity="primary" i18n-severity
           [rounded]="true"
         ></p-tag>
       </div>
@@ -68,13 +68,13 @@
     <div class="filters-bar">
       <div class="container">
         <div class="filters-content">
-          <h2 class="section-title">Browse Profiles</h2>
+          <h2 class="section-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Browse Profiles</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
           <button
             pButton
             pRipple
-            icon="pi pi-filter"
+            icon="pi pi-filter" i18n-icon
             (click)="openFilters()"
-            label="Filters"
+            label="Filters" i18n-label
             class="p-button-outlined"
           ></button>
         </div>
@@ -84,25 +84,25 @@
     <!-- Loading State -->
     <div class="loading-container" *ngIf="loading">
       <p-progressSpinner [strokeWidth]="4"></p-progressSpinner>
-      <p class="loading-text">Loading profiles...</p>
+      <p class="loading-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading profiles...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
     </div>
 
     <!-- Error State -->
     <div class="error-container" *ngIf="error && !loading">
       <i class="pi pi-exclamation-triangle" style="font-size: 2rem; color: var(--red-500)"></i>
-      <p class="error-text">{{ error }}</p>
-      <button pButton pRipple icon="pi pi-refresh" (click)="loadAds()" label="Try Again"></button>
+      <p class="error-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ error }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+      <button pButton pRipple icon="pi pi-refresh" i18n-icon (click)="loadAds()" label="Try Again" i18n-label></button>
     </div>
 
     <!-- Netflix-style Rows -->
     <div class="netflix-rows" *ngIf="!loading && !error">
       <div class="row-section" *ngFor="let category of categories; let i = index">
         <div class="container">
-          <h2 class="row-title">{{ category }}</h2>
+          <h2 class="row-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ category }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
 
           <!-- Empty state handling -->
           <div class="empty-row" *ngIf="adsByCategory[category]?.length === 0">
-            <p class="empty-row-text">No profiles in this category</p>
+            <p class="empty-row-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No profiles in this category</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
           </div>
 
           <!-- Grid of Cards -->
@@ -118,24 +118,24 @@
                   <p-avatar
                     [image]="ad.advertiserImage"
                     [label]="ad.advertiserName | slice : 0 : 1"
-                    shape="circle"
-                    size="small"
+                    shape="circle" i18n-shape
+                    size="small" i18n-size
                     [styleClass]="ad.isAdvertiserOnline ? 'online-avatar' : 'offline-avatar'"
                   ></p-avatar>
-                  <span class="advertiser-name">{{ ad.advertiserName }}</span>
+                  <span class="advertiser-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.advertiserName }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
                 </div>
               </ng-template>
 
               <div class="card-content" [style.backgroundImage]="'url(' + getMediaUrl(ad) + ')'">
-                <h3>{{ ad.title }}</h3>
-                <p>{{ ad.description?.substring(0, 100) + '...' }}</p>
+                <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+                <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.description?.substring(0, 100) + '...' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
 
                 <!-- Tags -->
                 <div class="card-tags" *ngIf="ad.tags?.length > 0">
                   <p-tag
                     *ngFor="let tag of ad.tags.slice(0, 3)"
                     [value]="tag"
-                    severity="primary"
+                    severity="primary" i18n-severity
                     [rounded]="true"
                   ></p-tag>
                 </div>
@@ -146,17 +146,17 @@
                   <button
                     pButton
                     pRipple
-                    icon="pi pi-info-circle"
+                    icon="pi pi-info-circle" i18n-icon
                     class="p-button-rounded p-button-text"
-                    pTooltip="View Details"
+                    pTooltip="View Details" i18n-pTooltip
                     (click)="$event.stopPropagation(); onCardAction({ id: 'view', itemId: ad.id })"
                   ></button>
                   <button
                     pButton
                     pRipple
-                    icon="pi pi-heart"
+                    icon="pi pi-heart" i18n-icon
                     class="p-button-rounded p-button-text"
-                    pTooltip="Add to Favorites"
+                    pTooltip="Add to Favorites" i18n-pTooltip
                     (click)="
                       $event.stopPropagation(); onCardAction({ id: 'favorite', itemId: ad.id })
                     "
@@ -164,9 +164,9 @@
                   <button
                     pButton
                     pRipple
-                    icon="pi pi-comments"
+                    icon="pi pi-comments" i18n-icon
                     class="p-button-rounded p-button-text"
-                    pTooltip="Start Chat"
+                    pTooltip="Start Chat" i18n-pTooltip
                     (click)="$event.stopPropagation(); onCardAction({ id: 'chat', itemId: ad.id })"
                   ></button>
                 </div>
@@ -183,10 +183,10 @@
 <button
   pButton
   pRipple
-  icon="pi pi-filter"
+  icon="pi pi-filter" i18n-icon
   class="floating-action-button p-button-rounded p-button-lg"
   (click)="openFilters()"
-  pTooltip="Filter Profiles"
+  pTooltip="Filter Profiles" i18n-pTooltip
 ></button>
 
 <!-- Filters Dialog -->
@@ -196,11 +196,11 @@
   [draggable]="false"
   [resizable]="false"
   [style]="{ width: '90vw', maxWidth: '500px' }"
-  header="Filter Profiles"
+  header="Filter Profiles" i18n-header
 >
   <form [formGroup]="filterForm">
     <div class="field">
-      <label for="category">Category</label>
+      <label for="category"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Category</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
       <p-dropdown
         id="category"
         formControlName="category"
@@ -212,13 +212,13 @@
           { label: 'Companion', value: 'Companion' },
           { label: 'Other', value: 'Other' }
         ]"
-        placeholder="Select a category"
+        placeholder="Select a category" i18n-placeholder
         [style]="{ width: '100%' }"
       ></p-dropdown>
     </div>
 
     <div class="field">
-      <label for="location">Location</label>
+      <label for="location"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Location</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
       <p-dropdown
         id="location"
         formControlName="location"
@@ -231,14 +231,14 @@
           { label: 'Tromsø', value: 'Tromsø' },
           { label: 'Kristiansand', value: 'Kristiansand' }
         ]"
-        placeholder="Select a location"
+        placeholder="Select a location" i18n-placeholder
         [style]="{ width: '100%' }"
       ></p-dropdown>
     </div>
 
     <div class="field-checkbox">
       <p-inputSwitch formControlName="touringOnly"></p-inputSwitch>
-      <label for="touringOnly" class="ml-2">Show only touring profiles</label>
+      <label for="touringOnly" class="ml-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Show only touring profiles</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
     </div>
   </form>
 
@@ -246,20 +246,20 @@
     <button
       pButton
       pRipple
-      icon="pi pi-refresh"
+      icon="pi pi-refresh" i18n-icon
       (click)="resetFilters()"
-      label="Reset"
+      label="Reset" i18n-label
       class="p-button-text"
     ></button>
     <button
       pButton
       pRipple
-      icon="pi pi-check"
+      icon="pi pi-check" i18n-icon
       (click)="applyFilters(); showFiltersDialog = false"
-      label="Apply"
+      label="Apply" i18n-label
     ></button>
   </ng-template>
 </p-dialog>
 
 <!-- Toast for notifications -->
-<p-toast position="top-right"></p-toast>
+<p-toast position="top-right" i18n-position></p-toast>

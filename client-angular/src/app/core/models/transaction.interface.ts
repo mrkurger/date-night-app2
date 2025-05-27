@@ -1,23 +1,15 @@
 /**
  *
  */
-export interface Transaction {
+export interface ITransaction {
   /**
    *
    */
-  _id?: string;
+  id: string;
   /**
    *
    */
-  id?: string;
-  /**
-   *
-   */
-  userId: string;
-  /**
-   *
-   */
-  type: string;
+  type: 'payment' | 'refund' | 'withdrawal' | 'deposit';
   /**
    *
    */
@@ -29,15 +21,7 @@ export interface Transaction {
   /**
    *
    */
-  status: string;
-  /**
-   *
-   */
-  createdAt: string;
-  /**
-   *
-   */
-  updatedAt?: string;
+  status: 'pending' | 'completed' | 'failed' | 'cancelled';
   /**
    *
    */
@@ -45,17 +29,43 @@ export interface Transaction {
   /**
    *
    */
-  paymentMethodId?: string;
+  metadata?: Record<string, unknown>;
   /**
    *
    */
-  recipientId?: string;
+  createdAt: Date;
   /**
    *
    */
-  reference?: string;
+  updatedAt: Date;
   /**
    *
    */
-  fee?: number;
+  paymentMethod?: {
+    /**
+     *
+     */
+    type: string;
+    /**
+     *
+     */
+    lastFourDigits?: string;
+    /**
+     *
+     */
+    expiryDate?: string;
+  };
+  /**
+   *
+   */
+  error?: {
+    /**
+     *
+     */
+    code: string;
+    /**
+     *
+     */
+    message: string;
+  };
 }

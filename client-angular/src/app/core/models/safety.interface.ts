@@ -1,40 +1,19 @@
 /**
  *
  */
-export interface SafetyCheckin {
+export interface ISafetyCheckin {
   /**
    *
    */
-  _id: string;
+  id: string;
   /**
    *
    */
-  user: string;
+  userId: string;
   /**
    *
    */
-  meetingWith?: {
-    /**
-     *
-     */
-    _id: string;
-    /**
-     *
-     */
-    username: string;
-    /**
-     *
-     */
-    profileImage?: string;
-  };
-  /**
-   *
-   */
-  clientName?: string;
-  /**
-   *
-   */
-  clientContact?: string;
+  timestamp: Date;
   /**
    *
    */
@@ -42,115 +21,73 @@ export interface SafetyCheckin {
     /**
      *
      */
-    type: 'Point';
+    latitude: number;
     /**
      *
      */
-    coordinates: [number, number]; // [longitude, latitude]
+    longitude: number;
     /**
      *
      */
     address?: string;
-    /**
-     *
-     */
-    locationName?: string;
-    /**
-     *
-     */
-    city?: string;
-    /**
-     *
-     */
-    county?: string;
   };
   /**
    *
    */
-  startTime: Date;
+  status: 'safe' | 'help-needed' | 'emergency';
   /**
    *
    */
-  expectedEndTime: Date;
+  message?: string;
   /**
    *
    */
-  actualEndTime?: Date;
-  /**
-   *
-   */
-  status: 'scheduled' | 'active' | 'completed' | 'missed' | 'emergency';
-  /**
-   *
-   */
-  checkInReminders: Array;
-  /**
-   *
-   */
-  emergencyContacts: Array;
-  /**
-   *
-   */
-  safetyNotes?: string;
-  /**
-   *
-   */
-  safetyCode?: string; // Only included when first created
-  /**
-   *
-   */
-  distressCode?: string; // Only included when first created
-  /**
-   *
-   */
-  checkInMethod: 'app' | 'sms' | 'email';
-  /**
-   *
-   */
-  checkInResponses: Array;
-  /**
-   *
-   */
-  autoCheckInSettings: {
+  attachments?: {
     /**
      *
      */
-    enabled: boolean;
+    images: string[];
     /**
      *
      */
-    intervalMinutes: number;
-    /**
-     *
-     */
-    missedCheckInsBeforeAlert: number;
+    audio: string[];
   };
   /**
    *
    */
-  createdAt: Date;
+  emergencyContacts: {
+    /**
+     *
+     */
+    notified: string[];
+    /**
+     *
+     */
+    confirmed: string[];
+  };
   /**
    *
    */
-  updatedAt: Date;
+  automatedActions: {
+    /**
+     *
+     */
+    smsNotifications: boolean;
+    /**
+     *
+     */
+    emailNotifications: boolean;
+    /**
+     *
+     */
+    emergencyServices: boolean;
+  };
 }
 
 /**
  *
  */
-export interface SafetyCheckinCreateData {
-  /**
-   *
-   */
-  meetingWith?: string;
-  /**
-   *
-   */
-  clientName?: string;
-  /**
-   *
-   */
-  clientContact?: string;
+export interface ISafetyCheckinCreateData {
   /**
    *
    */
@@ -158,165 +95,143 @@ export interface SafetyCheckinCreateData {
     /**
      *
      */
-    type: 'Point';
+    latitude: number;
     /**
      *
      */
-    coordinates: [number, number]; // [longitude, latitude]
-    /**
-     *
-     */
-    address?: string;
-    /**
-     *
-     */
-    locationName?: string;
-    /**
-     *
-     */
-    city?: string;
-    /**
-     *
-     */
-    county?: string;
-  };
-  /**
-   *
-   */
-  startTime: Date | string;
-  /**
-   *
-   */
-  expectedEndTime: Date | string;
-  /**
-   *
-   */
-  safetyNotes?: string;
-  /**
-   *
-   */
-  checkInMethod?: 'app' | 'sms' | 'email';
-  /**
-   *
-   */
-  autoCheckInSettings?: {
-    /**
-     *
-     */
-    enabled: boolean;
-    /**
-     *
-     */
-    intervalMinutes: number;
-    /**
-     *
-     */
-    missedCheckInsBeforeAlert: number;
-  };
-  /**
-   *
-   */
-  emergencyContacts?: Array;
-}
-
-/**
- *
- */
-export interface SafetyCheckinUpdateData {
-  /**
-   *
-   */
-  meetingWith?: string;
-  /**
-   *
-   */
-  clientName?: string;
-  /**
-   *
-   */
-  clientContact?: string;
-  /**
-   *
-   */
-  location?: {
-    /**
-     *
-     */
-    type: 'Point';
-    /**
-     *
-     */
-    coordinates: [number, number]; // [longitude, latitude]
+    longitude: number;
     /**
      *
      */
     address?: string;
-    /**
-     *
-     */
-    locationName?: string;
-    /**
-     *
-     */
-    city?: string;
-    /**
-     *
-     */
-    county?: string;
   };
   /**
    *
    */
-  startTime?: Date | string;
+  status: 'safe' | 'help-needed' | 'emergency';
   /**
    *
    */
-  expectedEndTime?: Date | string;
+  message?: string;
   /**
    *
    */
-  safetyNotes?: string;
-  /**
-   *
-   */
-  checkInMethod?: 'app' | 'sms' | 'email';
-  /**
-   *
-   */
-  autoCheckInSettings?: {
+  attachments?: {
     /**
      *
      */
-    enabled: boolean;
+    images: File[];
     /**
      *
      */
-    intervalMinutes: number;
+    audio: File[];
+  };
+  /**
+   *
+   */
+  emergencyContacts?: string[];
+  /**
+   *
+   */
+  automatedActions?: {
     /**
      *
      */
-    missedCheckInsBeforeAlert: number;
+    smsNotifications?: boolean;
+    /**
+     *
+     */
+    emailNotifications?: boolean;
+    /**
+     *
+     */
+    emergencyServices?: boolean;
   };
 }
 
 /**
  *
  */
-export interface CheckInResponse {
+export interface ISafetyCheckinUpdateData {
   /**
    *
    */
-  response: 'safe' | 'need_more_time' | 'distress';
+  status?: 'safe' | 'help-needed' | 'emergency';
   /**
    *
    */
-  coordinates?: [number, number]; // [longitude, latitude]
+  message?: string;
+  /**
+   *
+   */
+  attachments?: {
+    /**
+     *
+     */
+    images?: string[];
+    /**
+     *
+     */
+    audio?: string[];
+  };
+  /**
+   *
+   */
+  emergencyContacts?: {
+    /**
+     *
+     */
+    notified?: string[];
+    /**
+     *
+     */
+    confirmed?: string[];
+  };
+  /**
+   *
+   */
+  automatedActions?: {
+    /**
+     *
+     */
+    smsNotifications?: boolean;
+    /**
+     *
+     */
+    emailNotifications?: boolean;
+    /**
+     *
+     */
+    emergencyServices?: boolean;
+  };
 }
 
 /**
  *
  */
-export interface EmergencyContact {
+export interface ICheckInResponse {
+  /**
+   *
+   */
+  success: boolean;
+  /**
+   *
+   */
+  checkinId?: string;
+  /**
+   *
+   */
+  error?: string;
+}
+
+/**
+ *
+ */
+export interface IEmergencyContact {
+  /**
+   *
+   */
+  id: string;
   /**
    *
    */
@@ -324,7 +239,7 @@ export interface EmergencyContact {
   /**
    *
    */
-  phone?: string;
+  phone: string;
   /**
    *
    */
@@ -332,29 +247,21 @@ export interface EmergencyContact {
   /**
    *
    */
-  relationship?: string;
+  relationship: string;
+  /**
+   *
+   */
+  priority: number;
 }
 
 /**
  *
  */
-export interface SafetySettings {
+export interface ISafetySettings {
   /**
    *
    */
-  emergencyContacts: Array;
-  /**
-   *
-   */
-  safetyCode?: string;
-  /**
-   *
-   */
-  distressCode?: string;
-  /**
-   *
-   */
-  autoCheckIn: {
+  autoCheckin: {
     /**
      *
      */
@@ -362,26 +269,41 @@ export interface SafetySettings {
     /**
      *
      */
-    intervalMinutes: number;
+    interval: number; // minutes
     /**
      *
      */
-    missedCheckInsBeforeAlert: number;
+    startTime?: string; // HH:mm
+    /**
+     *
+     */
+    endTime?: string; // HH:mm
   };
-}
-
-/**
- *
- */
-export interface SafetySettingsUpdateData {
   /**
    *
    */
-  emergencyContacts?: Array;
+  emergencyContacts: IEmergencyContact[];
   /**
    *
    */
-  autoCheckIn?: {
+  notificationPreferences: {
+    /**
+     *
+     */
+    sms: boolean;
+    /**
+     *
+     */
+    email: boolean;
+    /**
+     *
+     */
+    push: boolean;
+  };
+  /**
+   *
+   */
+  locationSharing: {
     /**
      *
      */
@@ -389,14 +311,67 @@ export interface SafetySettingsUpdateData {
     /**
      *
      */
-    intervalMinutes: number;
+    shareWith: ('emergency-contacts' | 'trusted-users')[];
+  };
+}
+
+/**
+ *
+ */
+export interface ISafetySettingsUpdateData {
+  /**
+   *
+   */
+  autoCheckin?: {
     /**
      *
      */
-    missedCheckInsBeforeAlert: number;
+    enabled?: boolean;
+    /**
+     *
+     */
+    interval?: number;
+    /**
+     *
+     */
+    startTime?: string;
+    /**
+     *
+     */
+    endTime?: string;
   };
   /**
    *
    */
-  generateNewCodes?: boolean;
+  emergencyContacts?: IEmergencyContact[];
+  /**
+   *
+   */
+  notificationPreferences?: {
+    /**
+     *
+     */
+    sms?: boolean;
+    /**
+     *
+     */
+    email?: boolean;
+    /**
+     *
+     */
+    push?: boolean;
+  };
+  /**
+   *
+   */
+  locationSharing?: {
+    /**
+     *
+     */
+    enabled?: boolean;
+    /**
+     *
+     */
+    shareWith?: ('emergency-contacts' | 'trusted-users')[];
+  };
 }

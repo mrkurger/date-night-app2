@@ -8,13 +8,13 @@ import { PanelModule } from 'primeng/panel';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SidebarModule } from 'primeng/sidebar';
+import { ToolbarModule } from 'primeng/toolbar';
 import { Subscription } from 'rxjs';
 
 import { ThemeService } from './core/services/theme.service';
 import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
 
-import { ToolbarModule } from 'primeng/toolbar';
 
 /**
  *
