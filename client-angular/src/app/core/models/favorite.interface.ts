@@ -1,10 +1,10 @@
-import { Ad } from './ad.interface';
-import { User } from './user.interface';
+import { IAd } from './ad.interface';
+import { IUser } from './user.interface';
 
-export interface Favorite {
+export interface IFavorite {
   _id: string;
-  user: string | User;
-  ad: string | Ad;
+  user: string | IUser;
+  ad: string | IAd;
   adId?: string; // Reference to the ad ID
   title?: string; // Title from the ad
   dateAdded?: Date | string; // Alias for createdAt
@@ -19,25 +19,25 @@ export interface Favorite {
   selected?: boolean; // UI state for selection in lists
 }
 
-export interface FavoriteCreateData {
+export interface IFavoriteCreateData {
   adId: string;
   notes?: string;
   notificationsEnabled?: boolean;
-  tags?: string[]
+  tags?: string[];
   priority?: 'low' | 'normal' | 'high';
 }
 
-export interface FavoriteUpdateData {
+export interface IFavoriteUpdateData {
   notes?: string;
   notificationsEnabled?: boolean;
-  tags?: string[]
+  tags?: string[];
   priority?: 'low' | 'normal' | 'high';
 }
 
-export interface FavoriteFilterOptions {
+export interface IFavoriteFilterOptions {
   sort?: string;
   search?: string;
-  tags?: string[]
+  tags?: string[];
   category?: string;
   county?: string;
   city?: string;
@@ -48,12 +48,12 @@ export interface FavoriteFilterOptions {
   dateTo?: Date;
 }
 
-export interface FavoriteTag {
+export interface IFavoriteTag {
   tag: string;
   count: number;
 }
 
-export interface FavoriteBatchResult {
+export interface IFavoriteBatchResult {
   message: string;
   added?: number;
   removed?: number;

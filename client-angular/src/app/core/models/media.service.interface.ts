@@ -7,7 +7,7 @@ export interface IMediaService {
     adId: string,
     mediaId: string,
     status: 'approved' | 'rejected',
-    notes: string
+    notes: string,
   ): Promise<void>;
 }
 

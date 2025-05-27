@@ -1,0 +1,4 @@
+# .codeql/config.yml
+paths-ignore:
+  - client-angular/src/app/shared/components/custom-nebular-components/*
+  -

@@ -15,19 +15,19 @@ export interface IAd {
   location?: {
     city: string;
     county: string;
-  }
-  images?: string[] | { url: string; type?: string }[]
+  };
+  images?: string[] | { url: string; type?: string }[];
   media?: {
     type: string; // 'image' or 'video'
     url: string;
-  }[]
+  }[];
   advertiser?:
     | string
     | {
         _id: string;
         username: string;
         profileImage?: string;
-      }
+      };
   userId: string; // ID of the user who created the ad
   advertiserName?: string; // Name of the advertiser
   advertiserImage?: string; // Profile image of the advertiser
@@ -54,11 +54,11 @@ export interface IAd {
   tourDates?: {
     start: string;
     end: string;
-    cities: string[]
-  }
+    cities: string[];
+  };
 
   // UI-specific properties (may be derived from server data)
-  tags?: string[] // Used for displaying ad tags in list view
+  tags?: string[]; // Used for displaying ad tags in list view
   views?: number; // Mapped from viewCount for UI consistency
   age?: number; // Age of the advertiser or service provider
   cardState?: string; // For Tinder-style swiping animations
@@ -75,33 +75,33 @@ export interface IAdCreateDTO {
   location: {
     city: string;
     county: string;
-  }
+  };
   isActive: boolean;
   age?: number;
   images?: {
     url: string;
     type?: string;
-  }[]
+  }[];
   media?: {
     type: string; // 'image' or 'video'
     url: string;
-  }[]
+  }[];
   tourDates?: {
     start: string;
     end: string;
-    cities: string[]
-  }
+    cities: string[];
+  };
 }
 
 // Interface for updating existing ads
 export interface IAdUpdateDTO extends Partial<IAdCreateDTO> {
   isFeatured?: boolean;
   isTouring?: boolean;
-  tags?: string[]
+  tags?: string[];
 }
 
 // Interface for filtering ads
-export interface AdFilters {
+export interface IAdFilters {
   category?: string;
   city?: string;
   county?: string;
@@ -112,13 +112,13 @@ export interface AdFilters {
   isActive?: boolean;
   isFeatured?: boolean;
   isTouring?: boolean;
-  tags?: string[]
+  tags?: string[];
   sortBy?: 'price' | 'createdAt' | 'viewCount' | 'clickCount' | 'age';
   sortOrder?: 'asc' | 'desc';
 }
 
 // Interface for ad statistics
-export interface AdStats {
+export interface IAdStats {
   viewCount: number;
   clickCount: number;
   inquiryCount: number;
@@ -128,5 +128,5 @@ export interface AdStats {
     views: number;
     clicks: number;
     inquiries: number;
-  }[]
+  }[];
 }
