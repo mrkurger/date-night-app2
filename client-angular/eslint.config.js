@@ -3,8 +3,6 @@ import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import angular from '@angular-eslint/eslint-plugin';
-import angularTemplate from '@angular-eslint/eslint-plugin-template';
-import parser from '@angular-eslint/template-parser';
 import globals from 'globals';
 import sonarjs from 'eslint-plugin-sonarjs';
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -61,73 +59,65 @@ export default [
     rules: {
       // TypeScript rules
       '@typescript-eslint/strict-boolean-expressions': 'error',
-      '@typescript-eslint/explicit-function-return-type': ['warn', {
-        allowExpressions: true,
-      }],
+      '@typescript-eslint/explicit-function-return-type': [
+        'warn',
+        {
+          allowExpressions: true,
+        },
+      ],
       '@typescript-eslint/naming-convention': [
         'error',
         {
           selector: 'interface',
           format: ['PascalCase'],
-          prefix: ['I']
-        }
+          prefix: ['I'],
+        },
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-floating-promises': 'error',
 
       // Import rules
-      'import/order': ['error', {
-        'groups': [
-          'builtin',
-          'external',
-          'internal',
-          ['parent', 'sibling', 'index']
-        ],
-        'alphabetize': {
-          'order': 'asc',
-          'caseInsensitive': true
-        }
-      }],
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
       'import/no-unresolved': 'error',
 
       // Documentation rules
       'jsdoc/require-description': 'warn',
-      'jsdoc/require-jsdoc': ['warn', {
-        'publicOnly': true,
-        'require': {
-          'ArrowFunctionExpression': false,
-          'ClassDeclaration': true,
-          'ClassExpression': true,
-          'FunctionDeclaration': true,
-          'MethodDefinition': true
-        }
-      }],
+      'jsdoc/require-jsdoc': [
+        'warn',
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
 
       // Code quality rules
       'sonarjs/cognitive-complexity': ['error', 15],
-      'sonarjs/no-duplicate-string': ['warn', 4],
+      'sonarjs/no-duplicate-string': ['warn', { threshold: 4 }],
 
       // Base rules
       'no-unused-vars': 'off', // TypeScript handles this
-      '@typescript-eslint/no-unused-vars': ['error', {
-        'argsIgnorePattern': '^_',
-        'varsIgnorePattern': '^_'
-      }]
-    }
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+    },
   },
-
-  // Template files configuration - currently disabled to focus on TypeScript linting
-  // {
-  //   files: ['src/**/*.component.html'],
-  //   plugins: {
-  //     '@angular-eslint/template': angularTemplate,
-  //   },
-  //   languageOptions: {
-  //     parser: '@angular-eslint/template-parser',
-  //     parserOptions: {
-  //       project: './tsconfig.json',
-  //     },
-  //   },
-  //   rules: {},
-  // },
 ];
