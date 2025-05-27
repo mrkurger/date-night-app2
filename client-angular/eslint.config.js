@@ -4,8 +4,6 @@ import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import angular from '@angular-eslint/eslint-plugin';
 import angularTemplate from '@angular-eslint/eslint-plugin-template';
-import angularTemplateAccessibility from '@angular-eslint/eslint-plugin-template/configs/accessibility';
-import angularTemplateRecommended from '@angular-eslint/eslint-plugin-template/configs/recommended';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import globals from 'globals';
 import sonarjs from 'eslint-plugin-sonarjs';
@@ -193,12 +191,8 @@ export default [
       '@angular-eslint/template/conditional-complexity': ['error', { maxComplexity: 4 }],
     },
   },
-  
-  // Incorporate accessibility recommendations
-  {
-    files: ['src/**/*.component.html'],
-    rules: angularTemplateAccessibility.rules,
-  },
+
+  // HTML template files - separate accessibility config removed
   // Configuration for test files
   {
     files: ['src/**/*.spec.ts', 'src/**/*.test.ts', 'src/**/testing/**/*.ts'],

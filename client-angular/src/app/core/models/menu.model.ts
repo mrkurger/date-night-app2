@@ -1,7 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
 
-export interface AppMenuItem extends NbMenuItem {
+export interface IAppMenuItem extends NbMenuItem {
   id?: string;
-  children?: AppMenuItem[]
+  children?: IAppMenuItem[];
 }
-';

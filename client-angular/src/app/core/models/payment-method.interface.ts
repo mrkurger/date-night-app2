@@ -1,7 +1,7 @@
 /**
  *
  */
-export interface PaymentMethod {
+export interface IPaymentMethod {
   /**
    *
    */

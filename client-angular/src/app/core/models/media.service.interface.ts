@@ -1,20 +1,20 @@
 /**
- *;
+ * Media service interface
  */
 export interface IMediaService {
-  getPendingModerationMedia(): Promise;
-  moderateMedia(;
+  getPendingModerationMedia(): Promise<IPendingMedia[]>;
+  moderateMedia(
     adId: string,
     mediaId: string,
     status: 'approved' | 'rejected',
-    notes: string,
-  ): Promise;
+    notes: string
+  ): Promise<void>;
 }
 
 /**
- *;
+ * Pending media interface
  */
-export interface PendingMedia {
+export interface IPendingMedia {
   /**
    *;
    */
@@ -49,7 +49,7 @@ export interface PendingMedia {
  *;
  */
 export interface IContentSanitizerService {
-  sanitizeUrl(url: string): SafeUrl;
+  sanitizeUrl(url: string): unknown; // Should be SafeUrl from @angular/platform-browser
 }
 
 /**

@@ -10,7 +10,7 @@ export interface Profile extends User {
   }
   preferences?: {
     emailNotifications: boolean;
-    pushNotifications: boolean;';
+    pushNotifications: boolean;
     theme: 'light' | 'dark';
     language: string;
     notifications?: boolean;

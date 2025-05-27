@@ -1,10 +1,10 @@
 /**
- * Interface for ads from the server;
- *;
+ * Interface for ads from the server
+ *
  * Note: This interface includes both properties returned directly from the server
- * and derived properties used in the UI components.;
+ * and derived properties used in the UI components.
  */
-export interface Ad {
+export interface IAd {
   // Core properties
   _id: string;
   id?: string;
@@ -21,8 +21,8 @@ export interface Ad {
     type: string; // 'image' or 'video'
     url: string;
   }[]
-  advertiser?:;
-    | string;
+  advertiser?:
+    | string
     | {
         _id: string;
         username: string;
@@ -62,12 +62,12 @@ export interface Ad {
   views?: number; // Mapped from viewCount for UI consistency
   age?: number; // Age of the advertiser or service provider
   cardState?: string; // For Tinder-style swiping animations
-  reviews?: Array;
-  services?: Array;
+  reviews?: Array<unknown>;
+  services?: Array<unknown>;
 }
 
 // Interface for creating new ads
-export interface AdCreateDTO {
+export interface IAdCreateDTO {
   title: string;
   description: string;
   category: string;
@@ -94,7 +94,7 @@ export interface AdCreateDTO {
 }
 
 // Interface for updating existing ads
-export interface AdUpdateDTO extends Partial {
+export interface IAdUpdateDTO extends Partial<IAdCreateDTO> {
   isFeatured?: boolean;
   isTouring?: boolean;
   tags?: string[]
