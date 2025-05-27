@@ -10,12 +10,12 @@ export interface IUser {
   id: string;
 
   /**
-   * User's email address, used for authentication and communication.
+   * IUser's email address, used for authentication and communication.
    */
   email: string;
 
   /**
-   * User's full name as displayed in the application.
+   * IUser's full name as displayed in the application.
    */
   name: string;
 
@@ -25,7 +25,7 @@ export interface IUser {
   roles: string[];
 
   /**
-   * User's application preferences for customization.
+   * IUser's application preferences for customization.
    */
   preferences: {
     /**
@@ -193,12 +193,12 @@ export interface IAuthResponse {
  */
 export interface ILoginCredentials {
   /**
-   * User's email address.
+   * IUser's email address.
    */
   email: string;
 
   /**
-   * User's password.
+   * IUser's password.
    */
   password: string;
 

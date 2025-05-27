@@ -30,7 +30,7 @@ export interface IAd {
       };
   userId: string; // ID of the user who created the ad
   advertiserName?: string; // Name of the advertiser
-  advertiserImage?: string; // Profile image of the advertiser
+  advertiserImage?: string; // IProfile image of the advertiser
 
   // Status flags
   isActive: boolean;

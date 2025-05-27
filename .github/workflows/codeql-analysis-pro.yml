@@ -14,7 +14,7 @@ on:
       - '**/*.txt'
       - '.github/ISSUE_TEMPLATE/**'
       - 'docs/**'
-  
+
   pull_request:
     branches: [ main ]
     paths:
@@ -24,10 +24,10 @@ on:
       - '**.tsx'
       - '**.html'
       - 'package*.json'
-  
+
   schedule:
     - cron: '0 3 * * 1'
-  
+
   workflow_dispatch:
     inputs:
       output_format:
@@ -56,7 +56,7 @@ jobs:
     name: Analyze Code Security
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -111,26 +111,26 @@ jobs:
       run: |
         mkdir -p processed-results
         SARIF_FILE=$(find codeql-results-js-ts -name "*.sarif" -type f | head -n 1)
-        
+
         if [ -n "$SARIF_FILE" ]; then
           node --input-type=module << 'EOJS'
             import { readFileSync, writeFileSync } from 'fs';
-            
+
             const sarifContent = readFileSync(process.env.SARIF_FILE, 'utf8');
             const sarif = JSON.parse(sarifContent);
-            
+
             let highCount = 0, mediumCount = 0, lowCount = 0;
             const findings = [];
-            
+
             for (const run of sarif.runs || []) {
               for (const result of run.results || []) {
                 const level = result.level || 'warning';
                 let severity = level === 'error' ? 'HIGH' : level === 'warning' ? 'MEDIUM' : 'LOW';
-                
+
                 if (severity === 'HIGH') highCount++;
                 else if (severity === 'MEDIUM') mediumCount++;
                 else lowCount++;
-                
+
                 const location = result.locations?.[0]?.physicalLocation;
                 findings.push({
                   severity,
@@ -142,20 +142,19 @@ jobs:
                 });
               }
             }
-            
+
             findings.sort((a, b) => {
               const order = { HIGH: 0, MEDIUM: 1, LOW: 2 };
               return order[a.severity] - order[b.severity];
             });
-            
+
             const summary = {
               total: findings.length,
-              critical: criticalCount,
               high: highCount,
               medium: mediumCount,
               low: lowCount
             };
-            
+
             writeFileSync('processed-results/results.json', JSON.stringify({ summary, findings }, null, 2));
             console.log(`::set-output name=total_issues::${findings.length}`);
             console.log(`::set-output name=high_issues::${highCount}`);
@@ -164,7 +163,6 @@ jobs:
         else
           echo "No SARIF file found"
           echo "::set-output name=total_issues::0"
-          echo "::set-output name=critical_issues::0"
           echo "::set-output name=high_issues::0"
           echo "::set-output name=has_issues::false"
         fi

@@ -187,7 +187,7 @@ export interface IUser {
 /**
  *
  */
-export interface IPublicProfile {
+export interface IPublicIProfile {
   /**
    *
    */
@@ -264,7 +264,7 @@ export interface IPublicProfile {
 /**
  *
  */
-export interface IUserProfile extends IUser {
+export interface IUserIProfile extends IUser {
   /**
    *
    */

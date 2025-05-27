@@ -1,5 +1,5 @@
 /**
- * User profile interface
+ * IUser profile interface
  */
 export interface IProfile {
   // Core user properties
