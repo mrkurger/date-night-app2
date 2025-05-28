@@ -1,0 +1,86 @@
+{
+  "CodeGPT.apiKey": "CodeGPT Plus Beta",
+  "zencoder.enableRepoIndexing": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    
+
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "typescript", "html"],
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2,
+  "prettier.semi": true,
+  "prettier.bracketSpacing": true,
+  "prettier.arrowParens": "avoid",
+  "prettier.endOfLine": "lf",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "deepscan.enable": true,
+  "terminal.integrated.scrollback": 5000,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    
+  ],
+
+    // GitHub Copilot settings
+    "github.copilot.settings": {
+        // Increase the maximum number of files to process in each batch
+        "maxFilesPerBatch": 20,
+        
+        // Increase timeout for batch processing (in milliseconds)
+        "batchProcessingTimeout": 30000,
+        
+        // Enable parallel file processing
+        "enableParallelProcessing": true,
+        
+        // Increase memory limit for processing (in MB)
+        "memoryLimit": 4096,
+        
+        // Enable advanced analysis features
+        "advanced": {
+            "enableDeepAnalysis": true,
+            "maxContextFiles": 15,
+            "maxTokensPerFile": 5000
+        }
+    },
+
+    // MCP Server specific settings
+    "mcp": {
+        "servers": {
+            "sequentialthinking": {
+                "maxConcurrentOperations": 5,
+                "timeout": 30000
+            },
+            // Increase processing limits for MCP servers
+            "typescript-lsp": {
+                "maxConcurrentFiles": 10,
+                "timeout": 30000
+            }
+        }
+
+        },
+    
+    // Editor performance settings
+    "editor.maxTokenizationLineLength": 20000,
+    "files.maxMemoryForLargeFilesMB": 4096
+  }
+

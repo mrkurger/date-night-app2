@@ -1,27 +1,16 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import karma from 'karma';
-import karmaJasmine from 'karma-jasmine';
-import karmaChromeLauncher from 'karma-chrome-launcher';
-import karmaJasmineHtmlReporter from 'karma-jasmine-html-reporter';
-import karmaCoverage from 'karma-coverage';
-import angularKarma from '@angular-devkit/build-angular/plugins/karma';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export default function (config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
-      karmaJasmine,
-      karmaChromeLauncher,
-      karmaJasmineHtmlReporter,
-      karmaCoverage,
-      angularKarma,
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage'),
+      require('@angular-devkit/build-angular/plugins/karma.js'),
     ],
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
@@ -30,7 +19,7 @@ export default function (config) {
       },
     },
     coverageReporter: {
-      dir: `${__dirname}/coverage/client-angular`,
+      dir: require('path').join(__dirname, './coverage/client-angular'),
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
       check: {
@@ -57,4 +46,4 @@ export default function (config) {
       },
     },
   });
-}
+};
