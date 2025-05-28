@@ -120,13 +120,16 @@ export class ChatMessageComponent implements OnInit {
    * Check if the message is from the current user
    */
   private checkIfCurrentUser(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !this.message.sender) return false;
-
-    const senderId =
-      typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
-
-    return senderId === currentUser.id;
+    // Subscribe to currentUser$ observable instead of trying to access getValue
+    let isCurrentUser = false;
+    this.authService.currentUser$.subscribe((currentUser) => {
+      if (currentUser && this.message.sender) {
+        const senderId =
+          typeof this.message.sender === 'string' ? this.message.sender : this.message.sender.id;
+        isCurrentUser = senderId === currentUser.id;
+      }
+    });
+    return isCurrentUser;
   }
 
   /**
@@ -157,8 +160,8 @@ export class ChatMessageComponent implements OnInit {
       message: true,
       'message--outgoing': this.isCurrentUser,
       'message--incoming': !this.isCurrentUser,
-      'message--encrypted': this.message.isEncrypted,
-      'message--decryption-failed': this.decryptionFailed,
+      'message--encrypted': this.message.isEncrypted || false,
+      'message--decryption-failed': this.decryptionFailed || false,
       'message--system': this.message.type === 'system',
     };
   }
@@ -179,5 +182,12 @@ export class ChatMessageComponent implements OnInit {
     if (attachment.url) {
       window.open(attachment.url, '_blank');
     }
+  }
+
+  /**
+   * TrackBy function for attachment list
+   */
+  trackByAttachment(index: number, attachment: Attachment): string {
+    return attachment.id || attachment.url || index.toString();
   }
 }

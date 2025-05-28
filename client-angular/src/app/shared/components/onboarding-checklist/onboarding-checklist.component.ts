@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CheckboxModule } from 'primeng/checkbox';
+import { NebularModule } from '../../nebular.module';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -22,30 +22,25 @@ export interface ChecklistItem {
   route?: string; // Optional route to navigate to
   action?: () => void; // Optional action to perform
   icon?: string; // Optional icon
-  reward?: {';
+  reward?: {
     type: 'badge' | 'points' | 'feature';
     value: string | number;
     description: string;
-  }
+  };
 }
 
+/**
+ *
+ */
 @Component({
   selector: 'app-onboarding-checklist',
   templateUrl: './onboarding-checklist.component.html',
   styleUrls: ['./onboarding-checklist.component.scss'],
   standalone: true,
-  imports: [;
-    CommonModule,
-    FormsModule,
-    NbButtonModule,
-    NbIconModule,
-    NbProgressBarModule,
-    NbCheckboxModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, FormsModule, CheckboxModule, RouterModule, NebularModule],
 })
-export class OnboardingChecklistComponen {t implements OnInit {
-  @Input() items: ChecklistItem[] = []
+export class OnboardingChecklistComponent implements OnInit {
+  @Input() items: ChecklistItem[] = [];
 
   @Input() title = 'Getting Started';
   @Input() subtitle = 'Complete these tasks to set up your account';
@@ -55,73 +50,96 @@ export class OnboardingChecklistComponen {t implements OnInit {
   @Input() initiallyCollapsed = false;
   @Input() showRewards = true;
 
-  @Output() itemCompleted = new EventEmitter()
-  @Output() allCompleted = new EventEmitter()
+  @Output() itemCompleted = new EventEmitter<ChecklistItem>();
+  @Output() allCompleted = new EventEmitter<void>();
 
   isCollapsed = false;
 
+  /**
+   *
+   */
   get completedCount(): number {
     return this.items.filter((item) => item.completed).length;
   }
 
+  /**
+   *
+   */
   get progress(): number {
     return this.items.length > 0 ? (this.completedCount / this.items.length) * 100 : 0;
   }
 
+  /**
+   *
+   */
   get isAllCompleted(): boolean {
     return this.completedCount === this.items.length && this.items.length > 0;
   }
 
+  /**
+   *
+   */
   ngOnInit(): void {
     this.isCollapsed = this.initiallyCollapsed;
-    this.loadSavedState()
+    this.loadSavedState();
   }
 
+  /**
+   *
+   */
   toggleCollapse(): void {
     this.isCollapsed = !this.isCollapsed;
   }
 
+  /**
+   *
+   */
   markItemCompleted(item: ChecklistItem): void {
     item.completed = true;
-    this.saveState()
-    this.itemCompleted.emit(item)
+    this.saveState();
+    this.itemCompleted.emit(item);
 
     if (this.isAllCompleted) {
-      this.allCompleted.emit()
+      this.allCompleted.emit();
     }
   }
 
+  /**
+   *
+   */
   handleItemClick(item: ChecklistItem): void {
     if (item.action) {
-      item.action()
+      item.action();
     }
 
     if (!item.completed) {
-      this.markItemCompleted(item)
+      this.markItemCompleted(item);
     }
   }
 
+  /**
+   *
+   */
   resetChecklist(): void {
     this.items.forEach((item) => {
       item.completed = false;
-    })
-    this.saveState()
+    });
+    this.saveState();
   }
 
   private loadSavedState(): void {
-    const savedState = localStorage.getItem(this.storageKey)
+    const savedState = localStorage.getItem(this.storageKey);
     if (savedState) {
-      const completedItems = JSON.parse(savedState) as string[]
+      const completedItems = JSON.parse(savedState) as string[];
 
       this.items.forEach((item) => {
-        item.completed = completedItems.includes(item.id)
-      })
+        item.completed = completedItems.includes(item.id);
+      });
     }
   }
 
   private saveState(): void {
-    const completedItems = this.items.filter((item) => item.completed).map((item) => item.id)
-
-    localStorage.setItem(this.storageKey, JSON.stringify(completedItems))
+    const completedItems = this.items.filter((item) => item.completed).map((item) => item.id);
+    localStorage.setItem(this.storageKey, JSON.stringify(completedItems));
   }
 }

@@ -35,6 +35,13 @@ export class AuthService {
   private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
 
   public currentUser$ = this.currentUserSubject.asObservable();
+  
+  /**
+   * Get the current user value from the BehaviorSubject
+   */
+  getCurrentUser(): any {
+    return this.currentUserSubject.getValue();
+  }
 
   constructor(
     private http: HttpClient,

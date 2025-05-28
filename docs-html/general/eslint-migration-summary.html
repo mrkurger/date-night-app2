@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ESLint Configuration Migration Summary</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    h1, h2, h3 {
-      color: #0066cc;
-    }
-    .success {
-      color: #2e7d32;
-    }
-    .warning {
-      color: #ff8f00;
-    }
-    .note {
-      background-color: #e3f2fd;
-      border-left: 4px solid #2196f3;
-      padding: 10px;
-      margin: 20px 0;
-    }
-    code {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: #f5f5f5;
-      padding: 2px 5px;
-      border-radius: 3px;
-      font-size: 0.9em;
-    }
-    pre {
-      background-color: #f5f5f5;
-      padding: 10px;
-      border-radius: 5px;
-      overflow-x: auto;
-    }
-  </style>
-</head>
-<body>
-  <h1>ESLint Configuration Migration Summary</h1>
-  <p>This document summarizes the migration of ESLint configuration from <code>.eslintrc.json</code> to <code>eslint.config.js</code> in the Date Night App Angular frontend.</p>
-  
-  <h2>Migration Overview</h2>
-  <ul>
-    <li>Successfully migrated from <code>.eslintrc.json</code> to <code>eslint.config.js</code></li>
-    <li>Implemented flat config format with ESM imports</li>
-    <li>Added proper Angular template parsing configuration</li>
-    <li>Added specialized configurations for test and interceptor files</li>
-    <li>Fixed interface naming conventions to follow 'I' prefix standard</li>
-    <li>Updated all model files to use consistent interface naming</li>
-  </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESLint Configuration Migration Summary</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0066cc;
+      }
+      .success {
+        color: #2e7d32;
+      }
+      .warning {
+        color: #ff8f00;
+      }
+      .note {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      code {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ESLint Configuration Migration Summary</h1>
+    <p>
+      This document summarizes the migration of ESLint configuration from
+      <code>.eslintrc.json</code> to <code>eslint.config.js</code> in the Date Night App Angular
+      frontend.
+    </p>
 
-  <h2>Key Configuration Components</h2>
-  
-  <h3>1. Angular Template Support</h3>
-  <pre><code>// HTML Template configuration
+    <h2>Migration Overview</h2>
+    <ul>
+      <li>
+        Successfully migrated from <code>.eslintrc.json</code> to <code>eslint.config.js</code>
+      </li>
+      <li>Implemented flat config format with ESM imports</li>
+      <li>Added proper Angular template parsing configuration</li>
+      <li>Added specialized configurations for test and interceptor files</li>
+      <li>Fixed interface naming conventions to follow 'I' prefix standard</li>
+      <li>Updated all model files to use consistent interface naming</li>
+    </ul>
+
+    <h2>Key Configuration Components</h2>
+
+    <h3>1. Angular Template Support</h3>
+    <pre><code>// HTML Template configuration
 {
   files: ['src/**/*.component.html'],
   languageOptions: {
@@ -76,8 +84,8 @@
   },
 }</code></pre>
 
-  <h3>2. Interface Naming Convention</h3>
-  <pre><code>'@typescript-eslint/naming-convention': [
+    <h3>2. Interface Naming Convention</h3>
+    <pre><code>'@typescript-eslint/naming-convention': [
   'error',
   {
     selector: 'interface',
@@ -86,8 +94,8 @@
   },
 ],</code></pre>
 
-  <h3>3. Test Files Configuration</h3>
-  <pre><code>// Configuration for test files
+    <h3>3. Test Files Configuration</h3>
+    <pre><code>// Configuration for test files
 {
   files: ['src/**/*.spec.ts', 'src/**/*.test.ts', 'src/**/testing/**/*.ts'],
   rules: {
@@ -99,8 +107,8 @@
   },
 },</code></pre>
 
-  <h3>4. Interceptors Configuration</h3>
-  <pre><code>// Configuration for interceptors
+    <h3>4. Interceptors Configuration</h3>
+    <pre><code>// Configuration for interceptors
 {
   files: ['src/**/interceptors/**/*.ts'],
   rules: {
@@ -108,35 +116,42 @@
   },
 },</code></pre>
 
-  <h2>Model Files Updated</h2>
-  <ul>
-    <li><code>ad.interface.ts</code> - Updated from <code>Ad</code> to <code>IAd</code></li>
-    <li><code>favorite.interface.ts</code> - Updated all interfaces to use 'I' prefix</li>
-    <li><code>profile.interface.ts</code> - Updated and fixed compatibility issues</li>
-    <li><code>user.interface.ts</code> - Already using 'I' prefix</li>
-    <li><code>payment-method.interface.ts</code> - Already using 'I' prefix</li>
-    <li><code>menu.model.ts</code> - Already using 'I' prefix</li>
-  </ul>
-
-  <div class="note">
-    <h3>Known Issues</h3>
-    <p>There are some remaining import resolution errors from the ESLint import plugin:</p>
+    <h2>Model Files Updated</h2>
     <ul>
-      <li>Unable to resolve path to module errors</li>
-      <li>Resolve error: typescript with invalid interface loaded as resolver</li>
+      <li><code>ad.interface.ts</code> - Updated from <code>Ad</code> to <code>IAd</code></li>
+      <li><code>favorite.interface.ts</code> - Updated all interfaces to use 'I' prefix</li>
+      <li><code>profile.interface.ts</code> - Updated and fixed compatibility issues</li>
+      <li><code>user.interface.ts</code> - Already using 'I' prefix</li>
+      <li><code>payment-method.interface.ts</code> - Already using 'I' prefix</li>
+      <li><code>menu.model.ts</code> - Already using 'I' prefix</li>
     </ul>
-    <p>These are related to ESLint's import resolution system and do not affect the actual functionality of the application or the interface naming convention enforcement.</p>
-  </div>
 
-  <h2>Future Recommendations</h2>
-  <ul>
-    <li>Consider adding an ESLint ignore file for specific import resolution issues</li>
-    <li>Periodically update ESLint and related plugins to ensure compatibility</li>
-    <li>Ensure new interfaces follow the 'I' prefix convention standard</li>
-    <li>Run automated linting as part of CI/CD pipeline</li>
-  </ul>
+    <div class="note">
+      <h3>Known Issues</h3>
+      <p>There are some remaining import resolution errors from the ESLint import plugin:</p>
+      <ul>
+        <li>Unable to resolve path to module errors</li>
+        <li>Resolve error: typescript with invalid interface loaded as resolver</li>
+      </ul>
+      <p>
+        These are related to ESLint's import resolution system and do not affect the actual
+        functionality of the application or the interface naming convention enforcement.
+      </p>
+    </div>
 
-  <h2>Conclusion</h2>
-  <p class="success">The ESLint configuration has been successfully migrated and now properly enforces TypeScript and Angular best practices, including interface naming conventions. All model files have been updated to follow these conventions.</p>
-</body>
+    <h2>Future Recommendations</h2>
+    <ul>
+      <li>Consider adding an ESLint ignore file for specific import resolution issues</li>
+      <li>Periodically update ESLint and related plugins to ensure compatibility</li>
+      <li>Ensure new interfaces follow the 'I' prefix convention standard</li>
+      <li>Run automated linting as part of CI/CD pipeline</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p class="success">
+      The ESLint configuration has been successfully migrated and now properly enforces TypeScript
+      and Angular best practices, including interface naming conventions. All model files have been
+      updated to follow these conventions.
+    </p>
+  </body>
 </html>

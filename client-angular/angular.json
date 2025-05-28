@@ -86,16 +86,16 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/primeicons/primeicons.css",
-              "./node_modules/primeflex/primeflex.css",
-              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
-              "./node_modules/eva-icons/style/eva-icons.css",
-              "./node_modules/@fontsource/inter/index.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/@fontsource/inter/index.css",
               "src/styles.scss"
             ],
             "scripts": [],
+            "karmaConfig": "karma.conf.js",
+            "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": ["node_modules", "src/styles", "src/app/core/design"]
+              "includePaths": ["node_modules", "src/styles", "src/app/core/design", "."]
             }
           }
         }
