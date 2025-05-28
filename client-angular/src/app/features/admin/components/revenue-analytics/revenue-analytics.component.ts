@@ -29,7 +29,7 @@ interface TimeSeriesData {
     TabViewModule;
   ],
   templateUrl: './revenue-analytics.component.html',
-  styleUrls: ['./revenue-analytics.component.scss'],
+  styleUrls: ['./revenue-analytics.component.scss']
 })
 export class RevenueAnalyticsComponen {t implements OnInit {
   selectedPeriod = 'month';

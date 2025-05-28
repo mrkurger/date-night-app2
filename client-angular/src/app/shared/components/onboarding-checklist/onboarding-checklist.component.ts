@@ -37,7 +37,7 @@ export interface ChecklistItem {
   templateUrl: './onboarding-checklist.component.html',
   styleUrls: ['./onboarding-checklist.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, CheckboxModule, RouterModule, NebularModule],
+  imports: [CommonModule, FormsModule, CheckboxModule, RouterModule, NebularModule]
 })
 export class OnboardingChecklistComponent implements OnInit {
   @Input() items: ChecklistItem[] = [];

@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-,
+
 })
 export class CardComponen {t {
   /**

@@ -63,7 +63,7 @@ import {
   ],
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatListComponen {t implements OnInit, OnDestroy {
   rooms: ChatRoom[] = []

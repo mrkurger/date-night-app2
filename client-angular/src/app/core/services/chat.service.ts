@@ -1,12 +1,14 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { EncryptionService } from './encryption.service';
+import { environment } from '../../../environments/environment';
+
 /**
  * Chat service implementation for handling chat-related operations.;
  * This file contains settings for the chat service;
- *;
+ *
  * COMMON CUSTOMIZATIONS:;
  * - MAX_ATTACHMENT_SIZE: Maximum size for attachments in bytes (default: 10MB)
  * - TYPING_INDICATOR_TIMEOUT: Time in ms before typing indicator disappears (default: 3000)
@@ -30,7 +32,7 @@ export interface IChatMessageRequest {
   content: string;
   /** The ID of the sender */
   senderId: string;
-  /** The type of message */';
+  /** The type of message */
   type?: 'text' | 'image' | 'file';
   /** URL for file attachments */
   fileUrl?: string;
@@ -83,7 +85,7 @@ export interface IChatRoom {
   /** Display name of the room */
   name?: string;
   /** List of participants in the room */
-  participants: IChatParticipant[]
+  participants: IChatParticipant[];
   /** The last message sent in the room */
   lastMessage?: IChatMessage;
   /** Number of unread messages */
@@ -132,7 +134,7 @@ export interface ITypingStatus {
 @Injectable({
   providedIn: 'root',
 })
-export class ChatServic {e {
+export class ChatService {
   /** Observable for online users */
   public readonly onlineUsers$: Observable;
 
@@ -143,7 +145,7 @@ export class ChatServic {e {
   public readonly typingStatus$: Observable;
 
   /** API base URL for chat endpoints */
-  private readonly apiUrl = '/api/chat';
+  private readonly apiUrl = environment.apiUrl + '/chat';
 
   /** Subject for typing status updates */
   private readonly typingStatus = new BehaviorSubject({
@@ -163,7 +165,7 @@ export class ChatServic {e {
    * @param http - HTTP client for API calls;
    * @param encryptionService - Service for encryption operations;
    */
-  constructor(;
+  constructor(
     private readonly http: HttpClient,
     private readonly encryptionService: EncryptionService,
   ) {
@@ -370,5 +372,81 @@ export class ChatServic {e {
    */
   convertHoursToMilliseconds(hours: number): number {
     return hours * 60 * 60 * 1000;
+  }
+
+  sendMessage(messageRequest: IChatMessageRequest): Observable<IChatMessage> {
+    const temporaryId = Math.random().toString(36).substring(2);
+    let messageToSend = { ...messageRequest, id: temporaryId, timestamp: new Date() } as IChatMessage;
+
+    if (this.encryptionService && (this as any).enableMessageEncryption) {
+        messageToSend.content = this.encryptionService.encrypt(messageRequest.content);
+    }
+    
+    return this.http.post<IChatMessage>(`${this.apiUrl}/messages`, messageToSend).pipe(
+        map(sentMessage => {
+            if (this.encryptionService && (this as any).enableMessageEncryption && sentMessage) {
+                sentMessage.content = this.encryptionService.decrypt(sentMessage.content);
+            }
+            this.messagesSubject.next([...this.messagesSubject.value, sentMessage]);
+            return sentMessage;
+        }),
+        catchError(this.handleError.bind(this))
+    );
+  }
+
+  getMessages(roomId: string): Observable<IChatMessage[]> {
+    return this.http.get<IChatMessage[]>(`${this.apiUrl}/rooms/${roomId}/messages`).pipe(
+        map(messages => messages.map(msg => {
+            if (this.encryptionService && (this as any).enableMessageEncryption && msg) {
+                msg.content = this.encryptionService.decrypt(msg.content);
+            }
+            return msg;
+        })),
+        tap(messages => this.messagesSubject.next(messages)),
+        catchError(this.handleError.bind(this))
+    );
+  }
+  
+  uploadFile(file: File, roomId?: string): Observable<string | number> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    if (roomId) {
+      formData.append('roomId', roomId);
+    }
+
+    const uploadUrl = `${this.apiUrl}/upload`; 
+
+    return new Observable<string | number>(observer => {
+      this.http.post(uploadUrl, formData, {
+        reportProgress: true,
+        observe: 'events'
+      }).pipe(
+        map(event => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            const progress = Math.round(100 * event.loaded / event.total);
+            this.fileUploadProgressSubject.next({ [file.name]: progress });
+            observer.next(progress); 
+          } else if (event.type === HttpEventType.Response) {
+            const fileUrl = (event.body as any)?.url; 
+            if (fileUrl) {
+              observer.next(fileUrl); 
+              observer.complete();
+            } else {
+              observer.error('File URL not found in response');
+            }
+          }
+        }),
+        catchError(error => {
+          console.error('Upload error:', error);
+          observer.error(error);
+          return throwError(() => new Error('File upload failed.'));
+        })
+      ).subscribe();
+    });
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('API Error:', error);
+    return throwError(() => new Error('Something bad happened in ChatService; please try again later.'));
   }
 }

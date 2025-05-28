@@ -85,7 +85,7 @@ interface SavedFilter {
     BadgeModule,
     TagModule,
     CalendarModule;
-  ],
+  ]
 })
 export class ListViewComponen {t implements OnInit, AfterViewInit {
   // View template references
@@ -117,7 +117,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
   // Sort menu items for NbMenu
   sortMenuItems = this.sortOptions.map((option) => ({
     title: option.label,
-    data: { value: option.value },
+    data: { value: option.value }
   }))
 
   // Search debouncing
@@ -187,18 +187,18 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
       categories: this.fb.group({
         escort: [false],
         massage: [false],
-        striptease: [false],
+        striptease: [false]
       }),
       location: [[]],
       dateRange: this.fb.group({
         from: [null],
-        to: [null],
+        to: [null]
       }),
       status: this.fb.group({
         online: [false],
         touring: [false],
-        verified: [false],
-      }),
+        verified: [false]
+      })
     })
 
     // Load saved filters from localStorage
@@ -244,7 +244,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
         this.ads = response.ads.map((ad) => ({
           ...ad,
           createdAt: ad.createdAt || new Date().toISOString(),
-          category: ad.category || 'Uncategorized',
+          category: ad.category || 'Uncategorized'
         }))
         this.applyFilters()
         this.loading = false;
@@ -253,7 +253,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
         this.error = 'Failed to load ads. Please try again later.';
         this.loading = false;
         this.notificationService.error('Error', this.error)
-      },
+      }
     })
   }
 
@@ -363,7 +363,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
   setViewMode(mode: 'grid' | 'list' | 'compact'): void {
     this.viewMode = mode;
     this.userPreferencesService.updatePreferences({
-      defaultViewType: mode === 'compact' ? 'tinder' : mode === 'grid' ? 'list' : mode,
+      defaultViewType: mode === 'compact' ? 'tinder' : mode === 'grid' ? 'list' : mode
     })
   }
 
@@ -409,7 +409,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
         },
         error: (err) => {
           this.notificationService.error('Error', 'Failed to start chat. Please try again later.')
-        },
+        }
       })
     }
   }
@@ -431,7 +431,7 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
         online: false,
         touring: false,
         verified: false,
-      },
+      }
     })
 
     this.applyFilters()

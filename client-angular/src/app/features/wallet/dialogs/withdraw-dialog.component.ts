@@ -162,7 +162,7 @@ export interface WithdrawalRequest {
     MessageModule,
     InputTextModule;
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WithdrawDialogComponen {t implements OnInit {
   balances: WalletBalance[] = []
@@ -419,7 +419,7 @@ export class WithdrawDialogComponen {t implements OnInit {
     this.withdrawalForm = this.formBuilder.group({
       amount: ['', [Validators.required, Validators.min(0.01)]],
       paymentMethodId: ['', Validators.required],
-      memo: [''],
+      memo: ['']
     })
 
     // Initialize fiat withdrawal form
@@ -427,7 +427,7 @@ export class WithdrawDialogComponen {t implements OnInit {
       currency: ['', Validators.required],
       amount: ['', [Validators.required, Validators.min(0.01)]],
       paymentMethodId: ['', Validators.required],
-      description: [''],
+      description: ['']
     })
 
     // Initialize crypto withdrawal form
@@ -437,7 +437,7 @@ export class WithdrawDialogComponen {t implements OnInit {
       network: ['', Validators.required],
       address: ['', [Validators.required, Validators.minLength(10)]],
       memo: [''],
-      description: [''],
+      description: ['']
     })
   }
 
@@ -497,7 +497,7 @@ export class WithdrawDialogComponen {t implements OnInit {
         amount: formValue.amount,
         currency: this.selectedCurrency,
         paymentMethodId: formValue.paymentMethodId,
-        memo: formValue.memo,
+        memo: formValue.memo
       })
       .subscribe({
         next: () => {
@@ -508,7 +508,7 @@ export class WithdrawDialogComponen {t implements OnInit {
           this.toastr.danger(error.message || 'Failed to process withdrawal')
           this.loading = false;
           this.cd.markForCheck()
-        },
+        }
       })
   }
 

@@ -120,7 +120,7 @@ interface Advertiser {
     TieredMenuModule,
     InputTextModule,
     TooltipModule,
-  ],
+  ]
 })
 export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject()
@@ -258,7 +258,7 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
       this.userMenuAccount.push({
         label: 'Dashboard',
         icon: 'pi pi-th-large',
-        routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
+        routerLink: '/advertiser-browsing-alt/advertiser-dashboard'
       })
     }
 
@@ -266,7 +266,7 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
       this.userMenuAccount.push({
         label: 'Logout',
         icon: 'pi pi-sign-out',
-        command: () => this.handleUserMenuClick('logout'),
+        command: () => this.handleUserMenuClick('logout')
       })
     }
   }
@@ -295,7 +295,7 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
         this.mobileMenuItems.push({
           label: 'Dashboard',
           icon: 'pi pi-th-large',
-          routerLink: '/advertiser-browsing-alt/advertiser-dashboard',
+          routerLink: '/advertiser-browsing-alt/advertiser-dashboard'
         })
       }
       this.mobileMenuItems.push(;
@@ -456,7 +456,7 @@ export class AdvertiserBrowsingAlternateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/chat'], {
       queryParams: {
         advertiserId: advertiser.id,
-      },
+      }
     })
   }
 

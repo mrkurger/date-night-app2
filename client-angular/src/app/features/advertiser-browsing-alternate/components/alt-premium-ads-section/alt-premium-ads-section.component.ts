@@ -25,7 +25,7 @@ interface Advertiser {
   standalone: true,
   imports: [CommonModule, RouterModule, ButtonModule, CardModule, AltPremiumAdCardComponent],
   templateUrl: './alt-premium-ads-section.component.html',
-  styleUrls: ['./alt-premium-ads-section.component.scss'],
+  styleUrls: ['./alt-premium-ads-section.component.scss']
 })
 export class AltPremiumAdsSectionComponen {t {
   @Input() premiumAds: Advertiser[] = []

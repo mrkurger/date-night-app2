@@ -41,7 +41,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ProgressSpinnerModule,
     MessageModule,
     InputTextModule;
-  ],
+  ]
 })
 export class ProfileComponen {t implements OnInit {
   profileForm: FormGroup;
@@ -96,7 +96,7 @@ export class ProfileComponen {t implements OnInit {
       'location.country': [''],
       'preferences.notifications': [true],
       'preferences.darkMode': [false],
-      'preferences.language': ['en'],
+      'preferences.language': ['en']
     })
   }
 
@@ -148,7 +148,7 @@ export class ProfileComponen {t implements OnInit {
       'location.country': this.userProfile.location?.country || '',
       'preferences.notifications': this.userProfile.preferences?.pushNotifications ?? true,
       'preferences.darkMode': false,
-      'preferences.language': this.userProfile.preferences?.language || 'en',
+      'preferences.language': this.userProfile.preferences?.language || 'en'
     })
   }
 

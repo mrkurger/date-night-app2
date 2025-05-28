@@ -46,7 +46,7 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'; /
     PanelModule,
   ],
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+  styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   @Input() items: MenuItem[] = []; // Changed from NbMenuItem[] to PrimeNG MenuItem[]

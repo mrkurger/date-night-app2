@@ -1,5 +1,5 @@
 /* Test styles */
-@import 'styles';
+@use 'styles' as *;
 
 /* Mock Nebular theme */
 :root {

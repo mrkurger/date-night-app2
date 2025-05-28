@@ -74,7 +74,7 @@ export interface WalletTransaction {
     NbAlertModule,
     NbTooltipModule,
     NbTagModule,
-  ],
+  ]
 })
 export class TransactionDetailsDialogComponen {t {
   constructor(;

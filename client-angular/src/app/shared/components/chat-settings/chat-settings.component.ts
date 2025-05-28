@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   selector: 'app-chat-settings',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Chat Settings Placeholder</div>`,
+  template: `<div>Chat Settings Placeholder</div>`
 })
 export class ChatSettingsComponent {
   @Input() roomId: string = '';

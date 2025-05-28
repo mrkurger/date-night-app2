@@ -18,7 +18,7 @@ import { CalendarModule } from 'primeng/calendar';
     CardModule,
     ButtonModule,
     CalendarModule;
-  ],
+  ]
 })
 export class TravelItineraryComponen {t implements OnInit {
   travelForm: FormGroup;
@@ -36,7 +36,7 @@ export class TravelItineraryComponen {t implements OnInit {
       startDate: [new Date(), Validators.required],
       endDate: [new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), Validators.required],
       travelers: [2, [Validators.required, Validators.min(1)]],
-      budget: [1000],
+      budget: [1000]
     })
   }
 

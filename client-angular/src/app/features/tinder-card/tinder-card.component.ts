@@ -64,7 +64,7 @@ interface HammerManager {
     NbIconModule,
     NbBadgeModule,
     NbTagModule,
-  ],
+  ]
 })
 export class TinderCardComponen {t implements OnInit, AfterViewInit, OnDestroy {
   @Input() ad!: Ad;

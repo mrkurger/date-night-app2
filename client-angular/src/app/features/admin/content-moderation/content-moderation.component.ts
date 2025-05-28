@@ -47,7 +47,7 @@ import {
     MessageModule,
     PaginatorModule,
     ProgressSpinnerModule,
-  ],
+  ]
 })
 export class ContentModerationComponent implements OnInit, OnDestroy {
   /**
@@ -97,7 +97,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
   ) {
     this.moderationForm = this.formBuilder.group({
       status: ['approved', [Validators.required]],
-      notes: ['', [Validators.required, Validators.maxLength(500)]],
+      notes: ['', [Validators.required, Validators.maxLength(500)]]
     })
   }
 
@@ -146,7 +146,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.pendingMedia = (data ?? []).map((item) => ({
           ...item,
-          createdAt: item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt),
+          createdAt: item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt)
         }))
 
         this.applyFilters()
@@ -304,7 +304,7 @@ export class ContentModerationComponent implements OnInit, OnDestroy {
             `Content has been ${action} and removed from the moderation queue`,`
           )
           this.closeModerationDialog()
-        },
+        }
       })
   }
 

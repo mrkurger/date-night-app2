@@ -30,7 +30,7 @@ import { IconComponent } from '../icon/icon.component';
   ],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponen {t {
   /**

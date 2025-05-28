@@ -61,7 +61,7 @@ export interface TransferDialogData {
     NbBadgeModule,
     NbTagModule,,
     ProgressSpinnerModule;
-  ],
+  ]
 })
 export class TransferDialogComponen {t implements OnInit, OnDestroy {
   transferForm: FormGroup;
@@ -91,7 +91,7 @@ export class TransferDialogComponen {t implements OnInit, OnDestroy {
       currency: ['', Validators.required],
       amount: ['', [Validators.required, Validators.min(0.01)]],
       recipientUsername: ['', Validators.required],
-      description: [''],
+      description: ['']
     })
   }
 
@@ -212,7 +212,7 @@ export class TransferDialogComponen {t implements OnInit, OnDestroy {
           this.notificationService.error('Failed to process transfer')
           this.processingTransfer = false;
           this.isSubmitting = false;
-        },
+        }
       })
   }
 }

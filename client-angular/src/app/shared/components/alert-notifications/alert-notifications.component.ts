@@ -8,7 +8,7 @@ import { NbToastrService } from '@nebular/theme';
   standalone: true,
   imports: [CommonModule, NebularModule],
   template: '',
-  styles: [],
+  styles: []
 })
 export class AlertNotificationsComponen {t implements OnInit {
   constructor(private toastrService: NbToastrService) {}

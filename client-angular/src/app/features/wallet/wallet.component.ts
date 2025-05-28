@@ -28,7 +28,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TagModule,
     SelectButtonModule,
     ProgressSpinnerModule,
-  ],
+  ]
 })
 export class WalletComponen {t {
   // Simplified component for demonstration
@@ -209,7 +209,7 @@ export class WalletComponen {t {
   formatCurrency(amount: number): string {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'USD'
     }).format(amount)
   }
 
@@ -219,7 +219,7 @@ export class WalletComponen {t {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit',
+      minute: '2-digit'
     })
   }
 }

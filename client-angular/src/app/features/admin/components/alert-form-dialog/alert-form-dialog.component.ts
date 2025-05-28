@@ -17,6 +17,7 @@ import { AlertService } from '../../../../core/services/alert.service';
   _NbTagModule,
   NbSelectModule,';
 } from '@nebular/theme';
+import { NbDividerComponent } from '../../../shared/components/custom-nebular-components';
 
 import {
   Alert,

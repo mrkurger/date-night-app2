@@ -16,7 +16,7 @@ import {
   NbTagModule,
   NbCheckboxModule,
 } from '@nebular/theme';
-import { FavoriteButtonComponent } from '../../../shared/components/favorite-button/favorite-button.component';
+import { FavoriteButtonComponent } from './client-angular/src/app/shared/components/favorite-button/favorite-button.component.ts';
 import { Component } from '@angular/core';
 
 @Component({

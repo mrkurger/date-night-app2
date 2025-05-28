@@ -38,7 +38,7 @@ import { AccordionModule } from 'primeng/accordion';
     AccordionModule,
   ],
   templateUrl: './accessibility-demo.component.html',
-  styleUrls: ['./accessibility-demo.component.scss'],
+  styleUrls: ['./accessibility-demo.component.scss']
 })
 export class AccessibilityDemoComponen {t {
   bem = new BemUtil('a11y-demo')

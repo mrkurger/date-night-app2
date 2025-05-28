@@ -10,7 +10,7 @@ import { NebularModule } from '../../../nebular.module';
 @Component({
   selector: 'app-sort',
   standalone: true,
-  template: ``,
+  template: ``
 })
 export class AppSortComponent {
   @Input() active: string = '';
@@ -59,7 +59,7 @@ export class AppSortComponent {
         font-weight: bold;
       }
     `,
-  ],
+  ]
 })
 export class AppSortHeaderComponent {
   @Input() appSortHeaderId!: string;
@@ -90,7 +90,7 @@ export class AppSortHeaderComponent {
     const newDirection = this.getNextSortDirection();
     this.sort.sort({
       active: this.appSortHeaderId,
-      direction: newDirection,
+      direction: newDirection
     });
   }
 

@@ -24,7 +24,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [;
     CommonModule,
     ButtonModule;
-  ],
+  ]
 })
 export class AdDetailsComponen {t implements OnInit {
   ad: Ad | null = null;
@@ -86,7 +86,7 @@ export class AdDetailsComponen {t implements OnInit {
           console.error('Error fetching ad details:', err)
           this.error = 'Failed to load ad details. Please try again.';
           this.loading = false;
-        },
+        }
       })
     } else {
       this.error = 'Ad ID not found';
@@ -99,7 +99,7 @@ export class AdDetailsComponen {t implements OnInit {
       if (currentUser) {
         this.userService.getFavorites().subscribe({
           next: (favorites) => (this.favorites = favorites),
-          error: (err) => console.error('Error loading favorites:', err),
+          error: (err) => console.error('Error loading favorites:', err)
         })
       } else {
         this.favorites = [] // Clear favorites if no user
@@ -203,7 +203,7 @@ export class AdDetailsComponen {t implements OnInit {
           error: (err) => {
             console.error('Error removing from favorites:', err)
             this.notificationService.error('Failed to remove from favorites')
-          },
+          }
         })
       } else {
         this.userService.addFavorite(this.ad._id).subscribe({
@@ -214,7 +214,7 @@ export class AdDetailsComponen {t implements OnInit {
           error: (err) => {
             console.error('Error adding to favorites:', err)
             this.notificationService.error('Failed to add to favorites')
-          },
+          }
         })
       }
     })
@@ -242,7 +242,7 @@ export class AdDetailsComponen {t implements OnInit {
         error: (err) => {
           console.error('Error reporting ad:', err)
           this.notificationService.error('Failed to report ad')
-        },
+        }
       })
     }
   }
@@ -272,7 +272,7 @@ export class AdDetailsComponen {t implements OnInit {
       error: (err) => {
         console.error('Error toggling ad status:', err)
         this.notificationService.error('Failed to update ad status')
-      },
+      }
     })
   }
 
@@ -288,7 +288,7 @@ export class AdDetailsComponen {t implements OnInit {
         error: (err) => {
           console.error('Error deleting ad:', err)
           this.notificationService.error('Failed to delete ad')
-        },
+        }
       })
     }
   }

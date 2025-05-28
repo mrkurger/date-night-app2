@@ -36,7 +36,7 @@ import { NavigationComponent } from './shared/components/navigation/navigation.c
   ],
   template: ` <router-outlet></router-outlet> `,
   styleUrls: ['./app.component.scss'],
-  standalone: true,
+  standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;

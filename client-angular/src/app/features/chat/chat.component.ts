@@ -87,7 +87,7 @@ import {
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
@@ -298,7 +298,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
       error: (error) => {
         this.notificationService.showError('Failed to send message')
         console.error('Error sending message:', error)
-      },
+      }
     })
     const messageRequest: ChatMessageRequest = {
       content: this.messageText,
@@ -315,7 +315,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
       error: (error) => {
         this.notificationService.showError('Failed to send message')
         console.error('Error sending message:', error)
-      },
+      }
     })
   }
 
@@ -461,9 +461,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error clearing chat history:', error)
               this.notificationService.showError('Failed to clear chat history. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -499,9 +499,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error blocking user:', error)
               this.notificationService.showError('Failed to block user. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -534,9 +534,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error reporting user:', error)
               this.notificationService.showError('Failed to submit report. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -598,9 +598,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error clearing chat history:', error)
               this.notificationService.showError('Failed to clear chat history. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -636,9 +636,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error blocking user:', error)
               this.notificationService.showError('Failed to block user. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -671,9 +671,9 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
             error: (error) => {
               console.error('Error reporting user:', error)
               this.notificationService.showError('Failed to submit report. Please try again.')
-            },
+            }
           })
-      },
+      }
     })
   }
 
@@ -696,7 +696,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         this.notificationService.showError('Failed to load chat rooms')
         console.error('Error loading rooms:', error)
         this.loadingContacts = false;
-      },
+      }
     })
   }
 
@@ -718,7 +718,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         this.notificationService.showError('Failed to load messages')
         console.error('Error loading messages:', error)
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -746,7 +746,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         this.notificationService.showError('Failed to load messages')
         console.error('Error loading messages:', error)
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -851,7 +851,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         'fileMetadata',
         JSON.stringify({
           originalName: file.name,
-          originalType: file.type,
+          originalType: file.type
         }),
       )
     })
@@ -878,7 +878,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         error: (error) => {
           console.error('Error uploading files:', error)
           this.notificationService.showError('Failed to upload files. Please try again.')
-        },
+        }
       })
   }
 
@@ -904,7 +904,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         error: (error) => {
           console.error('Error sending message:', error)
           this.notificationService.showError('Failed to send message. Please try again.')
-        },
+        }
       })
   }
 
@@ -959,7 +959,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         'fileMetadata',
         JSON.stringify({
           originalName: file.name,
-          originalType: file.type,
+          originalType: file.type
         }),
       )
     })
@@ -986,7 +986,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         error: (error) => {
           console.error('Error uploading files:', error)
           this.notificationService.showError('Failed to upload files. Please try again.')
-        },
+        }
       })
   }
 
@@ -1012,7 +1012,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
         error: (error) => {
           console.error('Error sending message:', error)
           this.notificationService.showError('Failed to send message. Please try again.')
-        },
+        }
       })
   }
 

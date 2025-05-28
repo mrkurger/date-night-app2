@@ -73,7 +73,7 @@ interface DepositDialogConfig {
     MessageModule,
     InputTextModule;
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepositDialogComponen {t implements OnInit {
   depositForm: FormGroup;
@@ -120,7 +120,7 @@ export class DepositDialogComponen {t implements OnInit {
     this.depositForm = this.fb.group({
       currency: [this.context.selectedCurrency || '', Validators.required],
       amount: ['', [Validators.required, Validators.min(0.01)]],
-      paymentMethodId: ['', Validators.required],
+      paymentMethodId: ['', Validators.required]
     })
   }
 

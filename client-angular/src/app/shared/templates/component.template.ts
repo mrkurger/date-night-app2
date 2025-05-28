@@ -29,7 +29,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './component-name.component.html',
   styleUrls: ['./component-name.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ComponentNameComponen {t {
   /**

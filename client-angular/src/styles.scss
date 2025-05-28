@@ -1,13 +1,14 @@
+@use '@nebular/theme/styles/prebuilt/default.css';
 // PrimeNG styles are imported via angular.json
 // No need to import them here as they're already configured in the build
 
 // Import Nebular styles for compatibility (if needed)
-// @import '@nebular/theme/styles/theming';
-// @import '@nebular/theme/styles/themes/default';
+// @use '@nebular/theme/styles/theming' as *;
+// @use '@nebular/theme/styles/themes/default' as *;
 
 // Import fonts (if needed)
-// @import '@fontsource/inter';
-// @import '@fontsource/poppins';
+// @use '@fontsource/inter' as *;
+// @use '@fontsource/poppins' as *;
 
 // Core styles
 @use 'app/core/design/variables';

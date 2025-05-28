@@ -29,7 +29,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     CommonModule, ReactiveFormsModule, ButtonModule, TextareaModule,
     InputTextModule,
     InputTextareaModule;
-  ],
+  ]
 })
 export class ModerationModalComponen {t implements OnChanges {
   @Input() media: PendingMedia | null = null;

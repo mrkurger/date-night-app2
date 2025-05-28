@@ -31,7 +31,7 @@ interface Media {
   imports: [;
     CommonModule, ReactiveFormsModule, FormsModule,
     ButtonModule;
-  ],
+  ]
 })
 export class GalleryManagementComponen {t implements OnInit {
   @Input() adId: string;
@@ -75,7 +75,7 @@ export class GalleryManagementComponen {t implements OnInit {
         this.error = 'Failed to load media';
         this.loading = false;
         this.notificationService.error(this.error)
-      },
+      }
     })
   }
 
@@ -129,7 +129,7 @@ export class GalleryManagementComponen {t implements OnInit {
         this.uploading = false;
         this.notificationService.error('Failed to upload one or more files')
         console.error(err)
-      },
+      }
     })
   }
 
@@ -144,7 +144,7 @@ export class GalleryManagementComponen {t implements OnInit {
         error: (err) => {
           this.notificationService.error('Failed to delete media')
           console.error(err)
-        },
+        }
       })
     }
   }
@@ -159,7 +159,7 @@ export class GalleryManagementComponen {t implements OnInit {
       error: (err) => {
         this.notificationService.error('Failed to update featured media')
         console.error(err)
-      },
+      }
     })
   }
 

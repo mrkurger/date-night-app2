@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   selector: 'app-notes-dialog',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Notes Dialog Placeholder</div>`,
+  template: `<div>Notes Dialog Placeholder</div>`
 })
 export class NotesDialogComponent {
   notes = '';

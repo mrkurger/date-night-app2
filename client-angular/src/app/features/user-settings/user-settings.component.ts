@@ -67,7 +67,7 @@ type ThemeName = 'light' | 'dark' | 'system';
   ],
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService]
 })
 export class UserSettingsComponen {t implements OnInit, OnDestroy {
   user: User | null = null;
@@ -120,30 +120,30 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
     this.profileForm = this.fb.group({
       profileVisibility: ['public'],
       allowFriendRequests: [true],
-      allowMessagesFromUnknown: [true],
+      allowMessagesFromUnknown: [true]
     })
 
     this.notificationForm = this.fb.group({
       emailNotifications: [false],
       pushNotifications: [false],
-      smsNotifications: [false],
+      smsNotifications: [false]
     })
 
     this.privacyForm = this.fb.group({
       dataSharing: [false],
-      activityVisibility: ['friends'],
+      activityVisibility: ['friends']
     })
 
     this.passwordForm = this.fb.group({
       currentPassword: [''],
       newPassword: ['', [Validators.minLength(8)]],
-      confirmNewPassword: [''],
+      confirmNewPassword: ['']
     })
 
     this.displayForm = this.fb.group({
       defaultViewType: ['netflix'],
       contentDensity: ['comfortable'],
-      cardSize: ['medium'],
+      cardSize: ['medium']
     })
   }
 
@@ -187,7 +187,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
         error: (error) => {
           this.notificationService.error('Failed to load user data')
           this.loading = false;
-        },
+        }
       })
   }
 
@@ -195,30 +195,30 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
     this.profileForm.patchValue({
       profileVisibility: user.privacySettings?.profileVisibility || 'public',
       allowFriendRequests: user.privacySettings?.allowFriendRequests !== false,
-      allowMessagesFromUnknown: user.privacySettings?.allowMessagesFromUnknown !== false,
+      allowMessagesFromUnknown: user.privacySettings?.allowMessagesFromUnknown !== false
     })
 
     this.notificationForm.patchValue({
       emailNotifications: user.notificationSettings?.emailNotifications ?? false,
       pushNotifications: user.notificationSettings?.pushNotifications ?? false,
-      smsNotifications: user.notificationSettings?.sms ?? false,
+      smsNotifications: user.notificationSettings?.sms ?? false
     })
 
     this.privacyForm.patchValue({
       dataSharing: user.privacySettings?.dataSharing ?? false,
-      activityVisibility: user.privacySettings?.activityVisibility || 'friends',
+      activityVisibility: user.privacySettings?.activityVisibility || 'friends'
     })
 
     this.passwordForm.patchValue({
       currentPassword: '',
       newPassword: '',
-      confirmNewPassword: '',
+      confirmNewPassword: ''
     })
 
     this.displayForm.patchValue({
       defaultViewType: user.preferences?.defaultViewType || 'netflix',
       contentDensity: user.preferences?.contentDensity || 'comfortable',
-      cardSize: user.preferences?.cardSize || 'medium',
+      cardSize: user.preferences?.cardSize || 'medium'
     })
   }
 
@@ -255,7 +255,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
     this.displayForm.patchValue({
       defaultViewType: preferences.defaultViewType,
       contentDensity: preferences.contentDensity,
-      cardSize: preferences.cardSize,
+      cardSize: preferences.cardSize
     })
 
     this.subscriptions.push(;
@@ -287,7 +287,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
       error: (error) => {
         this.notificationService.error('Failed to update profile')
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -307,7 +307,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
       error: (error) => {
         this.notificationService.error('Failed to update password')
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -321,7 +321,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
       error: (error) => {
         this.notificationService.error('Failed to update notification settings')
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -335,7 +335,7 @@ export class UserSettingsComponen {t implements OnInit, OnDestroy {
       error: (error) => {
         this.notificationService.error('Failed to update privacy settings')
         this.loading = false;
-      },
+      }
     })
   }
 

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   selector: 'app-response-dialog',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Response Dialog Placeholder</div>`,
+  template: `<div>Response Dialog Placeholder</div>`
 })
 export class ResponseDialogComponent {
   /**

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   selector: 'app-review-dialog',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Review Dialog Placeholder</div>`,
+  template: `<div>Review Dialog Placeholder</div>`
 })
 export class ReviewDialogComponent {
   /**

@@ -51,7 +51,7 @@ interface TableLazyLoadEvent {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './performance-dashboard.component.html',
-  styleUrls: ['./performance-dashboard.component.scss'],
+  styleUrls: ['./performance-dashboard.component.scss']
 })
 export class PerformanceDashboardComponen {t implements OnInit {
   // Chart data
@@ -157,7 +157,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
             distribution: [],
             byDate: [],
             slowestEndpoints: [],
-            totalCount: 0,
+            totalCount: 0
           })
         }),
         finalize(() => {
@@ -180,7 +180,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
     return data;
       .map((item) => ({
         name: this.formatEndpointName(item.url, item.method),
-        value: item.avgDuration,
+        value: item.avgDuration
       }))
       .sort((a, b) => b.value - a.value)
       .slice(0, 10) // Top 10 slowest endpoints
@@ -203,7 +203,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
       const duration = item.duration;
       const bucket = buckets.find((b) => duration >= b.min && duration  ({
       name: bucket.name,
-      _value: bucket.count,
+      _value: bucket.count
     }))
   }
 
@@ -227,7 +227,7 @@ export class PerformanceDashboardComponen {t implements OnInit {
     // Convert to series format
     const series = Object.keys(groupedByDay).map((day) => ({
       name: day,
-      _value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0,
+      _value: groupedByDay[day].count > 0 ? groupedByDay[day].total / groupedByDay[day].count : 0
     }))
 
     // NbSortEvent by date

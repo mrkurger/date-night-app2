@@ -38,7 +38,7 @@ export function createMockComponent(
     selector,
     template,
     standalone: true,
-    imports: [],
+    imports: []
   })
   class MockComponen {t {
     // Dynamically add inputs

@@ -81,7 +81,7 @@ import { InputTextModule } from 'primeng/inputtext';
     NbLayoutModule,,
     ProgressSpinnerModule,
     InputTextModule;
-  ],
+  ]
 })
 export class AdvertiserProfileComponen {t implements OnInit {
   advertiser: User | null = null;
@@ -105,8 +105,8 @@ export class AdvertiserProfileComponen {t implements OnInit {
       profile: this.fb.group({
         firstName: [''],
         lastName: [''],
-        bio: [''],
-      }),
+        bio: ['']
+      })
     })
   }
 
@@ -151,14 +151,14 @@ export class AdvertiserProfileComponen {t implements OnInit {
             firstName: advertiserData.profile?.firstName || '',
             lastName: advertiserData.profile?.lastName || '',
             bio: advertiserData.profile?.bio || '',
-          },
+          }
         })
       },
       error: (err) => {
         this.error = 'Failed to load advertiser details';
         this.loading = false;
         console.error('Error loading advertiser:', err)
-      },
+      }
     })
   }
 
@@ -192,7 +192,7 @@ export class AdvertiserProfileComponen {t implements OnInit {
         this.loading = false;
         console.error('Error updating profile:', err)
         this.notificationService.error('Failed to update profile')
-      },
+      }
     })
   }
 
@@ -207,7 +207,7 @@ export class AdvertiserProfileComponen {t implements OnInit {
           firstName: this.advertiser.profile?.firstName || '',
           lastName: this.advertiser.profile?.lastName || '',
           bio: this.advertiser.profile?.bio || '',
-        },
+        }
       })
     }
   }
@@ -227,7 +227,7 @@ export class AdvertiserProfileComponen {t implements OnInit {
           this.loading = false;
           console.error('Error deleting profile:', err)
           this.notificationService.error('Failed to delete profile')
-        },
+        }
       })
     }
   }

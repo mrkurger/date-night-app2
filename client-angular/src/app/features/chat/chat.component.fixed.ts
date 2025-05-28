@@ -93,7 +93,7 @@ const TYPING_INDICATOR_DELAY = 500; // ms
     AppSortHeaderComponent,
   ],
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   // ViewChild references
@@ -403,7 +403,7 @@ export class ChatComponen {t implements OnInit, OnDestroy, AfterViewChecked {
       error: (err) => {
         console.error('Error loading chat rooms:', err)
         this.loadingContacts = false;
-      },
+      }
     })
   }
 

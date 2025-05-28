@@ -52,7 +52,7 @@ export interface TourStep {
   templateUrl: './feature-tour.component.html',
   styleUrls: ['./feature-tour.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule]
 })
 export class FeatureTourComponen {t implements OnInit, OnDestroy {
   @Input() steps: TourStep[] = []

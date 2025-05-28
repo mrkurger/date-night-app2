@@ -54,7 +54,7 @@ import {
     DropdownModule,
     ProgressSpinnerModule,
     InputTextModule;
-  ],
+  ]
 })
 export class AdFormComponen {t implements OnInit {
   @Input() ad: Ad | null = null;
@@ -119,7 +119,7 @@ export class AdFormComponen {t implements OnInit {
       tags: [''],
       contactEmail: ['', [Validators.email]],
       contactPhone: [''],
-      isActive: [true],
+      isActive: [true]
     })
   }
 
@@ -138,7 +138,7 @@ export class AdFormComponen {t implements OnInit {
         tags: this.ad.tags ? this.ad.tags.join(', ') : '',
         contactEmail: this.ad.contactEmail || '',
         contactPhone: this.ad.contactPhone || '',
-        isActive: this.ad.isActive !== false,
+        isActive: this.ad.isActive !== false
       })
 
       if (this.ad.images && this.ad.images.length > 0) {
@@ -156,7 +156,7 @@ export class AdFormComponen {t implements OnInit {
       },
       error: (err) => {
         console.error('Error loading categories:', err)
-      },
+      }
     })
   }
 
@@ -167,7 +167,7 @@ export class AdFormComponen {t implements OnInit {
       },
       error: (err) => {
         console.error('Error loading locations:', err)
-      },
+      }
     })
   }
 

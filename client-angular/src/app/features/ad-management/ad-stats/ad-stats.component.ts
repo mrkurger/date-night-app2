@@ -34,7 +34,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CardModule,
     DropdownModule,
     ProgressSpinnerModule;
-  ],
+  ]
 })
 export class AdStatsComponen {t implements OnInit {
   // Make Math available to the template
@@ -127,7 +127,7 @@ export class AdStatsComponen {t implements OnInit {
           console.error('Error loading ad:', error)
           this.adTitle = 'Unknown Ad';
           this.loading = false;
-        },
+        }
       })
     } else {
       this.adTitle = 'Unknown Ad';
@@ -185,22 +185,22 @@ export class AdStatsComponen {t implements OnInit {
       views: Math.floor(Math.random() * 100),
       clicks: Math.floor(Math.random() * 50),
       inquiries: Math.floor(Math.random() * 10),
-      conversionRate: Math.random() * 100,
+      conversionRate: Math.random() * 100
     }))
 
     this.rawData = sampleData;
     this.totalItems = sampleData.length;
 
     this.viewsData = sampleData.map((item) => ({
-      name: item.date,_value: item.views,
+      name: item.date,_value: item.views
     }))
     this.clicksData = sampleData.map((item) => ({
-      name: item.date,_value: item.clicks,
+      name: item.date,_value: item.clicks
     }))
 
     // Initialize the tree grid data source
     const formattedData = sampleData.map((item) => ({
-      data: item,
+      data: item
     }))
 
     // Update dataSource with the correct type

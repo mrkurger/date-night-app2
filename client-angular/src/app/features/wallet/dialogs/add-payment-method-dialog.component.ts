@@ -85,7 +85,7 @@ import {
     MessageModule,
     InputTextModule;
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddPaymentMethodDialogComponen {t implements OnInit {
   addPaymentMethodForm: FormGroup;
@@ -104,7 +104,7 @@ export class AddPaymentMethodDialogComponen {t implements OnInit {
       nameOnCard: ['', Validators.required],
       accountHolderName: [''],
       accountNumber: [''],
-      routingNumber: [''],
+      routingNumber: ['']
     })
   }
 
@@ -187,7 +187,7 @@ export class AddPaymentMethodDialogComponen {t implements OnInit {
         complete: () => {
           this.isLoading = false;
           this.cdr.detectChanges()
-        },
+        }
       })
     } catch (error: unknown) {
       console.error('Error saving payment method:', error)

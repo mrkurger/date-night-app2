@@ -80,7 +80,7 @@ interface Column {
     ChipModule,,
     CalendarModule;
   ],
-  providers: [MessageService, ConfirmationService, FavoriteManagementService],
+  providers: [MessageService, ConfirmationService, FavoriteManagementService]
 })
 export class FavoritesPageComponen {t implements OnInit, OnDestroy {
   favorites: Favorite[] = []
@@ -189,10 +189,10 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Could not load tags.',
+            detail: 'Could not load tags.'
           })
           console.error('Error loading tags:', err)
-        },
+        }
       })
   }
 
@@ -285,11 +285,11 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Error Loading Favorites',
-            detail: this.error,
+            detail: this.error
           })
           console.error('Error loading favorites:', err)
           this.cdr.markForCheck()
-        },
+        }
       })
   }
 
@@ -392,9 +392,9 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
         this.messageService.add({
           severity: 'info',
           summary: 'Cancelled',
-          detail: 'Deletion cancelled.',
+          detail: 'Deletion cancelled.'
         })
-      },
+      }
     })
   }
 
@@ -421,7 +421,7 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
             detail: `Failed to delete "${favorite.name}".`,`
           })
           console.error('Error deleting favorite:', err)
-        },
+        }
       })
   }
 
@@ -448,10 +448,10 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Failed to update priority.',
+            detail: 'Failed to update priority.'
           })
           console.error('Error updating priority:', err)
-        },
+        }
       })
   }
 
@@ -460,7 +460,7 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'warn',
         summary: 'No Selection',
-        detail: 'Please select favorites to delete.',
+        detail: 'Please select favorites to delete.'
       })
       return;
     }
@@ -470,7 +470,7 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.deleteSelectedFavorites()
-      },
+      }
     })
   }
 
@@ -496,10 +496,10 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Failed to delete selected favorites.',
+            detail: 'Failed to delete selected favorites.'
           })
           console.error('Error batch deleting favorites:', err)
-        },
+        }
       })
   }
 
@@ -508,7 +508,7 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'warn',
         summary: 'No Selection',
-        detail: 'Please select favorites to update priority.',
+        detail: 'Please select favorites to update priority.'
       })
       return;
     }
@@ -531,10 +531,10 @@ export class FavoritesPageComponen {t implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Failed to update priority for selected favorites.',
+            detail: 'Failed to update priority for selected favorites.'
           })
           console.error('Error batch updating priority:', err)
-        },
+        }
       })
   }
 

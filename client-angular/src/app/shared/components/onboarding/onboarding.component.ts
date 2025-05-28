@@ -36,7 +36,7 @@ export interface OnboardingStep {
     NbIconModule,
     NbProgressBarModule,
     RouterModule,
-  ],
+  ]
 })
 export class OnboardingComponen {t implements OnInit {
   @Input() steps: OnboardingStep[] = []

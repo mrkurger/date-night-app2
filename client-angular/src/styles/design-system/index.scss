@@ -41,7 +41,7 @@
 @forward '../../app/core/design/micro-interactions';
 
 /* Import PrimeNG Themes - must come after @forward rules */
-@import 'primeng/resources/themes/lara-light-blue/theme.css';
-@import 'primeng/resources/primeng.css';
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
+@use 'primeng/resources/themes/lara-light-blue/theme.css' as *;
+@use 'primeng/resources/primeng.css' as *;
+@use 'primeicons/primeicons.css' as *;
+@use 'primeflex/primeflex.css' as *;

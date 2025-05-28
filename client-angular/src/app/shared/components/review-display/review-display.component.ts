@@ -73,7 +73,7 @@ export interface Review {
     DividerModule;
   ],
   templateUrl: './review-display.component.html',
-  styleUrls: ['./review-display.component.scss'],
+  styleUrls: ['./review-display.component.scss']
 })
 export class ReviewDisplayComponen {t {
   @Input() review!: Review;

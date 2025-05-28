@@ -25,7 +25,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [;
     CommonModule, RouterModule, SharedModule,
     ButtonModule;
-  ],
+  ]
 })
 export class AdListComponen {t implements OnInit {
   ads: Ad[] = []
@@ -62,7 +62,7 @@ export class AdListComponen {t implements OnInit {
         this.loading = false;
         this.notificationService.error('Failed to load your ads')
         console.error(err)
-      },
+      }
     })
   }
 
@@ -88,7 +88,7 @@ export class AdListComponen {t implements OnInit {
         error: (err) => {
           this.notificationService.error('Failed to delete ad')
           console.error(err)
-        },
+        }
       })
     }
   }

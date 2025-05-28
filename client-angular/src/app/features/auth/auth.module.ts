@@ -45,9 +45,9 @@ const routes: Routes = [;
       { path: 'register', component: RegisterComponent },
       { path: 'request-password', component: RequestPasswordComponent },
       { path: 'reset-password', component: ResetPasswordComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-    ],
-  },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
+    ]
+  }
 ]
 
 @NgModule({
@@ -74,8 +74,8 @@ const routes: Routes = [;
     NbLayoutModule,
     NbBadgeModule,
     NbTagModule,
-    NbSelectModule,
+    NbSelectModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AuthModul {e {}

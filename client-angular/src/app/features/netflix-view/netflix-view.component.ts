@@ -85,7 +85,7 @@ interface GetAdsResponse {
     TooltipModule,
     TagModule,,
     ToastModule;
-  ],
+  ]
 })
 export class NetflixViewComponen {t implements OnInit {
   // Define categories for Netflix-style rows
@@ -131,7 +131,7 @@ export class NetflixViewComponen {t implements OnInit {
     this.filterForm = this.fb.group({
       category: [''],
       location: [''],
-      touringOnly: [false],
+      touringOnly: [false]
     })
   }
 
@@ -213,19 +213,19 @@ export class NetflixViewComponen {t implements OnInit {
               error: (err) => {
                 this.error = 'Failed to load ads. Please try again.';
                 this.loading = false;
-              },
+              }
             })
           },
           error: (err) => {
             this.error = 'Failed to load trending ads. Please try again.';
             this.loading = false;
-          },
+          }
         })
       },
       error: (err) => {
         this.error = 'Failed to load featured ads. Please try again.';
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -238,7 +238,7 @@ export class NetflixViewComponen {t implements OnInit {
       error: (err) => {
         this.error = 'Failed to load trending ads. Please try again.';
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -250,7 +250,7 @@ export class NetflixViewComponen {t implements OnInit {
       error: (err) => {
         this.error = 'Failed to load ads. Please try again.';
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -335,7 +335,7 @@ export class NetflixViewComponen {t implements OnInit {
       error: (err) => {
         this.notificationService.error('Failed to like ad')
         console.error('Error liking ad:', err)
-      },
+      }
     })
   }
 
@@ -361,7 +361,7 @@ export class NetflixViewComponen {t implements OnInit {
       error: (err) => {
         this.notificationService.error('Failed to start chat')
         console.error('Error starting chat:', err)
-      },
+      }
     })
   }
 
@@ -512,7 +512,7 @@ export class NetflixViewComponen {t implements OnInit {
     this.filterForm.reset({
       category: '',
       location: '',
-      touringOnly: false,
+      touringOnly: false
     })
 
     // Apply the reset filters

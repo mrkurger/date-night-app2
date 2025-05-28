@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   selector: 'app-report-dialog',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Report Dialog Placeholder</div>`,
+  template: `<div>Report Dialog Placeholder</div>`
 })
 export class ReportDialogComponent {
   /**

@@ -29,7 +29,7 @@ export interface HelpItem {
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   standalone: true,
-  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule],
+  imports: [CommonModule, NbButtonModule, NbIconModule, NbTooltipModule]
 })
 export class ContextualHelpComponen {t implements OnInit {
   @Input() helpItems: HelpItem[] = []

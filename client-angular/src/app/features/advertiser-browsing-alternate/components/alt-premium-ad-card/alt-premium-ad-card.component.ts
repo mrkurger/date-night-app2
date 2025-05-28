@@ -25,7 +25,7 @@ interface Advertiser {
   standalone: true,
   imports: [CommonModule, RouterModule, CardModule, ButtonModule, BadgeModule, TagModule],
   templateUrl: './alt-premium-ad-card.component.html',
-  styleUrls: ['./alt-premium-ad-card.component.scss'],
+  styleUrls: ['./alt-premium-ad-card.component.scss']
 })
 export class AltPremiumAdCardComponen {t {
   @Input() ad!: Advertiser;

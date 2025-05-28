@@ -8,6 +8,7 @@ import { FavoriteButtonComponent } from '../../../shared/components/favorite-but
 import { NotesDialogComponent } from '../../../shared/components/notes-dialog/notes-dialog.component';
 import { Subject } from 'rxjs';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { NbDividerComponent } from '../../../shared/components/custom-nebular-components';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   FavoriteService,
   Favorite,

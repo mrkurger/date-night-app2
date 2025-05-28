@@ -14,7 +14,7 @@ import { TabViewModule } from 'primeng/tabview';
   imports: [;
     NebularModule, CommonModule, RouterModule, NbCardModule, NbButtonModule, NbIconModule, NbLayoutModule,
     TabViewModule;
-  ],
+  ]
 })
 export class AdManagementComponen {t {
   // Component logic here

@@ -96,7 +96,7 @@ interface User {
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
-  standalone: true,
+  standalone: true
 })
 export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
@@ -126,7 +126,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
   private destroy$ = new Subject()
 
   messageForm = new FormGroup({
-    message: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required])
   })
 
   chatActions: MenuItem[] = [;
@@ -301,7 +301,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         console.error('Error loading messages:', error)
         this.notificationService.error('Failed to load messages')
         this.loading = false;
-      },
+      }
     })
   }
 
@@ -323,7 +323,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         console.error('Error loading more messages:', error)
         this.notificationService.error('Failed to load more messages')
         this.loadingMore = false;
-      },
+      }
     })
   }
 
@@ -530,7 +530,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error updating message expiry:', error)
           this.notificationService.error('Failed to update message expiry settings')
-        },
+        }
       })
     }
   }
@@ -552,7 +552,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error toggling encryption:', error)
           this.notificationService.error('Failed to update encryption settings')
-        },
+        }
       })
     }
   }
@@ -574,7 +574,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error pinning chat:', error)
           this.notificationService.error('Failed to pin chat')
-        },
+        }
       })
     }
   }
@@ -589,7 +589,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error clearing chat:', error)
           this.notificationService.error('Failed to clear chat')
-        },
+        }
       })
     }
   }
@@ -604,7 +604,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error blocking user:', error)
           this.notificationService.error('Failed to block user')
-        },
+        }
       })
     }
   }
@@ -618,7 +618,7 @@ export class ChatRoomComponen {t implements OnInit, OnDestroy, AfterViewChecked 
         error: (error) => {
           console.error('Error reporting user:', error)
           this.notificationService.error('Failed to report user')
-        },
+        }
       })
     }
   }
