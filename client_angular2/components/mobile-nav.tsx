@@ -1,38 +1,40 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { useAuth } from "@/context/auth-context"
-import { useState } from "react"
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/context/auth-context';
+import { useState } from 'react';
 
 export function MobileNav() {
-  const pathname = usePathname()
-  const { isAuthenticated } = useAuth()
-  const [searchQuery, setSearchQuery] = useState("")
+  const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Browse", href: "/browse" },
-    { name: "Tinder View", href: "/tinder" },
-    { name: "Rankings", href: "/rankings" },
-    { name: "Favorites", href: "/favorites", requiresAuth: true },
-    { name: "VIP", href: "/vip" },
-    { name: "Messages", href: "/messages", requiresAuth: true },
-    { name: "Profile", href: "/profile", requiresAuth: true },
-  ]
+    { name: 'Home', href: '/' },
+    { name: 'Browse', href: '/browse' },
+    { name: 'Tinder View', href: '/tinder' },
+    { name: 'Matches', href: '/matches', requiresAuth: true },
+    { name: 'Rankings', href: '/rankings' },
+    { name: 'Favorites', href: '/favorites', requiresAuth: true },
+    { name: 'VIP', href: '/vip' },
+    { name: 'Messages', href: '/messages', requiresAuth: true },
+    { name: 'Profile', href: '/profile', requiresAuth: true },
+    { name: 'Settings', href: '/settings', requiresAuth: true },
+  ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`
+      window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col h-full py-6">
@@ -48,7 +50,7 @@ export function MobileNav() {
             type="search"
             placeholder="Search advertisers..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             className="flex-1"
           />
           <Button type="submit" size="icon">
@@ -59,16 +61,16 @@ export function MobileNav() {
 
       <div className="space-y-1">
         {navItems
-          .filter((item) => !item.requiresAuth || isAuthenticated)
-          .map((item) => (
+          .filter(item => !item.requiresAuth || isAuthenticated)
+          .map(item => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "block py-2 px-3 rounded-md text-sm font-medium transition-colors",
+                'block py-2 px-3 rounded-md text-sm font-medium transition-colors',
                 pathname === item.href
-                  ? "bg-accent text-accent-foreground"
-                  : "hover:bg-accent hover:text-accent-foreground",
+                  ? 'bg-accent text-accent-foreground'
+                  : 'hover:bg-accent hover:text-accent-foreground',
               )}
             >
               {item.name}
@@ -87,5 +89,5 @@ export function MobileNav() {
         </div>
       )}
     </div>
-  )
+  );
 }
