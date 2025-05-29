@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import Transaction from '../../../models/transaction.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Transaction Model', () => {
   // Setup test data
@@ -44,6 +43,8 @@ describe('Transaction Model', () => {
   // Setup and teardown for all tests
   beforeAll(async () => {
     await setupTestDB();
+    // Ensure indexes are created for testing
+    await Transaction.createIndexes();
   });
 
   afterAll(async () => {

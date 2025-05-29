@@ -6,32 +6,31 @@ import { environment } from '../../../environments/environment';
 /**
  * Custom preloading strategy that selectively preloads modules based on data in the route;
  */
-@Injectable({';
+@Injectable({
   providedIn: 'root',
 })
-export class SelectivePreloadingStrateg {y implements PreloadingStrategy {
-  preloadedModules: string[] = []
+export class SelectivePreloadingStrategy implements PreloadingStrategy {
+  preloadedModules: string[] = [];
 
   /**
    * Preload a module if the route has data.preload set to true;
    */
-  preload(route: Route, load: () => Observable): Observable {
-    if (route.data?.preload && route.path) {
+  preload(route: Route, load: () => Observable<any>): Observable<any> {
+    if (route.data?['preload'] && route.path) {
       // Add the route path to the preloaded modules list
-      this.preloadedModules.push(route.path)
+      this.preloadedModules.push(route.path);
 
       // Log the preloaded module in development mode
       if (!environment.production) {
         // eslint-disable-next-line no-console
-        console.log(`Preloaded: ${route.path}`)`
+        console.log(`Preloaded: ${route.path}`);
       }
 
-      return load()
+      return load();
     } else {
-      return of(null)
+      return of(null);
     }
   }
 }
 
 // Import environment
-

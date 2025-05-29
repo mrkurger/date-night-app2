@@ -74,7 +74,10 @@ export class RankingsComponent implements OnInit {
       image: '/placeholder.svg?text=Jasmine',
       rating: 4.8,
       isVip: true,
-      isOnline: true,
+      onlineStatus: true, // Changed from isOnline
+      views: 1200, // Added views
+      duration: '45 min', // Added duration
+      category: 'Trending Now', // Added category
     },
     {
       id: 2,
@@ -86,7 +89,10 @@ export class RankingsComponent implements OnInit {
       image: '/placeholder.svg?text=Crystal',
       rating: 4.9,
       isVip: true,
-      isOnline: true,
+      onlineStatus: true, // Changed from isOnline
+      views: 1500, // Added views
+      duration: '60 min', // Added duration
+      category: 'Top Rated', // Added category
     },
   ];
 

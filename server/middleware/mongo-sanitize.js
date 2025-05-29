@@ -53,9 +53,8 @@ const sanitize = (value, path = '') => {
   } else if (Array.isArray(value)) {
     value = value.map((v, i) => sanitize(v, `${path}[${i}]`));
   } else if (typeof value === 'object' && value !== null) {
-    Object.keys(value).forEach(key => {
-      value[key] = sanitize(value[key], path ? `${path}.${key}` : key);
-    });
+    // Use sanitizeObject for nested objects to remove $ keys
+    value = sanitizeObject(value, path);
   }
   return value;
 };
@@ -63,8 +62,9 @@ const sanitize = (value, path = '') => {
 const sanitizeObject = (obj, source = '') => {
   const result = {};
   Object.keys(obj).forEach(key => {
-    if (checkForMaliciousChars(key, `${source}.${key}`)) {
-      logger.warn(`Skipping suspicious key in ${source}`, { key });
+    // Skip keys that start with $ (MongoDB operators)
+    if (key.startsWith('$')) {
+      logger.warn(`Removing MongoDB operator key in ${source}`, { key });
       return;
     }
     result[key] = sanitize(obj[key], key);
@@ -72,102 +72,100 @@ const sanitizeObject = (obj, source = '') => {
   return result;
 };
 
-export const mongoSanitize = () => {
-  return (req, res, next) => {
-    const requestId = req.id || Math.random().toString(36).substring(7);
+export const mongoSanitize = (req, res, next) => {
+  const requestId = req.id || Math.random().toString(36).substring(7);
 
-    try {
-      logger.debug('Starting request sanitization', {
-        requestId,
+  try {
+    logger.debug('Starting request sanitization', {
+      requestId,
+      method: req.method,
+      path: req.path,
+      ip: req.ip,
+    });
+
+    // Create sanitized copies of request data
+    if (req.body && Object.keys(req.body).length) {
+      const sanitizedBody = sanitizeObject(req.body, 'body');
+      if (JSON.stringify(sanitizedBody) !== JSON.stringify(req.body)) {
+        logger.info('Request body was sanitized', {
+          requestId,
+          before: req.body,
+          after: sanitizedBody,
+        });
+      }
+      req.body = sanitizedBody;
+    }
+
+    if (req.query && Object.keys(req.query).length) {
+      try {
+        const sanitizedQuery = sanitizeObject(req.query, 'query');
+        if (JSON.stringify(sanitizedQuery) !== JSON.stringify(req.query)) {
+          logger.info('Request query was sanitized', {
+            requestId,
+            before: req.query,
+            after: sanitizedQuery,
+          });
+        }
+        // Create a new query object since req.query is frozen in Express 5
+        Object.defineProperty(req, 'query', {
+          value: sanitizedQuery,
+          configurable: true,
+          enumerable: true,
+        });
+      } catch (queryError) {
+        logger.error('Error sanitizing query parameters', {
+          requestId,
+          error: queryError.message,
+          query: req.query,
+        });
+        throw queryError;
+      }
+    }
+
+    if (req.params && Object.keys(req.params).length) {
+      try {
+        const sanitizedParams = sanitizeObject(req.params, 'params');
+        if (JSON.stringify(sanitizedParams) !== JSON.stringify(req.params)) {
+          logger.info('Request params were sanitized', {
+            requestId,
+            before: req.params,
+            after: sanitizedParams,
+          });
+        }
+        // Create a new params object since req.params might be frozen
+        Object.defineProperty(req, 'params', {
+          value: sanitizedParams,
+          configurable: true,
+          enumerable: true,
+        });
+      } catch (paramsError) {
+        logger.error('Error sanitizing route parameters', {
+          requestId,
+          error: paramsError.message,
+          params: req.params,
+        });
+        throw paramsError;
+      }
+    }
+
+    logger.debug('Request sanitization completed', { requestId });
+    next();
+  } catch (err) {
+    logger.error('Middleware error', {
+      requestId,
+      error: err.message,
+      stack: err.stack,
+      request: {
         method: req.method,
         path: req.path,
-        ip: req.ip,
-      });
+        headers: req.headers,
+      },
+    });
 
-      // Create sanitized copies of request data
-      if (req.body && Object.keys(req.body).length) {
-        const sanitizedBody = sanitizeObject(req.body, 'body');
-        if (JSON.stringify(sanitizedBody) !== JSON.stringify(req.body)) {
-          logger.info('Request body was sanitized', {
-            requestId,
-            before: req.body,
-            after: sanitizedBody,
-          });
-        }
-        req.body = sanitizedBody;
-      }
-
-      if (req.query && Object.keys(req.query).length) {
-        try {
-          const sanitizedQuery = sanitizeObject(req.query, 'query');
-          if (JSON.stringify(sanitizedQuery) !== JSON.stringify(req.query)) {
-            logger.info('Request query was sanitized', {
-              requestId,
-              before: req.query,
-              after: sanitizedQuery,
-            });
-          }
-          // Create a new query object since req.query is frozen in Express 5
-          Object.defineProperty(req, 'query', {
-            value: sanitizedQuery,
-            configurable: true,
-            enumerable: true,
-          });
-        } catch (queryError) {
-          logger.error('Error sanitizing query parameters', {
-            requestId,
-            error: queryError.message,
-            query: req.query,
-          });
-          throw queryError;
-        }
-      }
-
-      if (req.params && Object.keys(req.params).length) {
-        try {
-          const sanitizedParams = sanitizeObject(req.params, 'params');
-          if (JSON.stringify(sanitizedParams) !== JSON.stringify(req.params)) {
-            logger.info('Request params were sanitized', {
-              requestId,
-              before: req.params,
-              after: sanitizedParams,
-            });
-          }
-          // Create a new params object since req.params might be frozen
-          Object.defineProperty(req, 'params', {
-            value: sanitizedParams,
-            configurable: true,
-            enumerable: true,
-          });
-        } catch (paramsError) {
-          logger.error('Error sanitizing route parameters', {
-            requestId,
-            error: paramsError.message,
-            params: req.params,
-          });
-          throw paramsError;
-        }
-      }
-
-      logger.debug('Request sanitization completed', { requestId });
-      next();
-    } catch (err) {
-      logger.error('Middleware error', {
-        requestId,
-        error: err.message,
-        stack: err.stack,
-        request: {
-          method: req.method,
-          path: req.path,
-          headers: req.headers,
-        },
-      });
-
-      // Send a safe error response
-      res.status(400).json({
-        error: 'Invalid request parameters',
-        code: 'INVALID_REQUEST',
-      });
-    }
-  };
+    // Send a safe error response
+    res.status(400).json({
+      error: 'Invalid request parameters',
+      code: 'INVALID_REQUEST',
+    });
+  }
 };

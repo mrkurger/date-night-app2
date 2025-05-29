@@ -1,5 +1,3 @@
-
-
 :host {
   display: contents;
 }
@@ -121,7 +119,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4)
+    /* TODO: Verify correct CSS variable */;
   border-bottom: 1px solid var(--neutral-200) /* TODO: Verify correct CSS variable */;
 }
 
@@ -146,7 +145,8 @@
 }
 
 .help-body {
-  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+  padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-4)
+    /* TODO: Verify correct CSS variable */;
 
   p {
     margin: 0;

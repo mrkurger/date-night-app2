@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +11,7 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext, createError } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext, createError } from '../../helpers.ts';
 import csrfMiddleware from '../../../middleware/csrf.js';
 
 describe('CSRF Middleware', () => {

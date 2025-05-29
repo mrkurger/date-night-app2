@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -54,7 +53,10 @@ describe('Security Middleware', () => {
       // Check that headers exist
       expect(res.headers).toHaveProperty('x-content-type-options', 'nosniff');
       expect(res.headers).toHaveProperty('x-frame-options', 'DENY');
-      expect(res.headers).toHaveProperty('x-xss-protection', '1; mode=block');
+      expect(res.headers).toHaveProperty(
+        'x-xss-protection',
+        '1; mode=block; report=/api/v1/xss-report'
+      );
       expect(res.headers).toHaveProperty('permissions-policy');
       expect(res.headers).toHaveProperty('referrer-policy', 'strict-origin-when-cross-origin');
 

@@ -111,7 +111,10 @@
     font-weight: bold;
 
     &:hover {
-      background: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
+      background: color.scale(
+        ds.var(--color-primary),
+        var(--lightness) /* TODO: Verify correct CSS variable */: -5%
+      );
     }
   }
 

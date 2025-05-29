@@ -6,8 +6,6 @@
  * Implements the DateNight.io checkbox styles using the design system.
  */
 
-
-
 .checkbox {
   display: inline-flex;
   align-items: flex-start;
@@ -53,12 +51,14 @@
     background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border-radius: var(--border-radius-sm) /* TODO: Verify correct CSS variable */;
-    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     app-icon {
       opacity: 0;
       transform: scale(0.8);
-      transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+      transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+        var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
     }
   }
 
@@ -82,7 +82,9 @@
     @include typography.body-xs;
 
     margin-top: var(--spacing-1) /* TODO: Verify correct CSS variable */;
-    margin-left: calc(var(--checkbox-size) + #{var(--spacing-2) /* TODO: Verify correct CSS variable */});
+    margin-left: calc(
+      var(--checkbox-size) + #{var(--spacing-2) /* TODO: Verify correct CSS variable */}
+    );
     color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
 
     &--error {

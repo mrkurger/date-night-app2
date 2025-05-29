@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import Review from '../../../models/review.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Review Model', () => {
   // Setup test data
@@ -152,6 +151,9 @@ describe('Review Model', () => {
     });
 
     it('should prevent duplicate reviews from the same reviewer for the same advertiser', async () => {
+      // Ensure indexes are created
+      await Review.createIndexes();
+
       // Create first review
       const review1 = new Review(TEST_REVIEW_DATA);
       await review1.save();

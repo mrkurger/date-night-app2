@@ -66,8 +66,11 @@ const reviewSchema = new mongoose.Schema(
       type: Date,
     },
     advertiserResponse: {
-      content: String,
-      date: Date,
+      type: {
+        content: String,
+        date: Date,
+      },
+      default: undefined,
     },
     helpfulVotes: {
       type: Number,

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -116,7 +115,7 @@ const createTestUsers = async (count, baseUserData = {}) => {
 const generateTestToken = (userId, additionalClaims = {}) => {
   return jwt.sign(
     {
-      sub: userId,
+      id: userId,
       ...additionalClaims,
     },
     process.env.JWT_SECRET || 'test_jwt_secret',
@@ -130,11 +129,9 @@ const generateTestToken = (userId, additionalClaims = {}) => {
  * @returns {string} Refresh token
  */
 const generateRefreshToken = userId => {
-  return jwt.sign(
-    { sub: userId },
-    process.env.REFRESH_TOKEN_SECRET || 'test_refresh_token_secret',
-    { expiresIn: '7d' }
-  );
+  return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET || 'test_refresh_token_secret', {
+    expiresIn: '7d',
+  });
 };
 
 /**
@@ -143,7 +140,7 @@ const generateRefreshToken = userId => {
  * @param {string} token - JWT token
  * @returns {Object} Request with auth headers
  */
-const authenticatedRequest = (request, token): void => {
+const authenticatedRequest = (request, token) => {
   return request.set('Authorization', `Bearer ${token}`);
 };
 
@@ -170,7 +167,7 @@ const mockRequest = (options = {}) => {
  * Create a mock response object for middleware testing
  * @returns {Object} Mock response object with jest spy methods
  */
-const mockResponse = (): void => {
+const mockResponse = () => {
   const res = {};
 
   res.status = jest.fn().mockReturnValue(res);
@@ -207,7 +204,7 @@ const createError = (message, statusCode = 500) => {
  * Create a timing utility for performance testing
  * @returns {Object} Timing utility object
  */
-const createTimingUtil = (): void => {
+const createTimingUtil = () => {
   const startTime = process.hrtime();
 
   return {

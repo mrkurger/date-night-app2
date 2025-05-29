@@ -182,51 +182,29 @@ app.use(
   app.use('/uploads/*', secureFileServing);
 })();
 
+// Import the unified database service
+import dbService from './config/db.js';
+
 // MongoDB connection with retry logic
 const connectWithRetry = async (retries = 5, delay = 5000) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      // Log the MongoDB URI we're connecting to (without credentials)
-      console.log(`[DEBUG] process.env.MONGODB_URI: ${process.env.MONGODB_URI}`); // Added for debugging
-      console.log(`[DEBUG] config.mongoUri before connect: ${config.mongoUri}`); // Added for debugging
-      const sanitizedUri = config.mongoUri.replace(/:\/\/([^:]+):([^@]+)@/, '://$1:***@');
-      console.log(`Connecting to MongoDB: ${sanitizedUri}`);
+  try {
+    // Log the MongoDB URI we're connecting to (without credentials)
+    console.log(`[DEBUG] process.env.MONGODB_URI: ${process.env.MONGODB_URI}`);
+    console.log(`[DEBUG] config.mongoUri before connect: ${config.mongoUri}`);
 
-      // Connect with more robust options
-      await mongoose.connect(config.mongoUri, {
-        serverSelectionTimeoutMS: 10000,
-        connectTimeoutMS: 10000,
-        socketTimeoutMS: 45000,
-        family: 4, // Use IPv4, skip trying IPv6
-      });
+    // Use the enhanced database service to connect with retry logic
+    await dbService.database.dbService.connectWithRetry(retries, delay, config.mongoUri);
 
-      console.log('MongoDB connected successfully');
-
-      // Set up event listeners for connection issues
-      mongoose.connection.on('disconnected', () => {
-        console.log('MongoDB disconnected');
-      });
-
-      mongoose.connection.on('reconnected', () => {
-        console.log('MongoDB reconnected');
-      });
-
-      mongoose.connection.on('error', err => {
-        console.error('MongoDB connection error:', err);
-      });
-
-      break;
-    } catch (err) {
-      console.error(`MongoDB connection attempt ${i + 1}/${retries} failed:`, err.message);
-
-      if (i === retries - 1) {
-        console.error('MongoDB connection failed after all retries. Error details:', err);
-        throw new Error('MongoDB connection failed after all retries');
-      }
-
-      console.log(`Retrying connection in ${delay / 1000} seconds...`);
-      await new Promise(resolve => setTimeout(resolve, delay));
+    // Initialize other database connections as needed
+    if (process.env.DATABASE1_URI) {
+      console.log('Secondary database connection URI detected. Connecting to database1...');
+      await dbService.database1.connect();
     }
+
+    console.log('All database connections established successfully');
+  } catch (err) {
+    console.error('Failed to establish database connections:', err.message);
+    throw new Error(`Database connection failed: ${err.message}`);
   }
 };
 
@@ -285,9 +263,9 @@ const shutdown = async signal => {
   console.log(`${signal} received. Starting graceful shutdown...`);
 
   try {
-    // Close database connection
-    await mongoose.connection.close();
-    console.log('Database connections closed');
+    // Close all database connections with our unified service
+    await dbService.closeAllConnections();
+    console.log('All database connections closed');
 
     // Close server if it exists
     if (server) {

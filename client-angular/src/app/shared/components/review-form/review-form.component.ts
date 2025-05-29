@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-review-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  template: `<div>Review Form Placeholder</div>`
+  template: `<div>Review Form Placeholder</div>`,
 })
 export class ReviewFormComponent {
   @Input() existingReview: any;

@@ -8,21 +8,21 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TagModule } from 'primeng/tag';
-import { Ad } from '../../../../core/models/ad.interface';
-import { AdService } from '../../../../core/services/ad.service';
-import { ChatService } from '../../../../core/services/chat.service';
-import { NotificationService } from '../../../../core/services/notification.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { TooltipModule } from 'primeng/tooltip';
-import { RippleModule } from 'primeng/ripple';
-import { ScrollerModule } from 'primeng/scroller';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RippleModule } from 'primeng/ripple';
+import { ScrollerModule } from 'primeng/scroller';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
+import { Ad } from '../../../../core/models/ad.interface';
+import { AdService } from '../../../../core/services/ad.service';
+import { AuthService } from '../../../../core/services/auth.service';
+import { ChatService } from '../../../../core/services/chat.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 /**
  *

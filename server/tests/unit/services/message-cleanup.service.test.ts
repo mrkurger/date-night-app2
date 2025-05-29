@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -16,7 +15,7 @@ import cron from 'node-cron';
 import ChatMessage from '../../../models/chat-message.model.js';
 import ChatAttachment from '../../../models/chat-attachment.schema.js';
 import messageCleanupService from '../../../services/message-cleanup.service.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 // Mock fs, path, and cron
 jest.mock('fs', () => ({

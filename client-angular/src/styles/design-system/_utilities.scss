@@ -2,7 +2,7 @@
 
 // Spacing Utilities
 @each var(--key) /* TODO: Verify correct CSS variable */,
-    in (
+  in (
       '0': 0,
       '1': var(--spacing-1) /* TODO: Verify correct CSS variable */,
       '2': var(--spacing-2) /* TODO: Verify correct CSS variable */,

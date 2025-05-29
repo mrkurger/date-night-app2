@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,8 +10,8 @@ import type { jest } from '@jest/globals';
 
 import request from 'supertest';
 import express from 'express';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { createTestUser, generateTestToken } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { createTestUser, generateTestToken } from '../../helpers.ts';
 import { jest } from '@jest/globals';
 
 // Mock dependencies

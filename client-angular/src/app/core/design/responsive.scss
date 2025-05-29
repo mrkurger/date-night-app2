@@ -1,6 +1,5 @@
 // Responsive utilities using Nebular breakpoints
 
-
 // Breakpoint mixins
 @mixin nb-media-breakpoint-up($name) {
   @if $name == xs {

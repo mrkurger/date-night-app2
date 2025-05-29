@@ -151,3 +151,47 @@ export const profileUpdateLimiter = createLimiter(
   10,
   'Too many profile updates, please try again later.'
 );
+
+/**
+ * Create a rate limiter with custom options
+ * @param {Object} options - Rate limiter options
+ * @returns {Function} Express middleware
+ */
+export const createRateLimiter = (options = {}) => {
+  const {
+    windowMs = 15 * 60 * 1000, // 15 minutes
+    max = 100, // 100 requests per windowMs
+    message = {
+      success: false,
+      status: 'error',
+      message: 'Too many requests, please try again later.',
+    },
+    ...otherOptions
+  } = options;
+
+  return rateLimit({
+    windowMs,
+    max,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message,
+    ...otherOptions,
+  });
+};
+
+// Default rate limiter - lazy initialization for testing
+let _rateLimiter;
+export const rateLimiter = (req, res, next) => {
+  if (!_rateLimiter) {
+    _rateLimiter = createRateLimiter();
+  }
+  return _rateLimiter(req, res, next);
+};
+
+// Reset function for testing
+export const resetRateLimiter = () => {
+  _rateLimiter = null;
+};
+
+// Default export
+export default rateLimiter;

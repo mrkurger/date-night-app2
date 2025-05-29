@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -16,13 +15,17 @@ import { mkdir, writeFile, unlink } from 'fs/promises';
 import sharp from 'sharp';
 import Ad from '../../../models/ad.model.js';
 import mediaService from '../../../services/media.service.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 // Mock fs, fs/promises, and sharp
-jest.mock('fs', () => ({
-  existsSync: jest.fn(),
-  statSync: jest.fn(), // Add statSync mock
-}));
+jest.mock('fs', () => {
+  const originalFs = jest.requireActual('fs');
+  return {
+    ...originalFs,
+    existsSync: jest.fn(),
+    statSync: jest.fn(),
+  };
+});
 
 jest.mock('fs/promises', () => ({
   mkdir: jest.fn(),
@@ -55,6 +58,14 @@ describe('Media Service', () => {
     title: 'Test Ad',
     description: 'Test description',
     advertiser: testUserId,
+    category: 'Massage',
+    county: 'Oslo',
+    city: 'Oslo',
+    location: {
+      type: 'Point',
+      coordinates: [10.7522, 59.9139], // Oslo coordinates
+    },
+    profileImage: '/path/to/test-image.jpg',
     media: [],
   };
 
@@ -134,15 +145,23 @@ describe('Media Service', () => {
 
   describe('uploadMedia', () => {
     it('should upload an image file and create a thumbnail', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Mock writeFile to succeed
       writeFile.mockResolvedValue(undefined);
 
       // Call the method
-      const result = await mediaService.uploadMedia(MOCK_FILE_DATA, testAdId, testUserId);
+      const result = await mediaService.uploadMedia(
+        MOCK_FILE_DATA,
+        testAdId,
+        testUserId.toString()
+      );
 
       // Verify the result
       expect(result).toBeDefined();
@@ -171,8 +190,12 @@ describe('Media Service', () => {
     });
 
     it('should upload a video file without creating a thumbnail', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Create a mock video file
@@ -186,7 +209,7 @@ describe('Media Service', () => {
       writeFile.mockResolvedValue(undefined);
 
       // Call the method
-      const result = await mediaService.uploadMedia(videoFile, testAdId, testUserId);
+      const result = await mediaService.uploadMedia(videoFile, testAdId, testUserId.toString());
 
       // Verify the result
       expect(result).toBeDefined();
@@ -213,7 +236,7 @@ describe('Media Service', () => {
       const nonExistentAdId = new mongoose.Types.ObjectId();
 
       await expect(
-        mediaService.uploadMedia(MOCK_FILE_DATA, nonExistentAdId, testUserId)
+        mediaService.uploadMedia(MOCK_FILE_DATA, nonExistentAdId, testUserId.toString())
       ).rejects.toThrow('Ad not found');
     });
 
@@ -227,14 +250,18 @@ describe('Media Service', () => {
       await ad.save();
 
       // Call the method
-      await expect(mediaService.uploadMedia(MOCK_FILE_DATA, testAdId, testUserId)).rejects.toThrow(
-        'Unauthorized: User does not own this ad'
-      );
+      await expect(
+        mediaService.uploadMedia(MOCK_FILE_DATA, testAdId, testUserId.toString())
+      ).rejects.toThrow('Unauthorized: User does not own this ad');
     });
 
     it('should handle errors during file upload', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Mock writeFile to fail
@@ -244,9 +271,9 @@ describe('Media Service', () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
 
       // Call the method
-      await expect(mediaService.uploadMedia(MOCK_FILE_DATA, testAdId, testUserId)).rejects.toThrow(
-        'File write error'
-      );
+      await expect(
+        mediaService.uploadMedia(MOCK_FILE_DATA, testAdId, testUserId.toString())
+      ).rejects.toThrow('File write error');
 
       // Verify console.error was called
       expect(consoleErrorSpy).toHaveBeenCalledWith('Error uploading media:', expect.any(Error));
@@ -303,6 +330,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -324,7 +353,7 @@ describe('Media Service', () => {
       unlink.mockResolvedValue(undefined);
 
       // Call the method
-      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId);
+      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId.toString());
 
       // Verify the result
       expect(result).toBe(true);
@@ -344,6 +373,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -365,7 +396,7 @@ describe('Media Service', () => {
       unlink.mockResolvedValue(undefined);
 
       // Call the method
-      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId);
+      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId.toString());
 
       // Verify the result
       expect(result).toBe(true);
@@ -384,6 +415,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -402,7 +435,7 @@ describe('Media Service', () => {
       fs.existsSync.mockReturnValue(false);
 
       // Call the method
-      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId);
+      const result = await mediaService.deleteMedia(testAdId, mediaId, testUserId.toString());
 
       // Verify the result
       expect(result).toBe(true);
@@ -420,9 +453,9 @@ describe('Media Service', () => {
       const nonExistentAdId = new mongoose.Types.ObjectId();
       const mediaId = new mongoose.Types.ObjectId();
 
-      await expect(mediaService.deleteMedia(nonExistentAdId, mediaId, testUserId)).rejects.toThrow(
-        'Ad not found'
-      );
+      await expect(
+        mediaService.deleteMedia(nonExistentAdId, mediaId, testUserId.toString())
+      ).rejects.toThrow('Ad not found');
     });
 
     it('should throw an error if the user does not own the ad', async () => {
@@ -436,21 +469,25 @@ describe('Media Service', () => {
       await ad.save();
 
       // Call the method
-      await expect(mediaService.deleteMedia(testAdId, mediaId, testUserId)).rejects.toThrow(
-        'Unauthorized: User does not own this ad'
-      );
+      await expect(
+        mediaService.deleteMedia(testAdId, mediaId, testUserId.toString())
+      ).rejects.toThrow('Unauthorized: User does not own this ad');
     });
 
     it('should throw an error if the media is not found in the ad', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Call the method with a non-existent media ID
       const nonExistentMediaId = new mongoose.Types.ObjectId();
 
       await expect(
-        mediaService.deleteMedia(testAdId, nonExistentMediaId, testUserId)
+        mediaService.deleteMedia(testAdId, nonExistentMediaId, testUserId.toString())
       ).rejects.toThrow('Media not found in ad');
     });
   });
@@ -461,6 +498,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -501,6 +540,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -547,8 +588,12 @@ describe('Media Service', () => {
     });
 
     it('should throw an error if the media is not found in the ad', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Call the method with a non-existent media ID
@@ -566,6 +611,8 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId,
@@ -581,7 +628,7 @@ describe('Media Service', () => {
       await ad.save();
 
       // Call the method
-      const result = await mediaService.setFeaturedMedia(testAdId, mediaId, testUserId);
+      const result = await mediaService.setFeaturedMedia(testAdId, mediaId, testUserId.toString());
 
       // Verify the result
       expect(result).toBeDefined();
@@ -598,7 +645,7 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
 
       await expect(
-        mediaService.setFeaturedMedia(nonExistentAdId, mediaId, testUserId)
+        mediaService.setFeaturedMedia(nonExistentAdId, mediaId, testUserId.toString())
       ).rejects.toThrow('Ad not found');
     });
 
@@ -608,26 +655,31 @@ describe('Media Service', () => {
       const mediaId = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
         advertiser: differentUserId,
       });
       await ad.save();
 
       // Call the method
-      await expect(mediaService.setFeaturedMedia(testAdId, mediaId, testUserId)).rejects.toThrow(
-        'Unauthorized: User does not own this ad'
-      );
+      await expect(
+        mediaService.setFeaturedMedia(testAdId, mediaId, testUserId.toString())
+      ).rejects.toThrow('Unauthorized: User does not own this ad');
     });
 
     it('should throw an error if the media is not found in the ad', async () => {
-      // Create a mock ad in the database
-      const ad = new Ad(MOCK_AD_DATA);
+      // Create a mock ad in the database with explicit advertiser
+      const ad = new Ad({
+        ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
+      });
       await ad.save();
 
       // Call the method with a non-existent media ID
       const nonExistentMediaId = new mongoose.Types.ObjectId();
 
       await expect(
-        mediaService.setFeaturedMedia(testAdId, nonExistentMediaId, testUserId)
+        mediaService.setFeaturedMedia(testAdId, nonExistentMediaId, testUserId.toString())
       ).rejects.toThrow('Media not found in ad');
     });
   });
@@ -639,6 +691,8 @@ describe('Media Service', () => {
       const mediaId2 = new mongoose.Types.ObjectId();
       const ad = new Ad({
         ...MOCK_AD_DATA,
+        _id: testAdId,
+        advertiser: testUserId,
         media: [
           {
             _id: mediaId1,

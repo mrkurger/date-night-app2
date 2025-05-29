@@ -1,187 +1,115 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Star, MessageCircle, Video, DollarSign } from 'lucide-react';
-import { FavoriteButton } from '@/components/favorites/favorite-button';
+import React, { useEffect } from 'react'; // Removed unused 'useRef'
+import { useInView } from 'react-intersection-observer';
 
 interface Advertiser {
   id: number;
   name: string;
-  age: number;
+  // age: number; // Removed as per new design focus
   location: string;
-  description: string;
-  tags: string[];
+  // description: string; // Removed as per new design focus
+  // tags: string[]; // Removed as per new design focus
   image: string;
-  rating: number;
-  isVip: boolean;
-  isOnline: boolean;
+  // rating: number; // Removed as per new design focus
+  // isVip: boolean; // Removed as per new design focus
+  // isOnline: boolean; // Removed as per new design focus
+  aspectRatio?: string; // Added aspectRatio e.g., "16:9", "4:3", "1:1"
 }
 
 interface NetflixViewProps {
   advertisers: Advertiser[];
-  loadMore?: (page: number) => void;
+  loadMore?: () => void; // Made loadMore optional as it might not always be needed initially
 }
 
 export default function NetflixView({ advertisers, loadMore }: NetflixViewProps) {
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const observer = useRef<IntersectionObserver | null>(null);
-  const lastCardRef = useRef<HTMLDivElement | null>(null);
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false, // Set to false to trigger every time it comes into view
+  });
 
-  // Function to handle infinite scrolling
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries;
-      if (entry.isIntersecting && !loading && loadMore) {
-        setLoading(true);
-        loadMore(page);
-        setPage(prev => prev + 1);
-        setLoading(false);
-      }
-    },
-    [loading, loadMore, page],
-  );
-
-  // Set up the intersection observer
   useEffect(() => {
-    if (loadMore) {
-      observer.current = new IntersectionObserver(handleObserver, {
-        root: null,
-        rootMargin: '20px',
-        threshold: 0.1,
-      });
-
-      if (lastCardRef.current) {
-        observer.current.observe(lastCardRef.current);
-      }
-
-      return () => {
-        if (observer.current) {
-          observer.current.disconnect();
-        }
-      };
+    if (inView && loadMore) {
+      // Check if loadMore is provided before calling
+      loadMore();
     }
-  }, [handleObserver, loadMore, advertisers]);
+  }, [inView, loadMore]);
 
-  if (advertisers.length === 0) {
+  // Helper to determine column span based on aspectRatio
+  const getColumnSpan = (aspectRatio?: string) => {
+    if (!aspectRatio) return 'col-span-1'; // Default span for items without a specific aspect ratio
+
+    // Example logic: wider images take up more space.
+    // This can be adjusted based on the desired visual outcome.
+    const parts = aspectRatio.split(':');
+    if (parts.length === 2) {
+      const width = parseInt(parts[0], 10);
+      const height = parseInt(parts[1], 10);
+      if (width > height) {
+        return 'col-span-2'; // Landscape-ish images
+      } else if (height > width) {
+        return 'col-span-1'; // Portrait-ish images
+      }
+    }
+    return 'col-span-1'; // Square or default
+  };
+
+  if (!advertisers || advertisers.length === 0) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-xl mb-2">No advertisers found</h3>
-        <p className="text-gray-400">Try adjusting your search or filters</p>
+        <h3 className="text-xl mb-2">No advertisers to display</h3>
+        <p className="text-gray-400">Check back later or try adjusting filters if available.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {advertisers.map((advertiser, index) => {
-        // Check if this is the last card
-        const isLastCard = index === advertisers.length - 1;
-
-        return (
-          <div key={`${advertiser.id}-${index}`} ref={isLastCard ? lastCardRef : null}>
-            <Link href={`/advertiser/${advertiser.id}`}>
-              <Card
-                className="overflow-hidden bg-gray-900 border-gray-800 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20 h-full"
-                onMouseEnter={() => setHoveredCard(advertiser.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={advertiser.image || '/placeholder.svg'}
-                    alt={advertiser.name}
-                    className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
-                  />
-                  <div className="absolute top-2 right-2 flex flex-col gap-2">
-                    <FavoriteButton advertiserId={advertiser.id} />
-                  </div>
-                  {advertiser.isOnline && (
-                    <div className="absolute bottom-2 left-2">
-                      <Badge
-                        variant="outline"
-                        className="bg-green-500/20 text-green-400 border-green-500"
-                      >
-                        Online Now
-                      </Badge>
-                    </div>
-                  )}
-                  {advertiser.isVip && (
-                    <div className="absolute bottom-2 right-2">
-                      <Badge
-                        variant="outline"
-                        className="bg-amber-500/20 text-amber-400 border-amber-500"
-                      >
-                        VIP Content
-                      </Badge>
-                    </div>
-                  )}
-
-                  {/* Overlay that appears on hover */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300 ${
-                      hoveredCard === advertiser.id ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  >
-                    <div className="flex gap-2 mb-2">
-                      <Button
-                        size="sm"
-                        variant="secondary"
-                        className="flex-1 bg-pink-600 hover:bg-pink-700 text-white"
-                      >
-                        <MessageCircle className="mr-1 h-4 w-4" /> Chat
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="secondary"
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        <Video className="mr-1 h-4 w-4" /> Video
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="secondary"
-                        className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                      >
-                        <DollarSign className="mr-1 h-4 w-4" /> Tip
-                      </Button>
-                    </div>
-                    <div className="text-xs text-gray-300">
-                      {advertiser.tags.map(tag => (
-                        <span key={tag} className="mr-2">
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="text-lg font-semibold">
-                      {advertiser.name}, {advertiser.age}
-                    </h3>
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                      <span className="text-sm">{advertiser.rating}</span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-400 mb-2">{advertiser.location}</p>
-                  <p className="text-sm line-clamp-2">{advertiser.description}</p>
-                </CardContent>
-              </Card>
-            </Link>
+    <div className="p-4 bg-black">
+      {' '}
+      {/* Added bg-black for a Netflix-like feel */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
+        {' '}
+        {/* Adjusted gap and columns for responsiveness */}
+        {advertisers.map(advertiser => (
+          <div
+            key={advertiser.id}
+            className={`group relative overflow-hidden rounded-md ${getColumnSpan(
+              advertiser.aspectRatio,
+            )}`}
+            // Using padding-top hack for aspect ratio if specific aspectRatio is given, otherwise default to a common one like 3:4 or 4:3
+            // The style approach with aspectRatio directly is better if supported and correctly implemented.
+            // For simplicity and broader compatibility, especially with Tailwind, direct style or a class-based approach might be preferred.
+            // Let's ensure the image itself drives the aspect ratio within its container.
+            // The container will be part of a grid, and its span is determined by getColumnSpan.
+            // The image will fill this container.
+          >
+            <img
+              src={advertiser.image}
+              alt={`Photo of ${advertiser.name}`}
+              // Ensure images cover their container; aspect ratio is handled by the grid item's span and the image filling it.
+              className="w-full h-auto object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+              // To enforce varying heights based on image's natural aspect ratio while fitting width:
+              // We might need to set a fixed height or let the grid auto-flow handle it.
+              // For a masonry-like varying height, CSS grid's `grid-auto-rows: minmax(min-content, max-content)` or similar might be needed,
+              // or a JS library for masonry layouts if Tailwind alone isn't sufficient for the dynamic heights based on content.
+              // Given the "varying sizes" from the PNG, this implies images might not all conform to the same aspect ratio within their grid cell.
+              // The `getColumnSpan` handles width variation. For height, if images have different intrinsic aspect ratios, `h-auto` should allow them to scale proportionally.
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-4 bg-gradient-to-t from-black/90 to-transparent">
+              <h3 className="text-white text-sm sm:text-md md:text-lg font-semibold truncate">
+                {advertiser.name}
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm truncate">{advertiser.location}</p>
+            </div>
           </div>
-        );
-      })}
-
-      {loading && (
-        <div className="col-span-full text-center py-4">
-          <p>Loading more advertisers...</p>
+        ))}
+      </div>
+      {loadMore && (
+        <div ref={ref} className="h-20 flex justify-center items-center">
+          {' '}
+          {/* Made sentinel visible for debugging, can be styled as a loader */}
+          <p className="text-white">Loading more...</p> {/* Basic loader text */}
         </div>
       )}
     </div>

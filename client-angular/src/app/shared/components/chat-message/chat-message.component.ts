@@ -39,7 +39,7 @@ import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  standalone: true,
 })
 export class ChatMessageComponent implements OnInit {
   @Input() message!: ChatMessage;

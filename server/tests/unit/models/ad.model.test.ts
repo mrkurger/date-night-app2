@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,8 +11,8 @@ import type { jest } from '@jest/globals';
 import mongoose from 'mongoose';
 import Ad from '../../../models/ad.model.js';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { TEST_AD_DATA, createTestUser } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { TEST_AD_DATA, createTestUser } from '../../helpers.ts';
 
 describe('Ad Model', () => {
   let testUser;

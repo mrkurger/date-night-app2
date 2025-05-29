@@ -17,46 +17,46 @@ describe('AuthGuard', () => {
   let routerSpy: jasmine.SpyObj;
 
   beforeEach(() => {
-    userServiceSpy = jasmine.createSpyObj('UserService', ['isAuthenticated'])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
+    userServiceSpy = jasmine.createSpyObj('UserService', ['isAuthenticated']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      providers: [;
+      providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: Router, useValue: routerSpy },
       ],
-    })
-  })
+    });
+  });
 
   it('should allow access when user is authenticated', () => {
     // Arrange
-    userServiceSpy.isAuthenticated.and.returnValue(true)
+    userServiceSpy.isAuthenticated.and.returnValue(true);
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/protected' } as RouterStateSnapshot;
 
     // Act
-    const result = TestBed.runInInjectionContext(() => AuthGuard(route, state))
+    const result = TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
     // Assert
-    expect(result).toBeTrue()
-    expect(userServiceSpy.isAuthenticated).toHaveBeenCalled()
-    expect(routerSpy.navigate).not.toHaveBeenCalled()
-  })
+    expect(result).toBeTrue();
+    expect(userServiceSpy.isAuthenticated).toHaveBeenCalled();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
+  });
 
   it('should redirect to login when user is not authenticated', () => {
     // Arrange
-    userServiceSpy.isAuthenticated.and.returnValue(false)
+    userServiceSpy.isAuthenticated.and.returnValue(false);
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/protected' } as RouterStateSnapshot;
 
     // Act
-    const result = TestBed.runInInjectionContext(() => AuthGuard(route, state))
+    const result = TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
     // Assert
-    expect(result).toBeFalse()
-    expect(userServiceSpy.isAuthenticated).toHaveBeenCalled()
+    expect(result).toBeFalse();
+    expect(userServiceSpy.isAuthenticated).toHaveBeenCalled();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'], {
       queryParams: { returnUrl: '/protected' },
-    })
-  })
-})
+    });
+  });
+});

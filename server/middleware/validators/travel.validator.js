@@ -180,11 +180,14 @@ export {
   validateItineraryId,
 };
 
-export default {
-  validateItineraryData,
-  validateLocationUpdate,
-  validateLocationQuery,
-  validateUpcomingToursQuery,
-  validateAdId,
-  validateItineraryId,
+// Create TravelSchemas object for compatibility with routes
+const TravelSchemas = {
+  adIdParam: validateAdId,
+  itineraryIdParam: validateItineraryId,
+  itineraryData: validateItineraryData,
+  locationUpdate: validateLocationUpdate,
+  locationQuery: validateLocationQuery,
+  upcomingToursQuery: validateUpcomingToursQuery,
 };
+
+export default TravelSchemas;

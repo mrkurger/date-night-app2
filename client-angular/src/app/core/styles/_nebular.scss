@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 // Re-export commonly used functions and mixins
 @forward '@nebular/theme/styles/theming';
 @forward '@nebular/theme/styles/themes/default';
@@ -21,8 +13,6 @@ $nb-enabled-themes: (default);
 @include nb-install() {
   @include nb-theme-global();
 }
-
-
 
 // Common breakpoint mixins
 @mixin nb-media-breakpoint-down($breakpoint) {

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Mock implementation of bcrypt for testing
  */

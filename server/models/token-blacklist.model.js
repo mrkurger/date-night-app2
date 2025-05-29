@@ -22,7 +22,7 @@ const tokenBlacklistSchema = new mongoose.Schema({
   },
   tokenType: {
     type: String,
-    enum: ['access', 'refresh'],
+    enum: ['access', 'refresh', 'all'],
     required: true,
   },
   userId: {

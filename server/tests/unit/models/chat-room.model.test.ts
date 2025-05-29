@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,8 +12,8 @@ import mongoose from 'mongoose';
 import ChatRoom from '../../../models/chat-room.model.js';
 import ChatMessage from '../../../models/chat-message.model.js';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { TEST_USER_DATA } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { TEST_USER_DATA } from '../../helpers.ts';
 
 describe('ChatRoom Model', () => {
   let user1;

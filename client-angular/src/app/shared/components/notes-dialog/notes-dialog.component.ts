@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 /**
  *
@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
   selector: 'app-notes-dialog',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Notes Dialog Placeholder</div>`
+  template: `<div>Notes Dialog Placeholder</div>`,
 })
-export class NotesDialogComponent {
+export class NotesDialogComponent implements OnInit {
   notes = '';
   data: any = {};
 

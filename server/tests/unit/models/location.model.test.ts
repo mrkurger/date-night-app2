@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import Location from '../../../models/location.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Location Model', () => {
   // Setup test data
@@ -29,6 +28,8 @@ describe('Location Model', () => {
   // Setup and teardown for all tests
   beforeAll(async () => {
     await setupTestDB();
+    // Ensure indexes are created for testing
+    await Location.createIndexes();
   });
 
   afterAll(async () => {

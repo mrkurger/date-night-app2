@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import Favorite from '../../../models/favorite.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Favorite Model', () => {
   // Setup test data
@@ -99,6 +98,9 @@ describe('Favorite Model', () => {
     });
 
     it('should prevent duplicate favorites for the same user and ad', async () => {
+      // Ensure indexes are created
+      await Favorite.createIndexes();
+
       // Create first favorite
       const favorite1 = new Favorite(TEST_FAVORITE_DATA);
       await favorite1.save();

@@ -13,7 +13,7 @@ import paymentController from '../controllers/payment.controller.js';
 import { protect } from '../middleware/auth.js';
 import bodyParser from 'body-parser';
 import { validateWithZod } from '../utils/validation-utils.js';
-import PaymentSchemas from '../middleware/validators/payment.validator.js';
+import { PaymentSchemas } from '../middleware/validators/payment.validator.js';
 
 // Special raw body parser for Stripe webhooks
 const stripeWebhookParser = bodyParser.raw({ type: 'application/json' });

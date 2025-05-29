@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,8 +12,8 @@ import mongoose from 'mongoose';
 import argon2 from 'argon2';
 import bcrypt from 'bcrypt';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { TEST_USER_DATA } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { TEST_USER_DATA } from '../../helpers.ts';
 
 describe('User Model', () => {
   // Setup and teardown for all tests

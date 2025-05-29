@@ -94,6 +94,32 @@
                 </ul>
             </section>
         </article>
+
+        <article>
+            <h2>Database Architecture</h2>
+
+            <section class="glossary-item" id="databaseArchitecture">
+                <h3>Multi-Database Architecture</h3>
+                <p>The application uses a multi-database architecture to separate concerns and optimize performance.</p>
+                <ul>
+                    <li><code>database.js</code>: Primary database for core business data</li>
+                    <li><code>database1.js</code>: Secondary database for analytics and non-critical data</li>
+                    <li><code>databaseCore.js</code>: Shared mongoose instance</li>
+                    <li><code>db.js</code>: Unified database service</li>
+                </ul>
+                <p>For more details, see <a href="/server/docs/database-architecture.md">Database Architecture</a>.</p>
+            </section>
+
+            <section class="glossary-item" id="modelDefinition">
+                <h3>Model Definition</h3>
+                <p>Models can be defined using either the primary or secondary database connection:</p>
+                <pre><code>// Primary database model
+const User = mongoose.model('User', userSchema);
+
+// Secondary database model
+const Analytic = database1.model('Analytic', analyticSchema);</code></pre>
+            </section>
+        </article>
     </main>
 </body>
 </html>

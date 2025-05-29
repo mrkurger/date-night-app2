@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -21,7 +20,7 @@ let mongoServer;
  * Creates an in-memory MongoDB server and connects to it
  * @returns {Promise<void>}
  */
-export const setupTestDB = async (): Promise<void> => {
+export const setupTestDB = async () => {
   // Create an in-memory MongoDB server
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
@@ -37,7 +36,7 @@ export const setupTestDB = async (): Promise<void> => {
  * Disconnects from MongoDB and stops the in-memory server
  * @returns {Promise<void>}
  */
-export const teardownTestDB = async (): Promise<void> => {
+export const teardownTestDB = async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
   console.log('Disconnected from in-memory MongoDB');
@@ -48,7 +47,7 @@ export const teardownTestDB = async (): Promise<void> => {
  * Clears all collections in the database
  * @returns {Promise<void>}
  */
-export const clearDatabase = async (): Promise<void> => {
+export const clearDatabase = async () => {
   const collections = mongoose.connection.collections;
 
   for (const key in collections) {
@@ -64,7 +63,7 @@ export const clearDatabase = async (): Promise<void> => {
  * @param {Object} mockData - The mock data to return
  * @returns {Object} - The mocked model
  */
-export const mockModel = (Model, mockData): void => {
+export const mockModel = (Model, mockData) => {
   // Save the original methods
   const originalMethods = {
     find: Model.find,

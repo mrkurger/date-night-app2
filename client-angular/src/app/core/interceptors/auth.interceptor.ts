@@ -1,4 +1,10 @@
-import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpHandlerFn,
+  HttpEvent,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { inject } from '@angular/core';
@@ -15,11 +21,11 @@ import { Router } from '@angular/router';
  * Token is now stored in HttpOnly cookies; no need to add Authorization header from localStorage.;
  */
 export const authInterceptor: HttpInterceptorFn = (
-  request: HttpRequest,
+  request: HttpRequest<unknown>,
   next: HttpHandlerFn,
-): Observable> => {
-  const userService = inject(UserService)
-  const router = inject(Router)
+): Observable<HttpEvent<unknown>> => {
+  const userService = inject(UserService);
+  const router = inject(Router);
 
   // No longer add auth token from localStorage; rely on HttpOnly cookies
 
@@ -28,17 +34,17 @@ export const authInterceptor: HttpInterceptorFn = (
   if (request.url.includes(environment.apiUrl)) {
     request = request.clone({
       withCredentials: true,
-    })
+    });
   }
 
-  return next(request).pipe(;
+  return next(request).pipe(
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
         // Token expired or invalid
-        userService.logout()';
-        router.navigate(['/login'])
+        userService.logout();
+        router.navigate(['/login']);
       }
-      return throwError(() => error)
+      return throwError(() => error);
     }),
-  )
-}
+  );
+};

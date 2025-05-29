@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,7 +12,7 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import ChatAttachment from '../../../models/chat-attachment.schema.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 // Mock fs module
 jest.mock('fs', () => ({

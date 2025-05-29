@@ -22,7 +22,8 @@
   background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
   box-shadow: var(--shadow-md) /* TODO: Verify correct CSS variable */;
   overflow: hidden;
-  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+  transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */
+    var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
   // Block modifier
   &--enabled {
@@ -86,11 +87,13 @@
   &__button {
     @include ds.button-text;
 
-    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4)
+      /* TODO: Verify correct CSS variable */;
     border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     border: none;
     cursor: pointer;
-    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     // Primary button modifier
     &--primary {

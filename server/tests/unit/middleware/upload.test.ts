@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +11,7 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 import { uploadSingle, uploadMultiple } from '../../../middleware/upload.js';
 import multer from 'multer';
 
@@ -21,13 +20,39 @@ jest.mock('multer', () => {
   const mockStorage = {};
   const multerMock = {
     diskStorage: jest.fn(() => mockStorage),
-    memoryStorage: jest.fn(() => mockStorage), // Ensure memoryStorage is a function that returns a mock storage object
+    memoryStorage: jest.fn(() => mockStorage),
     single: jest.fn(() => jest.fn((req, res, next) => next())),
     array: jest.fn(() => jest.fn((req, res, next) => next())),
-    limits: {},
-    fileFilter: jest.fn(),
+    limits: {
+      fileSize: 5 * 1024 * 1024, // 5MB
+      files: 5,
+    },
+    fileFilter: jest.fn((req, file, cb) => {
+      // Mock file filter behavior
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type'), false);
+      }
+    }),
   };
-  return jest.fn(() => multerMock);
+
+  const multerFunction = jest.fn(options => {
+    // Return a mock that includes the options passed to multer
+    return {
+      ...multerMock,
+      limits: options?.limits || multerMock.limits,
+      fileFilter: options?.fileFilter || multerMock.fileFilter,
+    };
+  });
+  multerFunction.diskStorage = jest.fn(() => mockStorage);
+  multerFunction.memoryStorage = jest.fn(() => mockStorage);
+
+  return {
+    __esModule: true,
+    default: multerFunction,
+  };
 });
 
 describe('Upload Middleware', () => {
@@ -135,7 +160,8 @@ describe('Upload Middleware', () => {
       // Create a mock callback
       const cb = jest.fn();
 
-      // Call the file filter function fileFilter(req, file, cb): void;
+      // Call the file filter function
+      fileFilter(req, file, cb);
 
       // Check if the callback was called with the correct arguments
       expect(cb).toHaveBeenCalledWith(null, true);
@@ -156,7 +182,8 @@ describe('Upload Middleware', () => {
       // Create a mock callback
       const cb = jest.fn();
 
-      // Call the file filter function fileFilter(req, file, cb): void;
+      // Call the file filter function
+      fileFilter(req, file, cb);
 
       // Check if the callback was called with the correct arguments
       expect(cb).toHaveBeenCalledWith(expect.any(Error), false);

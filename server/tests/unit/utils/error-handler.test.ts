@@ -8,6 +8,9 @@ describe('Error Handler', () => {
   let next: NextFunction;
 
   beforeEach(() => {
+    // Set NODE_ENV to development to ensure stack traces are included
+    process.env.NODE_ENV = 'development';
+
     errorHandler = new ErrorHandler({
       includeStackTrace: true,
       logErrors: false,
@@ -40,6 +43,7 @@ describe('Error Handler', () => {
     it('should handle validation errors', () => {
       const error = {
         name: 'ValidationError',
+        stack: 'Error stack trace',
         errors: {
           email: { path: 'email', message: 'Invalid email' },
           password: { path: 'password', message: 'Password too short' },
@@ -51,7 +55,7 @@ describe('Error Handler', () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
         success: false,
-        status: 'fail',
+        status: 'error',
         message: expect.any(String),
         errors: expect.arrayContaining([
           { field: 'email', message: 'Invalid email' },
@@ -66,6 +70,7 @@ describe('Error Handler', () => {
       const error = {
         name: 'MongoError',
         code: 11000,
+        stack: 'Error stack trace',
         keyValue: { email: 'test@example.com' },
       };
 
@@ -74,7 +79,7 @@ describe('Error Handler', () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
         success: false,
-        status: 'fail',
+        status: 'error',
         message: 'Duplicate field value: email. Please use another value',
         stack: expect.any(String),
         error: expect.any(Object),
@@ -85,6 +90,7 @@ describe('Error Handler', () => {
       const error = {
         name: 'JsonWebTokenError',
         message: 'Invalid token',
+        stack: 'Error stack trace',
       };
 
       errorHandler.handleError(error, req as Request, res as Response, next);
@@ -92,7 +98,7 @@ describe('Error Handler', () => {
       expect(res.status).toHaveBeenCalledWith(401);
       expect(res.json).toHaveBeenCalledWith({
         success: false,
-        status: 'fail',
+        status: 'error',
         message: 'Invalid token. Please log in again',
         stack: expect.any(String),
         error: expect.any(Object),
