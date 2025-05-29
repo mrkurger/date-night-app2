@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -16,7 +15,7 @@ import User from '../../../models/user.model.js';
 import ChatMessage from '../../../models/chat-message.model.js';
 import socketService from '../../../services/socket.service.js';
 import { AppError } from '../../../middleware/errorHandler.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 // Mock dependencies
 jest.mock('socket.io', () => {

@@ -39,6 +39,7 @@ cp .env.example .env
 | `PORT`                       | Server port                                 | 3000                                |
 | `NODE_ENV`                   | Environment (development, test, production) | development                         |
 | `MONGODB_URI`                | MongoDB connection string                   | mongodb://localhost:27017/datenight |
+| `DATABASE1_URI`              | Secondary DB connection string (optional)   | mongodb://localhost:27017/date_night_db1 |
 | `JWT_SECRET`                 | Secret for JWT token generation             | -                                   |
 | `JWT_REFRESH_SECRET`         | Secret for refresh tokens                   | -                                   |
 | `CORS_ORIGIN`                | Allowed CORS origins                        | http://localhost:4200               |
@@ -102,7 +103,10 @@ server/
 │   ├── profile/          # User profile management
 │   └── ...
 ├── config/               # Configuration files
-│   ├── database.js       # Database configuration
+│   ├── database.js       # Primary database configuration
+│   ├── database1.js      # Secondary database configuration
+│   ├── databaseCore.js   # Shared database core
+│   ├── db.js             # Unified database service
 │   ├── passport.js       # Authentication strategies
 │   └── ...
 ├── controllers/          # API controllers
@@ -161,6 +165,30 @@ npm run lint:fix
 ```
 
 ## Database Management
+
+### Database Architecture
+
+The application uses a multi-database architecture:
+
+- **Primary Database**: Stores core business data (users, ads, transactions, etc.)
+- **Secondary Database**: Handles analytics, logging, and non-critical data
+
+For detailed information, see:
+- [Database Architecture Documentation](/server/docs/database-architecture.md)
+- [Using the Secondary Database](/server/docs/using-secondary-database.md)
+
+### Connections
+
+```javascript
+// Import the unified database service
+import dbService from './config/db.js';
+
+// Initialize all database connections
+await dbService.initializeAllConnections();
+
+// Close all connections gracefully
+await dbService.closeAllConnections();
+```
 
 ### Migrations
 

@@ -223,7 +223,7 @@ const githubCallback = (req, res) => {
 };
 
 const googleCallback = githubCallback;
-// Reddit callback removed
+const redditCallback = githubCallback;
 const appleCallback = githubCallback;
 
 // Refresh token endpoint
@@ -298,6 +298,89 @@ const refreshToken = async (req, res) => {
   }
 };
 
+// Forgot password endpoint
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      // Don't reveal if email exists or not for security
+      return res.json({
+        success: true,
+        message: 'If an account with that email exists, a password reset link has been sent.',
+      });
+    }
+
+    // Generate password reset token
+    const resetToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    // In a real application, you would send an email here
+    // For now, we'll just return success
+    res.json({
+      success: true,
+      message: 'If an account with that email exists, a password reset link has been sent.',
+      // In development, include the token for testing
+      ...(process.env.NODE_ENV === 'development' && { resetToken }),
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to process password reset request',
+      error: err.message,
+    });
+  }
+};
+
+// Reset password endpoint
+const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    // Verify reset token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Find user
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired reset token',
+      });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password has been reset successfully',
+    });
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Reset token has expired',
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to reset password',
+      error: err.message,
+    });
+  }
+};
+
 // Export the controller methods
 export default {
   register,
@@ -308,4 +391,6 @@ export default {
   redditCallback,
   appleCallback,
   refreshToken,
+  forgotPassword,
+  resetPassword,
 };

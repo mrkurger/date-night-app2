@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import TokenBlacklist from '../../../models/token-blacklist.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('TokenBlacklist Model', () => {
   // Setup test data

@@ -14,8 +14,15 @@ import crypto from 'crypto';
  * This allows us to use nonce-based CSP instead of unsafe-inline
  */
 export const cspNonce = (req, res, next) => {
-  // Generate a random nonce
-  res.locals.cspNonce = crypto.randomBytes(16).toString('base64');
+  // Don't override existing nonce
+  if (!req.nonce) {
+    // Generate a random nonce
+    req.nonce = crypto.randomBytes(16).toString('base64');
+  }
+
+  // Make nonce available to templates
+  res.locals.nonce = req.nonce;
+
   next();
 };
 

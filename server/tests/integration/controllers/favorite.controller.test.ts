@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,8 +11,8 @@ import type { jest } from '@jest/globals';
 import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { createTestUser, TEST_USER_DATA, generateTestToken } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { createTestUser, TEST_USER_DATA, generateTestToken } from '../../helpers.ts';
 import Favorite from '../../../models/favorite.model.js';
 import Ad from '../../../models/ad.model.js';
 import { jest } from '@jest/globals';
@@ -73,6 +72,42 @@ describe('Favorite Controller', () => {
       return res.status(200).json(['mock-ad-id-1', 'mock-ad-id-2']);
     });
 
+    // Define batch routes first (before parameterized routes)
+    app.post('/api/v1/favorites/batch', (req, res) => {
+      if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'Authentication required' });
+      }
+
+      if (!req.body.adIds || !Array.isArray(req.body.adIds) || req.body.adIds.length === 0) {
+        return res.status(400).json({ message: 'No ad IDs provided' });
+      }
+
+      if (req.body.adIds.includes('nonexistent-ad')) {
+        return res.status(404).json({ message: 'Some ads were not found: nonexistent-ad' });
+      }
+
+      return res.status(201).json({
+        message: 'Batch favorite operation completed',
+        added: 2,
+        alreadyFavorited: 1,
+      });
+    });
+
+    app.delete('/api/v1/favorites/batch', (req, res) => {
+      if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'Authentication required' });
+      }
+
+      if (!req.body.adIds || !Array.isArray(req.body.adIds) || req.body.adIds.length === 0) {
+        return res.status(400).json({ message: 'No ad IDs provided' });
+      }
+
+      return res.status(200).json({
+        message: 'Batch removal completed',
+        removed: 3,
+      });
+    });
+
     app.get('/api/v1/favorites/check/:adId', (req, res) => {
       if (!req.headers.authorization) {
         return res.status(401).json({ message: 'Authentication required' });
@@ -97,26 +132,6 @@ describe('Favorite Controller', () => {
       return res.status(201).json({ message: 'Ad added to favorites' });
     });
 
-    app.post('/api/v1/favorites/batch', (req, res) => {
-      if (!req.headers.authorization) {
-        return res.status(401).json({ message: 'Authentication required' });
-      }
-
-      if (!req.body.adIds || !Array.isArray(req.body.adIds) || req.body.adIds.length === 0) {
-        return res.status(400).json({ message: 'No ad IDs provided' });
-      }
-
-      if (req.body.adIds.includes('nonexistent-ad')) {
-        return res.status(404).json({ message: 'Some ads were not found: nonexistent-ad' });
-      }
-
-      return res.status(201).json({
-        message: 'Batch favorite operation completed',
-        added: 2,
-        alreadyFavorited: 1,
-      });
-    });
-
     app.delete('/api/v1/favorites/:adId', (req, res) => {
       if (!req.headers.authorization) {
         return res.status(401).json({ message: 'Authentication required' });
@@ -127,21 +142,6 @@ describe('Favorite Controller', () => {
       }
 
       return res.status(200).json({ message: 'Ad removed from favorites' });
-    });
-
-    app.delete('/api/v1/favorites/batch', (req, res) => {
-      if (!req.headers.authorization) {
-        return res.status(401).json({ message: 'Authentication required' });
-      }
-
-      if (!req.body.adIds || !Array.isArray(req.body.adIds) || req.body.adIds.length === 0) {
-        return res.status(400).json({ message: 'No ad IDs provided' });
-      }
-
-      return res.status(200).json({
-        message: 'Batch removal completed',
-        removed: 3,
-      });
     });
 
     app.put('/api/v1/favorites/:adId/notes', (req, res) => {

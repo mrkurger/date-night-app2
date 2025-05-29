@@ -22,7 +22,15 @@ class RequestSanitizer {
 
     // Apply XSS filtering
     if (this.options.xssFilter) {
+      // Use more aggressive XSS filtering
       sanitizedValue = xssFilters.inHTMLData(sanitizedValue);
+
+      // Remove dangerous attributes and scripts
+      sanitizedValue = sanitizedValue
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        .replace(/\bon\w+\s*=\s*["'][^"']*["']/gi, '') // Remove event handlers like onerror, onclick, etc.
+        .replace(/\bon\w+\s*=\s*[^>\s]+/gi, '') // Remove unquoted event handlers
+        .replace(/javascript:/gi, ''); // Remove javascript: URLs
     }
 
     // Trim strings
@@ -44,6 +52,11 @@ class RequestSanitizer {
     }
 
     if (obj !== null && typeof obj === 'object') {
+      // Preserve special object types like Date, RegExp, etc.
+      if (obj instanceof Date || obj instanceof RegExp || obj instanceof Buffer) {
+        return obj;
+      }
+
       const sanitized = {};
       for (const [key, value] of Object.entries(obj)) {
         sanitized[key] = this.sanitizeObject(value);

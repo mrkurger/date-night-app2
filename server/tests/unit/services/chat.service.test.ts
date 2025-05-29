@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Chat Service Unit Tests
  *

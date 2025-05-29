@@ -91,5 +91,75 @@ const isResourceOwner = resourceField => {
   };
 };
 
-export { isAdmin, isAdvertiser, isResourceOwner };
-export default { isAdmin, isAdvertiser, isResourceOwner };
+/**
+ * Role hierarchy (higher number = higher privilege)
+ */
+const ROLE_HIERARCHY = {
+  user: 1,
+  support: 2,
+  moderator: 3,
+  advertiser: 3,
+  admin: 4,
+};
+
+/**
+ * Generic authorization middleware with role hierarchy support
+ * @param {string|Array} requiredRoles - Required role(s) for access
+ * @param {Function} ownershipCheck - Optional function to check resource ownership
+ * @returns {Function} Express middleware
+ */
+const authorize = (requiredRoles, ownershipCheck = null) => {
+  return (req, res, next) => {
+    // Check if user is authenticated
+    if (!req.user) {
+      const error = new Error('Access denied. User must be authenticated.');
+      error.statusCode = 401;
+      return next(error);
+    }
+
+    // Check if user has a role
+    if (!req.user.role) {
+      const error = new Error('Access denied. User role not found.');
+      error.statusCode = 403;
+      return next(error);
+    }
+
+    const userRole = req.user.role;
+    const userRoleLevel = ROLE_HIERARCHY[userRole] || 0;
+
+    // Convert requiredRoles to array if it's a string
+    const rolesArray = Array.isArray(requiredRoles) ? requiredRoles : [requiredRoles];
+
+    // Check if user has any of the required roles or higher
+    const hasRequiredRole = rolesArray.some(role => {
+      const requiredRoleLevel = ROLE_HIERARCHY[role] || 0;
+      return userRoleLevel >= requiredRoleLevel;
+    });
+
+    if (!hasRequiredRole) {
+      const error = new Error('Access denied. Insufficient permissions.');
+      error.statusCode = 403;
+      return next(error);
+    }
+
+    // If user is admin, bypass ownership check
+    if (userRole === 'admin') {
+      return next();
+    }
+
+    // If ownership check is provided, run it
+    if (ownershipCheck && typeof ownershipCheck === 'function') {
+      const isOwner = ownershipCheck(req);
+      if (!isOwner) {
+        const error = new Error('Access denied. Insufficient permissions.');
+        error.statusCode = 403;
+        return next(error);
+      }
+    }
+
+    next();
+  };
+};
+
+export { isAdmin, isAdvertiser, isResourceOwner, authorize };
+export default { isAdmin, isAdvertiser, isResourceOwner, authorize };

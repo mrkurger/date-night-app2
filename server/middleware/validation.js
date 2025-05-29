@@ -22,24 +22,29 @@ import { validationErrorResponse } from '../utils/response.js';
  */
 const validate = validations => {
   return async (req, res, next) => {
-    // Execute all validations
-    await Promise.all(validations.map(validation => validation.run(req)));
+    try {
+      // Execute all validations
+      await Promise.all(validations.map(validation => validation.run(req)));
 
-    // Check if there are validation errors
-    const errors = validationResult(req);
-    if (errors.isEmpty()) {
-      return next();
+      // Check if there are validation errors
+      const errors = validationResult(req);
+      if (errors.isEmpty()) {
+        return next();
+      }
+
+      // Format validation errors
+      const formattedErrors = errors.array().map(error => ({
+        path: error.path,
+        msg: error.msg,
+        value: error.value,
+      }));
+
+      // Return validation error response
+      return res.status(422).json(validationErrorResponse(formattedErrors));
+    } catch (error) {
+      // Handle unexpected errors gracefully by passing to error handler
+      return next(error);
     }
-
-    // Format validation errors
-    const formattedErrors = errors.array().map(error => ({
-      field: error.path,
-      message: error.msg,
-      value: error.value,
-    }));
-
-    // Return validation error response
-    return res.status(422).json(validationErrorResponse(formattedErrors));
   };
 };
 

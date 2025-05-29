@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,7 +9,7 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 // Import the actual 'validate' function and express-validator functions
 import { validate } from '../../../middleware/validation.js';
 import { body, query, param, validationResult } from 'express-validator';

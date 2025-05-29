@@ -93,8 +93,16 @@ app.get(
   '/test/query',
   validateRequestQuery(
     z.object({
-      page: z.number().int().min(1).optional(),
-      limit: z.number().int().min(1).max(100).optional(),
+      page: z
+        .string()
+        .transform(val => parseInt(val, 10))
+        .pipe(z.number().int().min(1))
+        .optional(),
+      limit: z
+        .string()
+        .transform(val => parseInt(val, 10))
+        .pipe(z.number().int().min(1).max(100))
+        .optional(),
       sort: z.string().optional(),
     })
   ),

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -14,7 +13,7 @@ import SafetyService from '../../../services/safety.service.js';
 import SafetyCheckin from '../../../models/safety-checkin.model.js';
 import User from '../../../models/user.model.js';
 import { AppError } from '../../../middleware/errorHandler.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Safety Service', () => {
   // Setup test data
@@ -291,6 +290,7 @@ describe('Safety Service', () => {
           _id: testUserId,
           username: 'testuser',
           email: 'test@example.com',
+          password: 'password123', // Add required password field
           // No safetySettings
         });
         await user.save();

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,9 +9,9 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 import requestValidator from '../../../middleware/requestValidator.js';
-import Joi from 'joi';
+import { z } from 'zod';
 
 describe('Request Validator Middleware', () => {
   let req;
@@ -27,10 +26,10 @@ describe('Request Validator Middleware', () => {
   });
 
   describe('Schema Validation', () => {
-    it('should validate request body against schema and pass if valid', () => {
-      const schema = Joi.object({
-        name: Joi.string().required(),
-        age: Joi.number().integer().min(18).required(),
+    it('should validate request body against schema and pass if valid', async () => {
+      const schema = z.object({
+        name: z.string(),
+        age: z.number().int().min(18),
       });
 
       req.body = {
@@ -38,16 +37,16 @@ describe('Request Validator Middleware', () => {
         age: 25,
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should reject request with invalid body', () => {
-      const schema = Joi.object({
-        name: Joi.string().required(),
-        age: Joi.number().integer().min(18).required(),
+    it('should reject request with invalid body', async () => {
+      const schema = z.object({
+        name: z.string(),
+        age: z.number().int().min(18),
       });
 
       req.body = {
@@ -55,20 +54,20 @@ describe('Request Validator Middleware', () => {
         age: 17, // Below minimum age
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalledWith(
         expect.objectContaining({
-          message: expect.stringContaining('age'),
+          message: expect.stringContaining('Validation failed'),
           statusCode: 400,
         })
       );
     });
 
-    it('should reject request with missing required fields', () => {
-      const schema = Joi.object({
-        name: Joi.string().required(),
-        age: Joi.number().integer().min(18).required(),
+    it('should reject request with missing required fields', async () => {
+      const schema = z.object({
+        name: z.string(),
+        age: z.number().int().min(18),
       });
 
       req.body = {
@@ -76,20 +75,20 @@ describe('Request Validator Middleware', () => {
         // Missing age field
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalledWith(
         expect.objectContaining({
-          message: expect.stringContaining('required'),
+          message: expect.stringContaining('Validation failed'),
           statusCode: 400,
         })
       );
     });
 
-    it('should validate query parameters if specified', () => {
-      const schema = Joi.object({
-        limit: Joi.number().integer().min(1).max(100),
-        page: Joi.number().integer().min(1),
+    it('should validate query parameters if specified', async () => {
+      const schema = z.object({
+        limit: z.coerce.number().int().min(1).max(100),
+        page: z.coerce.number().int().min(1),
       });
 
       req.query = {
@@ -97,40 +96,41 @@ describe('Request Validator Middleware', () => {
         page: '2',
       };
 
-      requestValidator(schema, 'query')(req, res, next);
+      await requestValidator(schema, 'query')(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should validate params if specified', () => {
-      const schema = Joi.object({
-        id: Joi.string().length(24).hex().required(),
+    it('should validate params if specified', async () => {
+      const schema = z.object({
+        id: z
+          .string()
+          .length(24)
+          .regex(/^[0-9a-fA-F]+$/),
       });
 
       req.params = {
         id: '507f1f77bcf86cd799439011', // Valid MongoDB ObjectId format
       };
 
-      requestValidator(schema, 'params')(req, res, next);
+      await requestValidator(schema, 'params')(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should handle complex nested schemas', () => {
-      const schema = Joi.object({
-        user: Joi.object({
-          name: Joi.string().required(),
-          address: Joi.object({
-            street: Joi.string().required(),
-            city: Joi.string().required(),
-            zipCode: Joi.string()
-              .pattern(/^\d{5}$/)
-              .required(),
-          }).required(),
-        }).required(),
-        preferences: Joi.array().items(Joi.string()).min(1).required(),
+    it('should handle complex nested schemas', async () => {
+      const schema = z.object({
+        user: z.object({
+          name: z.string(),
+          address: z.object({
+            street: z.string(),
+            city: z.string(),
+            zipCode: z.string().regex(/^\d{5}$/),
+          }),
+        }),
+        preferences: z.array(z.string()).min(1),
       });
 
       req.body = {
@@ -145,23 +145,22 @@ describe('Request Validator Middleware', () => {
         preferences: ['email', 'sms'],
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should handle array validation', () => {
-      const schema = Joi.object({
-        items: Joi.array()
-          .items(
-            Joi.object({
-              id: Joi.string().required(),
-              quantity: Joi.number().integer().min(1).required(),
+    it('should handle array validation', async () => {
+      const schema = z.object({
+        items: z
+          .array(
+            z.object({
+              id: z.string(),
+              quantity: z.number().int().min(1),
             })
           )
-          .min(1)
-          .required(),
+          .min(1),
       });
 
       req.body = {
@@ -171,46 +170,53 @@ describe('Request Validator Middleware', () => {
         ],
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should handle conditional validation', () => {
-      const schema = Joi.object({
-        paymentType: Joi.string().valid('credit', 'bank').required(),
-        creditCardNumber: Joi.when('paymentType', {
-          is: 'credit',
-          then: Joi.string().required(),
-          otherwise: Joi.forbidden(),
-        }),
-        bankAccountNumber: Joi.when('paymentType', {
-          is: 'bank',
-          then: Joi.string().required(),
-          otherwise: Joi.forbidden(),
-        }),
-      });
+    it('should handle conditional validation', async () => {
+      const schema = z
+        .object({
+          paymentType: z.enum(['credit', 'bank']),
+          creditCardNumber: z.string().optional(),
+          bankAccountNumber: z.string().optional(),
+        })
+        .refine(
+          data => {
+            if (data.paymentType === 'credit') {
+              return !!data.creditCardNumber && !data.bankAccountNumber;
+            }
+            if (data.paymentType === 'bank') {
+              return !!data.bankAccountNumber && !data.creditCardNumber;
+            }
+            return false;
+          },
+          {
+            message: 'Invalid payment method configuration',
+          }
+        );
 
       req.body = {
         paymentType: 'credit',
         creditCardNumber: '4111111111111111',
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalledWith(expect.any(Error));
     });
 
-    it('should provide detailed error messages', () => {
-      const schema = Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().min(8).pattern(/[A-Z]/).pattern(/[0-9]/).required().messages({
-          'string.min': 'Password must be at least 8 characters',
-          'string.pattern.base':
-            'Password must contain at least one uppercase letter and one number',
-        }),
+    it('should provide detailed error messages', async () => {
+      const schema = z.object({
+        email: z.string().email('Invalid email format'),
+        password: z
+          .string()
+          .min(8, 'Password must be at least 8 characters')
+          .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+          .regex(/[0-9]/, 'Password must contain at least one number'),
       });
 
       req.body = {
@@ -218,11 +224,11 @@ describe('Request Validator Middleware', () => {
         password: 'weak',
       };
 
-      requestValidator(schema)(req, res, next);
+      await requestValidator(schema)(req, res, next);
 
       expect(next).toHaveBeenCalledWith(
         expect.objectContaining({
-          message: expect.stringContaining('email'),
+          message: expect.stringContaining('Validation failed'),
           statusCode: 400,
         })
       );

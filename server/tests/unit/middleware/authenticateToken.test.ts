@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,7 +11,7 @@ import type { jest } from '@jest/globals';
 import { jest } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 import { authenticateToken } from '../../../middleware/authenticateToken.js';
-import { mockRequest, mockResponse, mockNext, generateTestToken } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext, generateTestToken } from '../../helpers.ts';
 
 // Set up mocks before using them
 jest.mock('jsonwebtoken');

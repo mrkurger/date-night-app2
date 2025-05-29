@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,7 +12,7 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 import geocodingService from '../../../services/geocoding.service.js';
 import Location from '../../../models/location.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 // Mock axios
 jest.mock('axios');

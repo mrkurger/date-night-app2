@@ -31,7 +31,7 @@ interface WebSocketFallbackServiceMethods {
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  template: ''
+  template: '',
 })
 class MockNavigationComponent {}
 
@@ -76,7 +76,7 @@ describe('AppComponent', () => {
       providers: [
         { provide: ThemeService, useValue: mockThemeService },
         { provide: WebSocketFallbackService, useValue: mockWebSocketFallbackService },
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -12,8 +11,8 @@ import type { jest } from '@jest/globals';
 import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { createTestUser, generateTestToken } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { createTestUser, generateTestToken } from '../../helpers.ts';
 import Location from '../../../models/location.model.js';
 import { jest } from '@jest/globals';
 
@@ -43,7 +42,104 @@ describe('Location Controller', () => {
     app = express();
     app.use(express.json());
 
-    // Mock location routes
+    // Mock specific location routes first (before general routes)
+    app.get('/api/v1/locations/search', (req, res) => {
+      try {
+        if (!req.query.query) {
+          return res.status(400).json({ message: 'Search query is required' });
+        }
+
+        return res.status(200).json([
+          {
+            _id: 'search-result-1',
+            name: 'Oslo City',
+            address: 'Stenersgata 1, 0050 Oslo',
+            city: 'Oslo',
+            coordinates: {
+              lat: 59.9139,
+              lng: 10.7522,
+            },
+          },
+          {
+            _id: 'search-result-2',
+            name: 'Oslo Opera House',
+            address: 'Kirsten Flagstads Plass 1, 0150 Oslo',
+            city: 'Oslo',
+            coordinates: {
+              lat: 59.9075,
+              lng: 10.7529,
+            },
+          },
+        ]);
+      } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    });
+
+    app.get('/api/v1/locations/nearby', (req, res) => {
+      try {
+        if (!req.query.lat || !req.query.lng) {
+          return res.status(400).json({ message: 'Latitude and longitude are required' });
+        }
+
+        return res.status(200).json([
+          {
+            _id: 'nearby-1',
+            name: 'Oslo City',
+            address: 'Stenersgata 1, 0050 Oslo',
+            city: 'Oslo',
+            coordinates: {
+              lat: 59.9139,
+              lng: 10.7522,
+            },
+            distance: 0.5, // km
+          },
+          {
+            _id: 'nearby-2',
+            name: 'Oslo Opera House',
+            address: 'Kirsten Flagstads Plass 1, 0150 Oslo',
+            city: 'Oslo',
+            coordinates: {
+              lat: 59.9075,
+              lng: 10.7529,
+            },
+            distance: 1.2, // km
+          },
+        ]);
+      } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    });
+
+    app.get('/api/v1/locations/cities', (req, res) => {
+      try {
+        return res.status(200).json([
+          { city: 'Oslo', count: 42 },
+          { city: 'Bergen', count: 28 },
+          { city: 'Trondheim', count: 19 },
+          { city: 'Stavanger', count: 15 },
+          { city: 'Tromsø', count: 10 },
+        ]);
+      } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    });
+
+    app.get('/api/v1/locations/types', (req, res) => {
+      try {
+        return res.status(200).json([
+          { type: 'restaurant', count: 120 },
+          { type: 'cafe', count: 85 },
+          { type: 'bar', count: 65 },
+          { type: 'shopping_mall', count: 25 },
+          { type: 'tourist_attraction', count: 40 },
+        ]);
+      } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    });
+
+    // Mock general location routes
     app.get('/api/v1/locations', (req, res) => {
       return res.status(200).json([
         {
@@ -183,86 +279,6 @@ describe('Location Controller', () => {
       }
 
       return res.status(200).json({ message: 'Location deleted successfully' });
-    });
-
-    app.get('/api/v1/locations/search', (req, res) => {
-      if (!req.query.query) {
-        return res.status(400).json({ message: 'Search query is required' });
-      }
-
-      return res.status(200).json([
-        {
-          _id: 'search-result-1',
-          name: 'Oslo City',
-          address: 'Stenersgata 1, 0050 Oslo',
-          city: 'Oslo',
-          coordinates: {
-            lat: 59.9139,
-            lng: 10.7522,
-          },
-        },
-        {
-          _id: 'search-result-2',
-          name: 'Oslo Opera House',
-          address: 'Kirsten Flagstads Plass 1, 0150 Oslo',
-          city: 'Oslo',
-          coordinates: {
-            lat: 59.9075,
-            lng: 10.7529,
-          },
-        },
-      ]);
-    });
-
-    app.get('/api/v1/locations/nearby', (req, res) => {
-      if (!req.query.lat || !req.query.lng) {
-        return res.status(400).json({ message: 'Latitude and longitude are required' });
-      }
-
-      return res.status(200).json([
-        {
-          _id: 'nearby-1',
-          name: 'Oslo City',
-          address: 'Stenersgata 1, 0050 Oslo',
-          city: 'Oslo',
-          coordinates: {
-            lat: 59.9139,
-            lng: 10.7522,
-          },
-          distance: 0.5, // km
-        },
-        {
-          _id: 'nearby-2',
-          name: 'Oslo Opera House',
-          address: 'Kirsten Flagstads Plass 1, 0150 Oslo',
-          city: 'Oslo',
-          coordinates: {
-            lat: 59.9075,
-            lng: 10.7529,
-          },
-          distance: 1.2, // km
-        },
-      ]);
-    });
-
-    app.get('/api/v1/locations/cities', (req, res) => {
-      return res.status(200).json([
-        { city: 'Oslo', count: 42 },
-        { city: 'Bergen', count: 28 },
-        { city: 'Trondheim', count: 19 },
-        { city: 'Stavanger', count: 15 },
-        { city: 'Tromsø', count: 10 },
-      ]);
-    });
-
-    app.get('/api/v1/locations/types', (req, res) => {
-      return res.status(200).json([
-        { type: 'restaurant', count: 120 },
-        { type: 'cafe', count: 85 },
-        { type: 'bar', count: 65 },
-        { type: 'shopping_mall', count: 25 },
-        { type: 'tourist_attraction', count: 40 },
-      ]);
     });
 
     // Create a real test user for some tests

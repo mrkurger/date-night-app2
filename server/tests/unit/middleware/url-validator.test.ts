@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // server/tests/unit/middleware/url-validator.test.js
 
 // ES Module imports for the functions and objects to be tested.

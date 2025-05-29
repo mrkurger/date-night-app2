@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import TabNavigation from '@/components/tab-navigation';
 import ChatWidget from '@/components/chat/chat-widget';
 import NetflixView from '@/components/netflix-view';
@@ -11,182 +11,107 @@ import { useSidebar } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
+import { debounce } from 'lodash';
 
-// Enhanced sample data with premium flag and better images
-const advertisers = [
+// Define the Advertiser interface according to the NetflixView component's needs
+interface Advertiser {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  aspectRatio?: string; // e.g., "16:9", "4:3", "1:1"
+}
+
+// Extended initial set of advertisers with aspectRatio for varied layout
+const initialAdvertisers: Advertiser[] = [
   {
     id: 1,
     name: 'Jasmine',
-    age: 25,
     location: 'Stockholm, Sweden',
-    description:
-      'Professional dancer with 5 years of experience. Specializing in private performances.',
-    tags: ['dancer', 'performer', 'private events'],
-    image: '/placeholder.svg?height=400&width=300&text=Jasmine',
-    rating: 4.8,
-    isVip: true,
-    isOnline: true,
-    isPremium: true,
+    image: '/placeholder.svg?height=600&width=400&text=Jasmine',
+    aspectRatio: '2:3',
   },
   {
     id: 2,
     name: 'Crystal',
-    age: 27,
     location: 'Oslo, Norway',
-    description: 'Certified massage therapist offering relaxing and therapeutic sessions.',
-    tags: ['massage', 'therapy', 'relaxation'],
-    image: '/placeholder.svg?height=400&width=300&text=Crystal',
-    rating: 4.9,
-    isVip: false,
-    isOnline: true,
-    isPremium: true,
+    image: '/placeholder.svg?height=400&width=600&text=Crystal',
+    aspectRatio: '3:2',
   },
   {
     id: 3,
     name: 'Destiny',
-    age: 24,
     location: 'Copenhagen, Denmark',
-    description: 'Experienced entertainer specializing in exclusive private shows.',
-    tags: ['entertainer', 'exclusive', 'private'],
-    image: '/placeholder.svg?height=400&width=300&text=Destiny',
-    rating: 4.7,
-    isVip: true,
-    isOnline: false,
-    isPremium: true,
+    image: '/placeholder.svg?height=500&width=500&text=Destiny',
+    aspectRatio: '1:1',
   },
   {
     id: 4,
     name: 'Amber',
-    age: 26,
     location: 'Helsinki, Finland',
-    description: 'Professional dancer with background in ballet and contemporary styles.',
-    tags: ['dancer', 'performer', 'artistic'],
-    image: '/placeholder.svg?height=400&width=300&text=Amber',
-    rating: 4.6,
-    isVip: false,
-    isOnline: true,
-    isPremium: false,
+    image: '/placeholder.svg?height=600&width=300&text=Amber',
+    aspectRatio: '1:2',
   },
   {
     id: 5,
     name: 'Sophia',
-    age: 28,
     location: 'Gothenburg, Sweden',
-    description:
-      'Experienced massage therapist specializing in deep tissue and relaxation techniques.',
-    tags: ['massage', 'therapy', 'wellness'],
-    image: '/placeholder.svg?height=400&width=300&text=Sophia',
-    rating: 4.9,
-    isVip: true,
-    isOnline: true,
-    isPremium: true,
+    image: '/placeholder.svg?height=450&width=600&text=Sophia',
+    aspectRatio: '4:3',
   },
   {
     id: 6,
     name: 'Tiffany',
-    age: 25,
     location: 'Bergen, Norway',
-    description: 'Professional entertainer with expertise in private performances.',
-    tags: ['entertainer', 'private', 'events'],
-    image: '/placeholder.svg?height=400&width=300&text=Tiffany',
-    rating: 4.7,
-    isVip: false,
-    isOnline: false,
-    isPremium: false,
+    image: '/placeholder.svg?height=600&width=400&text=Tiffany',
+    aspectRatio: '2:3',
   },
   {
     id: 7,
     name: 'Melody',
-    age: 27,
     location: 'Aarhus, Denmark',
-    description: 'Skilled dancer with experience in various styles and private events.',
-    tags: ['dancer', 'performer', 'versatile'],
-    image: '/placeholder.svg?height=400&width=300&text=Melody',
-    rating: 4.8,
-    isVip: true,
-    isOnline: true,
-    isPremium: false,
+    image: '/placeholder.svg?height=300&width=600&text=Melody',
+    aspectRatio: '2:1',
   },
   {
     id: 8,
     name: 'Victoria',
-    age: 26,
     location: 'Reykjavik, Iceland',
-    description: 'Licensed massage therapist offering premium relaxation services.',
-    tags: ['massage', 'premium', 'relaxation'],
-    image: '/placeholder.svg?height=400&width=300&text=Victoria',
-    rating: 4.9,
-    isVip: false,
-    isOnline: true,
-    isPremium: false,
-  },
-  // Additional advertisers for infinite scrolling
-  {
-    id: 9,
-    name: 'Natalie',
-    age: 24,
-    location: 'Stockholm, Sweden',
-    description: 'Experienced dancer specializing in private performances and events.',
-    tags: ['dancer', 'performer', 'events'],
-    image: '/placeholder.svg?height=400&width=300&text=Natalie',
-    rating: 4.7,
-    isVip: true,
-    isOnline: true,
-    isPremium: false,
-  },
-  {
-    id: 10,
-    name: 'Emma',
-    age: 26,
-    location: 'Oslo, Norway',
-    description: 'Professional massage therapist with expertise in relaxation techniques.',
-    tags: ['massage', 'therapy', 'wellness'],
-    image: '/placeholder.svg?height=400&width=300&text=Emma',
-    rating: 4.8,
-    isVip: false,
-    isOnline: true,
-    isPremium: false,
-  },
-  {
-    id: 11,
-    name: 'Olivia',
-    age: 25,
-    location: 'Copenhagen, Denmark',
-    description: 'Versatile entertainer offering exclusive private shows.',
-    tags: ['entertainer', 'exclusive', 'private'],
-    image: '/placeholder.svg?height=400&width=300&text=Olivia',
-    rating: 4.6,
-    isVip: true,
-    isOnline: false,
-    isPremium: false,
-  },
-  {
-    id: 12,
-    name: 'Isabella',
-    age: 27,
-    location: 'Helsinki, Finland',
-    description: 'Skilled dancer with background in multiple dance styles.',
-    tags: ['dancer', 'performer', 'artistic'],
-    image: '/placeholder.svg?height=400&width=300&text=Isabella',
-    rating: 4.7,
-    isVip: false,
-    isOnline: true,
-    isPremium: false,
+    image: '/placeholder.svg?height=500&width=500&text=Victoria',
+    aspectRatio: '1:1',
   },
 ];
 
-// Function to simulate loading more advertisers (for infinite scrolling)
-const getMoreAdvertisers = page => {
-  // In a real app, this would be an API call
-  return advertisers.slice(0, 8).map(ad => ({
-    ...ad,
-    id: ad.id + page * 12,
-    name: `${ad.name} ${page}`,
-    isPremium: false,
-  }));
+// Simulate fetching more advertisers
+const fetchMoreAdvertisers = async (page: number): Promise<Advertiser[]> => {
+  console.log(`Fetching page ${page}`);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const newAdvertisers = Array.from({ length: 8 }, (_, i) => {
+        const id = page * 8 + i + 1;
+        // Cycle through predefined aspect ratios for variety
+        const aspectRatios = ['2:3', '3:2', '1:1', '1:2', '4:3', '2:1'];
+        const aspectRatio = aspectRatios[id % aspectRatios.length];
+        return {
+          id,
+          name: `Advertiser ${id}`,
+          location: `City ${id}, Country`,
+          image: `/placeholder.svg?height=${Math.floor(
+            Math.random() * 300 + 300,
+          )}&width=${Math.floor(Math.random() * 300 + 300)}&text=Advertiser+${id}`,
+          aspectRatio,
+        };
+      });
+      resolve(newAdvertisers);
+    }, 1000); // Simulate network delay
+  });
 };
 
 export default function BrowsePage() {
+  const [advertisers, setAdvertisers] = useState<Advertiser[]>(initialAdvertisers);
+  const [page, setPage] = useState(1); // Start with page 1 for fetching more
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true); // Assume there's more data initially
   const [activeView, setActiveView] = useState<'grid' | 'cards' | 'map' | 'nearby' | 'featured'>(
     'grid',
   );
@@ -274,11 +199,22 @@ export default function BrowsePage() {
     setDisplayedAdvertisers(advertisers);
   };
 
-  // Load more advertisers for infinite scrolling
-  const loadMore = page => {
-    const newAds = getMoreAdvertisers(page);
-    setDisplayedAdvertisers(prev => [...prev, ...newAds]);
-  };
+  const loadMoreAdvertisers = useCallback(
+    debounce(async () => {
+      if (isLoading || !hasMore) return;
+
+      setIsLoading(true);
+      const newAdvertisers = await fetchMoreAdvertisers(page);
+      if (newAdvertisers.length > 0) {
+        setAdvertisers(prev => [...prev, ...newAdvertisers]);
+        setPage(prev => prev + 1);
+      } else {
+        setHasMore(false); // No more advertisers to load
+      }
+      setIsLoading(false);
+    }, 300),
+    [isLoading, hasMore, page],
+  ); // Debounce to prevent rapid firing
 
   return (
     <div className="min-h-screen">
@@ -345,7 +281,7 @@ export default function BrowsePage() {
                     ? displayedAdvertisers.filter(ad => !ad.isPremium)
                     : displayedAdvertisers.filter(ad => !ad.isPremium)
                 }
-                loadMore={loadMore}
+                loadMore={loadMoreAdvertisers}
               />
             )}
             {activeView === 'cards' && <TinderView advertisers={displayedAdvertisers} />}

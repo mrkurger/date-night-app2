@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Simple test to verify Jest is working with ES modules
  */

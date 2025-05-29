@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import { jest } from '@jest/globals';
 import { cache } from '../../../middleware/cache.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 import NodeCache from 'node-cache';
 
 // Mock NodeCache
@@ -56,6 +55,12 @@ describe('Cache Middleware', () => {
 
     // Mock NodeCache constructor to return our mockCache
     NodeCache.mockImplementation(() => mockCache);
+
+    // Mock res.status to set statusCode
+    res.status = jest.fn().mockImplementation(function (code) {
+      this.statusCode = code;
+      return this;
+    });
 
     // Mock res.send to capture the response
     res.send = jest.fn().mockImplementation(function () {
@@ -137,7 +142,7 @@ describe('Cache Middleware', () => {
   describe('cache miss behavior', () => {
     it('should call next and cache response on cache miss', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
       // Create middleware
       const middleware = cache();
@@ -162,7 +167,7 @@ describe('Cache Middleware', () => {
 
     it('should not cache error responses', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
       // Create middleware
       const middleware = cache();
@@ -180,7 +185,7 @@ describe('Cache Middleware', () => {
 
     it('should not cache responses with status codes >= 400', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
       // Create middleware
       const middleware = cache();
@@ -200,10 +205,10 @@ describe('Cache Middleware', () => {
   describe('cache key generation', () => {
     it('should generate cache key based on URL and method', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
-      // Create middleware
-      const middleware = cache();
+      // Create middleware that caches both GET and POST
+      const middleware = cache({ methods: ['GET', 'POST'] });
 
       // Call middleware with different URLs and methods
       req.originalUrl = '/api/users';
@@ -226,7 +231,7 @@ describe('Cache Middleware', () => {
 
     it('should include query parameters in cache key', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
       // Create middleware
       const middleware = cache();
@@ -240,7 +245,7 @@ describe('Cache Middleware', () => {
 
     it('should use custom key generator if provided', async () => {
       // Setup cache miss
-      mockCache.get.mockReturnValue(null);
+      mockCache.get.mockReturnValue(undefined);
 
       // Create middleware with custom key generator
       const customKeyGenerator = req => `custom:${req.method}:${req.originalUrl}`;

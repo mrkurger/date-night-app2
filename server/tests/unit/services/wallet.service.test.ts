@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Wallet Service Unit Tests
  *
@@ -23,7 +22,7 @@ jest.mock('../../../models/user.model.js', () => ({
 
 // Mock Wallet Model (Comprehensive Mock)
 jest.mock('../../../models/wallet.model.js', () => {
-  import mongoose from "mongoose";
+  const mongoose = require('mongoose');
   const mockSave = jest.fn();
   const mockToObject = jest.fn(function () {
     const obj = { ...this };
@@ -155,7 +154,7 @@ jest.mock('../../../models/wallet.model.js', () => {
 
 // Mock Transaction Model (Comprehensive Mock)
 jest.mock('../../../models/transaction.model.js', () => {
-  import mongoose from "mongoose";
+  const mongoose = require('mongoose');
   const mockSave = jest.fn(); // Transactions usually aren't saved directly in tests, but good practice
   const mockToObject = jest.fn(function () {
     const obj = { ...this };

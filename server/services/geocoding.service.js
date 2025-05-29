@@ -15,7 +15,6 @@ import { AppError } from '../middleware/errorHandler.js'; // Added .js
 import { logger } from '../utils/logger.js'; // Added .js
 import NodeCache from 'node-cache';
 import { LRUCache } from 'lru-cache';
-import fetch from 'node-fetch';
 
 // Initialize cache with 1 day TTL and check period of 1 hour
 const cache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 });
@@ -24,8 +23,8 @@ const lruCache = new LRUCache({ max: 500, ttl: 1000 * 60 * 5 }); // 5m
 export async function geocode(addr) {
   const key = addr.toLowerCase();
   if (lruCache.has(key)) return lruCache.get(key);
-  const res = await fetch(`https://maps.api/geocode?addr=${encodeURIComponent(addr)}`);
-  const data = await res.json();
+  const res = await axios.get(`https://maps.api/geocode?addr=${encodeURIComponent(addr)}`);
+  const data = res.data;
   lruCache.set(key, data);
   return data;
 }
@@ -47,6 +46,9 @@ class GeocodingService {
 
     // Default coordinates (Oslo, Norway)
     this.defaultCoordinates = [10.7522, 59.9139];
+
+    // Expose cache for testing
+    this.cache = cache;
   }
 
   /**

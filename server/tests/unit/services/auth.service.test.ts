@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Auth Service Unit Tests
  *
@@ -22,7 +21,7 @@ jest.mock('bcrypt');
 
 // Mock Session Model
 jest.mock('../../../models/session.model.js', () => {
-  import mongooseLocal from "mongoose"; // Use require for CJS context and a different name
+  const mongooseLocal = require('mongoose'); // Use require for CJS context and a different name
   const mockSessionSave = jest.fn().mockResolvedValue(this);
   const MockSession = jest.fn().mockImplementation(sessionData => ({
     ...sessionData,
@@ -41,7 +40,7 @@ jest.mock('../../../models/session.model.js', () => {
 
 // Improved User Mock
 jest.mock('../../../models/user.model.js', () => {
-  import mongoose from "mongoose"; // Use require inside mock for CJS context
+  const mongoose = require('mongoose'); // Use require inside mock for CJS context
   // Mock the save method for instances
   const mockSave = jest.fn();
   // Mock the toObject method for instances

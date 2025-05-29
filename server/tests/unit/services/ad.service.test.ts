@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Ad Service Unit Tests
  *

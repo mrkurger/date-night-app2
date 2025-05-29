@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,7 +9,7 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 import securityHeaders from '../../../middleware/securityHeaders.js';
 
 describe('Security Headers Middleware', () => {
@@ -42,7 +41,10 @@ describe('Security Headers Middleware', () => {
   it('should set X-XSS-Protection header', () => {
     securityHeaders(req, res, next);
 
-    expect(res.setHeader).toHaveBeenCalledWith('X-XSS-Protection', '1; mode=block');
+    expect(res.setHeader).toHaveBeenCalledWith(
+      'X-XSS-Protection',
+      '1; mode=block; report=/api/v1/xss-report'
+    );
     expect(next).toHaveBeenCalled();
   });
 

@@ -45,7 +45,7 @@ permissions:
   pull-requests: write
   issues: write
   actions: read
-  # Explicitly NOT including security-events permission
+  security-events: write # Added to address CodeQL warning
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

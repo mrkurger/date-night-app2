@@ -14,7 +14,6 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { SelectivePreloadingStrategy } from './core/strategies/selective-preloading.strategy';
-import { NebularModule } from './shared/nebular.module';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -43,6 +42,6 @@ export const appConfig: ApplicationConfig = {
       },
       ripple: true, // Enable ripple effect globally
     }),
-    importProvidersFrom(CoreModule, NebularModule, SocketIoModule.forRoot(socketConfig)),
+    importProvidersFrom(CoreModule, SocketIoModule.forRoot(socketConfig)),
   ],
 };

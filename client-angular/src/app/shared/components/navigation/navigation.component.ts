@@ -8,7 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   selector: 'app-navigation',
   standalone: true,
   imports: [CommonModule],
-  template: `<div>Navigation Placeholder</div>`
+  template: `<div>Navigation Placeholder</div>`,
 })
 export class NavigationComponent {
   @Output() topMenuItemClicked = new EventEmitter<any>();

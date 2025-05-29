@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -13,7 +12,7 @@ import type { jest } from '@jest/globals';
 
 import request from 'supertest';
 // Import the setup functions directly from the setup.js file in the parent directory
-import { setupTestDB, teardownTestDB, clearDatabase } from '../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../setup.ts';
 import { jest } from '@jest/globals';
 
 // Mock the user functions

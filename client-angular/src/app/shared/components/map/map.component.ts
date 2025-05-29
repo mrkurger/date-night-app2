@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 /**
  *
@@ -36,7 +36,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     `,
   ],
 })
-export class MapComponent {
+export class MapComponent implements OnInit {
   @Input() latitude: number = 0;
   @Input() longitude: number = 0;
   @Input() zoom: number = 10;

@@ -74,7 +74,7 @@ import { FavoriteButtonComponent } from '../../components/favorites/favorite-but
           <!-- Status Badges -->
           <div class="flex gap-4 mb-8">
             <span
-              *ngIf="advertiser.isOnline"
+              *ngIf="advertiser.onlineStatus" // Changed from isOnline to onlineStatus
               class="inline-flex items-center rounded-full border border-green-500 bg-green-500/20 px-4 py-2 text-sm font-medium text-green-400"
             >
               <span class="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
@@ -191,7 +191,7 @@ export class AdvertiserComponent implements OnInit {
           image: '/placeholder.svg?text=Jasmine',
           rating: 4.8,
           isVip: true,
-          isOnline: true,
+          onlineStatus: true, // Changed from isOnline to onlineStatus
         };
         this.loading = false;
       } catch (err) {

@@ -27,14 +27,16 @@
 
   &__theme-toggle {
     margin-top: var(--spacing-6) /* TODO: Verify correct CSS variable */;
-    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6)
+      /* TODO: Verify correct CSS variable */;
     background-color: var(--color-white) /* TODO: Verify correct CSS variable */;
     color: ds.var(--color-primary);
     border: none;
     border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     &:hover {
       background-color: rgba(var(--color-white) /* TODO: Verify correct CSS variable */, 0.9);
@@ -124,7 +126,8 @@
     border: 1px solid var(--color-light-gray-2) /* TODO: Verify correct CSS variable */;
     border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     padding: var(--spacing-4) /* TODO: Verify correct CSS variable */;
-    transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-normal) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     @include darkmode.dark-mode {
       border-color: var(--color-dark-gray-1) /* TODO: Verify correct CSS variable */;
@@ -151,7 +154,8 @@
         width: 0;
         height: 2px;
         background-color: ds.var(--color-primary);
-        transition: width var(--transition-normal) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+        transition: width var(--transition-normal) /* TODO: Verify correct CSS variable */
+          var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
       }
 
       &:hover::after {
@@ -188,18 +192,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-3) /* TODO: Verify correct CSS variable */ var(--spacing-6)
+      /* TODO: Verify correct CSS variable */;
     background-color: ds.var(--color-primary);
     color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
     border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
     min-width: 150px;
 
     &:hover:not(:disabled) {
-      background-color: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
+      background-color: color.scale(
+        ds.var(--color-primary),
+        var(--lightness) /* TODO: Verify correct CSS variable */: -5%
+      );
     }
 
     &:disabled {
@@ -223,7 +232,10 @@
       background-color: var(--color-secondary) /* TODO: Verify correct CSS variable */;
 
       &:hover:not(:disabled) {
-        background-color: color.scale(var(--color-secondary) /* TODO: Verify correct CSS variable */, var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
+        background-color: color.scale(
+          var(--color-secondary) /* TODO: Verify correct CSS variable */,
+          var(--lightness) /* TODO: Verify correct CSS variable */: -5%
+        );
       }
     }
 
@@ -231,7 +243,10 @@
       background-color: ds.var(--color-primary)-dark;
 
       &:hover:not(:disabled) {
-        background-color: color.scale(ds.var(--color-primary)-dark, var(--lightness) /* TODO: Verify correct CSS variable */: 5%);
+        background-color: color.scale(
+          ds.var(--color-primary)-dark,
+          var(--lightness) /* TODO: Verify correct CSS variable */: 5%
+        );
       }
     }
   }
@@ -303,17 +318,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4) /* TODO: Verify correct CSS variable */;
+    padding: var(--spacing-2) /* TODO: Verify correct CSS variable */ var(--spacing-4)
+      /* TODO: Verify correct CSS variable */;
     background-color: ds.var(--color-primary);
     color: var(--color-white) /* TODO: Verify correct CSS variable */;
     border: none;
     border-radius: var(--border-radius-md) /* TODO: Verify correct CSS variable */;
     font-weight: var(--font-weight-medium) /* TODO: Verify correct CSS variable */;
     cursor: pointer;
-    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */ var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
+    transition: all var(--transition-fast) /* TODO: Verify correct CSS variable */
+      var(--transition-timing-default) /* TODO: Verify correct CSS variable */;
 
     &:hover {
-      background-color: color.scale(ds.var(--color-primary), var(--lightness) /* TODO: Verify correct CSS variable */: -5%);
+      background-color: color.scale(
+        ds.var(--color-primary),
+        var(--lightness) /* TODO: Verify correct CSS variable */: -5%
+      );
     }
 
     &--loading {
@@ -354,7 +374,10 @@
       background-color: ds.var(--color-primary)-dark;
 
       &:hover {
-        background-color: color.scale(ds.var(--color-primary)-dark, var(--lightness) /* TODO: Verify correct CSS variable */: 5%);
+        background-color: color.scale(
+          ds.var(--color-primary)-dark,
+          var(--lightness) /* TODO: Verify correct CSS variable */: 5%
+        );
       }
     }
   }

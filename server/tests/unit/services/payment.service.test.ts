@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 /**
  * Payment Service Unit Tests
  *

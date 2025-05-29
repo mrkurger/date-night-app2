@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,12 +9,17 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { rateLimiter, createRateLimiter } from '../../../middleware/rateLimiter.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
-import rateLimit from 'express-rate-limit';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 
-// Mock express-rate-limit
+// Mock express-rate-limit BEFORE importing rateLimiter
 jest.mock('express-rate-limit');
+
+import {
+  rateLimiter,
+  createRateLimiter,
+  resetRateLimiter,
+} from '../../../middleware/rateLimiter.js';
+import rateLimit from 'express-rate-limit';
 
 describe('Rate Limiter Middleware', () => {
   let req, res, next;
@@ -24,6 +28,9 @@ describe('Rate Limiter Middleware', () => {
   beforeEach(() => {
     // Reset mocks
     jest.clearAllMocks();
+
+    // Reset rate limiter for fresh state
+    resetRateLimiter();
 
     // Setup request, response, and next function
     req = mockRequest();
@@ -126,13 +133,16 @@ describe('Rate Limiter Middleware', () => {
 
     it('should handle rate limit exceeded', () => {
       // Mock rate limiter to simulate rate limit exceeded
-      mockLimiter.mockImplementation((req, res, next) => {
+      const rateLimitExceededMock = jest.fn((req, res, next) => {
         res.status(429).json({
           success: false,
           status: 'error',
           message: 'Too many requests, please try again later.',
         });
       });
+
+      // Set up the mock to return our rate limit exceeded mock
+      rateLimit.mockReturnValue(rateLimitExceededMock);
 
       // Call the middleware
       rateLimiter(req, res, next);

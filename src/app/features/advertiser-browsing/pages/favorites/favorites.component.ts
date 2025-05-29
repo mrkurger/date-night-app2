@@ -55,7 +55,10 @@ export class FavoritesComponent implements OnInit {
       image: '/placeholder.svg?text=Jasmine',
       rating: 4.8,
       isVip: true,
-      isOnline: true,
+      onlineStatus: true, // Changed from isOnline
+      views: 1200, // Added views
+      duration: '45 min', // Added duration
+      category: 'Trending Now', // Added category
     },
     // Add more mock data as needed
   ];

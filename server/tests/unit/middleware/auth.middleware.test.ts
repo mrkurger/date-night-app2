@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -28,8 +27,8 @@ import {
   mockNext,
   generateTestToken,
   TEST_USER_DATA,
-} from '../../helpers.js';
-import { mockModel } from '../../setup.js';
+} from '../../helpers.ts';
+import { mockModel } from '../../setup.ts';
 
 // Set up mocks before using them
 jest.mock('../../../models/user.model.js');
@@ -50,6 +49,7 @@ jest.mock('../../../models/token-blacklist.model.js', () => {
 });
 
 jest.mock('../../../services/auth.service.js');
+jest.mock('jsonwebtoken');
 
 describe('Auth Middleware', () => {
   let req, res, next;
@@ -61,16 +61,17 @@ describe('Auth Middleware', () => {
     jest.clearAllMocks();
 
     // Create mock user
+    const userId = new mongoose.Types.ObjectId();
     mockUser = {
-      _id: new mongoose.Types.ObjectId(),
+      _id: userId,
       ...TEST_USER_DATA,
       role: 'user',
       lastActive: new Date(),
       save: jest.fn().mockResolvedValue(true),
     };
 
-    // Generate mock token
-    mockToken = generateTestToken(mockUser._id);
+    // Generate mock token - use a simple test token since we're mocking jwt.verify anyway
+    mockToken = 'test-jwt-token-' + userId.toString();
 
     // Setup request, response, and next function
     req = mockRequest();
@@ -83,6 +84,12 @@ describe('Auth Middleware', () => {
 
     // Mock User.findById
     User.findById = jest.fn().mockResolvedValue(mockUser);
+
+    // Mock jwt.verify with default successful verification
+    jwt.verify = jest.fn().mockReturnValue({
+      id: userId.toString(),
+      iat: Math.floor(Date.now() / 1000) - 3600, // 1 hour ago
+    });
   });
 
   describe('authenticate middleware', () => {

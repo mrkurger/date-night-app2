@@ -1,6 +1,5 @@
 // General purpose mixins
 
-
 // Fade in animation
 @mixin fade-in($duration: 0.3s, $delay: 0s) {
   animation: fade-in $duration ease $delay forwards;

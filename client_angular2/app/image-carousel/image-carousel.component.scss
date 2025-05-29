@@ -1,0 +1,134 @@
+/* SCSS for Tinder-like Image Carousel */
+/* Variables (consider moving to a global variables file if not already) */
+$primary-color: #007bff; /* Example primary color */
+$white: #ffffff;
+$neutral-600: #525252; /* Equivalent for text-neutral-600 */
+$primary-light: rgba($primary-color, 0.2); /* Equivalent for bg-primary/20 */
+
+.tinder-carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 24rem; // max-w-md (384px, assuming 1rem = 16px)
+  aspect-ratio: 1 / 1; // aspect-square
+  overflow: hidden;
+  border-radius: 0.5rem; // rounded-lg
+  margin: auto; // For centering if it's a block element
+
+  .carousel-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Important for containing the sliding items */
+  }
+
+  .carousel-content {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out; /* Smooth sliding animation */
+  }
+
+  .carousel-item {
+    min-width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden; /* Can help with animation smoothness */
+    transform-origin: center center;
+
+    &.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 1;
+    }
+
+    &:not(.active) {
+      opacity: 0.5;
+      transform: scale(0.8);
+      z-index: 0;
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // object-cover
+      display: block;
+    }
+  }
+
+  .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; // z-10
+    background-color: rgba($white, 0.8); // bg-white/80
+    border: none;
+    border-radius: 50%; // rounded-full
+    width: 2rem; // h-8 w-8
+    height: 2rem; // h-8 w-8
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease; // transition-opacity
+
+    // Lucide icon equivalent styling (font-based or SVG)
+    span {
+      // Placeholder for icon
+      color: $neutral-600; // text-neutral-600
+      font-size: 1rem; // h-4 w-4 (adjust as needed)
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+    }
+
+    &.prev {
+      left: 1rem; // left-4
+    }
+
+    &.next {
+      right: 1rem; // right-4
+    }
+  }
+
+  &:hover .carousel-control {
+    opacity: 1; // group-hover:opacity-100
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 1rem; // bottom-4
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem; // gap-2
+    z-index: 10;
+
+    .dot {
+      width: 0.5rem; // h-2 w-2
+      height: 0.5rem; // h-2 w-2
+      border-radius: 50%; // rounded-full
+      background-color: $primary-light; // bg-primary/20
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease; // transition-colors
+
+      &.active {
+        background-color: $primary-color; // bg-primary
+      }
+    }
+  }
+}
+
+/* If you are using Angular Material Icons, you might import the font in your global styles:
+   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+   And then use <mat-icon>arrow_back</mat-icon> and <mat-icon>arrow_forward</mat-icon> in HTML.
+*/
+
+/* Ensure you have BrowserAnimationsModule imported in your AppModule for Angular animations to work */

@@ -84,6 +84,12 @@ favoriteSchema.index({ user: 1, tags: 1 });
 favoriteSchema.index({ user: 1, priority: 1 });
 favoriteSchema.index({ user: 1, lastViewed: -1 });
 
+// Virtual field for priority sorting (low=1, normal=2, high=3)
+favoriteSchema.virtual('priorityOrder').get(function () {
+  const priorityMap = { low: 1, normal: 2, high: 3 };
+  return priorityMap[this.priority] || 2;
+});
+
 /**
  * Static method to get all favorites for a user
  * @param {string} userId - User ID
@@ -92,7 +98,7 @@ favoriteSchema.index({ user: 1, lastViewed: -1 });
  * @param {Object} options.filters - Filter options
  * @returns {Promise<Array>} Array of favorites with populated ad data
  */
-favoriteSchema.statics.findByUser = function (userId, options = {}) {
+favoriteSchema.statics.findByUser = async function (userId, options = {}) {
   const { sort = { createdAt: -1 }, filters = {} } = options;
 
   // Build the query
@@ -101,6 +107,30 @@ favoriteSchema.statics.findByUser = function (userId, options = {}) {
   // Apply additional filters
   if (Object.keys(filters).length > 0) {
     Object.assign(query, filters);
+  }
+
+  // Handle priority sorting specially
+  if (sort.priority !== undefined) {
+    // For priority sorting, we need to convert string values to numbers for proper sorting
+    // Use a simple approach: find all documents, sort in memory
+    const results = await this.find(query).populate({
+      path: 'ad',
+      select: 'title description price images advertiser location category',
+      populate: {
+        path: 'advertiser',
+        select: 'username profileImage',
+      },
+    });
+
+    // Sort by priority: low=1, normal=2, high=3
+    const priorityMap = { low: 1, normal: 2, high: 3 };
+    const sortOrder = sort.priority;
+
+    return results.sort((a, b) => {
+      const aPriority = priorityMap[a.priority] || 2;
+      const bPriority = priorityMap[b.priority] || 2;
+      return sortOrder === 1 ? aPriority - bPriority : bPriority - aPriority;
+    });
   }
 
   return this.find(query)

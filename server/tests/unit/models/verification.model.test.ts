@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -11,7 +10,7 @@ import type { jest } from '@jest/globals';
 
 import mongoose from 'mongoose';
 import Verification from '../../../models/verification.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
 
 describe('Verification Model', () => {
   // Setup test data
@@ -65,6 +64,9 @@ describe('Verification Model', () => {
     });
 
     it('should enforce unique user constraint', async () => {
+      // Ensure indexes are created
+      await Verification.createIndexes();
+
       // Create first verification record
       const verification1 = new Verification(TEST_VERIFICATION_DATA);
       await verification1.save();

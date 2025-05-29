@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
       <h2>Test Component</h2>
       <p-button label="Click Me"></p-button>
     </p-card>
-  `
+  `,
 })
 export class TestComponent {
   // Component logic here

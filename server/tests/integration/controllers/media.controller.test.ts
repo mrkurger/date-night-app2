@@ -4,8 +4,8 @@ import express, { Request, Response, NextFunction, Application } from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import fs from 'fs';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.js';
-import { createTestUser, generateTestToken } from '../../helpers.js';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { createTestUser, generateTestToken } from '../../helpers.ts';
 import multer from 'multer';
 
 // Types
@@ -299,7 +299,7 @@ describe('Media Controller', () => {
 
     it('should return 400 if no files are uploaded', async () => {
       // Override the multer mock for this test
-      import originalArray from "multer";().array;
+      const originalArray = require('multer')().array;
       require('multer')().array = jest.fn(() => (req, res, next) => {
         // Don't add files to request
         req.files = [];

@@ -61,7 +61,7 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
                 ></app-favorite-button>
               </div>
 
-              <div *ngIf="advertiser.isOnline" class="absolute bottom-2 left-2" role="status">
+              <div *ngIf="advertiser.onlineStatus" class="absolute bottom-2 left-2" role="status">
                 <span
                   class="inline-flex items-center rounded-full border border-green-500 bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400"
                   aria-label="Online now"

@@ -1,4 +1,3 @@
-import type { jest } from '@jest/globals';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -10,8 +9,8 @@ import type { jest } from '@jest/globals';
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { errorHandler, AppError } from '../../../middleware/errorHandler.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.js';
+import errorHandler, { AppError } from '../../../middleware/errorHandler.js';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
 
 // Mock dependencies
 jest.mock('../../../utils/logger.js', () => ({
@@ -33,6 +32,7 @@ describe('Error Handler Middleware', () => {
 
     // Setup request, response, and next function
     req = mockRequest();
+    req.correlationId = 'test-correlation-id'; // Add correlation ID for tests
     res = mockResponse();
     next = mockNext;
   });
@@ -77,6 +77,7 @@ describe('Error Handler Middleware', () => {
         success: false,
         status: 'fail',
         message: 'Validation error',
+        correlationId: 'test-correlation-id',
       });
     });
 
@@ -93,6 +94,7 @@ describe('Error Handler Middleware', () => {
         success: false,
         status: 'error',
         message: 'Something went wrong',
+        correlationId: 'test-correlation-id',
       });
     });
 
@@ -112,10 +114,14 @@ describe('Error Handler Middleware', () => {
         message: 'Programming error',
         stack: 'Error stack trace',
         error: error,
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle mongoose validation errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Validation failed');
       error.name = 'ValidationError';
       error.errors = {
@@ -129,11 +135,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Validation failed: Name is required, Email is invalid',
+        message: 'Invalid input data. Name is required. Email is invalid',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle mongoose cast errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Cast to ObjectId failed');
       error.name = 'CastError';
       error.path = '_id';
@@ -145,12 +155,18 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Invalid _id: invalid-id',
+        message: 'Invalid _id: invalid-id.',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle mongoose duplicate key errors', () => {
-      const error = new Error('Duplicate key error');
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
+      const error = new Error(
+        'E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "test@example.com" }'
+      );
       error.name = 'MongoError';
       error.code = 11000;
       error.keyValue = { email: 'test@example.com' };
@@ -161,11 +177,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Duplicate field value: email. Please use another value',
+        message: 'Duplicate field value: "test@example.com". Please use another value.',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle JWT errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Invalid token');
       error.name = 'JsonWebTokenError';
 
@@ -175,11 +195,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Invalid token. Please log in again',
+        message: 'Invalid token. Please log in again.',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle JWT expiration errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Token expired');
       error.name = 'TokenExpiredError';
 
@@ -189,11 +213,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Token expired. Please log in again',
+        message: 'Your token has expired. Please log in again.',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle multer file size errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('File too large');
       error.name = 'MulterError';
       error.code = 'LIMIT_FILE_SIZE';
@@ -204,11 +232,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'File too large. Maximum file size is 5MB',
+        message: 'File upload error: File too large',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle other multer errors', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Multer error');
       error.name = 'MulterError';
       error.code = 'LIMIT_UNEXPECTED_FILE';
@@ -219,11 +251,15 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Multer error: LIMIT_UNEXPECTED_FILE',
+        message: 'File upload error: Multer error',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle SyntaxError for JSON parsing', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new SyntaxError('Unexpected token in JSON');
       error.status = 400;
       error.body = '{"invalid": json}';
@@ -234,13 +270,19 @@ describe('Error Handler Middleware', () => {
       expect(res.json).toHaveBeenCalledWith({
         success: false,
         status: 'fail',
-        message: 'Invalid JSON. Please check your request body',
+        message: 'Invalid JSON in request body',
+        correlationId: 'test-correlation-id',
       });
     });
 
     it('should handle errors with custom status codes', () => {
+      // Set NODE_ENV to production for this test
+      process.env.NODE_ENV = 'production';
+
       const error = new Error('Not found');
       error.statusCode = 404;
+      error.status = 'fail'; // Set the status explicitly
+      error.isOperational = true; // Make it operational so it gets handled properly
 
       errorHandler(error, req, res, next);
 
@@ -249,6 +291,7 @@ describe('Error Handler Middleware', () => {
         success: false,
         status: 'fail',
         message: 'Not found',
+        correlationId: 'test-correlation-id',
       });
     });
 

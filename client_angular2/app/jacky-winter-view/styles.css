@@ -1,0 +1,29 @@
+/* styles.css */
+.jw-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: #000; /* Mimicking the bg-black class */
+  position: relative; /* Mimicking the relative class */
+}
+
+.jw-card {
+  background-color: #333; /* Darker card background */
+  border-radius: 8px;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+}
+
+.jw-card-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.67; /* From the website's image styling */
+  object-fit: cover;
+}
+
+.jw-card-title {
+  padding: 10px;
+  font-size: 1.2em;
+}
