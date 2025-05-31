@@ -14,13 +14,13 @@ import { EditProfileComponent } from './edit-profile.component';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 
-const routes: Routes = [';
+const routes: Routes = [
   { path: '', component: ProfileComponent },
   { path: 'edit', component: EditProfileComponent },
-]
+];
 
 @NgModule({
-  imports: [;
+  imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
@@ -28,4 +28,4 @@ const routes: Routes = [';
     EditProfileComponent,
   ],
 })
-export class ProfileModul {e {}
+export class ProfileModule {}

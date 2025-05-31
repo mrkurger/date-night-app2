@@ -5,7 +5,7 @@ import { z } from 'zod';
  * @param {object} schema - Zod schema for validation
  * @returns {function} Express middleware function
  */
-export const validateWithZod = (schema) => {
+export const validateWithZod = schema => {
   return async (req, res, next) => {
     try {
       const validatedData = await schema.parseAsync({
@@ -13,12 +13,12 @@ export const validateWithZod = (schema) => {
         query: req.query,
         params: req.params,
       });
-      
+
       // Replace request data with validated data
       req.body = validatedData.body || req.body;
       req.query = validatedData.query || req.query;
       req.params = validatedData.params || req.params;
-      
+
       next();
     } catch (error) {
       if (error instanceof z.ZodError) {

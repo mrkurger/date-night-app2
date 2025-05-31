@@ -115,7 +115,7 @@ export class RateLimitMiddleware {
             return 50; // 50 requests per 15 minutes for unauthenticated users
         }
       },
-      message: req => ({
+      message: _req => ({
         status: 429,
         message: 'Rate limit exceeded for your user role',
         details: `Please upgrade your account for higher limits.`,

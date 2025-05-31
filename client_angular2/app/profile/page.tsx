@@ -11,14 +11,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import { Footer } from '@/components/footer';
 import { MediaTicker } from '@/components/media-ticker';
+import { getFemaleImageByIndex } from '@/lib/data';
 
 const mockUser = {
   id: '1',
-  name: 'Alex Johnson',
-  email: 'alex.johnson@example.com',
+  name: 'Alexandra Johnson',
+  email: 'alexandra.johnson@example.com',
   bio: 'Lover of adventure, coding, and good food. Always looking for the next challenge.',
-  profilePicture:
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80',
+  profilePicture: getFemaleImageByIndex(1),
 };
 
 const ProfilePage: React.FC = () => {
@@ -101,7 +101,10 @@ const ProfilePage: React.FC = () => {
               <div className="relative group">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 border-4 border-slate-700 group-hover:border-sky-500 transition-colors duration-300">
                   <AvatarImage
-                    src={profilePicture || displayUser.profilePicture}
+                    src={
+                      profilePicture ||
+                      (displayUser === mockUser ? mockUser.profilePicture : undefined)
+                    }
                     alt={displayUser.name}
                   />
                   <AvatarFallback className="text-slate-900 text-4xl font-semibold">

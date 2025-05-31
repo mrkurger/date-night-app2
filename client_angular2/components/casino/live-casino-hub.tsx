@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import { useState, useRef } from "react"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState, useRef } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Video,
   VideoOff,
@@ -19,134 +19,139 @@ import {
   VolumeX,
   Maximize,
   MessageCircle,
-} from "lucide-react"
+} from 'lucide-react';
+import { getFemaleImageByIndex } from '@/lib/data';
 
 interface LiveAdvertiser {
-  id: number
-  name: string
-  image: string
-  isLive: boolean
-  viewers: number
-  streamUrl: string
-  cardRank: string
-  cardSuit: string
-  totalTips: number
-  currentGame?: "keno" | "blackjack" | "raffle"
-  gameMultiplier: number
-  isInteractive: boolean
-  streamQuality: "HD" | "4K"
-  showType: "public" | "private" | "group"
-  pricePerMinute: number
+  id: number;
+  name: string;
+  image: string;
+  isLive: boolean;
+  viewers: number;
+  streamUrl: string;
+  cardRank: string;
+  cardSuit: string;
+  totalTips: number;
+  currentGame?: 'keno' | 'blackjack' | 'raffle';
+  gameMultiplier: number;
+  isInteractive: boolean;
+  streamQuality: 'HD' | '4K';
+  showType: 'public' | 'private' | 'group';
+  pricePerMinute: number;
 }
 
 const liveAdvertisers: LiveAdvertiser[] = [
   {
     id: 1,
-    name: "Sophia",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=300&fit=crop&crop=face",
+    name: 'Sophia',
+    image: getFemaleImageByIndex(1),
     isLive: true,
     viewers: 234,
-    streamUrl: "https://example.com/stream1",
-    cardRank: "Ace",
-    cardSuit: "Hearts",
+    streamUrl: 'https://example.com/stream1',
+    cardRank: 'Ace',
+    cardSuit: 'Hearts',
     totalTips: 1250,
-    currentGame: "keno",
+    currentGame: 'keno',
     gameMultiplier: 2.5,
     isInteractive: true,
-    streamQuality: "4K",
-    showType: "public",
+    streamQuality: '4K',
+    showType: 'public',
     pricePerMinute: 3.99,
   },
   {
     id: 2,
-    name: "Isabella",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=300&fit=crop&crop=face",
+    name: 'Isabella',
+    image: getFemaleImageByIndex(2),
     isLive: true,
     viewers: 189,
-    streamUrl: "https://example.com/stream2",
-    cardRank: "King",
-    cardSuit: "Diamonds",
+    streamUrl: 'https://example.com/stream2',
+    cardRank: 'King',
+    cardSuit: 'Diamonds',
     totalTips: 890,
-    currentGame: "blackjack",
+    currentGame: 'blackjack',
     gameMultiplier: 1.8,
     isInteractive: true,
-    streamQuality: "HD",
-    showType: "group",
+    streamQuality: 'HD',
+    showType: 'group',
     pricePerMinute: 2.99,
   },
   {
     id: 3,
-    name: "Emma",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=300&fit=crop&crop=face",
+    name: 'Emma',
+    image: getFemaleImageByIndex(3),
     isLive: true,
     viewers: 156,
-    streamUrl: "https://example.com/stream3",
-    cardRank: "Queen",
-    cardSuit: "Spades",
+    streamUrl: 'https://example.com/stream3',
+    cardRank: 'Queen',
+    cardSuit: 'Spades',
     totalTips: 2100,
-    currentGame: "raffle",
+    currentGame: 'raffle',
     gameMultiplier: 3.2,
     isInteractive: false,
-    streamQuality: "4K",
-    showType: "private",
+    streamQuality: '4K',
+    showType: 'private',
     pricePerMinute: 5.99,
   },
-]
+];
 
 export default function LiveCasinoHub() {
-  const [selectedStream, setSelectedStream] = useState<LiveAdvertiser | null>(liveAdvertisers[0])
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [chatMessages, setChatMessages] = useState<Array<{ id: number; user: string; message: string; tip?: number }>>([
-    { id: 1, user: "Mike92", message: "Looking gorgeous tonight! 😍" },
-    { id: 2, user: "Alex_VIP", message: "Let's play some blackjack!", tip: 25 },
-    { id: 3, user: "Sarah_K", message: "Your keno picks are amazing!" },
-    { id: 4, user: "Rich_Player", message: "Going all in on this hand! 🎰", tip: 100 },
-  ])
-  const [newMessage, setNewMessage] = useState("")
-  const [activeBets, setActiveBets] = useState<Array<{ game: string; amount: number; advertiser: string }>>([])
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [selectedStream, setSelectedStream] = useState<LiveAdvertiser | null>(liveAdvertisers[0]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [chatMessages, setChatMessages] = useState<
+    Array<{ id: number; user: string; message: string; tip?: number }>
+  >([
+    { id: 1, user: 'Mike92', message: 'Looking gorgeous tonight! 😍' },
+    { id: 2, user: 'Alex_VIP', message: "Let's play some blackjack!", tip: 25 },
+    { id: 3, user: 'Sarah_K', message: 'Your keno picks are amazing!' },
+    { id: 4, user: 'Rich_Player', message: 'Going all in on this hand! 🎰', tip: 100 },
+  ]);
+  const [newMessage, setNewMessage] = useState('');
+  const [activeBets, setActiveBets] = useState<
+    Array<{ game: string; amount: number; advertiser: string }>
+  >([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStreamSelect = (advertiser: LiveAdvertiser) => {
-    setSelectedStream(advertiser)
-    setIsPlaying(true)
-  }
+    setSelectedStream(advertiser);
+    setIsPlaying(true);
+  };
 
   const handleTipDuringStream = (amount: number) => {
     if (selectedStream) {
       // Add tip message to chat
       const tipMessage = {
         id: Date.now(),
-        user: "You",
+        user: 'You',
         message: `Tipped $${amount} during ${selectedStream.currentGame} game! 🎰`,
         tip: amount,
-      }
-      setChatMessages((prev) => [...prev, tipMessage])
+      };
+      setChatMessages(prev => [...prev, tipMessage]);
 
       // Add to active bets if there's a current game
       if (selectedStream.currentGame) {
-        setActiveBets((prev) => [
+        setActiveBets(prev => [
           ...prev,
           {
             game: selectedStream.currentGame!,
             amount: amount * selectedStream.gameMultiplier,
             advertiser: selectedStream.name,
           },
-        ])
+        ]);
       }
     }
-  }
+  };
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      videoRef.current?.requestFullscreen()
-      setIsFullscreen(true)
+      videoRef.current?.requestFullscreen();
+      setIsFullscreen(true);
     } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
+      document.exitFullscreen();
+      setIsFullscreen(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
@@ -161,7 +166,7 @@ export default function LiveCasinoHub() {
                   {/* Video Player Placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center">
                     <img
-                      src={selectedStream.image || "/placeholder.svg"}
+                      src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
                       alt={selectedStream.name}
                       className="w-full h-full object-cover opacity-80"
                     />
@@ -179,10 +184,13 @@ export default function LiveCasinoHub() {
                         <Eye className="w-3 h-3 mr-1" />
                         {selectedStream.viewers}
                       </Badge>
-                      <Badge className="bg-purple-600 text-white">{selectedStream.streamQuality}</Badge>
+                      <Badge className="bg-purple-600 text-white">
+                        {selectedStream.streamQuality}
+                      </Badge>
                       {selectedStream.currentGame && (
                         <Badge className="bg-yellow-500 text-black">
-                          🎰 {selectedStream.currentGame.toUpperCase()} {selectedStream.gameMultiplier}x
+                          🎰 {selectedStream.currentGame.toUpperCase()}{' '}
+                          {selectedStream.gameMultiplier}x
                         </Badge>
                       )}
                     </div>
@@ -191,7 +199,12 @@ export default function LiveCasinoHub() {
                       <Button size="sm" variant="secondary" className="bg-black/60">
                         <MessageCircle className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="bg-black/60" onClick={toggleFullscreen}>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="bg-black/60"
+                        onClick={toggleFullscreen}
+                      >
                         <Maximize className="w-4 h-4" />
                       </Button>
                     </div>
@@ -203,7 +216,7 @@ export default function LiveCasinoHub() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <img
-                            src={selectedStream.image || "/placeholder.svg"}
+                            src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
                             alt={selectedStream.name}
                             className="w-12 h-12 rounded-full object-cover border-2 border-pink-500"
                           />
@@ -213,7 +226,9 @@ export default function LiveCasinoHub() {
                               <span className="text-gray-300">
                                 {selectedStream.cardRank} of {selectedStream.cardSuit}
                               </span>
-                              <span className="text-green-400">${selectedStream.totalTips} earned today</span>
+                              <span className="text-green-400">
+                                ${selectedStream.totalTips} earned today
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -309,19 +324,19 @@ export default function LiveCasinoHub() {
               Live Casino Streams
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {liveAdvertisers.map((advertiser) => (
+              {liveAdvertisers.map(advertiser => (
                 <Card
                   key={advertiser.id}
                   className={`cursor-pointer transition-all overflow-hidden ${
                     selectedStream?.id === advertiser.id
-                      ? "border-pink-500 bg-pink-500/10"
-                      : "border-gray-600 hover:border-pink-400 bg-gray-800/50"
+                      ? 'border-pink-500 bg-pink-500/10'
+                      : 'border-gray-600 hover:border-pink-400 bg-gray-800/50'
                   }`}
                   onClick={() => handleStreamSelect(advertiser)}
                 >
                   <div className="relative aspect-video">
                     <img
-                      src={advertiser.image || "/placeholder.svg"}
+                      src={advertiser.image || getFemaleImageByIndex(advertiser.id)}
                       alt={advertiser.name}
                       className="w-full h-full object-cover"
                     />
@@ -364,10 +379,18 @@ export default function LiveCasinoHub() {
           <Card className="bg-black/40 backdrop-blur-sm border-pink-500/30 p-4">
             <h3 className="text-white font-bold mb-3">Stream Controls</h3>
             <div className="grid grid-cols-2 gap-2">
-              <Button size="sm" variant={isPlaying ? "default" : "outline"} onClick={() => setIsPlaying(!isPlaying)}>
+              <Button
+                size="sm"
+                variant={isPlaying ? 'default' : 'outline'}
+                onClick={() => setIsPlaying(!isPlaying)}
+              >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </Button>
-              <Button size="sm" variant={isMuted ? "outline" : "default"} onClick={() => setIsMuted(!isMuted)}>
+              <Button
+                size="sm"
+                variant={isMuted ? 'outline' : 'default'}
+                onClick={() => setIsMuted(!isMuted)}
+              >
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </Button>
             </div>
@@ -377,7 +400,7 @@ export default function LiveCasinoHub() {
           <Card className="bg-black/40 backdrop-blur-sm border-pink-500/30 p-4">
             <h3 className="text-white font-bold mb-3">Quick Tips</h3>
             <div className="grid grid-cols-2 gap-2">
-              {[5, 10, 25, 50, 100, 250].map((amount) => (
+              {[5, 10, 25, 50, 100, 250].map(amount => (
                 <Button
                   key={amount}
                   size="sm"
@@ -398,7 +421,7 @@ export default function LiveCasinoHub() {
             </h3>
 
             <div className="space-y-2 mb-4 max-h-64 overflow-y-auto">
-              {chatMessages.map((msg) => (
+              {chatMessages.map(msg => (
                 <div key={msg.id} className="text-sm">
                   <span className="text-pink-400 font-semibold">{msg.user}:</span>
                   <span className="text-gray-300 ml-2">{msg.message}</span>
@@ -415,7 +438,7 @@ export default function LiveCasinoHub() {
               <input
                 type="text"
                 value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
+                onChange={e => setNewMessage(e.target.value)}
                 placeholder="Type a message..."
                 className="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm"
               />
@@ -448,5 +471,5 @@ export default function LiveCasinoHub() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -78,10 +78,16 @@ const navItems: NavItem[] = [
     description: 'Discover new content',
     children: [
       {
-        href: '/netflix-view',
-        label: 'Netflix View',
-        icon: <Grid3X3 className="w-5 h-5" />,
-        description: 'Grid-based content layout',
+        href: '/2live-casino',
+        label: '2Live Casino',
+        icon: <Zap className="w-5 h-5" />,
+        description: '2Live Casino',
+      },
+      {
+        href: '/carousel-demo',
+        label: 'Carousel Demo',
+        icon: <Film className="w-5 h-5" />,
+        description: 'Demo carousel layouts',
       },
       {
         href: '/carousely',
@@ -90,10 +96,94 @@ const navItems: NavItem[] = [
         description: 'Carousel-based content layout',
       },
       {
-        href: '/jacky-winter-view',
-        label: 'Jacky Winter',
+        href: '/casino',
+        label: 'Casino',
+        icon: <Building className="w-5 h-5" />,
+        description: 'Play casino games',
+      },
+      {
+        href: '/favorites',
+        label: 'Favorites',
+        icon: <Heart className="w-5 h-5" />,
+        description: 'Your saved content',
+      },
+      {
+        href: '/live-casino',
+        label: 'Live Casino',
+        icon: <Star className="w-5 h-5" />,
+        description: 'Live casino streaming',
+      },
+      {
+        href: '/login',
+        label: 'Login',
+        icon: <LogIn className="w-5 h-5" />,
+        description: 'Sign in to your account',
+      },
+      {
+        href: '/matches',
+        label: 'Matches',
+        icon: <Heart className="w-5 h-5" />,
+        description: 'Your matches',
+      },
+      {
+        href: '/messages',
+        label: 'Messages',
+        icon: <MessageSquare className="w-5 h-5" />,
+        description: 'Your conversations',
+      },
+      {
+        href: '/netflix-view',
+        label: 'Netflix View',
+        icon: <Grid3X3 className="w-5 h-5" />,
+        description: 'Grid-based content layout',
+      },
+      {
+        href: '/profile',
+        label: 'Profile',
+        icon: <User className="w-5 h-5" />,
+        description: 'View and edit your profile',
+      },
+      {
+        href: '/rankings',
+        label: 'Rankings',
+        icon: <Trophy className="w-5 h-5" />,
+        description: 'Top rated content',
+      },
+      {
+        href: '/search',
+        label: 'Search',
+        icon: <Search className="w-5 h-5" />,
+        description: 'Find specific content',
+      },
+      {
+        href: '/settings',
+        label: 'Settings',
+        icon: <Settings className="w-5 h-5" />,
+        description: 'Configure your preferences',
+      },
+      {
+        href: '/signup',
+        label: 'Signup',
+        icon: <UserPlus className="w-5 h-5" />,
+        description: 'Create an account',
+      },
+      {
+        href: '/tinder',
+        label: 'Tinder',
         icon: <Flame className="w-5 h-5" />,
-        description: 'Tinder-like swipe interface',
+        description: 'Swipe interface',
+      },
+      {
+        href: '/vip',
+        label: 'VIP',
+        icon: <Crown className="w-5 h-5" />,
+        description: 'Premium features',
+      },
+      {
+        href: '/wallet',
+        label: 'Wallet',
+        icon: <Wallet className="w-5 h-5" />,
+        description: 'Your balance',
       },
     ],
   },
@@ -157,6 +247,12 @@ const userNavItems: NavItem[] = [
     icon: <Bookmark className="w-5 h-5" />,
     description: 'Your saved items',
   },
+  {
+    href: '/favorites',
+    label: 'Favorites',
+    icon: <Heart className="w-5 h-5" />,
+    description: 'Your favorite profiles',
+  },
 ];
 
 const moreNavItems: NavItem[] = [
@@ -171,6 +267,18 @@ const moreNavItems: NavItem[] = [
     label: 'Casino',
     icon: <Building className="w-5 h-5" />,
     description: 'Play casino games',
+  },
+  {
+    href: '/live-casino',
+    label: 'Live Casino',
+    icon: <Star className="w-5 h-5" />,
+    description: 'Live casino streaming',
+  },
+  {
+    href: '/search',
+    label: 'Search',
+    icon: <Search className="w-5 h-5" />,
+    description: 'Search profiles and content',
   },
   {
     href: '/messages',
@@ -212,8 +320,8 @@ export default function EnhancedNavbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-background/95 backdrop-blur-md shadow-md'
-            : 'bg-background/50 backdrop-blur-sm'
+            ? 'bg-background/98 backdrop-blur-xl shadow-lg border-b border-border/20'
+            : 'bg-background/85 backdrop-blur-lg shadow-sm'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -224,7 +332,7 @@ export default function EnhancedNavbar() {
                 <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
                   <Zap className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent drop-shadow-sm">
                   HotTips
                 </span>
               </Link>
@@ -239,16 +347,16 @@ export default function EnhancedNavbar() {
                       return (
                         <NavigationMenuItem key={item.href}>
                           <NavigationMenuTrigger
-                            className={
+                            className={`text-base font-medium text-foreground/90 hover:text-foreground transition-colors ${
                               pathname === item.href ? 'bg-accent text-accent-foreground' : ''
-                            }
+                            }`}
                           >
-                            <span className="flex items-center gap-2">
+                            <span className="flex items-center gap-2 drop-shadow-sm">
                               {item.icon}
                               {item.label}
                             </span>
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent>
+                          <NavigationMenuContent className="bg-background/90 backdrop-blur-lg">
                             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                               {item.children.map(child => (
                                 <li key={child.href}>
@@ -289,7 +397,7 @@ export default function EnhancedNavbar() {
                       <NavigationMenuItem key={item.href}>
                         <Link href={item.href} legacyBehavior passHref>
                           <NavigationMenuLink
-                            className={`flex items-center gap-2 px-4 py-2 ${
+                            className={`flex items-center gap-2 px-4 py-2 text-base font-medium text-foreground/90 hover:text-foreground transition-colors drop-shadow-sm ${
                               pathname === item.href ? 'bg-accent text-accent-foreground' : ''
                             }`}
                           >
@@ -303,8 +411,8 @@ export default function EnhancedNavbar() {
                   })}
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger>
-                      <span className="flex items-center gap-2">
+                    <NavigationMenuTrigger className="text-base font-medium text-foreground/90 hover:text-foreground transition-colors">
+                      <span className="flex items-center gap-2 drop-shadow-sm">
                         <LayoutGrid className="w-5 h-5" />
                         More
                       </span>
@@ -371,7 +479,10 @@ export default function EnhancedNavbar() {
                         </span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-56 bg-background/90 backdrop-blur-lg"
+                    >
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       {userNavItems.map(item => (
@@ -427,7 +538,7 @@ export default function EnhancedNavbar() {
                         <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
                           <Zap className="w-5 h-5 text-white" />
                         </div>
-                        <span className="text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        <span className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent drop-shadow-sm">
                           HotTips
                         </span>
                       </div>
@@ -458,8 +569,8 @@ export default function EnhancedNavbar() {
                           <div key={item.href}>
                             {item.children ? (
                               <div className="space-y-1">
-                                <div className="flex items-center justify-between px-2 py-1.5 text-sm font-medium">
-                                  <div className="flex items-center gap-2">
+                                <div className="flex items-center justify-between px-2 py-1.5 text-base font-medium text-foreground/90">
+                                  <div className="flex items-center gap-2 drop-shadow-sm">
                                     {item.icon}
                                     {item.label}
                                   </div>
@@ -470,7 +581,7 @@ export default function EnhancedNavbar() {
                                     <Link
                                       key={child.href}
                                       href={child.href}
-                                      className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                                      className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-base font-medium text-foreground/90 hover:text-foreground transition-colors drop-shadow-sm ${
                                         pathname === child.href
                                           ? 'bg-accent text-accent-foreground'
                                           : 'hover:bg-accent hover:text-accent-foreground'
@@ -490,7 +601,7 @@ export default function EnhancedNavbar() {
                             ) : (
                               <Link
                                 href={item.href}
-                                className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                                className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-base font-medium text-foreground/90 hover:text-foreground transition-colors drop-shadow-sm ${
                                   pathname === item.href
                                     ? 'bg-accent text-accent-foreground'
                                     : 'hover:bg-accent hover:text-accent-foreground'
@@ -518,7 +629,7 @@ export default function EnhancedNavbar() {
                             <Link
                               key={item.href}
                               href={item.href}
-                              className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                              className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-base font-medium text-foreground/90 hover:text-foreground transition-colors drop-shadow-sm ${
                                 pathname === item.href
                                   ? 'bg-accent text-accent-foreground'
                                   : 'hover:bg-accent hover:text-accent-foreground'
@@ -542,7 +653,7 @@ export default function EnhancedNavbar() {
                           <Link
                             key={item.href}
                             href={item.href}
-                            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-base font-medium text-foreground/90 hover:text-foreground transition-colors drop-shadow-sm ${
                               pathname === item.href
                                 ? 'bg-accent text-accent-foreground'
                                 : 'hover:bg-accent hover:text-accent-foreground'

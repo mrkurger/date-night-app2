@@ -2,16 +2,10 @@
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Advertiser, getAdvertisers } from '@/lib/data'; // Assuming getAdvertisers fetches all and we filter locally
-import { Button } from '@/components/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/components/ui/card';
-import { Badge } from '@/components/components/ui/badge';
+import { Advertiser, getAdvertisers, getProfileImage } from '@/lib/data'; // Assuming getAdvertisers fetches all and we filter locally
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
 import { ArrowRight } from 'lucide-react'; // Import icon
@@ -73,7 +67,11 @@ const FavoritesPage: React.FC = () => {
                   className="bg-slate-800 border-slate-700 shadow-xl rounded-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-purple-500/40"
                 >
                   <CardHeader className="p-0 relative">
-                    <img src={adv.image} alt={adv.name} className="w-full h-72 object-cover" />
+                    <img
+                      src={getProfileImage(adv)}
+                      alt={adv.name}
+                      className="w-full h-72 object-cover"
+                    />
                     {adv.isVip && (
                       <Badge
                         variant="secondary"

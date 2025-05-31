@@ -91,7 +91,7 @@ describe('Async Handler Middleware', () => {
       await middleware(req, res, next);
     } catch (error) {
       // The asyncHandler should catch this and call next, not throw
-      fail('AsyncHandler should catch errors and call next, not throw');
+      throw new Error('AsyncHandler should catch errors and call next, not throw');
     }
 
     // Verify next was called with the error

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { z } from 'zod';
 import { verificationController } from '../controllers/verification.controller';
 import { authenticateToken } from '../middleware/auth';
 import { isAdmin } from '../middleware/roles';

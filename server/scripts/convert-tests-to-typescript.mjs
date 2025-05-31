@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -104,6 +103,10 @@ async function findTestFiles(dir) {
 }
 
 // Main execution
-console.log('Starting test file conversion...');
-await findTestFiles(TEST_DIR).catch(console.error);
-console.log('Conversion complete!');
+async function main() {
+  console.log('Starting test file conversion...');
+  await findTestFiles(TEST_DIR);
+  console.log('Conversion complete!');
+}
+
+main().catch(console.error);

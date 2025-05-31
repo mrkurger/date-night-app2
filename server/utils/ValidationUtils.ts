@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { body, param, query, ValidationChain, validationResult } from 'express-validator';
+import { ValidationChain, validationResult } from 'express-validator';
+// import { body, param, query } from 'express-validator'; // Unused
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { DOMPurify } from 'isomorphic-dompurify';
@@ -146,7 +147,7 @@ export class ValidationUtils {
     email = email.replace(/<[^>]*>/g, '');
 
     // Remove invalid characters
-    email = email.replace(/[^\w\.-@]/g, '');
+    email = email.replace(/[^\w.-@]/g, '');
 
     return email;
   }
@@ -179,6 +180,7 @@ export class ValidationUtils {
     text = text.replace(/<[^>]*>/g, '');
 
     // Remove null bytes and other control characters
+    // eslint-disable-next-line no-control-regex
     text = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
 
     // Normalize whitespace
@@ -202,7 +204,7 @@ export class ValidationUtils {
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
     norwegianPhone: /^(\+47|0047)?[2-9]\d{7}$/,
     norwegianPostalCode: /^\d{4}$/,
-    url: /^https:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/,
+    url: /^https:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/,
     mongoId: /^[0-9a-fA-F]{24}$/,
     date: /^\d{4}-\d{2}-\d{2}$/,
     coordinates: /^-?\d+(\.\d+)?$/,

@@ -72,6 +72,10 @@ async function findTestFiles(dir) {
 }
 
 // Main execution
-console.log('Starting test file conversion...');
-await findTestFiles(TESTS_DIR);
-console.log('Conversion complete!');
+async function main() {
+  console.log('Starting test file conversion...');
+  await findTestFiles(TESTS_DIR);
+  console.log('Conversion complete!');
+}
+
+main().catch(console.error);

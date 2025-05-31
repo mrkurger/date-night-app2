@@ -1,9 +1,9 @@
-import { ethers } from 'ethers';
-import axios from 'axios';
-import { decrypt } from '../utils/encryption.js';
+// import { ethers } from 'ethers'; // Unused
+// import axios from 'axios'; // Unused
+// import { decrypt } from '../utils/encryption.js'; // Unused
 import { logger } from '../utils/logger.js';
 import Wallet from '../models/wallet.model.js';
-import Transaction from '../models/transaction.model.js';
+// import Transaction from '../models/transaction.model.js'; // Unused
 
 class CryptoTransactionService {
   /**
@@ -13,23 +13,25 @@ class CryptoTransactionService {
    * @returns {Promise<Object>} Transaction details
    */
   async processWithdrawal(userId, withdrawalData) {
-    const { currency, network, amount, recipientAddress, memo } = withdrawalData;
-    
+    const { currency, network, amount } = withdrawalData;
+    // const { recipientAddress, memo } = withdrawalData; // Unused for now
+    let transaction = null;
+
     try {
       // 1. Validate user has sufficient balance
       const wallet = await Wallet.findOne({ userId });
       const balance = this.getUserCryptoBalance(wallet, currency, network);
-      
+
       if (balance < amount) {
         throw new Error('Insufficient balance');
       }
-      
+
       // 2. Create pending transaction record
-      const transaction = await this.createPendingTransaction(userId, withdrawalData);
-      
+      transaction = await this.createPendingTransaction(userId, withdrawalData);
+
       // 3. Process transaction based on currency
       let txHash;
-      switch(currency) {
+      switch (currency) {
         case 'ETH':
         case 'USDT':
         case 'USDC':
@@ -40,10 +42,10 @@ class CryptoTransactionService {
           break;
         // Additional implementations for other currencies
       }
-      
+
       // 4. Update transaction with result
       await this.updateTransactionStatus(transaction._id, 'completed', { txHash });
-      
+
       return { success: true, transactionId: transaction._id, txHash };
     } catch (error) {
       logger.error(`Error processing ${currency} withdrawal:`, error);
@@ -54,7 +56,7 @@ class CryptoTransactionService {
       throw error;
     }
   }
-  
+
   // Implementation methods for specific currencies...
 }
 

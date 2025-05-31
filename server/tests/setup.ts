@@ -12,15 +12,16 @@
 
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { jest } from '@jest/globals';
 
-let mongoServer;
+let mongoServer: MongoMemoryServer;
 
 /**
  * Setup function to be called before tests
  * Creates an in-memory MongoDB server and connects to it
  * @returns {Promise<void>}
  */
-export const setupTestDB = async () => {
+export const setupTestDB = async (): Promise<void> => {
   // Create an in-memory MongoDB server
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
@@ -36,7 +37,7 @@ export const setupTestDB = async () => {
  * Disconnects from MongoDB and stops the in-memory server
  * @returns {Promise<void>}
  */
-export const teardownTestDB = async () => {
+export const teardownTestDB = async (): Promise<void> => {
   await mongoose.disconnect();
   await mongoServer.stop();
   console.log('Disconnected from in-memory MongoDB');
@@ -54,7 +55,6 @@ export const clearDatabase = async () => {
     const collection = collections[key];
     await collection.deleteMany({});
   }
-  // console.log('Database cleared'); // Silenced to reduce test output noise
 };
 
 /**
@@ -63,7 +63,7 @@ export const clearDatabase = async () => {
  * @param {Object} mockData - The mock data to return
  * @returns {Object} - The mocked model
  */
-export const mockModel = (Model, mockData) => {
+export const mockModel = (Model: mongoose.Model<any>, mockData: any[]): (() => void) => {
   // Save the original methods
   const originalMethods = {
     find: Model.find,

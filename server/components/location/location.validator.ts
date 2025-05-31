@@ -10,6 +10,7 @@ const handleZodError = (error: unknown) => {
 };
 
 // Middleware creator for Zod validation
+// eslint-disable-next-line no-unused-vars
 const validateRequest = (validator: (data: unknown) => unknown, dataPath: keyof Request) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {

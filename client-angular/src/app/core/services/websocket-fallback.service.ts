@@ -19,6 +19,7 @@ export class WebSocketFallbackService {
   private reconnectAttempts = 0;
   private ws: WebSocket | null = null;
   private readonly messageSubject = new Subject<IWebSocketMessage>();
+  private originalWebSocket: typeof WebSocket | null = null;
 
   /**
    * Creates a WebSocket connection to the specified URL
@@ -86,6 +87,25 @@ export class WebSocketFallbackService {
       this.ws.send(JSON.stringify(data));
     } else {
       console.error('WebSocket is not connected');
+    }
+  }
+
+  /**
+   * Initializes the WebSocket fallback service
+   */
+  public initialize(): void {
+    // Store original WebSocket for restoration
+    this.originalWebSocket = (globalThis as any).WebSocket;
+    console.log('WebSocket fallback service initialized');
+  }
+
+  /**
+   * Restores the original WebSocket implementation
+   */
+  public restoreOriginalWebSocket(): void {
+    if (this.originalWebSocket) {
+      (globalThis as any).WebSocket = this.originalWebSocket;
+      console.log('Original WebSocket restored');
     }
   }
 

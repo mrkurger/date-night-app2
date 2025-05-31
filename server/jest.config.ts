@@ -29,7 +29,7 @@ const config: JestConfigWithTsJest = {
   setupFilesAfterEnv: ['jest-extended/all'],
   // Transform ESM modules that Jest can't handle
   transformIgnorePatterns: [
-    'node_modules/(?!(node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill|mongodb-memory-server|mongodb-memory-server-core|find-cache-dir|locate-path|find-up|pkg-dir|new-find-package-json|@mongodb-js)/)',
+    'node_modules/(?!(node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill|mongodb-memory-server|mongodb-memory-server-core|find-cache-dir|locate-path|find-up|pkg-dir|new-find-package-json|@mongodb-js|locate-path)/)',
   ],
   // Add globals for MongoDB Memory Server compatibility
   globals: {
@@ -49,3 +49,5 @@ const config: JestConfigWithTsJest = {
     '!**/*.d.ts',
   ],
 };
+
+export default config;

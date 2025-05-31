@@ -16,6 +16,11 @@ module.exports = {
   // TypeScript and ESM support
   preset: 'ts-jest',
   extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
   transform: {
     '^.+\\.(ts|tsx)$': [
       'ts-jest',
@@ -33,7 +38,7 @@ module.exports = {
   },
 
   // Setup files
-  setupFilesAfterEnv: ['jest-extended/all'],
+  // setupFilesAfterEnv: ['jest-extended/all'],
 
   // Coverage collection
   collectCoverageFrom: [
@@ -57,16 +62,6 @@ module.exports = {
     },
   },
 
-  // Use babel-jest for transforming
-  transform: {
-    '^.+\\.(js|mjs)$': ['babel-jest', { configFile: './babel.config.js' }],
-  },
-
-  // Module name mapping for imports
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
-  },
-
   // Set NODE_ENV to test
   testEnvironmentOptions: {
     NODE_ENV: 'test',
@@ -74,9 +69,6 @@ module.exports = {
 
   // Verbose output for test results
   verbose: true,
-
-  // Ensure proper handling of ES modules
-  moduleFileExtensions: ['js', 'json', 'node', 'mjs'],
 
   // Required for proper ES modules support
   testRunner: 'jest-circus/runner',

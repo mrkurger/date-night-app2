@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 
 import { ThemeService } from './core/services/theme.service';
 import { WebSocketFallbackService } from './core/services/websocket-fallback.service';
-import { NavigationComponent } from './shared/components/navigation/navigation.component';
+// NavigationComponent removed - not used in template
 
 /**
  *
@@ -22,7 +22,6 @@ import { NavigationComponent } from './shared/components/navigation/navigation.c
   selector: 'app-root',
   imports: [
     RouterModule,
-    NavigationComponent,
     ButtonModule,
     CardModule,
     ProgressSpinnerModule,
@@ -58,18 +57,21 @@ export class AppComponent implements OnInit, OnDestroy {
     // Subscribe to theme changes
     this.subscription = this.themeService.theme$.subscribe((theme) => {
       // Set data-theme attribute on document for PrimeNG theming
-      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+      document.documentElement.setAttribute(
+        'data-theme',
+        theme === 'lara-dark-blue' ? 'dark' : 'light',
+      );
     });
 
     // Initialize theme from saved preference
     const savedTheme = this.themeService.getCurrentTheme();
     if (savedTheme === 'system') {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.themeService.setTheme(prefersDark ? 'dark' : 'default');
+      this.themeService.setTheme(prefersDark ? 'lara-dark-blue' : 'lara-light-blue');
     } else if (savedTheme) {
       this.themeService.setTheme(savedTheme);
     } else {
-      this.themeService.setTheme('default');
+      this.themeService.setTheme('lara-light-blue');
     }
   }
 

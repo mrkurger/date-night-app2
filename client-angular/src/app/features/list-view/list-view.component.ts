@@ -29,12 +29,13 @@ import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
 import { CalendarModule } from 'primeng/calendar';
+import {
   Component,
   OnInit,
   AfterViewInit,
   ViewChild,
   TemplateRef,
-  CUSTOM_ELEMENTS_SCHEMA,';
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 
 // Import NebularModule which contains all Nebular components
@@ -71,8 +72,12 @@ interface SavedFilter {
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [;
-    CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NebularModule,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NebularModule,
     CardModule,
     ButtonModule,
     DropdownModule,
@@ -84,10 +89,10 @@ interface SavedFilter {
     MenuModule,
     BadgeModule,
     TagModule,
-    CalendarModule;
+    CalendarModule,
   ]
 })
-export class ListViewComponen {t implements OnInit, AfterViewInit {
+export class ListViewComponent implements OnInit, AfterViewInit {
   // View template references
   @ViewChild('saveFilterDialog') saveFilterDialog!: TemplateRef;
 
@@ -264,8 +269,8 @@ export class ListViewComponen {t implements OnInit, AfterViewInit {
     // Apply search filter
     if (filters.searchQuery) {
       const search = filters.searchQuery.toLowerCase()
-      filtered = filtered.filter(;
-        (ad) =>;
+      filtered = filtered.filter(
+        (ad) =>
           ad.title.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search),
       )
     }

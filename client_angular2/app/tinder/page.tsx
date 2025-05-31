@@ -1,5 +1,5 @@
-import EnhancedTinderView from "@/components/enhanced-tinder-view"
-import EnhancedNavbar from "@/components/enhanced-navbar"
+import EnhancedTinderView from '@/components/enhanced-tinder-view';
+import EnhancedNavbar from '@/components/enhanced-navbar';
 
 export default function TinderPage() {
   return (
@@ -7,5 +7,5 @@ export default function TinderPage() {
       <EnhancedNavbar />
       <EnhancedTinderView />
     </div>
-  )
+  );
 }

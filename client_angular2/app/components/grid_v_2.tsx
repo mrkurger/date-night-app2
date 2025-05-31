@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
@@ -40,7 +40,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
     }));
   };
 
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     if (isLoading) return;
 
     setIsLoading(true);
@@ -52,11 +52,11 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
       setPage(prev => prev + 1);
       setIsLoading(false);
     }, 800);
-  };
+  }, [isLoading, page]);
 
   useEffect(() => {
     loadMore();
-  }, []);
+  }, [loadMore]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,16 +68,17 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
       { threshold: 0.5 },
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
       }
     };
-  }, [isLoading]);
+  }, [isLoading, loadMore]);
 
   return (
     <div className={cn('w-full', className)}>

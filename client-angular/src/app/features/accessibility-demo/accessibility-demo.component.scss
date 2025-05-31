@@ -1,183 +1,182 @@
 @use 'src/styles/mixins/_dark-mode.scss' as darkmode;
 @use 'src/styles/mixins/index.scss' as mixins;
 
-@include nb-install {
-  :host {
-    display: block;
-    padding: var(--padding);
+// Converted from nb-install to standard CSS
+:host {
+  display: block;
+  padding: var(--padding);
+}
+
+.accessibility-demo {
+  &__section {
+    margin-bottom: var(--margin-lg);
   }
 
-  .accessibility-demo {
-    &__section {
-      margin-bottom: var(--margin-lg);
+  &__title {
+    margin-bottom: var(--margin);
+    color: var(--text-basic-color);
+    font-weight: bold;
+  }
+
+  &__subtitle {
+    margin-bottom: var(--margin-sm);
+    color: var(--text-hint-color);
+  }
+
+  &__example {
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+    background-color: var(--background-basic-color-1);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--margin);
+  }
+
+  &__button {
+    background-color: var(--color-primary-500);
+    color: var(--text-control-color);
+    border: none;
+    padding: var(--padding-sm) var(--padding);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-primary-600);
     }
 
-    &__title {
-      margin-bottom: var(--margin);
-      color: var(--text-basic-color);
-      font-weight: bold;
+    &:active {
+      background-color: var(--color-primary-700);
     }
 
-    &__subtitle {
-      margin-bottom: var(--margin-sm);
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-500);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--background-basic-color-3);
+      cursor: not-allowed;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: var(--padding-sm);
+    border: 1px solid var(--border-basic-color-3);
+    border-radius: var(--border-radius);
+    background-color: var(--background-basic-color-1);
+    color: var(--text-basic-color);
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary-500);
+      box-shadow: 0 0 0 2px var(--color-primary-transparent-200);
+    }
+
+    &::placeholder {
       color: var(--text-hint-color);
     }
+  }
 
-    &__example {
-      padding: var(--padding);
-      border-radius: var(--border-radius);
-      background-color: var(--background-basic-color-1);
-      box-shadow: var(--shadow);
-      margin-bottom: var(--margin);
+  &__link {
+    color: var(--color-primary-500);
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--color-primary-600);
+      text-decoration: underline;
     }
 
-    &__button {
-      background-color: var(--color-primary-500);
-      color: var(--text-control-color);
-      border: none;
-      padding: var(--padding-sm) var(--padding);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background-color: var(--color-primary-600);
-      }
-
-      &:active {
-        background-color: var(--color-primary-700);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--color-primary-500);
-        outline-offset: 2px;
-      }
-
-      &:disabled {
-        background-color: var(--background-basic-color-3);
-        cursor: not-allowed;
-      }
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-500);
+      outline-offset: 2px;
     }
+  }
 
-    &__input {
-      width: 100%;
-      padding: var(--padding-sm);
-      border: 1px solid var(--border-basic-color-3);
-      border-radius: var(--border-radius);
+  &__skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    padding: var(--padding-sm) var(--padding);
+    background-color: var(--color-primary-500);
+    color: var(--text-control-color);
+    text-decoration: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    transition: top 0.2s ease;
+
+    &:focus {
+      top: 0;
+    }
+  }
+
+  &__contrast-example {
+    padding: var(--padding);
+    margin-bottom: var(--margin);
+
+    &--good {
       background-color: var(--background-basic-color-1);
       color: var(--text-basic-color);
-      transition: all 0.2s ease;
-
-      &:focus {
-        outline: none;
-        border-color: var(--color-primary-500);
-        box-shadow: 0 0 0 2px var(--color-primary-transparent-200);
-      }
-
-      &::placeholder {
-        color: var(--text-hint-color);
-      }
     }
 
-    &__link {
-      color: var(--color-primary-500);
-      text-decoration: none;
-      transition: all 0.2s ease;
-
-      &:hover {
-        color: var(--color-primary-600);
-        text-decoration: underline;
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--color-primary-500);
-        outline-offset: 2px;
-      }
+    &--bad {
+      background-color: var(--background-basic-color-1);
+      color: var(--text-hint-color);
     }
+  }
 
-    &__skip-link {
+  &__header {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--padding-12) 0;
+    margin-bottom: var(--margin-12);
+
+    @include darkmode.dark-mode {
+      background-color: var(--color-primary-dark);
+    }
+  }
+
+  &__description {
+    font-size: var(--font-size-lg);
+    max-width: 800px;
+  }
+
+  &__section-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--margin-8);
+    position: relative;
+
+    &:after {
+      content: '';
       position: absolute;
-      top: -40px;
+      bottom: var(--margin-3);
       left: 0;
-      padding: var(--padding-sm) var(--padding);
-      background-color: var(--color-primary-500);
-      color: var(--text-control-color);
-      text-decoration: none;
-      border-radius: 0 0 var(--border-radius) var(--border-radius);
-      transition: top 0.2s ease;
-
-      &:focus {
-        top: 0;
-      }
-    }
-
-    &__contrast-example {
-      padding: var(--padding);
-      margin-bottom: var(--margin);
-
-      &--good {
-        background-color: var(--background-basic-color-1);
-        color: var(--text-basic-color);
-      }
-
-      &--bad {
-        background-color: var(--background-basic-color-1);
-        color: var(--text-hint-color);
-      }
-    }
-
-    &__header {
+      width: 60px;
+      height: 4px;
       background-color: var(--color-primary);
-      color: var(--color-white);
-      padding: var(--padding-12) 0;
-      margin-bottom: var(--margin-12);
+      border-radius: var(--border-radius-full);
 
       @include darkmode.dark-mode {
-        background-color: var(--color-primary-dark);
+        background-color: var(--color-primary-light);
       }
     }
+  }
 
-    &__description {
-      font-size: var(--font-size-lg);
-      max-width: 800px;
-    }
+  &__subsection {
+    margin-bottom: var(--margin-8);
+  }
 
-    &__section-title {
-      font-size: var(--font-size-3xl);
-      margin-bottom: var(--margin-8);
-      position: relative;
+  &__subsection-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--margin-4);
+  }
 
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: var(--margin-3);
-        left: 0;
-        width: 60px;
-        height: 4px;
-        background-color: var(--color-primary);
-        border-radius: var(--border-radius-full);
-
-        @include darkmode.dark-mode {
-          background-color: var(--color-primary-light);
-        }
-      }
-    }
-
-    &__subsection {
-      margin-bottom: var(--margin-8);
-    }
-
-    &__subsection-title {
-      font-size: var(--font-size-xl);
-      margin-bottom: var(--margin-4);
-    }
-
-    &__code {
-      background-color: var(--background-basic-color-2);
-      border-radius: var(--border-radius);
-      padding: var(--padding);
-      margin: var(--margin) 0;
-      overflow-x: auto;
-    }
+  &__code {
+    background-color: var(--background-basic-color-2);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    margin: var(--margin) 0;
+    overflow-x: auto;
   }
 }

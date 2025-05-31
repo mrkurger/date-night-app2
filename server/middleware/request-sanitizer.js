@@ -67,7 +67,7 @@ class RequestSanitizer {
     return this.sanitizeValue(obj);
   }
 
-  sanitize = (req, res, next) => {
+  sanitize(req, res, next) {
     // Sanitize body
     if (req.body) {
       req.body = this.sanitizeObject(req.body);
@@ -84,7 +84,7 @@ class RequestSanitizer {
     }
 
     next();
-  };
+  }
 }
 
 // Create default sanitizer instance

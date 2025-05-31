@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, Circle } from 'lucide-react'; // Wifi not used, Circle for online status
+import { getProfileImage } from '@/lib/data';
 
 export interface Advertiser {
   id: string | number;
@@ -38,7 +39,7 @@ const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser }) => {
       layout
     >
       <Image
-        src={advertiser.image}
+        src={getProfileImage(advertiser)}
         alt={advertiser.name}
         width={advertiser.imageWidth || 400}
         height={advertiser.imageHeight || 600}
@@ -64,7 +65,7 @@ const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser }) => {
               }`}
             />
             <span className="ml-1.5 text-xs text-white sr-only">
-              {advertiser.isOnline ? 'Online' : 'Offline'} // Changed from onlineStatus
+              {advertiser.isOnline ? 'Online' : 'Offline'} {/* Changed from onlineStatus */}
             </span>
           </div>
         )}

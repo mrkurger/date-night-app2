@@ -3,10 +3,10 @@
 import * as React from 'react';
 import { useState, useEffect, Suspense, useContext } from 'react';
 import { AuthContext } from '@/context/auth-context';
-import { Button } from '@/components/components/ui/button';
-import { Input } from '@/components/components/ui/input';
-import { Label } from '@/components/components/ui/label';
-import { Checkbox } from '@/components/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
 import Link from 'next/link';

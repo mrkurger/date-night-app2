@@ -14,7 +14,7 @@
   }
 
   .balance-section {
-    @extend .mb-4;
+    margin-bottom: 1.5rem;
 
     .balance-amount {
       font-size: 2rem;
@@ -32,7 +32,7 @@
 
   .transactions-section,
   .payment-methods-section {
-    @extend .mb-4;
+    margin-bottom: 1.5rem;
   }
 
   .section-header {

@@ -368,66 +368,65 @@
   }
 }
 
-@include nb-install {
-  :host {
-    display: block;
-    max-width: 400px;
-    margin: 0 auto;
+// Nebular-specific styles converted to standard CSS
+:host {
+  display: block;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: var(--padding);
+}
+
+.login-card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background-color: var(--background-basic-color-1);
+
+  .card-header {
+    padding: var(--padding);
+    border-bottom: 1px solid var(--border-basic-color-3);
+
+    h3 {
+      margin: 0;
+      color: var(--text-basic-color);
+    }
+  }
+
+  .card-body {
     padding: var(--padding);
   }
 
-  .login-card {
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    background-color: var(--background-basic-color-1);
+  .form-field {
+    margin-bottom: var(--margin);
+  }
 
-    nb-card-header {
-      padding: var(--padding);
-      border-bottom: 1px solid var(--border-basic-color-3);
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--margin-lg);
+  }
 
-      h3 {
-        margin: 0;
-        color: var(--text-basic-color);
-      }
+  .forgot-password {
+    color: var(--text-hint-color);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-primary-500);
     }
+  }
 
-    nb-card-body {
-      padding: var(--padding);
-    }
+  .register-link {
+    display: block;
+    text-align: center;
+    margin-top: var(--margin);
+    color: var(--text-hint-color);
 
-    nb-form-field {
-      margin-bottom: var(--margin);
-    }
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: var(--margin-lg);
-    }
-
-    .forgot-password {
-      color: var(--text-hint-color);
+    a {
+      color: var(--color-primary-500);
       text-decoration: none;
 
       &:hover {
-        color: var(--color-primary-500);
-      }
-    }
-
-    .register-link {
-      display: block;
-      text-align: center;
-      margin-top: var(--margin);
-      color: var(--text-hint-color);
-
-      a {
-        color: var(--color-primary-500);
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
+        text-decoration: underline;
       }
     }
   }

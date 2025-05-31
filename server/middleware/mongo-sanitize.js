@@ -20,21 +20,22 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-const checkForMaliciousChars = (value, path = '') => {
-  const hasDollar = value.includes('$');
-  const hasDoc = value.includes('.');
-
-  if (hasDollar || hasDoc) {
-    logger.warn('Potentially malicious characters detected', {
-      path,
-      value,
-      hasDollar,
-      hasDoc,
-    });
-  }
-
-  return hasDollar || hasDoc;
-};
+// Unused function - keeping for potential future use
+// const checkForMaliciousChars = (value, path = '') => {
+//   const hasDollar = value.includes('$');
+//   const hasDoc = value.includes('.');
+//
+//   if (hasDollar || hasDoc) {
+//     logger.warn('Potentially malicious characters detected', {
+//       path,
+//       value,
+//       hasDollar,
+//       hasDoc,
+//     });
+//   }
+//
+//   return hasDollar || hasDoc;
+// };
 
 const sanitize = (value, path = '') => {
   if (typeof value === 'string') {

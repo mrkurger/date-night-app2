@@ -1,4 +1,3 @@
-import {
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +10,7 @@ import { NotificationService } from '../../core/services/notification.service';
 import { NorwayCity, NorwayCounty } from '../../core/constants/norway-locations';
 import { ClusterModule } from '../../shared/modules/cluster/cluster.module';
 import { ButtonModule } from 'primeng/button';
+import {
   Observable,
   Subscription,
   catchError,
@@ -18,7 +18,7 @@ import { ButtonModule } from 'primeng/button';
   of,
   distinctUntilChanged,
   take,
-  map,';
+  map,
 } from 'rxjs';
 
 interface LocationMatchResult {
@@ -42,12 +42,15 @@ interface LocationMatchResult {
     templateUrl: './location-matching.component.html',
     styleUrls: ['./location-matching.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [;
-    CommonModule, ReactiveFormsModule, RouterModule, MapComponent,
-    ButtonModule;
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        MapComponent,
+        ButtonModule
+    ]
 })
-export class LocationMatchingComponen {t implements OnInit, OnDestroy {
+export class LocationMatchingComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   loading = false;
   results: LocationMatchResult[] = []
@@ -60,7 +63,7 @@ export class LocationMatchingComponen {t implements OnInit, OnDestroy {
   selectedDateRange: { start: Date | null; end: Date | null } = { start: null, end: null }
   locationSubscription: Subscription | null = null;
 
-  constructor(;
+  constructor(
     private fb: FormBuilder,
     private adService: AdService,
     private geocodingService: GeocodingService,

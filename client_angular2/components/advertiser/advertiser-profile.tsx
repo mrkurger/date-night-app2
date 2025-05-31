@@ -1,48 +1,47 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import Link from "next/link"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { Clock, DollarSign, MessageCircle, Phone, Star, Video } from "lucide-react"
-import { ImageGallery } from "@/components/advertiser/image-gallery"
-import { ServiceCard } from "@/components/advertiser/service-card"
-import { ReviewList } from "@/components/advertiser/review-list"
-import { VipContent } from "@/components/advertiser/vip-content"
-import { FavoriteButton } from "@/components/favorites/favorite-button"
-import { useAuth } from "@/context/auth-context"
-import type { Advertiser } from "@/lib/data"
+import { useState } from 'react';
+import Link from 'next/link';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Clock, DollarSign, MessageCircle, Phone, Star, Video } from 'lucide-react';
+import { ImageGallery } from '@/components/advertiser/image-gallery';
+import { ServiceCard } from '@/components/advertiser/service-card';
+import { ReviewList } from '@/components/advertiser/review-list';
+import { VipContent } from '@/components/advertiser/vip-content';
+import { FavoriteButton } from '@/components/favorites/favorite-button';
+import { useAuth } from '@/context/auth-context';
+import type { Advertiser } from '@/lib/data';
+import { getProfileImage, getFallbackFemaleImage } from '@/lib/data';
 
 interface AdvertiserProfileProps {
-  advertiser: Advertiser
+  advertiser: Advertiser;
 }
 
 export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
-  const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState("about")
+  const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState('about');
 
-  // Generate images if advertiser doesn't have any
-  const advertiserImages =
-    advertiser.images && advertiser.images.length > 0
-      ? advertiser.images
-      : [
-          `/placeholder.svg?height=600&width=400&text=${advertiser.name}+1`,
-          `/placeholder.svg?height=600&width=400&text=${advertiser.name}+2`,
-          `/placeholder.svg?height=600&width=400&text=${advertiser.name}+3`,
-          `/placeholder.svg?height=600&width=400&text=${advertiser.name}+4`,
-        ]
+  // Generate images using female profile images
+  const primaryImage = getProfileImage(advertiser);
+  const advertiserImages = [
+    primaryImage,
+    getFallbackFemaleImage((advertiser.id || 0) + 1),
+    getFallbackFemaleImage((advertiser.id || 0) + 2),
+    getFallbackFemaleImage((advertiser.id || 0) + 3),
+  ];
 
-  // Ensure services exist
-  const services = advertiser.services || [
-    { name: "Standard Service", price: "1000 kr", description: "Basic service package" },
-    { name: "Premium Service", price: "2000 kr", description: "Enhanced service with extras" },
-    { name: "VIP Experience", price: "3000 kr", description: "Complete premium package" },
-  ]
+  // Default services since advertiser doesn't have services property
+  const services = [
+    { name: 'Standard Service', price: '1000 kr', description: 'Basic service package' },
+    { name: 'Premium Service', price: '2000 kr', description: 'Enhanced service with extras' },
+    { name: 'VIP Experience', price: '3000 kr', description: 'Complete premium package' },
+  ];
 
-  // Ensure reviews exist
-  const reviews = advertiser.reviews || []
+  // Default reviews since advertiser doesn't have reviews property
+  const reviews: any[] = [];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,7 +76,9 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
             <Card className="bg-gradient-to-r from-yellow-800 to-amber-700 border-amber-500">
               <CardContent className="p-4">
                 <h3 className="text-lg font-bold mb-2">Unlock VIP Content</h3>
-                <p className="mb-4 text-sm">This advertiser has exclusive content only available to VIP members.</p>
+                <p className="mb-4 text-sm">
+                  This advertiser has exclusive content only available to VIP members.
+                </p>
                 <Button asChild className="w-full bg-amber-500 hover:bg-amber-600 text-black">
                   <Link href="/upgrade">Upgrade to VIP</Link>
                 </Button>
@@ -101,8 +102,12 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
               </div>
             </div>
             <div className="flex flex-col items-end gap-2">
-              {advertiser.isVip && <Badge className="bg-amber-500 text-amber-950">VIP Advertiser</Badge>}
-              {advertiser.isOnline && <Badge className="bg-green-500 text-green-950">Online Now</Badge>}
+              {advertiser.isVip && (
+                <Badge className="bg-amber-500 text-amber-950">VIP Advertiser</Badge>
+              )}
+              {advertiser.isOnline && (
+                <Badge className="bg-green-500 text-green-950">Online Now</Badge>
+              )}
             </div>
           </div>
 
@@ -123,9 +128,13 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <DollarSign className="h-5 w-5 text-green-500" />
-                <h3 className="text-lg font-semibold">Starting at {advertiser.price || "1000 kr"}</h3>
+                <h3 className="text-lg font-semibold">
+                  Starting at {advertiser.price || '1000 kr'}
+                </h3>
               </div>
-              <p className="text-sm text-gray-400">Prices may vary based on services and duration</p>
+              <p className="text-sm text-gray-400">
+                Prices may vary based on services and duration
+              </p>
             </CardContent>
           </Card>
 
@@ -137,25 +146,14 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
                 <h3 className="text-lg font-semibold">Availability</h3>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {advertiser.availability ? (
-                  advertiser.availability.map((slot: any) => (
-                    <div key={slot.day} className="flex justify-between">
-                      <span className="font-medium">{slot.day}</span>
-                      <span className={slot.hours === "Closed" ? "text-red-400" : "text-green-400"}>{slot.hours}</span>
-                    </div>
-                  ))
-                ) : (
-                  <>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Weekdays</span>
-                      <span className="text-green-400">10:00 - 22:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Weekends</span>
-                      <span className="text-green-400">12:00 - 00:00</span>
-                    </div>
-                  </>
-                )}
+                <div className="flex justify-between">
+                  <span className="font-medium">Weekdays</span>
+                  <span className="text-green-400">10:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Weekends</span>
+                  <span className="text-green-400">12:00 - 00:00</span>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -175,17 +173,18 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
                   <div>
                     <h3 className="text-lg font-semibold mb-2">About Me</h3>
                     <p>
-                      {advertiser.description} I'm a professional service provider with several years of experience
-                      dedicated to providing high-quality experiences. Customer satisfaction is my top priority, and I
-                      strive to exceed expectations with every encounter.
+                      {advertiser.description} I&apos;m a professional service provider with several
+                      years of experience dedicated to providing high-quality experiences. Customer
+                      satisfaction is my top priority, and I strive to exceed expectations with
+                      every encounter.
                     </p>
                   </div>
 
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Contact Information</h3>
                     <p className="text-gray-300">
-                      The best way to contact me is through the chat feature on this platform. I typically respond
-                      within 30 minutes during my available hours.
+                      The best way to contact me is through the chat feature on this platform. I
+                      typically respond within 30 minutes during my available hours.
                     </p>
                   </div>
                 </CardContent>
@@ -209,7 +208,7 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
                 {advertiserImages.map((image, index) => (
                   <div key={index} className="aspect-square overflow-hidden rounded-md">
                     <img
-                      src={image || "/placeholder.svg"}
+                      src={image || '/placeholder.svg'}
                       alt={`Media ${index + 1}`}
                       className="object-cover w-full h-full"
                     />
@@ -227,5 +226,5 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

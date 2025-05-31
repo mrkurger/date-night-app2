@@ -33,6 +33,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import {
   Component,
   OnInit,
   ElementRef,
@@ -41,7 +42,7 @@ import { ToastModule } from 'primeng/toast';
   ViewChild,
   TemplateRef,
   Input,
-  CUSTOM_ELEMENTS_SCHEMA,';
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 
 // PrimeNG Modules
@@ -64,8 +65,7 @@ interface GetAdsResponse {
   styleUrls: ['./netflix-view.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [;
-    TagModule, TooltipModule, DataViewModule, RippleModule, InputSwitchModule, DropdownModule, DialogModule, ProgressSpinnerModule, BadgeModule, AvatarModule, InputTextModule, ButtonModule, CardModule, 
+  imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
@@ -83,11 +83,11 @@ interface GetAdsResponse {
     RippleModule,
     DataViewModule,
     TooltipModule,
-    TagModule,,
-    ToastModule;
+    TagModule,
+    ToastModule,
   ]
 })
-export class NetflixViewComponen {t implements OnInit {
+export class NetflixViewComponent implements OnInit {
   // Define categories for Netflix-style rows
   categories: string[] = ['Featured', 'New Arrivals', 'Most Popular', 'Nearby', 'Touring']
 
@@ -120,7 +120,7 @@ export class NetflixViewComponen {t implements OnInit {
   // PrimeNG-specific properties
   showFiltersDialog = false; // For PrimeNG dialog visibility
 
-  constructor(;
+  constructor(
     private adService: AdService,
     private notificationService: NotificationPrimeNGService,
     private chatService: ChatService,
@@ -195,9 +195,9 @@ export class NetflixViewComponen {t implements OnInit {
 
                   // Set Touring (filter by isTouring flag)
                   const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10)
-                  this.adsByCategory['Touring'] =;
-                    touringAds.length > 0;
-                      ? touringAds;
+                  this.adsByCategory['Touring'] =
+                    touringAds.length > 0
+                      ? touringAds
                       : this.shuffleArray([...allAds]).slice(0, 10)
                 } else {
                   // If no ads found, set empty arrays for remaining categories
@@ -276,7 +276,7 @@ export class NetflixViewComponen {t implements OnInit {
 
       // Set Touring (filter by isTouring flag)
       const touringAds = allAds.filter((ad) => ad.isTouring).slice(0, 10)
-      this.adsByCategory['Touring'] =;
+      this.adsByCategory['Touring'] =
         touringAds.length > 0 ? touringAds : this.shuffleArray([...allAds]).slice(0, 10)
     } else {
       // If no ads found, set empty arrays for remaining categories
@@ -310,7 +310,7 @@ export class NetflixViewComponen {t implements OnInit {
    */
   viewAdDetails(adId: string): void {
     // Navigate to ad details page using Angular Router
-    this.router.navigateByUrl(`/ad-details/${adId}`)`
+    this.router.navigateByUrl(`/ad-details/${adId}`)
   }
 
   /**
@@ -356,7 +356,7 @@ export class NetflixViewComponen {t implements OnInit {
     // Create a chat room and navigate to it
     this.chatService.createAdRoom(adId).subscribe({
       next: (room) => {
-        this.router.navigateByUrl(`/chat/${room.id}`)`
+        this.router.navigateByUrl(`/chat/${room.id}`)
       },
       error: (err) => {
         this.notificationService.error('Failed to start chat')
@@ -441,7 +441,7 @@ export class NetflixViewComponen {t implements OnInit {
       return '';
     }
 
-    return `${ad.location.city}, ${ad.location.county}`;`
+    return `${ad.location.city}, ${ad.location.county}`;
   }
 
   /**

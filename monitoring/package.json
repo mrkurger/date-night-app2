@@ -1,0 +1,36 @@
+{
+  "name": "intelligent-monitoring-system",
+  "version": "1.0.0",
+  "description": "AI-powered system monitoring with automated response capabilities",
+  "main": "monitor.js",
+  "type": "module",
+  "scripts": {
+    "start": "node monitor.js",
+    "dev": "node --inspect monitor.js",
+    "test": "node test-monitor.js",
+    "status": "node status-check.js",
+    "install-service": "node install-service.js",
+    "uninstall-service": "node uninstall-service.js"
+  },
+  "keywords": [
+    "monitoring",
+    "ai",
+    "automation",
+    "system-health",
+    "devops",
+    "alerting"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "ws": "^8.14.2",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

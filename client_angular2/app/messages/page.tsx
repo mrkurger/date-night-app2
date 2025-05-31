@@ -2,13 +2,14 @@
 
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/components/ui/button';
-import { Input } from '@/components/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
 import { SendHorizonal, Paperclip, Smile, Search } from 'lucide-react';
+import { getFemaleImageByIndex } from '@/lib/data';
 
 // Mock data - replace with actual data from API or context
 interface User {
@@ -42,31 +43,27 @@ interface Conversation {
 const mockUser1: User = {
   id: 'currentUser',
   name: 'You',
-  avatar:
-    'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=faces',
+  avatar: getFemaleImageByIndex(1),
 };
 
 const mockUser2: User = {
   id: 'user2',
   name: 'Sarah Miller',
-  avatar:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces',
+  avatar: getFemaleImageByIndex(2),
   isOnline: true,
 };
 
 const mockUser3: User = {
   id: 'user3',
-  name: 'John Doe',
-  avatar:
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces',
+  name: 'Jessica Doe',
+  avatar: getFemaleImageByIndex(3),
   isOnline: false,
 };
 
 const mockUser4: User = {
   id: 'user4',
   name: 'Lisa Brown',
-  avatar:
-    'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=100&h=100&fit=crop&crop=faces',
+  avatar: getFemaleImageByIndex(4),
   isOnline: true,
 };
 
@@ -154,7 +151,7 @@ const mockConversations: Conversation[] = [
   },
   {
     id: 'conv2',
-    name: 'John Doe',
+    name: 'Jessica Doe',
     participants: [mockUser1, mockUser3],
     avatar: mockUser3.avatar,
     lastMessage: mockMessages
@@ -184,7 +181,7 @@ const MessagesPage: React.FC = () => {
     mockConversations[0],
   );
   const [messages, setMessages] = useState<Message[]>(
-    mockMessages.filter(m => m.conversationId === mockConversations[0?.id]),
+    mockMessages.filter(m => m.conversationId === mockConversations[0]?.id),
   );
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -200,14 +197,11 @@ const MessagesPage: React.FC = () => {
           : conv,
       );
       setConversations(updatedConversations);
-      mockMessages[selectedConversation.id] = mockMessages[selectedConversation.id]?.map(m => ({
-        ...m,
-        isRead: true,
-      }));
+      // Note: In a real app, you would update the messages in your backend/state management
     } else {
       setMessages([]);
     }
-  }, [selectedConversation]);
+  }, [selectedConversation, conversations]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -232,7 +226,7 @@ const MessagesPage: React.FC = () => {
 
     const updatedConversations = conversations.map((conv: Conversation) =>
       conv.id === selectedConversation.id
-        ? { ...conv, lastMessage: newMessage, timestamp: new Date().toISOString() }
+        ? { ...conv, lastMessage: newMsg, timestamp: new Date().toISOString() }
         : conv,
     );
     // Sort by most recent message

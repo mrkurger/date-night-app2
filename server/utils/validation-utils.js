@@ -14,7 +14,7 @@ export const zodSchemas = {
   date: z.string().datetime(),
 
   // MongoDB ObjectId
-  objectId: z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
+  objectId: z.string().refine(val => mongoose.Types.ObjectId.isValid(val), {
     message: 'Invalid ObjectId format',
   }),
 
@@ -70,9 +70,6 @@ export const zodSchemas = {
  * Utility functions for validation
  */
 export class ValidationUtils {
-  // Make zodSchemas available as a static property
-  static zodSchemas = zodSchemas;
-  
   /**
    * Validate a string as MongoDB ObjectId
    */
@@ -93,7 +90,7 @@ export class ValidationUtils {
   static isValidNorwegianPostalCode(value) {
     return /^\d{4}$/.test(value);
   }
-  
+
   /**
    * Validate with Zod schema - static method to use as middleware
    */
@@ -119,6 +116,9 @@ export class ValidationUtils {
     };
   }
 }
+
+// Add zodSchemas as a static property
+ValidationUtils.zodSchemas = zodSchemas;
 
 /**
  * Validate with Zod schema (function version - backward compatibility)

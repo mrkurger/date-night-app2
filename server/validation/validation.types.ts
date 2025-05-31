@@ -19,4 +19,4 @@ export interface BaseValidationOptions {
   stripUnknown?: boolean;
 }
 
-export type ErrorFormatter = (error: any) => ValidationError;
+export type ErrorFormatter = (_error: any) => ValidationError;

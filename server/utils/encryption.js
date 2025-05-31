@@ -8,24 +8,24 @@ import crypto from 'crypto';
 export function encrypt(data) {
   // Use a master key from environment variables
   const masterKey = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
-  
+
   // Generate a random initialization vector
   const iv = crypto.randomBytes(16);
-  
+
   // Create cipher
   const cipher = crypto.createCipheriv('aes-256-gcm', masterKey, iv);
-  
+
   // Encrypt the data
   let encrypted = cipher.update(data, 'utf8', 'hex');
   encrypted += cipher.final('hex');
-  
+
   // Get the authentication tag
   const tag = cipher.getAuthTag();
-  
+
   return {
     encrypted,
     iv: iv.toString('hex'),
-    tag: tag.toString('hex')
+    tag: tag.toString('hex'),
   };
 }
 
@@ -36,23 +36,19 @@ export function encrypt(data) {
  */
 export function decrypt(encryptedData) {
   const { encrypted, iv, tag } = encryptedData;
-  
+
   // Use a master key from environment variables
   const masterKey = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
-  
+
   // Create decipher
-  const decipher = crypto.createDecipheriv(
-    'aes-256-gcm', 
-    masterKey, 
-    Buffer.from(iv, 'hex')
-  );
-  
+  const decipher = crypto.createDecipheriv('aes-256-gcm', masterKey, Buffer.from(iv, 'hex'));
+
   // Set authentication tag
   decipher.setAuthTag(Buffer.from(tag, 'hex'));
-  
+
   // Decrypt the data
   let decrypted = decipher.update(encrypted, 'hex', 'utf8');
   decrypted += decipher.final('utf8');
-  
+
   return decrypted;
 }

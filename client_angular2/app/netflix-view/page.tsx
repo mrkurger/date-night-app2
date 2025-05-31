@@ -1,23 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Masonry from 'react-masonry-css';
 import { motion } from 'framer-motion';
 
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import AdvertiserCard, { Advertiser as AdvertiserCardType } from '@/components/ui/AdvertiserCard';
-import { Advertiser } from '../../../src/app/features/advertiser-browsing/models/advertiser.interface';
 
-const initialAdvertisersData: Advertiser[] = [
+const initialAdvertisersData: AdvertiserCardType[] = [
   {
     id: 1,
     name: 'Sophia',
     location: 'Miami, FL',
     distance: '2 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=1200&fit=crop&crop=faces',
+    isOnline: true, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-01.jpg',
     imageWidth: 800,
     imageHeight: 1200,
     age: 24,
@@ -27,7 +24,6 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '45 min',
     price: '$25',
     isVip: true,
-    isLive: true,
     description: 'Sophia is a top-rated advertiser known for her engaging content.',
     tags: ['trending', 'popular', 'engaging'],
   },
@@ -36,9 +32,8 @@ const initialAdvertisersData: Advertiser[] = [
     name: 'Isabella',
     location: 'Los Angeles, CA',
     distance: '15 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&h=800&fit=crop&crop=faces',
+    isOnline: false, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-02.jpg',
     imageWidth: 1200,
     imageHeight: 800,
     age: 28,
@@ -48,7 +43,6 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '30 min',
     price: '$20',
     isVip: false,
-    isLive: false,
     description: 'Isabella is a rising star with fresh and creative content.',
     tags: ['new', 'creative', 'fresh'],
   },
@@ -57,9 +51,8 @@ const initialAdvertisersData: Advertiser[] = [
     name: 'Emma',
     location: 'New York, NY',
     distance: '5 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: true, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-03.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 23,
@@ -69,16 +62,16 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30',
     isVip: true,
-    isLive: true,
+    description: 'Emma is a top-rated performer with amazing content.',
+    tags: ['top-rated', 'live', 'vip'],
   },
   {
     id: 4,
     name: 'Olivia',
     location: 'Las Vegas, NV',
     distance: '10 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: true, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-04.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 25,
@@ -88,16 +81,16 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35',
     isVip: true,
-    isLive: false,
+    description: 'Olivia offers exclusive VIP content from Las Vegas.',
+    tags: ['vip', 'exclusive', 'vegas'],
   },
   {
     id: 5,
     name: 'Ava',
     location: 'Chicago, IL',
     distance: '3 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: false, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-05.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -107,16 +100,16 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
+    description: 'Ava is trending with her engaging live content.',
+    tags: ['trending', 'live', 'young'],
   },
   {
     id: 6,
     name: 'Mia',
     location: 'Houston, TX',
     distance: '8 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&h=1200&fit=crop&crop=faces',
+    isOnline: true, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-06.jpg',
     imageWidth: 900,
     imageHeight: 1200,
     age: 27,
@@ -126,17 +119,17 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '35 min',
     price: '$28', // Changed to string
     isVip: true,
-    isLive: false,
+    description: 'Mia brings fresh new content from Houston.',
+    tags: ['new', 'vip', 'houston'],
   },
   // Add more advertisers to make the list longer for scrolling (at least 20-30 for good effect)
   {
     id: 7,
-    name: 'Liam',
+    name: 'Charlotte',
     location: 'San Francisco, CA',
     distance: '7 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: true, // Updated from onlineStatus
+    image: '/assets/img/profiles/female-07.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -146,16 +139,16 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
+    description: 'Charlotte is a top-rated performer from San Francisco.',
+    tags: ['top-rated', 'live', 'vip'],
   },
   {
     id: 8,
-    name: 'Noah',
+    name: 'Amelia',
     location: 'Seattle, WA',
     distance: '10 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-08.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -165,16 +158,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 9,
-    name: 'Oliver',
+    name: 'Harper',
     location: 'Austin, TX',
     distance: '4 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-09.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -184,16 +175,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 10,
-    name: 'Elijah',
+    name: 'Evelyn',
     location: 'Denver, CO',
     distance: '9 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&h=1200&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-10.jpg',
     imageWidth: 900,
     imageHeight: 1200,
     age: 27,
@@ -203,16 +192,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '35 min',
     price: '$28', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 11,
-    name: 'James',
+    name: 'Abigail',
     location: 'Boston, MA',
     distance: '6 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-11.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -222,16 +209,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 12,
-    name: 'Benjamin',
+    name: 'Emily',
     location: 'Phoenix, AZ',
     distance: '11 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-12.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -241,16 +226,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 13,
-    name: 'Lucas',
+    name: 'Elizabeth',
     location: 'San Diego, CA',
     distance: '3 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-13.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -260,16 +243,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 14,
-    name: 'Mason',
+    name: 'Sofia',
     location: 'Dallas, TX',
     distance: '8 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&h=1200&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-14.jpg',
     imageWidth: 900,
     imageHeight: 1200,
     age: 27,
@@ -279,16 +260,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '35 min',
     price: '$28', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 15,
-    name: 'Logan',
+    name: 'Avery',
     location: 'San Jose, CA',
     distance: '5 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-15.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -298,16 +277,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 16,
-    name: 'Alexander',
+    name: 'Ella',
     location: 'Austin, TX',
     distance: '10 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-16.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -317,16 +294,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 17,
-    name: 'William',
+    name: 'Scarlett',
     location: 'Seattle, WA',
     distance: '4 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-17.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -336,16 +311,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 18,
-    name: 'James',
+    name: 'Grace',
     location: 'Boston, MA',
     distance: '6 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-18.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -355,16 +328,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 19,
-    name: 'Benjamin',
+    name: 'Chloe',
     location: 'Phoenix, AZ',
     distance: '11 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-19.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -374,16 +345,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 20,
-    name: 'Lucas',
+    name: 'Victoria',
     location: 'San Diego, CA',
     distance: '3 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-20.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -393,16 +362,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 21,
-    name: 'Mason',
+    name: 'Madison',
     location: 'Dallas, TX',
     distance: '8 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&h=1200&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-21.jpg',
     imageWidth: 900,
     imageHeight: 1200,
     age: 27,
@@ -412,16 +379,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '35 min',
     price: '$28', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 22,
-    name: 'Logan',
+    name: 'Luna',
     location: 'San Jose, CA',
     distance: '5 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-22.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -431,16 +396,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 23,
-    name: 'Alexander',
+    name: 'Stella',
     location: 'Austin, TX',
     distance: '10 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-23.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -450,16 +413,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 24,
-    name: 'William',
+    name: 'Hazel',
     location: 'Seattle, WA',
     distance: '4 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-24.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -469,16 +430,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 25,
-    name: 'James',
+    name: 'Violet',
     location: 'Boston, MA',
     distance: '6 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-25.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -488,16 +447,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 26,
-    name: 'Benjamin',
+    name: 'Aurora',
     location: 'Phoenix, AZ',
     distance: '11 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-26.jpg',
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -507,16 +464,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 27,
-    name: 'Lucas',
+    name: 'Savannah',
     location: 'San Diego, CA',
     distance: '3 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&h=1000&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-27.jpg',
     imageWidth: 700,
     imageHeight: 1000,
     age: 22,
@@ -526,16 +481,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '40 min',
     price: '$22', // Changed to string
     isVip: false,
-    isLive: true,
   },
   {
     id: 28,
-    name: 'Mason',
+    name: 'Brooklyn',
     location: 'Dallas, TX',
     distance: '8 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&h=1200&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-28.jpg',
     imageWidth: 900,
     imageHeight: 1200,
     age: 27,
@@ -545,16 +498,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '35 min',
     price: '$28', // Changed to string
     isVip: true,
-    isLive: false,
   },
   {
     id: 29,
-    name: 'Logan',
+    name: 'Bella',
     location: 'San Jose, CA',
     distance: '5 km away',
-    onlineStatus: true, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=900&fit=crop&crop=faces',
+    isOnline: true, // Updated from isOnline
+    image: '/assets/img/profiles/female-29.jpg',
     imageWidth: 600,
     imageHeight: 900,
     age: 24,
@@ -564,16 +515,14 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '38 min',
     price: '$30', // Changed to string
     isVip: true,
-    isLive: true,
   },
   {
     id: 30,
-    name: 'Alexander',
+    name: 'Aria',
     location: 'Austin, TX',
     distance: '10 km away',
-    onlineStatus: false, // Updated from isOnline
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=1000&h=700&fit=crop&crop=faces',
+    isOnline: false, // Updated from isOnline
+    image: '/assets/img/profiles/female-01.jpg', // Cycle back to first image for variety
     imageWidth: 1000,
     imageHeight: 700,
     age: 26,
@@ -583,7 +532,6 @@ const initialAdvertisersData: Advertiser[] = [
     duration: '28 min',
     price: '$35', // Changed to string
     isVip: true,
-    isLive: false,
   },
 ];
 
@@ -594,19 +542,7 @@ export default function NetflixViewPage() {
   const [loadedCount, setLoadedCount] = useState(0);
   const { ref, inView } = useInView({ threshold: 0.5 }); // Trigger when 50% visible
 
-  // Initial load
-  useEffect(() => {
-    loadMoreAdvertisers();
-  }, []);
-
-  // Load more when 'inView' becomes true
-  useEffect(() => {
-    if (inView) {
-      loadMoreAdvertisers();
-    }
-  }, [inView]);
-
-  const loadMoreAdvertisers = () => {
+  const loadMoreAdvertisers = useCallback(() => {
     const currentLoadedCount = loadedCount;
     const newLoadedCount = Math.min(
       currentLoadedCount + ITEMS_PER_LOAD,
@@ -619,27 +555,26 @@ export default function NetflixViewPage() {
       ]);
       setLoadedCount(newLoadedCount);
     }
-  };
+  }, [loadedCount]);
 
-  const breakpointColumnsObj = {
-    default: 5, // Number of columns by default
-    1536: 5, // 2xl
-    1280: 4, // xl
-    1024: 3, // lg
-    768: 2, // md
-    640: 1, // sm
-  };
+  // Initial load
+  useEffect(() => {
+    loadMoreAdvertisers();
+  }, [loadMoreAdvertisers]);
+
+  // Load more when 'inView' becomes true
+  useEffect(() => {
+    if (inView) {
+      loadMoreAdvertisers();
+    }
+  }, [inView, loadMoreAdvertisers]);
 
   return (
     <div className="min-h-screen bg-black text-white">
       <EnhancedNavbar />
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {displayedAdvertisers.length > 0 ? (
-          <Masonry
-            breakpointCols={breakpointColumnsObj}
-            className="my-masonry-grid flex w-auto -ml-4"
-            columnClassName="my-masonry-grid_column bg-clip-padding pl-4"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {displayedAdvertisers.map((advertiser: AdvertiserCardType) => (
               <motion.div
                 key={advertiser.id}
@@ -650,7 +585,7 @@ export default function NetflixViewPage() {
                 <AdvertiserCard advertiser={advertiser} />
               </motion.div>
             ))}
-          </Masonry>
+          </div>
         ) : (
           <p>Loading advertisers...</p>
         )}
@@ -663,7 +598,7 @@ export default function NetflixViewPage() {
         )}
         {loadedCount >= initialAdvertisersData.length && displayedAdvertisers.length > 0 && (
           <div className="text-center py-10 text-gray-500">
-            <p>You've reached the end of the line!</p>
+            <p>You&apos;ve reached the end of the line!</p>
           </div>
         )}
       </div>
@@ -685,7 +620,7 @@ export default function NetflixViewPage() {
 }
 
 // Ensure items in column don't have default bottom margin if it causes issues
-.my-masonry-grid_column > div { 
+.my-masonry-grid_column > div {
   margin-bottom: 16px; // This is the vertical gap between items in the same column
 }
 */

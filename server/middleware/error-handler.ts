@@ -12,11 +12,13 @@ export class AppError extends Error {
   ) {
     super(message);
     this.name = 'AppError';
+    this.statusCode = statusCode;
+    this.status = status;
     Error.captureStackTrace(this, this.constructor);
   }
 }
 
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
   logger.error('Error:', {
     name: err.name,
     message: err.message,

@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import EnhancedNavbar from '@/components/enhanced-navbar';
-import { getAdvertisers, Advertiser } from '@/lib/data';
+import { getAdvertisers, Advertiser, getProfileImage } from '@/lib/data';
 import { Footer } from '@/components/footer';
-import { Button } from '@/components/components/ui/button';
-import { Badge } from '@/components/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Heart, MessageCircle, Star, ThumbsUp, ImageIcon, Video, SearchX } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
@@ -69,7 +69,7 @@ function RankedAdvertiserCard({
       <div className="relative">
         <Link href={`/advertiser/${advertiser.id}`}>
           <img
-            src={advertiser.image || '/placeholder-image.jpg'}
+            src={getProfileImage(advertiser)}
             alt={advertiser.name}
             className="w-full h-56 object-cover"
           />

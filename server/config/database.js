@@ -47,9 +47,9 @@ class DatabaseService {
    */
   async connect(uri, options = {}, name = 'default') {
     try {
-      // Use provided URI or fallback to config
+      // Use provided URI or fallback to environment variable
       const connectionUri =
-        uri || config.mongoUri || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/date_night';
+        uri || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/date_night';
 
       // If connection already exists, return it
       if (connections.has(name) && mongoose.connection.readyState === 1) {

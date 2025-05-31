@@ -21,7 +21,7 @@ export class RequestSanitizer {
       xssFilter: true,
       trimStrings: true,
       convertEmptyStringsToNull: true,
-      ...options
+      ...options,
     };
   }
 

@@ -1,4 +1,4 @@
-import path from 'path';
+// import path from 'path'; // Unused
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import OpenAPIDocument from './index.js';

@@ -20,7 +20,7 @@ import { AlertCircle } from 'lucide-react';
 import { AuthContext } from '@/context/auth-context';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
-import { Checkbox } from '@/components/components/ui/checkbox'; // Added import for Checkbox
+import { Checkbox } from '@/components/ui/checkbox'; // Added import for Checkbox
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    if (!authContext) {
+    if (!authContext || !login) {
       setError('Authentication context is not available.');
       setLoading(false);
       return;
@@ -173,7 +173,7 @@ export default function LoginPage() {
             </div>
           </form>
           <p className="mt-8 text-center text-sm text-slate-400">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link
               href="/signup"
               className="font-medium text-pink-400 hover:text-pink-300 transition-colors ml-1"

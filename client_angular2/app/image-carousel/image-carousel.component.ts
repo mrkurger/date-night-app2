@@ -21,12 +21,12 @@ export class ImageCarouselComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   carouselApi: any; // Placeholder for carousel API if using a library
 
-  // Example images if none are provided (replace with your actual placeholders or logic)
+  // Example images if none are provided (using local female profile images)
   private defaultImages = [
-    'https://images.unsplash.com/photo-1551250928-243dc937c49d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjN8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080',
-    'https://images.unsplash.com/photo-1551250928-e4a05afaed1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjR8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080',
-    'https://images.unsplash.com/photo-1536735561749-fc87494598cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxNzd8fHx8fHwyfHwxNzIzNjM0NDc0fA&ixlib=rb-4.0.3&q=80&w=1080',
-    'https://images.unsplash.com/photo-1548324215-9133768e4094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMzF8fHx8fHwyfHwxNzIzNDM1MzA1fA&ixlib=rb-4.0.3&q=80&w=1080',
+    '/assets/img/profiles/female-01.jpg',
+    '/assets/img/profiles/female-02.jpg',
+    '/assets/img/profiles/female-03.jpg',
+    '/assets/img/profiles/female-04.jpg',
   ];
 
   constructor() {}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Advertiser {
@@ -11,13 +11,7 @@ const NetflixViewGrid = () => {
   const [advertisers, setAdvertisers] = useState<Advertiser[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      fetchMoreData();
-    }
-  }, []);
-
-  const fetchMoreData = async () => {
+  const fetchMoreData = useCallback(async () => {
     try {
       const response = await fetch('/api/advertisers'); // Replace with actual API endpoint
       const data: Advertiser[] = await response.json();
@@ -29,7 +23,13 @@ const NetflixViewGrid = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      fetchMoreData();
+    }
+  }, [fetchMoreData]);
 
   return (
     <div className="p-4">

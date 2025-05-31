@@ -42,7 +42,7 @@ const baseDirectives = {
 // Development-specific CSP directives (no unsafe-eval/inline)
 const developmentDirectives = {
   ...baseDirectives,
-  'script-src': ["'self'", 'https://cdn.jsdelivr.net', ''],
+  'script-src': ["'self'", 'https://cdn.jsdelivr.net', "'unsafe-eval'", "'unsafe-inline'"],
   'connect-src': [...baseDirectives['connect-src'], 'http://localhost:*', 'ws://localhost:*', ''],
 };
 

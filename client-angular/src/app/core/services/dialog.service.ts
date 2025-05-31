@@ -1,13 +1,8 @@
-import {
 import { Injectable, Component, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-  NbDialogService,
-  NbDialogRef,
-  NbDialogConfig,
-  NbCardModule,
-  NbButtonModule,';
-} from '@nebular/theme';
+import { Observable, Subject } from 'rxjs';
+import { DialogService as PrimeDialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 import {
   ReviewDialogComponent,
@@ -49,14 +44,13 @@ import {
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl';
 
-export interface DialogConfig extends Omit, 'context'> {
+export interface DialogConfig extends Omit<DynamicDialogConfig, 'data'> {
   data?: T;
   title?: string;
   message?: string;
   confirmText?: string;
   cancelText?: string;
   size?: DialogSize;
-  context?: T;
 }
 
 interface DialogContext {
@@ -69,39 +63,42 @@ interface DialogContext {
 @Injectable({
   providedIn: 'root',
 })
-export class DialogServic {e {
-  private defaultConfig: Partial = {
-    closeOnBackdropClick: true,
-    closeOnEsc: true,
-    hasBackdrop: true,
-    hasScroll: false,
-    autoFocus: true,
-    backdropClass: 'dialog-backdrop',
-    dialogClass: 'dialog-container',
-  }
+export class DialogService {
+  private defaultConfig: Partial<DynamicDialogConfig> = {
+    closable: true,
+    modal: true,
+    resizable: false,
+    draggable: false,
+    keepInViewport: true,
+    styleClass: 'dialog-container',
+  };
 
-  constructor(private nbDialogService: NbDialogService) {}
+  constructor(private primeDialogService: PrimeDialogService) {}
 
   /**
    * Opens a dialog for writing or editing a review;
    */
   openReviewDialog(data: ReviewDialogData): Observable {
-    return this.nbDialogService.open(ReviewDialogComponent, {
+    const ref = this.primeDialogService.open(ReviewDialogComponent, {
       ...this.defaultConfig,
-      context: data as any,
-    }).onClose;
+      data: data,
+      header: 'Write Review',
+    });
+    return ref.onClose;
   }
 
   /**
    * Opens a dialog for reporting content;
    */
   reportReview(reviewId: string): Observable {
-    const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' }
+    const dialogData: ReportDialogData = { title: 'Report Review', contentType: 'review' };
 
-    return this.nbDialogService.open(ReportDialogComponent, {
+    const ref = this.primeDialogService.open(ReportDialogComponent, {
       ...this.defaultConfig,
-      context: dialogData as any,
-    }).onClose;
+      data: dialogData,
+      header: 'Report Review',
+    });
+    return ref.onClose;
   }
 
   /**
@@ -149,16 +146,12 @@ export class DialogServic {e {
   /**
    * Helper method to respond to a review;
    */
-  respondToReview(;
-    reviewId: string,
-    reviewTitle: string,
-    reviewContent: string,
-  ): Observable {
+  respondToReview(reviewId: string, reviewTitle: string, reviewContent: string): Observable {
     return this.openResponseDialog({
       title: 'Respond to Review',
       reviewTitle,
       reviewContent,
-    })
+    });
   }
 
   /**
@@ -168,13 +161,13 @@ export class DialogServic {e {
     return this.openFavoriteDialog({
       adId,
       adTitle,
-    })
+    });
   }
 
   /**
    * Helper method to edit a favorite;
    */
-  editFavorite(;
+  editFavorite(
     adId: string,
     adTitle: string,
     notes?: string,
@@ -189,7 +182,7 @@ export class DialogServic {e {
       existingTags: tags,
       existingPriority: priority,
       existingNotificationsEnabled: notificationsEnabled,
-    })
+    });
   }
 
   /**
@@ -198,12 +191,12 @@ export class DialogServic {e {
    * @param config Dialog configuration;
    * @returns Dialog reference;
    */
-  open(component: Type, config?: DialogConfig): NbDialogRef {
-    return this.nbDialogService.open(component, {
+  open(component: Type, config?: DialogConfig): DynamicDialogRef {
+    return this.primeDialogService.open(component, {
       ...this.defaultConfig,
       ...config,
-      context: (config?.data || config?.context) as any,
-    })
+      data: config?.data,
+    });
   }
 
   /**
@@ -215,7 +208,7 @@ export class DialogServic {e {
    * @param status Dialog status;
    * @returns Observable that resolves to true if confirmed, false if cancelled;
    */
-  confirm(;
+  confirm(
     title: string,
     message: string,
     confirmText: string = 'Confirm',
@@ -228,7 +221,7 @@ export class DialogServic {e {
       confirmText,
       cancelText,
       status,
-    }
+    };
 
     return this.nbDialogService.open(ConfirmDialogComponent, {
       ...this.defaultConfig,
@@ -248,7 +241,7 @@ export class DialogServic {e {
       title,
       message,
       buttonText,
-    }
+    };
 
     return this.nbDialogService.open(AlertDialogComponent, {
       ...this.defaultConfig,
@@ -264,7 +257,7 @@ export class DialogServic {e {
    * @param config Additional configuration;
    * @returns Observable that resolves to the input value or null if cancelled;
    */
-  prompt(;
+  prompt(
     title: string,
     message: string,
     defaultValue: string = '',
@@ -278,7 +271,7 @@ export class DialogServic {e {
       required: (config?.data as PromptDialogData)?.required || false,
       confirmText: config?.confirmText || 'OK',
       cancelText: config?.cancelText || 'Cancel',
-    }
+    };
 
     return this.nbDialogService.open(PromptDialogComponent, {
       ...this.defaultConfig,

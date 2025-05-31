@@ -1,7 +1,7 @@
 import express from 'express';
 import { protect } from '../middleware/auth.js';
 import safetyController from '../controllers/safety.controller.js';
-import { ValidationUtils } from '../utils/validation-utils.ts';
+import { ValidationUtils, zodSchemas } from '../utils/validation-utils.ts';
 import { safetySchemas } from './validators/safety.validator.js';
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 // database1.js imports the shared mongoose instance from core, not database.js
 import mongoose from './databaseCore.js';
-import config from './environment.js';
+// import config from './environment.js'; // Unused
 
 // Cache for database connections
 const connections = new Map();
@@ -30,7 +30,7 @@ const getDatabase1Uri = () => {
   // or fall back to the main database with a different database name
   return (
     process.env.DATABASE1_URI ||
-    process.env.MONGODB_URI?.replace(/\/[^\/]+$/, '/date_night_db1') ||
+    process.env.MONGODB_URI?.replace(/\/[^/]+$/, '/date_night_db1') ||
     'mongodb://127.0.0.1:27017/date_night_db1'
   );
 };

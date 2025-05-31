@@ -10,7 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     /* Added for scripts folder support */
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "jsx": "react-jsx"
   },
   /* Updated exclude to keep scripts folder */
   "exclude": ["node_modules", "dist", "client-angular"],

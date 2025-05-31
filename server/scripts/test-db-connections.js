@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Database Connection Test Script
  *
@@ -79,7 +78,7 @@ async function testConnections() {
     const start = Date.now();
 
     // Initialize all connections
-    const connections = await dbService.initializeAllConnections();
+    const _connections = await dbService.initializeAllConnections();
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(2);
     printSuccess(`All connections initialized in ${elapsed}s`);

@@ -1,5 +1,5 @@
 import {
-import { Inject, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormControl } from '@angular/forms';import { Inject, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../../../app/shared/nebular.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';

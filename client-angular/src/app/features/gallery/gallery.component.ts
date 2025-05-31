@@ -17,85 +17,80 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../app/shared/shared.module';
 import { Subscription } from 'rxjs';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
+import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,';
-} from '@nebular/theme';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-gallery',
-    template: `;`
-    ;
-      ;
-        ;
-          Photo Gallery;
-          ;
-            ;
-              ;
-            ;
-            ;
-              ;
-            ;
-          ;
-        ;
-        ;
-          ;
-            ;
-            Gallery feature coming soon...;
-          ;
-        ;
-      ;
-    ;
-  `,`
-    styles: [;
-        `;`
-      .gallery-container {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
-        gap: 16px;
-        padding: 16px;
-      }
-      .gallery-list {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 16px;
-      }
-      .view-toggle {
-        display: flex;
-        margin-left: auto;
-        gap: 8px;
-      }
-    `,`
-    ],
+    template: `
+        <div class="gallery-container">
+            <p-card>
+                <ng-template pTemplate="header">
+                    <div class="flex justify-content-between align-items-center">
+                        <h2>Photo Gallery</h2>
+                        <div class="view-toggle">
+                            <p-button
+                                icon="pi pi-th-large"
+                                [outlined]="viewMode !== 'grid'"
+                                (click)="setViewMode('grid')"
+                                pTooltip="Grid View">
+                            </p-button>
+                            <p-button
+                                icon="pi pi-list"
+                                [outlined]="viewMode !== 'list'"
+                                (click)="setViewMode('list')"
+                                pTooltip="List View">
+                            </p-button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="content">
+                    <div [class]="viewMode === 'grid' ? 'gallery-grid' : 'gallery-list'">
+                        <p>Gallery feature coming soon...</p>
+                    </div>
+                </ng-template>
+            </p-card>
+        </div>
+    `,
+    styles: [`
+        .gallery-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+        .gallery-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+        }
+        .view-toggle {
+            display: flex;
+            margin-left: auto;
+            gap: 8px;
+        }
+    `],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NebularModule, CommonModule,
+    imports: [
+        CommonModule,
         FormsModule,
-        NbButtonModule,
-        NbCardModule,
-        NbIconModule,
-        NbTooltipModule,
         ReactiveFormsModule,
         RouterModule,
         SharedModule,
+        CardModule,
+        ButtonModule,
+        TooltipModule,
     ]
 })
-export class GalleryComponen {t implements OnInit, OnDestroy {
+export class GalleryComponent implements OnInit, OnDestroy {
   viewMode: 'grid' | 'list' = 'grid';
   private subscriptions: Subscription[] = []
 
@@ -113,7 +108,7 @@ export class GalleryComponen {t implements OnInit, OnDestroy {
     }
 
     // Subscribe to preference changes
-    this.subscriptions.push(;
+    this.subscriptions.push(
       this.userPreferencesService.preferences$.subscribe((prefs) => {
         if (prefs.defaultViewType === 'list') {
           this.viewMode = 'list';

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ValidationError } from '../../utils/validation-utils';
+// import { ValidationError } from '../../utils/validation-utils'; // Unused
 import { VerificationService } from './verification.service';
 import { logger } from '../../utils/logger';
 
@@ -7,7 +7,7 @@ import { logger } from '../../utils/logger';
  * Verification controller with input validation using Zod schemas
  */
 export class VerificationController {
-  constructor(private verificationService: VerificationService) {}
+  constructor(private _verificationService: VerificationService) {}
 
   /**
    * Get verification status for current user

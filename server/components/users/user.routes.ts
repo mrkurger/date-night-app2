@@ -11,7 +11,7 @@ import express from 'express';
 const router = express.Router();
 import userController from './user.controller.js';
 import { protect } from '../../middleware/auth.js';
-import { validatePasswordChange } from './users.validator';
+import { validatePasswordChange } from './users.validator.js';
 
 // Protected routes (require authentication)
 router.get('/me', protect, userController.getCurrentUser);

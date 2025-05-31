@@ -1,5 +1,5 @@
 import express from 'express';
-import type { Request, Response, NextFunction } from 'express';
+// import type { Request, Response, NextFunction } from 'express'; // Unused
 import { protect as authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
 import travelController from '../controllers/travel.controller.js';

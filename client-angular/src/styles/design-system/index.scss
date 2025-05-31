@@ -26,22 +26,22 @@
 @forward '../../app/core/design/accessibility-utilities';
 // Temporarily commenting out to avoid duplicate mixins
 // @forward '../../app/core/design/animation-utilities';
-@forward '../../app/core/design/dark-mode';
+// @forward '../../app/core/design/dark-mode'; // Commented out - already forwarded by ../mixins/index
 
 /* Forward component styles */
 @forward '../../app/core/design/components';
 
 /* Forward typography */
-@forward '../../app/core/design/typography-mixins';
+// @forward '../../app/core/design/typography-mixins'; // Commented out - already forwarded by ../mixins/index
 
 /* Forward spacing utilities */
 @forward '../../app/core/design/spacing-utilities';
 
 /* Forward micro-interactions */
-@forward '../../app/core/design/micro-interactions';
+// @forward '../../app/core/design/micro-interactions'; // Commented out - already forwarded by ../mixins/index
 
 /* Import PrimeNG Themes - must come after @forward rules */
-@use 'primeng/resources/themes/lara-light-blue/theme.css' as *;
-@use 'primeng/resources/primeng.css' as *;
-@use 'primeicons/primeicons.css' as *;
-@use 'primeflex/primeflex.css' as *;
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';

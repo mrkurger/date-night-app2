@@ -93,3 +93,7 @@ debug.log
 *.log
 test-results/
 
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/

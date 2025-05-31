@@ -94,7 +94,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
     return next(request)
   }
 
-  return next(request).pipe(;
+  return next(request).pipe(
     retry({
       count: 2,
       delay: 1000,
@@ -140,23 +140,23 @@ function getErrorMessage(error: HttpErrorResponse): string {
 
   // Default messages based on status code
   switch (error.status) {
-    case 0:;
+    case 0:
       return 'Unable to connect to the server. Please check your internet connection.';
-    case 400:;
+    case 400:
       return 'Invalid request. Please check your input.';
-    case 401:;
+    case 401:
       return 'You need to log in to access this resource.';
-    case 403:;
+    case 403:
       return 'You do not have permission to access this resource.';
-    case 404:;
+    case 404:
       return 'The requested resource was not found.';
-    case 409:;
+    case 409:
       return 'A conflict occurred. Please try again.';
-    case 429:;
+    case 429:
       return 'Too many requests. Please try again later.';
-    case 500:;
+    case 500:
       return 'An internal server error occurred. Please try again later.';
-    default:;
+    default:
       return 'An unexpected error occurred. Please try again.';
   }
 }
@@ -172,8 +172,8 @@ function shouldSkipUrl(url: string): boolean {
  * Sanitizes headers to remove sensitive information;
  */
 function sanitizeHeaders(
-  headers: Array,
-): Array {
+  headers: Array<{ key: string; value: string }>,
+): Array<{ key: string; value: string }> {
   if (!config.sanitizeSensitiveData) {
     return headers;
   }
@@ -200,7 +200,7 @@ function sanitizeBody(body: unknown): unknown {
   }
 
   const sensitiveFields = ['password', 'token', 'secret', 'creditCard', 'ssn']
-  const sanitized = { ...(body as Record) }
+  const sanitized = { ...(body as Record<string, any>) }
 
   Object.keys(sanitized).forEach((key) => {
     if (sensitiveFields.some((field) => key.toLowerCase().includes(field))) {

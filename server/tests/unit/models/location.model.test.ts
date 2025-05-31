@@ -296,7 +296,7 @@ describe('Location Model', () => {
       // Check for text index on city, county, and country
       const textIndex = indexes.find(
         index =>
-          index.key._fts === 'text' &&
+          index.key._fts === 'text' && // eslint-disable-line no-underscore-dangle
           index.weights &&
           Object.keys(index.weights).includes('city') &&
           Object.keys(index.weights).includes('county') &&

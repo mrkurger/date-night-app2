@@ -1,11 +1,11 @@
 'use client';
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
-import { getAdvertisers, Advertiser } from '@/lib/data'; // Ensure Advertiser is imported
-import { Button } from '@/components/components/ui/button';
-import { Checkbox } from '@/components/components/ui/checkbox';
-import { Badge } from '@/components/components/ui/badge';
-import { Input } from '@/components/components/ui/input';
+import { getAdvertisers, Advertiser, getProfileImage } from '@/lib/data'; // Ensure Advertiser is imported
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
 
@@ -115,7 +115,11 @@ const AdvertisersPage: React.FC = () => {
                   key={adv.id}
                   className="bg-slate-800 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-pink-500/30"
                 >
-                  <img src={adv.image} alt={adv.name} className="w-full h-72 object-cover" />
+                  <img
+                    src={getProfileImage(adv)}
+                    alt={adv.name}
+                    className="w-full h-72 object-cover"
+                  />
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-2">
                       <h2 className="text-2xl font-semibold text-pink-400">{adv.name}</h2>

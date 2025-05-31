@@ -3,8 +3,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "airbnb-typescript/base"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,14 +18,11 @@
     "@typescript-eslint/no-unused-vars": "warn",
     "import/prefer-default-export": "off",
     "import/no-default-export": "warn",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "ts": "never"
-      }
-    ]
+    "import/extensions": "off",
+    "n/no-missing-import": "off",
+    "n/no-missing-require": "off",
+    "node/no-missing-import": "off",
+    "node/no-missing-require": "off"
   },
   "env": {
     "node": true,
@@ -40,5 +36,14 @@
       }
     }
   },
-  "ignorePatterns": ["dist/", "coverage/", "node_modules/"]
+  "ignorePatterns": ["dist/", "coverage/", "node_modules/"],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.js"],
+      "rules": {
+        "n/no-missing-import": "off",
+        "n/no-missing-require": "off"
+      }
+    }
+  ]
 }

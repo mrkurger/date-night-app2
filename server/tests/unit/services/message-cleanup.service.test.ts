@@ -137,6 +137,7 @@ describe('Message Cleanup Service', () => {
       jest.spyOn(mongoose.Query.prototype, 'populate').mockImplementation(function () {
         // This is a bit of a hack to simulate populate behavior
         // In a real scenario, populate would fetch the actual attachment documents
+        // eslint-disable-next-line no-underscore-dangle
         if (this._conditions.expiresAt && this._conditions.expiresAt.$lte) {
           return Promise.resolve([
             {
@@ -204,6 +205,7 @@ describe('Message Cleanup Service', () => {
 
       // Mock the populate method
       jest.spyOn(mongoose.Query.prototype, 'populate').mockImplementation(function () {
+        // eslint-disable-next-line no-underscore-dangle
         if (this._conditions.expiresAt && this._conditions.expiresAt.$lte) {
           return Promise.resolve([
             {
@@ -266,6 +268,7 @@ describe('Message Cleanup Service', () => {
 
       // Mock the populate method
       jest.spyOn(mongoose.Query.prototype, 'populate').mockImplementation(function () {
+        // eslint-disable-next-line no-underscore-dangle
         if (this._conditions.expiresAt && this._conditions.expiresAt.$lte) {
           return Promise.resolve([
             {

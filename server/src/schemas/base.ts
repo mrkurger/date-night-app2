@@ -12,6 +12,12 @@ export const ErrorSchema = z
 // Base model schemas with common fields
 export const BaseModelSchema = z.object({
   _id: z.string().describe('MongoDB ObjectId'),
-  createdAt: z.string().datetime().describe('Creation timestamp'),
-  updatedAt: z.string().datetime().describe('Last update timestamp'),
+  createdAt: z
+    .string()
+    .regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/)
+    .describe('Creation timestamp'),
+  updatedAt: z
+    .string()
+    .regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/)
+    .describe('Last update timestamp'),
 });

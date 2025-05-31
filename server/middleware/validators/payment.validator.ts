@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ValidationUtils } from '../../utils/ValidationUtils';
+import { ValidationUtils } from '../../utils/ValidationUtils.js';
 
 const PaymentSchemas = {
   createPaymentIntent: z.object({

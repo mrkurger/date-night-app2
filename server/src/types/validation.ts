@@ -14,7 +14,7 @@ export type ValidationMiddlewareConfig = {
 
 export class ValidationError extends Error {
   constructor(
-    public readonly errors: { param: string; message: string; value?: any }[],
+    public readonly _errors: { param: string; message: string; value?: any }[],
     message = 'Validation failed'
   ) {
     super(message);

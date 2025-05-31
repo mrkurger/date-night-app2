@@ -17,40 +17,31 @@ import { TinderComponent } from '../tinder/tinder.component';
 import { ListViewComponent } from '../list-view/list-view.component';
 import { UserPreferencesService } from '../../core/services/user-preferences.service';
 import { Subscription } from 'rxjs';
-import { NebularModule } from '../../../app/shared/nebular.module';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
-  NbCardModule,
-  NbTabsetModule,
-  NbIconModule,
-  NbButtonModule,
-  NbLayoutModule,';
-} from '@nebular/theme';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-browse',
     templateUrl: './browse.component.html',
     styleUrls: ['./browse.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [;
-    NebularModule, CommonModule,
+    imports: [
+        CommonModule,
         RouterModule,
-        NbCardModule,
-        NbTabsetModule,
-        NbIconModule,
-        NbButtonModule,
-        NbLayoutModule,
+        CardModule,
+        TabViewModule,
+        ButtonModule,
         NetflixViewComponent,
         TinderComponent,
-        ListViewComponent,,
-    TabViewModule;
-  ]
+        ListViewComponent
+    ]
 })
-export class BrowseComponen {t implements OnInit, OnDestroy {
+export class BrowseComponent implements OnInit, OnDestroy {
   activeView: 'netflix' | 'tinder' | 'list' = 'netflix';
   private subscriptions: Subscription[] = []
 
-  constructor(;
+  constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userPreferencesService: UserPreferencesService,
@@ -58,7 +49,7 @@ export class BrowseComponen {t implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Get the view from the route query params
-    this.subscriptions.push(;
+    this.subscriptions.push(
       this.route.queryParams.subscribe((params) => {
         if (params['view']) {
           const view = params['view']
@@ -90,24 +81,36 @@ export class BrowseComponen {t implements OnInit, OnDestroy {
   }
 
   /**
-   * Change the active view and update user preferences;
-   * @param view The view to change to;
+   * Get the active tab index for PrimeNG TabView
    */
-  changeView(view: string): void {
-    // Map the tab title to the view type
+  getActiveIndex(): number {
+    switch (this.activeView) {
+      case 'netflix': return 0;
+      case 'tinder': return 1;
+      case 'list': return 2;
+      default: return 0;
+    }
+  }
+
+  /**
+   * Change the active view and update user preferences;
+   * @param index The tab index to change to;
+   */
+  changeView(index: number): void {
+    // Map the tab index to the view type
     let viewType: 'netflix' | 'tinder' | 'list';
 
-    switch (view.toLowerCase()) {
-      case 'discover':;
+    switch (index) {
+      case 0:
         viewType = 'netflix';
         break;
-      case 'swipe':;
+      case 1:
         viewType = 'tinder';
         break;
-      case 'list':;
+      case 2:
         viewType = 'list';
         break;
-      default:;
+      default:
         viewType = 'netflix';
     }
 

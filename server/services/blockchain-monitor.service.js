@@ -1,16 +1,16 @@
 import { ethers } from 'ethers';
-import axios from 'axios';
+// import axios from 'axios'; // Unused
 import { logger } from '../utils/logger.js';
-import Wallet from '../models/wallet.model.js';
-import Transaction from '../models/transaction.model.js';
-import { SUPPORTED_NETWORKS } from '../models/wallet.model.js';
+// import Wallet from '../models/wallet.model.js'; // Unused
+// import Transaction from '../models/transaction.model.js'; // Unused
+// import { SUPPORTED_NETWORKS } from '../models/wallet.model.js'; // Unused
 
 class BlockchainMonitorService {
   constructor() {
     this.providers = {};
     this.initializeProviders();
   }
-  
+
   /**
    * Initialize blockchain providers
    */
@@ -23,11 +23,11 @@ class BlockchainMonitorService {
         this.providers[network] = new ethers.providers.JsonRpcProvider(rpcUrl);
       }
     });
-    
+
     // Initialize other blockchain API clients
     // ...
   }
-  
+
   /**
    * Start monitoring for deposits
    */
@@ -41,7 +41,7 @@ class BlockchainMonitorService {
       }
     }, 60000); // Check every minute
   }
-  
+
   // Implementation methods for monitoring deposits
   // ...
 }

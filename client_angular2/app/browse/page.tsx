@@ -12,6 +12,7 @@ import {
   getPremiumAdvertisers,
   getOnlineAdvertisers,
   Advertiser,
+  getFemaleImageByIndex,
 } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,34 +29,13 @@ export default function BrowsePage() {
   const [newAdvertisers, setNewAdvertisers] = useState<Advertiser[]>([]);
   const [popularAdvertisers, setPopularAdvertisers] = useState<Advertiser[]>([]);
 
-  const femaleImages = [
-    'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1548142813-c348350df52b?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=300&h=400&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=400&fit=crop&crop=face',
-  ];
+  // Use our local female profile images instead of Unsplash URLs
 
   useEffect(() => {
     // Get all advertisers with distances
     const all = getAdvertisers().map((adv, index) => ({
       ...adv,
-      image: femaleImages[index % femaleImages.length],
+      image: getFemaleImageByIndex(index + 1),
       distance: Math.floor(Math.random() * 20) + 1,
     }));
     setAllAdvertisers(all);
@@ -63,7 +43,7 @@ export default function BrowsePage() {
     // Get premium advertisers
     const premium = getPremiumAdvertisers().map((adv, index) => ({
       ...adv,
-      image: femaleImages[index % femaleImages.length],
+      image: getFemaleImageByIndex(index + 1),
       distance: Math.floor(Math.random() * 20) + 1,
       isPremium: true,
     }));
@@ -72,7 +52,7 @@ export default function BrowsePage() {
     // Get online advertisers
     const online = getOnlineAdvertisers().map((adv, index) => ({
       ...adv,
-      image: femaleImages[index % femaleImages.length],
+      image: getFemaleImageByIndex(index + 1),
       distance: Math.floor(Math.random() * 20) + 1,
     }));
     setOnlineAdvertisers(online);
@@ -83,7 +63,7 @@ export default function BrowsePage() {
       .slice(0, 10)
       .map((adv, index) => ({
         ...adv,
-        image: femaleImages[index % femaleImages.length],
+        image: getFemaleImageByIndex(index + 1),
         distance: Math.floor(Math.random() * 20) + 1,
       }));
     setNewAdvertisers(newOnes);
@@ -94,7 +74,7 @@ export default function BrowsePage() {
       .slice(0, 10)
       .map((adv, index) => ({
         ...adv,
-        image: femaleImages[index % femaleImages.length],
+        image: getFemaleImageByIndex(index + 1),
         distance: Math.floor(Math.random() * 20) + 1,
       }));
     setPopularAdvertisers(popular);

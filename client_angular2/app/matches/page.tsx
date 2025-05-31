@@ -11,18 +11,19 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import { Footer } from '@/components/footer';
-import { 
-  Heart, 
-  MessageCircle, 
-  Star, 
-  Search, 
+import {
+  Heart,
+  MessageCircle,
+  Star,
+  Search,
   Filter,
   MapPin,
   Calendar,
   Sparkles,
   Gift,
-  DollarSign
+  DollarSign,
 } from 'lucide-react';
+import { getFemaleImageByIndex } from '@/lib/data';
 
 interface Match {
   id: string;
@@ -48,7 +49,7 @@ const mockMatches: Match[] = [
     id: '1',
     name: 'Emma Wilson',
     age: 26,
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150',
+    avatar: getFemaleImageByIndex(1),
     location: 'Oslo, Norway',
     distance: 2.5,
     bio: 'Adventure seeker and coffee enthusiast. Love hiking and exploring new places!',
@@ -60,13 +61,13 @@ const mockMatches: Match[] = [
     rating: 4.8,
     hasUnreadMessages: true,
     mutualInterests: 3,
-    photos: ['https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400']
+    photos: [getFemaleImageByIndex(1)],
   },
   {
     id: '2',
     name: 'Sofia Larsen',
     age: 24,
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+    avatar: getFemaleImageByIndex(2),
     location: 'Bergen, Norway',
     distance: 5.2,
     bio: 'Artist and yoga instructor. Looking for someone who appreciates creativity and mindfulness.',
@@ -78,13 +79,13 @@ const mockMatches: Match[] = [
     rating: 4.9,
     hasUnreadMessages: false,
     mutualInterests: 2,
-    photos: ['https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400']
+    photos: [getFemaleImageByIndex(2)],
   },
   {
     id: '3',
     name: 'Ingrid Hansen',
     age: 29,
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
+    avatar: getFemaleImageByIndex(3),
     location: 'Trondheim, Norway',
     distance: 8.1,
     bio: 'Tech entrepreneur and fitness enthusiast. Love building things and staying active.',
@@ -96,13 +97,13 @@ const mockMatches: Match[] = [
     rating: 4.6,
     hasUnreadMessages: true,
     mutualInterests: 4,
-    photos: ['https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400']
+    photos: [getFemaleImageByIndex(3)],
   },
   {
     id: '4',
     name: 'Astrid Nordahl',
     age: 27,
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+    avatar: getFemaleImageByIndex(4),
     location: 'Stavanger, Norway',
     distance: 12.3,
     bio: 'Marine biologist with a passion for ocean conservation. Love diving and underwater photography.',
@@ -114,8 +115,8 @@ const mockMatches: Match[] = [
     rating: 4.7,
     hasUnreadMessages: false,
     mutualInterests: 1,
-    photos: ['https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400']
-  }
+    photos: [getFemaleImageByIndex(4)],
+  },
 ];
 
 const MatchesPage: React.FC = () => {
@@ -124,12 +125,13 @@ const MatchesPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('all');
 
   const filteredMatches = matches.filter(match => {
-    const matchesSearch = match.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         match.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
+    const matchesSearch =
+      match.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      match.location.toLowerCase().includes(searchQuery.toLowerCase());
+
     switch (activeTab) {
       case 'recent':
-        return matchesSearch && (Date.now() - match.matchDate.getTime()) < 604800000; // 7 days
+        return matchesSearch && Date.now() - match.matchDate.getTime() < 604800000; // 7 days
       case 'online':
         return matchesSearch && match.isOnline;
       case 'messages':
@@ -163,9 +165,7 @@ const MatchesPage: React.FC = () => {
         <main className="max-w-6xl mx-auto">
           <header className="mb-8">
             <h1 className="text-4xl font-bold text-foreground mb-2">Your Matches</h1>
-            <p className="text-muted-foreground">
-              Connect with people who liked you back
-            </p>
+            <p className="text-muted-foreground">Connect with people who liked you back</p>
           </header>
 
           {/* Search and Filter */}
@@ -175,7 +175,7 @@ const MatchesPage: React.FC = () => {
               <Input
                 placeholder="Search matches..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 className="pl-10"
               />
             </div>
@@ -212,7 +212,7 @@ const MatchesPage: React.FC = () => {
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-purple-500">
-                  {matches.filter(m => (Date.now() - m.matchDate.getTime()) < 604800000).length}
+                  {matches.filter(m => Date.now() - m.matchDate.getTime() < 604800000).length}
                 </div>
                 <div className="text-sm text-muted-foreground">This Week</div>
               </CardContent>
@@ -235,21 +235,26 @@ const MatchesPage: React.FC = () => {
                     <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No matches found</h3>
                     <p className="text-muted-foreground">
-                      {searchQuery ? 'Try adjusting your search terms' : 'Keep swiping to find your perfect match!'}
+                      {searchQuery
+                        ? 'Try adjusting your search terms'
+                        : 'Keep swiping to find your perfect match!'}
                     </p>
                   </CardContent>
                 </Card>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredMatches.map((match) => (
-                    <Card key={match.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  {filteredMatches.map(match => (
+                    <Card
+                      key={match.id}
+                      className="overflow-hidden hover:shadow-lg transition-shadow"
+                    >
                       <div className="relative">
                         <img
                           src={match.photos[0]}
                           alt={match.name}
                           className="w-full h-48 object-cover"
                         />
-                        
+
                         {/* Online indicator */}
                         {match.isOnline && (
                           <div className="absolute top-3 right-3">
@@ -258,7 +263,7 @@ const MatchesPage: React.FC = () => {
                             </Badge>
                           </div>
                         )}
-                        
+
                         {/* New messages indicator */}
                         {match.hasUnreadMessages && (
                           <div className="absolute top-3 left-3">
@@ -269,15 +274,15 @@ const MatchesPage: React.FC = () => {
                           </div>
                         )}
                       </div>
-                      
+
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div>
                             <div className="flex items-center gap-2">
-                              <h3 className="font-semibold text-lg">{match.name}, {match.age}</h3>
-                              {match.isVerified && (
-                                <Star className="h-4 w-4 text-yellow-500" />
-                              )}
+                              <h3 className="font-semibold text-lg">
+                                {match.name}, {match.age}
+                              </h3>
+                              {match.isVerified && <Star className="h-4 w-4 text-yellow-500" />}
                             </div>
                             <div className="flex items-center gap-1 text-sm text-muted-foreground">
                               <MapPin className="h-3 w-3" />
@@ -291,11 +296,11 @@ const MatchesPage: React.FC = () => {
                             </div>
                           </div>
                         </div>
-                        
+
                         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                           {match.bio}
                         </p>
-                        
+
                         <div className="flex flex-wrap gap-1 mb-3">
                           {match.interests.slice(0, 3).map((interest, index) => (
                             <Badge key={index} variant="outline" className="text-xs">
@@ -308,17 +313,19 @@ const MatchesPage: React.FC = () => {
                             </Badge>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             Matched {formatMatchDate(match.matchDate)}
                           </div>
                           <div>
-                            {match.isOnline ? 'Online now' : `Active ${formatLastSeen(match.lastSeen)}`}
+                            {match.isOnline
+                              ? 'Online now'
+                              : `Active ${formatLastSeen(match.lastSeen)}`}
                           </div>
                         </div>
-                        
+
                         <div className="flex gap-2">
                           <Button asChild className="flex-1" size="sm">
                             <Link href={`/messages/${match.id}`}>

@@ -24,5 +24,4 @@ import { LinkifyPipe } from '../../shared/pipes/linkify.pipe';
   imports: [SharedModule, ChatRoutingModule],
   providers: [LinkifyPipe],
 })
-export class ChatModul {e {}
-';
+export class ChatModule {}

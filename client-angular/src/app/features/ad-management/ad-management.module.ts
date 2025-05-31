@@ -1,35 +1,29 @@
-import {
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,';
-} from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BadgeModule } from 'primeng/badge';
+import { ChipModule } from 'primeng/chip';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
-  imports: [;
+  imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbSpinnerModule,
-    NbBadgeModule,
-    NbTagModule,
-    NbSelectModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    ProgressSpinnerModule,
+    BadgeModule,
+    ChipModule,
+    DropdownModule,
   ],
   declarations: [],
   exports: [],
 })
-export class AdManagementModul {e {}
+export class AdManagementModule {}

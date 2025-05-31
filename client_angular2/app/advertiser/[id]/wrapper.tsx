@@ -11,7 +11,7 @@ import { DebugInfo } from '@/components/debug-info';
 
 export function AdvertiserDetailWrapper({ id }: { id: string }) {
   const router = useRouter();
-  const { getAdvertiser } = useData();
+  const { getAdvertiserById } = useData();
   const [advertiser, setAdvertiser] = useState<Advertiser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function AdvertiserDetailWrapper({ id }: { id: string }) {
 
     try {
       // Fetch the advertiser data
-      const fetchedAdvertiser = getAdvertiser(id);
+      const fetchedAdvertiser = getAdvertiserById(id);
       console.log('Fetched advertiser:', fetchedAdvertiser);
 
       if (fetchedAdvertiser) {
@@ -41,7 +41,7 @@ export function AdvertiserDetailWrapper({ id }: { id: string }) {
     } finally {
       setLoading(false);
     }
-  }, [id, getAdvertiser]);
+  }, [id, getAdvertiserById]);
 
   // Show loading state
   if (loading) {

@@ -18,7 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
   NbBadgeModule,
   NbTagModule,
   NbSelectModule,
-  NbToggleModule,';
+  NbToggleModule,
 } from '@nebular/theme';
 
 /**

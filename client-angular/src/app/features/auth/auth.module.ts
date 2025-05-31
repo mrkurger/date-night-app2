@@ -19,28 +19,24 @@ import { RequestPasswordComponent } from './components/request-password/request-
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 import { environment } from '../../../environments/environment';
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbAlertModule,
-  NbTooltipModule,
-  NbLayoutModule,
-  NbBadgeModule,
-  NbTagModule,
-  NbSelectModule,
-  NbCheckboxModule,';
-} from '@nebular/theme';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MessagesModule } from 'primeng/messages';
+import { TooltipModule } from 'primeng/tooltip';
+import { BadgeModule } from 'primeng/badge';
+import { ChipModule } from 'primeng/chip';
+import { DropdownModule } from 'primeng/dropdown';
 
 // Components
 
-const routes: Routes = [;
+const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
-    children: [;
+    children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'request-password', component: RequestPasswordComponent },
@@ -51,7 +47,7 @@ const routes: Routes = [;
 ]
 
 @NgModule({
-  imports: [;
+  imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
@@ -61,21 +57,18 @@ const routes: Routes = [;
     AuthLayoutComponent,
     RequestPasswordComponent,
     ResetPasswordComponent,
-    // Import Nebular modules
-    NbCardModule,
-    NbInputModule,
-    NbButtonModule,
-    NbIconModule,
-    NbCheckboxModule,
-    NbSpinnerModule,
-    NbFormFieldModule,
-    NbAlertModule,
-    NbTooltipModule,
-    NbLayoutModule,
-    NbBadgeModule,
-    NbTagModule,
-    NbSelectModule
+    // Import PrimeNG modules
+    CardModule,
+    InputTextModule,
+    ButtonModule,
+    CheckboxModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    TooltipModule,
+    BadgeModule,
+    ChipModule,
+    DropdownModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AuthModul {e {}
+export class AuthModule {}

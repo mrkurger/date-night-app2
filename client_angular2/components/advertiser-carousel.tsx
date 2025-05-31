@@ -1,62 +1,63 @@
-"use client"
+'use client';
 
-import { useState, useRef, useEffect } from "react"
-import { ChevronLeft, ChevronRight, MapPin, Star } from "lucide-react"
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, MapPin, Star } from 'lucide-react';
+import { getRandomFemaleImage } from '@/lib/data';
 
 interface Advertiser {
-  id: number
-  name: string
-  age: number
-  city: string
-  image: string
-  rating: number
-  distance: number
-  price: string
-  isOnline: boolean
+  id: number;
+  name: string;
+  age: number;
+  city: string;
+  image: string;
+  rating: number;
+  distance: number;
+  price: string;
+  isOnline: boolean;
 }
 
 interface AdvertiserCarouselProps {
-  advertisers: Advertiser[]
+  advertisers: Advertiser[];
 }
 
 export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const carouselRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const nextSlide = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentIndex((prev) => (prev + 1) % advertisers.length)
-    setTimeout(() => setIsAnimating(false), 300)
-  }
+  const nextSlide = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(prev => (prev + 1) % advertisers.length);
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, advertisers.length]);
 
-  const prevSlide = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentIndex((prev) => (prev - 1 + advertisers.length) % advertisers.length)
-    setTimeout(() => setIsAnimating(false), 300)
-  }
+  const prevSlide = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(prev => (prev - 1 + advertisers.length) % advertisers.length);
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, advertisers.length]);
 
   const goToSlide = (index: number) => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentIndex(index)
-    setTimeout(() => setIsAnimating(false), 300)
-  }
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(index);
+    setTimeout(() => setIsAnimating(false), 300);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") {
-        prevSlide()
-      } else if (event.key === "ArrowRight") {
-        nextSlide()
+      if (event.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (event.key === 'ArrowRight') {
+        nextSlide();
       }
-    }
+    };
 
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [])
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">
@@ -91,7 +92,7 @@ export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
             >
               <div className="relative h-96 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl overflow-hidden">
                 <img
-                  src={advertiser.image || "/placeholder.svg"}
+                  src={advertiser.image || getRandomFemaleImage()}
                   alt={advertiser.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -142,11 +143,11 @@ export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              index === currentIndex ? "bg-pink-500 scale-110" : "bg-gray-300 hover:bg-gray-400"
+              index === currentIndex ? 'bg-pink-500 scale-110' : 'bg-gray-300 hover:bg-gray-400'
             }`}
           />
         ))}
       </div>
     </div>
-  )
+  );
 }

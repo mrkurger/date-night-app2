@@ -19,7 +19,7 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { xssProtection } from './middleware/xss-protection.js';
 import hpp from 'hpp';
-import path from 'path';
+// import path from 'path'; // Unused
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import config from './config/environment.js';
@@ -30,7 +30,7 @@ import { patchExpressRoute } from './middleware/url-validator.js';
 import { setupOpenAPI } from './src/openapi/setup.js';
 
 const app = express();
-let server;
+let server; // eslint-disable-line no-unused-vars
 
 // Apply the patch to express.Route for all subsequent route definitions
 patchExpressRoute(express);
@@ -39,7 +39,7 @@ patchExpressRoute(express);
 client.collectDefaultMetrics();
 
 // health check endpoint
-app.get('/health', async (req, res) => {
+app.get('/health', async (_req, res) => {
   const mem = process.memoryUsage();
   res.json({
     status: 'ok',
@@ -80,7 +80,7 @@ setupOpenAPI(app);
 app.use('/api/v1', routes);
 
 // Error handling
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,

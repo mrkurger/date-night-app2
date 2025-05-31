@@ -156,6 +156,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  console.log('AuthContext initialized with login:', login);
+
   return (
     <AuthContext.Provider
       value={{
@@ -180,3 +182,5 @@ export function useAuth() {
   }
   return context;
 }
+
+export type { AuthContextType };

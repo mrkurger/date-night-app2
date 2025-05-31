@@ -1,44 +1,60 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
+import type { AuthContextType } from '@/context/auth-context';
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { useAuth } from "@/context/auth-context"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useAuth } from '@/context/auth-context';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const { login } = useAuth()
-  const router = useRouter()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth();
+  const router = useRouter();
+
+  if (!auth || !auth.login) {
+    throw new Error(
+      'Auth context or login method is not available. Please ensure AuthProvider is correctly initialized.',
+    );
+  }
+
+  const { login } = auth;
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
 
     try {
-      const result = await login(email, password)
+      const result = await login(email, password);
 
       if (result.success) {
-        router.push("/browse")
+        router.push('/browse');
       } else {
-        setError(result.message || "Invalid email or password")
+        setError(result.message || 'Invalid email or password');
       }
     } catch (err) {
-      setError("An unexpected error occurred")
-      console.error(err)
+      setError('An unexpected error occurred');
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen px-4">
@@ -56,7 +72,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="your.email@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 required
                 className="bg-gray-800/50 border-gray-700"
               />
@@ -72,18 +88,24 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 required
                 className="bg-gray-800/50 border-gray-700"
               />
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm p-2 bg-red-500/10 rounded-md border border-red-500/20">{error}</div>
+              <div className="text-red-500 text-sm p-2 bg-red-500/10 rounded-md border border-red-500/20">
+                {error}
+              </div>
             )}
 
-            <Button type="submit" className="w-full bg-pink-600 hover:bg-pink-700" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+            <Button
+              type="submit"
+              className="w-full bg-pink-600 hover:bg-pink-700"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Logging in...' : 'Login'}
             </Button>
 
             <div className="relative my-4">
@@ -96,18 +118,14 @@ export default function LoginPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="border-gray-700 hover:bg-gray-800">
-                Google
-              </Button>
-              <Button variant="outline" className="border-gray-700 hover:bg-gray-800">
-                Facebook
-              </Button>
+              <Button className="border-gray-700 hover:bg-gray-800">Google</Button>
+              <Button className="border-gray-700 hover:bg-gray-800">Facebook</Button>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-center text-gray-400">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-pink-500 hover:text-pink-400 font-medium">
               Sign up
             </Link>
@@ -115,5 +133,5 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

@@ -23,30 +23,98 @@ export interface Advertiser {
   createdAt?: string; // Or Date
 }
 
-// Replace the femaleImages array with these more realistic image URLs
+// Female profile images from assets/img/profiles
 const femaleImages = [
-  '/img/1.webp', // Replaced Unsplash URL
-  '/img/2.jpeg', // Replaced Unsplash URL
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1517841905240-b8d87734a5a2?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=600&fit=crop',
+  '/assets/img/profiles/female-01.jpg',
+  '/assets/img/profiles/female-02.jpg',
+  '/assets/img/profiles/female-03.jpg',
+  '/assets/img/profiles/female-04.jpg',
+  '/assets/img/profiles/female-05.jpg',
+  '/assets/img/profiles/female-06.jpg',
+  '/assets/img/profiles/female-07.jpg',
+  '/assets/img/profiles/female-08.jpg',
+  '/assets/img/profiles/female-09.jpg',
+  '/assets/img/profiles/female-10.jpg',
+  '/assets/img/profiles/female-11.jpg',
+  '/assets/img/profiles/female-12.jpg',
+  '/assets/img/profiles/female-13.jpg',
+  '/assets/img/profiles/female-14.jpg',
+  '/assets/img/profiles/female-15.jpg',
+  '/assets/img/profiles/female-16.jpg',
+  '/assets/img/profiles/female-17.jpg',
+  '/assets/img/profiles/female-18.jpg',
+  '/assets/img/profiles/female-19.jpg',
+  '/assets/img/profiles/female-20.jpg',
+  '/assets/img/profiles/female-21.jpg',
+  '/assets/img/profiles/female-22.jpg',
+  '/assets/img/profiles/female-23.jpg',
+  '/assets/img/profiles/female-24.jpg',
+  '/assets/img/profiles/female-25.jpg',
+  '/assets/img/profiles/female-26.jpg',
+  '/assets/img/profiles/female-27.jpg',
+  '/assets/img/profiles/female-28.jpg',
+  '/assets/img/profiles/female-29.jpg',
 ];
 
-// Add male images for variety
-const maleImages = [
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&h=600&fit=crop',
-  '/img/4.jpeg',
-  'https://images.unsplash.com/photo-1618077360395-f3068be8e001?q=80&w=400&h=600&fit=crop',
-];
+// Utility function to get a random female image
+export const getRandomFemaleImage = (): string => {
+  const randomIndex = Math.floor(Math.random() * femaleImages.length);
+  return femaleImages[randomIndex];
+};
 
-// Update the sample advertisers to use these images and add more image variety
+// Utility function to get a specific female image by index
+export const getFemaleImageByIndex = (index: number): string => {
+  return femaleImages[index % femaleImages.length];
+};
+
+// Utility function to get a fallback female image for any advertiser without an image
+export const getFallbackFemaleImage = (advertiserId?: string | number): string => {
+  if (advertiserId) {
+    // Use advertiser ID to get consistent image for the same advertiser
+    const id = typeof advertiserId === 'string' ? parseInt(advertiserId) || 0 : advertiserId;
+    return getFemaleImageByIndex(id);
+  }
+  return getRandomFemaleImage();
+};
+
+// Enhanced utility function to get profile image with male replacement logic
+export const getProfileImage = (advertiser: any): string => {
+  // Check if advertiser has a valid image and is not male
+  if (
+    advertiser.image &&
+    advertiser.image !== '/placeholder.svg' &&
+    advertiser.image !== '/assets/img/default-profile.jpg' &&
+    !advertiser.image.includes('placeholder') &&
+    advertiser.attributes?.gender !== 'male' &&
+    advertiser.gender !== 'male'
+  ) {
+    return advertiser.image;
+  }
+
+  // For male advertisers or missing images, return female image
+  return getFallbackFemaleImage(advertiser.id || advertiser._id);
+};
+
+// Utility function to check if an image URL is valid/not a placeholder
+export const isValidImageUrl = (imageUrl?: string): boolean => {
+  if (!imageUrl) return false;
+
+  const placeholderPatterns = [
+    '/placeholder.svg',
+    '/assets/img/default-profile.jpg',
+    '/assets/images/placeholder.jpg',
+    '/assets/images/default-profile.jpg',
+    'placeholder',
+    'default-profile',
+  ];
+
+  return !placeholderPatterns.some(pattern => imageUrl.includes(pattern));
+};
+
+// Export the female images array for use in other components
+export { femaleImages };
+
+// Update the sample advertisers to use female profile images
 const advertisers: Advertiser[] = [
   {
     id: 1,
@@ -54,7 +122,7 @@ const advertisers: Advertiser[] = [
     age: 24,
     city: 'Miami',
     location: 'Miami, FL',
-    image: '/img/enjoying-the-beach-v0-ecajs9ieitue1.webp', // Replaced Unsplash URL
+    image: getFemaleImageByIndex(0),
     rating: 4.9,
     price: '$150/hr',
     isOnline: true,
@@ -76,7 +144,7 @@ const advertisers: Advertiser[] = [
     age: 28,
     city: 'Los Angeles',
     location: 'Los Angeles, CA',
-    image: '/img/stranda.jpeg', // Replaced Unsplash URL
+    image: getFemaleImageByIndex(1),
     rating: 4.8,
     price: '$200/hr',
     isOnline: false,
@@ -98,8 +166,7 @@ const advertisers: Advertiser[] = [
     age: 26,
     city: 'New York',
     location: 'New York, NY',
-    image:
-      'https://images.unsplash.com/photo-1517841905240-b8d87734a5a2?q=80&w=400&h=600&fit=crop&crop=face',
+    image: getFemaleImageByIndex(2),
     rating: 4.7,
     price: '$180/hr',
     isOnline: true,
@@ -121,8 +188,7 @@ const advertisers: Advertiser[] = [
     age: 23,
     city: 'Las Vegas',
     location: 'Las Vegas, NV',
-    image:
-      'https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=400&h=600&fit=crop&crop=face',
+    image: getFemaleImageByIndex(3),
     rating: 4.9,
     price: '$220/hr',
     isOnline: true,
@@ -144,8 +210,7 @@ const advertisers: Advertiser[] = [
     age: 29,
     city: 'Chicago',
     location: 'Chicago, IL',
-    image:
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop&crop=face',
+    image: getFemaleImageByIndex(4),
     rating: 4.6,
     price: '$160/hr',
     isOnline: false,
@@ -163,38 +228,75 @@ const advertisers: Advertiser[] = [
   },
 ];
 
-// Update the function that adds more advertisers to use realistic images
+// Generate additional female advertisers using the profile images
 // Add more advertisers with different IDs
-for (let i = 6; i < 15; i++) {
-  const isFemale = Math.random() > 0.2; // 80% female advertisers
-  const imageArray = isFemale ? femaleImages : maleImages;
-  const randomImageIndex = Math.floor(Math.random() * imageArray.length);
-  const mainImage = imageArray[randomImageIndex];
+const femaleNames = [
+  'Aria',
+  'Luna',
+  'Maya',
+  'Zoe',
+  'Chloe',
+  'Mia',
+  'Lily',
+  'Grace',
+  'Ruby',
+  'Ivy',
+  'Jade',
+  'Rose',
+  'Sage',
+  'Iris',
+  'Hazel',
+  'Violet',
+  'Daisy',
+  'Willow',
+  'Aurora',
+  'Nova',
+];
+
+for (let i = 6; i < 35; i++) {
+  // Generate more advertisers to use all 29 images
+  const nameIndex = (i - 6) % femaleNames.length;
+  const femaleImageIndex = (i - 6) % femaleImages.length;
+
   advertisers.push({
     id: i,
-    name: isFemale ? `User${i}` : `UserM${i}`,
-    age: Math.floor(Math.random() * 15) + 20,
-    city: ['New York', 'Los Angeles', 'Chicago', 'Miami', 'Las Vegas'][
-      Math.floor(Math.random() * 5)
-    ],
-    location: ['New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Miami, FL', 'Las Vegas, NV'][
-      Math.floor(Math.random() * 5)
-    ],
-    image: mainImage,
-    rating: Math.round((Math.random() * 2 + 3) * 10) / 10,
-    price: `$${Math.floor(Math.random() * 100) + 100}/hr`,
-    isOnline: Math.random() > 0.3,
-    isVip: Math.random() > 0.7,
+    name: femaleNames[nameIndex],
+    age: Math.floor(Math.random() * 15) + 20, // Ages 20-34
+    city: [
+      'New York',
+      'Los Angeles',
+      'Chicago',
+      'Miami',
+      'Las Vegas',
+      'Seattle',
+      'Austin',
+      'Denver',
+    ][Math.floor(Math.random() * 8)],
+    location: [
+      'New York, NY',
+      'Los Angeles, CA',
+      'Chicago, IL',
+      'Miami, FL',
+      'Las Vegas, NV',
+      'Seattle, WA',
+      'Austin, TX',
+      'Denver, CO',
+    ][Math.floor(Math.random() * 8)],
+    image: getFemaleImageByIndex(femaleImageIndex),
+    rating: Math.round((Math.random() * 2 + 3) * 10) / 10, // 3.0-5.0 rating
+    price: `$${Math.floor(Math.random() * 200) + 100}/hr`, // $100-300/hr
+    isOnline: Math.random() > 0.3, // 70% online
+    isVip: Math.random() > 0.7, // 30% VIP
     description: 'A passionate and engaging companion ready to make your acquaintance.',
-    tags: ['Fun', 'Engaging', 'Social']
+    tags: ['Fun', 'Engaging', 'Social', 'Professional', 'Elegant', 'Charming']
       .sort(() => 0.5 - Math.random())
-      .slice(0, Math.floor(Math.random() * 2) + 1),
-    headline: `Exciting New Profile ${i}`,
-    reviewsCount: Math.floor(Math.random() * 100),
-    likes: Math.floor(Math.random() * 500),
-    commentsCount: Math.floor(Math.random() * 50),
-    hasPhotos: Math.random() > 0.2,
-    hasVideos: Math.random() > 0.5,
+      .slice(0, Math.floor(Math.random() * 3) + 1),
+    headline: `Meet ${femaleNames[nameIndex]} - Your Perfect Companion`,
+    reviewsCount: Math.floor(Math.random() * 150) + 10,
+    likes: Math.floor(Math.random() * 800) + 100,
+    commentsCount: Math.floor(Math.random() * 50) + 5,
+    hasPhotos: true, // All have photos
+    hasVideos: Math.random() > 0.4, // 60% have videos
     country: 'USA',
     createdAt: `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(
       Math.floor(Math.random() * 28) + 1,

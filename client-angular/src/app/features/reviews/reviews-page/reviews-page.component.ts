@@ -11,57 +11,80 @@ import { NotificationService } from '../../../core/services/notification.service
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
-@Component({';
-    selector: 'app-reviews-page',
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [;
-    CommonModule, RouterModule, NebularModule, ReviewsListComponent, ReviewFormComponent,
-    ButtonModule;
+@Component({
+  selector: 'app-reviews-page',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReviewsListComponent,
+    ReviewFormComponent,
+    ButtonModule,
+    CardModule,
   ],
-    template: `;`
-    ;
-      ;
-        ;
-          ;
-            ;
-              ;
-                ;
-              ;
-              ;
-                {{ adTitle }}
-                ;
-                  View Ad;
-                  ;
-                ;
-              ;
-            ;
+  template: `
+    <div class="reviews-page-container">
+      <p-card class="reviews-header-card">
+        <div class="reviews-header">
+          <div class="ad-info">
+            <div class="ad-image" *ngIf="adImage">
+              <img [src]="adImage" [alt]="adTitle" />
+            </div>
+            <div class="ad-details">
+              <h2 class="ad-title">{{ adTitle }}</h2>
+              <a [routerLink]="['/ads', adId]" class="ad-link">
+                <i class="pi pi-external-link"></i>
+                View Ad
+              </a>
+            </div>
+          </div>
+        </div>
+      </p-card>
 
-            ;
-              ;
-                ;
-                Write a Review;
-              ;
-            ;
-          ;
-        ;
-      ;
+      <p-card class="reviews-section">
+        <h3 class="section-title">Reviews ({{ totalReviews }})</h3>
 
-      ;
-      ;
-        ;
-      ;
+        <div class="review-form-wrapper" *ngIf="!hasReviewed && !showReviewForm">
+          <p-button
+            label="Write a Review"
+            icon="pi pi-plus"
+            (click)="showAddReviewForm()"
+            [disabled]="!currentUserId"
+          >
+          </p-button>
+        </div>
 
-      ;
-      ;
-        Reviews;
+        <div class="review-form-wrapper" *ngIf="showReviewForm">
+          <app-review-form
+            [adId]="adId"
+            [editingReview]="editingReview"
+            (reviewSubmitted)="onReviewSubmitted($event)"
+            (cancelled)="onCancelReview()"
+          >
+          </app-review-form>
+        </div>
 
-        ;
-      ;
-    ;
-  `,`
-    styles: [;
-        `;`
+        <app-reviews-list
+          [reviews]="reviews"
+          [loading]="loading"
+          [currentUserId]="currentUserId"
+          [totalReviews]="totalReviews"
+          [currentPage]="currentPage"
+          [pageSize]="pageSize"
+          (pageChange)="onPageChange($event)"
+          (editReview)="onEditReview($event)"
+          (deleteReview)="onDeleteReview($event)"
+          (reactionChange)="onReactionChange($event)"
+        >
+        </app-reviews-list>
+      </p-card>
+    </div>
+  `,
+  styles: [
+    `
       :host {
         display: block;
       }
@@ -90,7 +113,7 @@ import { ButtonModule } from 'primeng/button';
       .ad-image {
         width: 120px;
         height: 120px;
-        border-radius: var(--border-radius)
+        border-radius: var(--border-radius);
         overflow: hidden;
 
         img {
@@ -103,14 +126,14 @@ import { ButtonModule } from 'primeng/button';
       .ad-details {
         .ad-title {
           margin: 0 0 0.5rem;
-          color: var(--text-basic-color)
+          color: var(--text-basic-color);
         }
 
         .ad-link {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          color: var(--text-primary-color)
+          color: var(--text-primary-color);
           text-decoration: none;
 
           &:hover {
@@ -121,21 +144,21 @@ import { ButtonModule } from 'primeng/button';
 
       .section-title {
         margin: 0 0 1.5rem;
-        color: var(--text-basic-color)
+        color: var(--text-basic-color);
       }
 
       .review-form-wrapper {
         margin-bottom: 2rem;
       }
-    `,`
-    ]
+    `,
+  ],
 })
-export class ReviewsPageComponen {t implements OnInit {
+export class ReviewsPageComponent implements OnInit {
   adId = '';
   adTitle = '';
   adImage = '';
 
-  reviews: Review[] = []
+  reviews: Review[] = [];
   totalReviews = 0;
   currentPage = 1;
   pageSize = 10;
@@ -147,7 +170,7 @@ export class ReviewsPageComponen {t implements OnInit {
   currentUserId: string | null = null;
   hasReviewed = false;
 
-  constructor(;
+  constructor(
     private route: ActivatedRoute,
     private reviewsService: ReviewsService,
     private adService: AdService,
@@ -159,10 +182,10 @@ export class ReviewsPageComponen {t implements OnInit {
     this.currentUserId = this.authService.getCurrentUser()?.id;
 
     this.route.params.subscribe((params) => {
-      this.adId = params['id']
-      this.loadAdDetails()
-      this.loadReviews()
-    })
+      this.adId = params['id'];
+      this.loadAdDetails();
+      this.loadReviews();
+    });
   }
 
   /**
@@ -171,13 +194,13 @@ export class ReviewsPageComponen {t implements OnInit {
   loadAdDetails(): void {
     if (!this.adId) return;
 
-    this.adService;
+    this.adService
       .getAdById(this.adId)
-      .pipe(;
+      .pipe(
         catchError((error) => {
-          console.error('Error loading ad details:', error)
-          this.notificationService.error('Failed to load ad details')
-          return of(null)
+          console.error('Error loading ad details:', error);
+          this.notificationService.error('Failed to load ad details');
+          return of(null);
         }),
       )
       .subscribe((ad) => {
@@ -187,7 +210,7 @@ export class ReviewsPageComponen {t implements OnInit {
           // Handle images safely
           if (ad.images && Array.isArray(ad.images) && ad.images.length > 0) {
             if (typeof ad.images[0] === 'string') {
-              this.adImage = ad.images[0]
+              this.adImage = ad.images[0];
             } else if (typeof ad.images[0] === 'object' && 'url' in ad.images[0]) {
               this.adImage = (ad.images[0] as { url: string }).url;
             } else {
@@ -197,7 +220,7 @@ export class ReviewsPageComponen {t implements OnInit {
             this.adImage = '';
           }
         }
-      })
+      });
   }
 
   /**
@@ -208,9 +231,9 @@ export class ReviewsPageComponen {t implements OnInit {
 
     this.loading = true;
 
-    this.reviewsService;
+    this.reviewsService
       .getAdReviews(this.adId, this.currentPage, this.pageSize)
-      .pipe(;
+      .pipe(
         tap((response) => {
           this.reviews = response.reviews;
           this.totalReviews = response.total;
@@ -218,19 +241,19 @@ export class ReviewsPageComponen {t implements OnInit {
 
           // Check if the current user has already reviewed this ad
           if (this.currentUserId) {
-            this.hasReviewed = this.reviews.some((review) => review.userId === this.currentUserId)
+            this.hasReviewed = this.reviews.some((review) => review.userId === this.currentUserId);
           }
         }),
         catchError((error) => {
-          console.error('Error loading reviews:', error)
-          this.notificationService.error('Failed to load reviews')
-          return of(null)
+          console.error('Error loading reviews:', error);
+          this.notificationService.error('Failed to load reviews');
+          return of(null);
         }),
         tap(() => {
           this.loading = false;
         }),
       )
-      .subscribe()
+      .subscribe();
   }
 
   /**
@@ -238,7 +261,7 @@ export class ReviewsPageComponen {t implements OnInit {
    */
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadReviews()
+    this.loadReviews();
   }
 
   /**
@@ -246,7 +269,7 @@ export class ReviewsPageComponen {t implements OnInit {
    */
   showAddReviewForm(): void {
     if (!this.authService.isAuthenticated()) {
-      this.notificationService.info('Please log in to write a review')
+      this.notificationService.info('Please log in to write a review');
       return;
     }
 
@@ -268,39 +291,39 @@ export class ReviewsPageComponen {t implements OnInit {
   onReviewSubmitted(reviewData: ReviewData): void {
     if (this.editingReview) {
       // Update existing review
-      this.reviewsService;
+      this.reviewsService
         .updateReview(this.editingReview._id, reviewData)
-        .pipe(;
+        .pipe(
           tap(() => {
-            this.notificationService.success('Review updated successfully')
+            this.notificationService.success('Review updated successfully');
             this.showReviewForm = false;
             this.editingReview = null;
-            this.loadReviews()
+            this.loadReviews();
           }),
           catchError((error) => {
-            console.error('Error updating review:', error)
-            this.notificationService.error('Failed to update review')
-            return of(null)
+            console.error('Error updating review:', error);
+            this.notificationService.error('Failed to update review');
+            return of(null);
           }),
         )
-        .subscribe()
+        .subscribe();
     } else {
       // Create new review
-      this.reviewsService;
+      this.reviewsService
         .createReview(this.adId, reviewData)
-        .pipe(;
+        .pipe(
           tap(() => {
-            this.notificationService.success('Review submitted successfully')
+            this.notificationService.success('Review submitted successfully');
             this.showReviewForm = false;
-            this.loadReviews()
+            this.loadReviews();
           }),
           catchError((error) => {
-            console.error('Error submitting review:', error)
-            this.notificationService.error('Failed to submit review')
-            return of(null)
+            console.error('Error submitting review:', error);
+            this.notificationService.error('Failed to submit review');
+            return of(null);
           }),
         )
-        .subscribe()
+        .subscribe();
     }
   }
 
@@ -308,20 +331,20 @@ export class ReviewsPageComponen {t implements OnInit {
    * Handle review deletion;
    */
   onDeleteReview(reviewId: string): void {
-    this.reviewsService;
+    this.reviewsService
       .deleteReview(reviewId)
-      .pipe(;
+      .pipe(
         tap(() => {
-          this.notificationService.success('Review deleted successfully')
-          this.loadReviews()
+          this.notificationService.success('Review deleted successfully');
+          this.loadReviews();
         }),
         catchError((error) => {
-          console.error('Error deleting review:', error)
-          this.notificationService.error('Failed to delete review')
-          return of(null)
+          console.error('Error deleting review:', error);
+          this.notificationService.error('Failed to delete review');
+          return of(null);
         }),
       )
-      .subscribe()
+      .subscribe();
   }
 
   /**
@@ -329,24 +352,24 @@ export class ReviewsPageComponen {t implements OnInit {
    */
   onReactionChange(event: { reviewId: string; reaction: 'helpful' | 'unhelpful' | null }): void {
     if (!this.authService.isAuthenticated()) {
-      this.notificationService.info('Please log in to rate reviews')
+      this.notificationService.info('Please log in to rate reviews');
       return;
     }
 
-    this.reviewsService;
+    this.reviewsService
       .rateReview(event.reviewId, event.reaction)
-      .pipe(;
+      .pipe(
         tap(() => {
           // Update the review in the list
-          this.loadReviews()
+          this.loadReviews();
         }),
         catchError((error) => {
-          console.error('Error rating review:', error)
-          this.notificationService.error('Failed to rate review')
-          return of(null)
+          console.error('Error rating review:', error);
+          this.notificationService.error('Failed to rate review');
+          return of(null);
         }),
       )
-      .subscribe()
+      .subscribe();
   }
 
   /**

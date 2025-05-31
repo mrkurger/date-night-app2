@@ -1,12 +1,12 @@
-import { ethers } from 'ethers';
-import * as bitcoin from 'bitcoinjs-lib';
-import * as bip39 from 'bip39';
-import * as ecc from 'tiny-secp256k1';
-import { BIP32Factory } from 'bip32';
-import { encrypt, decrypt } from '../utils/encryption.js';
+// import { ethers } from 'ethers'; // Unused
+// import * as bitcoin from 'bitcoinjs-lib'; // Unused
+// import * as bip39 from 'bip39'; // Unused
+// import * as ecc from 'tiny-secp256k1'; // Unused
+// import { BIP32Factory } from 'bip32'; // Unused
+// import { encrypt, decrypt } from '../utils/encryption.js'; // Unused
 import { logger } from '../utils/logger.js';
 
-const bip32 = BIP32Factory(ecc);
+// const bip32 = BIP32Factory(ecc); // Unused
 
 class CryptoService {
   /**
@@ -22,9 +22,9 @@ class CryptoService {
       if (!this.validateCurrencyNetwork(currency, network)) {
         throw new Error(`Invalid currency/network combination: ${currency}/${network}`);
       }
-      
+
       // Generate wallet based on currency
-      switch(currency) {
+      switch (currency) {
         case 'ETH':
         case 'USDT':
         case 'USDC':
@@ -38,7 +38,7 @@ class CryptoService {
       throw error;
     }
   }
-  
+
   // Implementation methods for specific currencies...
 }
 

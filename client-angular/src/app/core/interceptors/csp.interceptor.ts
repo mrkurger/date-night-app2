@@ -15,10 +15,10 @@ export const cspInterceptor: HttpInterceptorFn = (
   // Only add CSP headers to same-origin requests
   if (isSameOrigin(request.url)) {
     request = request.clone({
-      setHeaders: {';
+      setHeaders: {
         'Content-Security-Policy': getCSPPolicy(),
       },
-    })
+    });
   }
 
   return next(request)

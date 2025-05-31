@@ -87,7 +87,7 @@ export class SecurityMiddleware {
   /**
    * Apply additional security checks to specific routes
    */
-  static validateRoute(validations: Array<(req: Request) => boolean>) {
+  static validateRoute(validations: Array<(_req: Request) => boolean>) {
     return (req: Request, res: Response, next: NextFunction) => {
       try {
         const failedValidations = validations

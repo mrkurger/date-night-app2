@@ -7,19 +7,23 @@
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
+    "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "src/*": ["./src/*"]
     },
     "types": ["jest", "node", "express", "multer"],
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "checkJs": false,
+    "typeRoots": ["./node_modules/@types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "jsx": "preserve"

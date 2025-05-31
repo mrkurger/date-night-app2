@@ -15,7 +15,7 @@ interface MulterFile {
   path: string;
   size: number;
   buffer?: Buffer;
-  stream?: NodeJS.ReadableStream;
+  stream?: any;
 }
 
 type MockRequestParams = { [key: string]: string | undefined };
@@ -128,8 +128,12 @@ describe('File Access Middleware', () => {
   describe('fileAccess middleware', () => {
     it('should allow access to files with valid extensions', async () => {
       req.params.filename = 'test.jpg';
-      (fs.promises.access as jest.Mock).mockResolvedValueOnce(undefined); // File exists
-      (fs.promises.stat as jest.Mock).mockResolvedValueOnce({ size: 1000 });
+      (fs.promises.access as jest.MockedFunction<typeof fs.promises.access>).mockResolvedValueOnce(
+        undefined
+      ); // File exists
+      (fs.promises.stat as jest.MockedFunction<typeof fs.promises.stat>).mockResolvedValueOnce({
+        size: 1000,
+      } as any);
 
       await fileAccess(req as any, res as any, mockNext);
 

@@ -1,24 +1,28 @@
 <p-card>
-  <p-card-header >
-    <p-tabView fullWidth (changeTab)="changeView($event.tabTitle.toLowerCase())" >
-      <p-tabPanel tabTitle="Discover" [active]="activeView === 'netflix'">
-        <ng-template nbTabIcon>
-          <i class="pi pi-grid"></i>
+  <ng-template pTemplate="header">
+    <p-tabView (onChange)="changeView($event.index)" [activeIndex]="getActiveIndex()">
+      <p-tabPanel header="Discover">
+        <ng-template pTemplate="header">
+          <i class="pi pi-grid mr-2"></i>
+          Discover
         </ng-template>
       </p-tabPanel>
-      <p-tabPanel tabTitle="Swipe" [active]="activeView === 'tinder'">
-        <ng-template nbTabIcon>
-          <i class="pi pi-heart"></i>
+      <p-tabPanel header="Swipe">
+        <ng-template pTemplate="header">
+          <i class="pi pi-heart mr-2"></i>
+          Swipe
         </ng-template>
       </p-tabPanel>
-      <p-tabPanel tabTitle="List" [active]="activeView === 'list'">
-        <ng-template nbTabIcon>
-          <i class="pi pi-list"></i>
+      <p-tabPanel header="List">
+        <ng-template pTemplate="header">
+          <i class="pi pi-list mr-2"></i>
+          List
         </ng-template>
       </p-tabPanel>
     </p-tabView>
   </ng-template>
-  <p-card-body >
+
+  <ng-template pTemplate="content">
     <!-- View Content -->
     <div class="view-content">
       <app-netflix-view *ngIf="activeView === 'netflix'"></app-netflix-view>

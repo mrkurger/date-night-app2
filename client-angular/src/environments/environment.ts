@@ -29,9 +29,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api/v1',
-  chatWsUrl: 'ws://localhost:3000',
-  socketUrl: 'http://localhost:3000',
+  apiUrl: 'http://localhost:3001/api/v1',
+  chatWsUrl: 'ws://localhost:3001',
+  socketUrl: 'http://localhost:3001',
   defaultImageUrl: '/assets/images/default-ad.jpg',
   maxUploadSize: 5 * 1024 * 1024, // 5MB
   supportedImageTypes: ['image/jpeg', 'image/png', 'image/webp'],

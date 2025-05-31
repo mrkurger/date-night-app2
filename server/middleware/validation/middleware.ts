@@ -67,6 +67,7 @@ export class ValidationMiddleware {
    * Combine multiple validation middlewares
    */
   static combine(
+    // eslint-disable-next-line no-unused-vars
     ...middlewares: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
   ) {
     return async (req: Request, res: Response, next: NextFunction) => {

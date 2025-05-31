@@ -1,41 +1,42 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { getRandomFemaleImage } from '@/lib/data';
 
 interface ImageCarouselProps {
-  images: string[]
-  className?: string
-  showDots?: boolean
+  images: string[];
+  className?: string;
+  showDots?: boolean;
 }
 
 export default function ImageCarousel({ images, className, showDots = true }: ImageCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Default image if no images are provided
   if (!images || images.length === 0) {
-    images = ["/placeholder.svg?height=400&width=300&text=No+Image"]
+    images = [getRandomFemaleImage()];
   }
 
   const goToPrevious = () => {
-    const isFirstSlide = currentIndex === 0
-    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1
-    setCurrentIndex(newIndex)
-  }
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
 
   const goToNext = () => {
-    const isLastSlide = currentIndex === images.length - 1
-    const newIndex = isLastSlide ? 0 : currentIndex + 1
-    setCurrentIndex(newIndex)
-  }
+    const isLastSlide = currentIndex === images.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
 
   const goToSlide = (slideIndex: number) => {
-    setCurrentIndex(slideIndex)
-  }
+    setCurrentIndex(slideIndex);
+  };
 
   return (
-    <div className={cn("relative w-full h-full group", className)}>
+    <div className={cn('relative w-full h-full group', className)}>
       <div className="w-full h-full overflow-hidden">
         <div
           className="w-full h-full bg-center bg-cover duration-500"
@@ -65,13 +66,13 @@ export default function ImageCarousel({ images, className, showDots = true }: Im
               key={slideIndex}
               onClick={() => goToSlide(slideIndex)}
               className={cn(
-                "cursor-pointer w-2 h-2 rounded-full",
-                slideIndex === currentIndex ? "bg-white" : "bg-white/50",
+                'cursor-pointer w-2 h-2 rounded-full',
+                slideIndex === currentIndex ? 'bg-white' : 'bg-white/50',
               )}
             />
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -17,5 +17,4 @@ import { FavoritesPageComponent } from './favorites-page/favorites-page.componen
   declarations: [],
   imports: [CommonModule, FavoritesRoutingModule, FavoritesListComponent, FavoritesPageComponent],
 })
-export class FavoritesModul {e {}
-';
+export class FavoritesModule {}

@@ -12,10 +12,9 @@ import { AdDetailsComponent } from './ad-details.component';
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 
-';
-const routes: Routes = [{ path: '', component: AdDetailsComponent }]
+const routes: Routes = [{ path: '', component: AdDetailsComponent }];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), AdDetailsComponent],
 })
-export class AdDetailsModul {e {}
+export class AdDetailsModule {}

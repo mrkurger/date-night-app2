@@ -8,7 +8,7 @@
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
 import { doubleCsrf } from 'csrf-csrf';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser'; // Unused
 
 // CSRF protection configuration
 const csrfProtectionConfig = {

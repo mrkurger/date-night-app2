@@ -23,7 +23,7 @@ import hpp from 'hpp';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose'; // Unused
 import cookieParser from 'cookie-parser';
 import config from './config/environment.js';
 import routes from './routes/index.js';
@@ -340,7 +340,7 @@ process.on('unhandledRejection', error => {
 const startServer = async () => {
   try {
     await connectWithRetry();
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3001;
     server = app.listen(PORT, () => {
       // Assign to top-level server variable
       console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);

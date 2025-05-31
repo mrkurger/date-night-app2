@@ -1,31 +1,32 @@
-"use client"
+'use client';
 
-import type React from "react"
-import { useState, useRef } from "react"
-import { Heart, X, Star, DollarSign, Zap, Crown, Gift, Sparkles } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import type React from 'react';
+import { useState, useRef } from 'react';
+import { Heart, X, Star, DollarSign, Zap, Crown, Gift, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { getProfileImage, getFallbackFemaleImage } from '@/lib/data';
 
 interface Advertiser {
-  id: number
-  name: string
-  age: number
-  location: string
-  image: string
-  isOnline: boolean
-  isVip: boolean
-  price: number
-  rating: number
-  totalEarnings: number
+  id: number;
+  name: string;
+  age: number;
+  location: string;
+  image: string;
+  isOnline: boolean;
+  isVip: boolean;
+  price: number;
+  rating: number;
+  totalEarnings: number;
 }
 
 const advertisers: Advertiser[] = [
   {
     id: 1,
-    name: "Sophia",
+    name: 'Sophia',
     age: 24,
-    location: "Miami, FL",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=600&fit=crop&crop=face",
+    location: 'Miami, FL',
+    image: getFallbackFemaleImage(1),
     isOnline: true,
     isVip: true,
     price: 150,
@@ -34,10 +35,10 @@ const advertisers: Advertiser[] = [
   },
   {
     id: 2,
-    name: "Isabella",
+    name: 'Isabella',
     age: 28,
-    location: "Los Angeles, CA",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=600&fit=crop&crop=face",
+    location: 'Los Angeles, CA',
+    image: getFallbackFemaleImage(2),
     isOnline: true,
     isVip: false,
     price: 120,
@@ -46,10 +47,10 @@ const advertisers: Advertiser[] = [
   },
   {
     id: 3,
-    name: "Emma",
+    name: 'Emma',
     age: 22,
-    location: "New York, NY",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop&crop=face",
+    location: 'New York, NY',
+    image: getFallbackFemaleImage(3),
     isOnline: false,
     isVip: true,
     price: 180,
@@ -58,10 +59,10 @@ const advertisers: Advertiser[] = [
   },
   {
     id: 4,
-    name: "Olivia",
+    name: 'Olivia',
     age: 26,
-    location: "Las Vegas, NV",
-    image: "https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=400&h=600&fit=crop&crop=face",
+    location: 'Las Vegas, NV',
+    image: getFallbackFemaleImage(4),
     isOnline: true,
     isVip: false,
     price: 100,
@@ -70,106 +71,106 @@ const advertisers: Advertiser[] = [
   },
   {
     id: 5,
-    name: "Ava",
+    name: 'Ava',
     age: 25,
-    location: "Chicago, IL",
-    image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=600&fit=crop&crop=face",
+    location: 'Chicago, IL',
+    image: getFallbackFemaleImage(5),
     isOnline: true,
     isVip: true,
     price: 160,
     rating: 4.9,
     totalEarnings: 11400,
   },
-]
+];
 
-const tipAmounts = [5, 10, 25, 50, 100, 250, 500, 1000]
+const tipAmounts = [5, 10, 25, 50, 100, 250, 500, 1000];
 
 export default function EnhancedTinderView() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const [isDragging, setIsDragging] = useState(false)
-  const [showTipModal, setShowTipModal] = useState(false)
-  const [selectedTipAmount, setSelectedTipAmount] = useState(0)
-  const [rainEffect, setRainEffect] = useState(false)
-  const [userBalance, setUserBalance] = useState(2500)
-  const [totalTipped, setTotalTipped] = useState(0)
-  const [streak, setStreak] = useState(0)
-  const [multiplier, setMultiplier] = useState(1)
-  const cardRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [showTipModal, setShowTipModal] = useState(false);
+  const [selectedTipAmount, setSelectedTipAmount] = useState(0);
+  const [rainEffect, setRainEffect] = useState(false);
+  const [userBalance, setUserBalance] = useState(2500);
+  const [totalTipped, setTotalTipped] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [multiplier, setMultiplier] = useState(1);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const currentAdvertiser = advertisers[currentIndex]
+  const currentAdvertiser = advertisers[currentIndex];
 
-  const handleSwipe = (direction: "left" | "right") => {
-    if (direction === "right") {
+  const handleSwipe = (direction: 'left' | 'right') => {
+    if (direction === 'right') {
       // Liked - show tip modal
-      setShowTipModal(true)
+      setShowTipModal(true);
     } else {
       // Passed - move to next
-      nextCard()
+      nextCard();
     }
-  }
+  };
 
   const nextCard = () => {
-    setCurrentIndex((prev) => (prev + 1) % advertisers.length)
-    setDragOffset({ x: 0, y: 0 })
-  }
+    setCurrentIndex(prev => (prev + 1) % advertisers.length);
+    setDragOffset({ x: 0, y: 0 });
+  };
 
   const handleTip = (amount: number) => {
     if (amount <= userBalance) {
-      setUserBalance((prev) => prev - amount)
-      setTotalTipped((prev) => prev + amount)
-      setStreak((prev) => prev + 1)
+      setUserBalance(prev => prev - amount);
+      setTotalTipped(prev => prev + amount);
+      setStreak(prev => prev + 1);
 
       // Calculate multiplier based on streak
-      const newMultiplier = Math.min(5, 1 + Math.floor(streak / 3) * 0.5)
-      setMultiplier(newMultiplier)
+      const newMultiplier = Math.min(5, 1 + Math.floor(streak / 3) * 0.5);
+      setMultiplier(newMultiplier);
 
       // Trigger rain effect for big tips
       if (amount >= 100) {
-        setRainEffect(true)
-        setTimeout(() => setRainEffect(false), 3000)
+        setRainEffect(true);
+        setTimeout(() => setRainEffect(false), 3000);
       }
 
-      setShowTipModal(false)
-      nextCard()
+      setShowTipModal(false);
+      nextCard();
     }
-  }
+  };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    setIsDragging(true)
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY
+    setIsDragging(true);
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
     const handleDragMove = (moveEvent: MouseEvent | TouchEvent) => {
-      const moveClientX = "touches" in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX
-      const moveClientY = "touches" in moveEvent ? moveEvent.touches[0].clientY : moveEvent.clientY
+      const moveClientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
+      const moveClientY = 'touches' in moveEvent ? moveEvent.touches[0].clientY : moveEvent.clientY;
 
       setDragOffset({
         x: moveClientX - clientX,
         y: moveClientY - clientY,
-      })
-    }
+      });
+    };
 
     const handleDragEnd = () => {
-      setIsDragging(false)
+      setIsDragging(false);
 
       if (Math.abs(dragOffset.x) > 100) {
-        handleSwipe(dragOffset.x > 0 ? "right" : "left")
+        handleSwipe(dragOffset.x > 0 ? 'right' : 'left');
       } else {
-        setDragOffset({ x: 0, y: 0 })
+        setDragOffset({ x: 0, y: 0 });
       }
 
-      document.removeEventListener("mousemove", handleDragMove)
-      document.removeEventListener("mouseup", handleDragEnd)
-      document.removeEventListener("touchmove", handleDragMove)
-      document.removeEventListener("touchend", handleDragEnd)
-    }
+      document.removeEventListener('mousemove', handleDragMove);
+      document.removeEventListener('mouseup', handleDragEnd);
+      document.removeEventListener('touchmove', handleDragMove);
+      document.removeEventListener('touchend', handleDragEnd);
+    };
 
-    document.addEventListener("mousemove", handleDragMove)
-    document.addEventListener("mouseup", handleDragEnd)
-    document.addEventListener("touchmove", handleDragMove)
-    document.addEventListener("touchend", handleDragEnd)
-  }
+    document.addEventListener('mousemove', handleDragMove);
+    document.addEventListener('mouseup', handleDragEnd);
+    document.addEventListener('touchmove', handleDragMove);
+    document.addEventListener('touchend', handleDragEnd);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 relative overflow-hidden">
@@ -227,7 +228,7 @@ export default function EnhancedTinderView() {
             >
               <div className="relative h-[600px]">
                 <img
-                  src={advertiser.image || "/placeholder.svg"}
+                  src={advertiser.image || '/placeholder.svg'}
                   alt={advertiser.name}
                   className="w-full h-full object-cover"
                 />
@@ -241,16 +242,18 @@ export default function EnhancedTinderView() {
             ref={cardRef}
             className="relative rounded-3xl overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing"
             style={{
-              transform: `translateX(${dragOffset.x}px) translateY(${dragOffset.y}px) rotate(${dragOffset.x * 0.1}deg)`,
+              transform: `translateX(${dragOffset.x}px) translateY(${dragOffset.y}px) rotate(${
+                dragOffset.x * 0.1
+              }deg)`,
               zIndex: 20,
-              transition: isDragging ? "none" : "transform 0.3s ease-out",
+              transition: isDragging ? 'none' : 'transform 0.3s ease-out',
             }}
             onMouseDown={handleDragStart}
             onTouchStart={handleDragStart}
           >
             <div className="relative h-[600px]">
               <img
-                src={currentAdvertiser.image || "/placeholder.svg"}
+                src={currentAdvertiser.image || '/placeholder.svg'}
                 alt={currentAdvertiser.name}
                 className="w-full h-full object-cover"
               />
@@ -298,7 +301,7 @@ export default function EnhancedTinderView() {
 
                 {/* Quick Tip Buttons */}
                 <div className="flex gap-2 mb-4">
-                  {[10, 25, 50].map((amount) => (
+                  {[10, 25, 50].map(amount => (
                     <Button
                       key={amount}
                       size="sm"
@@ -335,7 +338,7 @@ export default function EnhancedTinderView() {
         <Button
           size="lg"
           className="bg-red-500 hover:bg-red-600 rounded-full w-16 h-16 p-0"
-          onClick={() => handleSwipe("left")}
+          onClick={() => handleSwipe('left')}
         >
           <X className="w-8 h-8 text-white" />
         </Button>
@@ -351,7 +354,7 @@ export default function EnhancedTinderView() {
         <Button
           size="lg"
           className="bg-green-500 hover:bg-green-600 rounded-full w-16 h-16 p-0"
-          onClick={() => handleSwipe("right")}
+          onClick={() => handleSwipe('right')}
         >
           <Heart className="w-8 h-8 text-white fill-current" />
         </Button>
@@ -364,7 +367,7 @@ export default function EnhancedTinderView() {
             <div className="text-center mb-6">
               <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500">
                 <img
-                  src={currentAdvertiser.image || "/placeholder.svg"}
+                  src={currentAdvertiser.image || '/placeholder.svg'}
                   alt={currentAdvertiser.name}
                   className="w-full h-full object-cover"
                 />
@@ -379,11 +382,11 @@ export default function EnhancedTinderView() {
             </div>
 
             <div className="grid grid-cols-4 gap-3 mb-6">
-              {tipAmounts.map((amount) => (
+              {tipAmounts.map(amount => (
                 <Button
                   key={amount}
                   className={`bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white border-0 ${
-                    amount > userBalance ? "opacity-50 cursor-not-allowed" : ""
+                    amount > userBalance ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   onClick={() => handleTip(amount)}
                   disabled={amount > userBalance}
@@ -403,7 +406,7 @@ export default function EnhancedTinderView() {
               </Button>
               <Button
                 className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0"
-                onClick={() => handleSwipe("right")}
+                onClick={() => handleSwipe('right')}
               >
                 <Heart className="w-4 h-4 mr-2 fill-current" />
                 Like
@@ -421,5 +424,5 @@ export default function EnhancedTinderView() {
         <Sparkles className="w-6 h-6 text-white" />
       </Button>
     </div>
-  )
+  );
 }

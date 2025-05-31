@@ -198,4 +198,12 @@
 }
 
 .nav-link.btn-outline-login:hover {
+  color: var(--primary);
+}
+
+.navbar .dropdown-menu {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
 }

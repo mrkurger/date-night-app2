@@ -55,6 +55,15 @@ body {
     --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
     --sidebar-border: oklch(0.92 0.004 286.32);
     --sidebar-ring: oklch(0.623 0.214 259.815);
+
+    /* Casino MagicUI Variables */
+    --color-1: #ff6b6b;
+    --color-2: #4ecdc4;
+    --color-3: #45b7d1;
+    --color-4: #96ceb4;
+    --color-5: #feca57;
+    --speed: 2s;
+    --duration: 600ms;
   }
   .dark {
     --background: oklch(0.141 0.005 285.823);
@@ -88,6 +97,18 @@ body {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.488 0.243 264.376);
+
+    /* Casino MagicUI Variables - Dark Mode */
+    --color-1: #ff8a80;
+    --color-2: #80cbc4;
+    --color-3: #81c784;
+    --color-4: #a5d6a7;
+    --color-5: #ffcc02;
+    --speed: 2s;
+    --duration: 600ms;
+  }
+  .theme {
+    --animate-meteor: meteor 5s linear infinite;
   }
 }
 
@@ -97,5 +118,27 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@theme inline {
+  @keyframes meteor {
+    0% {
+      transform: rotate(215deg) translateX(0);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(215deg) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes border-beam {
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }

@@ -80,15 +80,16 @@ export const routes: Routes = [
       import('./features/gallery/gallery.component').then((m) => m.GalleryComponent),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'location-matching',
-    loadComponent: () =>
-      import('./features/location-matching/location-matching.component').then(
-        (m) => m.LocationMatchingComponent,
-      ),
-    canActivate: [AuthGuard],
-    data: { title: 'Location-Based Matching' },
-  },
+  // Temporarily disabled due to syntax errors - needs complex refactoring
+  // {
+  //   path: 'location-matching',
+  //   loadComponent: () =>
+  //     import('./features/location-matching/location-matching.component').then(
+  //       (m) => m.LocationMatchingComponent,
+  //     ),
+  //   canActivate: [AuthGuard],
+  //   data: { title: 'Location-Based Matching' },
+  // },
 
   // View-specific routes
   {
@@ -110,15 +111,15 @@ export const routes: Routes = [
     data: { title: 'List View' },
   },
 
-  // Design System Demo
-  {
-    path: 'design-system',
-    loadComponent: () =>
-      import('./features/design-system-demo/design-system-demo.component').then(
-        (m) => m.DesignSystemDemoComponent,
-      ),
-    data: { title: 'Design System Demo' },
-  },
+  // Design System Demo - Temporarily disabled due to syntax errors
+  // {
+  //   path: 'design-system',
+  //   loadComponent: () =>
+  //     import('./features/design-system-demo/design-system-demo.component').then(
+  //       (m) => m.DesignSystemDemoComponent,
+  //     ),
+  //   data: { title: 'Design System Demo' },
+  // },
 
   // Style Guide
   {

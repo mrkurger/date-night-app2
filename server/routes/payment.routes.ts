@@ -1,5 +1,5 @@
 import express from 'express';
-import type { Request, Response, NextFunction } from 'express';
+// import type { Request, Response, NextFunction } from 'express'; // Unused
 import paymentController from '../controllers/payment.controller.js';
 import { protect } from '../middleware/auth.js';
 import bodyParser from 'body-parser';

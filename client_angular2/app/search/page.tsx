@@ -3,24 +3,24 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
 import { Advertiser, getAdvertisers } from '@/lib/data';
-import { Button } from '@/components/components/ui/button';
-import { Checkbox } from '@/components/components/ui/checkbox';
-import { Input } from '@/components/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/components/ui/select';
+} from '@/components/ui/select';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/components/ui/card';
-import { Badge } from '@/components/components/ui/badge';
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
 import { ArrowRight, SearchX } from 'lucide-react'; // Import icons

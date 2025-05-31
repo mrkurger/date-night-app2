@@ -27,8 +27,8 @@ import {
   mockNext,
   generateTestToken,
   TEST_USER_DATA,
-} from '../../helpers.ts';
-import { mockModel } from '../../setup.ts';
+} from '../../helpers.js';
+import { mockModel } from '../../setup.js';
 
 // Set up mocks before using them
 jest.mock('../../../models/user.model.js');
@@ -37,28 +37,33 @@ jest.mock('../../../models/user.model.js');
 // The actual module exports the Mongoose model as a default export.
 // auth.js imports this default export.
 // So, we need to mock the default export.
-jest.mock('../../../models/token-blacklist.model.js', () => {
-  const mockStaticMethods = {
-    isBlacklisted: jest.fn(), // Will be configured in beforeEach or tests
-    // Add other static methods of TokenBlacklist model if they are used
-  };
-  return {
-    __esModule: true, // Important for ES modules
-    default: mockStaticMethods, // This is what `import TokenBlacklist from '...'` will get
-  };
-});
+jest.mock('../../../models/token-blacklist.model.js', () => ({
+  isBlacklisted: jest.fn().mockImplementation(async token => {
+    return token === 'blacklistedToken';
+  }),
+}));
 
 jest.mock('../../../services/auth.service.js');
 jest.mock('jsonwebtoken');
 
 describe('Auth Middleware', () => {
-  let req, res, next;
-  let mockUser;
-  let mockToken;
+  let req: ReturnType<typeof mockRequest>;
+  let res: ReturnType<typeof mockResponse>;
+  let next: ReturnType<typeof mockNext>;
+  let mockUser: typeof TEST_USER_DATA & {
+    _id: mongoose.Types.ObjectId;
+    role: string;
+    lastActive: Date;
+    save: jest.Mock;
+  };
+  let mockToken: string;
 
   beforeEach(() => {
     // Reset mocks
     jest.clearAllMocks();
+
+    // Mock environment variable
+    process.env.JWT_SECRET = 'test-secret';
 
     // Create mock user
     const userId = new mongoose.Types.ObjectId();

@@ -6,6 +6,7 @@ import { UserPreferencesService } from '../../../core/services/user-preferences.
 import { Subscription } from 'rxjs';
 import { NebularModule } from '../../nebular.module';
 import { ButtonModule } from 'primeng/button';
+import { getAdCardImage, getFallbackFemaleImage } from '../../utils/profile-image.util';
 // ===================================================
 // CUSTOMIZABLE SETTINGS IN THIS FILE
 // ===================================================
@@ -243,23 +244,7 @@ export class AdCardComponen {t implements OnInit, OnDestroy {
    * Get the primary image URL for the ad;
    */
   getPrimaryImage(): string {
-    if (this.ad.images && Array.isArray(this.ad.images) && this.ad.images.length > 0) {
-      // Handle both string[] and object[] formats
-      if (typeof this.ad.images[0] === 'string') {
-        return this.ad.images[0] as string;
-      } else if (typeof this.ad.images[0] === 'object' && 'url' in this.ad.images[0]) {
-        return (this.ad.images[0] as { url: string }).url;
-      }
-    }
-
-    if (this.ad.media && Array.isArray(this.ad.media) && this.ad.media.length > 0) {
-      const image = this.ad.media.find((m) => 'type' in m && m.type === 'image')
-      if (image && 'url' in image) {
-        return image.url;
-      }
-    }
-
-    return '/assets/img/default-profile.jpg';
+    return getAdCardImage(this.ad);
   }
 
   /**

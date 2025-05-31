@@ -38,14 +38,14 @@ export class ErrorHandler {
       includeStackTrace: process.env.NODE_ENV === 'development',
       logErrors: true,
       defaultMessage: 'Something went wrong',
-      ...config
+      ...config,
     };
   }
 
   /**
    * Main error handling middleware
    */
-  handleError = (err: any, req: Request, res: Response, next: NextFunction) => {
+  handleError = (err: any, req: Request, res: Response, _next: NextFunction) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
@@ -54,7 +54,7 @@ export class ErrorHandler {
       console.error('Error:', {
         message: err.message,
         stack: err.stack,
-        statusCode: err.statusCode
+        statusCode: err.statusCode,
       });
     }
 
@@ -62,7 +62,7 @@ export class ErrorHandler {
     const errorResponse: any = {
       success: false,
       status: err.status,
-      message: err.message || this.config.defaultMessage
+      message: err.message || this.config.defaultMessage,
     };
 
     // Add stack trace in development
@@ -76,12 +76,13 @@ export class ErrorHandler {
       err.statusCode = 400;
       errorResponse.errors = Object.values(err.errors).map((e: any) => ({
         field: e.path,
-        message: e.message
+        message: e.message,
       }));
     } else if (err.name === 'CastError') {
       err.statusCode = 400;
       errorResponse.message = `Invalid ${err.path}: ${err.value}`;
-    } else if (err.code === 11000) { // Duplicate key error
+    } else if (err.code === 11000) {
+      // Duplicate key error
       err.statusCode = 400;
       const field = Object.keys(err.keyValue)[0];
       errorResponse.message = `Duplicate field value: ${field}. Please use another value`;
@@ -117,10 +118,6 @@ export class ErrorHandler {
 // Create default error handler instance
 const defaultErrorHandler = new ErrorHandler();
 
-export const {
-  handleError,
-  catchAsync,
-  createError
-} = defaultErrorHandler;
+export const { handleError, catchAsync, createError } = defaultErrorHandler;
 
 export default defaultErrorHandler;

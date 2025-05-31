@@ -22,6 +22,7 @@ import { Separator } from '@/components/ui/separator';
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import { Footer } from '@/components/footer';
 import { Upload, X, Plus, MapPin, Calendar, Heart, Star, Camera, ArrowLeft } from 'lucide-react';
+import { getFemaleImageByIndex } from '@/lib/data';
 
 interface UserProfile {
   id: string;
@@ -43,8 +44,8 @@ interface UserProfile {
 
 const mockProfile: UserProfile = {
   id: '1',
-  name: 'Alex Johnson',
-  email: 'alex.johnson@example.com',
+  name: 'Alexandra Johnson',
+  email: 'alexandra.johnson@example.com',
   age: 28,
   bio: 'Adventure seeker, coffee enthusiast, and dog lover. Looking for someone to explore the world with!',
   location: 'Oslo, Norway',
@@ -54,12 +55,8 @@ const mockProfile: UserProfile = {
   bodyType: 'Athletic',
   relationshipGoals: 'Long-term relationship',
   interests: ['Travel', 'Photography', 'Hiking', 'Cooking', 'Music'],
-  photos: [
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
-  ],
-  profilePicture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+  photos: [getFemaleImageByIndex(1), getFemaleImageByIndex(2), getFemaleImageByIndex(3)],
+  profilePicture: getFemaleImageByIndex(1),
   isVerified: true,
 };
 

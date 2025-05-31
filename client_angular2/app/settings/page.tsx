@@ -350,7 +350,7 @@ const SettingsPage: React.FC = () => {
                         <div>
                           <Label htmlFor="show-online-status">Show Online Status</Label>
                           <p className="text-sm text-muted-foreground">
-                            Let others see when you're online
+                            Let others see when you&apos;re online
                           </p>
                         </div>
                       </div>

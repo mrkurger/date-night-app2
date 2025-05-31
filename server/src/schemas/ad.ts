@@ -6,8 +6,8 @@ export const AdSchema = BaseModelSchema.extend({
   description: z.string().min(20),
   contact: z.string(),
   location: z.string(),
-  datePosted: z.string().datetime(),
-  lastUpdated: z.string().datetime(),
+  datePosted: z.string().regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/),
+  lastUpdated: z.string().regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/),
   coordinates: z.object({
     type: z.literal('Point'),
     coordinates: z.tuple([z.number(), z.number()]),

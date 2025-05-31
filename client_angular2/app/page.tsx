@@ -4,6 +4,9 @@ import { InfiniteScrollGrid } from '@/components/InfiniteScrollGrid';
 import { GamifiedContentHub } from '@/components/GamifiedContentHub';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Added EnhancedNavbar
 
+// file: enhanced-carousel.tsx
+// file: enhanced-carousel.tsx.original
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
