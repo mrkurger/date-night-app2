@@ -85,7 +85,7 @@ const generateProfileCards = (count: number): ProfileCard[] => {
     name: names[i % names.length] || 'Unknown',
     age: Math.floor(Math.random() * 26) + 20,
     city: cities[i % cities.length] || 'Unknown City',
-    image: `/public/assets/img/profiles/random${(i % 29) + 1}.jpg`,
+    image: `/assets/img/profiles/random${(i % 16) + 1}.jpg`,
     rating: Math.round((Math.random() * 2 + 3) * 10) / 10,
     isOnline: Math.random() > 0.6,
     price: `$${Math.floor(Math.random() * 200) + 100}`,

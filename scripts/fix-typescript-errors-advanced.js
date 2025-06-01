@@ -9,7 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Project, SyntaxKind, SourceFile, Node } = require('ts-morph');
+// const { Project, SyntaxKind, SourceFile, Node } = require('ts-morph');
 const { execSync } = require('child_process');
 
 // Configuration
@@ -25,6 +25,9 @@ const CONFIG = {
 async function main() {
   console.log('Advanced TypeScript Error Fixer');
   console.log('==============================');
+  console.log('This script requires ts-morph package to be installed');
+  console.log('Skipping execution due to missing dependencies');
+  return;
 
   // Check if ts-morph is installed
   try {
@@ -366,8 +369,8 @@ function fixTypeAssignmentError(sourceFile, error) {
             .some(
               namedImport =>
                 namedImport.getName() === 'AlertTimeWindow' ||
-                namedImport.getName() === 'AlertChannel'
-            )
+                namedImport.getName() === 'AlertChannel',
+            ),
       );
 
     if (!hasAlertModelImport) {

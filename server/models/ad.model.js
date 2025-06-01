@@ -481,6 +481,9 @@ if (mongoose.models.Ad) {
   };
 
   // Method to update advertiser's current location
+  /**
+   * @this {import('mongoose').Document & {currentLocation: any, isTouring: boolean, travelItinerary: any[], save: Function}}
+   */
   adSchema.methods.updateCurrentLocation = async function (longitude, latitude) {
     this.currentLocation = {
       type: 'Point',
@@ -522,6 +525,9 @@ if (mongoose.models.Ad) {
   };
 
   // Method to add a travel itinerary
+  /**
+   * @this {import('mongoose').Document & {travelItinerary: any[], isTouring: boolean, save: Function}}
+   */
   adSchema.methods.addTravelItinerary = async function (itineraryData) {
     if (!this.travelItinerary) {
       this.travelItinerary = [];
@@ -534,6 +540,9 @@ if (mongoose.models.Ad) {
   };
 
   // Method to update a travel itinerary
+  /**
+   * @this {import('mongoose').Document & {travelItinerary: any[], isTouring: boolean, save: Function}}
+   */
   adSchema.methods.updateTravelItinerary = async function (itineraryId, updates) {
     const itinerary = this.travelItinerary.id(itineraryId);
 
@@ -556,6 +565,9 @@ if (mongoose.models.Ad) {
   };
 
   // Method to cancel a travel itinerary
+  /**
+   * @this {import('mongoose').Document & {travelItinerary: any[], isTouring: boolean, save: Function}}
+   */
   adSchema.methods.cancelTravelItinerary = async function (itineraryId) {
     const itinerary = this.travelItinerary.id(itineraryId);
 

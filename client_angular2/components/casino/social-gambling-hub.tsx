@@ -69,7 +69,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 1800,
     creator: {
       name: 'Emma',
-      avatar: '/public/assets/img/profiles/random1.jpg',
+      avatar: '/assets/img/profiles/random1.jpg',
       rating: 4.8,
     },
     currentPot: 6000,
@@ -86,7 +86,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 3600,
     creator: {
       name: 'Sofia',
-      avatar: '/public/assets/img/profiles/random2.jpg',
+      avatar: '/assets/img/profiles/random2.jpg',
       rating: 4.9,
     },
     currentPot: 2500,
@@ -103,7 +103,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 7200,
     creator: {
       name: 'Astrid',
-      avatar: '/public/assets/img/profiles/random3.jpg',
+      avatar: '/assets/img/profiles/random3.jpg',
       rating: 4.7,
     },
     currentPot: 12500,
@@ -117,7 +117,7 @@ const mockDataBets: DataBet[] = [
     id: '1',
     user: {
       name: 'Isabella',
-      avatar: '/public/assets/img/profiles/random4.jpg',
+      avatar: '/assets/img/profiles/random4.jpg',
       rating: 4.6,
     },
     stake: 'private_photos',
@@ -131,7 +131,7 @@ const mockDataBets: DataBet[] = [
     id: '2',
     user: {
       name: 'Ingrid',
-      avatar: '/public/assets/img/profiles/random5.jpg',
+      avatar: '/assets/img/profiles/random5.jpg',
       rating: 4.8,
     },
     stake: 'location',

@@ -5,7 +5,7 @@
  * This script updates both server and client CSP configurations
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';

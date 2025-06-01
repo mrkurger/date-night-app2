@@ -33,7 +33,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
     return Array.from({ length: 10 }, (_, i) => ({
       id: startId + i,
       name: `Advertiser ${startId + i}`,
-      image: `/public/assets/img/profiles/random${(startId + i) % 29}.jpg`,
+      image: `/assets/img/profiles/random${((startId + i) % 16) + 1}.jpg`,
       distance: `${Math.floor(Math.random() * 10) + 1} km away`,
       isOnline: Math.random() > 0.5,
     }));

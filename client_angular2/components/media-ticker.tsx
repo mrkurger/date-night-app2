@@ -43,7 +43,7 @@ export function MediaTicker() {
         advertiserName: 'Emma',
         advertiserId: '2',
         timestamp: '1 hour ago',
-        imageUrl: '/public/assets/img/profiles/random1.jpg',
+        imageUrl: '/assets/img/profiles/random1.jpg',
       },
       {
         id: '3',
@@ -60,7 +60,7 @@ export function MediaTicker() {
         advertiserName: 'Isabella',
         advertiserId: '4',
         timestamp: '3 hours ago',
-        imageUrl: '/public/assets/img/profiles/random2.jpg',
+        imageUrl: '/assets/img/profiles/random2.jpg',
       },
       {
         id: '5',

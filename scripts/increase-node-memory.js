@@ -3,7 +3,7 @@
  * to prevent "JavaScript heap out of memory" errors during testing.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';

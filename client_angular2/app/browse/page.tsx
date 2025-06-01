@@ -35,7 +35,7 @@ export default function BrowsePage() {
     // Get all advertisers with distances
     const all = getAdvertisers().map((adv, index) => ({
       ...adv,
-      image: `/public/assets/img/profiles/random${index + 1}.jpg`,
+      image: `/assets/img/profiles/random${index + 1}.jpg`,
       distance: Math.floor(Math.random() * 20) + 1,
     }));
     setAllAdvertisers(all);
@@ -43,7 +43,7 @@ export default function BrowsePage() {
     // Get premium advertisers
     const premium = getPremiumAdvertisers().map((adv, index) => ({
       ...adv,
-      image: `/public/assets/img/profiles/random${index + 1}.jpg`,
+      image: `/assets/img/profiles/random${index + 1}.jpg`,
       distance: Math.floor(Math.random() * 20) + 1,
       isPremium: true,
     }));
@@ -52,7 +52,7 @@ export default function BrowsePage() {
     // Get online advertisers
     const online = getOnlineAdvertisers().map((adv, index) => ({
       ...adv,
-      image: `/public/assets/img/profiles/random${index + 1}.jpg`,
+      image: `/assets/img/profiles/random${index + 1}.jpg`,
       distance: Math.floor(Math.random() * 20) + 1,
     }));
     setOnlineAdvertisers(online);
@@ -63,7 +63,7 @@ export default function BrowsePage() {
       .slice(0, 10)
       .map((adv, index) => ({
         ...adv,
-        image: `/public/assets/img/profiles/random${index + 1}.jpg`,
+        image: `/assets/img/profiles/random${index + 1}.jpg`,
         distance: Math.floor(Math.random() * 20) + 1,
       }));
     setNewAdvertisers(newOnes);
@@ -74,7 +74,7 @@ export default function BrowsePage() {
       .slice(0, 10)
       .map((adv, index) => ({
         ...adv,
-        image: `/public/assets/img/profiles/random${index + 1}.jpg`,
+        image: `/assets/img/profiles/random${index + 1}.jpg`,
         distance: Math.floor(Math.random() * 20) + 1,
       }));
     setPopularAdvertisers(popular);

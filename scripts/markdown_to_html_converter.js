@@ -53,28 +53,28 @@ function readTemplate() {
 /**
  * Converts Markdown content to HTML
  * @param {string} markdown - The Markdown content
- * @returns {string} The HTML content
+ * @returns {Promise<string>} The HTML content
  */
-function convertMarkdownToHtml(markdown) {
+async function convertMarkdownToHtml(markdown) {
   // Configure marked options if needed
   marked.setOptions({
     gfm: true,
     breaks: true,
-    smartLists: true,
-    smartypants: true,
-    highlight: function (code, lang) {
-      // You could add syntax highlighting here if desired
-      return code;
-    },
+    // smartLists: true, // Removed - not supported in current marked version
+    // smartypants: true, // Removed - not supported in current marked version
+    // highlight: function (code, lang) {
+    //   // You could add syntax highlighting here if desired
+    //   return code;
+    // }, // Removed - not supported in current marked version
   });
 
-  return marked.parse(markdown);
+  return await marked.parse(markdown);
 }
 
 /**
  * Main function to convert a Markdown file to HTML
  */
-function convertFile() {
+async function convertFile() {
   const absoluteMarkdownPath = path.resolve(config.rootDir, markdownFile);
   const absoluteOutputPath = path.resolve(config.rootDir, outputHtmlFile);
 
@@ -87,7 +87,7 @@ function convertFile() {
   const markdown = fs.readFileSync(absoluteMarkdownPath, 'utf8');
 
   // Convert to HTML
-  let html = convertMarkdownToHtml(markdown);
+  let html = await convertMarkdownToHtml(markdown);
 
   // Add tooltips and links if requested
   if (addTooltips) {
@@ -139,4 +139,4 @@ function convertFile() {
 }
 
 // Run the conversion
-convertFile();
+convertFile().catch(console.error);

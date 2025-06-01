@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AuthProvider } from '../context/auth-context';
 import { DataProvider } from '../context/data-context';
+import { Toaster } from '@/components/ui/toaster';
 import '../styles/globals.css';
 
 export const metadata = {
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AuthProvider>
           <DataProvider>{children}</DataProvider>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

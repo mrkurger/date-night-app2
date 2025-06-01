@@ -6,7 +6,8 @@
 
 import semver from 'semver';
 import { execSync } from 'child_process';
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -87,7 +88,7 @@ if (major % 2 !== 0) {
 // Check if the required dependencies for the version check are installed
 const rootPackageJsonPath = path.join(__dirname, '..', 'package.json');
 try {
-  const packageJsonContent = await fs.readFile(rootPackageJsonPath, 'utf8');
+  const packageJsonContent = await fsPromises.readFile(rootPackageJsonPath, 'utf8');
   const packageJson = JSON.parse(packageJsonContent);
 
   // Add semver as a dependency if it doesn't exist
@@ -101,7 +102,7 @@ try {
     packageJson.dependencies.semver = '^7.5.4';
 
     // Write the updated package.json
-    await fs.writeFile(rootPackageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+    await fsPromises.writeFile(rootPackageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
 
     console.log('Added semver to package.json. Run "npm install" to install it.');
   }
@@ -117,14 +118,14 @@ try {
     packageJson.scripts['check-node'] = 'node scripts/check-node-version.js';
 
     // Write the updated package.json
-    await fs.writeFile(rootPackageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+    await fsPromises.writeFile(rootPackageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
 
     console.log('Added "check-node" script to package.json');
   }
 
   // Example usage of fs.readFile and fs.writeFile
-  const data = await fs.readFile(rootPackageJsonPath, 'utf8');
-  await fs.writeFile(rootPackageJsonPath, data, 'utf8');
+  const data = await fsPromises.readFile(rootPackageJsonPath, 'utf8');
+  await fsPromises.writeFile(rootPackageJsonPath, data, 'utf8');
 } catch (error) {
   console.error('Error updating package.json:', error.message);
 }

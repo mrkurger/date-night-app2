@@ -7,35 +7,58 @@
 // - SETTING_NAME: Description of setting (default: value)
 //   Related to: other_file.js:OTHER_SETTING
 // ===================================================
-import Verification from '../models/verification.model.js';
-import User from '../models/user.model.js';
-import fs from 'fs/promises';
+import { Request, Response } from 'express';
+import Verification, {
+  IVerificationDocument,
+  IVerificationModel,
+  DocumentType,
+  IVerificationTypes,
+} from '../models/verification.model.js'; // Reverted to .js extension
+import User, { IUserDocument } from '../models/user.model.js'; // Reverted to .js extension
+import * as fsSync from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { sendError } from '../utils/response.js';
 
+import { fileURLToPath } from 'url';
+
+// ES Module equivalents for __filename and __dirname
+const currentFilePath = fileURLToPath(import.meta.url);
+const currentDirPath = path.dirname(currentFilePath);
+
+// Define a more specific type for req.user and req.files
+interface AuthenticatedRequest extends Request {
+  user?: IUserDocument; // Use IUserDocument for req.user
+  files?: any; // Consider using a library like multer and its types, e.g., req.file or req.files
+  body: any; // Add body explicitly
+  params: any; // Add params explicitly
+}
+
 // Helper function to ensure uploads directory exists
-const ensureUploadsDirectory = () => {
-  const dir = path.join(__dirname, '../uploads/verification');
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+const ensureUploadsDirectory = (): string => {
+  const dir = path.join(currentDirPath, '../uploads/verification');
+  if (!fsSync.existsSync(dir)) {
+    fsSync.mkdirSync(dir, { recursive: true });
   }
   return dir;
 };
 
 // Helper function to generate a secure filename
-const generateSecureFilename = originalFilename => {
+const generateSecureFilename = (originalFilename: string): string => {
   const ext = path.extname(originalFilename);
   const randomName = crypto.randomBytes(16).toString('hex');
   return `${randomName}${ext}`;
 };
 
 // Get verification status for current user
-const getVerificationStatus = async (req, res) => {
+const getVerificationStatus = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
 
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
       // Create a new verification record if none exists
@@ -95,20 +118,28 @@ const getVerificationStatus = async (req, res) => {
         },
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error retrieving verification status',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Submit identity verification
-const submitIdentityVerification = async (req, res) => {
+const submitIdentityVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { documentType, documentNumber, expiryDate, notes } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { documentType, documentNumber, expiryDate, notes } = req.body as {
+      documentType: DocumentType; // Use Enum
+      documentNumber: string;
+      expiryDate?: Date;
+      notes?: string;
+    };
 
     if (!req.files || !req.files.documentImages) {
       return res.status(400).json({
@@ -124,7 +155,7 @@ const submitIdentityVerification = async (req, res) => {
 
     // Save files to secure location
     const uploadDir = ensureUploadsDirectory();
-    const savedFilePaths = [];
+    const savedFilePaths: string[] = [];
 
     for (const file of documentImages) {
       const secureFilename = generateSecureFilename(file.name);
@@ -135,10 +166,10 @@ const submitIdentityVerification = async (req, res) => {
     }
 
     // Find or create verification record
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
-      verification = new Verification({ user: userId });
+      verification = new Verification({ user: userId }) as IVerificationDocument;
     }
 
     // Submit identity verification
@@ -158,20 +189,23 @@ const submitIdentityVerification = async (req, res) => {
         submittedDate: verification.verificationTypes.identity.submittedDate,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error submitting identity verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Submit photo verification
-const submitPhotoVerification = async (req, res) => {
+const submitPhotoVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { notes } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { notes } = req.body as { notes?: string };
 
     if (!req.files || !req.files.verificationImage) {
       return res.status(400).json({
@@ -190,10 +224,10 @@ const submitPhotoVerification = async (req, res) => {
     const savedFilePath = `/uploads/verification/${secureFilename}`;
 
     // Find or create verification record
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
-      verification = new Verification({ user: userId });
+      verification = new Verification({ user: userId }) as IVerificationDocument;
     }
 
     // Submit photo verification
@@ -210,20 +244,23 @@ const submitPhotoVerification = async (req, res) => {
         submittedDate: verification.verificationTypes.photo.submittedDate,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error submitting photo verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Submit phone verification
-const submitPhoneVerification = async (req, res) => {
+const submitPhoneVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { phoneNumber } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { phoneNumber } = req.body as { phoneNumber: string };
 
     if (!phoneNumber) {
       return res.status(400).json({
@@ -233,10 +270,10 @@ const submitPhoneVerification = async (req, res) => {
     }
 
     // Find or create verification record
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
-      verification = new Verification({ user: userId });
+      verification = new Verification({ user: userId }) as IVerificationDocument;
     }
 
     // Submit phone verification
@@ -257,20 +294,23 @@ const submitPhoneVerification = async (req, res) => {
         verificationCode: process.env.NODE_ENV === 'development' ? verificationCode : undefined,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error submitting phone verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Verify phone with code
-const verifyPhoneWithCode = async (req, res) => {
+const verifyPhoneWithCode = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { code } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { code } = req.body as { code: string };
 
     if (!code) {
       return res.status(400).json({
@@ -280,7 +320,7 @@ const verifyPhoneWithCode = async (req, res) => {
     }
 
     // Find verification record
-    const verification = await Verification.findOne({ user: userId });
+    const verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
       return res.status(404).json({
@@ -307,20 +347,23 @@ const verifyPhoneWithCode = async (req, res) => {
         approvedDate: verification.verificationTypes.phone.approvedDate,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(400).json({
       success: false,
       message: 'Error verifying phone',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Submit email verification
-const submitEmailVerification = async (req, res) => {
+const submitEmailVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { email } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { email } = req.body as { email: string };
 
     if (!email) {
       return res.status(400).json({
@@ -330,10 +373,10 @@ const submitEmailVerification = async (req, res) => {
     }
 
     // Find or create verification record
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
-      verification = new Verification({ user: userId });
+      verification = new Verification({ user: userId }) as IVerificationDocument;
     }
 
     // Submit email verification
@@ -354,20 +397,23 @@ const submitEmailVerification = async (req, res) => {
         verificationCode: process.env.NODE_ENV === 'development' ? verificationCode : undefined,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error submitting email verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Verify email with code
-const verifyEmailWithCode = async (req, res) => {
+const verifyEmailWithCode = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { code } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { code } = req.body as { code: string };
 
     if (!code) {
       return res.status(400).json({
@@ -377,7 +423,7 @@ const verifyEmailWithCode = async (req, res) => {
     }
 
     // Find verification record
-    const verification = await Verification.findOne({ user: userId });
+    const verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
       return res.status(404).json({
@@ -405,20 +451,30 @@ const verifyEmailWithCode = async (req, res) => {
         approvedDate: verification.verificationTypes.email.approvedDate,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(400).json({
       success: false,
       message: 'Error verifying email',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Submit address verification
-const submitAddressVerification = async (req, res) => {
+const submitAddressVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user._id;
-    const { street, city, postalCode, county, country, notes } = req.body;
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User not authenticated' });
+    }
+    const { street, city, postalCode, county, country, notes } = req.body as {
+      street: string;
+      city: string;
+      postalCode: string;
+      county: string;
+      country: string;
+      notes?: string;
+    };
 
     if (!req.files || !req.files.documentImage) {
       return res.status(400).json({
@@ -437,10 +493,10 @@ const submitAddressVerification = async (req, res) => {
     const savedFilePath = `/uploads/verification/${secureFilename}`;
 
     // Find or create verification record
-    let verification = await Verification.findOne({ user: userId });
+    let verification: IVerificationDocument | null = await Verification.findOne({ user: userId });
 
     if (!verification) {
-      verification = new Verification({ user: userId });
+      verification = new Verification({ user: userId }) as IVerificationDocument;
     }
 
     // Submit address verification
@@ -462,54 +518,60 @@ const submitAddressVerification = async (req, res) => {
         submittedDate: verification.verificationTypes.address.submittedDate,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error submitting address verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Admin: Get pending verifications
-const getPendingVerifications = async (req, res) => {
+const getPendingVerifications = async (req: AuthenticatedRequest, res: Response) => {
   try {
     // Check if user is admin
-    if (req.user.role !== 'admin') {
+    if (req.user?.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Unauthorized: Admin access required',
       });
     }
 
-    const pendingVerifications = await Verification.findPendingVerifications();
+    const pendingVerifications: IVerificationDocument[] = await (
+      Verification as IVerificationModel
+    ).findPendingVerifications();
 
     res.status(200).json({
       success: true,
       count: pendingVerifications.length,
       data: pendingVerifications,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error retrieving pending verifications',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Admin: Approve verification
-const approveVerification = async (req, res) => {
+const approveVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
     // Check if user is admin
-    if (req.user.role !== 'admin') {
+    if (req.user?.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Unauthorized: Admin access required',
       });
     }
 
-    const { verificationId, type, notes } = req.body;
+    const { verificationId, type, notes } = req.body as {
+      verificationId: string;
+      type: keyof IVerificationTypes;
+      notes?: string;
+    };
 
     if (!verificationId || !type) {
       return res.status(400).json({
@@ -518,7 +580,7 @@ const approveVerification = async (req, res) => {
       });
     }
 
-    const verification = await Verification.findById(verificationId);
+    const verification: IVerificationDocument | null = await Verification.findById(verificationId);
 
     if (!verification) {
       return res.status(404).json({
@@ -532,36 +594,41 @@ const approveVerification = async (req, res) => {
 
     // Update user's verification badges and level
     await User.findByIdAndUpdate(verification.user, {
-      [`verificationBadges.${type}`]: true,
+      [`verificationBadges.${String(type)}`]: true, // Explicitly cast type to string
       $inc: { verificationLevel: 1 },
     });
 
     res.status(200).json({
       success: true,
-      message: `${type} verification approved successfully`,
+      message: `${String(type)} verification approved successfully`, // Explicitly cast type to string
       data: verification,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error approving verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Admin: Reject verification
-const rejectVerification = async (req, res) => {
+const rejectVerification = async (req: AuthenticatedRequest, res: Response) => {
   try {
     // Check if user is admin
-    if (req.user.role !== 'admin') {
+    if (req.user?.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Unauthorized: Admin access required',
       });
     }
 
-    const { verificationId, type, reason, notes } = req.body;
+    const { verificationId, type, reason, notes } = req.body as {
+      verificationId: string;
+      type: keyof IVerificationTypes;
+      reason: string;
+      notes?: string;
+    };
 
     if (!verificationId || !type || !reason) {
       return res.status(400).json({
@@ -584,22 +651,22 @@ const rejectVerification = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `${type} verification rejected successfully`,
+      message: `${String(type)} verification rejected successfully`, // Explicitly cast type to string
       data: verification,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error rejecting verification',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
 // Get verification status for a specific user (public)
-const getUserVerificationStatus = async (req, res) => {
+const getUserVerificationStatus = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.params as { userId: string };
 
     if (!userId) {
       return res.status(400).json({
@@ -609,7 +676,10 @@ const getUserVerificationStatus = async (req, res) => {
     }
 
     // Find user
-    const user = await User.findById(userId, 'username verificationLevel verificationBadges');
+    const user: Pick<
+      IUserDocument,
+      'username' | 'verificationLevel' | 'verificationBadges'
+    > | null = await User.findById(userId, 'username verificationLevel verificationBadges');
 
     if (!user) {
       return res.status(404).json({
@@ -626,22 +696,22 @@ const getUserVerificationStatus = async (req, res) => {
         verificationBadges: user.verificationBadges,
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error retrieving user verification status',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'An unknown error occurred',
     });
   }
 };
 
-export async function someHandler(req, res) {
+export async function someHandler(req: Request, res: Response) {
   // TODO: Implement verification handler
   return sendError(res, new Error('NOT_IMPLEMENTED'), 501);
 }
 
-// Export the controller
-export default {
+// Export the controller as a named export
+export const verificationController = {
   getVerificationStatus,
   submitIdentityVerification,
   submitPhotoVerification,
@@ -654,4 +724,5 @@ export default {
   getPendingVerifications,
   approveVerification,
   rejectVerification,
+  someHandler,
 };

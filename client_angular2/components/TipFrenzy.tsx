@@ -32,14 +32,14 @@ const tipOptions: TipOption[] = [
 ];
 
 const femaleImages = [
-  '/public/assets/img/profiles/random1.jpg',
-  '/public/assets/img/profiles/random2.jpg',
-  '/public/assets/img/profiles/random3.jpg',
-  '/public/assets/img/profiles/random4.jpg',
-  '/public/assets/img/profiles/random5.jpg',
-  '/public/assets/img/profiles/random6.jpg',
-  '/public/assets/img/profiles/random7.jpg',
-  '/public/assets/img/profiles/random8.jpg',
+  '/assets/img/profiles/random1.jpg',
+  '/assets/img/profiles/random2.jpg',
+  '/assets/img/profiles/random3.jpg',
+  '/assets/img/profiles/random4.jpg',
+  '/assets/img/profiles/random5.jpg',
+  '/assets/img/profiles/random6.jpg',
+  '/assets/img/profiles/female-10.jpg',
+  '/assets/img/profiles/female-11.jpg',
 ];
 
 const names = [

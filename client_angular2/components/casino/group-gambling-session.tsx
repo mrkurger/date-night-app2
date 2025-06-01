@@ -65,7 +65,7 @@ const mockParticipants: GroupParticipant[] = [
   {
     id: '1',
     name: 'Emma',
-    avatar: '/public/assets/img/profiles/random1.jpg',
+    avatar: '/assets/img/profiles/random1.jpg',
     rating: 4.8,
     currentBet: 500,
     totalWinnings: 2400,
@@ -76,7 +76,7 @@ const mockParticipants: GroupParticipant[] = [
   {
     id: '2',
     name: 'Sofia',
-    avatar: '/public/assets/img/profiles/random2.jpg',
+    avatar: '/assets/img/profiles/random2.jpg',
     rating: 4.9,
     currentBet: 750,
     totalWinnings: 1800,
@@ -87,7 +87,7 @@ const mockParticipants: GroupParticipant[] = [
   {
     id: '3',
     name: 'Isabella',
-    avatar: '/public/assets/img/profiles/random3.jpg',
+    avatar: '/assets/img/profiles/random3.jpg',
     rating: 4.6,
     currentBet: 300,
     totalWinnings: 1200,
@@ -98,7 +98,7 @@ const mockParticipants: GroupParticipant[] = [
   {
     id: '4',
     name: 'Astrid',
-    avatar: '/public/assets/img/profiles/random4.jpg',
+    avatar: '/assets/img/profiles/random4.jpg',
     rating: 4.7,
     currentBet: 400,
     totalWinnings: 900,

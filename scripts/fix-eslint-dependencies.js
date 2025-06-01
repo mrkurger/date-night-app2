@@ -5,7 +5,7 @@
  * to package.json files.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';

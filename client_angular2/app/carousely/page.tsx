@@ -1,9 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import EnhancedNavbar from '@/components/enhanced-navbar';
-import TinderCardStack from '@/components/carousely/tinder-card-stack';
+import TinderCardStack, { TinderCardStackRef } from '@/components/carousely/tinder-card-stack';
 import { generateMockAdvertisers, Advertiser } from '@/services/mock-advertisers';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ export default function CarouselyPage() {
   const [loading, setLoading] = useState(true);
   const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const tinderCardStackRef = useRef<TinderCardStackRef>(null);
 
   // Generate mock data and check cache on component mount
   useEffect(() => {
@@ -34,22 +35,39 @@ export default function CarouselyPage() {
     // If no cached data, generate mock data with minimal delay for testing
     const timer = setTimeout(
       () => {
-        const mockData = generateMockAdvertisers(25);
-        setAdvertisers(mockData);
-        setLoading(false);
-
-        // Cache data in localStorage for offline use
         try {
-          localStorage.setItem('carousely-advertisers', JSON.stringify(mockData));
+          const mockData = generateMockAdvertisers(25);
+          setAdvertisers(mockData);
+          setLoading(false);
+
+          // Cache data in localStorage for offline use
+          try {
+            localStorage.setItem('carousely-advertisers', JSON.stringify(mockData));
+          } catch (error) {
+            console.error('Error caching advertiser data:', error);
+          }
         } catch (error) {
-          console.error('Error caching advertiser data:', error);
+          console.error('Error generating mock data:', error);
+          // Fallback: still set loading to false to prevent infinite loading
+          setLoading(false);
         }
       },
-      process.env.NODE_ENV === 'test' ? 100 : 800,
+      process.env.NODE_ENV === 'test' ? 50 : 800,
     );
 
-    return () => clearTimeout(timer);
-  }, []);
+    // Fallback timeout to prevent infinite loading
+    const fallbackTimer = setTimeout(() => {
+      if (loading) {
+        console.warn('Fallback: forcing loading to false after timeout');
+        setLoading(false);
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fallbackTimer);
+    };
+  }, [loading]);
 
   // Handle geolocation permission
   const requestGeolocation = () => {
@@ -98,8 +116,8 @@ export default function CarouselyPage() {
     }
   };
 
-  // Handle swipe actions
-  const handleSwipe = (direction: 'left' | 'right' | 'up', advertiserId: string) => {
+  // Handle swipe actions (called by TinderCardStack component)
+  const handleSwipe = (direction: 'left' | 'right' | 'up', advertiser: any) => {
     if (direction === 'right') {
       toast({
         title: "It's a match!",
@@ -119,9 +137,11 @@ export default function CarouselyPage() {
         duration: 2000,
       });
     }
+  };
 
-    // Remove advertiser from list after swipe
-    setAdvertisers(prev => prev.filter(ad => ad.id !== advertiserId));
+  // Handle external button clicks
+  const handleButtonSwipe = (direction: 'left' | 'right' | 'up') => {
+    tinderCardStackRef.current?.triggerSwipe(direction);
   };
 
   return (
@@ -173,10 +193,11 @@ export default function CarouselyPage() {
             <>
               <div className="relative mb-8" data-testid="carousel-container">
                 <TinderCardStack
+                  ref={tinderCardStackRef}
                   advertisers={advertisers}
-                  onSwipeLeft={advertiser => handleSwipe('left', advertiser.id)}
-                  onSwipeRight={advertiser => handleSwipe('right', advertiser.id)}
-                  onSwipeUp={advertiser => handleSwipe('up', advertiser.id)}
+                  onSwipeLeft={advertiser => handleSwipe('left', advertiser)}
+                  onSwipeRight={advertiser => handleSwipe('right', advertiser)}
+                  onSwipeUp={advertiser => handleSwipe('up', advertiser)}
                 />
 
                 {/* Swipe action buttons */}
@@ -188,7 +209,7 @@ export default function CarouselyPage() {
                     size="lg"
                     variant="destructive"
                     className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg"
-                    onClick={() => advertisers[0]?.id && handleSwipe('left', advertisers[0].id)}
+                    onClick={() => handleButtonSwipe('left')}
                     data-testid="dislike-button"
                   >
                     <XIcon size={24} />
@@ -197,7 +218,7 @@ export default function CarouselyPage() {
                     size="lg"
                     variant="default"
                     className="rounded-full h-14 w-14 flex items-center justify-center bg-gradient-to-r from-pink-500 to-rose-500 shadow-lg"
-                    onClick={() => advertisers[0]?.id && handleSwipe('right', advertisers[0].id)}
+                    onClick={() => handleButtonSwipe('right')}
                     data-testid="like-button"
                   >
                     <HeartIcon size={24} />

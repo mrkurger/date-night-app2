@@ -61,7 +61,7 @@ test.describe('Casino and Gaming Pages', () => {
 
       // Look for enhanced features like animations, 3D elements
       const enhancedElements = page.locator(
-        '.enhanced, .animation, .3d, [data-testid*="enhanced"]',
+        '.enhanced, .animation, .three-d, [data-testid*="enhanced"]',
       );
       if ((await enhancedElements.count()) > 0) {
         await expect(enhancedElements.first()).toBeVisible();
@@ -152,7 +152,7 @@ test.describe('Casino and Gaming Pages', () => {
       await expect(page.locator('body')).toBeVisible();
 
       // Look for 2live specific elements
-      const twoLiveElements = page.locator('.2live, [data-testid*="2live"], .dual-live');
+      const twoLiveElements = page.locator('.two-live, [data-testid*="2live"], .dual-live');
       if ((await twoLiveElements.count()) > 0) {
         await expect(twoLiveElements.first()).toBeVisible();
       }
