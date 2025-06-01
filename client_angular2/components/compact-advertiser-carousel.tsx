@@ -104,7 +104,8 @@ export function CompactAdvertiserCarousel({
                     `/placeholder.svg?height=350&width=250&text=${advertiser.name}`
                   }
                   alt={advertiser.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
 
                 {/* Overlay gradient */}

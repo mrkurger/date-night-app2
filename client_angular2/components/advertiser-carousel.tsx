@@ -95,7 +95,8 @@ export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
                 <Image
                   src={advertiser.image || getRandomFemaleImage()}
                   alt={advertiser.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
 
                 {/* Online Status */}

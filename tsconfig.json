@@ -9,8 +9,12 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "checkJs": true,
-    "jsx": "react-jsx",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
@@ -21,10 +25,18 @@
       }
     ]
   },
-  "exclude": ["node_modules", "dist", "client-angular", "scripts/**/*.mjs"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "client-angular",
+    "scripts/**/*.mjs"
+  ],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  "include": ["scripts/**/*", ".next/types/**/*.ts"]
+  "include": [
+    "scripts/**/*",
+    ".next/types/**/*.ts"
+  ]
 }

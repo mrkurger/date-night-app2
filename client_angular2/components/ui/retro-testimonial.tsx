@@ -32,12 +32,15 @@ const useOutsideClick = (
   ref: React.RefObject<HTMLDivElement | null>,
   onOutsideClick: () => void,
 ) => {
-  const handleClickOutside = useCallback((event: MouseEvent | TouchEvent) => {
-    if (!ref.current || ref.current.contains(event.target as Node)) {
-      return;
-    }
-    onOutsideClick();
-  }, [ref, onOutsideClick]);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
+        return;
+      }
+      onOutsideClick();
+    },
+    [ref, onOutsideClick],
+  );
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

@@ -4,12 +4,13 @@ import { getAdvertiserById } from '@/lib/data';
 import React from 'react';
 
 interface PageProps<T> {
-  params: Promise<T>;
+  params: T;
 }
 
-export default async function AdvertiserDetailPage({ params }: PageProps<{ id: string }>): Promise<React.JSX.Element> {
-  const resolvedParams = await params;
-  const advertiser = getAdvertiserById(resolvedParams.id);
+export default function AdvertiserDetailPage({
+  params,
+}: PageProps<{ id: string }>): React.JSX.Element {
+  const advertiser = getAdvertiserById(params.id);
 
   if (!advertiser) {
     notFound();

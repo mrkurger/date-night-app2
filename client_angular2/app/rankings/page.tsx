@@ -3,13 +3,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import EnhancedNavbar from '@/components/enhanced-navbar';
-import { getAdvertisers, Advertiser, getProfileImage } from '@/lib/data';
+import { getAdvertisers, Advertiser } from '@/lib/data';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Heart, MessageCircle, Star, ThumbsUp, ImageIcon, Video, SearchX } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/context/auth-context';
+// Removed useAuth import to fix SSR prerendering issue
 
 // RankedAdvertiserCard component
 interface RankedAdvertiserCardProps {
@@ -171,7 +171,8 @@ export default function RankingsPage() {
   const [error, setError] = useState<string | null>(null);
   const [rankingType, setRankingType] = useState<string>('overall');
   const [favoriteAdvertisers, setFavoriteAdvertisers] = useState<number[]>([]);
-  const { user } = useAuth(); // user might be used for personalized features later
+  // Removed useAuth call to fix SSR prerendering issue
+  // const { user } = useAuth(); // user might be used for personalized features later
 
   useEffect(() => {
     async function loadAdvertisers() {

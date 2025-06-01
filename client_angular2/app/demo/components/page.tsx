@@ -47,19 +47,15 @@ import Particles from '@/components/ui/particles';
 import Confetti from '@/components/ui/confetti';
 import { Meteors } from '@/components/ui/meteors';
 
-// Add sample data
-const sampleImages: string[] = [
-  '/images/sample1.jpg',
-  '/images/sample2.jpg',
-  '/images/sample3.jpg',
-];
+// Add sample data - using existing placeholder images
+const sampleImages: string[] = ['/placeholder.jpg', '/placeholder-user.jpg', '/placeholder.svg'];
 
 // Sample data for carousel components (simple format)
 const sampleAdvertisers = [
   {
     id: 1,
     name: 'Acme Inc',
-    image: '/images/sample1.jpg',
+    image: '/placeholder.jpg',
     age: 25,
     city: 'Los Angeles',
     rating: 4.8,
@@ -72,7 +68,7 @@ const sampleAdvertisers = [
   {
     id: 2,
     name: 'Beta Corp',
-    image: '/images/sample2.jpg',
+    image: '/placeholder-user.jpg',
     age: 28,
     city: 'New York',
     rating: 4.6,
@@ -85,7 +81,7 @@ const sampleAdvertisers = [
   {
     id: 3,
     name: 'Gamma Ltd',
-    image: '/images/sample3.jpg',
+    image: '/placeholder.jpg',
     age: 26,
     city: 'Miami',
     rating: 4.9,
@@ -495,7 +491,7 @@ export default function ComponentDemoPage() {
         <TabsContent value="utils">
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold">ProfileAvatar</h2>
-            <ProfileAvatar src="/avatars/sample1.jpg" name="Sample User" size="lg" />
+            <ProfileAvatar src="/placeholder-user.jpg" name="Sample User" size="lg" />
 
             <h2 className="text-2xl font-semibold">MediaTicker</h2>
             <MediaTicker />

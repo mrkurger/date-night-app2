@@ -89,9 +89,7 @@ export function BlurImage({
       <Image
         src={getOptimizedSrc(src)}
         alt={alt}
-        width={fill ? undefined : width || 800}
-        height={fill ? undefined : height || 600}
-        fill={fill}
+        {...(fill ? { fill: true } : { width: width || 800, height: height || 600 })}
         priority={priority}
         quality={quality}
         onLoad={handleImageLoad}
@@ -104,8 +102,8 @@ export function BlurImage({
           className,
         )}
         placeholder={blurDataUrl ? 'blur' : 'empty'}
-        blurDataURL={blurDataUrl}
-        sizes={fill ? '100vw' : undefined}
+        {...(blurDataUrl ? { blurDataURL: blurDataUrl } : {})}
+        {...(fill ? { sizes: '100vw' } : {})}
       />
     </div>
   );
