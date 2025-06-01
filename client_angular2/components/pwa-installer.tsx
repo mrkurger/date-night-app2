@@ -23,9 +23,9 @@ export function PWAInstaller() {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker
         .register('/service-worker.js')
-        .then((registration) => {
+        .then(registration => {
           console.log('SW registered: ', registration);
-          
+
           // Check for updates
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
@@ -39,7 +39,7 @@ export function PWAInstaller() {
             }
           });
         })
-        .catch((registrationError) => {
+        .catch(registrationError => {
           console.log('SW registration failed: ', registrationError);
         });
     }
@@ -77,13 +77,13 @@ export function PWAInstaller() {
 
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    
+
     if (outcome === 'accepted') {
       console.log('User accepted the install prompt');
     } else {
       console.log('User dismissed the install prompt');
     }
-    
+
     setDeferredPrompt(null);
     setShowInstallPrompt(false);
   };
@@ -91,13 +91,18 @@ export function PWAInstaller() {
   const handleDismiss = () => {
     setShowInstallPrompt(false);
     // Don't show again for this session
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.sessionStorage) {
       sessionStorage.setItem('pwa-install-dismissed', 'true');
     }
   };
 
   // Don't show if already installed or dismissed this session
-  if (isInstalled || (typeof window !== 'undefined' && sessionStorage.getItem('pwa-install-dismissed'))) {
+  if (
+    isInstalled ||
+    (typeof window !== 'undefined' &&
+      window.sessionStorage &&
+      sessionStorage.getItem('pwa-install-dismissed'))
+  ) {
     return null;
   }
 
@@ -113,20 +118,15 @@ export function PWAInstaller() {
             <Download className="h-5 w-5 text-primary mr-2" />
             <h3 className="font-semibold text-sm">Install App</h3>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDismiss}
-            className="h-6 w-6 p-0"
-          >
+          <Button variant="ghost" size="sm" onClick={handleDismiss} className="h-6 w-6 p-0">
             <X className="h-4 w-4" />
           </Button>
         </div>
-        
+
         <p className="text-sm text-muted-foreground mb-3">
           Install Carousely for a better experience with offline access and faster loading.
         </p>
-        
+
         <div className="flex gap-2">
           <Button onClick={handleInstallClick} size="sm" className="flex-1">
             Install

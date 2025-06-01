@@ -10,7 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 4,
   reporter: [['html'], ['line']],
 
   // Global timeout for all tests
@@ -18,7 +18,7 @@ export default defineConfig({
 
   // Capture screenshot and trace on test failure
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
 
@@ -72,12 +72,16 @@ export default defineConfig({
     },
   ],
 
-  // Run local dev server before tests if needed
+  // Run local dev server before tests if needed with port fallback
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
+    command: 'node scripts/start-dev-server.js',
+    url: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',
+    timeout: 120 * 1000, // 2 minutes timeout for server startup
+    env: Object.fromEntries(
+      Object.entries(process.env).filter(([, value]) => value !== undefined),
+    ) as Record<string, string>,
   },
 });

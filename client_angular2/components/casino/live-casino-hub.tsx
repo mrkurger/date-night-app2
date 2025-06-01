@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -95,7 +96,7 @@ const liveAdvertisers: LiveAdvertiser[] = [
 ];
 
 export default function LiveCasinoHub() {
-  const [selectedStream, setSelectedStream] = useState<LiveAdvertiser | null>(liveAdvertisers[0]);
+  const [selectedStream, setSelectedStream] = useState<LiveAdvertiser | null>(liveAdvertisers[0] || null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -168,7 +169,8 @@ export default function LiveCasinoHub() {
                     <Image
                       src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
                       alt={selectedStream.name}
-                      className="w-full h-full object-cover opacity-80"
+                      fill
+                      className="object-cover opacity-80"
                     />
                     <div className="absolute inset-0 bg-black/30" />
                   </div>
@@ -215,11 +217,14 @@ export default function LiveCasinoHub() {
                     <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
-                            alt={selectedStream.name}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-pink-500"
-                          />
+                          <div className="relative w-12 h-12">
+                            <Image
+                              src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
+                              alt={selectedStream.name}
+                              fill
+                              className="rounded-full object-cover border-2 border-pink-500"
+                            />
+                          </div>
                           <div>
                             <h3 className="text-white font-bold text-lg">{selectedStream.name}</h3>
                             <div className="flex items-center gap-2 text-sm">
@@ -338,7 +343,8 @@ export default function LiveCasinoHub() {
                     <Image
                       src={advertiser.image || getFemaleImageByIndex(advertiser.id)}
                       alt={advertiser.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 

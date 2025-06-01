@@ -78,5 +78,9 @@ export default defineConfig({
     command: 'cd client_angular2 && npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: true,
+    env: {
+      NODE_ENV: process.env.NODE_ENV || 'development',
+      TZ: process.env.TZ || 'UTC',
+    },
   },
 });

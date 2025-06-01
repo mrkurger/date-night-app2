@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -311,11 +312,12 @@ function KenoGame({ advertisers, userBalance, setUserBalance }: any) {
                 >
                   <div className="flex flex-col items-center">
                     <div className="text-lg font-bold">{num}</div>
-                    <div className="w-6 h-6 rounded-full overflow-hidden mt-1">
+                    <div className="w-6 h-6 rounded-full overflow-hidden mt-1 relative">
                       <Image
                         src={advertiser.image}
                         alt={advertiser.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                   </div>
@@ -377,11 +379,14 @@ function CardGames({ advertisers, userBalance, setUserBalance }: any) {
             <div className="mt-4 p-4 bg-gray-800 rounded-lg">
               <div className="text-white text-sm mb-2">Selected Card:</div>
               <div className="flex items-center gap-2">
-                <Image
-                  src={selectedCard.image}
-                  alt={selectedCard.name}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
+                <div className="relative w-8 h-8">
+                  <Image
+                    src={selectedCard.image}
+                    alt={selectedCard.name}
+                    fill
+                    className="rounded-full object-cover"
+                  />
+                </div>
                 <div>
                   <div className="text-white font-bold">{selectedCard.name}</div>
                   <div className="flex items-center gap-1">
@@ -412,11 +417,14 @@ function CardGames({ advertisers, userBalance, setUserBalance }: any) {
                 onClick={() => setSelectedCard(advertiser)}
               >
                 <div className="text-center">
-                  <Image
-                    src={advertiser.image}
-                    alt={advertiser.name}
-                    className="w-16 h-16 rounded-full object-cover mx-auto mb-2"
-                  />
+                  <div className="relative w-16 h-16 mx-auto mb-2">
+                    <Image
+                      src={advertiser.image}
+                      alt={advertiser.name}
+                      fill
+                      className="rounded-full object-cover"
+                    />
+                  </div>
                   <div className="text-white font-bold text-sm">{advertiser.name}</div>
                   <div className="flex items-center justify-center gap-1 mt-1">
                     <span className="text-gray-300 text-xs">{advertiser.cardRank}</span>
@@ -453,11 +461,14 @@ function ActiveRaffles({ advertisers, userBalance, setUserBalance }: any) {
       {raffles.map(raffle => (
         <Card key={raffle.id} className="bg-black/40 backdrop-blur-sm border-pink-500/30 p-6">
           <div className="text-center mb-4">
-            <Image
-              src={raffle.advertiser.image}
-              alt={raffle.advertiser.name}
-              className="w-20 h-20 rounded-full object-cover mx-auto mb-3"
-            />
+            <div className="relative w-20 h-20 mx-auto mb-3">
+              <Image
+                src={raffle.advertiser.image}
+                alt={raffle.advertiser.name}
+                fill
+                className="rounded-full object-cover"
+              />
+            </div>
             <h3 className="text-white font-bold text-lg">{raffle.advertiser.name}</h3>
             <div className="text-pink-400 text-sm">Raffle Prize</div>
           </div>
@@ -515,11 +526,14 @@ function Leaderboard({ advertisers }: any) {
           >
             <div className="text-2xl font-bold text-yellow-400">#{index + 1}</div>
 
-            <Image
-              src={advertiser.image}
-              alt={advertiser.name}
-              className="w-12 h-12 rounded-full object-cover"
-            />
+            <div className="relative w-12 h-12">
+              <Image
+                src={advertiser.image}
+                alt={advertiser.name}
+                fill
+                className="rounded-full object-cover"
+              />
+            </div>
 
             <div className="flex-1">
               <div className="text-white font-bold">{advertiser.name}</div>

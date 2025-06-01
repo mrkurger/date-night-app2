@@ -1,25 +1,30 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
-    /* Changed from "node" to "bundler" for better ESM support */
+    "module": "esnext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    /* Added for scripts folder support */
     "allowJs": true,
     "checkJs": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  /* Updated exclude to keep scripts folder */
-  "exclude": ["node_modules", "dist", "client-angular"],
-  /* Added ts-node config for ESM support */
+  "exclude": ["node_modules", "dist", "client-angular", "scripts/**/*.mjs"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  /* Added include for scripts */
-  "include": ["scripts/**/*"]
+  "include": ["scripts/**/*", ".next/types/**/*.ts"]
 }

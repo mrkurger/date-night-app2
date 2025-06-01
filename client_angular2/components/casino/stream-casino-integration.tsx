@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -163,11 +164,14 @@ export default function StreamCasinoIntegration({
         <Card className="bg-black/90 backdrop-blur-sm border-pink-500/30 p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <Image
-                src={advertiserImage || '/placeholder.svg'}
-                alt={advertiserName}
-                className="w-10 h-10 rounded-full object-cover border-2 border-pink-500"
-              />
+              <div className="relative w-10 h-10">
+                <Image
+                  src={advertiserImage || '/placeholder.svg'}
+                  alt={advertiserName}
+                  fill
+                  className="rounded-full object-cover border-2 border-pink-500"
+                />
+              </div>
               <div>
                 <h3 className="text-white font-bold">{advertiserName}</h3>
                 <div className="text-gray-300 text-sm">

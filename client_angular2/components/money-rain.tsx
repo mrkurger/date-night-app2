@@ -27,6 +27,7 @@ export default function MoneyRain({ isActive, intensity = 50, duration = 3000 }:
 
       return () => clearTimeout(timer)
     }
+    return undefined;
   }, [isActive, intensity, duration])
 
   if (!isActive || particles.length === 0) return null

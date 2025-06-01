@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import './netflix-view.css';
 
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import AdvertiserCard, { Advertiser as AdvertiserCardType } from '@/components/ui/AdvertiserCard';
@@ -574,17 +575,50 @@ export default function NetflixViewPage() {
       <EnhancedNavbar />
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {displayedAdvertisers.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {displayedAdvertisers.map((advertiser: AdvertiserCardType) => (
-              <motion.div
-                key={advertiser.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <AdvertiserCard advertiser={advertiser} />
-              </motion.div>
-            ))}
+          <div className="masonry-grid gap-4">
+            {displayedAdvertisers.map((advertiser: AdvertiserCardType, index) => {
+              // Determine card size based on image dimensions and index for variety
+              const aspectRatio = (advertiser.imageWidth || 400) / (advertiser.imageHeight || 600);
+              const imageWidth = advertiser.imageWidth || 400;
+              const imageHeight = advertiser.imageHeight || 600;
+              let cardSizeClass = '';
+
+              // Create more variety by using index and image properties
+              if (index % 7 === 0 && aspectRatio > 1.0) {
+                // Every 7th item that's landscape becomes extra wide
+                cardSizeClass = 'masonry-item-extra-wide';
+              } else if (index % 5 === 0 && aspectRatio < 0.8) {
+                // Every 5th item that's portrait becomes extra tall
+                cardSizeClass = 'masonry-item-extra-tall';
+              } else if (aspectRatio > 1.3) {
+                // Wide landscape images
+                cardSizeClass = 'masonry-item-wide';
+              } else if (aspectRatio < 0.6) {
+                // Very tall portrait images
+                cardSizeClass = 'masonry-item-tall';
+              } else if (imageWidth > 900 || imageHeight > 1000) {
+                // Large images
+                cardSizeClass = 'masonry-item-large';
+              } else if (index % 3 === 0) {
+                // Every 3rd item gets medium size for variety
+                cardSizeClass = 'masonry-item-medium';
+              } else {
+                // Regular size
+                cardSizeClass = 'masonry-item-regular';
+              }
+
+              return (
+                <motion.div
+                  key={advertiser.id}
+                  className={`masonry-item ${cardSizeClass}`}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <AdvertiserCard advertiser={advertiser} />
+                </motion.div>
+              );
+            })}
           </div>
         ) : (
           <p>Loading advertisers...</p>

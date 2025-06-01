@@ -257,24 +257,24 @@ export function EnhancedProfileCarousel() {
           <div className="flex items-center gap-4 mb-6">
             <div className="relative w-20 h-20">
               <Image
-                src={centerCard.image || getFemaleImageByIndex(centerCard.id)}
-                alt={centerCard.name}
+                src={centerCard?.image || getFemaleImageByIndex(centerCard?.id || 1)}
+                alt={centerCard?.name || 'Profile'}
                 fill
                 className="rounded-full object-cover border-4 border-white shadow-lg"
               />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-gray-800">
-                {centerCard.name}, {centerCard.age}
+                {centerCard?.name}, {centerCard?.age}
               </h2>
-              <p className="text-xl text-gray-600">{centerCard.city}</p>
+              <p className="text-xl text-gray-600">{centerCard?.city}</p>
               <div className="flex items-center gap-2 mt-2">
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    centerCard.isOnline ? 'bg-green-500' : 'bg-gray-400'
+                    centerCard?.isOnline ? 'bg-green-500' : 'bg-gray-400'
                   }`}
                 ></div>
-                <span className="text-sm font-medium text-gray-700">{centerCard.lastOnline}</span>
+                <span className="text-sm font-medium text-gray-700">{centerCard?.lastOnline}</span>
               </div>
             </div>
           </div>
@@ -282,16 +282,16 @@ export function EnhancedProfileCarousel() {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold text-gray-800 mb-3">About Me</h3>
-              <p className="text-gray-700 leading-relaxed mb-6">{centerCard.description}</p>
+              <p className="text-gray-700 leading-relaxed mb-6">{centerCard?.description}</p>
 
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="font-medium text-gray-700">Pricing:</span>
-                  <span className="text-pink-600 font-semibold">{centerCard.pricing}</span>
+                  <span className="text-pink-600 font-semibold">{centerCard?.pricing}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="font-medium text-gray-700">Member Since:</span>
-                  <span className="text-gray-600">{centerCard.membershipLength}</span>
+                  <span className="text-gray-600">{centerCard?.membershipLength}</span>
                 </div>
               </div>
             </div>
@@ -300,12 +300,12 @@ export function EnhancedProfileCarousel() {
               <h3 className="text-xl font-semibold text-gray-800 mb-3">Profile Stats</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-                  <div className="text-2xl font-bold text-pink-600">{centerCard.sharedImages}</div>
+                  <div className="text-2xl font-bold text-pink-600">{centerCard?.sharedImages}</div>
                   <div className="text-sm text-gray-600">Shared Images</div>
                 </div>
                 <div className="bg-white rounded-lg p-4 text-center shadow-sm">
                   <div className="text-2xl font-bold text-purple-600">
-                    {centerCard.receivedLikes.toLocaleString()}
+                    {centerCard?.receivedLikes?.toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">Received Likes</div>
                 </div>

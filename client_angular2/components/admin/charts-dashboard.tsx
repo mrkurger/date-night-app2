@@ -37,7 +37,7 @@ export function ChartsDashboard() {
     const systemEvents = events.filter(e => e.type === 'system');
     if (systemEvents.length > 0) {
       const latest = systemEvents[0];
-      if (latest.data && 'cpu' in latest.data) {
+      if (latest?.data && 'cpu' in latest.data) {
         const data = latest.data as any;
         setCpuUsage(Math.round(data.cpu.usage));
         setMemoryUsage(Math.round(data.memory.percentage));

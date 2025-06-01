@@ -69,7 +69,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 1800,
     creator: {
       name: 'Emma',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150',
+      avatar: '/public/assets/img/profiles/random1.jpg',
       rating: 4.8,
     },
     currentPot: 6000,
@@ -86,7 +86,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 3600,
     creator: {
       name: 'Sofia',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+      avatar: '/public/assets/img/profiles/random2.jpg',
       rating: 4.9,
     },
     currentPot: 2500,
@@ -103,7 +103,7 @@ const mockSessions: SocialGamblingSession[] = [
     timeLeft: 7200,
     creator: {
       name: 'Astrid',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+      avatar: '/public/assets/img/profiles/random3.jpg',
       rating: 4.7,
     },
     currentPot: 12500,
@@ -117,7 +117,7 @@ const mockDataBets: DataBet[] = [
     id: '1',
     user: {
       name: 'Isabella',
-      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150',
+      avatar: '/public/assets/img/profiles/random4.jpg',
       rating: 4.6,
     },
     stake: 'private_photos',
@@ -131,7 +131,7 @@ const mockDataBets: DataBet[] = [
     id: '2',
     user: {
       name: 'Ingrid',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
+      avatar: '/public/assets/img/profiles/random5.jpg',
       rating: 4.8,
     },
     stake: 'location',

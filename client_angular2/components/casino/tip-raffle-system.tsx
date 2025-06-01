@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -58,11 +59,12 @@ export default function TipRaffleSystem({
   return (
     <Card className="bg-gradient-to-br from-purple-900/90 to-pink-900/90 backdrop-blur-sm border-pink-500/30 p-6">
       <div className="text-center mb-6">
-        <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500">
+        <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500 relative">
           <Image
             src={advertiserImage || '/placeholder.svg'}
             alt={advertiserName}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">Tip & Win with {advertiserName}</h3>

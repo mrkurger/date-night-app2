@@ -70,10 +70,11 @@ function RankedAdvertiserCard({
       <div className="relative h-56">
         <Link href={`/advertiser/${advertiser.id}`}>
           <Image
-            src={getProfileImage(advertiser)}
+            src={advertiser.image || '/placeholder.svg'}
             alt={advertiser.name}
             fill
-            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </Link>
         <Badge variant="secondary" className="absolute top-2 left-2 bg-black/70 text-white">
@@ -191,34 +192,39 @@ export default function RankingsPage() {
   }, []);
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem('favoriteAdvertisers');
-    if (storedFavorites) {
-      try {
-        const parsedFavorites = JSON.parse(storedFavorites);
-        if (
-          Array.isArray(parsedFavorites) &&
-          parsedFavorites.every(item => typeof item === 'number')
-        ) {
-          setFavoriteAdvertisers(parsedFavorites);
-        } else {
-          console.error('Parsed favorites is not an array of numbers');
+    // Add availability check for localStorage
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedFavorites = localStorage.getItem('favoriteAdvertisers');
+      if (storedFavorites) {
+        try {
+          const parsedFavorites = JSON.parse(storedFavorites);
+          if (
+            Array.isArray(parsedFavorites) &&
+            parsedFavorites.every(item => typeof item === 'number')
+          ) {
+            setFavoriteAdvertisers(parsedFavorites);
+          } else {
+            console.error('Parsed favorites is not an array of numbers');
+            setFavoriteAdvertisers([]);
+          }
+        } catch (e) {
+          console.error('Failed to parse favorites from localStorage', e);
           setFavoriteAdvertisers([]);
         }
-      } catch (e) {
-        console.error('Failed to parse favorites from localStorage', e);
-        setFavoriteAdvertisers([]);
       }
     }
   }, []);
 
   const handleFavorite = (advertiserId: number) => {
-    setFavoriteAdvertisers((prevFavorites: number[]) => {
-      const newFavorites = prevFavorites.includes(advertiserId)
-        ? prevFavorites.filter((id: number) => id !== advertiserId)
-        : [...prevFavorites, advertiserId];
-      localStorage.setItem('favoriteAdvertisers', JSON.stringify(newFavorites));
-      return newFavorites;
-    });
+    if (typeof window !== 'undefined') {
+      setFavoriteAdvertisers((prevFavorites: number[]) => {
+        const newFavorites = prevFavorites.includes(advertiserId)
+          ? prevFavorites.filter((id: number) => id !== advertiserId)
+          : [...prevFavorites, advertiserId];
+        localStorage.setItem('favoriteAdvertisers', JSON.stringify(newFavorites));
+        return newFavorites;
+      });
+    }
   };
 
   const sortedAdvertisers = useMemo(() => {

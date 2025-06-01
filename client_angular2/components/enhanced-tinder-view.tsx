@@ -139,12 +139,14 @@ export default function EnhancedTinderView() {
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const clientX = 'touches' in e ? e.touches[0]?.clientX || 0 : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0]?.clientY || 0 : e.clientY;
 
     const handleDragMove = (moveEvent: MouseEvent | TouchEvent) => {
-      const moveClientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
-      const moveClientY = 'touches' in moveEvent ? moveEvent.touches[0].clientY : moveEvent.clientY;
+      const moveClientX =
+        'touches' in moveEvent ? moveEvent.touches[0]?.clientX || 0 : moveEvent.clientX;
+      const moveClientY =
+        'touches' in moveEvent ? moveEvent.touches[0]?.clientY || 0 : moveEvent.clientY;
 
       setDragOffset({
         x: moveClientX - clientX,
@@ -231,7 +233,8 @@ export default function EnhancedTinderView() {
                 <Image
                   src={advertiser.image || '/placeholder.svg'}
                   alt={advertiser.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               </div>
@@ -254,18 +257,19 @@ export default function EnhancedTinderView() {
           >
             <div className="relative h-[600px]">
               <Image
-                src={currentAdvertiser.image || '/placeholder.svg'}
-                alt={currentAdvertiser.name}
-                className="w-full h-full object-cover"
+                src={currentAdvertiser?.image || '/placeholder.svg'}
+                alt={currentAdvertiser?.name || 'Profile'}
+                fill
+                className="object-cover"
               />
 
               {/* Online Status */}
-              {currentAdvertiser.isOnline && (
+              {currentAdvertiser?.isOnline && (
                 <div className="absolute top-4 right-4 bg-green-500 rounded-full w-4 h-4 border-2 border-white animate-pulse" />
               )}
 
               {/* VIP Badge */}
-              {currentAdvertiser.isVip && (
+              {currentAdvertiser?.isVip && (
                 <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full px-3 py-1 flex items-center gap-1">
                   <Crown className="w-4 h-4 text-white" />
                   <span className="text-white text-xs font-bold">VIP</span>
@@ -278,25 +282,25 @@ export default function EnhancedTinderView() {
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                 <div className="flex items-center gap-2 mb-2">
-                  <h2 className="text-3xl font-bold">{currentAdvertiser.name}</h2>
-                  <span className="text-xl text-gray-300">{currentAdvertiser.age}</span>
+                  <h2 className="text-3xl font-bold">{currentAdvertiser?.name}</h2>
+                  <span className="text-xl text-gray-300">{currentAdvertiser?.age}</span>
                 </div>
 
-                <p className="text-gray-300 mb-3">{currentAdvertiser.location}</p>
+                <p className="text-gray-300 mb-3">{currentAdvertiser?.location}</p>
 
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-sm">{currentAdvertiser.rating}</span>
+                    <span className="text-sm">{currentAdvertiser?.rating}</span>
                   </div>
 
                   <div className="flex items-center gap-1">
                     <DollarSign className="w-4 h-4 text-green-400" />
-                    <span className="text-sm font-bold">${currentAdvertiser.price}/hr</span>
+                    <span className="text-sm font-bold">${currentAdvertiser?.price}/hr</span>
                   </div>
 
                   <div className="text-xs text-gray-400">
-                    ${currentAdvertiser.totalEarnings.toLocaleString()} earned
+                    ${currentAdvertiser?.totalEarnings?.toLocaleString()} earned
                   </div>
                 </div>
 
@@ -366,14 +370,15 @@ export default function EnhancedTinderView() {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <Card className="bg-gradient-to-br from-purple-900 to-pink-900 border-pink-500/30 p-6 max-w-md w-full">
             <div className="text-center mb-6">
-              <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500">
+              <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500 relative">
                 <Image
-                  src={currentAdvertiser.image || '/placeholder.svg'}
-                  alt={currentAdvertiser.name}
-                  className="w-full h-full object-cover"
+                  src={currentAdvertiser?.image || '/placeholder.svg'}
+                  alt={currentAdvertiser?.name || 'Profile'}
+                  fill
+                  className="object-cover"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Tip {currentAdvertiser.name}</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Tip {currentAdvertiser?.name}</h3>
               <p className="text-gray-300">Show your appreciation with a tip!</p>
               {multiplier > 1 && (
                 <div className="mt-2 bg-yellow-500/20 rounded-full px-3 py-1 inline-block">

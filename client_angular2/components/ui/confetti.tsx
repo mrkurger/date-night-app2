@@ -60,7 +60,7 @@ export default function Confetti({
         y: Math.random() * dimensions.height - dimensions.height,
         w: randomRange(10, 30),
         h: randomRange(5, 15),
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)] || '#000000',
         mp: randomRange(0.5, 1),
         xv: randomRange(-3, 3),
         yv: randomRange(1, 3),

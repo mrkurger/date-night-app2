@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -50,8 +51,7 @@ const contentCreators: ContentCreator[] = [
   {
     id: '1',
     name: 'Sofia',
-    image:
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face',
+    image: '/public/assets/img/profiles/random1.jpg',
     isOnline: true,
     followers: 12500,
     tips: 8950,
@@ -62,8 +62,7 @@ const contentCreators: ContentCreator[] = [
   {
     id: '2',
     name: 'Isabella',
-    image:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face',
+    image: '/public/assets/img/profiles/random2.jpg',
     isOnline: false,
     followers: 9800,
     tips: 6750,
@@ -74,8 +73,7 @@ const contentCreators: ContentCreator[] = [
   {
     id: '3',
     name: 'Valentina',
-    image:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face',
+    image: '/public/assets/img/profiles/random3.jpg',
     isOnline: true,
     followers: 15200,
     tips: 11200,
@@ -90,10 +88,9 @@ const contentPosts: ContentPost[] = [
     id: '1',
     creatorId: '1',
     creatorName: 'Sofia',
-    creatorImage:
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face',
+    creatorImage: '/public/assets/img/profiles/random1.jpg',
     type: 'live',
-    thumbnail: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=300&fit=crop',
+    thumbnail: '/public/assets/img/profiles/random1.jpg',
     title: 'Live Yoga Session 🧘‍♀️',
     tips: 245,
     likes: 892,
@@ -103,10 +100,9 @@ const contentPosts: ContentPost[] = [
     id: '2',
     creatorId: '2',
     creatorName: 'Isabella',
-    creatorImage:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face',
+    creatorImage: '/public/assets/img/profiles/random2.jpg',
     type: 'video',
-    thumbnail: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=300&fit=crop',
+    thumbnail: '/public/assets/img/profiles/random2.jpg',
     title: 'Behind the Scenes Photoshoot',
     tips: 156,
     likes: 634,
@@ -118,10 +114,9 @@ const contentPosts: ContentPost[] = [
     id: '3',
     creatorId: '3',
     creatorName: 'Valentina',
-    creatorImage:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face',
+    creatorImage: '/public/assets/img/profiles/random3.jpg',
     type: 'image',
-    thumbnail: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop',
+    thumbnail: '/public/assets/img/profiles/random3.jpg',
     title: 'Exclusive Photo Set 📸',
     tips: 89,
     likes: 423,
@@ -177,11 +172,13 @@ export function GamifiedContentHub() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {contentPosts.map(post => (
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
+                <div className="relative h-48">
                   <Image
                     src={post.thumbnail || '/placeholder.svg'}
                     alt={post.title}
-                    className="w-full h-48 object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
                   />
                   {post.type === 'live' && (
                     <Badge className="absolute top-2 left-2 bg-red-500 text-white">
@@ -205,11 +202,14 @@ export function GamifiedContentHub() {
                 </div>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Image
-                      src={post.creatorImage || '/placeholder.svg'}
-                      alt={post.creatorName}
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
+                    <div className="relative w-8 h-8">
+                      <Image
+                        src={post.creatorImage || '/placeholder.svg'}
+                        alt={post.creatorName}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    </div>
                     <span className="font-medium">{post.creatorName}</span>
                   </div>
                   <h3 className="font-semibold mb-2">{post.title}</h3>
@@ -251,11 +251,12 @@ export function GamifiedContentHub() {
               .filter(c => c.isOnline)
               .map(creator => (
                 <Card key={creator.id} className="overflow-hidden">
-                  <div className="relative">
+                  <div className="relative h-48">
                     <Image
                       src={creator.image || '/placeholder.svg'}
                       alt={creator.name}
-                      className="w-full h-48 object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <Badge className="absolute top-2 left-2 bg-red-500 text-white">
                       <div className="w-2 h-2 bg-white rounded-full mr-1 animate-pulse"></div>
@@ -304,11 +305,12 @@ export function GamifiedContentHub() {
               <Card key={creator.id} className="overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="relative">
+                    <div className="relative w-16 h-16">
                       <Image
                         src={creator.image || '/placeholder.svg'}
                         alt={creator.name}
-                        className="w-16 h-16 rounded-full object-cover"
+                        fill
+                        className="rounded-full object-cover"
                       />
                       {creator.isOnline && (
                         <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
@@ -374,11 +376,14 @@ export function GamifiedContentHub() {
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-sm">
                         {index + 1}
                       </div>
-                      <Image
-                        src={creator.image || '/placeholder.svg'}
-                        alt={creator.name}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
+                      <div className="relative w-10 h-10">
+                        <Image
+                          src={creator.image || '/placeholder.svg'}
+                          alt={creator.name}
+                          fill
+                          className="rounded-full object-cover"
+                        />
+                      </div>
                       <div className="flex-1">
                         <div className="font-medium">{creator.name}</div>
                         <div className="text-sm text-gray-600">
@@ -406,11 +411,14 @@ export function GamifiedContentHub() {
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-400 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
                         {index + 1}
                       </div>
-                      <Image
-                        src={post.thumbnail || '/placeholder.svg'}
-                        alt={post.title}
-                        className="w-10 h-10 rounded object-cover"
-                      />
+                      <div className="relative w-10 h-10">
+                        <Image
+                          src={post.thumbnail || '/placeholder.svg'}
+                          alt={post.title}
+                          fill
+                          className="rounded object-cover"
+                        />
+                      </div>
                       <div className="flex-1">
                         <div className="font-medium text-sm">{post.title}</div>
                         <div className="text-xs text-gray-600">

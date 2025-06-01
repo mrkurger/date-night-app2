@@ -79,7 +79,8 @@ export function Swiper({ children, onSwipe, threshold = 100, className = '' }: S
       whileDrag={{
         scale: 1.05,
         cursor: 'grabbing',
-        rotateZ: ({ offset }) => getRotation(offset?.x || 0),
+        rotateZ: ({ offset }: { offset?: { x?: number; y?: number } }) =>
+          getRotation(offset?.x || 0),
       }}
     >
       {children}

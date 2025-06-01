@@ -12,6 +12,7 @@ interface BlurImageProps {
   fill?: boolean;
   priority?: boolean;
   className?: string;
+  containerClassName?: string;
   imagePlaceholder?: string;
   objectFit?: 'contain' | 'cover' | 'fill';
   quality?: number;
@@ -29,6 +30,7 @@ export function BlurImage({
   fill = false,
   priority = false,
   className = '',
+  containerClassName = '',
   imagePlaceholder,
   objectFit = 'cover',
   quality = 80,
@@ -81,14 +83,14 @@ export function BlurImage({
       className={cn(
         'overflow-hidden relative',
         isLoading ? 'animate-pulse bg-muted' : '',
-        className,
+        containerClassName,
       )}
     >
       <Image
         src={getOptimizedSrc(src)}
         alt={alt}
         width={fill ? undefined : width || 800}
-        height={fill ? undefined : height}
+        height={fill ? undefined : height || 600}
         fill={fill}
         priority={priority}
         quality={quality}
@@ -99,6 +101,7 @@ export function BlurImage({
           objectFit === 'cover' && 'object-cover',
           objectFit === 'contain' && 'object-contain',
           objectFit === 'fill' && 'object-fill',
+          className,
         )}
         placeholder={blurDataUrl ? 'blur' : 'empty'}
         blurDataURL={blurDataUrl}

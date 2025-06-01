@@ -66,8 +66,8 @@ test.describe('Carousely Page', () => {
     // Click the like button using the data-testid
     await page.locator('button[data-testid="like-button"]').click();
 
-    // Verify a toast notification appears
-    await expect(page.getByText("It's a match!")).toBeVisible();
+    // Verify a toast notification appears (target only the toast title, not the screen reader text)
+    await expect(page.locator('.text-sm.font-semibold').getByText("It's a match!")).toBeVisible();
 
     // Verify card count decreased by one
     await page.waitForTimeout(1000); // Wait for animation
@@ -75,23 +75,31 @@ test.describe('Carousely Page', () => {
     expect(newCardCount).toBeLessThan(initialCardCount);
   });
 
-  test('Geolocation permission functionality', async ({ page }) => {
-    // Handle geolocation permission automatically through configuration
+  test('Geolocation permission functionality', async ({ page, context }) => {
+    // Grant geolocation permission and set location
+    await context.grantPermissions(['geolocation']);
+    await context.setGeolocation({ latitude: 40.7128, longitude: -74.006 });
 
     // Click on the geolocation button using the data-testid
     await page.locator('button[data-testid="geolocation-button"]').click();
 
-    // Verify success state
-    await expect(page.getByText('Location enabled')).toBeVisible();
+    // Wait a moment for the geolocation to process
+    await page.waitForTimeout(2000);
 
-    // Verify button state changed
-    const geoButton = page.locator('button').filter({ has: page.locator('svg').first() });
+    // First verify button state changed (this should work if geolocation is triggered)
+    const geoButton = page.locator('button[data-testid="geolocation-button"]');
     await expect(geoButton).toHaveClass(/bg-green-100/);
+
+    // Then verify success state text appears
+    await expect(page.getByText('Location enabled')).toBeVisible();
   });
 
   test('Carousel card content is correctly displayed', async ({ page }) => {
-    // Get the first card
-    const firstCard = page.locator('.w-80.h-\\[400px\\]').first();
+    // Wait for carousel to be ready and get a visible card (not hidden)
+    await page.waitForTimeout(1000); // Give time for carousel to initialize
+
+    // Get the first visible card (not hidden)
+    const firstCard = page.locator('.w-80.h-\\[400px\\]:not(.hidden)').first();
 
     // Verify card has an image
     await expect(firstCard.locator('img')).toBeVisible();
@@ -108,7 +116,7 @@ test.describe('Carousely Page', () => {
     expect(bioText?.trim().length).toBeGreaterThan(0);
 
     // Verify card has tags
-    await expect(firstCard.locator('.px-2.py-0\\.5')).toBeVisible();
+    await expect(firstCard.locator('.px-2.py-0\\.5').first()).toBeVisible();
   });
 
   // Test responsive behavior

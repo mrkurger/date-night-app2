@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Lock } from 'lucide-react';
@@ -33,11 +34,12 @@ export function VipContent() {
       <h3 className="text-lg font-bold">VIP Content</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className="aspect-square overflow-hidden rounded-md">
+          <div key={index} className="aspect-square overflow-hidden rounded-md relative">
             <Image
               src={`/placeholder.svg?height=300&width=300&text=VIP+Content+${index + 1}`}
               alt={`VIP Content ${index + 1}`}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
             />
           </div>
         ))}

@@ -32,14 +32,14 @@ const tipOptions: TipOption[] = [
 ];
 
 const femaleImages = [
-  'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=400&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=400&fit=crop&crop=face',
+  '/public/assets/img/profiles/random1.jpg',
+  '/public/assets/img/profiles/random2.jpg',
+  '/public/assets/img/profiles/random3.jpg',
+  '/public/assets/img/profiles/random4.jpg',
+  '/public/assets/img/profiles/random5.jpg',
+  '/public/assets/img/profiles/random6.jpg',
+  '/public/assets/img/profiles/random7.jpg',
+  '/public/assets/img/profiles/random8.jpg',
 ];
 
 const names = [
@@ -75,8 +75,8 @@ export function TipFrenzy() {
   const generateRandomAdvertisers = () => {
     return Array.from({ length: 6 }, (_, i) => ({
       id: `random-${i}`,
-      name: names[Math.floor(Math.random() * names.length)],
-      image: femaleImages[i % femaleImages.length],
+      name: names[Math.floor(Math.random() * names.length)] || 'Unknown',
+      image: femaleImages[i % femaleImages.length] || '/placeholder.svg',
       isOnline: Math.random() > 0.4,
       xp: Math.floor(Math.random() * 1000) + 100,
     }));
@@ -176,9 +176,9 @@ export function TipFrenzy() {
                     <Image
                       src={advertiser.image || '/placeholder.svg'}
                       alt={advertiser.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full border-2 border-pink-500 object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 hover:scale-105"
                     />
                     {advertiser.isOnline && (
                       <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-black"></div>

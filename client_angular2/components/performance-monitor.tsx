@@ -1,6 +1,17 @@
 'use client';
 
 import { useEffect } from 'react';
+import React from 'react';
+
+// Type declaration for Google Analytics gtag function
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
+// Global gtag function
+declare const gtag: (...args: any[]) => void;
 
 interface PerformanceMetrics {
   fcp?: number; // First Contentful Paint
@@ -13,7 +24,7 @@ interface PerformanceMetrics {
 export function PerformanceMonitor() {
   useEffect(() => {
     // Web Vitals monitoring
-    const observer = new PerformanceObserver((list) => {
+    const observer = new PerformanceObserver(list => {
       const metrics: PerformanceMetrics = {};
 
       for (const entry of list.getEntries()) {
@@ -49,7 +60,15 @@ export function PerformanceMonitor() {
 
     // Observe different performance entry types
     try {
-      observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'first-input', 'layout-shift', 'navigation'] });
+      observer.observe({
+        entryTypes: [
+          'paint',
+          'largest-contentful-paint',
+          'first-input',
+          'layout-shift',
+          'navigation',
+        ],
+      });
     } catch (e) {
       // Fallback for browsers that don't support all entry types
       console.warn('Some performance metrics not supported:', e);
@@ -92,7 +111,7 @@ function sendMetrics(metrics: any) {
 
   // In production, send to your analytics service
   // Example implementations:
-  
+
   // Google Analytics 4
   if (typeof gtag !== 'undefined') {
     Object.entries(metrics).forEach(([key, value]) => {
@@ -116,7 +135,7 @@ function sendMetrics(metrics: any) {
       userAgent: navigator.userAgent,
       url: window.location.href,
     }),
-  }).catch((error) => {
+  }).catch(error => {
     console.warn('Failed to send performance metrics:', error);
   });
 }
@@ -129,7 +148,7 @@ export function usePerformanceTracking() {
       duration,
       timestamp: Date.now(),
     };
-    
+
     sendMetrics(metrics);
   };
 
@@ -144,12 +163,12 @@ export function usePerformanceTracking() {
 // Utility function to measure component render time
 export function withPerformanceTracking<T extends object>(
   Component: React.ComponentType<T>,
-  componentName: string
+  componentName: string,
 ) {
   return function PerformanceTrackedComponent(props: T) {
     useEffect(() => {
       const startTime = performance.now();
-      
+
       return () => {
         const endTime = performance.now();
         sendMetrics({

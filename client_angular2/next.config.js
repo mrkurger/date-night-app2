@@ -1,20 +1,21 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+// Temporarily disabled bundle analyzer
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// });
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-  buildExcludes: [/middleware-manifest\.json$/],
-});
+// Temporarily disabled PWA for debugging
+// const withPWA = require('next-pwa')({
+//   dest: 'public',
+//   register: true,
+//   skipWaiting: true,
+//   disable: process.env.NODE_ENV === 'development',
+//   buildExcludes: [/middleware-manifest\.json$/],
+// });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // React optimizations
   reactStrictMode: true,
-  swcMinify: true,
 
   // Performance optimizations
   compress: true,
@@ -82,39 +83,21 @@ const nextConfig = {
     ];
   },
 
-  // Experimental features for performance
+  // Experimental features for performance (temporarily disabled for debugging)
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
+    // turbo: {
+    //   rules: {
+    //     '*.svg': {
+    //       loaders: ['@svgr/webpack'],
+    //       as: '*.js',
+    //     },
+    //   },
+    // },
   },
 
-  // Bundle optimization
-  webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
-    if (!dev && !isServer) {
-      config.optimization.splitChunks.cacheGroups = {
-        ...config.optimization.splitChunks.cacheGroups,
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      };
-    }
-
-    return config;
-  },
-
-  // Output optimization
-  outputFileTracing: true,
+  // Webpack configuration temporarily removed for debugging
 
   // Environment variables
   env: {
@@ -122,4 +105,5 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(withPWA(nextConfig));
+// module.exports = withPWA(nextConfig);
+module.exports = nextConfig;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Advertiser {
@@ -43,11 +44,12 @@ const NetflixViewGrid = () => {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {advertisers.map((advertiser, index) => (
-            <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
+            <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg h-64">
               <Image
                 src={advertiser.image}
                 alt={advertiser.name}
-                className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2">
                 <h2 className="text-lg font-semibold">{advertiser.name}</h2>

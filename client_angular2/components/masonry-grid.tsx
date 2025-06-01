@@ -33,7 +33,24 @@ export function MasonryGrid({ advertisers, className }: MasonryGridProps) {
 
   // If we have less than 7, duplicate some to fill the grid
   while (gridAdvertisers.length < 7) {
-    gridAdvertisers.push({ ...gridAdvertisers[gridAdvertisers.length % advertisers.length] });
+    const advertiser = gridAdvertisers[gridAdvertisers.length % advertisers.length];
+    if (!advertiser) break; // Avoid infinite loop
+
+    const newAdvertiser: Advertiser = {
+      id: advertiser.id || '',
+      name: advertiser.name || '',
+    };
+
+    // Only add optional properties if they exist
+    if (advertiser.age !== undefined) newAdvertiser.age = advertiser.age;
+    if (advertiser.location !== undefined) newAdvertiser.location = advertiser.location;
+    if (advertiser.distance !== undefined) newAdvertiser.distance = advertiser.distance;
+    if (advertiser.image !== undefined) newAdvertiser.image = advertiser.image;
+    if (advertiser.isVip !== undefined) newAdvertiser.isVip = advertiser.isVip;
+    if (advertiser.isOnline !== undefined) newAdvertiser.isOnline = advertiser.isOnline;
+    if (advertiser.isPremium !== undefined) newAdvertiser.isPremium = advertiser.isPremium;
+
+    gridAdvertisers.push(newAdvertiser);
   }
 
   // Define the grid layout
@@ -53,7 +70,7 @@ export function MasonryGrid({ advertisers, className }: MasonryGridProps) {
         <Link
           key={`${advertiser.id}-${index}`}
           href={`/advertiser/${advertiser.id}`}
-          className={cn('relative overflow-hidden rounded-2xl group', gridLayout[index].className)}
+          className={cn('relative overflow-hidden rounded-2xl group', gridLayout[index]?.className)}
           onMouseEnter={() => setHoveredId(advertiser.id)}
           onMouseLeave={() => setHoveredId(null)}
         >

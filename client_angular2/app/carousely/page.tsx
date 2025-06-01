@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import EnhancedNavbar from '@/components/enhanced-navbar';
-import { CarouselWheel } from '@/components/carousely/carousel-wheel';
+import TinderCardStack from '@/components/carousely/tinder-card-stack';
 import { generateMockAdvertisers, Advertiser } from '@/services/mock-advertisers';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -99,11 +99,23 @@ export default function CarouselyPage() {
   };
 
   // Handle swipe actions
-  const handleSwipe = (direction: 'left' | 'right', advertiserId: string) => {
+  const handleSwipe = (direction: 'left' | 'right' | 'up', advertiserId: string) => {
     if (direction === 'right') {
       toast({
         title: "It's a match!",
         description: 'You liked this profile',
+        duration: 2000,
+      });
+    } else if (direction === 'up') {
+      toast({
+        title: 'Super Like!',
+        description: 'You super liked this profile',
+        duration: 2000,
+      });
+    } else {
+      toast({
+        title: 'Passed',
+        description: 'You passed on this profile',
         duration: 2000,
       });
     }
@@ -119,7 +131,12 @@ export default function CarouselyPage() {
       <main className="pt-16 md:pt-16">
         <div className="container mx-auto p-4">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold">Find Your Match</h1>
+            <div>
+              <h1 className="text-3xl font-bold">Find Your Match</h1>
+              {geolocationEnabled && (
+                <p className="text-sm text-green-600 font-medium">Location enabled</p>
+              )}
+            </div>
             <div className="flex gap-2">
               <Button
                 variant="outline"
@@ -155,7 +172,12 @@ export default function CarouselyPage() {
           ) : (
             <>
               <div className="relative mb-8" data-testid="carousel-container">
-                <CarouselWheel advertisers={advertisers} onSwipe={handleSwipe} />
+                <TinderCardStack
+                  advertisers={advertisers}
+                  onSwipeLeft={advertiser => handleSwipe('left', advertiser.id)}
+                  onSwipeRight={advertiser => handleSwipe('right', advertiser.id)}
+                  onSwipeUp={advertiser => handleSwipe('up', advertiser.id)}
+                />
 
                 {/* Swipe action buttons */}
                 <div
@@ -166,7 +188,7 @@ export default function CarouselyPage() {
                     size="lg"
                     variant="destructive"
                     className="rounded-full h-14 w-14 flex items-center justify-center shadow-lg"
-                    onClick={() => handleSwipe('left', advertisers[0]?.id)}
+                    onClick={() => advertisers[0]?.id && handleSwipe('left', advertisers[0].id)}
                     data-testid="dislike-button"
                   >
                     <XIcon size={24} />
@@ -175,7 +197,7 @@ export default function CarouselyPage() {
                     size="lg"
                     variant="default"
                     className="rounded-full h-14 w-14 flex items-center justify-center bg-gradient-to-r from-pink-500 to-rose-500 shadow-lg"
-                    onClick={() => handleSwipe('right', advertisers[0]?.id)}
+                    onClick={() => advertisers[0]?.id && handleSwipe('right', advertisers[0].id)}
                     data-testid="like-button"
                   >
                     <HeartIcon size={24} />

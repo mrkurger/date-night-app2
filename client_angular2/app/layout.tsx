@@ -1,11 +1,5 @@
 import * as React from 'react';
-import { AuthProvider } from '../context/auth-context';
-import { DataProvider } from '../context/data-context';
-import { Toaster } from '@/components/ui/toaster';
-import { ErrorBoundary } from '@/components/error-boundary';
-import { PerformanceMonitor } from '@/components/performance-monitor';
-import { PWAInstaller } from '@/components/pwa-installer';
-import './globals.css';
+import '../styles/globals.css';
 
 export const metadata = {
   title: 'Carousely - Tinder-Style Dating App',
@@ -43,20 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
       </head>
-      <body>
-        <ErrorBoundary>
-          <AuthProvider>
-            <DataProvider>
-              <PerformanceMonitor />
-              {children}
-              <Toaster />
-              <PWAInstaller />
-              {/* PWA Setup component is client-side only */}
-              <div id="pwa-root" />
-            </DataProvider>
-          </AuthProvider>
-        </ErrorBoundary>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, type PanInfo, useAnimation } from 'framer-motion';
@@ -116,7 +117,8 @@ export default function TinderView({ advertisers }: TinderViewProps) {
                 <Image
                   src={currentAdvertiser.image || '/placeholder.svg?height=600&width=400'}
                   alt={currentAdvertiser.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
 
@@ -279,7 +281,8 @@ export default function TinderView({ advertisers }: TinderViewProps) {
                   <Image
                     src={ad.image || '/placeholder.svg?height=400&width=300'}
                     alt={ad.name}
-                    className="object-cover w-full h-full"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute top-2 right-2">
                     <Badge className="bg-gray-800/70">Sponsored</Badge>

@@ -89,6 +89,10 @@ self.addEventListener('fetch', event => {
 
 // API request handler - network first with cache fallback
 function handleApiRequest(event) {
+  if (event.request.method !== 'GET') {
+    return fetch(event.request); // Skip caching for non-GET requests
+  }
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
@@ -102,7 +106,7 @@ function handleApiRequest(event) {
         return response;
       })
       .catch(() => {
-        return caches.match(event.request);
+        return caches.match(event.request); // Fallback to cache
       }),
   );
 }

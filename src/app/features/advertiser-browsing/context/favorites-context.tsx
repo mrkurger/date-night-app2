@@ -71,7 +71,8 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
 
   // Load favorites from localStorage on mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && user) {
+    // Add availability check for localStorage
+    if (typeof window !== 'undefined' && window.localStorage && user) {
       try {
         const storedFavorites = localStorage.getItem(`favorites-${user.id}`);
         const storedCollections = localStorage.getItem(`collections-${user.id}`);

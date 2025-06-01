@@ -33,7 +33,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
     // Log error to monitoring service
     console.error('Error Boundary caught an error:', error, errorInfo);
-    
+
     // In production, you would send this to your error tracking service
     if (process.env.NODE_ENV === 'production') {
       // Example: Sentry.captureException(error, { extra: errorInfo });
@@ -41,7 +41,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   handleReset = () => {
-    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+    this.setState({ hasError: false });
   };
 
   render() {
@@ -55,9 +55,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="max-w-md w-full mx-auto p-6 text-center">
             <div className="mb-6">
               <AlertTriangle className="h-16 w-16 text-destructive mx-auto mb-4" />
-              <h1 className="text-2xl font-bold text-foreground mb-2">
-                Something went wrong
-              </h1>
+              <h1 className="text-2xl font-bold text-foreground mb-2">Something went wrong</h1>
               <p className="text-muted-foreground">
                 We apologize for the inconvenience. An unexpected error has occurred.
               </p>
@@ -68,10 +66,10 @@ export class ErrorBoundary extends Component<Props, State> {
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Try Again
               </Button>
-              
-              <Button 
-                variant="outline" 
-                onClick={() => window.location.href = '/'}
+
+              <Button
+                variant="outline"
+                onClick={() => (window.location.href = '/')}
                 className="w-full"
               >
                 Go Home
@@ -102,7 +100,7 @@ export class ErrorBoundary extends Component<Props, State> {
 export function useErrorHandler() {
   return (error: Error, errorInfo?: ErrorInfo) => {
     console.error('Error caught by error handler:', error, errorInfo);
-    
+
     if (process.env.NODE_ENV === 'production') {
       // Send to error tracking service
     }

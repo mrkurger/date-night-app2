@@ -38,6 +38,7 @@ export default function InteractiveGameOverlay({ advertiser, isLive, onGameActio
       }, 1000)
       return () => clearInterval(timer)
     }
+    return undefined;
   }, [advertiser.currentGame, isLive])
 
   if (!advertiser.currentGame || !isLive) return null

@@ -44,6 +44,44 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
     }
   }, [gradientColors]);
 
+  const checkCompletion = useCallback(() => {
+    if (isComplete) return;
+
+    const startAnimation = async () => {
+      await controls.start({
+        scale: [1, 1.5, 1],
+        rotate: [0, 10, -10, 10, -10, 0],
+        transition: { duration: 0.5 },
+      });
+
+      // Call onComplete after animation finishes
+      if (onComplete) {
+        onComplete();
+      }
+    };
+
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = imageData.data;
+      const totalPixels = pixels.length / 4;
+      let clearPixels = 0;
+
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) clearPixels++;
+      }
+
+      const percentage = (clearPixels / totalPixels) * 100;
+
+      if (percentage >= minScratchPercentage) {
+        setIsComplete(true);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        startAnimation();
+      }
+    }
+  }, [isComplete, minScratchPercentage, controls, onComplete]);
+
   useEffect(() => {
     const handleDocumentMouseMove = (event: MouseEvent) => {
       if (!isScratching) return;
@@ -53,7 +91,7 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
     const handleDocumentTouchMove = (event: TouchEvent) => {
       if (!isScratching) return;
       const touch = event.touches[0];
-      scratch(touch.clientX, touch.clientY);
+      scratch(touch?.clientX || 0, touch?.clientY || 0);
     };
 
     const handleDocumentMouseUp = () => {
@@ -102,44 +140,6 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
       ctx.fill();
     }
   };
-
-  const checkCompletion = useCallback(() => {
-    if (isComplete) return;
-
-    const startAnimation = async () => {
-      await controls.start({
-        scale: [1, 1.5, 1],
-        rotate: [0, 10, -10, 10, -10, 0],
-        transition: { duration: 0.5 },
-      });
-
-      // Call onComplete after animation finishes
-      if (onComplete) {
-        onComplete();
-      }
-    };
-
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (canvas && ctx) {
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixels = imageData.data;
-      const totalPixels = pixels.length / 4;
-      let clearPixels = 0;
-
-      for (let i = 3; i < pixels.length; i += 4) {
-        if (pixels[i] === 0) clearPixels++;
-      }
-
-      const percentage = (clearPixels / totalPixels) * 100;
-
-      if (percentage >= minScratchPercentage) {
-        setIsComplete(true);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        startAnimation();
-      }
-    }
-  }, [isComplete, minScratchPercentage, controls, onComplete]);
 
   return (
     <motion.div

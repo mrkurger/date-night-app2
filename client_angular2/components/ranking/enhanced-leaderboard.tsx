@@ -205,7 +205,7 @@ export function EnhancedLeaderboard({ className }: EnhancedLeaderboardProps) {
           <div>
             <label className="text-sm text-gray-400 mb-2 block">User Type</label>
             <Select
-              value={filters.userType}
+              value={filters.userType || 'all'}
               onValueChange={(value: any) => setFilters(prev => ({ ...prev, userType: value }))}
             >
               <SelectTrigger className="bg-gray-700 border-gray-600">
@@ -223,7 +223,7 @@ export function EnhancedLeaderboard({ className }: EnhancedLeaderboardProps) {
           <div>
             <label className="text-sm text-gray-400 mb-2 block">Min Reviews</label>
             <Select
-              value={filters.minReviews?.toString()}
+              value={filters.minReviews?.toString() || '5'}
               onValueChange={value =>
                 setFilters(prev => ({ ...prev, minReviews: parseInt(value) }))
               }

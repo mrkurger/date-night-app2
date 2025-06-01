@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState, useEffect } from 'react';
 import { Heart, X, Info, ChevronDown, Star } from 'lucide-react';
@@ -124,7 +125,7 @@ export default function TinderView() {
   useEffect(() => {
     // Set advertisers after component mounts
     setAdvertisers(mockAdvertisers);
-    setCurrentAdvertiser(mockAdvertisers[0]);
+    setCurrentAdvertiser(mockAdvertisers[0] || null);
   }, []);
 
   const nextAdvertiser = () => {
@@ -133,7 +134,7 @@ export default function TinderView() {
       setCurrentAdvertiser(null);
     } else {
       setCurrentIndex(nextIndex);
-      setCurrentAdvertiser(advertisers[nextIndex]);
+      setCurrentAdvertiser(advertisers[nextIndex] || null);
       setShowInfo(false);
     }
   };
@@ -156,7 +157,7 @@ export default function TinderView() {
 
   const resetCards = () => {
     setCurrentIndex(0);
-    setCurrentAdvertiser(advertisers[0]);
+    setCurrentAdvertiser(advertisers[0] || null);
     setShowInfo(false);
   };
 
@@ -189,7 +190,8 @@ export default function TinderView() {
               <Image
                 src={getProfileImage({ ...currentAdvertiser, image: currentAdvertiser.images[0] })}
                 alt={currentAdvertiser.name}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
               <div
                 className={`card-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/10 transition-all duration-300 ${
@@ -356,7 +358,8 @@ export default function TinderView() {
                 <Image
                   src={getProfileImage({ ...advertiser, image: advertiser.images[0] })}
                   alt={advertiser.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <span className="sponsored-badge absolute top-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-xs">
                   Sponsored
