@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getFemaleImageByIndex } from '@/lib/data';
@@ -226,11 +227,12 @@ export function EnhancedProfileCarousel() {
                 }}
               >
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <div className="relative">
-                    <img
+                  <div className="relative h-80">
+                    <Image
                       src={card.image || getFemaleImageByIndex(card.id)}
                       alt={card.name}
-                      className="w-full h-80 object-cover"
+                      fill
+                      className="object-cover"
                     />
                     {card.isOnline && (
                       <div className="absolute top-3 right-3 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
@@ -253,11 +255,14 @@ export function EnhancedProfileCarousel() {
       <div className="mt-4 bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-6 shadow-lg min-h-[calc(100vh-400px)]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-6">
-            <img
-              src={centerCard.image || getFemaleImageByIndex(centerCard.id)}
-              alt={centerCard.name}
-              className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
-            />
+            <div className="relative w-20 h-20">
+              <Image
+                src={centerCard.image || getFemaleImageByIndex(centerCard.id)}
+                alt={centerCard.name}
+                fill
+                className="rounded-full object-cover border-4 border-white shadow-lg"
+              />
+            </div>
             <div>
               <h2 className="text-3xl font-bold text-gray-800">
                 {centerCard.name}, {centerCard.age}

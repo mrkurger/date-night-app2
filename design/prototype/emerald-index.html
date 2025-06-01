@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -438,7 +438,7 @@
             <div class="eui-row">
               <div class="eui-col-md-3 eui-col-sm-6 mb-4">
                 <div class="eui-card">
-                  <img
+                  <image
                     src="https://via.placeholder.com/300x200"
                     class="eui-card-img-top"
                     alt="Professional Massage"
@@ -479,7 +479,7 @@
 
               <div class="eui-col-md-3 eui-col-sm-6 mb-4">
                 <div class="eui-card">
-                  <img
+                  <image
                     src="https://via.placeholder.com/300x200"
                     class="eui-card-img-top"
                     alt="Elegant Escort"
@@ -520,7 +520,7 @@
 
               <div class="eui-col-md-3 eui-col-sm-6 mb-4">
                 <div class="eui-card">
-                  <img
+                  <image
                     src="https://via.placeholder.com/300x200"
                     class="eui-card-img-top"
                     alt="Exotic Dance"
@@ -561,7 +561,7 @@
 
               <div class="eui-col-md-3 eui-col-sm-6 mb-4">
                 <div class="eui-card">
-                  <img
+                  <image
                     src="https://via.placeholder.com/300x200"
                     class="eui-card-img-top"
                     alt="Event Planner"
@@ -606,7 +606,7 @@
           <section id="tinder">
             <div class="card-stack">
               <div class="eui-card tinder-card">
-                <img src="https://via.placeholder.com/400x300" alt="Massage Therapy" />
+                <image src="https://via.placeholder.com/400x300" alt="Massage Therapy" />
                 <div class="info">
                   <h4>Professional Massage</h4>
                   <p>Oslo, Norway</p>
@@ -694,7 +694,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -728,7 +728,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -762,7 +762,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -796,7 +796,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -830,7 +830,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -864,7 +864,7 @@
                     <tr>
                       <td>
                         <div style="display: flex; align-items: center">
-                          <img
+                          <image
                             src="https://via.placeholder.com/40x40"
                             style="border-radius: 50%; margin-right: var(--spacing-2)"
                             alt="Profile"
@@ -1004,14 +1004,14 @@
           const target = link.getAttribute('data-section');
 
           sections.forEach(s =>
-            s.id === target ? s.classList.add('active') : s.classList.remove('active')
+            s.id === target ? s.classList.add('active') : s.classList.remove('active'),
           );
 
           links.forEach(l => l.classList.remove('active'));
           links.forEach(l => {
             if (l.getAttribute('data-section') === target) l.classList.add('active');
           });
-        })
+        }),
       );
     </script>
   </body>

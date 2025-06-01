@@ -165,7 +165,7 @@ export default function LiveCasinoHub() {
                 <>
                   {/* Video Player Placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center">
-                    <img
+                    <Image
                       src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
                       alt={selectedStream.name}
                       className="w-full h-full object-cover opacity-80"
@@ -215,7 +215,7 @@ export default function LiveCasinoHub() {
                     <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <img
+                          <Image
                             src={selectedStream.image || getFemaleImageByIndex(selectedStream.id)}
                             alt={selectedStream.name}
                             className="w-12 h-12 rounded-full object-cover border-2 border-pink-500"
@@ -335,7 +335,7 @@ export default function LiveCasinoHub() {
                   onClick={() => handleStreamSelect(advertiser)}
                 >
                   <div className="relative aspect-video">
-                    <img
+                    <Image
                       src={advertiser.image || getFemaleImageByIndex(advertiser.id)}
                       alt={advertiser.name}
                       className="w-full h-full object-cover"

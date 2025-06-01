@@ -1,9 +1,49 @@
 <div class="touring-container">
   <div class="header">
-    <h1><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Touring Advertisers</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h1>
+    <h1>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n>Touring Advertisers</ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </h1>
     <p class="subtitle">
-      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Find advertisers who are currently touring or planning to visit your area
-    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          >Find advertisers who are currently touring or planning to visit your area
+                        </ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </p>
   </div>
 
   <div class="row">
@@ -11,41 +51,248 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Currently Touring</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Advertisers who are currently on tour</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <h2>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>Currently Touring</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </h2>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >Advertisers who are currently on tour</ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
         <div class="card-body">
           <div *ngIf="loading" class="text-center">
             <div class="spinner-border"></div>
-            <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading touring advertisers...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >Loading touring advertisers...</ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
           </div>
 
           <div *ngIf="!loading && touringAds.length === 0" class="text-center">
-            <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No advertisers are currently touring.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >No advertisers are currently touring.</ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
           </div>
 
           <div *ngIf="!loading && touringAds.length > 0" class="touring-grid">
             <div *ngFor="let ad of touringAds" class="touring-card">
               <div class="touring-card-image">
-                <img [src]="ad.profileImage" [alt]="ad.title" />
-                <div class="touring-badge"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Touring</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                <Image [src]="ad.profileImage" [alt]="ad.title" />
+                <div class="touring-badge">
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>Touring</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </div>
               </div>
               <div class="touring-card-content">
-                <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-                <p class="advertiser"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.advertiser.username }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+                <h3>
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{ ad.title }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </h3>
+                <p class="advertiser">
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{
+                                      ad.advertiser.username
+                                    }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </p>
                 <p class="location">
                   <i class="fas fa-map-marker-alt"></i>
-                  <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.city }}, {{ ad.county }}
-                </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      >{{ ad.city }}, {{ ad.county }}
+                                    </ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </p>
                 <div class="touring-card-actions">
-                  <a [routerLink]="['/ad-details', ad._id]" class="btn btn-primary"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>View Profile</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
+                  <a [routerLink]="['/ad-details', ad._id]" class="btn btn-primary"
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>View Profile</ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></a
+                  >
                   <a
                     [routerLink]="['/chat']"
                     [queryParams]="{ adId: ad._id }"
                     class="btn btn-outline-primary"
                   >
-                    <i class="fas fa-comment"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Chat
-                  </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
+                    <i class="fas fa-comment"></i>
+                    <ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>Chat </ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></a
+                  >
                 </div>
               </div>
             </div>
@@ -58,8 +305,50 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Upcoming Tours</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Advertisers who are planning to tour soon</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <h2>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>Upcoming Tours</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </h2>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >Advertisers who are planning to tour soon</ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
         <div class="card-body">
           <!-- Filter Form -->
@@ -67,84 +356,496 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="county"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>County</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+                  <label for="county"
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>County</ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></label
+                  >
                   <select id="county" formControlName="county" class="form-control">
-                    <option value=""><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>All Counties</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
-                    <option *ngFor="let county of counties" [value]="county"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ county }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
+                    <option value="">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >All Counties</ng-container
+                                        ></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
+                    <option *ngFor="let county of counties" [value]="county">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n>{{
+                                          county
+                                        }}</ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
                   </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="city"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>City</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+                  <label for="city"
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>City</ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></label
+                  >
                   <select id="city" formControlName="city" class="form-control">
-                    <option value=""><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>All Cities</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
-                    <option *ngFor="let city of cities" [value]="city"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ city }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
+                    <option value="">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n>All Cities</ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
+                    <option *ngFor="let city of cities" [value]="city">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n>{{ city }}</ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
                   </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="days"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Days Ahead</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+                  <label for="days"
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>Days Ahead</ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></label
+                  >
                   <select id="days" formControlName="days" class="form-control">
-                    <option [value]="7"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Next 7 days</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
-                    <option [value]="14"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Next 14 days</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
-                    <option [value]="30"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Next 30 days</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
-                    <option [value]="90"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Next 3 months</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></option>
+                    <option [value]="7">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n>Next 7 days</ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
+                    <option [value]="14">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >Next 14 days</ng-container
+                                        ></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
+                    <option [value]="30">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >Next 30 days</ng-container
+                                        ></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
+                    <option [value]="90">
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >Next 3 months</ng-container
+                                        ></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="filter-actions">
               <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">
-                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Reset Filters
-              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
+                <ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n>Reset Filters </ng-container></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                >
+              </button>
             </div>
           </form>
 
           <div *ngIf="loading" class="text-center mt-4">
             <div class="spinner-border"></div>
-            <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading upcoming tours...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >Loading upcoming tours...</ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
           </div>
 
           <div *ngIf="!loading && upcomingTours.length === 0" class="text-center mt-4">
-            <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No upcoming tours match your filters.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+            <p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >No upcoming tours match your filters.</ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
           </div>
 
           <div *ngIf="!loading && upcomingTours.length > 0" class="upcoming-list mt-4">
             <div *ngFor="let ad of upcomingTours" class="upcoming-item">
               <div class="upcoming-image">
-                <img [src]="ad.profileImage" [alt]="ad.title" />
+                <Image [src]="ad.profileImage" [alt]="ad.title" />
               </div>
               <div class="upcoming-content">
-                <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-                <p class="advertiser"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.advertiser.username }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+                <h3>
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{ ad.title }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </h3>
+                <p class="advertiser">
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{
+                                      ad.advertiser.username
+                                    }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </p>
 
                 <div *ngFor="let itinerary of ad.travelItinerary" class="itinerary-item">
                   <div *ngIf="itinerary.status === 'planned'" class="itinerary-details">
                     <div class="destination">
                       <i class="fas fa-map-marker-alt"></i>
-                      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ itinerary.destination.city }}, {{ itinerary.destination.county }}
-                    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >{{ itinerary.destination.city }},
+                                          {{ itinerary.destination.county }}
+                                        </ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </div>
                     <div class="dates">
                       <i class="far fa-calendar-alt"></i>
-                      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatDate(itinerary.arrivalDate) }} -
-                      {{ formatDate(itinerary.departureDate) }}
-                    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                      <ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n
+                                        ><ng-container i18n
+                                          >{{ formatDate(itinerary.arrivalDate) }} -
+                                          {{ formatDate(itinerary.departureDate) }}
+                                        </ng-container></ng-container
+                                      ></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      >
+                    </div>
                   </div>
                 </div>
 
                 <div class="upcoming-actions">
                   <a [routerLink]="['/ad-details', ad._id]" class="btn btn-sm btn-primary"
-                    ><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>View Profile</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>View Profile</ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></a
                   >
                   <a
                     [routerLink]="['/chat']"
                     [queryParams]="{ adId: ad._id }"
                     class="btn btn-sm btn-outline-primary"
                   >
-                    <i class="fas fa-comment"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Chat
-                  </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></a>
+                    <i class="fas fa-comment"></i>
+                    <ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n
+                                      ><ng-container i18n>Chat </ng-container></ng-container
+                                    ></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></a
+                  >
                 </div>
               </div>
             </div>

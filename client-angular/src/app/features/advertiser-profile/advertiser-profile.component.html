@@ -4,11 +4,11 @@
       <div class="profile-media">
         <div class="profile-gallery">
           <div class="main-image">
-            <img [src]="getMediaUrl(0)" [alt]="advertiser.username" class="profile-image" />
+            <Image [src]="getMediaUrl(0)" [alt]="advertiser.username" class="profile-image" />
           </div>
           <div class="thumbnail-row" *ngIf="getMediaIndices().length > 0">
             <div class="thumbnail" *ngFor="let i of getMediaIndices(); let idx = index">
-              <img [src]="getMediaUrl(i)" [alt]="'Thumbnail ' + (i + 1)" class="thumbnail-image" />
+              <Image [src]="getMediaUrl(i)" [alt]="'Thumbnail ' + (i + 1)" class="thumbnail-image" />
             </div>
           </div>
         </div>

@@ -1,14 +1,14 @@
-"use client"
+'use client';
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Lock, Star } from "lucide-react"
-import Link from "next/link"
-import { useAuth } from "@/context/auth-context"
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Lock, Star } from 'lucide-react';
+import Link from 'next/link';
+import { useAuth } from '@/context/auth-context';
 
 export function VipContent() {
-  const { user } = useAuth()
-  const isVipMember = user?.isVipMember
+  const { user } = useAuth();
+  const isVipMember = user?.isVipMember;
 
   if (isVipMember) {
     return (
@@ -18,9 +18,9 @@ export function VipContent() {
           VIP Content
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((index) => (
+          {[1, 2, 3, 4, 5, 6].map(index => (
             <div key={index} className="aspect-square rounded-md overflow-hidden relative group">
-              <img
+              <Image
                 src={`/placeholder.svg?height=300&width=300&text=VIP+Content+${index}`}
                 alt={`VIP Content ${index}`}
                 className="w-full h-full object-cover transition-transform group-hover:scale-105"
@@ -29,7 +29,7 @@ export function VipContent() {
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -40,12 +40,13 @@ export function VipContent() {
         </div>
         <h3 className="text-xl font-bold mb-2">VIP Content Locked</h3>
         <p className="mb-4 text-gray-300">
-          Upgrade to VIP membership to access exclusive photos, videos, and special offers from this advertiser.
+          Upgrade to VIP membership to access exclusive photos, videos, and special offers from this
+          advertiser.
         </p>
         <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black">
           <Link href="/upgrade">Upgrade to VIP</Link>
         </Button>
       </CardContent>
     </Card>
-  )
+  );
 }

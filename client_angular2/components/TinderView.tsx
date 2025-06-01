@@ -186,7 +186,7 @@ export default function TinderView() {
             }`}
           >
             <div className="card-image absolute inset-0">
-              <img
+              <Image
                 src={getProfileImage({ ...currentAdvertiser, image: currentAdvertiser.images[0] })}
                 alt={currentAdvertiser.name}
                 className="w-full h-full object-cover"
@@ -353,7 +353,7 @@ export default function TinderView() {
               className="sponsored-card rounded-xl overflow-hidden shadow-lg cursor-pointer transition-transform duration-300 hover:-translate-y-2 bg-white"
             >
               <div className="sponsored-image relative h-48">
-                <img
+                <Image
                   src={getProfileImage({ ...advertiser, image: advertiser.images[0] })}
                   alt={advertiser.name}
                   className="w-full h-full object-cover"

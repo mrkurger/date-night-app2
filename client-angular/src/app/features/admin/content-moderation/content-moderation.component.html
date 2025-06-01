@@ -2,14 +2,59 @@
   <div class="moderation-header">
     <div class="p-grid p-align-items-center">
       <div class="p-col-12 p-md-6">
-        <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Content Moderation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
-        <p class="p-text-secondary"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Review and moderate user-submitted content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <h2>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Content Moderation</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </h2>
+        <p class="p-text-secondary">
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              >Review and moderate user-submitted content</ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
       </div>
       <div class="p-col-12 p-md-6 p-text-right">
         <p-button
-          label="Refresh" i18n-label
-          icon="fas fa-sync-alt" i18n-icon
-          styleClass="p-button-outlined p-button-primary" i18n-styleClass
+          label="Refresh"
+          i18n-label
+          icon="fas fa-sync-alt"
+          i18n-icon
+          styleClass="p-button-outlined p-button-primary"
+          i18n-styleClass
           (click)="loadPendingMedia()"
         >
         </p-button>
@@ -23,12 +68,35 @@
   <!-- Loading Spinner -->
   <div class="loading-container" *ngIf="loading">
     <p-progressSpinner
-      styleClass="w-4rem h-4rem" i18n-styleClass
+      styleClass="w-4rem h-4rem"
+      i18n-styleClass
       strokeWidth="4"
       fill="var(--surface-ground)"
       animationDuration=".5s"
     ></p-progressSpinner>
-    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading content for moderation...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+    <p>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          >Loading content for moderation...</ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </p>
   </div>
 
   <!-- Filters -->
@@ -42,7 +110,8 @@
           <input
             pInputText
             type="text"
-            placeholder="Search by ad title" i18n-placeholder
+            placeholder="Search by ad title"
+            i18n-placeholder
             [(ngModel)]="searchTerm"
             (input)="applyFilters()"
           />
@@ -57,10 +126,14 @@
           ]"
           [(ngModel)]="mediaTypeFilter"
           (onChange)="applyFilters()"
-          optionLabel="label" i18n-optionLabel
-          optionValue="value" i18n-optionValue
-          placeholder="Select Media Type" i18n-placeholder
-          styleClass="w-100" i18n-styleClass
+          optionLabel="label"
+          i18n-optionLabel
+          optionValue="value"
+          i18n-optionValue
+          placeholder="Select Media Type"
+          i18n-placeholder
+          styleClass="w-100"
+          i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="p-col-12 p-md-3 p-mb-2">
@@ -72,16 +145,22 @@
           ]"
           [(ngModel)]="sortOrder"
           (onChange)="applyFilters()"
-          optionLabel="label" i18n-optionLabel
-          optionValue="value" i18n-optionValue
-          placeholder="Sort By" i18n-placeholder
-          styleClass="w-100" i18n-styleClass
+          optionLabel="label"
+          i18n-optionLabel
+          optionValue="value"
+          i18n-optionValue
+          placeholder="Sort By"
+          i18n-placeholder
+          styleClass="w-100"
+          i18n-styleClass
         ></p-dropdown>
       </div>
       <div class="p-col-12 p-md-2 p-mb-2">
         <p-button
-          label="Reset" i18n-label
-          styleClass="p-button-outlined p-button-secondary w-100" i18n-styleClass
+          label="Reset"
+          i18n-label
+          styleClass="p-button-outlined p-button-secondary w-100"
+          i18n-styleClass
           (click)="resetFilters()"
         ></p-button>
       </div>
@@ -96,13 +175,32 @@
         [ngClass]="{ video: media.type === 'video', image: media.type === 'image' }"
       >
         <i [class]="'fas ' + getMediaTypeIcon(media.type)"></i>
-        <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.type }}
-      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+        <ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{ media.type }} </ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        >
+      </div>
       <div class="media-img-container">
-        <img
+        <Image
           *ngIf="media.type === 'image'"
           [src]="getSafeUrl(media.url)"
-          alt="Media preview" i18n-alt
+          alt="Media preview"
+          i18n-alt
           class="p-card-img"
           (error)="onMediaLoadError(media)"
         />
@@ -114,16 +212,60 @@
         </div>
       </div>
       <div class="p-card-body">
-        <h5 class="p-card-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.adTitle }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
+        <h5 class="p-card-title">
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>{{ media.adTitle }}</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </h5>
         <p class="p-card-subtitle">
           <small class="p-text-secondary">
-            <i class="fas fa-clock"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ media.createdAt | date: 'short' }}
-          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
+            <i class="fas fa-clock"></i>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >{{ media.createdAt | date: 'short' }}
+                              </ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></small
+          >
         </p>
         <p-button
-          label="Moderate" i18n-label
-          icon="fas fa-check-square" i18n-icon
-          styleClass="p-button-primary" i18n-styleClass
+          label="Moderate"
+          i18n-label
+          icon="fas fa-check-square"
+          i18n-icon
+          styleClass="p-button-primary"
+          i18n-styleClass
           (click)="openModerationModal(media)"
         >
         </p-button>
@@ -152,12 +294,58 @@
     <div class="empty-state-icon">
       <i class="fas fa-check-circle"></i>
     </div>
-    <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No Pending Content</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-    <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>There are no media items waiting for moderation at this time.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+    <h3>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n>No Pending Content</ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </h3>
+    <p>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          >There are no media items waiting for moderation at this
+                          time.</ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </p>
     <p-button
-      label="Refresh" i18n-label
-      icon="fas fa-sync-alt" i18n-icon
-      styleClass="p-button-outlined p-button-primary" i18n-styleClass
+      label="Refresh"
+      i18n-label
+      icon="fas fa-sync-alt"
+      i18n-icon
+      styleClass="p-button-outlined p-button-primary"
+      i18n-styleClass
       (click)="loadPendingMedia()"
     >
     </p-button>
@@ -171,7 +359,8 @@
   [style]="{ width: '90%', maxWidth: '700px' }"
   [draggable]="false"
   [resizable]="false"
-  header="Moderate Content" i18n-header
+  header="Moderate Content"
+  i18n-header
   [closeOnEscape]="true"
   (onHide)="closeModerationDialog()"
 >

@@ -1,18 +1,18 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Gift, DollarSign, Users, Zap, Crown, Timer, TrendingUp } from "lucide-react"
+import { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Gift, DollarSign, Users, Zap, Crown, Timer, TrendingUp } from 'lucide-react';
 
 interface TipRaffleProps {
-  advertiserId: number
-  advertiserName: string
-  advertiserImage: string
-  tipAmount: number
-  onTipWithRaffle: (amount: number, raffleEntry: boolean, advertiserMatch: boolean) => void
+  advertiserId: number;
+  advertiserName: string;
+  advertiserImage: string;
+  tipAmount: number;
+  onTipWithRaffle: (amount: number, raffleEntry: boolean, advertiserMatch: boolean) => void;
 }
 
 export default function TipRaffleSystem({
@@ -22,45 +22,45 @@ export default function TipRaffleSystem({
   tipAmount,
   onTipWithRaffle,
 }: TipRaffleProps) {
-  const [raffleEntry, setRaffleEntry] = useState(false)
-  const [advertiserMatch, setAdvertiserMatch] = useState(false)
-  const [loyaltyLevel, setLoyaltyLevel] = useState(2.3) // User's loyalty multiplier with this advertiser
-  const [nextDraw, setNextDraw] = useState(180) // seconds until next draw
-  const [currentPrize, setCurrentPrize] = useState(1250)
+  const [raffleEntry, setRaffleEntry] = useState(false);
+  const [advertiserMatch, setAdvertiserMatch] = useState(false);
+  const [loyaltyLevel, setLoyaltyLevel] = useState(2.3); // User's loyalty multiplier with this advertiser
+  const [nextDraw, setNextDraw] = useState(180); // seconds until next draw
+  const [currentPrize, setCurrentPrize] = useState(1250);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setNextDraw((prev) => (prev > 0 ? prev - 1 : 300))
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
+      setNextDraw(prev => (prev > 0 ? prev - 1 : 300));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const calculateWinChance = () => {
-    const baseChance = 5 // 5% base chance
-    const loyaltyBonus = Math.min(loyaltyLevel * 10, 50) // Max 50% from loyalty
-    const matchBonus = advertiserMatch ? 25 : 0 // 25% bonus if advertiser matches
-    return Math.min(baseChance + loyaltyBonus + matchBonus, 80) // Max 80% chance
-  }
+    const baseChance = 5; // 5% base chance
+    const loyaltyBonus = Math.min(loyaltyLevel * 10, 50); // Max 50% from loyalty
+    const matchBonus = advertiserMatch ? 25 : 0; // 25% bonus if advertiser matches
+    return Math.min(baseChance + loyaltyBonus + matchBonus, 80); // Max 80% chance
+  };
 
   const calculatePrize = () => {
-    let basePrize = tipAmount * 2
-    if (raffleEntry) basePrize += currentPrize * 0.1
-    if (advertiserMatch) basePrize *= 2
-    return basePrize
-  }
+    let basePrize = tipAmount * 2;
+    if (raffleEntry) basePrize += currentPrize * 0.1;
+    if (advertiserMatch) basePrize *= 2;
+    return basePrize;
+  };
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, "0")}`
-  }
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <Card className="bg-gradient-to-br from-purple-900/90 to-pink-900/90 backdrop-blur-sm border-pink-500/30 p-6">
       <div className="text-center mb-6">
         <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500">
-          <img
-            src={advertiserImage || "/placeholder.svg"}
+          <Image
+            src={advertiserImage || '/placeholder.svg'}
             alt={advertiserName}
             className="w-full h-full object-cover"
           />
@@ -105,7 +105,9 @@ export default function TipRaffleSystem({
             <span className="text-white font-semibold">Basic Tip</span>
             <span className="text-green-400 font-bold">${tipAmount}</span>
           </div>
-          <div className="text-gray-400 text-sm">Standard tip - {advertiserName} gets 85%, site gets 15%</div>
+          <div className="text-gray-400 text-sm">
+            Standard tip - {advertiserName} gets 85%, site gets 15%
+          </div>
         </div>
 
         {/* Raffle Entry */}
@@ -115,7 +117,7 @@ export default function TipRaffleSystem({
               <input
                 type="checkbox"
                 checked={raffleEntry}
-                onChange={(e) => setRaffleEntry(e.target.checked)}
+                onChange={e => setRaffleEntry(e.target.checked)}
                 className="rounded border-gray-600"
               />
               <span className="text-white font-semibold">Enter Raffle</span>
@@ -124,7 +126,9 @@ export default function TipRaffleSystem({
           </div>
           <div className="text-gray-400 text-sm">Double your tip to enter the 24/7 raffle draw</div>
           {raffleEntry && (
-            <div className="mt-2 text-purple-400 text-sm">✨ Win Chance: {calculateWinChance().toFixed(1)}%</div>
+            <div className="mt-2 text-purple-400 text-sm">
+              ✨ Win Chance: {calculateWinChance().toFixed(1)}%
+            </div>
           )}
         </div>
 
@@ -135,7 +139,7 @@ export default function TipRaffleSystem({
               <input
                 type="checkbox"
                 checked={advertiserMatch}
-                onChange={(e) => setAdvertiserMatch(e.target.checked)}
+                onChange={e => setAdvertiserMatch(e.target.checked)}
                 className="rounded border-gray-600"
               />
               <span className="text-white font-semibold">Advertiser Match</span>
@@ -146,7 +150,9 @@ export default function TipRaffleSystem({
             {advertiserName} matches your bet - quadruple your winning chances!
           </div>
           {advertiserMatch && (
-            <div className="mt-2 text-pink-400 text-sm">🚀 Boosted Win Chance: {calculateWinChance().toFixed(1)}%</div>
+            <div className="mt-2 text-pink-400 text-sm">
+              🚀 Boosted Win Chance: {calculateWinChance().toFixed(1)}%
+            </div>
           )}
         </div>
       </div>
@@ -157,17 +163,21 @@ export default function TipRaffleSystem({
           <span className="text-white font-semibold">Potential Prize:</span>
           <span className="text-green-400 font-bold text-xl">${calculatePrize().toFixed(0)}</span>
         </div>
-        <div className="text-gray-300 text-sm mt-1">Split 50/50 with {advertiserName} if you win!</div>
+        <div className="text-gray-300 text-sm mt-1">
+          Split 50/50 with {advertiserName} if you win!
+        </div>
       </div>
 
       {/* Action Buttons */}
       <div className="space-y-3">
         <Button
           className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white h-12"
-          onClick={() => onTipWithRaffle(tipAmount * (raffleEntry ? 2 : 1), raffleEntry, advertiserMatch)}
+          onClick={() =>
+            onTipWithRaffle(tipAmount * (raffleEntry ? 2 : 1), raffleEntry, advertiserMatch)
+          }
         >
           <DollarSign className="w-5 h-5 mr-2" />
-          Tip ${tipAmount * (raffleEntry ? 2 : 1)} {raffleEntry && "& Enter Raffle"}
+          Tip ${tipAmount * (raffleEntry ? 2 : 1)} {raffleEntry && '& Enter Raffle'}
           {advertiserMatch && <Zap className="w-5 h-5 ml-2 text-yellow-400" />}
         </Button>
 
@@ -197,5 +207,5 @@ export default function TipRaffleSystem({
         </div>
       </div>
     </Card>
-  )
+  );
 }

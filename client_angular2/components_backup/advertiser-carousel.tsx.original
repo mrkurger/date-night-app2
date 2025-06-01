@@ -90,7 +90,7 @@ export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
               onClick={() => console.log(`Clicked on ${advertiser.name}`)}
             >
               <div className="relative h-96 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src={advertiser.image || "/placeholder.svg"}
                   alt={advertiser.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

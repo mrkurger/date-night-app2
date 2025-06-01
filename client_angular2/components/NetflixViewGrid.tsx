@@ -44,7 +44,7 @@ const NetflixViewGrid = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {advertisers.map((advertiser, index) => (
             <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
-              <img
+              <Image
                 src={advertiser.image}
                 alt={advertiser.name}
                 className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"

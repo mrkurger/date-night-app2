@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
@@ -122,10 +123,11 @@ const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser, className }
     >
       <Card className="overflow-hidden h-full">
         <div className="relative h-48 sm:h-64 overflow-hidden">
-          <img
+          <Image
             src={advertiser.image}
             alt={advertiser.name}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
           <div className="absolute top-2 right-2">
             <Badge

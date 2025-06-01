@@ -164,7 +164,7 @@ export function TipFrenzy() {
             <div className="flex -space-x-2">
               {(frenzyMode === "selected" ? selectedAdvertisers : randomAdvertisers).slice(0, 6).map((advertiser) => (
                 <div key={advertiser.id} className="relative">
-                  <img
+                  <Image
                     src={advertiser.image || "/placeholder.svg"}
                     alt={advertiser.name}
                     className="w-10 h-10 rounded-full border-2 border-pink-500 object-cover"

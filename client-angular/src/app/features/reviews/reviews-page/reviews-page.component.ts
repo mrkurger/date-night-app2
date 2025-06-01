@@ -31,7 +31,7 @@ import { CardModule } from 'primeng/card';
         <div class="reviews-header">
           <div class="ad-info">
             <div class="ad-image" *ngIf="adImage">
-              <img [src]="adImage" [alt]="adTitle" />
+              <Image [src]="adImage" [alt]="adTitle" />
             </div>
             <div class="ad-details">
               <h2 class="ad-title">{{ adTitle }}</h2>

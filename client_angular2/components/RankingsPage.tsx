@@ -202,7 +202,10 @@ export default function RankingsPage() {
             <div key={advertiser.id} className="carousel-card">
               <div className="card-rank">{index + 1}</div>
               <div className="card-image">
-                <img src={getFallbackFemaleImage(parseInt(advertiser.id))} alt={advertiser.name} />
+                <Image
+                  src={getFallbackFemaleImage(parseInt(advertiser.id))}
+                  alt={advertiser.name}
+                />
                 <div className="card-badges">
                   {advertiser.isOnline && <span className="badge online">Online</span>}
                   {category === 'rating' && (

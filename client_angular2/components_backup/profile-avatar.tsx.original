@@ -34,7 +34,7 @@ export function ProfileAvatar({ src, name, size = "md", className }: ProfileAvat
   if (src && !imageError) {
     return (
       <div className={cn("relative rounded-full overflow-hidden", sizeClasses[size], className)}>
-        <img
+        <Image
           src={src || "/placeholder.svg"}
           alt={name}
           className="w-full h-full object-cover"

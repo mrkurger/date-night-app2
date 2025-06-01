@@ -39,7 +39,7 @@ export function ProfileAvatar({ src, name, size = 'md', className, userId }: Pro
 
   return (
     <div className={cn('relative rounded-full overflow-hidden', sizeClasses[size], className)}>
-      <img
+      <Image
         src={imageSource}
         alt={name}
         className="w-full h-full object-cover"

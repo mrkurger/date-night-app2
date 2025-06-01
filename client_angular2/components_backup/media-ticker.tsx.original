@@ -119,7 +119,7 @@ export function MediaTicker() {
               >
                 <div className="flex items-center space-x-2 w-full">
                   {item.imageUrl && !isMobile && (
-                    <img
+                    <Image
                       src={item.imageUrl || "/placeholder.svg"}
                       alt={item.advertiserName}
                       className="h-8 w-8 object-cover rounded"

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import * as React from 'react';
 import { useState } from 'react';
@@ -248,11 +249,12 @@ const MatchesPage: React.FC = () => {
                       key={match.id}
                       className="overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <div className="relative">
-                        <img
+                      <div className="relative h-48">
+                        <Image
                           src={match.photos[0]}
                           alt={match.name}
-                          className="w-full h-48 object-cover"
+                          fill
+                          className="object-cover"
                         />
 
                         {/* Online indicator */}

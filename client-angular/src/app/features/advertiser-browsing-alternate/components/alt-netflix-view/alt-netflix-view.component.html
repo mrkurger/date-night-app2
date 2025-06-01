@@ -1,4 +1,27 @@
-<p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Placeholder for AltNetflixViewComponent. Content will be a grid of ad cards.</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+<p>
+  <ng-container i18n
+    ><ng-container i18n
+      ><ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      >Placeholder for AltNetflixViewComponent. Content will be a grid of ad
+                      cards.</ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      ></ng-container
+    ></ng-container
+  >
+</p>
 
 <!-- Netflix-style grid layout for advertisers -->
 <div class="netflix-view">
@@ -6,9 +29,33 @@
   <div *ngIf="error" class="error-message p-4 text-center">
     <p-card>
       <span class="pi pi-exclamation-circle text-red-500 text-xl mr-2"></span>
-      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ error }}
-      </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container><div class="mt-3">
-        <p-button icon="pi pi-refresh" i18n-icon (onClick)="loadAds()" label="Try Again" i18n-label></p-button>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n>{{ error }} </ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+      <div class="mt-3">
+        <p-button
+          icon="pi pi-refresh"
+          i18n-icon
+          (onClick)="loadAds()"
+          label="Try Again"
+          i18n-label
+        ></p-button>
       </div>
     </p-card>
   </div>
@@ -16,7 +63,27 @@
   <!-- Loading State -->
   <div *ngIf="loading" class="loading-container p-5 text-center">
     <p-progressSpinner strokeWidth="4"></p-progressSpinner>
-    <p class="mt-3"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading profiles...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+    <p class="mt-3">
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n>Loading profiles...</ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </p>
   </div>
 
   <!-- Main Content -->
@@ -31,7 +98,7 @@
           <!-- Image Section -->
           <ng-template pTemplate="header">
             <div class="relative">
-              <img
+              <Image
                 [src]="advertiser.image || 'assets/images/profile-placeholder.jpg'"
                 [alt]="advertiser.name"
                 class="w-full h-48 object-cover"
@@ -41,23 +108,96 @@
                 <p-badge
                   *ngIf="advertiser.isVip"
                   value="VIP"
-                  severity="warning" i18n-severity
+                  severity="warning"
+                  i18n-severity
                   [style]="{ background: 'linear-gradient(45deg, #FFD700, #FFA500)' }"
                 >
                 </p-badge>
                 <!-- Online Status -->
-                <p-badge *ngIf="advertiser.isOnline" value="Online" severity="success" i18n-severity> </p-badge>
+                <p-badge
+                  *ngIf="advertiser.isOnline"
+                  value="Online"
+                  severity="success"
+                  i18n-severity
+                >
+                </p-badge>
               </div>
             </div>
           </ng-template>
 
           <!-- Content Section -->
           <div class="card-content">
-            <h3 class="text-xl font-semibold mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ advertiser.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <h3 class="text-xl font-semibold mb-2">
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{
+                                  advertiser.name
+                                }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </h3>
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-sm text-gray-600"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatLocation(advertiser.location) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+              <span class="text-sm text-gray-600"
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n>{{
+                                    formatLocation(advertiser.location)
+                                  }}</ng-container></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></span
+              >
               <span class="text-sm text-gray-600">•</span>
-              <span class="text-sm text-gray-600"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ advertiser.age }} yrs</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+              <span class="text-sm text-gray-600"
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    >{{ advertiser.age }} yrs</ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></span
+              >
             </div>
 
             <!-- Rating -->
@@ -65,7 +205,8 @@
               <p-tag
                 [value]="advertiser.rating.toFixed(1)"
                 [severity]="getRatingClass(advertiser.rating)"
-                icon="pi pi-star" i18n-icon
+                icon="pi pi-star"
+                i18n-icon
               >
               </p-tag>
             </div>
@@ -82,32 +223,58 @@
 
             <!-- Description -->
             <p class="text-sm text-gray-600 mb-4 line-clamp-2">
-              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ advertiser.description }}
-            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >{{ advertiser.description }}
+                                </ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
           </div>
 
           <!-- Actions -->
           <ng-template pTemplate="footer">
             <div class="flex justify-between gap-2">
               <p-button
-                icon="pi pi-heart" i18n-icon
+                icon="pi pi-heart"
+                i18n-icon
                 (onClick)="onFavorite(advertiser)"
                 [styleClass]="'p-button-rounded p-button-text p-button-danger'"
-                pTooltip="Add to Favorites" i18n-pTooltip
+                pTooltip="Add to Favorites"
+                i18n-pTooltip
               >
               </p-button>
               <p-button
-                icon="pi pi-comments" i18n-icon
+                icon="pi pi-comments"
+                i18n-icon
                 (onClick)="onChat(advertiser)"
                 [styleClass]="'p-button-rounded p-button-text p-button-info'"
-                pTooltip="Start Chat" i18n-pTooltip
+                pTooltip="Start Chat"
+                i18n-pTooltip
               >
               </p-button>
               <p-button
-                icon="pi pi-user" i18n-icon
+                icon="pi pi-user"
+                i18n-icon
                 (onClick)="onViewProfile(advertiser)"
                 [styleClass]="'p-button-rounded p-button-text p-button-secondary'"
-                pTooltip="View Profile" i18n-pTooltip
+                pTooltip="View Profile"
+                i18n-pTooltip
               >
               </p-button>
             </div>
@@ -119,16 +286,66 @@
     <!-- Empty State -->
     <div *ngIf="!loading && advertisers.length === 0" class="empty-state p-5 text-center">
       <p-card>
-        <h3 class="text-xl mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No profiles found</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-        <p class="text-gray-600 mb-3"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Try adjusting your search filters</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
-        <p-button icon="pi pi-filter" i18n-icon (onClick)="openFilters()" label="Adjust Filters" i18n-label> </p-button>
+        <h3 class="text-xl mb-2">
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>No profiles found</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </h3>
+        <p class="text-gray-600 mb-3">
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              >Try adjusting your search filters</ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
+        <p-button
+          icon="pi pi-filter"
+          i18n-icon
+          (onClick)="openFilters()"
+          label="Adjust Filters"
+          i18n-label
+        >
+        </p-button>
       </p-card>
     </div>
   </div>
 
   <!-- Filters Dialog -->
   <p-dialog
-    header="Filter Profiles" i18n-header
+    header="Filter Profiles"
+    i18n-header
     [(visible)]="filterDialogVisible"
     [style]="{ width: '90%', maxWidth: '500px' }"
     [modal]="true"
@@ -138,7 +355,27 @@
     <form [formGroup]="filterForm" class="p-fluid">
       <!-- Categories -->
       <div class="mb-4">
-        <label class="block mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Categories</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+        <label class="block mb-2"
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Categories</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></label
+        >
         <p-multiSelect
           [options]="categories"
           formControlName="categories"
@@ -150,13 +387,59 @@
 
       <!-- Location -->
       <div class="mb-4">
-        <label class="block mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Location</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
-        <input type="text" pInputText formControlName="location" placeholder="Enter location" i18n-placeholder />
+        <label class="block mb-2"
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Location</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></label
+        >
+        <input
+          type="text"
+          pInputText
+          formControlName="location"
+          placeholder="Enter location"
+          i18n-placeholder
+        />
       </div>
 
       <!-- Age Range -->
       <div class="mb-4">
-        <label class="block mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Age Range</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+        <label class="block mb-2"
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Age Range</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></label
+        >
         <p-dropdown
           [options]="[
             { label: '18-25', value: [18, 25] },
@@ -165,14 +448,35 @@
             { label: '46+', value: [46, 100] },
           ]"
           formControlName="ageRange"
-          placeholder="Select age range" i18n-placeholder
+          placeholder="Select age range"
+          i18n-placeholder
         >
         </p-dropdown>
       </div>
 
       <!-- Rating -->
       <div class="mb-4">
-        <label class="block mb-2"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Minimum Rating</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></label>
+        <label class="block mb-2"
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Minimum Rating</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></label
+        >
         <p-dropdown
           [options]="[
             { label: '5 stars', value: 5 },
@@ -180,7 +484,8 @@
             { label: '3+ stars', value: 3 },
           ]"
           formControlName="rating"
-          placeholder="Select minimum rating" i18n-placeholder
+          placeholder="Select minimum rating"
+          i18n-placeholder
         >
         </p-dropdown>
       </div>
@@ -188,9 +493,15 @@
 
     <ng-template pTemplate="footer">
       <div class="flex justify-end gap-2">
-        <p-button label="Reset" i18n-label (onClick)="resetFilters()" [styleClass]="'p-button-text'">
+        <p-button
+          label="Reset"
+          i18n-label
+          (onClick)="resetFilters()"
+          [styleClass]="'p-button-text'"
+        >
         </p-button>
-        <p-button label="Apply" i18n-label icon="pi pi-check" i18n-icon (onClick)="applyFilters()"> </p-button>
+        <p-button label="Apply" i18n-label icon="pi pi-check" i18n-icon (onClick)="applyFilters()">
+        </p-button>
       </div>
     </ng-template>
   </p-dialog>
@@ -199,11 +510,15 @@
   <p-speedDial
     [model]="speedDialItems"
     [radius]="80"
-    direction="up" i18n-direction
-    buttonClassName="p-button-info" i18n-buttonClassName
+    direction="up"
+    i18n-direction
+    buttonClassName="p-button-info"
+    i18n-buttonClassName
     [transitionDelay]="80"
-    showIcon="pi pi-bars" i18n-showIcon
-    hideIcon="pi pi-times" i18n-hideIcon
+    showIcon="pi pi-bars"
+    i18n-showIcon
+    hideIcon="pi pi-times"
+    i18n-hideIcon
     class="fixed bottom-5 right-5"
   >
   </p-speedDial>

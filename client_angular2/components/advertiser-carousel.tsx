@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, MapPin, Star } from 'lucide-react';
 import { getRandomFemaleImage } from '@/lib/data';
 
@@ -91,7 +92,7 @@ export function AdvertiserCarousel({ advertisers }: AdvertiserCarouselProps) {
               onClick={() => console.log(`Clicked on ${advertiser.name}`)}
             >
               <div className="relative h-96 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src={advertiser.image || getRandomFemaleImage()}
                   alt={advertiser.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

@@ -17,7 +17,7 @@
 
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="userProfile && !isLoading">
       <div class="profile-image-section">
-        <img
+        <Image
           [src]="userProfile.avatar || 'assets/images/default-profile.png'"
           alt="Profile Image"
           class="profile-avatar"

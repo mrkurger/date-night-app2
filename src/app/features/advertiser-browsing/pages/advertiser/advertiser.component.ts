@@ -33,7 +33,7 @@ import { FavoriteButtonComponent } from '../../components/favorites/favorite-but
         <div class="max-w-4xl mx-auto">
           <!-- Header Section -->
           <div class="relative rounded-xl overflow-hidden mb-8 aspect-video">
-            <img
+            <Image
               [src]="advertiser.image || '/placeholder.svg'"
               [alt]="advertiser.name"
               class="absolute inset-0 w-full h-full object-cover"

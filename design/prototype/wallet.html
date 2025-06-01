@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -114,9 +114,7 @@
         text-align: center;
         padding: var(--spacing-4);
         cursor: pointer;
-        transition:
-          transform var(--transition-normal),
-          box-shadow var(--transition-normal);
+        transition: transform var(--transition-normal), box-shadow var(--transition-normal);
       }
 
       .action-card:hover {
@@ -532,7 +530,7 @@
                   <div class="crypto-list">
                     <!-- Bitcoin -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
                         alt="Bitcoin"
                         class="crypto-icon"
@@ -553,7 +551,7 @@
 
                     <!-- Ethereum -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
                         alt="Ethereum"
                         class="crypto-icon"
@@ -574,7 +572,7 @@
 
                     <!-- Litecoin -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/litecoin-ltc-logo.png"
                         alt="Litecoin"
                         class="crypto-icon"
@@ -595,7 +593,7 @@
 
                     <!-- Ripple -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/xrp-xrp-logo.png"
                         alt="XRP"
                         class="crypto-icon"
@@ -616,7 +614,7 @@
 
                     <!-- Cardano -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/cardano-ada-logo.png"
                         alt="Cardano"
                         class="crypto-icon"
@@ -637,7 +635,7 @@
 
                     <!-- Polkadot -->
                     <div class="crypto-item">
-                      <img
+                      <image
                         src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png"
                         alt="Polkadot"
                         class="crypto-icon"
@@ -694,7 +692,7 @@
                   </div>
 
                   <div class="qr-code">
-                    <img
+                    <image
                       src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5"
                       alt="Bitcoin QR Code"
                       id="qr-code"
@@ -1150,8 +1148,9 @@
             document.getElementById('btc-address').textContent = address;
 
             // Update QR code
-            document.getElementById('qr-code').src =
-              `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}`;
+            document.getElementById(
+              'qr-code',
+            ).src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}`;
           });
         }
 

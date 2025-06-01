@@ -312,7 +312,7 @@ function KenoGame({ advertisers, userBalance, setUserBalance }: any) {
                   <div className="flex flex-col items-center">
                     <div className="text-lg font-bold">{num}</div>
                     <div className="w-6 h-6 rounded-full overflow-hidden mt-1">
-                      <img
+                      <Image
                         src={advertiser.image}
                         alt={advertiser.name}
                         className="w-full h-full object-cover"
@@ -377,7 +377,7 @@ function CardGames({ advertisers, userBalance, setUserBalance }: any) {
             <div className="mt-4 p-4 bg-gray-800 rounded-lg">
               <div className="text-white text-sm mb-2">Selected Card:</div>
               <div className="flex items-center gap-2">
-                <img
+                <Image
                   src={selectedCard.image}
                   alt={selectedCard.name}
                   className="w-8 h-8 rounded-full object-cover"
@@ -412,7 +412,7 @@ function CardGames({ advertisers, userBalance, setUserBalance }: any) {
                 onClick={() => setSelectedCard(advertiser)}
               >
                 <div className="text-center">
-                  <img
+                  <Image
                     src={advertiser.image}
                     alt={advertiser.name}
                     className="w-16 h-16 rounded-full object-cover mx-auto mb-2"
@@ -453,7 +453,7 @@ function ActiveRaffles({ advertisers, userBalance, setUserBalance }: any) {
       {raffles.map(raffle => (
         <Card key={raffle.id} className="bg-black/40 backdrop-blur-sm border-pink-500/30 p-6">
           <div className="text-center mb-4">
-            <img
+            <Image
               src={raffle.advertiser.image}
               alt={raffle.advertiser.name}
               className="w-20 h-20 rounded-full object-cover mx-auto mb-3"
@@ -515,7 +515,7 @@ function Leaderboard({ advertisers }: any) {
           >
             <div className="text-2xl font-bold text-yellow-400">#{index + 1}</div>
 
-            <img
+            <Image
               src={advertiser.image}
               alt={advertiser.name}
               className="w-12 h-12 rounded-full object-cover"

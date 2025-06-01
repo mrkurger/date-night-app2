@@ -2,14 +2,15 @@ import * as React from 'react';
 import { AuthProvider } from '../context/auth-context';
 import { DataProvider } from '../context/data-context';
 import { Toaster } from '@/components/ui/toaster';
+import { ErrorBoundary } from '@/components/error-boundary';
+import { PerformanceMonitor } from '@/components/performance-monitor';
+import { PWAInstaller } from '@/components/pwa-installer';
 import './globals.css';
 
 export const metadata = {
   title: 'Carousely - Tinder-Style Dating App',
   description: 'A modern PWA dating app with a wheel carousel interface',
   manifest: '/manifest.json',
-  themeColor: '#ec4899',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -26,6 +27,12 @@ export const metadata = {
   generator: 'v0.dev',
 };
 
+// Add viewport export
+export const viewport = {
+  themeColor: '#ec4899',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -37,14 +44,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
       </head>
       <body>
-        <AuthProvider>
-          <DataProvider>
-            {children}
-            <Toaster />
-            {/* PWA Setup component is client-side only */}
-            <div id="pwa-root" />
-          </DataProvider>
-        </AuthProvider>
+        <ErrorBoundary>
+          <AuthProvider>
+            <DataProvider>
+              <PerformanceMonitor />
+              {children}
+              <Toaster />
+              <PWAInstaller />
+              {/* PWA Setup component is client-side only */}
+              <div id="pwa-root" />
+            </DataProvider>
+          </AuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

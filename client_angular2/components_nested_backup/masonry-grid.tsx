@@ -61,7 +61,7 @@ export function MasonryGrid({ advertisers, className }: MasonryGridProps) {
           onMouseLeave={() => setHoveredId(null)}
         >
           <div className="absolute inset-0 w-full h-full">
-            <img
+            <Image
               src={
                 advertiser.image || `/placeholder.svg?height=600&width=400&text=${advertiser.name}`
               }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import { getAdvertisers, Advertiser, getProfileImage } from '@/lib/data';
 import { Footer } from '@/components/footer';
@@ -66,12 +67,13 @@ function RankedAdvertiserCard({
 
   return (
     <div className="bg-card border rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl flex flex-col">
-      <div className="relative">
+      <div className="relative h-56">
         <Link href={`/advertiser/${advertiser.id}`}>
-          <img
+          <Image
             src={getProfileImage(advertiser)}
             alt={advertiser.name}
-            className="w-full h-56 object-cover"
+            fill
+            className="object-cover"
           />
         </Link>
         <Badge variant="secondary" className="absolute top-2 left-2 bg-black/70 text-white">

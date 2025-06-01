@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import EnhancedNavbar from '@/components/enhanced-navbar';
 import { CarouselWheel } from '@/components/carousely/carousel-wheel';
 import { generateMockAdvertisers, Advertiser } from '@/services/mock-advertisers';
-import { toast } from '@/components/ui/toast';
+import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { BellIcon, CompassIcon, HeartIcon, XIcon } from 'lucide-react';
 import { PWAInit } from '@/components/pwa/pwa-init';

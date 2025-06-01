@@ -83,7 +83,7 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
             // The container will be part of a grid, and its span is determined by getColumnSpan.
             // The image will fill this container.
           >
-            <img
+            <Image
               src={advertiser.image}
               alt={`Photo of ${advertiser.name}`}
               // Ensure images cover their container; aspect ratio is handled by the grid item's span and the image filling it.

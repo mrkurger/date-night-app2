@@ -155,7 +155,7 @@ export default function NetflixView({
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
+                    <Image
                       src={getProfileImage(advertiser)}
                       alt={advertiser.name}
                       className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"

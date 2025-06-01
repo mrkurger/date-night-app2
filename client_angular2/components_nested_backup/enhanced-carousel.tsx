@@ -128,7 +128,7 @@ export function EnhancedCarousel({
               onClick={() => isPremium && toggleInfo(advertiser.id)}
             >
               {/* Card Image */}
-              <img
+              <Image
                 src={
                   advertiser.image ||
                   `/placeholder.svg?height=450&width=350&text=${advertiser.name}`

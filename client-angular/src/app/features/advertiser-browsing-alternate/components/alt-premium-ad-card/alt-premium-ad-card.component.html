@@ -1,11 +1,12 @@
 <p-card
   [style]="{ width: '280px' }"
-  styleClass="alt-premium-ad-card" i18n-styleClass
+  styleClass="alt-premium-ad-card"
+  i18n-styleClass
   (mouseenter)="isHovered = true"
   (mouseleave)="isHovered = false"
 >
   <div class="ad-image-container">
-    <img
+    <Image
       [src]="ad.image || '/assets/img/default-placeholder.png'"
       [alt]="ad.name"
       class="ad-image"
@@ -14,45 +15,201 @@
     <div class="badges-container">
       <p-badge
         value="Premium"
-        severity="info" i18n-severity
+        severity="info"
+        i18n-severity
         *ngIf="ad.isPremium"
-        styleClass="premium-badge" i18n-styleClass
+        styleClass="premium-badge"
+        i18n-styleClass
       ></p-badge>
       <p-badge
         value="Online"
-        severity="success" i18n-severity
+        severity="success"
+        i18n-severity
         *ngIf="ad.isOnline"
-        styleClass="online-badge" i18n-styleClass
+        styleClass="online-badge"
+        i18n-styleClass
       ></p-badge>
-      <p-badge value="VIP" severity="warning" i18n-severity *ngIf="ad.isVip" styleClass="vip-badge" i18n-styleClass></p-badge>
+      <p-badge
+        value="VIP"
+        severity="warning"
+        i18n-severity
+        *ngIf="ad.isVip"
+        styleClass="vip-badge"
+        i18n-styleClass
+      ></p-badge>
     </div>
 
     <!-- Hover overlay -->
     <div class="hover-overlay" [class.visible]="isHovered">
       <div class="overlay-actions">
         <button pButton type="button" class="p-button-rounded p-button-success p-mr-2">
-          <i class="pi pi-comments"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Chat
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
+          <i class="pi pi-comments"></i>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Chat </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </button>
         <button pButton type="button" class="p-button-rounded p-button-info p-mr-2">
-          <i class="pi pi-video"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Call
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
+          <i class="pi pi-video"></i>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Call </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </button>
         <button pButton type="button" class="p-button-rounded p-button-warning">
-          <i class="pi pi-dollar"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Tip
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></button>
+          <i class="pi pi-dollar"></i>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Tip </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </button>
       </div>
       <div class="overlay-tags" *ngIf="ad.tags && ad.tags.length > 0">
-        <p-tag *ngFor="let tag of ad.tags" [value]="'#' + tag" severity="secondary" i18n-severity></p-tag>
+        <p-tag
+          *ngFor="let tag of ad.tags"
+          [value]="'#' + tag"
+          severity="secondary"
+          i18n-severity
+        ></p-tag>
       </div>
     </div>
   </div>
 
   <div class="ad-info-header">
-    <h5 class="ad-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.name }}{{ ad.age ? ', ' + ad.age : '' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h5>
-    <div class="ad-rating" *ngIf="ad.rating"><i class="pi pi-star-fill"></i> <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.rating }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+    <h5 class="ad-name">
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          >{{ ad.name }}{{ ad.age ? ', ' + ad.age : '' }}</ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </h5>
+    <div class="ad-rating" *ngIf="ad.rating">
+      <i class="pi pi-star-fill"></i>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n>{{ ad.rating }}</ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </div>
   </div>
-  <p class="ad-location" *ngIf="ad.location"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.location }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+  <p class="ad-location" *ngIf="ad.location">
+    <ng-container i18n
+      ><ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n>{{ ad.location }}</ng-container></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      ></ng-container
+    >
+  </p>
   <p class="ad-description">
-    <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.description | slice: 0 : 100
-    }}{{ ad.description && ad.description.length > 100 ? '...' : '' }}
-  </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+    <ng-container i18n
+      ><ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        >{{ ad.description | slice: 0 : 100
+                        }}{{ ad.description && ad.description.length > 100 ? '...' : '' }}
+                      </ng-container></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      ></ng-container
+    >
+  </p>
 </p-card>

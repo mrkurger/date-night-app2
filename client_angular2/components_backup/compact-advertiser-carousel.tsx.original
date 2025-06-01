@@ -93,7 +93,7 @@ export function CompactAdvertiserCarousel({ advertisers, title, className }: Com
             >
               <div className="relative rounded-2xl overflow-hidden shadow-md h-[350px] transition-transform duration-300 hover:scale-[1.02]">
                 {/* Card Image */}
-                <img
+                <Image
                   src={advertiser.image || `/placeholder.svg?height=350&width=250&text=${advertiser.name}`}
                   alt={advertiser.name}
                   className="w-full h-full object-cover"

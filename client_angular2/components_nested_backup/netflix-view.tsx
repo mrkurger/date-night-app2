@@ -1,95 +1,95 @@
-"use client"
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Star, MessageCircle, Video, DollarSign, ChevronLeft, ChevronRight } from "lucide-react"
-import { FavoriteButton } from "@/components/favorites/favorite-button"
-import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Star, MessageCircle, Video, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
+import { FavoriteButton } from '@/components/favorites/favorite-button';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Advertiser {
-  id: number | string
-  name: string
-  age: number
-  location: string
-  description: string
-  tags: string[]
-  image: string
-  images?: string[]
-  rating: number
-  isVip: boolean
-  isOnline: boolean
+  id: number | string;
+  name: string;
+  age: number;
+  location: string;
+  description: string;
+  tags: string[];
+  image: string;
+  images?: string[];
+  rating: number;
+  isVip: boolean;
+  isOnline: boolean;
 }
 
 interface NetflixViewProps {
-  advertisers: Advertiser[]
-  loadMore?: (page: number) => void
-  title?: string
-  showSectionNav?: boolean
+  advertisers: Advertiser[];
+  loadMore?: (page: number) => void;
+  title?: string;
+  showSectionNav?: boolean;
 }
 
 export default function NetflixView({
   advertisers,
   loadMore,
-  title = "Browse Advertisers",
+  title = 'Browse Advertisers',
   showSectionNav = false,
 }: NetflixViewProps) {
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null)
-  const observer = useRef<IntersectionObserver | null>(null)
-  const lastCardRef = useRef<HTMLDivElement | null>(null)
-  const rowRef = useRef<HTMLDivElement | null>(null)
-  const isMobile = useIsMobile()
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastCardRef = useRef<HTMLDivElement | null>(null);
+  const rowRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useIsMobile();
 
   // Function to handle infinite scrolling
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries
+      const [entry] = entries;
       if (entry.isIntersecting && !loading && loadMore) {
-        setLoading(true)
-        loadMore(page)
-        setPage((prev) => prev + 1)
-        setLoading(false)
+        setLoading(true);
+        loadMore(page);
+        setPage(prev => prev + 1);
+        setLoading(false);
       }
     },
     [loading, loadMore, page],
-  )
+  );
 
   // Set up the intersection observer
   useEffect(() => {
     if (loadMore) {
       observer.current = new IntersectionObserver(handleObserver, {
         root: null,
-        rootMargin: "20px",
+        rootMargin: '20px',
         threshold: 0.1,
-      })
+      });
 
       if (lastCardRef.current) {
-        observer.current.observe(lastCardRef.current)
+        observer.current.observe(lastCardRef.current);
       }
 
       return () => {
         if (observer.current) {
-          observer.current.disconnect()
+          observer.current.disconnect();
         }
-      }
+      };
     }
-  }, [handleObserver, loadMore, advertisers])
+  }, [handleObserver, loadMore, advertisers]);
 
-  const scrollRow = (direction: "left" | "right") => {
+  const scrollRow = (direction: 'left' | 'right') => {
     if (rowRef.current) {
-      const scrollAmount = rowRef.current.clientWidth * 0.75
-      if (direction === "left") {
-        rowRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+      const scrollAmount = rowRef.current.clientWidth * 0.75;
+      if (direction === 'left') {
+        rowRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       } else {
-        rowRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
+        rowRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
     }
-  }
+  };
 
   if (advertisers.length === 0) {
     return (
@@ -97,7 +97,7 @@ export default function NetflixView({
         <h3 className="text-xl mb-2">No advertisers found</h3>
         <p className="text-gray-400">Try adjusting your search or filters</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -107,10 +107,20 @@ export default function NetflixView({
           <h2 className="text-2xl font-bold">{title}</h2>
           {showSectionNav && (
             <div className="flex space-x-2">
-              <Button variant="outline" size="icon" onClick={() => scrollRow("left")} className="rounded-full">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => scrollRow('left')}
+                className="rounded-full"
+              >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" onClick={() => scrollRow("right")} className="rounded-full">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => scrollRow('right')}
+                className="rounded-full"
+              >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -121,21 +131,21 @@ export default function NetflixView({
       <div
         ref={rowRef}
         className={cn(
-          "grid gap-4",
+          'grid gap-4',
           showSectionNav
-            ? "flex overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
-            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+            ? 'flex overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide'
+            : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
         )}
       >
         {advertisers.map((advertiser, index) => {
           // Check if this is the last card
-          const isLastCard = index === advertisers.length - 1
+          const isLastCard = index === advertisers.length - 1;
 
           return (
             <div
               key={`${advertiser.id}-${index}`}
               ref={isLastCard ? lastCardRef : null}
-              className={cn(showSectionNav && "min-w-[250px] sm:min-w-[280px] snap-start")}
+              className={cn(showSectionNav && 'min-w-[250px] sm:min-w-[280px] snap-start')}
             >
               <Link href={`/advertiser/${advertiser.id}`}>
                 <Card
@@ -144,8 +154,11 @@ export default function NetflixView({
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
-                      src={advertiser.image || `/placeholder.svg?height=400&width=300&text=${advertiser.name}`}
+                    <Image
+                      src={
+                        advertiser.image ||
+                        `/placeholder.svg?height=400&width=300&text=${advertiser.name}`
+                      }
                       alt={advertiser.name}
                       className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
                     />
@@ -154,14 +167,20 @@ export default function NetflixView({
                     </div>
                     {advertiser.isOnline && (
                       <div className="absolute bottom-2 left-2">
-                        <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500">
+                        <Badge
+                          variant="outline"
+                          className="bg-green-500/20 text-green-400 border-green-500"
+                        >
                           Online Now
                         </Badge>
                       </div>
                     )}
                     {advertiser.isVip && (
                       <div className="absolute bottom-2 right-2">
-                        <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500">
+                        <Badge
+                          variant="outline"
+                          className="bg-amber-500/20 text-amber-400 border-amber-500"
+                        >
                           VIP Content
                         </Badge>
                       </div>
@@ -170,9 +189,10 @@ export default function NetflixView({
                     {/* Overlay that appears on hover */}
                     <div
                       className={cn(
-                        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300",
-                        hoveredCard === advertiser.id ? "opacity-100" : "opacity-0",
-                        isMobile && "opacity-100 bg-gradient-to-t from-black/80 via-black/30 to-transparent",
+                        'absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300',
+                        hoveredCard === advertiser.id ? 'opacity-100' : 'opacity-0',
+                        isMobile &&
+                          'opacity-100 bg-gradient-to-t from-black/80 via-black/30 to-transparent',
                       )}
                     >
                       <div className="flex gap-2 mb-2">
@@ -199,7 +219,7 @@ export default function NetflixView({
                         </Button>
                       </div>
                       <div className="text-xs text-gray-300">
-                        {advertiser.tags.map((tag) => (
+                        {advertiser.tags.map(tag => (
                           <span key={tag} className="mr-2">
                             #{tag}
                           </span>
@@ -224,7 +244,7 @@ export default function NetflixView({
                 </Card>
               </Link>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -234,5 +254,5 @@ export default function NetflixView({
         </div>
       )}
     </div>
-  )
+  );
 }

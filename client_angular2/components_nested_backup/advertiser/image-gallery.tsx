@@ -1,42 +1,42 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ImageGalleryProps {
-  images: string[]
+  images: string[];
 }
 
 export function ImageGallery({ images }: ImageGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Default image if no images are provided
   if (!images || images.length === 0) {
-    images = ["/placeholder.svg?height=600&width=400&text=No+Image"]
+    images = ['/placeholder.svg?height=600&width=400&text=No+Image'];
   }
 
   const goToPrevious = () => {
-    const isFirstSlide = currentIndex === 0
-    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1
-    setCurrentIndex(newIndex)
-  }
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
 
   const goToNext = () => {
-    const isLastSlide = currentIndex === images.length - 1
-    const newIndex = isLastSlide ? 0 : currentIndex + 1
-    setCurrentIndex(newIndex)
-  }
+    const isLastSlide = currentIndex === images.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
 
   const goToSlide = (slideIndex: number) => {
-    setCurrentIndex(slideIndex)
-  }
+    setCurrentIndex(slideIndex);
+  };
 
   return (
     <div className="relative w-full h-full aspect-[3/4] group">
       <div className="w-full h-full overflow-hidden rounded-lg">
-        <img
-          src={images[currentIndex] || "/placeholder.svg"}
+        <Image
+          src={images[currentIndex] || '/placeholder.svg'}
           alt={`Gallery image ${currentIndex + 1}`}
           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
         />
@@ -64,8 +64,8 @@ export function ImageGallery({ images }: ImageGalleryProps) {
               key={slideIndex}
               onClick={() => goToSlide(slideIndex)}
               className={cn(
-                "cursor-pointer w-3 h-3 rounded-full",
-                slideIndex === currentIndex ? "bg-white" : "bg-white/50",
+                'cursor-pointer w-3 h-3 rounded-full',
+                slideIndex === currentIndex ? 'bg-white' : 'bg-white/50',
               )}
             />
           ))}
@@ -80,12 +80,12 @@ export function ImageGallery({ images }: ImageGalleryProps) {
               key={index}
               onClick={() => goToSlide(index)}
               className={cn(
-                "cursor-pointer w-16 h-16 rounded-md overflow-hidden border-2",
-                index === currentIndex ? "border-pink-500" : "border-transparent",
+                'cursor-pointer w-16 h-16 rounded-md overflow-hidden border-2',
+                index === currentIndex ? 'border-pink-500' : 'border-transparent',
               )}
             >
-              <img
-                src={image || "/placeholder.svg"}
+              <Image
+                src={image || '/placeholder.svg'}
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -94,5 +94,5 @@ export function ImageGallery({ images }: ImageGalleryProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

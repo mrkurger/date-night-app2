@@ -207,7 +207,7 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {advertiserImages.map((image, index) => (
                   <div key={index} className="aspect-square overflow-hidden rounded-md">
-                    <img
+                    <Image
                       src={image || '/placeholder.svg'}
                       alt={`Media ${index + 1}`}
                       className="object-cover w-full h-full"

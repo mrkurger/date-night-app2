@@ -2,6 +2,7 @@
 
 import type React from 'react';
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Heart, X, Star, DollarSign, Zap, Crown, Gift, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -227,7 +228,7 @@ export default function EnhancedTinderView() {
               }}
             >
               <div className="relative h-[600px]">
-                <img
+                <Image
                   src={advertiser.image || '/placeholder.svg'}
                   alt={advertiser.name}
                   className="w-full h-full object-cover"
@@ -252,7 +253,7 @@ export default function EnhancedTinderView() {
             onTouchStart={handleDragStart}
           >
             <div className="relative h-[600px]">
-              <img
+              <Image
                 src={currentAdvertiser.image || '/placeholder.svg'}
                 alt={currentAdvertiser.name}
                 className="w-full h-full object-cover"
@@ -366,7 +367,7 @@ export default function EnhancedTinderView() {
           <Card className="bg-gradient-to-br from-purple-900 to-pink-900 border-pink-500/30 p-6 max-w-md w-full">
             <div className="text-center mb-6">
               <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-4 border-pink-500">
-                <img
+                <Image
                   src={currentAdvertiser.image || '/placeholder.svg'}
                   alt={currentAdvertiser.name}
                   className="w-full h-full object-cover"

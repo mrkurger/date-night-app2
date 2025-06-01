@@ -1,157 +1,165 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { ChevronRight } from "lucide-react"
+import { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 
 interface AdvertiserItem {
-  id: string
-  name: string
-  age: number
-  location: string
-  image: string
-  images: string[]
-  tags: string[]
-  isOnline?: boolean
-  isVip?: boolean
-  isPremium?: boolean
-  rating?: number
+  id: string;
+  name: string;
+  age: number;
+  location: string;
+  image: string;
+  images: string[];
+  tags: string[];
+  isOnline?: boolean;
+  isVip?: boolean;
+  isPremium?: boolean;
+  rating?: number;
 }
 
 interface MasonryGridProps {
-  items?: AdvertiserItem[]
-  compact?: boolean
+  items?: AdvertiserItem[];
+  compact?: boolean;
 }
 
 const defaultItems: AdvertiserItem[] = [
   {
-    id: "1",
-    name: "Sophia",
+    id: '1',
+    name: 'Sophia',
     age: 28,
-    location: "Stockholm",
+    location: 'Stockholm',
     image:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Massage", "Wellness", "Premium"],
+    tags: ['Massage', 'Wellness', 'Premium'],
     isOnline: true,
     isVip: true,
     rating: 4.9,
   },
   {
-    id: "2",
-    name: "Emma",
+    id: '2',
+    name: 'Emma',
     age: 25,
-    location: "Gothenburg",
+    location: 'Gothenburg',
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Dance", "Entertainment"],
+    tags: ['Dance', 'Entertainment'],
     isPremium: true,
     rating: 4.8,
   },
   {
-    id: "3",
-    name: "Olivia",
+    id: '3',
+    name: 'Olivia',
     age: 27,
-    location: "Malmö",
+    location: 'Malmö',
     image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Massage", "Therapy"],
+    tags: ['Massage', 'Therapy'],
     isOnline: true,
     rating: 4.7,
   },
   {
-    id: "4",
-    name: "Isabella",
+    id: '4',
+    name: 'Isabella',
     age: 24,
-    location: "Uppsala",
+    location: 'Uppsala',
     image:
-      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Dance", "Entertainment", "Premium"],
+    tags: ['Dance', 'Entertainment', 'Premium'],
     isVip: true,
     rating: 4.6,
   },
   {
-    id: "5",
-    name: "Mia",
+    id: '5',
+    name: 'Mia',
     age: 26,
-    location: "Stockholm",
+    location: 'Stockholm',
     image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Massage", "Wellness", "VIP"],
+    tags: ['Massage', 'Wellness', 'VIP'],
     isOnline: true,
     rating: 4.5,
   },
   {
-    id: "6",
-    name: "Charlotte",
+    id: '6',
+    name: 'Charlotte',
     age: 29,
-    location: "Gothenburg",
+    location: 'Gothenburg',
     image:
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Dance", "Entertainment", "VIP"],
+    tags: ['Dance', 'Entertainment', 'VIP'],
     isPremium: true,
     rating: 4.4,
   },
   {
-    id: "7",
-    name: "Amelia",
+    id: '7',
+    name: 'Amelia',
     age: 27,
-    location: "Stockholm",
+    location: 'Stockholm',
     image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     images: [
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     ],
-    tags: ["Massage", "Wellness", "Premium"],
+    tags: ['Massage', 'Wellness', 'Premium'],
     isOnline: true,
     isVip: true,
     rating: 4.3,
   },
-]
+];
 
 export default function MasonryGrid({ items, compact = false }: MasonryGridProps) {
-  const [displayItems, setDisplayItems] = useState<AdvertiserItem[]>([])
-  const [layoutClasses] = useState(["tall-left", "wide-top", "medium", "small", "small", "wide-bottom", "tall-right"])
+  const [displayItems, setDisplayItems] = useState<AdvertiserItem[]>([]);
+  const [layoutClasses] = useState([
+    'tall-left',
+    'wide-top',
+    'medium',
+    'small',
+    'small',
+    'wide-bottom',
+    'tall-right',
+  ]);
 
   useEffect(() => {
     // Set items after component mounts to avoid state update during render
-    setDisplayItems(items || defaultItems)
-  }, [items])
+    setDisplayItems(items || defaultItems);
+  }, [items]);
 
   const getItemClass = (index: number): string => {
-    return layoutClasses[index % layoutClasses.length]
-  }
+    return layoutClasses[index % layoutClasses.length];
+  };
 
   if (displayItems.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-gray-500">Loading...</div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className={`masonry-grid ${compact ? "compact" : ""}`}>
+    <div className={`masonry-grid ${compact ? 'compact' : ''}`}>
       {displayItems.map((item, index) => (
         <div key={item.id} className={`masonry-item ${getItemClass(index)}`}>
           <div className="item-image-container">
-            <img src={item.image || item.images[0]} alt={item.name} className="item-image" />
+            <Image src={item.image || item.images[0]} alt={item.name} className="item-image" />
             <div className="item-overlay"></div>
           </div>
 
@@ -186,5 +194,5 @@ export default function MasonryGrid({ items, compact = false }: MasonryGridProps
         </div>
       ))}
     </div>
-  )
+  );
 }

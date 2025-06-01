@@ -613,7 +613,7 @@ function fixHtmlTemplateIssues() {
               Add Image
             </button>
             <div class="image-preview" *ngIf="imagePreviewUrl">
-              <img [src]="imagePreviewUrl" alt="Preview">
+              <Image [src]="imagePreviewUrl" alt="Preview">
               <button nbButton status="danger" class="remove-button" (click)="onRemoveImage()">
                 <nb-icon icon="trash-2-outline"></nb-icon>
               </button>
@@ -638,9 +638,9 @@ function fixHtmlTemplateIssues() {
     <nb-card-body>
       <div class="ad-content">
         <div class="ad-images" *ngIf="ad?.images && ad.images.length > 0">
-          <img [src]="ad.images[0]" alt="{{ ad.title }}">
+          <Image [src]="ad.images[0]" alt="{{ ad.title }}">
           <div class="image-thumbnails" *ngIf="ad.images.length > 1">
-            <img *ngFor="let image of ad.images.slice(1)" [src]="image" alt="{{ ad.title }}" (click)="selectImage(image)">
+            <Image *ngFor="let image of ad.images.slice(1)" [src]="image" alt="{{ ad.title }}" (click)="selectImage(image)">
           </div>
         </div>
         

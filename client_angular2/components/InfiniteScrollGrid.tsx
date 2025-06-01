@@ -164,7 +164,7 @@ export function InfiniteScrollGrid() {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 <div className="relative">
-                  <img
+                  <Image
                     src={profile.image || getFemaleImageByIndex(profile.id)}
                     alt={profile.name}
                     className="w-full h-64 object-cover"

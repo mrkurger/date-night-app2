@@ -75,7 +75,7 @@
       >
         <!-- Image attachment -->
         <div class="attachment__image" *ngIf="attachment.type === 'image'">
-          <img
+          <Image
             [src]="attachment.url"
             [alt]="attachment.name || 'Image attachment'"
             (click)="openAttachment(attachment)"

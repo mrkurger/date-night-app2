@@ -43,7 +43,7 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
             [attr.aria-current]="hoveredCard === advertiser.id ? 'true' : null"
           >
             <div class="relative aspect-[3/4] overflow-hidden">
-              <img
+              <Image
                 [src]="advertiser.image || '/placeholder.svg'"
                 [alt]="advertiser.name + ' profile photo'"
                 class="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"

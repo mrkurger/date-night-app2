@@ -195,7 +195,7 @@ export default function RankingsPage() {
             <div key={advertiser.id} className="carousel-card">
               <div className="card-rank">{index + 1}</div>
               <div className="card-image">
-                <img src={advertiser.images[0] || "/placeholder.svg"} alt={advertiser.name} />
+                <Image src={advertiser.images[0] || "/placeholder.svg"} alt={advertiser.name} />
                 <div className="card-badges">
                   {advertiser.isOnline && <span className="badge online">Online</span>}
                   {category === "rating" && <span className="badge rating">{advertiser.rating} ★</span>}
