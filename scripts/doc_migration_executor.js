@@ -73,22 +73,22 @@ function readTemplate() {
 /**
  * Converts Markdown content to HTML
  * @param {string} markdown - The Markdown content
- * @returns {string} The HTML content
+ * @returns {Promise<string>} The HTML content
  */
-function convertMarkdownToHtml(markdown) {
+async function convertMarkdownToHtml(markdown) {
   // Configure marked options
   marked.setOptions({
     gfm: true,
     breaks: true,
-    smartLists: true,
-    smartypants: true,
-    highlight: function (code, lang) {
-      // You could add syntax highlighting here if desired
-      return code;
-    },
+    // smartLists: true, // Removed - not supported in current marked version
+    // smartypants: true, // Removed - not supported in current marked version
+    // highlight: function (code, lang) {
+    //   // You could add syntax highlighting here if desired
+    //   return code;
+    // }, // Removed - not supported in current marked version
   });
 
-  return marked.parse(markdown);
+  return await marked.parse(markdown);
 }
 
 /**
@@ -579,7 +579,7 @@ function updateMigrationChecklist(markdownFile, htmlFile, status) {
   try {
     execSync(`node ${updateScript} ${markdownFile} ${htmlFile} ${status}`, { stdio: 'inherit' });
     console.log(
-      `Updated migration checklist with mapping: ${markdownFile} -> ${htmlFile} (${status})`
+      `Updated migration checklist with mapping: ${markdownFile} -> ${htmlFile} (${status})`,
     );
   } catch (error) {
     console.error(`Error updating migration checklist: ${error.message}`);
@@ -626,7 +626,7 @@ async function executeMigration() {
   const markdown = fs.readFileSync(absoluteMarkdownPath, 'utf8');
 
   // Convert to HTML
-  let html = convertMarkdownToHtml(markdown);
+  let html = await convertMarkdownToHtml(markdown);
 
   // Extract function names from the output directory
   const functions = extractFunctionNames(outputDir);

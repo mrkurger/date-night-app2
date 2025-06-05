@@ -19,7 +19,7 @@
       <h4>Selected Files ({{ selectedFiles.length }})</h4>
       <div class="preview-container">
         <div *ngFor="let preview of previewUrls; let i = index" class="preview-item">
-          <img [src]="preview" alt="Preview" />
+          <Image [src]="preview" alt="Preview" />
           <div class="file-name">{{ selectedFiles[i].name }}</div>
         </div>
       </div>
@@ -75,7 +75,7 @@
       >
         <div class="media-content">
           <div *ngIf="item.type === 'image'" class="image-container">
-            <img [src]="item.url" alt="Media" />
+            <Image [src]="item.url" alt="Media" />
           </div>
           <div *ngIf="item.type === 'video'" class="video-container">
             <video controls>

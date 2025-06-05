@@ -125,7 +125,7 @@ import 'emerald-ui/lib/js/emerald-ui.min.js';
 
 <!-- Card with image -->
 <div class="eui-card">
-  <img src="image.jpg" class="eui-card-img-top" alt="Card image" />
+  <Image src="image.jpg" class="eui-card-img-top" alt="Card image" />
   <div class="eui-card-body">
     <h5 class="eui-card-title">Card Title</h5>
     <p class="eui-card-text">Card content goes here.</p>

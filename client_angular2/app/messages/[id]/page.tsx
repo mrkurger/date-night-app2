@@ -185,7 +185,7 @@ const ChatPage: React.FC = () => {
   const renderMessage = (message: Message, index: number) => {
     const isCurrentUser = message.senderId === '1';
     const showDate =
-      index === 0 || formatDate(message.timestamp) !== formatDate(messages[index - 1].timestamp);
+      index === 0 || formatDate(message.timestamp) !== formatDate(messages[index - 1]?.timestamp || new Date());
 
     return (
       <div key={message.id}>

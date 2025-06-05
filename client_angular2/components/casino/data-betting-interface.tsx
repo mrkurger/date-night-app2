@@ -118,7 +118,7 @@ export default function DataBettingInterface() {
     return selectedStakes.reduce((total, stakeType) => {
       const stake = dataStakes.find(s => s.type === stakeType)
       return total + (stake?.baseValue || 0)
-    }, 0) + betAmount[0]
+    }, 0) + (betAmount[0] || 0)
   }
 
   const calculateWinnings = () => {

@@ -112,7 +112,7 @@ export function ReviewCreationForm({
   const calculateOverallRating = () => {
     return categoryRatings.reduce((sum, cr, index) => {
       const category = DEFAULT_REVIEW_CATEGORIES[index];
-      return sum + cr.rating * category.weight;
+      return sum + cr.rating * (category?.weight || 1);
     }, 0);
   };
 

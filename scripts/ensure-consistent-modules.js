@@ -7,7 +7,8 @@
  * - Removes duplicate module imports
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -74,7 +75,7 @@ const modulePathMap = {
 async function processFile(filePath) {
   try {
     // Read the file content
-    const content = await fs.readFile(filePath, 'utf8');
+    const content = await fsPromises.readFile(filePath, 'utf8');
     let newContent = content;
     let modified = false;
 
@@ -256,7 +257,7 @@ async function processFile(filePath) {
 
     // Write the modified content back to the file
     if (modified || newContent !== content) {
-      await fs.writeFile(filePath, newContent, 'utf8');
+      await fsPromises.writeFile(filePath, newContent, 'utf8');
       console.log(`Fixed: ${path.relative(rootDir, filePath)}`);
       return true;
     }
@@ -274,7 +275,7 @@ async function processFile(filePath) {
  * @returns {Promise<string[]>} - Array of file paths
  */
 async function findComponentFiles(dir) {
-  const files = await fs.readdir(dir, { withFileTypes: true });
+  const files = await fsPromises.readdir(dir, { withFileTypes: true });
   const result = [];
 
   for (const file of files) {

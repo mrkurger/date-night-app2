@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Advertiser, getAdvertisers, getProfileImage } from '@/lib/data'; // Assuming getAdvertisers fetches all and we filter locally
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -67,11 +68,14 @@ const FavoritesPage: React.FC = () => {
                   className="bg-slate-800 border-slate-700 shadow-xl rounded-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-purple-500/40"
                 >
                   <CardHeader className="p-0 relative">
-                    <img
-                      src={getProfileImage(adv)}
-                      alt={adv.name}
-                      className="w-full h-72 object-cover"
-                    />
+                    <div className="relative h-72">
+                      <Image
+                        src={getProfileImage(adv)}
+                        alt={adv.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                     {adv.isVip && (
                       <Badge
                         variant="secondary"

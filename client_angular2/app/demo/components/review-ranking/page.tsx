@@ -107,7 +107,7 @@ export default function ReviewRankingShowcase() {
 
     setCurrentUser(mockCurrentUser);
     setUsers(mockUsers);
-    setSelectedUser(mockUsers[0]);
+    setSelectedUser(mockUsers[0] || null);
 
     // Load some sample reviews
     const sampleReviews = [

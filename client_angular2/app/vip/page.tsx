@@ -1,21 +1,23 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import EnhancedNavbar from "@/components/enhanced-navbar"
-import { Crown, Star, Diamond, Video, MessageCircle, Lock, Sparkles } from "lucide-react"
+import { useState } from 'react';
+import Image from 'next/image';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import EnhancedNavbar from '@/components/enhanced-navbar';
+import { Crown, Star, Diamond, Video, MessageCircle, Lock, Sparkles } from 'lucide-react';
 
 const vipAdvertisers = [
   {
     id: 1,
-    name: "Sophia Elite",
+    name: 'Sophia Elite',
     age: 24,
-    location: "Miami, FL",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=600&fit=crop&crop=face",
-    tier: "Diamond",
+    location: 'Miami, FL',
+    image:
+      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=600&fit=crop&crop=face',
+    tier: 'Diamond',
     price: 299,
     rating: 4.9,
     isOnline: true,
@@ -24,11 +26,12 @@ const vipAdvertisers = [
   },
   {
     id: 2,
-    name: "Isabella Luxe",
+    name: 'Isabella Luxe',
     age: 26,
-    location: "Los Angeles, CA",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=600&fit=crop&crop=face",
-    tier: "Platinum",
+    location: 'Los Angeles, CA',
+    image:
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=600&fit=crop&crop=face',
+    tier: 'Platinum',
     price: 199,
     rating: 4.8,
     isOnline: true,
@@ -37,21 +40,22 @@ const vipAdvertisers = [
   },
   {
     id: 3,
-    name: "Emma Royal",
+    name: 'Emma Royal',
     age: 23,
-    location: "New York, NY",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop&crop=face",
-    tier: "Gold",
+    location: 'New York, NY',
+    image:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop&crop=face',
+    tier: 'Gold',
     price: 149,
     rating: 4.7,
     isOnline: false,
     exclusiveContent: 28,
     vipMembers: 156,
   },
-]
+];
 
 export default function VIPPage() {
-  const [selectedTier, setSelectedTier] = useState("all")
+  const [selectedTier, setSelectedTier] = useState('all');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
@@ -68,7 +72,8 @@ export default function VIPPage() {
             <Crown className="w-12 h-12 text-yellow-400" />
           </div>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Access premium content, private shows, and exclusive experiences with our top-tier advertisers
+            Access premium content, private shows, and exclusive experiences with our top-tier
+            advertisers
           </p>
         </div>
 
@@ -79,7 +84,9 @@ export default function VIPPage() {
             <h3 className="text-2xl font-bold text-yellow-400 mb-2">Gold VIP</h3>
             <p className="text-gray-300 mb-4">Premium access to exclusive content</p>
             <div className="text-3xl font-bold text-white mb-4">$149/month</div>
-            <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-600">Upgrade Now</Button>
+            <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-600">
+              Upgrade Now
+            </Button>
           </Card>
 
           <Card className="bg-gradient-to-br from-gray-400/20 to-gray-600/20 border-gray-400/30 p-6 text-center">
@@ -87,7 +94,9 @@ export default function VIPPage() {
             <h3 className="text-2xl font-bold text-gray-300 mb-2">Platinum VIP</h3>
             <p className="text-gray-300 mb-4">Enhanced features + private messaging</p>
             <div className="text-3xl font-bold text-white mb-4">$199/month</div>
-            <Button className="w-full bg-gradient-to-r from-gray-500 to-gray-700">Upgrade Now</Button>
+            <Button className="w-full bg-gradient-to-r from-gray-500 to-gray-700">
+              Upgrade Now
+            </Button>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-blue-500/30 p-6 text-center">
@@ -95,7 +104,9 @@ export default function VIPPage() {
             <h3 className="text-2xl font-bold text-blue-400 mb-2">Diamond VIP</h3>
             <p className="text-gray-300 mb-4">Ultimate access + personal concierge</p>
             <div className="text-3xl font-bold text-white mb-4">$299/month</div>
-            <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600">Upgrade Now</Button>
+            <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600">
+              Upgrade Now
+            </Button>
           </Card>
         </div>
 
@@ -110,22 +121,26 @@ export default function VIPPage() {
 
           <TabsContent value="exclusive" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {vipAdvertisers.map((advertiser) => (
-                <Card key={advertiser.id} className="bg-black/40 backdrop-blur-sm border-pink-500/30 overflow-hidden">
-                  <div className="relative">
-                    <img
-                      src={advertiser.image || "/placeholder.svg"}
+              {vipAdvertisers.map(advertiser => (
+                <Card
+                  key={advertiser.id}
+                  className="bg-black/40 backdrop-blur-sm border-pink-500/30 overflow-hidden"
+                >
+                  <div className="relative h-64">
+                    <Image
+                      src={advertiser.image || '/placeholder.svg'}
                       alt={advertiser.name}
-                      className="w-full h-64 object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute top-4 left-4">
                       <Badge
                         className={`${
-                          advertiser.tier === "Diamond"
-                            ? "bg-blue-600"
-                            : advertiser.tier === "Platinum"
-                              ? "bg-gray-600"
-                              : "bg-yellow-600"
+                          advertiser.tier === 'Diamond'
+                            ? 'bg-blue-600'
+                            : advertiser.tier === 'Platinum'
+                            ? 'bg-gray-600'
+                            : 'bg-yellow-600'
                         } text-white`}
                       >
                         <Crown className="w-3 h-3 mr-1" />
@@ -205,7 +220,9 @@ export default function VIPPage() {
             <div className="text-center py-12">
               <Sparkles className="w-24 h-24 text-blue-400 mx-auto mb-6" />
               <h2 className="text-3xl font-bold text-white mb-4">Personal Concierge</h2>
-              <p className="text-gray-300 mb-8 max-w-2xl mx-auto">24/7 personal assistance for Diamond VIP members</p>
+              <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+                24/7 personal assistance for Diamond VIP members
+              </p>
               <Button className="bg-gradient-to-r from-blue-500 to-purple-600 text-lg px-8 py-3">
                 Contact Concierge
               </Button>
@@ -214,5 +231,5 @@ export default function VIPPage() {
         </Tabs>
       </div>
     </div>
-  )
+  );
 }

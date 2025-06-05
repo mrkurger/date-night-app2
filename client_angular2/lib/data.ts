@@ -59,12 +59,12 @@ const femaleImages = [
 // Utility function to get a random female image
 export const getRandomFemaleImage = (): string => {
   const randomIndex = Math.floor(Math.random() * femaleImages.length);
-  return femaleImages[randomIndex];
+  return femaleImages[randomIndex] || '/placeholder.svg';
 };
 
 // Utility function to get a specific female image by index
 export const getFemaleImageByIndex = (index: number): string => {
-  return femaleImages[index % femaleImages.length];
+  return femaleImages[index % femaleImages.length] || '/placeholder.svg';
 };
 
 // Utility function to get a fallback female image for any advertiser without an image
@@ -258,30 +258,33 @@ for (let i = 6; i < 35; i++) {
   const nameIndex = (i - 6) % femaleNames.length;
   const femaleImageIndex = (i - 6) % femaleImages.length;
 
+  const cities = [
+    'New York',
+    'Los Angeles',
+    'Chicago',
+    'Miami',
+    'Las Vegas',
+    'Seattle',
+    'Austin',
+    'Denver',
+  ];
+  const locations = [
+    'New York, NY',
+    'Los Angeles, CA',
+    'Chicago, IL',
+    'Miami, FL',
+    'Las Vegas, NV',
+    'Seattle, WA',
+    'Austin, TX',
+    'Denver, CO',
+  ];
+
   advertisers.push({
     id: i,
-    name: femaleNames[nameIndex],
+    name: femaleNames[nameIndex] || 'Unknown',
     age: Math.floor(Math.random() * 15) + 20, // Ages 20-34
-    city: [
-      'New York',
-      'Los Angeles',
-      'Chicago',
-      'Miami',
-      'Las Vegas',
-      'Seattle',
-      'Austin',
-      'Denver',
-    ][Math.floor(Math.random() * 8)],
-    location: [
-      'New York, NY',
-      'Los Angeles, CA',
-      'Chicago, IL',
-      'Miami, FL',
-      'Las Vegas, NV',
-      'Seattle, WA',
-      'Austin, TX',
-      'Denver, CO',
-    ][Math.floor(Math.random() * 8)],
+    city: cities[Math.floor(Math.random() * cities.length)] || 'Unknown',
+    location: locations[Math.floor(Math.random() * locations.length)] || 'Unknown',
     image: getFemaleImageByIndex(femaleImageIndex),
     rating: Math.round((Math.random() * 2 + 3) * 10) / 10, // 3.0-5.0 rating
     price: `$${Math.floor(Math.random() * 200) + 100}/hr`, // $100-300/hr

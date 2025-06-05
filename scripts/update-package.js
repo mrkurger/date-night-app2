@@ -4,7 +4,8 @@
  * Script to update package.json with missing dependencies
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -18,7 +19,7 @@ const serverDir = path.join(__dirname, '..', 'server');
 const packageJsonPath = path.join(serverDir, 'package.json');
 
 // Read the current package.json
-const packageJsonContent = await fs.readFile(packageJsonPath, 'utf8');
+const packageJsonContent = await fsPromises.readFile(packageJsonPath, 'utf8');
 const packageJson = JSON.parse(packageJsonContent);
 
 // Define the dependencies to add

@@ -185,7 +185,7 @@
             <div class="result-item" *ngFor="let result of results" [id]="'result-' + result._id">
               <div class="result-card">
                 <div class="result-image" *ngIf="result.imageUrl">
-                  <img [src]="result.imageUrl" [alt]="result.title" />
+                  <Image [src]="result.imageUrl" [alt]="result.title" />
                 </div>
                 <div class="result-content">
                   <h4>{{ result.title }}</h4>

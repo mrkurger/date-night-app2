@@ -208,7 +208,7 @@ Include images with descriptive alt text:
 Specify image dimensions if necessary:
 
 ```markdown
-<img src="images/example.png" alt="Alt text describing the image" width="300" height="200">
+<Image src="images/example.png" alt="Alt text describing the image" width="300" height="200">
 ```
 
 ### Blockquotes

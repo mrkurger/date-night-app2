@@ -83,8 +83,8 @@ export const ScratchToReveal: React.FC<ScratchToRevealProps> = ({
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
     return {
-      x: touch.clientX - rect.left,
-      y: touch.clientY - rect.top,
+      x: (touch?.clientX || 0) - rect.left,
+      y: (touch?.clientY || 0) - rect.top,
     };
   }, []);
 

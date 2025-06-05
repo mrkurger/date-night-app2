@@ -1,5 +1,6 @@
 // scripts/validate-esm.js
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -34,7 +35,7 @@ const COMMONJS_PATTERNS = [
 ];
 
 async function validateFile(filePath) {
-  const content = await fs.readFile(filePath, 'utf-8');
+  const content = await fsPromises.readFile(filePath, 'utf-8');
   const issues = [];
 
   for (const pattern of COMMONJS_PATTERNS) {
@@ -56,7 +57,7 @@ async function validateFile(filePath) {
 }
 
 async function processDirectory(dirPath) {
-  const files = await fs.readdir(dirPath, { withFileTypes: true });
+  const files = await fsPromises.readdir(dirPath, { withFileTypes: true });
   const issues = {};
 
   for (const file of files) {

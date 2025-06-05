@@ -171,10 +171,10 @@ export function generateMockAdvertisers(count: number = 25): Advertiser[] {
 
     advertisers.push({
       id,
-      name,
+      name: name || 'Unknown',
       age,
-      location,
-      bio,
+      location: location || 'Unknown',
+      bio: bio || 'No bio available',
       images,
       tags: selectedTags,
       rating,

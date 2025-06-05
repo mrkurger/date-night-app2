@@ -1,10 +1,11 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Heart,
   MessageCircle,
@@ -17,130 +18,130 @@ import {
   Lock,
   Crown,
   Zap,
-} from "lucide-react"
+} from 'lucide-react';
 
 interface ContentCreator {
-  id: string
-  name: string
-  image: string
-  isOnline: boolean
-  followers: number
-  tips: number
-  rating: number
-  isVip: boolean
-  specialties: string[]
+  id: string;
+  name: string;
+  image: string;
+  isOnline: boolean;
+  followers: number;
+  tips: number;
+  rating: number;
+  isVip: boolean;
+  specialties: string[];
 }
 
 interface ContentPost {
-  id: string
-  creatorId: string
-  creatorName: string
-  creatorImage: string
-  type: "image" | "video" | "live"
-  thumbnail: string
-  title: string
-  tips: number
-  likes: number
-  isLocked: boolean
-  price?: number
-  duration?: string
+  id: string;
+  creatorId: string;
+  creatorName: string;
+  creatorImage: string;
+  type: 'image' | 'video' | 'live';
+  thumbnail: string;
+  title: string;
+  tips: number;
+  likes: number;
+  isLocked: boolean;
+  price?: number;
+  duration?: string;
 }
 
 const contentCreators: ContentCreator[] = [
   {
-    id: "1",
-    name: "Sofia",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face",
+    id: '1',
+    name: 'Sofia',
+    image: '/assets/img/profiles/random1.jpg',
     isOnline: true,
     followers: 12500,
     tips: 8950,
     rating: 4.9,
     isVip: true,
-    specialties: ["Live Shows", "Custom Content", "Chat"],
+    specialties: ['Live Shows', 'Custom Content', 'Chat'],
   },
   {
-    id: "2",
-    name: "Isabella",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face",
+    id: '2',
+    name: 'Isabella',
+    image: '/assets/img/profiles/random2.jpg',
     isOnline: false,
     followers: 9800,
     tips: 6750,
     rating: 4.8,
     isVip: true,
-    specialties: ["Photo Sets", "Video Calls", "Messages"],
+    specialties: ['Photo Sets', 'Video Calls', 'Messages'],
   },
   {
-    id: "3",
-    name: "Valentina",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face",
+    id: '3',
+    name: 'Valentina',
+    image: '/assets/img/profiles/random3.jpg',
     isOnline: true,
     followers: 15200,
     tips: 11200,
     rating: 4.9,
     isVip: true,
-    specialties: ["Live Cam", "Private Shows", "Custom Videos"],
+    specialties: ['Live Cam', 'Private Shows', 'Custom Videos'],
   },
-]
+];
 
 const contentPosts: ContentPost[] = [
   {
-    id: "1",
-    creatorId: "1",
-    creatorName: "Sofia",
-    creatorImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop&crop=face",
-    type: "live",
-    thumbnail: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=300&fit=crop",
-    title: "Live Yoga Session 🧘‍♀️",
+    id: '1',
+    creatorId: '1',
+    creatorName: 'Sofia',
+    creatorImage: '/assets/img/profiles/random1.jpg',
+    type: 'live',
+    thumbnail: '/assets/img/profiles/random1.jpg',
+    title: 'Live Yoga Session 🧘‍♀️',
     tips: 245,
     likes: 892,
     isLocked: false,
   },
   {
-    id: "2",
-    creatorId: "2",
-    creatorName: "Isabella",
-    creatorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop&crop=face",
-    type: "video",
-    thumbnail: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=300&fit=crop",
-    title: "Behind the Scenes Photoshoot",
+    id: '2',
+    creatorId: '2',
+    creatorName: 'Isabella',
+    creatorImage: '/assets/img/profiles/random2.jpg',
+    type: 'video',
+    thumbnail: '/assets/img/profiles/random2.jpg',
+    title: 'Behind the Scenes Photoshoot',
     tips: 156,
     likes: 634,
     isLocked: true,
     price: 25,
-    duration: "8:32",
+    duration: '8:32',
   },
   {
-    id: "3",
-    creatorId: "3",
-    creatorName: "Valentina",
-    creatorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=face",
-    type: "image",
-    thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop",
-    title: "Exclusive Photo Set 📸",
+    id: '3',
+    creatorId: '3',
+    creatorName: 'Valentina',
+    creatorImage: '/assets/img/profiles/random3.jpg',
+    type: 'image',
+    thumbnail: '/assets/img/profiles/random3.jpg',
+    title: 'Exclusive Photo Set 📸',
     tips: 89,
     likes: 423,
     isLocked: true,
     price: 15,
   },
-]
+];
 
 export function GamifiedContentHub() {
-  const [activeTab, setActiveTab] = useState("trending")
-  const [userCoins, setUserCoins] = useState(150)
+  const [activeTab, setActiveTab] = useState('trending');
+  const [userCoins, setUserCoins] = useState(150);
 
   const handleTip = (creatorId: string, amount: number) => {
     if (userCoins >= amount) {
-      setUserCoins((prev) => prev - amount)
+      setUserCoins(prev => prev - amount);
       // Update creator tips in real app
     }
-  }
+  };
 
   const handleUnlock = (postId: string, price: number) => {
     if (userCoins >= price) {
-      setUserCoins((prev) => prev - price)
+      setUserCoins(prev => prev - price);
       // Unlock content in real app
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -169,15 +170,17 @@ export function GamifiedContentHub() {
 
         <TabsContent value="trending" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {contentPosts.map((post) => (
+            {contentPosts.map(post => (
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <img
-                    src={post.thumbnail || "/placeholder.svg"}
+                <div className="relative h-48">
+                  <Image
+                    src={post.thumbnail || '/placeholder.svg'}
                     alt={post.title}
-                    className="w-full h-48 object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
                   />
-                  {post.type === "live" && (
+                  {post.type === 'live' && (
                     <Badge className="absolute top-2 left-2 bg-red-500 text-white">
                       <div className="w-2 h-2 bg-white rounded-full mr-1 animate-pulse"></div>
                       LIVE
@@ -192,16 +195,21 @@ export function GamifiedContentHub() {
                     </div>
                   )}
                   {post.duration && (
-                    <Badge className="absolute bottom-2 right-2 bg-black/70 text-white">{post.duration}</Badge>
+                    <Badge className="absolute bottom-2 right-2 bg-black/70 text-white">
+                      {post.duration}
+                    </Badge>
                   )}
                 </div>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <img
-                      src={post.creatorImage || "/placeholder.svg"}
-                      alt={post.creatorName}
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
+                    <div className="relative w-8 h-8">
+                      <Image
+                        src={post.creatorImage || '/placeholder.svg'}
+                        alt={post.creatorName}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    </div>
                     <span className="font-medium">{post.creatorName}</span>
                   </div>
                   <h3 className="font-semibold mb-2">{post.title}</h3>
@@ -240,14 +248,15 @@ export function GamifiedContentHub() {
         <TabsContent value="live" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {contentCreators
-              .filter((c) => c.isOnline)
-              .map((creator) => (
+              .filter(c => c.isOnline)
+              .map(creator => (
                 <Card key={creator.id} className="overflow-hidden">
-                  <div className="relative">
-                    <img
-                      src={creator.image || "/placeholder.svg"}
+                  <div className="relative h-48">
+                    <Image
+                      src={creator.image || '/placeholder.svg'}
                       alt={creator.name}
-                      className="w-full h-48 object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <Badge className="absolute top-2 left-2 bg-red-500 text-white">
                       <div className="w-2 h-2 bg-white rounded-full mr-1 animate-pulse"></div>
@@ -263,7 +272,7 @@ export function GamifiedContentHub() {
                       {creator.isVip && <Crown className="h-5 w-5 text-yellow-500" />}
                     </div>
                     <div className="flex flex-wrap gap-1 mb-3">
-                      {creator.specialties.map((specialty) => (
+                      {creator.specialties.map(specialty => (
                         <Badge key={specialty} variant="outline" className="text-xs">
                           {specialty}
                         </Badge>
@@ -292,15 +301,16 @@ export function GamifiedContentHub() {
 
         <TabsContent value="creators" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {contentCreators.map((creator) => (
+            {contentCreators.map(creator => (
               <Card key={creator.id} className="overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="relative">
-                      <img
-                        src={creator.image || "/placeholder.svg"}
+                    <div className="relative w-16 h-16">
+                      <Image
+                        src={creator.image || '/placeholder.svg'}
                         alt={creator.name}
-                        className="w-16 h-16 rounded-full object-cover"
+                        fill
+                        className="rounded-full object-cover"
                       />
                       {creator.isOnline && (
                         <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
@@ -321,7 +331,9 @@ export function GamifiedContentHub() {
                   <div className="space-y-2 mb-4">
                     <div className="flex justify-between text-sm">
                       <span>Tips Received</span>
-                      <span className="font-semibold text-green-600">{creator.tips.toLocaleString()} coins</span>
+                      <span className="font-semibold text-green-600">
+                        {creator.tips.toLocaleString()} coins
+                      </span>
                     </div>
                   </div>
 
@@ -364,14 +376,19 @@ export function GamifiedContentHub() {
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-sm">
                         {index + 1}
                       </div>
-                      <img
-                        src={creator.image || "/placeholder.svg"}
-                        alt={creator.name}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
+                      <div className="relative w-10 h-10">
+                        <Image
+                          src={creator.image || '/placeholder.svg'}
+                          alt={creator.name}
+                          fill
+                          className="rounded-full object-cover"
+                        />
+                      </div>
                       <div className="flex-1">
                         <div className="font-medium">{creator.name}</div>
-                        <div className="text-sm text-gray-600">{creator.tips.toLocaleString()} coins</div>
+                        <div className="text-sm text-gray-600">
+                          {creator.tips.toLocaleString()} coins
+                        </div>
                       </div>
                       {creator.isVip && <Crown className="h-4 w-4 text-yellow-500" />}
                     </div>
@@ -394,11 +411,14 @@ export function GamifiedContentHub() {
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-400 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
                         {index + 1}
                       </div>
-                      <img
-                        src={post.thumbnail || "/placeholder.svg"}
-                        alt={post.title}
-                        className="w-10 h-10 rounded object-cover"
-                      />
+                      <div className="relative w-10 h-10">
+                        <Image
+                          src={post.thumbnail || '/placeholder.svg'}
+                          alt={post.title}
+                          fill
+                          className="rounded object-cover"
+                        />
+                      </div>
                       <div className="flex-1">
                         <div className="font-medium text-sm">{post.title}</div>
                         <div className="text-xs text-gray-600">
@@ -413,5 +433,5 @@ export function GamifiedContentHub() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

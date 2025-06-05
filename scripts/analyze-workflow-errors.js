@@ -7,7 +7,7 @@
  * and provides insights and recommendations for fixing the issues.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { fileURLToPath } from 'url';

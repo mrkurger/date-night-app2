@@ -14,7 +14,7 @@ import {
   DEFAULT_REVIEW_CATEGORIES,
   DEFAULT_RANKING_CATEGORIES,
   DEFAULT_ACHIEVEMENTS,
-  CategoryRating
+  CategoryRating,
 } from '@/types/review-ranking';
 
 class ReviewRankingService {
@@ -36,7 +36,7 @@ class ReviewRankingService {
   subscribe(callback: (data: any) => void): () => void {
     this.subscribers.push(callback);
     callback({ reviews: this.reviews, rankings: this.rankings });
-    
+
     return () => {
       const index = this.subscribers.indexOf(callback);
       if (index > -1) {
@@ -58,7 +58,7 @@ class ReviewRankingService {
   // Get user stats
   getUserStats(userId: string): ReviewStats {
     const userReviews = this.getUserReviews(userId);
-    
+
     if (userReviews.length === 0) {
       return {
         totalReviews: 0,
@@ -67,7 +67,7 @@ class ReviewRankingService {
         ratingDistribution: {},
         recentTrend: 'stable',
         verifiedReviewsCount: 0,
-        helpfulReviewsCount: 0
+        helpfulReviewsCount: 0,
       };
     }
 
@@ -77,11 +77,12 @@ class ReviewRankingService {
     // Calculate category averages
     const categoryAverages: { [categoryId: string]: number } = {};
     DEFAULT_REVIEW_CATEGORIES.forEach(category => {
-      const categoryRatings = userReviews.flatMap(r => 
-        r.categoryRatings.filter(cr => cr.categoryId === category.id)
+      const categoryRatings = userReviews.flatMap(r =>
+        r.categoryRatings.filter(cr => cr.categoryId === category.id),
       );
       if (categoryRatings.length > 0) {
-        categoryAverages[category.id] = categoryRatings.reduce((sum, cr) => sum + cr.rating, 0) / categoryRatings.length;
+        categoryAverages[category.id] =
+          categoryRatings.reduce((sum, cr) => sum + cr.rating, 0) / categoryRatings.length;
       }
     });
 
@@ -94,9 +95,13 @@ class ReviewRankingService {
     // Calculate trend (simplified)
     const recentReviews = userReviews.slice(-5);
     const olderReviews = userReviews.slice(-10, -5);
-    const recentAvg = recentReviews.reduce((sum, r) => sum + r.overallRating, 0) / recentReviews.length;
-    const olderAvg = olderReviews.length > 0 ? olderReviews.reduce((sum, r) => sum + r.overallRating, 0) / olderReviews.length : recentAvg;
-    
+    const recentAvg =
+      recentReviews.reduce((sum, r) => sum + r.overallRating, 0) / recentReviews.length;
+    const olderAvg =
+      olderReviews.length > 0
+        ? olderReviews.reduce((sum, r) => sum + r.overallRating, 0) / olderReviews.length
+        : recentAvg;
+
     let recentTrend: 'up' | 'down' | 'stable' = 'stable';
     if (recentAvg > olderAvg + 0.2) recentTrend = 'up';
     else if (recentAvg < olderAvg - 0.2) recentTrend = 'down';
@@ -108,12 +113,17 @@ class ReviewRankingService {
       ratingDistribution,
       recentTrend,
       verifiedReviewsCount: userReviews.filter(r => r.isVerified).length,
-      helpfulReviewsCount: userReviews.filter(r => r.helpfulVotes > 5).length
+      helpfulReviewsCount: userReviews.filter(r => r.helpfulVotes > 5).length,
     };
   }
 
   // Add new review
-  addReview(review: Omit<Review, 'id' | 'createdAt' | 'updatedAt' | 'helpfulVotes' | 'reportCount' | 'moderationStatus'>): Review {
+  addReview(
+    review: Omit<
+      Review,
+      'id' | 'createdAt' | 'updatedAt' | 'helpfulVotes' | 'reportCount' | 'moderationStatus'
+    >,
+  ): Review {
     const newReview: Review = {
       ...review,
       id: `review_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -121,7 +131,7 @@ class ReviewRankingService {
       updatedAt: new Date(),
       helpfulVotes: 0,
       reportCount: 0,
-      moderationStatus: 'approved' // Auto-approve for demo
+      moderationStatus: 'approved', // Auto-approve for demo
     };
 
     this.reviews.unshift(newReview);
@@ -143,8 +153,8 @@ class ReviewRankingService {
     }
 
     if (filters.ageRange) {
-      filteredUsers = filteredUsers.filter(u => 
-        u.age >= filters.ageRange![0] && u.age <= filters.ageRange![1]
+      filteredUsers = filteredUsers.filter(
+        u => u.age >= filters.ageRange![0] && u.age <= filters.ageRange![1],
       );
     }
 
@@ -165,7 +175,9 @@ class ReviewRankingService {
 
     // Get rankings for filtered users
     const leaderboard: LeaderboardEntry[] = filteredUsers.map(user => {
-      const ranking = this.rankings.find(r => r.userId === user.id && r.categoryId === filters.category);
+      const ranking = this.rankings.find(
+        r => r.userId === user.id && r.categoryId === filters.category,
+      );
       const stats = this.getUserStats(user.id);
       const userAchievements = this.userAchievements
         .filter(ua => ua.userId === user.id)
@@ -181,11 +193,11 @@ class ReviewRankingService {
           rank: 999,
           score: 0,
           trend: 'stable',
-          achievements: []
+          achievements: [],
         },
         stats,
         achievements: userAchievements,
-        streak
+        ...(streak && { streak }),
       };
     });
 
@@ -219,7 +231,7 @@ class ReviewRankingService {
         description: 'Basic review reward',
         rarity: 'common',
         animation: 'coin_shower',
-        conditions: { minRating: 1 }
+        conditions: { minRating: 1 },
       },
       {
         id: 'quality_bonus',
@@ -228,7 +240,7 @@ class ReviewRankingService {
         description: 'Quality review bonus',
         rarity: 'rare',
         animation: 'golden_coins',
-        conditions: { minRating: 8, reviewLength: 100 }
+        conditions: { minRating: 8, reviewLength: 100 },
       },
       {
         id: 'verified_bonus',
@@ -237,7 +249,7 @@ class ReviewRankingService {
         description: 'Verified reviewer bonus',
         rarity: 'epic',
         animation: 'chip_stack',
-        conditions: { isVerified: true, minRating: 7 }
+        conditions: { isVerified: true, minRating: 7 },
       },
       {
         id: 'streak_jackpot',
@@ -246,14 +258,14 @@ class ReviewRankingService {
         description: 'Streak jackpot scratch card',
         rarity: 'legendary',
         animation: 'jackpot_lights',
-        conditions: { streakBonus: true, minRating: 9 }
-      }
+        conditions: { streakBonus: true, minRating: 9 },
+      },
     ];
 
     // Check which rewards apply
     const applicableRewards = rewards.filter(reward => {
       const conditions = reward.conditions;
-      
+
       if (conditions.minRating && review.overallRating < conditions.minRating) return false;
       if (conditions.reviewLength && review.comment.length < conditions.reviewLength) return false;
       if (conditions.isVerified && !review.isVerified) return false;
@@ -261,19 +273,17 @@ class ReviewRankingService {
         const streak = this.streaks.find(s => s.userId === review.reviewerId);
         if (!streak || streak.currentStreak < 5) return false;
       }
-      
+
       return true;
     });
 
     // Return highest rarity reward
     if (applicableRewards.length === 0) return null;
-    
-    const rarityOrder = ['common', 'rare', 'epic', 'legendary'];
-    applicableRewards.sort((a, b) => 
-      rarityOrder.indexOf(b.rarity) - rarityOrder.indexOf(a.rarity)
-    );
 
-    return applicableRewards[0];
+    const rarityOrder = ['common', 'rare', 'epic', 'legendary'];
+    applicableRewards.sort((a, b) => rarityOrder.indexOf(b.rarity) - rarityOrder.indexOf(a.rarity));
+
+    return applicableRewards[0] || null;
   }
 
   // Get analytics
@@ -311,22 +321,41 @@ class ReviewRankingService {
       const recentRatings = this.reviews
         .filter(r => r.createdAt >= weekAgo)
         .flatMap(r => r.categoryRatings.filter(cr => cr.categoryId === category.id));
-      
+
       if (recentRatings.length > 0) {
-        categoryTrends[category.id] = recentRatings.reduce((sum, cr) => sum + cr.rating, 0) / recentRatings.length;
+        categoryTrends[category.id] =
+          recentRatings.reduce((sum, cr) => sum + cr.rating, 0) / recentRatings.length;
       }
     });
 
     // Sentiment analysis (simplified)
-    const positiveWords = ['great', 'amazing', 'wonderful', 'fantastic', 'excellent', 'love', 'perfect'];
-    const negativeWords = ['bad', 'terrible', 'awful', 'horrible', 'hate', 'worst', 'disappointing'];
+    const positiveWords = [
+      'great',
+      'amazing',
+      'wonderful',
+      'fantastic',
+      'excellent',
+      'love',
+      'perfect',
+    ];
+    const negativeWords = [
+      'bad',
+      'terrible',
+      'awful',
+      'horrible',
+      'hate',
+      'worst',
+      'disappointing',
+    ];
 
-    let positive = 0, negative = 0, neutral = 0;
+    let positive = 0,
+      negative = 0,
+      neutral = 0;
     this.reviews.forEach(review => {
       const comment = review.comment.toLowerCase();
       const hasPositive = positiveWords.some(word => comment.includes(word));
       const hasNegative = negativeWords.some(word => comment.includes(word));
-      
+
       if (hasPositive && !hasNegative) positive++;
       else if (hasNegative && !hasPositive) negative++;
       else neutral++;
@@ -334,7 +363,8 @@ class ReviewRankingService {
 
     return {
       totalReviews: this.reviews.length,
-      averageRating: this.reviews.reduce((sum, r) => sum + r.overallRating, 0) / this.reviews.length,
+      averageRating:
+        this.reviews.reduce((sum, r) => sum + r.overallRating, 0) / this.reviews.length,
       reviewsToday,
       reviewsThisWeek,
       topReviewers,
@@ -345,8 +375,8 @@ class ReviewRankingService {
         pending: this.reviews.filter(r => r.moderationStatus === 'pending').length,
         approved: this.reviews.filter(r => r.moderationStatus === 'approved').length,
         rejected: this.reviews.filter(r => r.moderationStatus === 'rejected').length,
-        flagged: this.reviews.filter(r => r.moderationStatus === 'flagged').length
-      }
+        flagged: this.reviews.filter(r => r.moderationStatus === 'flagged').length,
+      },
     };
   }
 
@@ -359,13 +389,16 @@ class ReviewRankingService {
       displayName: `User ${i + 1}`,
       avatar: `/placeholder-user-${(i % 10) + 1}.jpg`,
       age: 20 + Math.floor(Math.random() * 30),
-      location: ['New York', 'Los Angeles', 'Chicago', 'Miami', 'Las Vegas'][Math.floor(Math.random() * 5)],
+      location:
+        ['New York', 'Los Angeles', 'Chicago', 'Miami', 'Las Vegas'][
+          Math.floor(Math.random() * 5)
+        ] || 'Unknown',
       isVip: Math.random() > 0.8,
       isVerified: Math.random() > 0.6,
       joinDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000),
       lastActive: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
       profileViews: Math.floor(Math.random() * 10000),
-      totalTips: Math.floor(Math.random() * 5000)
+      totalTips: Math.floor(Math.random() * 5000),
     }));
 
     // Create mock reviews
@@ -377,19 +410,25 @@ class ReviewRankingService {
 
   private generateMockReviews(): void {
     for (let i = 0; i < 200; i++) {
-      const reviewerId = this.users[Math.floor(Math.random() * this.users.length)].id;
-      const revieweeId = this.users[Math.floor(Math.random() * this.users.length)].id;
-      
+      const reviewerUser = this.users[Math.floor(Math.random() * this.users.length)];
+      const revieweeUser = this.users[Math.floor(Math.random() * this.users.length)];
+
+      if (!reviewerUser || !revieweeUser) continue;
+
+      const reviewerId = reviewerUser.id;
+      const revieweeId = revieweeUser.id;
+
       if (reviewerId === revieweeId) continue;
 
       const categoryRatings: CategoryRating[] = DEFAULT_REVIEW_CATEGORIES.map(category => ({
         categoryId: category.id,
         rating: 1 + Math.random() * 9,
-        confidence: 1 + Math.random() * 4
+        confidence: 1 + Math.random() * 4,
       }));
 
-      const overallRating = categoryRatings.reduce((sum, cr, index) => 
-        sum + cr.rating * DEFAULT_REVIEW_CATEGORIES[index].weight, 0
+      const overallRating = categoryRatings.reduce(
+        (sum, cr, index) => sum + cr.rating * (DEFAULT_REVIEW_CATEGORIES[index]?.weight || 1),
+        0,
       );
 
       this.reviews.push({
@@ -407,7 +446,9 @@ class ReviewRankingService {
         updatedAt: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000),
         moderationStatus: 'approved',
         tags: this.generateMockTags(),
-        interactionType: ['date', 'chat', 'video_call', 'casino_game', 'tip_exchange'][Math.floor(Math.random() * 5)] as any
+        interactionType: ['date', 'chat', 'video_call', 'casino_game', 'tip_exchange'][
+          Math.floor(Math.random() * 5)
+        ] as any,
       });
     }
   }
@@ -415,35 +456,48 @@ class ReviewRankingService {
   private generateMockComment(rating: number): string {
     const comments = {
       high: [
-        "Amazing experience! Highly recommended.",
-        "Absolutely wonderful person, great conversation.",
+        'Amazing experience! Highly recommended.',
+        'Absolutely wonderful person, great conversation.',
         "Perfect date, couldn't ask for better!",
-        "Fantastic personality and very attractive.",
-        "Best interaction I've had on this platform!"
+        'Fantastic personality and very attractive.',
+        "Best interaction I've had on this platform!",
       ],
       medium: [
-        "Good experience overall, would recommend.",
-        "Nice person, enjoyable conversation.",
-        "Pleasant interaction, nothing special.",
-        "Decent experience, met expectations.",
-        "Good time, would chat again."
+        'Good experience overall, would recommend.',
+        'Nice person, enjoyable conversation.',
+        'Pleasant interaction, nothing special.',
+        'Decent experience, met expectations.',
+        'Good time, would chat again.',
       ],
       low: [
-        "Not what I expected, disappointing.",
-        "Below average experience.",
-        "Could be better, not impressed.",
+        'Not what I expected, disappointing.',
+        'Below average experience.',
+        'Could be better, not impressed.',
         "Mediocre interaction, wouldn't repeat.",
-        "Not recommended, poor experience."
-      ]
+        'Not recommended, poor experience.',
+      ],
     };
 
-    if (rating >= 7) return comments.high[Math.floor(Math.random() * comments.high.length)];
-    if (rating >= 4) return comments.medium[Math.floor(Math.random() * comments.medium.length)];
-    return comments.low[Math.floor(Math.random() * comments.low.length)];
+    if (rating >= 7)
+      return comments.high[Math.floor(Math.random() * comments.high.length)] || 'Great experience!';
+    if (rating >= 4)
+      return (
+        comments.medium[Math.floor(Math.random() * comments.medium.length)] || 'Good experience.'
+      );
+    return comments.low[Math.floor(Math.random() * comments.low.length)] || 'Could be better.';
   }
 
   private generateMockTags(): string[] {
-    const allTags = ['funny', 'sweet', 'professional', 'charming', 'intelligent', 'attractive', 'kind', 'entertaining'];
+    const allTags = [
+      'funny',
+      'sweet',
+      'professional',
+      'charming',
+      'intelligent',
+      'attractive',
+      'kind',
+      'entertaining',
+    ];
     const numTags = Math.floor(Math.random() * 4) + 1;
     return allTags.sort(() => 0.5 - Math.random()).slice(0, numTags);
   }
@@ -478,15 +532,21 @@ class ReviewRankingService {
       userScores.sort((a, b) => b.score - a.score);
 
       userScores.forEach((userScore, index) => {
-        const existingRanking = this.rankings.find(r => r.userId === userScore.userId && r.categoryId === category.id);
+        const existingRanking = this.rankings.find(
+          r => r.userId === userScore.userId && r.categoryId === category.id,
+        );
         const newRank = index + 1;
 
         if (existingRanking) {
           existingRanking.previousRank = existingRanking.rank;
           existingRanking.rank = newRank;
           existingRanking.score = userScore.score;
-          existingRanking.trend = newRank < existingRanking.previousRank! ? 'up' : 
-                                 newRank > existingRanking.previousRank! ? 'down' : 'stable';
+          existingRanking.trend =
+            newRank < existingRanking.previousRank!
+              ? 'up'
+              : newRank > existingRanking.previousRank!
+              ? 'down'
+              : 'stable';
         } else {
           this.rankings.push({
             userId: userScore.userId,
@@ -494,7 +554,7 @@ class ReviewRankingService {
             rank: newRank,
             score: userScore.score,
             trend: 'new',
-            achievements: []
+            achievements: [],
           });
         }
       });
@@ -504,14 +564,14 @@ class ReviewRankingService {
   private generateMockAchievements(): void {
     this.users.forEach(user => {
       const stats = this.getUserStats(user.id);
-      
+
       // Check for achievements
       if (stats.totalReviews >= 1) {
         this.userAchievements.push({
           userId: user.id,
           achievementId: 'first_review',
           unlockedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-          isDisplayed: true
+          isDisplayed: true,
         });
       }
 
@@ -520,7 +580,7 @@ class ReviewRankingService {
           userId: user.id,
           achievementId: 'five_star_streak',
           unlockedAt: new Date(Date.now() - Math.random() * 15 * 24 * 60 * 60 * 1000),
-          isDisplayed: true
+          isDisplayed: true,
         });
       }
     });
@@ -535,7 +595,7 @@ class ReviewRankingService {
           longestStreak: Math.floor(Math.random() * 50) + 1,
           lastReviewDate: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
           streakType: ['giving', 'receiving', 'helpful'][Math.floor(Math.random() * 3)] as any,
-          multiplier: 1 + Math.random() * 2
+          multiplier: 1 + Math.random() * 2,
         });
       }
     });
@@ -561,8 +621,8 @@ class ReviewRankingService {
   }
 
   private notifySubscribers(): void {
-    this.subscribers.forEach(callback => 
-      callback({ reviews: this.reviews, rankings: this.rankings })
+    this.subscribers.forEach(callback =>
+      callback({ reviews: this.reviews, rankings: this.rankings }),
     );
   }
 }

@@ -47,19 +47,15 @@ import Particles from '@/components/ui/particles';
 import Confetti from '@/components/ui/confetti';
 import { Meteors } from '@/components/ui/meteors';
 
-// Add sample data
-const sampleImages: string[] = [
-  '/images/sample1.jpg',
-  '/images/sample2.jpg',
-  '/images/sample3.jpg',
-];
+// Add sample data - using existing placeholder images
+const sampleImages: string[] = ['/placeholder.jpg', '/placeholder-user.jpg', '/placeholder.svg'];
 
 // Sample data for carousel components (simple format)
 const sampleAdvertisers = [
   {
     id: 1,
     name: 'Acme Inc',
-    image: '/images/sample1.jpg',
+    image: '/placeholder.jpg',
     age: 25,
     city: 'Los Angeles',
     rating: 4.8,
@@ -72,7 +68,7 @@ const sampleAdvertisers = [
   {
     id: 2,
     name: 'Beta Corp',
-    image: '/images/sample2.jpg',
+    image: '/placeholder-user.jpg',
     age: 28,
     city: 'New York',
     rating: 4.6,
@@ -85,7 +81,7 @@ const sampleAdvertisers = [
   {
     id: 3,
     name: 'Gamma Ltd',
-    image: '/images/sample3.jpg',
+    image: '/placeholder.jpg',
     age: 26,
     city: 'Miami',
     rating: 4.9,
@@ -444,13 +440,58 @@ export default function ComponentDemoPage() {
                 </div>
               </div>
             </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">🌟 Retro Testimonials Carousel</h2>
+              <div className="text-center p-8 bg-gradient-to-br from-pink-900/20 to-purple-900/20 rounded-lg border border-pink-500/30">
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  Premium Member Success Stories
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  Beautiful retro-style testimonial carousel with expandable cards, smooth
+                  animations, and elegant typography perfect for showcasing member experiences.
+                </p>
+                <div className="flex justify-center">
+                  <a
+                    href="/demo/retro-testimonials"
+                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                  >
+                    <span className="mr-2">✨</span>
+                    View Testimonials Demo
+                  </a>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                  <div className="p-4 bg-gray-800/50 rounded-lg">
+                    <div className="text-2xl mb-2">🎨</div>
+                    <h4 className="font-semibold text-white">Retro Design</h4>
+                    <p className="text-sm text-gray-400">Vintage aesthetic with modern UX</p>
+                  </div>
+                  <div className="p-4 bg-gray-800/50 rounded-lg">
+                    <div className="text-2xl mb-2">📱</div>
+                    <h4 className="font-semibold text-white">Expandable Cards</h4>
+                    <p className="text-sm text-gray-400">Click to read full testimonials</p>
+                  </div>
+                  <div className="p-4 bg-gray-800/50 rounded-lg">
+                    <div className="text-2xl mb-2">⚡</div>
+                    <h4 className="font-semibold text-white">Smooth Animations</h4>
+                    <p className="text-sm text-gray-400">Framer Motion transitions</p>
+                  </div>
+                  <div className="p-4 bg-gray-800/50 rounded-lg">
+                    <div className="text-2xl mb-2">💎</div>
+                    <h4 className="font-semibold text-white">Premium Feel</h4>
+                    <p className="text-sm text-gray-400">Elegant typography & effects</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
         </TabsContent>
 
         <TabsContent value="utils">
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold">ProfileAvatar</h2>
-            <ProfileAvatar src="/avatars/sample1.jpg" name="Sample User" size="lg" />
+            <ProfileAvatar src="/placeholder-user.jpg" name="Sample User" size="lg" />
 
             <h2 className="text-2xl font-semibold">MediaTicker</h2>
             <MediaTicker />

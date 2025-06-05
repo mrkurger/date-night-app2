@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import { getAdvertisers, Advertiser, getProfileImage } from '@/lib/data'; // Ensure Advertiser is imported
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -115,11 +116,14 @@ const AdvertisersPage: React.FC = () => {
                   key={adv.id}
                   className="bg-slate-800 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-pink-500/30"
                 >
-                  <img
-                    src={getProfileImage(adv)}
-                    alt={adv.name}
-                    className="w-full h-72 object-cover"
-                  />
+                  <div className="relative h-72">
+                    <Image
+                      src={getProfileImage(adv)}
+                      alt={adv.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-2">
                       <h2 className="text-2xl font-semibold text-pink-400">{adv.name}</h2>

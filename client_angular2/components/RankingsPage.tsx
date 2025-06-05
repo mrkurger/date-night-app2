@@ -2,6 +2,7 @@
 
 import type React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Heart, MessageCircle } from 'lucide-react';
 import { getFallbackFemaleImage, getProfileImage } from '@/lib/data';
 
@@ -27,9 +28,7 @@ const mockAdvertisers: Advertiser[] = [
     age: 28,
     location: 'Stockholm',
     distance: 2,
-    images: [
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    ],
+    images: ['/assets/img/profiles/random1.jpg'],
     rating: 4.9,
     reviewCount: 156,
     mediaRating: 4.8,
@@ -43,9 +42,7 @@ const mockAdvertisers: Advertiser[] = [
     age: 25,
     location: 'Gothenburg',
     distance: 5,
-    images: [
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    ],
+    images: ['/assets/img/profiles/random2.jpg'],
     rating: 4.8,
     reviewCount: 134,
     mediaRating: 4.7,
@@ -59,9 +56,7 @@ const mockAdvertisers: Advertiser[] = [
     age: 27,
     location: 'Malmö',
     distance: 3,
-    images: [
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    ],
+    images: ['/assets/img/profiles/random3.jpg'],
     rating: 4.7,
     reviewCount: 98,
     mediaRating: 4.9,
@@ -75,9 +70,7 @@ const mockAdvertisers: Advertiser[] = [
     age: 24,
     location: 'Uppsala',
     distance: 7,
-    images: [
-      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    ],
+    images: ['/assets/img/profiles/random4.jpg'],
     rating: 4.6,
     reviewCount: 87,
     mediaRating: 4.6,
@@ -91,9 +84,7 @@ const mockAdvertisers: Advertiser[] = [
     age: 26,
     location: 'Stockholm',
     distance: 4,
-    images: [
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    ],
+    images: ['/assets/img/profiles/random5.jpg'],
     rating: 4.5,
     reviewCount: 76,
     mediaRating: 4.5,
@@ -201,8 +192,14 @@ export default function RankingsPage() {
           {items.map((advertiser, index) => (
             <div key={advertiser.id} className="carousel-card">
               <div className="card-rank">{index + 1}</div>
-              <div className="card-image">
-                <img src={getFallbackFemaleImage(parseInt(advertiser.id))} alt={advertiser.name} />
+              <div className="card-image relative">
+                <Image
+                  src={advertiser.images[0] || '/placeholder.svg'}
+                  alt={advertiser.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 hover:scale-105"
+                />
                 <div className="card-badges">
                   {advertiser.isOnline && <span className="badge online">Online</span>}
                   {category === 'rating' && (

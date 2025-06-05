@@ -8,7 +8,8 @@
  * run in CI environments, which can cause issues with Git hooks.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 
 const huskyConfig = {
@@ -24,7 +25,7 @@ async function main() {
     console.log('CI environment detected - configuring Husky to skip hooks');
     try {
       // Write .huskyrc.json
-      await fs.writeFile(
+      await fsPromises.writeFile(
         path.join(process.cwd(), '.huskyrc.json'),
         JSON.stringify(huskyConfig, null, 2),
       );

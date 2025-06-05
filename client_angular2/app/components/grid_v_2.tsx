@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,9 +33,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
     return Array.from({ length: 10 }, (_, i) => ({
       id: startId + i,
       name: `Advertiser ${startId + i}`,
-      image: `https://source.unsplash.com/random/300x${300 + ((startId + i) % 200)}?sig=${
-        startId + i
-      }`,
+      image: `/assets/img/profiles/random${((startId + i) % 16) + 1}.jpg`,
       distance: `${Math.floor(Math.random() * 10) + 1} km away`,
       isOnline: Math.random() > 0.5,
     }));
@@ -61,7 +60,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ className }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        if (entries[0].isIntersecting && !isLoading) {
+        if (entries[0]?.isIntersecting && !isLoading) {
           loadMore();
         }
       },
@@ -122,10 +121,12 @@ const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser, className }
     >
       <Card className="overflow-hidden h-full">
         <div className="relative h-48 sm:h-64 overflow-hidden">
-          <img
-            src={advertiser.image}
+          <Image
+            src={advertiser.image || '/placeholder.svg'}
             alt={advertiser.name}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
           <div className="absolute top-2 right-2">
             <Badge

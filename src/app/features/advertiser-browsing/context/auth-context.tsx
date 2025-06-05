@@ -39,7 +39,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Load user from localStorage on mount
   useEffect(() => {
     const loadUser = () => {
-      if (typeof window !== 'undefined') {
+      // Add availability check for localStorage
+      if (typeof window !== 'undefined' && window.localStorage) {
         try {
           const storedUser = localStorage.getItem('user');
           if (storedUser) {

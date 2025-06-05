@@ -78,7 +78,7 @@ export const Confetti: React.FC<ConfettiProps> = ({
         x: Math.random() * 100,
         y: 100,
         rotation: Math.random() * 360,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)] || '#000000',
         size: Math.random() * 8 + 4,
         velocity: {
           x: Math.cos(angle1) * velocity,

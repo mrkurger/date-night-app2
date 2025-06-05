@@ -331,7 +331,9 @@ export function AchievementShowcase({ user, className }: AchievementShowcaseProp
               if (lockedAchievements.length > 0) {
                 const randomAchievement =
                   lockedAchievements[Math.floor(Math.random() * lockedAchievements.length)];
-                simulateUnlock(randomAchievement);
+                if (randomAchievement) {
+                  simulateUnlock(randomAchievement);
+                }
               }
             }}
             className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -206,11 +207,12 @@ export function AdvertiserProfile({ advertiser }: AdvertiserProfileProps) {
             <TabsContent value="media" className="mt-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {advertiserImages.map((image, index) => (
-                  <div key={index} className="aspect-square overflow-hidden rounded-md">
-                    <img
+                  <div key={index} className="aspect-square overflow-hidden rounded-md relative">
+                    <Image
                       src={image || '/placeholder.svg'}
                       alt={`Media ${index + 1}`}
-                      className="object-cover w-full h-full"
+                      fill
+                      className="object-cover"
                     />
                   </div>
                 ))}

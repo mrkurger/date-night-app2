@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { useAuth } from "@/context/auth-context"
-import { useFavorites } from "@/context/favorites-context"
-import { getAdvertisers, type Advertiser } from "@/lib/data"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from 'react';
+import { useAuth } from '@/context/auth-context';
+import { useFavorites } from '@/context/favorites-context';
+import { getAdvertisers, type Advertiser } from '@/lib/data';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Dialog,
   DialogContent,
@@ -16,14 +16,19 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Heart, MessageCircle, Plus, Edit, Trash2, FolderPlus, User } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import Link from "next/link"
+} from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Heart, MessageCircle, Plus, Edit, Trash2, FolderPlus, User } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 export default function FavoritesPage() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const {
     favorites = [],
     groups = [],
@@ -33,28 +38,30 @@ export default function FavoritesPage() {
     removeFavorite,
     renameGroup,
     addToGroup,
-  } = useFavorites()
-  const advertisers = getAdvertisers()
-  const favoriteAdvertisers = advertisers.filter((advertiser) => favorites && favorites.includes(advertiser.id))
+  } = useFavorites();
+  const advertisers = getAdvertisers();
+  const favoriteAdvertisers = advertisers.filter(
+    advertiser => favorites && favorites.includes(advertiser.id),
+  );
 
-  const [newGroupName, setNewGroupName] = useState("")
-  const [editedGroupName, setEditedGroupName] = useState("")
-  const [editingGroupId, setEditingGroupId] = useState<string | null>(null)
+  const [newGroupName, setNewGroupName] = useState('');
+  const [editedGroupName, setEditedGroupName] = useState('');
+  const [editingGroupId, setEditingGroupId] = useState<string | null>(null);
 
   const handleCreateGroup = () => {
     if (newGroupName.trim() && createGroup) {
-      createGroup(newGroupName.trim())
-      setNewGroupName("")
+      createGroup(newGroupName.trim());
+      setNewGroupName('');
     }
-  }
+  };
 
   const handleRenameGroup = () => {
     if (editingGroupId && editedGroupName.trim() && renameGroup) {
-      renameGroup(editingGroupId, editedGroupName.trim())
-      setEditingGroupId(null)
-      setEditedGroupName("")
+      renameGroup(editingGroupId, editedGroupName.trim());
+      setEditingGroupId(null);
+      setEditedGroupName('');
     }
-  }
+  };
 
   // If user is not logged in, show login prompt
   if (!user) {
@@ -63,13 +70,15 @@ export default function FavoritesPage() {
         <div className="max-w-md mx-auto bg-card p-8 rounded-lg border">
           <User className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
           <h1 className="text-2xl font-bold mb-4">Login Required</h1>
-          <p className="text-muted-foreground mb-6">Please log in to view and manage your favorites.</p>
+          <p className="text-muted-foreground mb-6">
+            Please log in to view and manage your favorites.
+          </p>
           <Button asChild>
             <Link href="/login">Login</Link>
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -88,7 +97,11 @@ export default function FavoritesPage() {
               <DialogTitle>Create New Group</DialogTitle>
             </DialogHeader>
             <div className="py-4">
-              <Input placeholder="Group name" value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)} />
+              <Input
+                placeholder="Group name"
+                value={newGroupName}
+                onChange={e => setNewGroupName(e.target.value)}
+              />
             </div>
             <DialogFooter>
               <DialogClose asChild>
@@ -104,7 +117,7 @@ export default function FavoritesPage() {
         <TabsList className="mb-6">
           <TabsTrigger value="all">All Favorites</TabsTrigger>
           {groups &&
-            groups.map((group) => (
+            groups.map(group => (
               <TabsTrigger key={group.id} value={group.id}>
                 {group.name}
               </TabsTrigger>
@@ -114,12 +127,12 @@ export default function FavoritesPage() {
         <TabsContent value="all">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {favoriteAdvertisers.length > 0 ? (
-              favoriteAdvertisers.map((advertiser) => (
+              favoriteAdvertisers.map(advertiser => (
                 <AdvertiserCard
                   key={advertiser.id}
                   advertiser={advertiser}
                   onRemove={() => removeFavorite && removeFavorite(advertiser.id)}
-                  onAddToGroup={(groupId) => addToGroup && addToGroup(advertiser.id, groupId)}
+                  onAddToGroup={groupId => addToGroup && addToGroup(advertiser.id, groupId)}
                   groups={groups || []}
                 />
               ))
@@ -136,7 +149,7 @@ export default function FavoritesPage() {
         </TabsContent>
 
         {groups &&
-          groups.map((group) => (
+          groups.map(group => (
             <TabsContent key={group.id} value={group.id}>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold">{group.name}</h2>
@@ -156,7 +169,7 @@ export default function FavoritesPage() {
                         <Input
                           placeholder="Group name"
                           defaultValue={group.name}
-                          onChange={(e) => setEditedGroupName(e.target.value)}
+                          onChange={e => setEditedGroupName(e.target.value)}
                         />
                       </div>
                       <DialogFooter>
@@ -165,8 +178,8 @@ export default function FavoritesPage() {
                         </DialogClose>
                         <Button
                           onClick={() => {
-                            setEditingGroupId(group.id)
-                            handleRenameGroup()
+                            setEditingGroupId(group.id);
+                            handleRenameGroup();
                           }}
                         >
                           Save
@@ -175,7 +188,11 @@ export default function FavoritesPage() {
                     </DialogContent>
                   </Dialog>
 
-                  <Button variant="destructive" size="sm" onClick={() => deleteGroup && deleteGroup(group.id)}>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => deleteGroup && deleteGroup(group.id)}
+                  >
                     <Trash2 className="h-4 w-4 mr-2" />
                     Delete
                   </Button>
@@ -185,13 +202,13 @@ export default function FavoritesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {group.advertisers && group.advertisers.length > 0 ? (
                   advertisers
-                    .filter((advertiser) => group.advertisers.includes(advertiser.id))
-                    .map((advertiser) => (
+                    .filter(advertiser => group.advertisers.includes(advertiser.id))
+                    .map(advertiser => (
                       <AdvertiserCard
                         key={advertiser.id}
                         advertiser={advertiser}
                         onRemove={() => removeFromGroup && removeFromGroup(advertiser.id, group.id)}
-                        onAddToGroup={(groupId) => addToGroup && addToGroup(advertiser.id, groupId)}
+                        onAddToGroup={groupId => addToGroup && addToGroup(advertiser.id, groupId)}
                         groups={groups || []}
                       />
                     ))
@@ -205,7 +222,7 @@ export default function FavoritesPage() {
           ))}
       </Tabs>
     </div>
-  )
+  );
 }
 
 function AdvertiserCard({
@@ -214,10 +231,10 @@ function AdvertiserCard({
   onAddToGroup,
   groups,
 }: {
-  advertiser: Advertiser
-  onRemove: () => void
-  onAddToGroup: (groupId: string) => void
-  groups: Array<{ id: string; name: string; advertisers?: string[] }>
+  advertiser: Advertiser;
+  onRemove: () => void;
+  onAddToGroup: (groupId: string) => void;
+  groups: Array<{ id: string; name: string; advertisers?: string[] }>;
 }) {
   return (
     <Card className="overflow-hidden">
@@ -225,8 +242,8 @@ function AdvertiserCard({
         <div className="relative h-64">
           <div className="h-full bg-muted flex items-center justify-center">
             {advertiser.images && advertiser.images.length > 0 ? (
-              <img
-                src={advertiser.images[0] || "/placeholder.svg"}
+              <Image
+                src={advertiser.images[0] || '/placeholder.svg'}
                 alt={advertiser.name}
                 className="h-full w-full object-cover"
               />
@@ -254,7 +271,7 @@ function AdvertiserCard({
         <div className="h-12 overflow-auto">
           <div className="flex flex-wrap gap-1">
             {advertiser.tags &&
-              advertiser.tags.map((tag) => (
+              advertiser.tags.map(tag => (
                 <Badge key={tag} variant="outline" className="text-xs">
                   {tag}
                 </Badge>
@@ -283,7 +300,7 @@ function AdvertiserCard({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {groups.map((group) => (
+              {groups.map(group => (
                 <DropdownMenuItem key={group.id} onClick={() => onAddToGroup(group.id)}>
                   {group.name}
                 </DropdownMenuItem>
@@ -297,5 +314,5 @@ function AdvertiserCard({
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

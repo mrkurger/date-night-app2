@@ -35,7 +35,7 @@ const templateArg = args.indexOf('--template');
 
 if (inputArg === -1 || outputArg === -1) {
   console.error(
-    'Usage: node markdown_to_html_helper.js --input path/to/markdown.md --output path/to/output.html [--template template_name]'
+    'Usage: node markdown_to_html_helper.js --input path/to/markdown.md --output path/to/output.html [--template template_name]',
   );
   process.exit(1);
 }
@@ -62,10 +62,10 @@ function readTemplate(templateName) {
 /**
  * Converts Markdown content to HTML
  * @param {string} markdown - The Markdown content
- * @returns {string} - The HTML content
+ * @returns {Promise<string>} - The HTML content
  */
-function convertMarkdownToHtml(markdown) {
-  return marked.parse(markdown);
+async function convertMarkdownToHtml(markdown) {
+  return await marked.parse(markdown);
 }
 
 /**
@@ -92,13 +92,13 @@ function extractComponentName(outputPath) {
 /**
  * Main function
  */
-function main() {
+async function main() {
   try {
     // Read the input Markdown file
     const markdownContent = fs.readFileSync(path.join(config.rootDir, inputFile), 'utf8');
 
     // Convert Markdown to HTML
-    const htmlContent = convertMarkdownToHtml(markdownContent);
+    const htmlContent = await convertMarkdownToHtml(markdownContent);
 
     // Extract title and component name
     const title = extractTitle(markdownContent);

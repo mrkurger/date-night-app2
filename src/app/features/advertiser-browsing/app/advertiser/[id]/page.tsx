@@ -1,13 +1,20 @@
-import { notFound } from "next/navigation"
-import { AdvertiserProfile } from "@/components/advertiser/advertiser-profile"
-import { getAdvertiserById } from "@/lib/data"
+import { notFound } from 'next/navigation';
+import { AdvertiserProfile } from '@/components/advertiser/advertiser-profile';
+import { getAdvertiserById } from '@/lib/data';
+import React from 'react';
 
-export default function AdvertiserDetailPage({ params }: { params: { id: string } }) {
-  const advertiser = getAdvertiserById(params.id)
+interface PageProps<T> {
+  params: T;
+}
+
+export default function AdvertiserDetailPage({
+  params,
+}: PageProps<{ id: string }>): React.JSX.Element {
+  const advertiser = getAdvertiserById(params.id);
 
   if (!advertiser) {
-    notFound()
+    notFound();
   }
 
-  return <AdvertiserProfile advertiser={advertiser} />
+  return <AdvertiserProfile advertiser={advertiser} />;
 }

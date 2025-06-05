@@ -173,7 +173,7 @@ Responsive images and media ensure optimal performance and display:
 - Use aspect ratio boxes to maintain proportions
 
 ```html
-<img
+<Image
   src="image-small.jpg"
   srcset="image-small.jpg 400w, image-medium.jpg 800w, image-large.jpg 1200w"
   sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"

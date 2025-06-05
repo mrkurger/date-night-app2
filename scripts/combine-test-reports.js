@@ -24,7 +24,7 @@
  * - docs/latest-test-results.md
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 
 // --- Configuration ---

@@ -398,7 +398,7 @@ interface FilterPreset {
               ></mat-checkbox>
             </div>
 
-            <img
+            <Image
               [src]="
                 favorite.ad.images && favorite.ad.images.length > 0
                   ? favorite.ad.images[0]

@@ -6,7 +6,7 @@
  * human-readable test reports that can be committed to the repository.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 
 // Simple XML parser for JUnit format

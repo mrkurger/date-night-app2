@@ -3,7 +3,7 @@
  * to ensure that the project uses newer, non-deprecated versions.
  */
 
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';

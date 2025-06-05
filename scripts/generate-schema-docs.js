@@ -23,8 +23,8 @@ const outputFile = path.join(__dirname, '../docs/DATABASE_SCHEMA_DETAIL.MD');
 async function extractSchemaInfo(filePath) {
   try {
     // Clear mongoose models to prevent duplicate model errors
-    mongoose.models = {};
-    mongoose.modelSchemas = {};
+    // Note: mongoose.models and mongoose.modelSchemas are read-only
+    // We'll handle duplicate model errors in the catch block
 
     // Import the model file
     const modelModule = await import(filePath);

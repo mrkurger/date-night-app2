@@ -11,9 +11,9 @@ export default function OfflinePage() {
         <div className="mb-8 p-6 rounded-full bg-muted">
           <WifiOffIcon className="h-12 w-12" />
         </div>
-        <h1 className="text-4xl font-bold mb-4">You're offline</h1>
+        <h1 className="text-4xl font-bold mb-4">You&apos;re offline</h1>
         <p className="text-muted-foreground mb-8">
-          It seems you've lost your internet connection. Check your connection and try again.
+          It seems you&apos;ve lost your internet connection. Check your connection and try again.
         </p>
         <div className="space-y-4">
           <Button size="lg" onClick={() => window.location.reload()} className="w-full">

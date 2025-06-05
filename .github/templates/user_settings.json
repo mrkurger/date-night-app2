@@ -161,20 +161,7 @@
     "/Users/oivindlund/git_repos/EvilCrow-v2-SDR"
   ],
   "snyk.allIssuesVsNetNewIssues": "All issues",
-  "amazonQ.suppressPrompts": {
-    "amazonQChatDisclaimer": true,
-    "createCredentialsProfile": false,
-    "codeWhispererNewWelcomeMessage": false,
-    "codeWhispererConnectionExpired": false,
-    "amazonQWelcomePage": false,
-    "amazonQSessionConfigurationMessage": false,
-    "minIdeVersion": false,
-    "ssoCacheError": false,
-    "amazonQLspManifestMessage": false,
-    "amazonQWorkspaceLspManifestMessage": false
-  },
-  "amazonQ.telemetry": false,
-  "amazonQ.allowFeatureDevelopmentToRunCodeAndTests": {},
+
   "github.copilot.nextEditSuggestions.enabled": true,
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.chat.agent.thinkingTool": true,
@@ -185,80 +172,6 @@
   "editor.largeFileOptimizations": false,
   "terminal.integrated.accessibleViewFocusOnCommandExecution": true,
   "terminal.integrated.scrollback": 5000,
-  "mcp": {
-    "servers": {
-      "sequential-thinking": {
-        "command": "docker",
-        "args": ["run", "--rm", "-i", "mcp/sequentialthinking:latest"]
-      },
-      "filesystem": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "--mount",
-          "type=bind,src=/Users/oivindlund/date-night-app/,dst=/Users/oivindlund/date-night-app/",
-          "mcp/filesystem",
-          "/Users/oivindlund/date-night-app/"
-        ]
-      },
-      "memory": {
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "-v", "augment-memory:/app/dist", "mcp/memory"],
-        "env": {},
-        "type": "stdio"
-      },
-      "date-night-app2 Docs": {
-        "type": "sse",
-        "url": "https://gitmcp.io/mrkurger/date-night-app2"
-      },
-      "typescript-lsp": {
-        "type": "stdio",
-        "command": "npx",
-        "args": [
-          "/Users/oivindlund/git_repos/lsp-mcp",
-          "typescript",
-          "/Users/oivindlund/git_repos/lsp-mcp/node_modules/.bin/typescript-language-server",
-          "--stdio"
-        ]
-      },
-      "github": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "-e",
-          "GITHUB_PERSONAL_ACCESS_TOKEN",
-          "ghcr.io/github/github-mcp-server"
-        ],
-        "env": {
-          "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
-        }
-      }
-    },
-    "inputs": [
-      {
-        "id": "",
-        "type": "promptString",
-        "description": "GitHub Personal Access Token",
-        "password": true
-      },
-      {
-        "type": "promptString",
-        "id": "apiKey",
-        "description": "Firecrawl API Key",
-        "password": true
-      },
-      {
-        "id": "github_token",
-        "type": "promptString",
-        "description": "GitHub Personal Access Token",
-        "password": true
-      }
-    ]
-  },
   "github.copilot.nextEditSuggestions.fixes": true,
   "github.copilot.chat.languageContext.fix.typescript.enabled": true,
   "github.copilot.chat.generateTests.codeLens": true,

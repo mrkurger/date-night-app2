@@ -2,14 +2,12 @@ import * as React from 'react';
 import { AuthProvider } from '../context/auth-context';
 import { DataProvider } from '../context/data-context';
 import { Toaster } from '@/components/ui/toaster';
-import './globals.css';
+import '../styles/globals.css';
 
 export const metadata = {
   title: 'Carousely - Tinder-Style Dating App',
   description: 'A modern PWA dating app with a wheel carousel interface',
   manifest: '/manifest.json',
-  themeColor: '#ec4899',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -26,6 +24,12 @@ export const metadata = {
   generator: 'v0.dev',
 };
 
+// Add viewport export
+export const viewport = {
+  themeColor: '#ec4899',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -38,12 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <AuthProvider>
-          <DataProvider>
-            {children}
-            <Toaster />
-            {/* PWA Setup component is client-side only */}
-            <div id="pwa-root" />
-          </DataProvider>
+          <DataProvider>{children}</DataProvider>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>
