@@ -10,8 +10,8 @@
 
 import request from 'supertest';
 import express from 'express';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { createTestUser, generateTestToken } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { createTestUser, generateTestToken } from '../../helpers.ts.js';
 import { jest } from '@jest/globals';
 
 // Mock dependencies

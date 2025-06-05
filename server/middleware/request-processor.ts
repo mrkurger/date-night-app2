@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationUtils } from '../utils/validation-utils';
-import { catchAsync } from '../utils/error-handler';
-import { sanitizeRequest } from './request-sanitizer';
+import { ValidationUtils } from '../utils/validation-utils.js';
+import { catchAsync } from '../utils/error-handler.js';
+import { sanitizeRequest } from './request-sanitizer.js';
 
 /**
  * Combined request processing middleware that applies:

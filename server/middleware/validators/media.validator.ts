@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils';
+import { zodSchemas } from '../../utils/validation-utils.js';
 
 export const MediaSchemas = {
   // Schema for media upload parameters

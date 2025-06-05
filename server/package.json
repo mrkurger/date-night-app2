@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
     "dev": "npx nodemon -r dotenv/config dist/server.js",
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -p tsconfig.build.json --watch",
     "test": "NODE_ENV=test npx jest --config=jest.config.cjs",
     "test:watch": "NODE_ENV=test npx jest --watch --config=jest.config.cjs",
     "test:coverage": "NODE_ENV=test npx jest --coverage --config=jest.config.cjs",
@@ -95,7 +95,7 @@
     "@jest/types": "^29.6.3",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
-    "@types/express": "^5.0.2",
+    "@types/express": "^4.17.22",
     "@types/hpp": "^0.2.6",
     "@types/jest": "^29.5.14",
     "@types/morgan": "^1.9.9",
@@ -126,7 +126,7 @@
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.3.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.4.4"
   },
   "engines": {
     "node": "22.14.0",

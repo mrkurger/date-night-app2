@@ -11,7 +11,7 @@
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 import { uploadSingle, uploadMultiple } from '../../../middleware/upload.js';
 import multer from 'multer';
 

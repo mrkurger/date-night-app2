@@ -15,7 +15,7 @@ import { mkdir, writeFile, unlink } from 'fs/promises';
 import sharp from 'sharp';
 import Ad from '../../../models/ad.model.js';
 import mediaService from '../../../services/media.service.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 // Mock fs, fs/promises, and sharp
 jest.mock('fs', () => {

@@ -2,8 +2,8 @@
  * Authentication routes
  */
 import { Router } from 'express';
-import { standardValidation } from '../validation';
-import { AuthController } from '../controllers/auth.controller';
+import { standardValidation } from '../validation.js';
+import { AuthController } from '../controllers/auth.controller.js';
 
 const router = Router();
 

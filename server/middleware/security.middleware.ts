@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationUtils } from '../utils/validation-utils';
+import { ValidationUtils } from '../utils/validation-utils.js';
 
 /**
  * Content Security Policy middleware

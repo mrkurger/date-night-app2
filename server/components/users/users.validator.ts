@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils';
-import { validateWithZod } from '../../middleware/validator';
+import { zodSchemas } from '../../utils/validation-utils.js';
+// Import validateWithZod function correctly
+import { validateWithZod } from '../../middleware/validator.js';
 
 // Schema for password change request
 const changePasswordSchema = z.object({

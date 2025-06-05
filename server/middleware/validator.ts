@@ -11,8 +11,9 @@ import {
   validationResult,
   ValidationError as ExpressValidationError,
 } from 'express-validator';
-import { zodSchemas, ValidationUtils } from '../utils/validation-utils';
-import { ZodError } from 'zod';
+import { zodSchemas, ValidationUtils } from '../utils/validation-utils.js';
+import { ZodError, ZodSchema } from 'zod';
+import { RequestProperty } from '../src/types/validation.js';
 
 // Helper function to validate validation results
 const validate = (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +29,31 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
   }
   next();
 };
+
+// Zod validation middleware
+export function validateWithZod(schema: ZodSchema, property: RequestProperty = 'body') {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // Type assertion needed since we know these properties exist from express.d.ts
+      const data = req[property as keyof Request];
+      const validated = await schema.parseAsync(data);
+      req[property as keyof Request] = validated;
+      next();
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(422).json({
+          success: false,
+          errors: error.errors.map(e => ({
+            field: e.path.join('.'),
+            message: e.message,
+            code: e.code,
+          })),
+        });
+      }
+      next(error);
+    }
+  };
+}
 
 // Common validation chains reusable across routes
 const validators = {
@@ -143,5 +169,51 @@ const standardValidation = {
     validate,
   ],
 };
+
+/**
+ * Middleware to validate request data using Zod schema
+ * @param schema - Zod schema for validation
+ * @param source - Which part of the request to validate (body, query, params)
+ * @returns Express middleware function
+ */
+export const validateWithZod = (schema: ZodSchema, source: RequestProperty = 'body') => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // Type assertion to handle dynamic property access
+      const data = req[source as keyof Request] as unknown;
+      const validatedData = await schema.parseAsync(data);
+
+      // Replace request data with validated data
+      // Using type assertion to handle dynamic property assignment
+      (req as any)[source] = validatedData;
+
+      next();
+    } catch (error) {
+      // Handle zod validation errors
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: 'Validation failed',
+          errors: error.errors.map(e => ({
+            path: e.path.join('.'),
+            message: e.message,
+          })),
+        });
+      }
+
+      // Pass other errors to the error handler
+      next(error);
+    }
+  };
+};
+
+/**
+ * Create a validation middleware for a specific request source
+ * @param schema - Zod schema for validation
+ * @param source - Which part of the request to validate
+ * @returns Express middleware function
+ */
+export const validateRequest = (schema: ZodSchema, source: RequestProperty = 'body') =>
+  validateWithZod(schema, source);
 
 export { validate, validators, standardValidation };

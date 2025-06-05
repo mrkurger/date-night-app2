@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'express-validator';
 import { ZodError } from 'zod';
-import { ValidationErrorHandler } from './middleware/validation/error-handler';
-import { logger } from '../utils/logger';
+import { ValidationErrorHandler } from './middleware/validation/error-handler.js';
+import { logger } from '../utils/logger.js';
 
 export class AppError extends Error {
   constructor(

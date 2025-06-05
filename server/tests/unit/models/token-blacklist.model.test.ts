@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import TokenBlacklist from '../../../models/token-blacklist.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('TokenBlacklist Model', () => {
   // Setup test data

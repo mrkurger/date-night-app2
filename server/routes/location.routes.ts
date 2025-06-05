@@ -1,8 +1,8 @@
 import express from 'express';
 import { protect as authenticate, restrictTo } from '../middleware/auth.js';
 import locationController from '../controllers/location.controller.js';
-import { ValidationUtils } from '../utils/validation-utils';
-import { LocationSchemas } from '../middleware/validators/location.validator';
+import { ValidationUtils } from '../utils/validation-utils.js';
+import { LocationSchemas } from '../middleware/validators/location.validator.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
 
 const router = express.Router();

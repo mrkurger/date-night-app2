@@ -169,7 +169,19 @@ app.use(
 // Enable CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:4200',
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.CLIENT_URL || 'http://localhost:4200', // Angular client
+        'http://localhost:3000', // Next.js client_angular2
+      ];
+      // Allow requests with no origin (like mobile apps, curl, postman)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS blocked request from origin: ${origin}`);
+        callback(null, false);
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],

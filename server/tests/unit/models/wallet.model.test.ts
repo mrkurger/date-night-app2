@@ -11,8 +11,8 @@
 import mongoose from 'mongoose';
 import Wallet from '../../../models/wallet.model.js';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { createTestUser } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { createTestUser } from '../../helpers.ts.js';
 
 // Test data for wallet
 const TEST_TRANSACTION = {

@@ -11,8 +11,8 @@
 import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { createTestUser, TEST_USER_DATA, generateTestToken } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { createTestUser, TEST_USER_DATA, generateTestToken } from '../../helpers.ts.js';
 import Favorite from '../../../models/favorite.model.js';
 import Ad from '../../../models/ad.model.js';
 import { jest } from '@jest/globals';

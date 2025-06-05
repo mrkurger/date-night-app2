@@ -4,14 +4,15 @@ import { z } from 'zod';
 const locationBaseSchema = z.object({
   city: z.string().min(1, 'City is required').trim(),
   county: z.string().min(1, 'County is required').trim(),
-  country: z.string().default('Norway').trim(),
-  coordinates: z.tuple(
-    [
+  country: z.string().trim().default('Norway'),
+  coordinates: z
+    .tuple([
       z.number().min(-180).max(180), // longitude
       z.number().min(-90).max(90), // latitude
-    ],
-    'Coordinates must be [longitude, latitude]'
-  ),
+    ])
+    .refine(coords => coords.length === 2, {
+      message: 'Coordinates must be [longitude, latitude]',
+    }),
   source: z.enum(['manual', 'nominatim', 'google', 'mapbox', 'imported']).default('manual'),
   population: z.number().optional(),
   timezone: z.string().optional(),

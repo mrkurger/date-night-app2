@@ -2,8 +2,8 @@ import { describe, expect, test } from '@jest/globals';
 import express, { Request, Response, NextFunction, RequestHandler } from 'express';
 import request from 'supertest';
 import { z } from 'zod';
-import { ValidationMiddleware } from '../../../middleware/validation/middleware';
-import { zodSchemas } from '../../../utils/validation-utils';
+import { ValidationMiddleware } from '../../../middleware/validation/middleware.js';
+import { zodSchemas } from '../../../utils/validation-utils.js';
 
 const app = express();
 app.use(express.json());

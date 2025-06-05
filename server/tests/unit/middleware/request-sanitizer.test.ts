@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { RequestSanitizer } from '../../../middleware/request-sanitizer';
+import { RequestSanitizer } from '../../../middleware/request-sanitizer.js';
 
 describe('Request Sanitizer', () => {
   let sanitizer: RequestSanitizer;

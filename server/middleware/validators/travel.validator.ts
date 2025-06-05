@@ -2,8 +2,9 @@
  * Validation schemas for travel-related routes using Zod
  */
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils';
-import { validateWithZod } from '../../middleware/validator';
+import { zodSchemas } from '../../utils/validation-utils.js';
+// Import validateWithZod function from local validator
+import { validateWithZod } from '../validator.js';
 
 export const TravelSchemas = {
   // Schema for itinerary creation/update
@@ -23,8 +24,10 @@ export const TravelSchemas = {
       .string()
       .datetime()
       .refine(
-        (value, ctx) => {
-          const arrivalDate = ctx.parent?.arrivalDate ? new Date(ctx.parent.arrivalDate) : null;
+        (value: string, ctx: z.RefinementCtx) => {
+          const arrivalDate = (ctx as any).parent?.arrivalDate
+            ? new Date((ctx as any).parent.arrivalDate)
+            : null;
           return arrivalDate ? new Date(value) > arrivalDate : true;
         },
         {

@@ -1,0 +1,120 @@
+import express from 'express';
+import { protect as authenticate } from '../middleware/auth.js';
+import { isAdvertiser } from '../middleware/roles.js';
+import travelController from '../controllers/travel.controller.js';
+
+const router = express.Router();
+
+// All routes require authentication
+router.use(authenticate);
+
+// Create a new itinerary
+router.post(
+  '/ad/:adId/itinerary',
+  isAdvertiser,
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.addItinerary(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Get itineraries for an advertiser
+router.get(
+  '/ad/:adId/itineraries',
+  isAdvertiser,
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.getItineraries(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Update an itinerary
+router.put(
+  '/ad/:adId/itinerary/:itineraryId',
+  isAdvertiser,
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.updateItinerary(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Cancel an itinerary
+router.delete(
+  '/ad/:adId/itinerary/:itineraryId',
+  isAdvertiser,
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.cancelItinerary(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Update advertiser location
+router.patch(
+  '/ad/:adId/location',
+  isAdvertiser,
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.updateLocation(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Get all touring advertisers
+router.get(
+  '/touring-advertisers',
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.getTouringAdvertisers(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Get upcoming tours
+router.get(
+  '/upcoming-tours',
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.getUpcomingTours(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Get ads by location
+router.get(
+  '/ads-by-location',
+  // We'll add validation back later
+  (req, res, next) => {
+    try {
+      travelController.getAdsByLocation(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+export default router;

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
 import { asyncHandler } from '../../middleware/asyncHandler.js';
 import { protect as authenticate, restrictTo } from '../../middleware/auth.js';
@@ -13,7 +13,7 @@ import norwayLocations from '../../data/norway-locations.js';
  */
 router.get(
   '/counties',
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const counties = norwayLocations.getAllCounties();
     res.json(counties);
   })

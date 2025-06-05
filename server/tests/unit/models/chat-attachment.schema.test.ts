@@ -12,7 +12,7 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import ChatAttachment from '../../../models/chat-attachment.schema.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 // Mock fs module
 jest.mock('fs', () => ({

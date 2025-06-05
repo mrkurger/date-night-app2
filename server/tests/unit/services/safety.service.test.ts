@@ -13,7 +13,7 @@ import SafetyService from '../../../services/safety.service.js';
 import SafetyCheckin from '../../../models/safety-checkin.model.js';
 import User from '../../../models/user.model.js';
 import { AppError } from '../../../middleware/errorHandler.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('Safety Service', () => {
   // Setup test data

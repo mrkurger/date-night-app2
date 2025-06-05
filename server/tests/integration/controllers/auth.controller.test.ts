@@ -11,13 +11,13 @@ import { jest } from '@jest/globals'; // Keep only one jest import
 
 import request from 'supertest';
 import mongoose from 'mongoose';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 import {
   createTestUser,
   TEST_USER_DATA,
   generateTestToken,
   generateRefreshToken,
-} from '../../helpers.ts';
+} from '../../helpers.ts.js';
 
 // Import server app - changed to named import
 import { app } from '../../../server.js';

@@ -12,8 +12,8 @@ import mongoose from 'mongoose';
 import PaymentMethod from '../../../models/paymentMethod.model.js';
 import User from '../../../models/user.model.js';
 import Wallet from '../../../models/wallet.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { createTestUser } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { createTestUser } from '../../helpers.ts.js';
 
 // Test data for payment methods
 const TEST_CARD_PAYMENT_METHOD = {

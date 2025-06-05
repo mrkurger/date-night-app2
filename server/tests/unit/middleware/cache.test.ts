@@ -10,7 +10,7 @@
 
 import { jest } from '@jest/globals';
 import { cache } from '../../../middleware/cache.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 import NodeCache from 'node-cache';
 
 // Mock NodeCache

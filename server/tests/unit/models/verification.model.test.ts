@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import Verification from '../../../models/verification.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('Verification Model', () => {
   // Setup test data

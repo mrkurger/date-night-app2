@@ -12,7 +12,7 @@
 
 import request from 'supertest';
 // Import the setup functions directly from the setup.js file in the parent directory
-import { setupTestDB, teardownTestDB, clearDatabase } from '../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../setup.ts.js';
 import { jest } from '@jest/globals';
 
 // Mock the user functions

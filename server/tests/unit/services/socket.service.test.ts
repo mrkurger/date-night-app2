@@ -15,7 +15,7 @@ import User from '../../../models/user.model.js';
 import ChatMessage from '../../../models/chat-message.model.js';
 import socketService from '../../../services/socket.service.js';
 import { AppError } from '../../../middleware/errorHandler.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 // Mock dependencies
 jest.mock('socket.io', () => {

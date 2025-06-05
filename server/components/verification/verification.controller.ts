@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-// import { ValidationError } from '../../utils/validation-utils'; // Unused
-import { VerificationService } from './verification.service';
-import { logger } from '../../utils/logger';
+// import { ValidationError } from '../../utils/validation-utils.js'; // Unused
+import { VerificationService } from './verification.service.js';
+import { logger } from '../../utils/logger.js';
 
 /**
  * Verification controller with input validation using Zod schemas

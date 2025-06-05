@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ErrorHandler, AppError } from '../../../utils/error-handler';
+import { ErrorHandler, AppError } from '../../../utils/error-handler.js';
 
 describe('Error Handler', () => {
   let errorHandler: ErrorHandler;

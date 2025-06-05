@@ -1,10 +1,7 @@
 import express from 'express';
-// import type { Request, Response, NextFunction } from 'express'; // Unused
 import { protect as authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
 import travelController from '../controllers/travel.controller.js';
-import { ValidationUtils } from '../utils/validation-utils';
-import TravelSchemas from '../middleware/validators/travel.validator';
 
 const router = express.Router();
 
@@ -12,68 +9,35 @@ const router = express.Router();
 router.use(authenticate);
 
 // Create a new itinerary
-router.post(
-  '/ad/:adId/itinerary',
-  isAdvertiser,
-  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
-  ValidationUtils.validateWithZod(TravelSchemas.itineraryData),
-  travelController.createItinerary
-);
+router.post('/ad/:adId/itinerary', isAdvertiser, travelController.addItinerary);
 
 // Get advertiser itineraries
-router.get(
-  '/ad/:adId/itineraries',
-  isAdvertiser,
-  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
-  ValidationUtils.validateWithZod(ValidationUtils.zodSchemas.pagination, 'query'),
-  travelController.getAdvertiserItineraries
-);
+router.get('/ad/:adId/itineraries', isAdvertiser, travelController.getItineraries);
 
-// Update an itinerary
+// Update a specific itinerary
 router.put(
   '/ad/:adId/itinerary/:itineraryId',
   isAdvertiser,
-  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
-  ValidationUtils.validateWithZod(TravelSchemas.itineraryIdParam, 'params'),
-  ValidationUtils.validateWithZod(TravelSchemas.itineraryData),
   travelController.updateItinerary
 );
 
-// Delete an itinerary
+// Cancel an itinerary
 router.delete(
   '/ad/:adId/itinerary/:itineraryId',
   isAdvertiser,
-  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
-  ValidationUtils.validateWithZod(TravelSchemas.itineraryIdParam, 'params'),
   travelController.cancelItinerary
 );
 
-// Location update route
-router.put(
-  '/ad/:adId/location',
-  isAdvertiser,
-  ValidationUtils.validateWithZod(TravelSchemas.adIdParam, 'params'),
-  ValidationUtils.validateWithZod(TravelSchemas.locationUpdate),
-  travelController.updateLocation
-);
+// Update current location while traveling
+router.post('/ad/:adId/location', isAdvertiser, travelController.updateLocation);
 
-// Public routes for browsing travel information
-router.get(
-  '/touring',
-  ValidationUtils.validateWithZod(ValidationUtils.zodSchemas.pagination, 'query'),
-  travelController.getTouringAdvertisers
-);
+// Get advertisers currently touring
+router.get('/advertisers/touring', travelController.getTouringAdvertisers);
 
-router.get(
-  '/upcoming',
-  ValidationUtils.validateWithZod(TravelSchemas.upcomingToursQuery, 'query'),
-  travelController.getUpcomingTours
-);
+// Get upcoming tours
+router.get('/upcoming', travelController.getUpcomingTours);
 
-router.get(
-  '/location',
-  ValidationUtils.validateWithZod(TravelSchemas.locationQuery, 'query'),
-  travelController.getAdsByLocation
-);
+// Get ads by location
+router.get('/location', travelController.getAdsByLocation);
 
 export default router;

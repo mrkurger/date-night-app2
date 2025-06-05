@@ -10,7 +10,7 @@
 
 import { jest } from '@jest/globals';
 import errorHandler, { AppError } from '../../../middleware/errorHandler.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 
 // Mock dependencies
 jest.mock('../../../utils/logger.js', () => ({

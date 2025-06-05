@@ -3,8 +3,8 @@ import express from 'express';
 import paymentController from '../controllers/payment.controller.js';
 import { protect } from '../middleware/auth.js';
 import bodyParser from 'body-parser';
-import { ValidationUtils } from '../utils/validation-utils';
-import PaymentSchemas from '../middleware/validators/payment.validator';
+import { ValidationUtils } from '../utils/validation-utils.js';
+import PaymentSchemas from '../middleware/validators/payment.validator.js';
 
 const router = express.Router();
 

@@ -15,7 +15,7 @@ import cron from 'node-cron';
 import ChatMessage from '../../../models/chat-message.model.js';
 import ChatAttachment from '../../../models/chat-attachment.schema.js';
 import messageCleanupService from '../../../services/message-cleanup.service.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 // Mock fs, path, and cron
 jest.mock('fs', () => ({

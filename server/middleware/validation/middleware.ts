@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AnyZodObject, ZodError } from 'zod';
-import { ValidationError } from '../../utils/validation-utils';
+import { ValidationError } from '../../utils/validation-utils.js';
 
 /**
  * Standardized error response format for validation errors

@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import Review from '../../../models/review.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('Review Model', () => {
   // Setup test data

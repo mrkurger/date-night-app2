@@ -9,7 +9,7 @@
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 // Import the actual 'validate' function and express-validator functions
 import { validate } from '../../../middleware/validation.js';
 import { body, query, param, validationResult } from 'express-validator';

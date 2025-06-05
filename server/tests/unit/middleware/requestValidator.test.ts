@@ -9,7 +9,7 @@
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 import requestValidator from '../../../middleware/requestValidator.js';
 import { z } from 'zod';
 

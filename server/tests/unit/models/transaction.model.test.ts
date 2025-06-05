@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import Transaction from '../../../models/transaction.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('Transaction Model', () => {
   // Setup test data

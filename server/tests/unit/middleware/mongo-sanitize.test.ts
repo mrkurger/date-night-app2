@@ -8,7 +8,7 @@
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 import { mongoSanitize } from '../../../middleware/mongo-sanitize.js';
 
 describe('Mongo Sanitize Middleware', () => {

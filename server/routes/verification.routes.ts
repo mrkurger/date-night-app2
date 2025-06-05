@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { verificationController } from '../controllers/verification.controller';
-import { authenticateToken } from '../middleware/auth';
-import { isAdmin } from '../middleware/roles';
-import { ValidationUtils } from '../utils/validation-utils';
-import { verificationSchemas } from './components/verification/verification.schema';
-import { zodSchemas } from '../utils/validation-utils';
+import verificationController from '../controllers/verification.controller.js';
+import { authenticateToken } from '../middleware/auth.js';
+import { isAdmin } from '../middleware/roles.js';
+import { ValidationUtils } from '../utils/validation-utils.js';
+import { verificationSchemas } from './components/verification/verification.schema.js';
+import { zodSchemas } from '../utils/validation-utils.js';
 
 const router = Router();
 

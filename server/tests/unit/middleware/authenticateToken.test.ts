@@ -11,7 +11,7 @@
 import { jest } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 import { authenticateToken } from '../../../middleware/authenticateToken.js';
-import { mockRequest, mockResponse, mockNext, generateTestToken } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext, generateTestToken } from '../../helpers.ts.js';
 
 // Set up mocks before using them
 jest.mock('jsonwebtoken');

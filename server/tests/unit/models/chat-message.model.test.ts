@@ -11,8 +11,8 @@
 import mongoose from 'mongoose';
 import ChatMessage from '../../../models/chat-message.model.js';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { TEST_USER_DATA, TEST_MESSAGE_DATA } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { TEST_USER_DATA, TEST_MESSAGE_DATA } from '../../helpers.ts.js';
 
 describe('ChatMessage Model', () => {
   let sender;

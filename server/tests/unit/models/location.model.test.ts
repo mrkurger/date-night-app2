@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import Location from '../../../models/location.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('Location Model', () => {
   // Setup test data

@@ -4,8 +4,8 @@ import express, { Request, Response, NextFunction, Application } from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import fs from 'fs';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { createTestUser, generateTestToken } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { createTestUser, generateTestToken } from '../../helpers.ts.js';
 import multer from 'multer';
 
 // Types

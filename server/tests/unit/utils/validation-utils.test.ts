@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationUtils, zodSchemas } from '../../../utils/validation-utils';
+import { ValidationUtils, zodSchemas } from '../../../utils/validation-utils.js';
 import mongoose from 'mongoose';
 import { z } from 'zod';
 import { jest, describe, expect, it, beforeEach } from '@jest/globals';

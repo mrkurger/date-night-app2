@@ -50,7 +50,12 @@ app.get('/health', async (_req, res) => {
 
 // Security middlewares
 app.use(helmet());
-app.use(cors(config.corsOptions));
+const corsOptions = {
+  origin: ['http://localhost:3000'], // Allow requests from client_angular2
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(xssProtection);
 app.use(hpp());
 app.use(mongoSanitize);

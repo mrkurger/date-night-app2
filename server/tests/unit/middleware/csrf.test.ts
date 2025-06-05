@@ -11,7 +11,7 @@
 // ===================================================
 
 import { jest } from '@jest/globals';
-import { mockRequest, mockResponse, mockNext, createError } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext, createError } from '../../helpers.ts.js';
 import csrfMiddleware from '../../../middleware/csrf.js';
 
 describe('CSRF Middleware', () => {

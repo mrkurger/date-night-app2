@@ -11,8 +11,8 @@
 import mongoose from 'mongoose';
 import Ad from '../../../models/ad.model.js';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { TEST_AD_DATA, createTestUser } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { TEST_AD_DATA, createTestUser } from '../../helpers.ts.js';
 
 describe('Ad Model', () => {
   let testUser;

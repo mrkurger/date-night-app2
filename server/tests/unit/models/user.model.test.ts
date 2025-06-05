@@ -12,8 +12,8 @@ import mongoose from 'mongoose';
 import argon2 from 'argon2';
 import bcrypt from 'bcrypt';
 import User from '../../../models/user.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
-import { TEST_USER_DATA } from '../../helpers.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
+import { TEST_USER_DATA } from '../../helpers.ts.js';
 
 describe('User Model', () => {
   // Setup and teardown for all tests

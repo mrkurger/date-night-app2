@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { travelController } from './travel.controller';
-import { authenticateToken } from '../../middleware/auth';
-import { isAdvertiser } from '../../middleware/roles';
-import { ValidationUtils } from '../../utils/validation-utils';
-import { travelSchemas } from './travel.schema';
+import { travelController } from './travel.controller.js';
+import { authenticateToken } from '../../middleware/auth.js';
+import { isAdvertiser } from '../../middleware/roles.js';
+import { ValidationUtils } from '../../utils/validation-utils.js';
+import { travelSchemas } from './travel.schema.js';
 
 const router = Router();
 

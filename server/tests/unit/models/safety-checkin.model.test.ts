@@ -10,7 +10,7 @@
 
 import mongoose from 'mongoose';
 import SafetyCheckin from '../../../models/safety-checkin.model.js';
-import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts';
+import { setupTestDB, teardownTestDB, clearDatabase } from '../../setup.ts.js';
 
 describe('SafetyCheckin Model', () => {
   // Setup test data

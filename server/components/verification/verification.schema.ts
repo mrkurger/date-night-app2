@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils';
+import { zodSchemas } from '../../utils/validation-utils.js';
 
 export const verificationSchemas = {
   // Identity verification schema

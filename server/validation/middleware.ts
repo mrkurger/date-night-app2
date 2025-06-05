@@ -3,9 +3,9 @@
  */
 
 import { body, query, param, validationResult } from 'express-validator';
-import { ValidationUtils } from './utils';
-import { zodSchemas } from './schemas';
-import { ValidationError } from './validation.types';
+import { ValidationUtils } from './utils.js';
+import { zodSchemas } from './schemas.js';
+import { ValidationError } from './validation.types.js';
 
 /**
  * Process validation errors from express-validator

@@ -10,7 +10,7 @@
 
 import { jest } from '@jest/globals';
 import { asyncHandler } from '../../../middleware/asyncHandler.js';
-import { mockRequest, mockResponse, mockNext } from '../../helpers.ts';
+import { mockRequest, mockResponse, mockNext } from '../../helpers.ts.js';
 
 describe('Async Handler Middleware', () => {
   let req, res, next;

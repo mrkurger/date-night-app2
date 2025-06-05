@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'express-validator';
 import { ZodError } from 'zod';
-import { logger } from '../../utils/logger';
+import { logger } from '../../utils/logger.js';
 
 export interface FormattedValidationError {
   field: string;
