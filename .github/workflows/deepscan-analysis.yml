@@ -1,0 +1,124 @@
+name: DeepScan Analysis
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'client-angular/**'
+      - 'client_angular2/**'
+      - 'scripts/**'
+      - 'src/**'
+      - '.eslintrc.security.json'
+      - '.deepscan.json'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'client-angular/**'
+      - 'client_angular2/**'
+      - 'scripts/**'
+      - 'src/**'
+      - '.eslintrc.security.json'
+      - '.deepscan.json'
+
+jobs:
+  deepscan:
+    runs-on: ubuntu-latest
+    name: DeepScan Analysis
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies (root)
+        run: npm install --ignore-scripts
+        continue-on-error: true
+
+      - name: Install dependencies (Angular frontend)
+        run: |
+          cd client-angular
+          npm install --ignore-scripts
+        continue-on-error: true
+
+      - name: Install dependencies (React frontend)
+        run: |
+          cd client_angular2
+          npm install --ignore-scripts
+        continue-on-error: true
+
+      - name: Run ESLint Security Check
+        run: |
+          npx eslint . --config .eslintrc.security.json --ext .js,.ts,.tsx,.jsx --format json --output-file eslint-security-results.json
+        continue-on-error: true
+
+      - name: Run DeepScan
+        uses: deepscan-io/deepscan-action@master
+        with:
+          deepscan_token: ${{ secrets.DEEPSCAN_LICENSE }}
+          config_file: .deepscan.json
+        continue-on-error: true
+
+      - name: Upload ESLint results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eslint-security-results
+          path: eslint-security-results.json
+
+      - name: Upload DeepScan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deepscan-results
+          path: |
+            .deepscan/
+            deepscan-result.json
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🔍 DeepScan Analysis Results\n\n';
+            
+            try {
+              const eslintResults = JSON.parse(fs.readFileSync('eslint-security-results.json', 'utf8'));
+              const errorCount = eslintResults.reduce((sum, file) => sum + file.errorCount, 0);
+              const warningCount = eslintResults.reduce((sum, file) => sum + file.warningCount, 0);
+              
+              comment += `### ESLint Security Check\n`;
+              comment += `- 🔴 Errors: ${errorCount}\n`;
+              comment += `- 🟡 Warnings: ${warningCount}\n\n`;
+              
+              if (errorCount > 0) {
+                comment += '#### Critical Security Issues Found:\n';
+                eslintResults.forEach(file => {
+                  if (file.errorCount > 0) {
+                    comment += `**${file.filePath}**\n`;
+                    file.messages.filter(m => m.severity === 2).forEach(msg => {
+                      comment += `- Line ${msg.line}: ${msg.message} (${msg.ruleId})\n`;
+                    });
+                  }
+                });
+              }
+            } catch (error) {
+              comment += '⚠️ ESLint results not available\n\n';
+            }
+            
+            comment += `### 📋 Recommendations\n`;
+            comment += `- Review security vulnerabilities in both frontends\n`;
+            comment += `- Ensure client-angular/ (Angular) and client_angular2/ (React/Next.js) are properly separated\n`;
+            comment += `- Check for framework-specific security patterns\n`;
+            comment += `- Run \`npm audit\` in each frontend directory\n`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

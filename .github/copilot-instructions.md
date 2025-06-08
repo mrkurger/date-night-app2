@@ -34,8 +34,35 @@ Integrated LLM Development Protocol (ILDP)
 ⸻
 
 4. Project Structure Reference (Hardcoded Context)
-	•	/client_angular2/: Next.js frontend (primary)
-	•	/client-angular/: Angular frontend (legacy/secondary)
+**CRITICAL MONOREPO STRUCTURE AWARENESS:**
+
+This is a monorepo with TWO DISTINCT frontend applications. Always verify which frontend you're working with:
+
+• **client-angular/** - Angular 19 frontend (LEGACY/SECONDARY)
+  - Framework: Angular 19 with PrimeNG UI components
+  - Status: Legacy frontend, minimal maintenance mode
+  - Build: `ng build`, `ng serve`
+  - Testing: Jasmine, Karma, Cypress
+  - Styling: SCSS, Angular Material/PrimeNG components
+  - **DO NOT** use React/JSX syntax, hooks, or Next.js patterns here
+
+• **client_angular2/** - React/Next.js frontend (PRIMARY/CURRENT FOCUS)  
+  - Framework: Next.js 15.3.3 with React 18.3.1
+  - UI: Tailwind CSS + Radix UI + shadcn/ui components
+  - Build: `npm run build`, `npm run dev`
+  - Testing: Playwright for E2E testing
+  - Styling: Tailwind CSS classes, CSS modules
+  - **DO NOT** use Angular syntax, decorators, or Angular-specific patterns here
+
+**BEFORE MAKING ANY CHANGES:**
+1. Identify the correct frontend by checking the file path
+2. Use appropriate syntax, patterns, and dependencies for that frontend
+3. When uncertain, ask for clarification about which frontend to target
+4. Never mix Angular and React patterns between the frontends
+
+**FILE PATH INDICATORS:**
+- `/client-angular/` = Angular frontend → Use Angular patterns
+- `/client_angular2/` = React/Next.js frontend → Use React/Next.js patterns
 
 ⸻
 
