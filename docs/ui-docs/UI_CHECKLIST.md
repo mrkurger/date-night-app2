@@ -1,5 +1,10 @@
 # UI Implementation Checklist
 
+**Last Updated**: 2025-06-08T22:46:34.543Z
+
+> **📝 Update Notice**: This documentation was automatically updated to reflect the current codebase structure. Some references to legacy technologies have been updated. Please review for accuracy.
+
+
 Use this checklist to ensure your components follow the DateNight.io UI guidelines.
 
 ## Design Tokens
@@ -75,7 +80,7 @@ Use this checklist to ensure your components follow the DateNight.io UI guidelin
 
 ## Code Quality
 
-- [ ] Component follows the Angular style guide
+- [ ] Component follows the Next.js style guide
 - [ ] Code is well-documented with JSDoc comments
 - [ ] Component has appropriate unit tests
 - [ ] No unused imports or dependencies
@@ -83,12 +88,12 @@ Use this checklist to ensure your components follow the DateNight.io UI guidelin
 - [ ] No hardcoded strings (use i18n)
 - [ ] No magic numbers or values
 
-## Emerald UI Integration
+## Radix UI + shadcn/ui Integration
 
-- [ ] Using Emerald UI components where appropriate
-- [ ] Emerald UI components are properly styled to match the design system
-- [ ] No custom implementations of components that already exist in Emerald UI
-- [ ] Emerald UI components are properly imported and used
+- [ ] Using Radix UI + shadcn/ui components where appropriate
+- [ ] Radix UI + shadcn/ui components are properly styled to match the design system
+- [ ] No custom implementations of components that already exist in Radix UI + shadcn/ui
+- [ ] Radix UI + shadcn/ui components are properly imported and used
 
 ## Final Checks
 

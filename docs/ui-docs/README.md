@@ -1,5 +1,10 @@
 # DateNight.io UI/UX Documentation
 
+**Last Updated**: 2025-06-08T22:46:34.543Z
+
+> **📝 Update Notice**: This documentation was automatically updated to reflect the current codebase structure. Some references to legacy technologies have been updated. Please review for accuracy.
+
+
 This directory contains comprehensive documentation for the UI/UX implementation in the DateNight.io application.
 
 ## Directory Structure
@@ -19,16 +24,16 @@ This directory contains comprehensive documentation for the UI/UX implementation
 ### Implementation
 
 - [UI/UX Implementation](../UI_UX_IMPLEMENTATION.MD) - Details of the UI/UX components implementation
-- [Emerald UI Integration Guide](../EMERALD_UI_INTEGRATION_GUIDE.MD) - Guide for integrating Emerald UI components
+- [Radix UI + shadcn/ui Integration Guide](../radix-ui_UI_INTEGRATION_GUIDE.MD) - Guide for integrating Radix UI + shadcn/ui components
 
 ### Components
 
 - [UI Components Technical Documentation](../UI_COMPONENTS_TECHNICAL.MD) - Technical details of UI components
 
-### Emerald UI
+### Radix UI + shadcn/ui
 
-- [Emerald Implementation Summary](../EMERALD_IMPLEMENTATION_SUMMARY.MD) - Summary of the Emerald.js implementation
-- [Emerald Components Changelog](../EMERALD_COMPONENTS_CHANGELOG.MD) - Changelog for Emerald components
+- [radix-ui Implementation Summary](../radix-ui_IMPLEMENTATION_SUMMARY.MD) - Summary of the radix-ui.js implementation
+- [radix-ui Components Changelog](../radix-ui_COMPONENTS_CHANGELOG.MD) - Changelog for radix-ui components
 
 ## Getting Started
 
@@ -37,7 +42,7 @@ If you're new to the DateNight.io UI/UX implementation, we recommend starting wi
 1. [UI/UX Implementation](../UI_UX_IMPLEMENTATION.MD) - Overview of the UI/UX implementation
 2. [Design Tokens Documentation](../DESIGN_TOKENS_DOCUMENTATION.MD) - Understanding the design system
 3. [BEM Naming Convention](../BEM_NAMING_CONVENTION.MD) - Understanding the CSS naming convention
-4. [Emerald UI Integration Guide](../EMERALD_UI_INTEGRATION_GUIDE.MD) - Understanding the component library
+4. [Radix UI + shadcn/ui Integration Guide](../radix-ui_UI_INTEGRATION_GUIDE.MD) - Understanding the component library
 
 ## Contributing
 

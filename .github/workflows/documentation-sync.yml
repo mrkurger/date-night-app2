@@ -1,0 +1,357 @@
+name: Documentation Control & Synchronization
+
+on:
+  # Run every 24 hours at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      force_full_sync:
+        description: 'Force full documentation synchronization'
+        required: false
+        default: 'false'
+        type: boolean
+      
+      sync_scope:
+        description: 'Scope of synchronization'
+        required: false
+        default: 'incremental'
+        type: choice
+        options:
+          - incremental
+          - full
+          - audit_only
+
+  # Run on pushes to main branch (for testing)
+  push:
+    branches: [ main ]
+    paths:
+      - 'server/**'
+      - 'client_angular2/**' 
+      - 'scripts/**'
+      - 'prisma/**'
+      - '.github/**'
+      - '!client-angular/**'  # Explicitly exclude client-angular
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  documentation-sync:
+    runs-on: ubuntu-latest
+    name: Synchronize Documentation
+    
+    steps:
+      - name: 🛡️ Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+          disable-telemetry: true
+          
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history for proper change detection
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: |
+          npm ci || npm install
+          
+      - name: 🔍 Run Documentation Audit
+        id: audit
+        run: |
+          echo "🚀 Running documentation audit..."
+          node scripts/doc_control_audit.js
+          
+          # Check if significant changes were detected
+          if [ -f "docs/DOCUMENTATION_DISCREPANCIES_REPORT.md" ]; then
+            UNDOCUMENTED=$(grep -o "Undocumented Elements.*: [0-9]*" docs/DOCUMENTATION_DISCREPANCIES_REPORT.md | grep -o "[0-9]*" || echo "0")
+            OUTDATED=$(grep -o "Outdated Documentation.*: [0-9]*" docs/DOCUMENTATION_DISCREPANCIES_REPORT.md | grep -o "[0-9]*" || echo "0")
+            
+            echo "undocumented_count=${UNDOCUMENTED}" >> $GITHUB_OUTPUT
+            echo "outdated_count=${OUTDATED}" >> $GITHUB_OUTPUT
+            
+            # Set flag for significant changes
+            if [ "${UNDOCUMENTED}" -gt 10 ] || [ "${OUTDATED}" -gt 50 ]; then
+              echo "significant_changes=true" >> $GITHUB_OUTPUT
+            else
+              echo "significant_changes=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "undocumented_count=0" >> $GITHUB_OUTPUT
+            echo "outdated_count=0" >> $GITHUB_OUTPUT
+            echo "significant_changes=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 🔄 Detect Code Changes
+        id: changes
+        run: |
+          echo "🔍 Detecting changes since last documentation sync..."
+          
+          # Get the last commit that modified documentation
+          LAST_DOC_COMMIT=$(git log --format="%H" --grep="docs:" -n 1 || echo "HEAD~7")
+          echo "last_doc_commit=${LAST_DOC_COMMIT}" >> $GITHUB_OUTPUT
+          
+          # Check for changes in monitored directories since last documentation update
+          CHANGED_FILES=$(git diff --name-only ${LAST_DOC_COMMIT} HEAD -- server/ client_angular2/ scripts/ prisma/ .github/ || true)
+          
+          if [ -n "${CHANGED_FILES}" ]; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            echo "${CHANGED_FILES}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 📝 Synchronize Documentation
+        if: steps.changes.outputs.changes_detected == 'true' || github.event.inputs.force_full_sync == 'true'
+        id: sync
+        run: |
+          echo "🚀 Running documentation synchronization..."
+          
+          # Run the synchronization script
+          node scripts/doc_sync.js
+          
+          # Check if any documentation files were created or modified
+          DOC_CHANGES=$(git status --porcelain docs/ | wc -l)
+          echo "doc_changes_count=${DOC_CHANGES}" >> $GITHUB_OUTPUT
+          
+          if [ "${DOC_CHANGES}" -gt 0 ]; then
+            echo "documentation_updated=true" >> $GITHUB_OUTPUT
+          else
+            echo "documentation_updated=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 🗄️ Archive Outdated Documentation
+        if: steps.audit.outputs.outdated_count > 50
+        run: |
+          echo "🗄️ Archiving outdated documentation..."
+          
+          # Create archive directory
+          mkdir -p docs/outdated/$(date +%Y-%m-%d)
+          
+          # Move documentation that references client-angular to archive
+          find docs/ -name "*.md" -type f -exec grep -l "client-angular" {} \; | while read file; do
+            if [[ "$file" != *"/outdated/"* ]] && [[ "$file" != *"/graph/"* ]]; then
+              echo "Archiving: $file"
+              mv "$file" "docs/outdated/$(date +%Y-%m-%d)/"
+            fi
+          done
+          
+          # Create archive index
+          cat > docs/outdated/$(date +%Y-%m-%d)/README.md << EOF
+          # Archived Documentation - $(date +%Y-%m-%d)
+          
+          This directory contains documentation that was archived during the automated documentation cleanup process.
+          
+          ## Reason for Archival
+          These files were archived because they contained references to the excluded \`client-angular/\` directory.
+          
+          ## Files Archived
+          $(ls docs/outdated/$(date +%Y-%m-%d)/*.md 2>/dev/null | grep -v README.md | wc -l) files were archived.
+          
+          ## Recovery
+          If any of these files contain relevant information for the current codebase, they can be reviewed and updated to remove client-angular references.
+          
+          ---
+          *Archived by Documentation Control & Synchronization System on $(date)*
+          EOF
+          
+      - name: 🧠 Update Knowledge Graph
+        if: steps.sync.outputs.documentation_updated == 'true' || steps.audit.outputs.significant_changes == 'true'
+        run: |
+          echo "🧠 Updating knowledge graph..."
+          
+          # Ensure knowledge graph exists and is up to date
+          if [ ! -f "docs/graph/ci_knowledge.md" ]; then
+            echo "Creating knowledge graph..."
+            # The doc_sync.js script handles this
+          fi
+          
+          # Update knowledge graph metadata
+          node -e "
+          const fs = require('fs');
+          const path = 'docs/graph/ci_knowledge.md';
+          if (fs.existsSync(path)) {
+            let content = fs.readFileSync(path, 'utf8');
+            const timestamp = new Date().toISOString();
+            content = content.replace(
+              /\"last_updated\": \"[^\"]*\"/g,
+              '\"last_updated\": \"' + timestamp + '\"'
+            );
+            content = content.replace(
+              /\*\*Last Updated\*\*: .+/g,
+              '**Last Updated**: ' + timestamp
+            );
+            fs.writeFileSync(path, content);
+            console.log('✅ Knowledge graph metadata updated');
+          }
+          "
+          
+      - name: 📊 Generate Documentation Report
+        id: report
+        run: |
+          echo "📊 Generating documentation status report..."
+          
+          cat > docs/DOCUMENTATION_STATUS.md << EOF
+          # Documentation Status Report
+          
+          **Generated**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")  
+          **Workflow Run**: [\#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          
+          ## Summary
+          
+          - **Undocumented Elements**: ${{ steps.audit.outputs.undocumented_count }}
+          - **Outdated Documentation**: ${{ steps.audit.outputs.outdated_count }}
+          - **Documentation Files Updated**: ${{ steps.sync.outputs.doc_changes_count || 0 }}
+          - **Changes Detected**: ${{ steps.changes.outputs.changes_detected }}
+          
+          ## Actions Taken
+          
+          - ✅ Documentation audit completed
+          - ${{ steps.changes.outputs.changes_detected == 'true' && '✅' || '⏭️' }} Code change detection
+          - ${{ steps.sync.outputs.documentation_updated == 'true' && '✅' || '⏭️' }} Documentation synchronization
+          - ${{ steps.audit.outputs.outdated_count > 50 && '✅' || '⏭️' }} Outdated documentation archival
+          - ✅ Knowledge graph update
+          
+          ## Next Scheduled Run
+          
+          This workflow runs automatically every 24 hours at 2 AM UTC.
+          
+          ## Manual Execution
+          
+          To manually trigger this workflow:
+          1. Go to the [Actions tab](${{ github.server_url }}/${{ github.repository }}/actions/workflows/documentation-sync.yml)
+          2. Click "Run workflow"
+          3. Choose synchronization scope and options
+          
+          ---
+          *Generated by Documentation Control & Synchronization System*
+          EOF
+          
+      - name: 💾 Commit Documentation Changes
+        if: steps.sync.outputs.documentation_updated == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Documentation Sync Bot"
+          
+          git add docs/
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "docs: automated documentation synchronization
+            
+            - Updated ${{ steps.sync.outputs.doc_changes_count }} documentation files
+            - Synchronized with code changes since last update
+            - Updated knowledge graph metadata
+            - Generated by workflow run #${{ github.run_number }}
+            
+            [skip ci]"
+            
+            git push
+            
+            echo "✅ Documentation changes committed and pushed"
+          else
+            echo "ℹ️  No documentation changes to commit"
+          fi
+          
+      - name: 🚨 Create Issue for Significant Changes
+        if: steps.audit.outputs.significant_changes == 'true' && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const undocumented = ${{ steps.audit.outputs.undocumented_count }};
+            const outdated = ${{ steps.audit.outputs.outdated_count }};
+            
+            const title = `Documentation Review Required: ${undocumented} undocumented elements found`;
+            const body = `## Documentation Issues Detected
+            
+            The automated documentation audit has detected significant documentation issues that require attention:
+            
+            ### Issues Found
+            - **Undocumented Elements**: ${undocumented}
+            - **Outdated Documentation**: ${outdated}
+            
+            ### Recommended Actions
+            1. Review the [documentation discrepancies report](docs/DOCUMENTATION_DISCREPANCIES_REPORT.md)
+            2. Prioritize documentation for high-priority undocumented elements
+            3. Update or archive outdated documentation files
+            
+            ### Reports
+            - [Full Audit Report](docs/DOCUMENTATION_DISCREPANCIES_REPORT.md)
+            - [Status Report](docs/DOCUMENTATION_STATUS.md)
+            - [Knowledge Graph](docs/graph/ci_knowledge.md)
+            
+            This issue was automatically created by the Documentation Control & Synchronization workflow.
+            
+            ---
+            **Workflow Run**: #${{ github.run_number }}  
+            **Triggered**: ${{ github.event_name }}
+            `;
+            
+            // Check if similar issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'documentation'
+            });
+            
+            const hasExistingIssue = existingIssues.data.some(issue => 
+              issue.title.includes('Documentation Review Required')
+            );
+            
+            if (!hasExistingIssue) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['documentation', 'automated', 'needs-review']
+              });
+              
+              console.log('📋 Created issue for documentation review');
+            } else {
+              console.log('ℹ️  Documentation review issue already exists');
+            }
+            
+      - name: 📈 Upload Documentation Metrics
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: documentation-metrics
+          path: |
+            docs/DOCUMENTATION_DISCREPANCIES_REPORT.md
+            docs/DOCUMENTATION_STATUS.md
+            docs/graph/ci_knowledge.md
+          retention-days: 30
+          
+      - name: 🎯 Summary
+        if: always()
+        run: |
+          echo "## Documentation Synchronization Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Undocumented Elements | ${{ steps.audit.outputs.undocumented_count || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Outdated Documentation | ${{ steps.audit.outputs.outdated_count || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Documentation Updated | ${{ steps.sync.outputs.documentation_updated || 'false' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Files Changed | ${{ steps.sync.outputs.doc_changes_count || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Significant Changes | ${{ steps.audit.outputs.significant_changes || 'false' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Quick Links" >> $GITHUB_STEP_SUMMARY
+          echo "- [Audit Report](docs/DOCUMENTATION_DISCREPANCIES_REPORT.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Status Report](docs/DOCUMENTATION_STATUS.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Knowledge Graph](docs/graph/ci_knowledge.md)" >> $GITHUB_STEP_SUMMARY
