@@ -113,53 +113,57 @@ jobs:
         SARIF_FILE=$(find codeql-results-js-ts -name "*.sarif" -type f | head -n 1)
 
         if [ -n "$SARIF_FILE" ]; then
-          node --input-type=module << 'EOJS'
-            import { readFileSync, writeFileSync } from 'fs';
-
-            const sarifContent = readFileSync(process.env.SARIF_FILE, 'utf8');
-            const sarif = JSON.parse(sarifContent);
-
-            let highCount = 0, mediumCount = 0, lowCount = 0;
-            const findings = [];
-
-            for (const run of sarif.runs || []) {
-              for (const result of run.results || []) {
-                const level = result.level || 'warning';
-                let severity = level === 'error' ? 'HIGH' : level === 'warning' ? 'MEDIUM' : 'LOW';
-
-                if (severity === 'HIGH') highCount++;
-                else if (severity === 'MEDIUM') mediumCount++;
-                else lowCount++;
-
-                const location = result.locations?.[0]?.physicalLocation;
-                findings.push({
-                  severity,
-                  rule: result.ruleId || 'unknown',
-                  message: result.message?.text || 'No description',
-                  file: location?.artifactLocation?.uri || 'unknown',
-                  line: location?.region?.startLine || '?',
-                  tool: run.tool?.driver?.name || 'CodeQL'
-                });
-              }
-            }
-
-            findings.sort((a, b) => {
-              const order = { HIGH: 0, MEDIUM: 1, LOW: 2 };
-              return order[a.severity] - order[b.severity];
-            });
-
-            const summary = {
-              total: findings.length,
-              high: highCount,
-              medium: mediumCount,
-              low: lowCount
-            };
-
-            writeFileSync('processed-results/results.json', JSON.stringify({ summary, findings }, null, 2));
-            console.log(`::set-output name=total_issues::${findings.length}`);
-            console.log(`::set-output name=high_issues::${highCount}`);
-            console.log(`::set-output name=has_issues::${findings.length > 0}`);
-          EOJS
+          # Create temporary JavaScript file for processing
+          printf '%s\n' \
+            'import { readFileSync, writeFileSync } from "fs";' \
+            '' \
+            'const sarifContent = readFileSync(process.env.SARIF_FILE, "utf8");' \
+            'const sarif = JSON.parse(sarifContent);' \
+            '' \
+            'let highCount = 0, mediumCount = 0, lowCount = 0;' \
+            'const findings = [];' \
+            '' \
+            'for (const run of sarif.runs || []) {' \
+            '  for (const result of run.results || []) {' \
+            '    const level = result.level || "warning";' \
+            '    let severity = level === "error" ? "HIGH" : level === "warning" ? "MEDIUM" : "LOW";' \
+            '' \
+            '    if (severity === "HIGH") highCount++;' \
+            '    else if (severity === "MEDIUM") mediumCount++;' \
+            '    else lowCount++;' \
+            '' \
+            '    const location = result.locations?.[0]?.physicalLocation;' \
+            '    findings.push({' \
+            '      severity,' \
+            '      rule: result.ruleId || "unknown",' \
+            '      message: result.message?.text || "No description",' \
+            '      file: location?.artifactLocation?.uri || "unknown",' \
+            '      line: location?.region?.startLine || "?",' \
+            '      tool: run.tool?.driver?.name || "CodeQL"' \
+            '    });' \
+            '  }' \
+            '}' \
+            '' \
+            'findings.sort((a, b) => {' \
+            '  const order = { HIGH: 0, MEDIUM: 1, LOW: 2 };' \
+            '  return order[a.severity] - order[b.severity];' \
+            '});' \
+            '' \
+            'const summary = {' \
+            '  total: findings.length,' \
+            '  high: highCount,' \
+            '  medium: mediumCount,' \
+            '  low: lowCount' \
+            '};' \
+            '' \
+            'writeFileSync("processed-results/results.json", JSON.stringify({ summary, findings }, null, 2));' \
+            'console.log(`::set-output name=total_issues::${findings.length}`);' \
+            'console.log(`::set-output name=high_issues::${highCount}`);' \
+            'console.log(`::set-output name=has_issues::${findings.length > 0}`);' \
+            > process_sarif.js
+          
+          node --input-type=module process_sarif.js
+          rm process_sarif.js
         else
           echo "No SARIF file found"
           echo "::set-output name=total_issues::0"
