@@ -1,15 +1,15 @@
 # Documentation Control & Synchronization Audit Report
 
-Generated: 2025-06-08T22:54:01.213Z
+Generated: 2025-06-08T23:54:44.700Z
 Scope: Entire repository excluding client-angular/ directory
 
 ## Executive Summary
 
-- **Total Code Elements Analyzed**: 203
-- **Total Documentation Files**: 520
-- **Documentation Coverage**: 192%
-- **Undocumented Elements**: 130
-- **Outdated Documentation**: 419
+- **Total Code Elements Analyzed**: 230
+- **Total Documentation Files**: 525
+- **Documentation Coverage**: 168%
+- **Undocumented Elements**: 138
+- **Outdated Documentation**: 420
 
 ## Undocumented Code Elements
 
@@ -17,8 +17,11 @@ These code elements lack proper documentation and should be prioritized:
 
 ### Components
 
+- `SCHEMA_REFACTOR_NEEDED.d`
 - `SCHEMA_REFACTOR_NEEDED`
+- `encryption.controller.d`
 - `encryption.controller`
+- `encryption.routes.d`
 - `encryption.routes`
 - `location.routes`
 - `location.schema`
@@ -142,10 +145,15 @@ These code elements lack proper documentation and should be prioritized:
 
 ### Controllers
 
+- `appointment.controller.d`
 - `appointment.controller`
+- `geocoding.controller.d`
 - `geocoding.controller`
+- `location.controller.d`
 - `location.controller`
+- `safety.controller.d`
 - `safety.controller`
+- `travel.controller.d`
 - `travel.controller`
 - `verification.controller`
 
@@ -178,15 +186,12 @@ These documentation files reference excluded directories or outdated information
 - **docs/COMPONENT_LIBRARY.MD**: References excluded client-angular directory
 - **docs/CONFIG_INDEX.MD**: References excluded client-angular directory
 - **docs/CSP_CONFIGURATION.MD**: References excluded client-angular directory
-- **docs/CURRENT_AUDIT.md**: References excluded client-angular directory
 - **docs/CUSTOMIZATION_GUIDE.MD**: References excluded client-angular directory
 - **docs/DEPENDENCY_MANAGEMENT.MD**: References excluded client-angular directory
 - **docs/DEPLOYMENT.MD**: References excluded client-angular directory
 - **docs/DEPRECATED.MD**: References excluded client-angular directory
 - **docs/DESIGN_SYSTEM_USAGE_GUIDE.MD**: References excluded client-angular directory
 - **docs/DOCS_IMPROVEMENT_PLAN.MD**: References excluded client-angular directory
-- **docs/DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
-- **docs/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
 - **docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD**: References excluded client-angular directory
 - **docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.MD**: References excluded client-angular directory
 - **docs/DOCUMENTATION_IMPROVEMENT_SUMMARY.MD**: References excluded client-angular directory
@@ -585,6 +590,10 @@ These documentation files reference excluded directories or outdated information
 - **docs/features/USER_PREFS.MD**: References excluded client-angular directory
 - **docs/features/WALLET.MD**: References excluded client-angular directory
 - **docs/graph/ci_knowledge.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/CURRENT_AUDIT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/README.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-08-2025-06-08-DEEPSCAN_INTEGRATION.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-08-2025-06-08-FEATURE-NAME.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-08-2025-06-08-IMPLEMENTATION_GUIDE.md**: References excluded client-angular directory
@@ -593,8 +602,8 @@ These documentation files reference excluded directories or outdated information
 ## Recommendations
 
 ### Immediate Actions Required:
-1. Create documentation for 130 undocumented code elements
-2. Update or archive 419 outdated documentation files
+1. Create documentation for 138 undocumented code elements
+2. Update or archive 420 outdated documentation files
 3. Implement automated documentation synchronization
 
 ### Priority Order:
