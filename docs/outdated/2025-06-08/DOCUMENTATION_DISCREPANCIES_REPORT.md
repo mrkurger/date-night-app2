@@ -1,13 +1,13 @@
 # Documentation Control & Synchronization Audit Report
 
-Generated: 2025-06-08T22:48:09.294Z
+Generated: 2025-06-08T22:54:01.213Z
 Scope: Entire repository excluding client-angular/ directory
 
 ## Executive Summary
 
 - **Total Code Elements Analyzed**: 203
-- **Total Documentation Files**: 518
-- **Documentation Coverage**: 191%
+- **Total Documentation Files**: 520
+- **Documentation Coverage**: 192%
 - **Undocumented Elements**: 130
 - **Outdated Documentation**: 419
 
@@ -186,7 +186,6 @@ These documentation files reference excluded directories or outdated information
 - **docs/DESIGN_SYSTEM_USAGE_GUIDE.MD**: References excluded client-angular directory
 - **docs/DOCS_IMPROVEMENT_PLAN.MD**: References excluded client-angular directory
 - **docs/DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
-- **docs/DOCUMENTATION_CONTROL_SYSTEM_README.md**: References excluded client-angular directory
 - **docs/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
 - **docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD**: References excluded client-angular directory
 - **docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.MD**: References excluded client-angular directory
@@ -586,9 +585,10 @@ These documentation files reference excluded directories or outdated information
 - **docs/features/USER_PREFS.MD**: References excluded client-angular directory
 - **docs/features/WALLET.MD**: References excluded client-angular directory
 - **docs/graph/ci_knowledge.md**: References excluded client-angular directory
-- **docs/outdated/2025-06-08-DEEPSCAN_INTEGRATION.md**: References excluded client-angular directory
-- **docs/outdated/2025-06-08-FEATURE-NAME.md**: References excluded client-angular directory
-- **docs/outdated/2025-06-08-IMPLEMENTATION_GUIDE.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-DEEPSCAN_INTEGRATION.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-FEATURE-NAME.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-IMPLEMENTATION_GUIDE.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
 
 ## Recommendations
 
