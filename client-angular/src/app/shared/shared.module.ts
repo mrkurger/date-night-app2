@@ -1,91 +1,16 @@
 import { NgModule } from '@angular/core';
-import { NebularModule } from './nebular.module';
+import { PrimeNGModule } from './primeng.module';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import {
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSelectModule,
-  NbTagModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbContextMenuModule,
-  NbActionsModule,
-  NbTabsetModule,
-  NbRouteTabsetModule,
-  NbAccordionModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbPopoverModule,
-  NbTooltipModule,
-  NbToggleModule,
-  NbChatModule,
-  NbCalendarModule,
-  NbSpinnerModule,
-  NbSearchModule,
-} from '@nebular/theme';
-
-// Import custom components
-import { NbErrorComponent } from './components/custom-nebular-components/nb-error/nb-error.component';
-import { NbPaginationChangeEvent } from './components/custom-nebular-components/nb-paginator/nb-paginator.module';
-
-const NEBULAR_MODULES = [
-  // Basic Nebular modules
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbFormFieldModule,
-  NbIconModule,
-  NbSelectModule,
-  NbTagModule,
-  NbListModule,
-  NbUserModule,
-  NbBadgeModule,
-  NbAlertModule,
-  NbCheckboxModule,
-  NbRadioModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
-  NbContextMenuModule,
-  NbActionsModule,
-  NbTabsetModule,
-  NbRouteTabsetModule,
-  NbAccordionModule,
-  NbStepperModule,
-  NbTreeGridModule,
-  NbEvaIconsModule,
-
-  // Additional modules needed
-  NbPopoverModule,
-  NbTooltipModule,
-  NbToggleModule,
-  NbChatModule,
-  NbCalendarModule,
-  NbSpinnerModule,
-  NbSearchModule,
-];
-
-// Custom components and modules
-const CUSTOM_COMPONENTS = [NbErrorComponent];
-
-const CUSTOM_MODULES = [];
+// Import custom components that don't depend on Nebular
+// (These will need to be migrated individually)
 
 /**
  * Shared Module
  *
- * This module exports common Angular modules and Nebular modules.
+ * This module exports common Angular modules and PrimeNG modules.
  * Standalone components and pipes should be imported directly where needed.
  *
  * Note: All components and pipes have been migrated to standalone.
@@ -96,18 +21,13 @@ const CUSTOM_MODULES = [];
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ...NEBULAR_MODULES,
-    ...CUSTOM_MODULES,
-    ...CUSTOM_COMPONENTS,
-    NebularModule,
+    PrimeNGModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ...NEBULAR_MODULES,
-    ...CUSTOM_MODULES,
-    ...CUSTOM_COMPONENTS,
+    PrimeNGModule,
   ],
 })
 export class SharedModule {}

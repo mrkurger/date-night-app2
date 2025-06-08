@@ -4,16 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-// Nebular imports
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
-
 // App imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { NebularModule } from './shared/nebular.module';
+import { PrimeNGModule } from './shared/primeng.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,12 +21,7 @@ import { NebularModule } from './shared/nebular.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-
-    // Nebular Core Modules
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbEvaIconsModule,
-    NbLayoutModule,
-    NebularModule.forRoot(),
+    PrimeNGModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

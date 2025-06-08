@@ -1,6 +1,3 @@
-@use '@nebular/theme/styles/theming' as *;
-@use '@nebular/theme/styles/themes/default';
-@use '@nebular/theme/styles/themes/cosmic' as dark;
 @use './app/core/design/tokens' as tokens;
 @use './app/core/design/utilities' as utils;
 @use '@fontsource/inter' as inter;
@@ -10,109 +7,100 @@
 @use './app/core/design/typography' as typography;
 @use './app/core/design/spacing' as spacing;
 @use './app/core/design/spacing-utilities-fix' as spacing-fix;
-@use '@primeng/themes/aura/light/blue/theme.css' as primeng-aura;
 
-// Import Nebular theme styles
-@use '@nebular/theme/styles/globals' as *;
-
-// Include Nebular theme styles
-@include nb-install() {
-  @include nb-theme-global();
-}
+// Import PrimeNG theme
+@import 'primeng/resources/themes/aura-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
 
 :root {
-  --nb-theme-margin: 1rem;
-  --nb-theme-margin-lg: 1.5rem;
-  --nb-theme-margin-xs: 0.25rem;
-  --nb-theme-spacing: 0.5rem;
-  --nb-theme-form-field-spacing: 0.75rem;
-  --nb-theme-card-margin-bottom: 1.5rem;
-  --nb-theme-card-border-radius: 0.5rem;
-  --nb-theme-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --nb-theme-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
-  --nb-theme-transition-duration: 0.2s;
-  --nb-theme-transition-timing-function: ease-in-out;
-  --nb-theme-button-border-radius: 0.25rem;
-  --nb-theme-button-padding: 0.5rem 1rem;
-  --nb-theme-border-radius: 0.25rem;
-  --nb-theme-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --nb-theme-padding: 1rem;
-  --color-danger-default: #ff3d71;
-  --color-primary-default: #3366ff;
+  --app-margin: 1rem;
+  --app-margin-lg: 1.5rem;
+  --app-margin-xs: 0.25rem;
+  --app-spacing: 0.5rem;
+  --app-form-field-spacing: 0.75rem;
+  --app-card-margin-bottom: 1.5rem;
+  --app-card-border-radius: 0.5rem;
+  --app-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --app-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --app-transition-duration: 0.2s;
+  --app-transition-timing-function: ease-in-out;
+  --app-button-border-radius: 0.25rem;
+  --app-button-padding: 0.5rem 1rem;
+  --app-border-radius: 0.25rem;
+  --app-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --app-padding: 1rem;
+  --color-danger-default: #e24c4c;
+  --color-primary-default: #3B82F6;
   --color-basic-600: #8f9bb3;
 }
-
-// Nebular theme and Eva Icons are now loaded via index.html
-
-// Removed custom nb-register-theme and nb-install blocks for prebuilt theme usage.
 
 // Global styles
 html,
 body {
   height: 100%;
   margin: 0;
-  font-family: nb-theme(text-paragraph-font-family);
-  background-color: nb-theme(background-basic-color-1);
-  color: nb-theme(text-basic-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #ffffff;
+  color: #333333;
 }
 
 // Component styles
-nb-card {
-  margin-bottom: nb-theme(card-margin-bottom);
-  border-radius: nb-theme(card-border-radius);
-  box-shadow: nb-theme(card-shadow);
-  transition: transform 0.2s nb-theme(transition-timing-function),
-    box-shadow 0.2s nb-theme(transition-timing-function);
+.p-card {
+  margin-bottom: var(--app-card-margin-bottom);
+  border-radius: var(--app-card-border-radius);
+  box-shadow: var(--app-card-shadow);
+  transition: transform 0.2s var(--app-transition-timing-function),
+    box-shadow 0.2s var(--app-transition-timing-function);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: nb-theme(card-shadow-hover);
+    box-shadow: var(--app-card-shadow-hover);
   }
 }
 
 // Form styles
-nb-form-field {
-  margin-bottom: nb-theme(form-field-spacing);
+.p-field {
+  margin-bottom: var(--app-form-field-spacing);
 
   input,
   textarea,
   select {
     width: 100%;
-    font-family: nb-theme(text-paragraph-font-family);
+    font-family: 'Inter', sans-serif;
   }
 
-  &.has-error {
+  &.p-error {
     .error-message {
-      color: nb-theme(color-danger-default);
-      font-size: nb-theme(text-caption-font-size);
-      margin-top: nb-theme(form-field-spacing);
+      color: var(--color-danger-default);
+      font-size: 0.875rem;
+      margin-top: var(--app-form-field-spacing);
     }
   }
 }
 
 // Button styles
-[nbButton] {
-  font-family: nb-theme(text-button-font-family) !important;
-  font-weight: nb-theme(text-button-font-weight) !important;
-  text-transform: nb-theme(text-button-text-transform) !important;
-  border-radius: nb-theme(button-border-radius) !important;
-  padding: nb-theme(button-padding) !important;
-  transition: all nb-theme(transition-duration) nb-theme(transition-timing-function) !important;
+.p-button {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: var(--app-button-border-radius) !important;
+  padding: var(--app-button-padding) !important;
+  transition: all var(--app-transition-duration) var(--app-transition-timing-function) !important;
 }
 
 // Utility classes
-.nb-margin {
-  margin: nb-theme(margin);
+.app-margin {
+  margin: var(--app-margin);
 }
 
-.nb-padding {
-  padding: nb-theme(padding);
+.app-padding {
+  padding: var(--app-padding);
 }
 
-.nb-rounded {
-  border-radius: nb-theme(border-radius);
+.app-rounded {
+  border-radius: var(--app-border-radius);
 }
 
-.nb-shadow {
-  box-shadow: nb-theme(shadow);
+.app-shadow {
+  box-shadow: var(--app-shadow);
 }

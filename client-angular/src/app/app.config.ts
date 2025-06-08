@@ -20,12 +20,9 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { cspInterceptor } from './core/interceptors/csp.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { CoreModule } from './core/core.module';
-import { NebularModule } from './shared/nebular.module';
+import { PrimeNGModule } from './shared/primeng.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './core/config/socket.config';
-
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbThemeModule } from '@nebular/theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,10 +44,8 @@ export const appConfig: ApplicationConfig = {
     }),
     importProvidersFrom(
       CoreModule,
-      NebularModule,
+      PrimeNGModule,
       SocketIoModule.forRoot(socketConfig),
-      NbThemeModule.forRoot({ name: 'default' }),
-      NbEvaIconsModule,
     ),
   ],
 };
