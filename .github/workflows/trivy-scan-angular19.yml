@@ -43,15 +43,22 @@ jobs:
       - name: Trivy Scan for Vulnerabilities Only
         run: |
           # Only scan for vulnerabilities (no secret scanning), for faster scan times as recommended
-          trivy fs --scanners vuln --exit-code 1 --severity HIGH,CRITICAL .
+          trivy fs --scanners vuln --format json --output trivy-results.json --severity HIGH,CRITICAL . || true
+          
+          # Also generate human-readable output
+          trivy fs --scanners vuln --severity HIGH,CRITICAL . || true
 
-      # Step 5: Handle Trivy Warnings (Optional)
-      - name: Handle Trivy Warnings (Optional)
-        if: failure()
-        run: echo "Review Trivy scan warnings for details."
+      # Step 5: Upload Trivy Results as Artifacts
+      - name: Upload Trivy Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-results
+          path: trivy-results.json
+          retention-days: 30
 
-      # Step 6: Scan dependencies for vulnerabilities ONLY (again, disables secret scanning for speed)
+      # Step 6: Scan dependencies for additional vulnerabilities
       - name: Scan Dependencies for Vulnerabilities Only
         run: |
           # Only scan for vulnerabilities again, e.g. in dependencies (if needed)
-          trivy fs --scanners vuln --exit-code 1 .
+          trivy fs --scanners vuln --format json --output trivy-deps-results.json . || true

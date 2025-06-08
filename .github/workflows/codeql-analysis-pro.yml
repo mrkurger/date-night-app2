@@ -156,15 +156,20 @@ jobs:
             };
 
             writeFileSync('processed-results/results.json', JSON.stringify({ summary, findings }, null, 2));
-            console.log(`::set-output name=total_issues::${findings.length}`);
-            console.log(`::set-output name=high_issues::${highCount}`);
-            console.log(`::set-output name=has_issues::${findings.length > 0}`);
+            
+            // Write outputs to GITHUB_OUTPUT
+            const outputFile = process.env.GITHUB_OUTPUT;
+            if (outputFile) {
+              require('fs').appendFileSync(outputFile, `total_issues=${findings.length}\n`);
+              require('fs').appendFileSync(outputFile, `high_issues=${highCount}\n`);
+              require('fs').appendFileSync(outputFile, `has_issues=${findings.length > 0}\n`);
+            }
           EOJS
         else
           echo "No SARIF file found"
-          echo "::set-output name=total_issues::0"
-          echo "::set-output name=high_issues::0"
-          echo "::set-output name=has_issues::false"
+          echo "total_issues=0" >> $GITHUB_OUTPUT
+          echo "high_issues=0" >> $GITHUB_OUTPUT
+          echo "has_issues=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Upload Results
