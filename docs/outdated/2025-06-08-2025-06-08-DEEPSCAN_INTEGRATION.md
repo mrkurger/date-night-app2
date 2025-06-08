@@ -1,3 +1,25 @@
+> **🗄️ ARCHIVED DOCUMENTATION**
+> 
+> **Archived Date**: 2025-06-08T22:48:09.367Z
+> **Original Path**: `docs/outdated/2025-06-08-DEEPSCAN_INTEGRATION.md`
+> **Reason**: Contains outdated references to excluded client-angular/ directory and legacy technologies
+> 
+> This documentation has been archived as part of the documentation cleanup process.
+> If this content is still relevant, please create updated documentation that reflects the current codebase.
+
+---
+
+> **🗄️ ARCHIVED DOCUMENTATION**
+> 
+> **Archived Date**: 2025-06-08T22:46:34.538Z
+> **Original Path**: `docs/DEEPSCAN_INTEGRATION.md`
+> **Reason**: Contains outdated references to excluded client-angular/ directory and legacy technologies
+> 
+> This documentation has been archived as part of the documentation cleanup process.
+> If this content is still relevant, please create updated documentation that reflects the current codebase.
+
+---
+
 # DeepScan Integration Guide
 
 This document explains the DeepScan configuration and integration for the Date Night App monorepo.

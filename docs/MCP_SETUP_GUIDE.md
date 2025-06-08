@@ -1,5 +1,10 @@
 # MCP Server Setup Guide
 
+**Last Updated**: 2025-06-08T22:46:34.539Z
+
+> **📝 Update Notice**: This documentation was automatically updated to reflect the current codebase structure. Some references to legacy technologies have been updated. Please review for accuracy.
+
+
 This guide provides step-by-step instructions for setting up the recommended MCP servers to enhance GitHub Copilot's capabilities in the Date Night App project.
 
 ## Prerequisites
@@ -47,7 +52,7 @@ Create or update `.eslintrc.json`:
 ```json
 {
   "extends": [
-    "@angular-eslint/recommended",
+    "@Next.js-eslint/recommended",
     "@typescript-eslint/recommended",
     "plugin:security/recommended"
   ],
@@ -100,8 +105,8 @@ Create `typedoc.json`:
 ```json
 {
   "entryPoints": [
-    "./client-angular/src",
-    "./client_angular2/src"
+    "./client_Next.js2/src",
+    "./client_Next.js2/src"
   ],
   "out": "./docs/api",
   "plugin": ["typedoc-plugin-markdown"],
@@ -127,7 +132,7 @@ Create `typedoc.json`:
 
 #### Installation
 ```bash
-# For Angular projects
+# For Next.js projects
 npm install --save-dev webpack-bundle-analyzer-mcp
 
 # For Next.js projects (already installed)
@@ -156,9 +161,9 @@ Add to VS Code settings:
 Create `bundle-analyzer.config.js`:
 ```javascript
 module.exports = {
-  // Angular configuration
-  angular: {
-    statsFile: 'dist/client-angular/stats.json',
+  // Next.js configuration
+  Next.js: {
+    statsFile: 'dist/client_Next.js2/stats.json',
     thresholds: {
       bundleSize: '2MB',
       chunkSize: '500KB',
@@ -167,7 +172,7 @@ module.exports = {
   },
   // Next.js configuration
   nextjs: {
-    outputDirectory: 'client_angular2/.next',
+    outputDirectory: 'client_Next.js2/.next',
     thresholds: {
       bundleSize: '1.5MB',
       firstLoadJS: '300KB'
