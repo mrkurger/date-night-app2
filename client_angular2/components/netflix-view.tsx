@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -50,7 +51,7 @@ export default function NetflixView({
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries;
-      if (entry.isIntersecting && !loading && loadMore) {
+      if (entry?.isIntersecting && !loading && loadMore) {
         setLoading(true);
         loadMore(page);
         setPage(prev => prev + 1);
@@ -79,6 +80,7 @@ export default function NetflixView({
         }
       };
     }
+    return undefined;
   }, [handleObserver, loadMore, advertisers]);
 
   const scrollRow = (direction: 'left' | 'right') => {
@@ -155,10 +157,11 @@ export default function NetflixView({
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
+                    <Image
                       src={getProfileImage(advertiser)}
                       alt={advertiser.name}
-                      className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-500 ease-in-out hover:scale-105"
                     />
                     <div className="absolute top-2 right-2 flex flex-col gap-2">
                       <FavoriteButton advertiserId={advertiser.id.toString()} />

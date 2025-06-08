@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -128,14 +129,17 @@ export function EnhancedCarousel({
               onClick={() => isPremium && toggleInfo(advertiser.id)}
             >
               {/* Card Image */}
-              <img
-                src={
-                  advertiser.image ||
-                  `/placeholder.svg?height=450&width=350&text=${advertiser.name}`
-                }
-                alt={advertiser.name}
-                className="w-full h-full object-cover"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={
+                    advertiser.image ||
+                    `/placeholder.svg?height=450&width=350&text=${advertiser.name}`
+                  }
+                  alt={advertiser.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70"></div>

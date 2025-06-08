@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState, useEffect, useRef } from 'react';
 import { Heart, MessageCircle, Star } from 'lucide-react';
@@ -81,10 +82,10 @@ const generateProfileCards = (count: number): ProfileCard[] => {
 
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
-    name: names[i % names.length],
+    name: names[i % names.length] || 'Unknown',
     age: Math.floor(Math.random() * 26) + 20,
-    city: cities[i % cities.length],
-    image: getFemaleImageByIndex((i % 29) + 1),
+    city: cities[i % cities.length] || 'Unknown City',
+    image: `/assets/img/profiles/random${(i % 16) + 1}.jpg`,
     rating: Math.round((Math.random() * 2 + 3) * 10) / 10,
     isOnline: Math.random() > 0.6,
     price: `$${Math.floor(Math.random() * 200) + 100}`,
@@ -118,6 +119,7 @@ export function InfiniteScrollGrid() {
       container.addEventListener('scroll', handleScroll);
       return () => container.removeEventListener('scroll', handleScroll);
     }
+    return undefined;
   }, []);
 
   const getRowStyle = (rowIndex: number) => {
@@ -163,11 +165,12 @@ export function InfiniteScrollGrid() {
                 key={profile.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
               >
-                <div className="relative">
-                  <img
+                <div className="relative h-64">
+                  <Image
                     src={profile.image || getFemaleImageByIndex(profile.id)}
                     alt={profile.name}
-                    className="w-full h-64 object-cover"
+                    fill
+                    className="object-cover"
                   />
                   {profile.isOnline && (
                     <div className="absolute top-3 right-3 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>

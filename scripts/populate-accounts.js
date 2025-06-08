@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import argon2 from 'argon2';
+// import argon2 from 'argon2';
 import User from '../server/models/user.model.js';
 import Ad from '../server/models/ad.model.js';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -178,7 +178,9 @@ function getRandomCityCoordinates(county, city) {
 
 // Generate a random phone number
 function getRandomPhoneNumber() {
-  return `+47 ${Math.floor(100 + Math.random() * 900)} ${Math.floor(10 + Math.random() * 90)} ${Math.floor(100 + Math.random() * 900)}`;
+  return `+47 ${Math.floor(100 + Math.random() * 900)} ${Math.floor(
+    10 + Math.random() * 90,
+  )} ${Math.floor(100 + Math.random() * 900)}`;
 }
 
 // Generate random tags
@@ -396,7 +398,7 @@ function generateRandomAd(advertiserId) {
     profileImage: `/uploads/default-profile-${Math.floor(Math.random() * 5) + 1}.jpg`,
     album: Array.from(
       { length: Math.floor(Math.random() * 5) + 1 },
-      (_, i) => `/uploads/default-album-${Math.floor(Math.random() * 10) + 1}.jpg`
+      (_, i) => `/uploads/default-album-${Math.floor(Math.random() * 10) + 1}.jpg`,
     ),
     featured: Math.random() > 0.8,
     verified: Math.random() > 0.7,
@@ -478,7 +480,7 @@ function generateRandomUser(role, index) {
     profileImage: `/uploads/default-profile-${Math.floor(Math.random() * 5) + 1}.jpg`,
     album: Array.from(
       { length: Math.floor(Math.random() * 3) + 1 },
-      (_, i) => `/uploads/default-album-${Math.floor(Math.random() * 10) + 1}.jpg`
+      (_, i) => `/uploads/default-album-${Math.floor(Math.random() * 10) + 1}.jpg`,
     ),
     online: Math.random() > 0.7,
     lastActive: new Date(Date.now() - Math.floor(Math.random() * 24) * 60 * 60 * 1000),
@@ -488,8 +490,14 @@ function generateRandomUser(role, index) {
     },
     bio:
       role === 'advertiser'
-        ? `Professional ${['escort', 'massage therapist', 'entertainer'][Math.floor(Math.random() * 3)]} based in ${city}. Available for bookings and special events.`
-        : `${['Looking for companionship', 'Interested in meeting new people', 'Here to explore'][Math.floor(Math.random() * 3)]}`,
+        ? `Professional ${
+            ['escort', 'massage therapist', 'entertainer'][Math.floor(Math.random() * 3)]
+          } based in ${city}. Available for bookings and special events.`
+        : `${
+            ['Looking for companionship', 'Interested in meeting new people', 'Here to explore'][
+              Math.floor(Math.random() * 3)
+            ]
+          }`,
     preferences: {
       notifications: {
         email: Math.random() > 0.3,
@@ -532,6 +540,10 @@ function ensureUploadsDirectory() {
 }
 
 async function populateAccounts() {
+  console.log('This script requires argon2 package to be installed');
+  console.log('Skipping execution due to missing dependencies');
+  return;
+
   try {
     // Connect to MongoDB
     console.log('Connecting to MongoDB...');

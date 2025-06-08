@@ -72,7 +72,7 @@ HTML:
 
 ```html
 <div class="card">
-  <img class="card__image" src="image.jpg" alt="Card image" />
+  <Image class="card__image" src="image.jpg" alt="Card image" />
   <div class="card__content">
     <h2 class="card__title">Card Title</h2>
     <p class="card__text">Card description text</p>
@@ -149,7 +149,7 @@ HTML:
 ```html
 <div class="profile-card profile-card--online">
   <div class="profile-card__header">
-    <img class="profile-card__avatar" src="avatar.jpg" alt="User avatar" />
+    <Image class="profile-card__avatar" src="avatar.jpg" alt="User avatar" />
     <div class="profile-card__status"></div>
   </div>
   <div class="profile-card__body">

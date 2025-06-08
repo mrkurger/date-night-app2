@@ -1,72 +1,72 @@
-"use client"
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Star, MessageCircle, Video, DollarSign } from "lucide-react"
-import { FavoriteButton } from "@/components/favorites/favorite-button"
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Star, MessageCircle, Video, DollarSign } from 'lucide-react';
+import { FavoriteButton } from '@/components/favorites/favorite-button';
 
 interface Advertiser {
-  id: number
-  name: string
-  age: number
-  location: string
-  description: string
-  tags: string[]
-  image: string
-  rating: number
-  isVip: boolean
-  isOnline: boolean
+  id: number;
+  name: string;
+  age: number;
+  location: string;
+  description: string;
+  tags: string[];
+  image: string;
+  rating: number;
+  isVip: boolean;
+  isOnline: boolean;
 }
 
 interface NetflixViewProps {
-  advertisers: Advertiser[]
-  loadMore?: (page: number) => void
+  advertisers: Advertiser[];
+  loadMore?: (page: number) => void;
 }
 
 export default function NetflixView({ advertisers, loadMore }: NetflixViewProps) {
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-  const observer = useRef<IntersectionObserver | null>(null)
-  const lastCardRef = useRef<HTMLDivElement | null>(null)
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastCardRef = useRef<HTMLDivElement | null>(null);
 
   // Function to handle infinite scrolling
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries
+      const [entry] = entries;
       if (entry.isIntersecting && !loading && loadMore) {
-        setLoading(true)
-        loadMore(page)
-        setPage((prev) => prev + 1)
-        setLoading(false)
+        setLoading(true);
+        loadMore(page);
+        setPage(prev => prev + 1);
+        setLoading(false);
       }
     },
     [loading, loadMore, page],
-  )
+  );
 
   // Set up the intersection observer
   useEffect(() => {
     if (loadMore) {
       observer.current = new IntersectionObserver(handleObserver, {
         root: null,
-        rootMargin: "20px",
+        rootMargin: '20px',
         threshold: 0.1,
-      })
+      });
 
       if (lastCardRef.current) {
-        observer.current.observe(lastCardRef.current)
+        observer.current.observe(lastCardRef.current);
       }
 
       return () => {
         if (observer.current) {
-          observer.current.disconnect()
+          observer.current.disconnect();
         }
-      }
+      };
     }
-  }, [handleObserver, loadMore, advertisers])
+  }, [handleObserver, loadMore, advertisers]);
 
   if (advertisers.length === 0) {
     return (
@@ -74,14 +74,14 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
         <h3 className="text-xl mb-2">No advertisers found</h3>
         <p className="text-gray-400">Try adjusting your search or filters</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {advertisers.map((advertiser, index) => {
         // Check if this is the last card
-        const isLastCard = index === advertisers.length - 1
+        const isLastCard = index === advertisers.length - 1;
 
         return (
           <div key={`${advertiser.id}-${index}`} ref={isLastCard ? lastCardRef : null}>
@@ -92,8 +92,8 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={advertiser.image || "/placeholder.svg"}
+                  <Image
+                    src={advertiser.image || '/placeholder.svg'}
                     alt={advertiser.name}
                     className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
                   />
@@ -102,14 +102,20 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
                   </div>
                   {advertiser.isOnline && (
                     <div className="absolute bottom-2 left-2">
-                      <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500">
+                      <Badge
+                        variant="outline"
+                        className="bg-green-500/20 text-green-400 border-green-500"
+                      >
                         Online Now
                       </Badge>
                     </div>
                   )}
                   {advertiser.isVip && (
                     <div className="absolute bottom-2 right-2">
-                      <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500">
+                      <Badge
+                        variant="outline"
+                        className="bg-amber-500/20 text-amber-400 border-amber-500"
+                      >
                         VIP Content
                       </Badge>
                     </div>
@@ -118,14 +124,22 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
                   {/* Overlay that appears on hover */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300 ${
-                      hoveredCard === advertiser.id ? "opacity-100" : "opacity-0"
+                      hoveredCard === advertiser.id ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
                     <div className="flex gap-2 mb-2">
-                      <Button size="sm" variant="secondary" className="flex-1 bg-pink-600 hover:bg-pink-700 text-white">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="flex-1 bg-pink-600 hover:bg-pink-700 text-white"
+                      >
                         <MessageCircle className="mr-1 h-4 w-4" /> Chat
                       </Button>
-                      <Button size="sm" variant="secondary" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      >
                         <Video className="mr-1 h-4 w-4" /> Video
                       </Button>
                       <Button
@@ -137,7 +151,7 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
                       </Button>
                     </div>
                     <div className="text-xs text-gray-300">
-                      {advertiser.tags.map((tag) => (
+                      {advertiser.tags.map(tag => (
                         <span key={tag} className="mr-2">
                           #{tag}
                         </span>
@@ -162,7 +176,7 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
               </Card>
             </Link>
           </div>
-        )
+        );
       })}
 
       {loading && (
@@ -171,5 +185,5 @@ export default function NetflixView({ advertisers, loadMore }: NetflixViewProps)
         </div>
       )}
     </div>
-  )
+  );
 }

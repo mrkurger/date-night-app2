@@ -2,15 +2,12 @@
 import { EnhancedProfileCarousel } from '@/components/EnhancedProfileCarousel';
 import { InfiniteScrollGrid } from '@/components/InfiniteScrollGrid';
 import { GamifiedContentHub } from '@/components/GamifiedContentHub';
-import EnhancedNavbar from '@/components/enhanced-navbar'; // Added EnhancedNavbar
-
-// file: enhanced-carousel.tsx
-// file: enhanced-carousel.tsx.original
+import EnhancedNavbar from '@/components/enhanced-navbar';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <EnhancedNavbar /> {/* Added EnhancedNavbar */}
+      <EnhancedNavbar />
       {/* Hero Section - reduced height and text sizes */}
       <section className="bg-gradient-to-r from-pink-500 to-purple-600 text-white py-14">
         <div className="container mx-auto px-4 text-center">

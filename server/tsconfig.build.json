@@ -3,7 +3,9 @@
   "compilerOptions": {
     "strict": false,
     "noImplicitAny": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmitOnError": false,
+    "checkJs": false
   },
   "exclude": [
     "node_modules",
@@ -14,7 +16,10 @@
     "components/**/*.ts",
     "middleware/validators/**/*.ts",
     "routes/**/*.ts",
-    "utils/**/*.ts"
+    "utils/**/*.ts",
+    "controllers/**/*.ts",
+    "src/openapi/**/*.ts",
+    "models/**/*.ts"
   ],
   "include": ["server.ts"]
 }

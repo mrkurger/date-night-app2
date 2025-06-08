@@ -356,7 +356,7 @@ export default function EnhancedNavbar() {
                               {item.label}
                             </span>
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent className="bg-background/90 backdrop-blur-lg">
+                          <NavigationMenuContent className="bg-background/85 backdrop-blur-lg shadow-lg border border-border/20 z-50">
                             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                               {item.children.map(child => (
                                 <li key={child.href}>
@@ -417,7 +417,7 @@ export default function EnhancedNavbar() {
                         More
                       </span>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent>
+                    <NavigationMenuContent className="bg-background/85 backdrop-blur-lg shadow-lg border border-border/20 z-50">
                       <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                         {moreNavItems.map(item => (
                           <li key={item.href}>
@@ -481,7 +481,7 @@ export default function EnhancedNavbar() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
-                      className="w-56 bg-background/90 backdrop-blur-lg"
+                      className="w-56 bg-background/85 backdrop-blur-lg shadow-lg border border-border/20 z-50"
                     >
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />

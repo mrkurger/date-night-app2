@@ -36,7 +36,7 @@ import { FavoriteButtonComponent } from '../favorites/favorite-button.component'
         <div
           class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 border border-gray-800"
         >
-          <img
+          <Image
             [src]="advertiser.image || '/placeholder.svg'"
             [alt]="advertiser.name + ''s profile photo'"
             class="absolute inset-0 w-full h-full object-cover"

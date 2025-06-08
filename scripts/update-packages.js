@@ -7,7 +7,8 @@
 
 import { execSync } from 'child_process';
 import path from 'path';
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import { fileURLToPath } from 'url';
 
 // Define paths using ES modules approach
@@ -38,7 +39,7 @@ async function updatePackages(dir, name) {
   console.log(`${colors.magenta}Updating packages in ${name}...${colors.reset}`);
 
   try {
-    await fs.access(path.join(dir, 'package.json'));
+    await fsPromises.access(path.join(dir, 'package.json'));
   } catch (error) {
     console.log(`${colors.yellow}No package.json found in ${name}, skipping...${colors.reset}`);
     return;
@@ -51,7 +52,7 @@ async function updatePackages(dir, name) {
     console.log(`${colors.green}Successfully updated packages in ${name}!${colors.reset}\n`);
   } catch (error) {
     console.error(
-      `${colors.red}Error updating packages in ${name}: ${error.message}${colors.reset}\n`
+      `${colors.red}Error updating packages in ${name}: ${error.message}${colors.reset}\n`,
     );
   }
 }

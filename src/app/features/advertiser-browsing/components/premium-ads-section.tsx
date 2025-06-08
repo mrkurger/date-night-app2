@@ -1,52 +1,52 @@
-"use client"
+'use client';
 
-import { useState, useRef } from "react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Star, MessageCircle, Video, DollarSign, ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { FavoriteButton } from "@/components/favorites/favorite-button"
-import { cn } from "@/lib/utils"
+import { useState, useRef } from 'react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Star, MessageCircle, Video, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { FavoriteButton } from '@/components/favorites/favorite-button';
+import { cn } from '@/lib/utils';
 
 interface PremiumAd {
-  id: number | string
-  name: string
-  age: number
-  location: string
-  description: string
-  tags: string[]
-  image: string
-  rating: number
-  isVip: boolean
-  isOnline: boolean
-  isPremium: boolean
+  id: number | string;
+  name: string;
+  age: number;
+  location: string;
+  description: string;
+  tags: string[];
+  image: string;
+  rating: number;
+  isVip: boolean;
+  isOnline: boolean;
+  isPremium: boolean;
 }
 
 interface PremiumAdsSectionProps {
-  premiumAds?: PremiumAd[]
+  premiumAds?: PremiumAd[];
 }
 
 export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSectionProps) {
-  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // If no premium ads are provided, return nothing
   if (premiumAds.length === 0) {
-    return null
+    return null;
   }
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" })
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
-  }
+  };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" })
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
-  }
+  };
 
   return (
     <div className="mb-8 relative">
@@ -67,8 +67,11 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
         </button>
 
         {/* Scrollable container */}
-        <div ref={scrollContainerRef} className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory no-scrollbar">
-          {premiumAds.map((ad) => (
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory no-scrollbar"
+        >
+          {premiumAds.map(ad => (
             <div key={ad.id} className="min-w-[280px] snap-start">
               <Link href={`/advertiser/${ad.id}`}>
                 <Card
@@ -77,7 +80,7 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
+                    <Image
                       src={ad.image || `/placeholder.svg?height=400&width=300&text=${ad.name}`}
                       alt={ad.name}
                       className="object-cover w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
@@ -92,14 +95,20 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
                     </div>
                     {ad.isOnline && (
                       <div className="absolute bottom-2 left-2">
-                        <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500">
+                        <Badge
+                          variant="outline"
+                          className="bg-green-500/20 text-green-400 border-green-500"
+                        >
                           Online Now
                         </Badge>
                       </div>
                     )}
                     {ad.isVip && (
                       <div className="absolute bottom-2 right-2">
-                        <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500">
+                        <Badge
+                          variant="outline"
+                          className="bg-amber-500/20 text-amber-400 border-amber-500"
+                        >
                           VIP Content
                         </Badge>
                       </div>
@@ -108,8 +117,8 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
                     {/* Overlay that appears on hover */}
                     <div
                       className={cn(
-                        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300",
-                        hoveredCard === ad.id ? "opacity-100" : "opacity-0",
+                        'absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300',
+                        hoveredCard === ad.id ? 'opacity-100' : 'opacity-0',
                       )}
                     >
                       <div className="flex gap-2 mb-2">
@@ -136,7 +145,7 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
                         </Button>
                       </div>
                       <div className="text-xs text-gray-300">
-                        {ad.tags.map((tag) => (
+                        {ad.tags.map(tag => (
                           <span key={tag} className="mr-2">
                             #{tag}
                           </span>
@@ -173,5 +182,5 @@ export default function PremiumAdsSection({ premiumAds = [] }: PremiumAdsSection
         </button>
       </div>
     </div>
-  )
+  );
 }

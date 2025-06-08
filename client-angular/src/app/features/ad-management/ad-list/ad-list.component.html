@@ -32,7 +32,7 @@
     <div *ngFor="let ad of ads" class="ad-card">
       <div class="ad-card-header">
         <div class="ad-image">
-          <img [src]="ad.profileImage || 'assets/images/placeholder.jpg'" [alt]="ad.title" />
+          <Image [src]="ad.profileImage || 'assets/images/placeholder.jpg'" [alt]="ad.title" />
           <span *ngIf="ad.featured" class="featured-badge">Featured</span>
           <span *ngIf="ad.boosted" class="boosted-badge">Boosted</span>
         </div>

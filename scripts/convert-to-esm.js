@@ -1,5 +1,6 @@
 // scripts/convert-to-esm.js
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -88,7 +89,7 @@ async function shouldProcessFile(filePath) {
 
 async function convertFile(filePath) {
   try {
-    let content = await fs.readFile(filePath, 'utf-8');
+    let content = await fsPromises.readFile(filePath, 'utf-8');
     let modified = false;
 
     // Add .js extension to relative imports if missing
@@ -123,7 +124,7 @@ async function convertFile(filePath) {
     }
 
     if (modified) {
-      await fs.writeFile(filePath, content, 'utf-8');
+      await fsPromises.writeFile(filePath, content, 'utf-8');
       console.log(`✅ Converted: ${filePath}`);
       return true;
     }
@@ -139,11 +140,11 @@ async function createBackup(directory) {
   console.log(`📦 Creating backup in: ${backupDir}`);
 
   try {
-    await fs.mkdir(backupDir, { recursive: true });
+    await fsPromises.mkdir(backupDir, { recursive: true });
 
     async function copyRecursive(src) {
       try {
-        const entries = await fs.readdir(src, { withFileTypes: true });
+        const entries = await fsPromises.readdir(src, { withFileTypes: true });
 
         for (const entry of entries) {
           const srcPath = path.join(src, entry.name);
@@ -164,12 +165,12 @@ async function createBackup(directory) {
 
           try {
             if (entry.isDirectory()) {
-              await fs.mkdir(destPath, { recursive: true });
+              await fsPromises.mkdir(destPath, { recursive: true });
               await copyRecursive(srcPath);
             } else {
               if (await shouldProcessFile(srcPath)) {
-                await fs.mkdir(path.dirname(destPath), { recursive: true });
-                await fs.copyFile(srcPath, destPath);
+                await fsPromises.mkdir(path.dirname(destPath), { recursive: true });
+                await fsPromises.copyFile(srcPath, destPath);
               }
             }
           } catch (err) {
@@ -196,14 +197,14 @@ async function createBackup(directory) {
 
 async function processDirectory(dirPath) {
   try {
-    const files = await fs.readdir(dirPath);
+    const files = await fsPromises.readdir(dirPath);
     let convertedCount = 0;
 
     for (const file of files) {
       const fullPath = path.join(dirPath, file);
 
       try {
-        const stats = await fs.stat(fullPath);
+        const stats = await fsPromises.stat(fullPath);
 
         if (stats.isDirectory()) {
           // Skip ignored directories
@@ -245,10 +246,10 @@ async function main() {
   // Add type: "module" to package.json first
   try {
     const packageJsonPath = path.join(rootDir, 'package.json');
-    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+    const packageJson = JSON.parse(await fsPromises.readFile(packageJsonPath, 'utf-8'));
     if (!packageJson.type) {
       packageJson.type = 'module';
-      await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+      await fsPromises.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
       console.log('✅ Added "type": "module" to package.json');
     }
   } catch (error) {
@@ -260,7 +261,7 @@ async function main() {
   const backupSuccess = await createBackup(rootDir);
   if (!backupSuccess) {
     console.log(
-      '⚠️ Proceeding without backup. Press Ctrl+C to cancel or any other key to continue...'
+      '⚠️ Proceeding without backup. Press Ctrl+C to cancel or any other key to continue...',
     );
     await new Promise(resolve => {
       process.stdin.setRawMode(true);

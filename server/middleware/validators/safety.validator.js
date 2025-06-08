@@ -2,7 +2,7 @@
  * Validation middleware for safety-related routes
  */
 import { z } from 'zod';
-import { zodSchemas } from '../../utils/validation-utils';
+import { zodSchemas } from '../../utils/validation-utils.js';
 
 export const SafetySchemas = {
   // Schema for check-in data

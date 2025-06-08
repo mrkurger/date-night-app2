@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { PWAService } from '@/services/pwa.service';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/toast';
+import { toast } from '@/hooks/use-toast';
 
 export function PWASetup() {
   const [installPrompt, setInstallPrompt] = useState<any>(null);
@@ -55,7 +55,6 @@ export function PWASetup() {
       toast({
         title: 'App installed',
         description: 'Carousely has been installed successfully!',
-        variant: 'success',
         duration: 3000,
       });
       setInstallPrompt(null);
@@ -86,7 +85,6 @@ export function PWASetup() {
         toast({
           title: 'Installing app',
           description: 'Carousely is being installed',
-          variant: 'success',
           duration: 3000,
         });
       }

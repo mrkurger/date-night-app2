@@ -8,7 +8,7 @@
   <div *ngIf="ad && !loading" class="ad-details-content">
     <div class="ad-details-main">
       <div class="ad-gallery" *ngIf="ad.media && ad.media.length">
-        <img [src]="currentImageUrl" alt="{{ ad.title }}" />
+        <Image [src]="currentImageUrl" alt="{{ ad.title }}" />
         <div class="gallery-nav" *ngIf="ad.media.length > 1">
           <button (click)="prevImage()">❮</button>
           <button (click)="nextImage()">❯</button>

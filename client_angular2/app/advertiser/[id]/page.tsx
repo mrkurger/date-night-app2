@@ -1,5 +1,10 @@
-import AdvertiserDetailClient from "./client"
+import AdvertiserDetailClient from './client';
 
-export default function AdvertiserDetailPage({ params }: { params: { id: string } }) {
-  return <AdvertiserDetailClient id={params.id} />
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function AdvertiserDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  return <AdvertiserDetailClient id={id} />;
 }

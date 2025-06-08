@@ -222,7 +222,7 @@ function createDocumentationMapping(featureName, codeFolders) {
   const docsFeatureFolderPath = path.join(config.docsDir, 'features', featureName.toLowerCase());
   if (fs.existsSync(docsFeatureFolderPath)) {
     try {
-      const featureDocs = glob(`${docsFeatureFolderPath}/**/*.md`, { sync: true });
+      const featureDocs = glob.sync(`${docsFeatureFolderPath}/**/*.md`);
       if (Array.isArray(featureDocs)) {
         sourceFiles.push(...featureDocs);
       } else {
@@ -245,7 +245,7 @@ function createDocumentationMapping(featureName, codeFolders) {
   // Look for imports in TypeScript files
   let tsFiles = [];
   try {
-    tsFiles = glob(`${featureFolder}/**/*.ts`, { sync: true });
+    tsFiles = glob.sync(`${featureFolder}/**/*.ts`);
     if (!Array.isArray(tsFiles)) {
       tsFiles = [];
       logVerbose(`Warning: glob did not return an array for ${featureFolder}/**/*.ts`);

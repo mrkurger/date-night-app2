@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, type PanInfo, useAnimation } from 'framer-motion';
@@ -113,10 +114,11 @@ export default function TinderView({ advertisers }: TinderViewProps) {
           >
             <Card className="w-full h-full overflow-hidden relative group">
               <div className="absolute inset-0">
-                <img
+                <Image
                   src={currentAdvertiser.image || '/placeholder.svg?height=600&width=400'}
                   alt={currentAdvertiser.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
 
@@ -276,10 +278,11 @@ export default function TinderView({ advertisers }: TinderViewProps) {
             <Link key={ad.id} href={`/advertiser/${ad.id}`}>
               <Card className="overflow-hidden hover:shadow-md transition-shadow">
                 <div className="aspect-[3/4] relative">
-                  <img
+                  <Image
                     src={ad.image || '/placeholder.svg?height=400&width=300'}
                     alt={ad.name}
-                    className="object-cover w-full h-full"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute top-2 right-2">
                     <Badge className="bg-gray-800/70">Sponsored</Badge>

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
@@ -13,13 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import EnhancedNavbar from '@/components/enhanced-navbar'; // Corrected import
 import { Footer } from '@/components/footer'; // Corrected import
@@ -300,11 +295,12 @@ const SearchPage: React.FC = () => {
                 key={adv.id}
                 className="bg-gray-800 border-gray-700 shadow-lg hover:shadow-pink-500/30 transition-shadow duration-300 flex flex-col"
               >
-                <CardHeader className="p-0">
-                  <img
+                <CardHeader className="p-0 relative h-64">
+                  <Image
                     src={adv.image}
                     alt={adv.name}
-                    className="w-full h-64 object-cover rounded-t-lg"
+                    fill
+                    className="object-cover rounded-t-lg"
                   />
                 </CardHeader>
                 <CardContent className="p-4 flex-grow">

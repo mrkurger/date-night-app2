@@ -1,7 +1,10 @@
 // Custom type definitions for middleware
 import { NextFunction, Request, Response } from 'express';
 import { ZodSchema, ZodError } from 'zod';
-import { ParamsDictionary } from 'express-serve-static-core';
+import {
+  ParamsDictionary,
+  RequestHandler as ExpressRequestHandler,
+} from 'express-serve-static-core';
 import { RateLimitRequestHandler } from 'express-rate-limit';
 
 // Make express-rate-limit compatible with express
@@ -58,13 +61,24 @@ export type ErrorHandlerMiddleware = (
 ) => void;
 
 // RequestHandler type that ensures compatibility with express middleware
-export type RequestHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => void | Promise<void>;
+export type RequestHandler = ExpressRequestHandler;
 
 // For validating with Zod
 export interface ZodSchemaMap {
   [key: string]: ZodSchema;
+}
+
+// Extended Request interface for custom properties
+declare global {
+  namespace Express {
+    interface Request {
+      correlationId?: string;
+      user?: {
+        id: string;
+        role: string;
+        [key: string]: any;
+      };
+      [key: string]: any;
+    }
+  }
 }

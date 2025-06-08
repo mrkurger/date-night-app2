@@ -145,7 +145,15 @@ const mockConversations: Conversation[] = [
     avatar: mockUser2.avatar,
     lastMessage: mockMessages
       .filter(m => m.conversationId === 'conv1')
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0],
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] || {
+      id: 'default',
+      conversationId: 'conv1',
+      sender: 'System',
+      text: 'No messages yet',
+      timestamp: new Date().toISOString(),
+      avatar: '/placeholder.svg',
+      isRead: true
+    },
     timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
     unreadCount: 1,
   },
@@ -156,7 +164,15 @@ const mockConversations: Conversation[] = [
     avatar: mockUser3.avatar,
     lastMessage: mockMessages
       .filter(m => m.conversationId === 'conv2')
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0],
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] || {
+      id: 'default',
+      conversationId: 'conv2',
+      sender: 'System',
+      text: 'No messages yet',
+      timestamp: new Date().toISOString(),
+      avatar: '/placeholder.svg',
+      isRead: true
+    },
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     unreadCount: 0,
   },
@@ -167,7 +183,15 @@ const mockConversations: Conversation[] = [
     avatar: mockUser4.avatar,
     lastMessage: mockMessages
       .filter(m => m.conversationId === 'conv3')
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0],
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0] || {
+      id: 'default',
+      conversationId: 'conv3',
+      sender: 'System',
+      text: 'No messages yet',
+      timestamp: new Date().toISOString(),
+      avatar: '/placeholder.svg',
+      isRead: true
+    },
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
     unreadCount: 0,
   },
@@ -178,7 +202,7 @@ const currentUser: User = mockUser1;
 const MessagesPage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>(mockConversations);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(
-    mockConversations[0],
+    mockConversations[0] || null,
   );
   const [messages, setMessages] = useState<Message[]>(
     mockMessages.filter(m => m.conversationId === mockConversations[0]?.id),

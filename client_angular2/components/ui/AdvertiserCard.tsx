@@ -41,8 +41,8 @@ const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser }) => {
       <Image
         src={getProfileImage(advertiser)}
         alt={advertiser.name}
-        width={advertiser.imageWidth || 400}
-        height={advertiser.imageHeight || 600}
+        width={Number(advertiser.imageWidth) || 400}
+        height={Number(advertiser.imageHeight) || 600}
         className="w-full h-auto object-cover"
         priority={false}
       />

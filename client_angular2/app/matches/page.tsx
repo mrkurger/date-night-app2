@@ -1,7 +1,8 @@
 'use client';
+import Image from 'next/image';
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -120,9 +121,24 @@ const mockMatches: Match[] = [
 ];
 
 const MatchesPage: React.FC = () => {
-  const [matches, setMatches] = useState<Match[]>(mockMatches);
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      const response = await fetch(`/api/matches?page=${page}`);
+      const data = await response.json();
+      setMatches(prevMatches => [...prevMatches, ...data]);
+    };
+
+    fetchMatches();
+  }, [page]);
+
+  const loadMoreMatches = () => {
+    setPage(prevPage => prevPage + 1);
+  };
 
   const filteredMatches = matches.filter(match => {
     const matchesSearch =
@@ -248,11 +264,12 @@ const MatchesPage: React.FC = () => {
                       key={match.id}
                       className="overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <div className="relative">
-                        <img
-                          src={match.photos[0]}
+                      <div className="relative h-48">
+                        <Image
+                          src={match.photos[0] || '/placeholder.svg'}
                           alt={match.name}
-                          className="w-full h-48 object-cover"
+                          fill
+                          className="object-cover"
                         />
 
                         {/* Online indicator */}
@@ -347,6 +364,13 @@ const MatchesPage: React.FC = () => {
               )}
             </TabsContent>
           </Tabs>
+
+          {/* Load more button */}
+          <div className="mt-8 text-center">
+            <Button onClick={loadMoreMatches} variant="outline">
+              Load More Matches
+            </Button>
+          </div>
         </main>
       </div>
       <Footer />

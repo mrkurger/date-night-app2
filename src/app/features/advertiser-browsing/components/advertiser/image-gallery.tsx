@@ -1,43 +1,47 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ImageGalleryProps {
-  images: string[]
-  className?: string
+  images: string[];
+  className?: string;
 }
 
 export function ImageGallery({ images, className }: ImageGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1))
-  }
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+  };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1))
-  }
+    setCurrentIndex(prevIndex => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+  };
 
   const goToImage = (index: number) => {
-    setCurrentIndex(index)
-  }
+    setCurrentIndex(index);
+  };
 
   return (
-    <div className={cn("relative rounded-lg overflow-hidden", className)}>
+    <div className={cn('relative rounded-lg overflow-hidden', className)}>
       {/* Main image */}
       <div className="aspect-[4/3] relative">
         {images.map((image, index) => (
           <div
             key={index}
             className={cn(
-              "absolute inset-0 transition-opacity duration-300",
-              index === currentIndex ? "opacity-100" : "opacity-0",
+              'absolute inset-0 transition-opacity duration-300',
+              index === currentIndex ? 'opacity-100' : 'opacity-0',
             )}
           >
-            <img src={image || "/placeholder.svg"} alt={`Image ${index + 1}`} className="w-full h-full object-cover" />
+            <Image
+              src={image || '/placeholder.svg'}
+              alt={`Image ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
 
@@ -66,13 +70,13 @@ export function ImageGallery({ images, className }: ImageGalleryProps) {
           <button
             key={index}
             className={cn(
-              "h-16 w-16 flex-shrink-0 rounded-md overflow-hidden transition-all",
-              index === currentIndex ? "ring-2 ring-pink-500" : "opacity-70 hover:opacity-100",
+              'h-16 w-16 flex-shrink-0 rounded-md overflow-hidden transition-all',
+              index === currentIndex ? 'ring-2 ring-pink-500' : 'opacity-70 hover:opacity-100',
             )}
             onClick={() => goToImage(index)}
           >
-            <img
-              src={image || "/placeholder.svg"}
+            <Image
+              src={image || '/placeholder.svg'}
               alt={`Thumbnail ${index + 1}`}
               className="h-full w-full object-cover"
             />
@@ -80,5 +84,5 @@ export function ImageGallery({ images, className }: ImageGalleryProps) {
         ))}
       </div>
     </div>
-  )
+  );
 }

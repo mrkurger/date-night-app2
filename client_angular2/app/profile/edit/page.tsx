@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import * as React from 'react';
 import { useState, useContext } from 'react';
@@ -354,11 +355,12 @@ const ProfileEditPage: React.FC = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {profile.photos.map((photo, index) => (
                     <div key={index} className="relative group">
-                      <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                        <img
+                      <div className="aspect-square rounded-lg overflow-hidden bg-muted relative">
+                        <Image
                           src={photo}
                           alt={`Profile photo ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       </div>
 

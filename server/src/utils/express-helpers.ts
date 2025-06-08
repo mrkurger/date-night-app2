@@ -2,7 +2,8 @@
  * Helper functions to assert Express request handlers for TypeScript compatibility
  */
 import { Request, Response, NextFunction } from 'express';
-import { RequestHandler } from 'express-serve-static-core';
+import { RequestHandler } from '../types/middleware.js';
+import { ControllerMethod, ValidatorMiddleware } from '../types/express-enhanced.js';
 
 /**
  * Asserts that a function is a valid Express request handler
@@ -17,4 +18,33 @@ export function assertRequestHandler(handler: any): RequestHandler {
  */
 export function assertRequestHandlers(handlers: any[]): RequestHandler[] {
   return handlers as RequestHandler[];
+}
+
+/**
+ * Type-safe wrapper for controller methods
+ * @param handler The request handler function
+ * @returns TypeScript-friendly request handler
+ */
+export function controllerMethod(
+  handler: (req: Request, res: Response, next?: NextFunction) => Promise<any> | any
+): RequestHandler {
+  return handler as RequestHandler;
+}
+
+/**
+ * Type-safe wrapper for validator middleware
+ * @param validator The validator function
+ * @returns TypeScript-friendly middleware function
+ */
+export function asValidatorMiddleware(validator: any): ValidatorMiddleware {
+  return validator as ValidatorMiddleware;
+}
+
+/**
+ * Helper function to ensure Express middleware compatibility
+ * @param middleware Any middleware function
+ * @returns Express-compatible middleware function
+ */
+export function asMiddleware<T extends Function>(middleware: T): RequestHandler {
+  return middleware as unknown as RequestHandler;
 }

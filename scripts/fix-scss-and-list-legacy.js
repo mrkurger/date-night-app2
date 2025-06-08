@@ -39,7 +39,8 @@ const CSS_IMPORTS_TO_REMOVE = [
 ];
 
 const INVALID_VAR_ASSIGN = /^\s*var\(--([^)]+)\)\s*:\s*([^;]+);/gm;
-const INVALID_FOR_LOOP = /^\s*@for\s+var\(--([^)]+)\)\s+from\s+([^\s]+)\s+through\s+([^\s]+)\s*\{/gm;
+const INVALID_FOR_LOOP =
+  /^\s*@for\s+var\(--([^)]+)\)\s+from\s+([^\s]+)\s+through\s+([^\s]+)\s*\{/gm;
 const INVALID_SCSS_FN = /color\.adjust\([^)]+\)/g;
 
 const legacyFiles = new Set();
@@ -54,7 +55,10 @@ async function scanAndFixFile(filePath) {
   // Remove invalid CSS imports
   for (const pattern of CSS_IMPORTS_TO_REMOVE) {
     if (pattern.test(content)) {
-      content = content.replace(pattern, '/* Removed invalid CSS import (should be in angular.json) */');
+      content = content.replace(
+        pattern,
+        '/* Removed invalid CSS import (should be in angular.json) */',
+      );
       changed = true;
     }
   }
@@ -66,28 +70,30 @@ async function scanAndFixFile(filePath) {
   });
 
   // Remove invalid @for loops using CSS variables
-  content = content.replace(INVALID_FOR_LOOP, (match) => {
+  content = content.replace(INVALID_FOR_LOOP, match => {
     changed = true;
     return `/* TODO: Invalid @for loop using CSS variable removed: ${match} */`;
   });
 
   // Remove invalid SCSS function calls with CSS variables
-  content = content.replace(INVALID_SCSS_FN, (match) => {
+  content = content.replace(INVALID_SCSS_FN, match => {
     changed = true;
     return `/* TODO: Invalid SCSS function call with CSS variable removed: ${match} */`;
   });
 
   // Auto-replace legacy variables with Nebular/CSS custom properties
-  for (const [pattern, replacement] of REPLACEMENTS) {
-    if (pattern.test(content)) {
-      content = content.replace(pattern, replacement);
+  for (const replacement of REPLACEMENTS) {
+    const pattern = replacement[0];
+    const replacementText = replacement[1];
+    if (pattern instanceof RegExp && typeof replacementText === 'string' && pattern.test(content)) {
+      content = content.replace(pattern, replacementText);
       changed = true;
     }
   }
 
   // List legacy references
   for (const pattern of LEGACY_PATTERNS) {
-    if (pattern.test(content)) {
+    if (pattern instanceof RegExp && pattern.test(content)) {
       legacyFiles.add(filePath);
     }
   }

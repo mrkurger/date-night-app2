@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { getFallbackFemaleImage, isValidImageUrl } from '@/lib/data';
 
@@ -27,8 +28,10 @@ export function ProfileAvatar({ src, name, size = 'md', className, userId }: Pro
   const getInitials = (name: string) => {
     if (!name) return '?';
     const parts = name.split(' ');
-    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+    if (parts.length === 1) return parts[0]?.charAt(0).toUpperCase() || 'U';
+    const firstInitial = parts[0]?.charAt(0) || '';
+    const lastInitial = parts[parts.length - 1]?.charAt(0) || '';
+    return (firstInitial + lastInitial).toUpperCase();
   };
 
   const initials = getInitials(name);
@@ -39,10 +42,11 @@ export function ProfileAvatar({ src, name, size = 'md', className, userId }: Pro
 
   return (
     <div className={cn('relative rounded-full overflow-hidden', sizeClasses[size], className)}>
-      <img
+      <Image
         src={imageSource}
         alt={name}
-        className="w-full h-full object-cover"
+        fill
+        className="object-cover"
         onError={() => {
           // If the female image also fails, show initials
           setImageError(true);

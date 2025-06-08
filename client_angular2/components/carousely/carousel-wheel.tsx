@@ -32,7 +32,7 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(0);
   const [wheelRotation, setWheelRotation] = useState(0);
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const [visibleCards, setVisibleCards] = useState<number[]>([0, 1, 2, 3, 4]);
   const wheelRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -62,7 +62,8 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
 
     // If we've calculated less than 5 cards or half the total, add more
     while (visibleIndexes.length < Math.min(5, Math.ceil(totalCards / 2))) {
-      const nextIndex = (visibleIndexes[visibleIndexes.length - 1] + 1) % totalCards;
+      const lastIndex = visibleIndexes[visibleIndexes.length - 1];
+      const nextIndex = lastIndex !== undefined ? (lastIndex + 1) % totalCards : 0;
       if (!visibleIndexes.includes(nextIndex)) {
         visibleIndexes.push(nextIndex);
       } else {
@@ -77,7 +78,7 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
   // Handle wheel rotation via drag
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     if ('touches' in e) {
-      setDragStartX(e.touches[0].clientX);
+      setDragStartX(e.touches[0]?.clientX || 0);
     } else {
       setDragStartX(e.clientX);
     }
@@ -88,7 +89,7 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
 
     let clientX;
     if ('touches' in e) {
-      clientX = e.touches[0].clientX;
+      clientX = e.touches[0]?.clientX || 0;
     } else {
       clientX = e.clientX;
     }
@@ -105,7 +106,7 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
   // Handle flick-up gesture for "liking"
   const handleFlickUp = (index: number) => {
     if (onSwipe) {
-      onSwipe('right', advertisers[index].id);
+      onSwipe('right', advertisers[index]?.id || '');
 
       // Animate the card flying up
       const cardElement = cardRefs.current[index];
@@ -207,10 +208,11 @@ export function CarouselWheel({ advertisers, onSwipe }: CarouselWheelProps) {
                 {inView && (
                   <>
                     <BlurImage
-                      src={advertiser.images[0]}
+                      src={advertiser.images?.[0] || '/placeholder.svg'}
                       alt={advertiser.name}
-                      fill
-                      className="object-cover"
+                      width={320}
+                      height={400}
+                      className="w-full h-full object-cover"
                       priority={index === activeCardIndex}
                       quality={index === activeCardIndex ? 85 : 70}
                       data-testid="card-image"

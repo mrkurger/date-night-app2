@@ -2593,7 +2593,7 @@ if (fs.existsSync(indexHtmlPath)) {
 // Create a script to update the UI/UX implementation status
 const updateUiUxStatusScript = `
 // Update the UI/UX implementation status in the documentation
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 
 const uiUxImplementationPath = path.join(__dirname, '../docs/ui-ux-implementation.md');

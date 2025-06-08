@@ -1,64 +1,82 @@
-Integrated Developer-Focused Memory & Sequential Thinking Instructions
-Core Workflow for Each Interaction
+Integrated LLM Development Protocol (ILDP)
 
-Context Initialization
-Always begin with "Remembering..." and retrieve relevant technical context
-Assume primary developer interaction unless specified otherwise
-Prioritize retrieval of: current projects, technical decisions, known issues, developer preferences, recent progress
-Sequential Problem Analysis Framework
-Initial Thought Process:
-Establish technical domain (firmware, web dev, RF security, etc.) using memory context
-Assess complexity and break down into manageable components
-Consider established patterns and preferences from memory
-Structured Analysis:
+1. Context Initialization & Retrieval
+	•	At the start of every job/interaction:
+	•	Retrieve relevant project context from memory using available search tools.
+	•	Prioritize: active projects, recent progress, technical decisions, unresolved blockers, developer preferences.
+	•	Always assume the primary interaction is with a developer unless otherwise stated.
 
-Requirements: objectives, constraints, success criteria, architecture fit
-Solution Space: approaches, trade-offs, dependencies, risks
-Implementation: steps, sequence, testing, rollback plans
-Code-Focused Patterns:
+⸻
 
-Data flow tracing → core abstractions → error handling → testing strategy → maintainability
-Architecture thinking: separation of concerns, interfaces, scalability, performance
-3. Information Categories to Monitor & Store
-Technical Profile: languages, frameworks, tools, environment setup, coding standards, testing approaches
-Project Context: repositories, architecture, dependencies, team structure, status
-Problem-Solving Patterns: debugging approaches, solutions, error patterns, optimization strategies
-Development Workflow: methodologies, code review, CI/CD, version control practices
+2. Task Planning & Execution (Sequential Thinking Framework)
+	•	When task complexity warrants:
+	•	Break work into manageable components using structured analysis:
+	•	Requirements: objectives, constraints, architecture fit.
+	•	Solution Space: approaches, trade-offs, risks.
+	•	Implementation: steps, order, testing, rollback plan.
+	•	For every step:
+	•	Update the memory graph with:
+	•	Status, blockers, decisions, new milestones.
+	•	New patterns, bugs and fixes, technology insights.
+	•	Indicators for rethinking approach: scope changes, new constraints, emerging better solutions.
 
-Proactive Memory Updates During Thinking
-Immediate storage for:
-Technical Decisions: new technologies, architectural choices, rationale
-Problem Solutions: bugs/issues with solutions, debugging steps, successful methods
-Project Evolution: features, milestones, dependency updates, configuration changes
-Knowledge Growth: new concepts, patterns, techniques, skill development
-5. Iterative Refinement & Revision
-Use revision thinking when:
+⸻
 
-Complexity exceeds initial assessment
-New information changes scope
-Better solutions emerge
-Integration challenges appear
-Revision indicators: "Wait, I need to reconsider..." / "Actually, there's a better approach..."
+3. Coding and Quality Enforcement
+	•	Always use absolute file paths in terminal commands.
+	•	After code edits or implementations:
+	•	Run linting tools (e.g., npm run lint)
+	•	Type check TypeScript (tsc --noEmit)
+	•	For frontend-related changes:
+	•	Execute Playwright end-to-end tests.
+	•	Ensure functionality, regression safety, UI correctness.
 
-Entity & Relationship Structure
-Key Entities: Projects, Technologies, Issues/Solutions, Code Components, Configurations, Team Members
-Important Relationships: "uses", "works_on", "depends_on", "solved_by", "prefers", "implements", "collaborates_with"
+⸻
 
-Solution Validation & Documentation
-Final verification: Does this solve the problem? Constraints satisfied? Testable? Integrates properly? Unintended consequences?
+4. Project Structure Reference (Hardcoded Context)
+	•	/client_angular2/: Next.js frontend (primary)
+	•	/client-angular/: Angular frontend (legacy/secondary)
 
-Capture reasoning for: technology choices, architecture decisions, trade-off resolutions, implementation strategies
+⸻
 
-Adaptive Strategies by Problem Type
-Debugging: symptoms → root cause → verify fix
-Feature Development: requirements → design → implementation → testing
-Performance: measure → bottlenecks → optimize → validate
-Integration: interfaces → data flow → implement → test end-to-end
+5. Developer Memory and Technical Knowledge Graph
+	•	Actively store the following categories:
+	•	Technical Profile: languages, frameworks, tools, standards.
+	•	Project Context: repositories, architecture, dependencies, team.
+	•	Problem-Solving Patterns: debug steps, solution paths, failures.
+	•	Workflow Methods: CI/CD, version control, review process.
 
-Knowledge Integration
-Before concluding:
+⸻
 
-Update memory with new technical knowledge, project status, decisions, preferences
-Consider team impact: documentation needs, breaking changes, deployment strategy
-Capture learning: new patterns, mistakes/lessons, successful approaches, resources
-This integrated approach ensures both memory and sequential thinking work together as a comprehensive technical knowledge system that supports ongoing development, tracks project evolution, and builds developer expertise through structured problem-solving.
+6. Adaptive Problem-Type Strategies
+	•	Debugging: trace → isolate root cause → fix → verify
+	•	Feature Development: requirements → design → build → test
+	•	Performance: profile → identify bottlenecks → optimize → validate
+	•	Integration: interface mapping → data flow → implementation → end-to-end test
+
+⸻
+
+7. Reasoning Capture & Documentation
+	•	For any important decision:
+	•	Record rationale, alternatives considered, and why the final choice was made.
+	•	Validate final solution:
+	•	All constraints met? Integration smooth? Regression avoided?
+
+⸻
+
+8. Final Checklist for Each Request
+	•	Search memory for context → Plan via sequential analysis (if complex)
+→ Implement → Run lint/type checks → Run tests (if needed) → Update memory with progress & knowledge
+
+⸻
+
+🔁 REMEMBER:
+	•	Use fill prop OR define explicit width/height on all Next.js <Image> components.
+	•	Capture technical insights and decisions as they happen, not just at the end.
+
+⸻
+
+🔄 This Protocol Enables:
+	•	LLMs to operate as structured technical co-pilots
+	•	Continuously improving problem-solving intelligence
+	•	Transparent, traceable, and adaptive development process

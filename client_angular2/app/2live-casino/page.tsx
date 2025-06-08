@@ -151,7 +151,7 @@ export default function EnhancedLiveCasinoPage() {
                     <Card
                       key={dealer.id}
                       className={`cursor-pointer transition-all duration-300 overflow-hidden ${
-                        selectedDealer.id === dealer.id
+                        selectedDealer?.id === dealer.id
                           ? 'border-pink-500 bg-pink-500/10 shadow-lg shadow-pink-500/20'
                           : 'border-gray-600 hover:border-pink-400 bg-gray-800/50 hover:bg-pink-500/5'
                       }`}
@@ -216,9 +216,9 @@ export default function EnhancedLiveCasinoPage() {
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Play className="w-6 h-6 text-pink-400" />
-                  Now Playing: {selectedDealer.game}
+                  Now Playing: {selectedDealer?.game}
                   <Badge className="bg-green-500/20 text-green-300">
-                    Live with {selectedDealer.name}
+                    Live with {selectedDealer?.name}
                   </Badge>
                 </CardTitle>
               </CardHeader>
@@ -226,13 +226,13 @@ export default function EnhancedLiveCasinoPage() {
                 <div className="aspect-video bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-lg flex items-center justify-center mb-4">
                   <div className="text-center">
                     <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-pink-400">
-                      <AvatarImage src={selectedDealer.image} alt={selectedDealer.name} />
+                      <AvatarImage src={selectedDealer?.image} alt={selectedDealer?.name} />
                       <AvatarFallback className="bg-pink-500 text-white text-4xl">
-                        {selectedDealer.name[0]}
+                        {selectedDealer?.name?.[0]}
                       </AvatarFallback>
                     </Avatar>
-                    <h3 className="text-white text-2xl font-bold mb-2">{selectedDealer.name}</h3>
-                    <p className="text-pink-300 mb-4">Hosting {selectedDealer.game}</p>
+                    <h3 className="text-white text-2xl font-bold mb-2">{selectedDealer?.name}</h3>
+                    <p className="text-pink-300 mb-4">Hosting {selectedDealer?.game}</p>
                     <div className="flex justify-center gap-4">
                       <Button className="bg-pink-500 hover:bg-pink-600">
                         <Heart className="w-4 h-4 mr-2" />

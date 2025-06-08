@@ -6,21 +6,6 @@
     "auditLog": "/Users/oivindlund/date-night-app/server/logs/.c51afaba8b12641705b47d902b93477968f5453d-audit.json",
     "files": [
         {
-            "date": 1747353917266,
-            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-16.log",
-            "hash": "a871d1f39b120fb585e503b09c49b0bdec50cef23dac329df89308fdf210ca8d"
-        },
-        {
-            "date": 1747432833384,
-            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-17.log",
-            "hash": "800f1f257ebfa57993ffb0e81995b25d000b17ca6564bc0aea38922cc226af77"
-        },
-        {
-            "date": 1747519378222,
-            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-18.log",
-            "hash": "0bda93408e6cae421a6c5a0e1416e205de3c51c55d7f100be1817b05e0d5ae5c"
-        },
-        {
             "date": 1748459433401,
             "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-28.log",
             "hash": "ef91eec276c44c321241d66be3805c8714a01cd0790317f3659ef497694bf51a"
@@ -34,6 +19,16 @@
             "date": 1748556249513,
             "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-05-30.log",
             "hash": "b01b455bfe35a3dfa0697f69fe18164ff06d797bbc5192e429ca58781ee3fd3e"
+        },
+        {
+            "date": 1749140386161,
+            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-06-05.log",
+            "hash": "da1bcc413b4efb9460fd313a473dee0978fa5fde17cdeee5b2f21292244ba378"
+        },
+        {
+            "date": 1749161266326,
+            "name": "/Users/oivindlund/date-night-app/server/logs/combined-2025-06-06.log",
+            "hash": "6d2e5dde7b746690e41f93d803cebf99f82d093e34f15adaedaf190d95a6292e"
         }
     ],
     "hashType": "sha256"

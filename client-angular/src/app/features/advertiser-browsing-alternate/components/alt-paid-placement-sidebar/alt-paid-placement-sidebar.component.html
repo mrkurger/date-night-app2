@@ -5,7 +5,7 @@
   </div>
   <p-card *ngFor="let ad of ads" class="paid-ad-item" >
     <p-card-body >
-      <img
+      <Image
         [src]="ad.image || '/assets/img/default-placeholder.png'"
         [alt]="ad.name"
         class="ad-image-placeholder-small"

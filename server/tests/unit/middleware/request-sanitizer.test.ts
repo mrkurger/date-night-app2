@@ -22,7 +22,7 @@ describe('Request Sanitizer', () => {
     it('should sanitize XSS attempts in body', () => {
       req.body = {
         name: '<script>alert("xss")</script>Test Name',
-        description: 'Normal text <img src="x" onerror="alert(1)">',
+        description: 'Normal text <Image src="x" onerror="alert(1)">',
       };
 
       sanitizer.sanitize(req as Request, res as Response, next);

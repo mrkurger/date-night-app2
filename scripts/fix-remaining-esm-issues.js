@@ -1,5 +1,6 @@
 // scripts/fix-remaining-esm-issues.js
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,21 +16,17 @@ const PATTERNS_TO_FIX = [
   // Fix dynamic imports
   {
     test: /const\s*{\s*([^}]+)\s*}\s*=\s*require\(['"](.*?)['"]\)/g,
-    replace: (match, imports, module) => `const { ${imports} } = await import('${module}')`,
+    replace: `const { $1 } = await import('$2')`,
   },
   // Fix remaining requires
   {
     test: /const\s+(\w+)\s*=\s*require\(['"](.*?)['"]\)/g,
-    replace: (match, variable, module) => `import ${variable} from '${module}'`,
+    replace: `import $1 from '$2'`,
   },
   // Fix dynamic imports at non-top level
   {
     test: /import\((.*?)\)/g,
-    replace: (match, importPath) => {
-      // If inside an async function, keep as is
-      // Otherwise, wrap in async IIFE
-      return `import(${importPath})`;
-    },
+    replace: `import($1)`,
   },
   // Fix module.exports
   {
@@ -40,7 +37,7 @@ const PATTERNS_TO_FIX = [
 
 async function fixFile(filePath) {
   try {
-    let content = await fs.readFile(filePath, 'utf-8');
+    let content = await fsPromises.readFile(filePath, 'utf-8');
     let modified = false;
 
     // Add async wrapper for files with dynamic imports
@@ -59,7 +56,7 @@ async function fixFile(filePath) {
     }
 
     if (modified) {
-      await fs.writeFile(filePath, content, 'utf-8');
+      await fsPromises.writeFile(filePath, content, 'utf-8');
       console.log(`✅ Fixed: ${filePath}`);
       return true;
     }
@@ -71,7 +68,7 @@ async function fixFile(filePath) {
 }
 
 async function processDirectory(dirPath) {
-  const files = await fs.readdir(dirPath, { withFileTypes: true });
+  const files = await fsPromises.readdir(dirPath, { withFileTypes: true });
   let fixedCount = 0;
 
   for (const file of files) {

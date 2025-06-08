@@ -1,8 +1,10 @@
 <p-confirmDialog
   [style]="{ width: '450px' }"
   [closeOnEscape]="true"
-  rejectButtonStyleClass="p-button-text" i18n-rejectButtonStyleClass
-  acceptButtonStyleClass="p-button-danger" i18n-acceptButtonStyleClass
+  rejectButtonStyleClass="p-button-text"
+  i18n-rejectButtonStyleClass
+  acceptButtonStyleClass="p-button-danger"
+  i18n-acceptButtonStyleClass
 >
 </p-confirmDialog>
 
@@ -10,16 +12,45 @@
   <!-- Left Sidebar with Conversation List -->
   <div class="chat-sidebar">
     <div class="chat-header">
-      <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Messages</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
+      <h2>
+        <ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>Messages</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        >
+      </h2>
       <div class="chat-header-actions">
         <p-button
-          icon="pi pi-plus" i18n-icon
-          styleClass="p-button-outlined" i18n-styleClass
+          icon="pi pi-plus"
+          i18n-icon
+          styleClass="p-button-outlined"
+          i18n-styleClass
           (onClick)="openNewMessageDialog()"
-          label="New Message" i18n-label
+          label="New Message"
+          i18n-label
         >
         </p-button>
-        <p-button icon="pi pi-cog" i18n-icon styleClass="p-button-text" i18n-styleClass (onClick)="openChatSettings()">
+        <p-button
+          icon="pi pi-cog"
+          i18n-icon
+          styleClass="p-button-text"
+          i18n-styleClass
+          (onClick)="openChatSettings()"
+        >
         </p-button>
       </div>
     </div>
@@ -31,14 +62,16 @@
           pInputText
           class="w-full"
           type="text"
-          placeholder="Search conversations..." i18n-placeholder
+          placeholder="Search conversations..."
+          i18n-placeholder
           [(ngModel)]="conversationSearchQuery"
           (ngModelChange)="filterContacts()"
         />
         <button
           *ngIf="conversationSearchQuery"
           pButton
-          icon="pi pi-times" i18n-icon
+          icon="pi pi-times"
+          i18n-icon
           class="p-button-text p-button-rounded"
           (click)="clearConversationSearch()"
         ></button>
@@ -48,7 +81,27 @@
     <div class="conversation-list" #conversationList>
       <div *ngIf="loadingContacts" class="loading-container">
         <p-progressSpinner strokeWidth="4"></p-progressSpinner>
-        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading contacts...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+        <span
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Loading contacts...</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></span
+        >
       </div>
       <div
         *ngFor="let contact of filteredContacts"
@@ -60,24 +113,86 @@
           [imageUrl]="contact.profileImage"
           [name]="contact.name"
           [status]="contact.status"
-          size="medium" i18n-size
+          size="medium"
+          i18n-size
         >
         </app-avatar>
         <div class="conversation-info">
           <div class="conversation-header">
-            <span class="contact-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ contact.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
-            <span class="last-message-time"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{
-              contact.lastMessage?.timestamp | date: 'shortTime'
-            }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+            <span class="contact-name"
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{ contact.name }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></span
+            >
+            <span class="last-message-time"
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{
+                                  contact.lastMessage?.timestamp | date: 'shortTime'
+                                }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></span
+            >
           </div>
           <div class="conversation-preview">
             <p class="last-message">
-              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ contact.lastMessage?.content || 'No messages yet' }}
-            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >{{ contact.lastMessage?.content || 'No messages yet' }}
+                                </ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
             <p-badge
               *ngIf="contact.unreadCount > 0"
               [value]="contact.unreadCount"
-              severity="primary" i18n-severity
+              severity="primary"
+              i18n-severity
             >
             </p-badge>
           </div>
@@ -90,7 +205,12 @@
             <div class="flex align-items-center gap-3">
               <p-skeleton shape="circle" i18n-shape size="4rem"></p-skeleton>
               <div class="flex-1">
-                <p-skeleton width="60%" height="1rem" styleClass="mb-2" i18n-styleClass></p-skeleton>
+                <p-skeleton
+                  width="60%"
+                  height="1rem"
+                  styleClass="mb-2"
+                  i18n-styleClass
+                ></p-skeleton>
                 <p-skeleton width="90%" height="1rem"></p-skeleton>
               </div>
             </div>
@@ -100,7 +220,27 @@
 
       <div *ngIf="!loading && filteredContacts.length === 0" class="no-conversations">
         <i class="pi pi-comments text-6xl text-color-secondary mb-3"></i>
-        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No conversations found</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <p>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>No conversations found</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
       </div>
     </div>
   </div>
@@ -114,20 +254,83 @@
             [imageUrl]="selectedContact?.profileImage"
             [name]="selectedContact?.name"
             [status]="selectedContact?.status"
-            size="small" i18n-size
+            size="small"
+            i18n-size
           >
           </app-avatar>
           <div class="contact-details">
-            <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ selectedContact?.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-            <span class="status-text"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ selectedContact?.status | titlecase }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+            <h3>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{
+                                  selectedContact?.name
+                                }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </h3>
+            <span class="status-text"
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{
+                                  selectedContact?.status | titlecase
+                                }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></span
+            >
           </div>
         </div>
         <div class="chat-actions">
-          <p-button icon="pi pi-phone" i18n-icon styleClass="p-button-text" i18n-styleClass pTooltip="Voice Call" i18n-pTooltip> </p-button>
-          <p-button icon="pi pi-video" i18n-icon styleClass="p-button-text" i18n-styleClass pTooltip="Video Call" i18n-pTooltip> </p-button>
           <p-button
-            icon="pi pi-ellipsis-v" i18n-icon
-            styleClass="p-button-text" i18n-styleClass
+            icon="pi pi-phone"
+            i18n-icon
+            styleClass="p-button-text"
+            i18n-styleClass
+            pTooltip="Voice Call"
+            i18n-pTooltip
+          >
+          </p-button>
+          <p-button
+            icon="pi pi-video"
+            i18n-icon
+            styleClass="p-button-text"
+            i18n-styleClass
+            pTooltip="Video Call"
+            i18n-pTooltip
+          >
+          </p-button>
+          <p-button
+            icon="pi pi-ellipsis-v"
+            i18n-icon
+            styleClass="p-button-text"
+            i18n-styleClass
             [pTooltip]="'Chat Info'"
             (click)="menu.toggle($event)"
           >
@@ -139,21 +342,105 @@
       <div class="messages-container" #messagesContainer>
         <div *ngIf="loading" class="loading-container">
           <p-progressSpinner strokeWidth="4"></p-progressSpinner>
-          <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Loading messages...</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+          <span
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>Loading messages...</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></span
+          >
         </div>
         <div class="messages-list">
           <div *ngFor="let message of currentMessages" class="message-group">
             <div class="message-date" *ngIf="showMessageDate(message)">
-              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.timestamp | date }}
-            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >{{ message.timestamp | date }}
+                                </ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </div>
             <div
               class="message"
               [class.outgoing]="message.senderId === currentUserId"
               [class.incoming]="message.senderId !== currentUserId"
             >
               <div class="message-content">
-                <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.content }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
-                <span class="message-time"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.timestamp | date: 'shortTime' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+                <p>
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{
+                                      message.content
+                                    }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </p>
+                <span class="message-time"
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{
+                                      message.timestamp | date: 'shortTime'
+                                    }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></span
+                >
               </div>
             </div>
           </div>
@@ -173,17 +460,37 @@
             pInputText
             class="w-full"
             type="text"
-            placeholder="Type a message..." i18n-placeholder
+            placeholder="Type a message..."
+            i18n-placeholder
             [(ngModel)]="newMessage"
             (keyup.enter)="sendMessage()"
             (input)="onTyping()"
           />
           <div class="message-actions">
-            <p-button icon="pi pi-paperclip" i18n-icon styleClass="p-button-text" i18n-styleClass pTooltip="Add attachment" i18n-pTooltip>
+            <p-button
+              icon="pi pi-paperclip"
+              i18n-icon
+              styleClass="p-button-text"
+              i18n-styleClass
+              pTooltip="Add attachment"
+              i18n-pTooltip
+            >
             </p-button>
-            <p-button icon="pi pi-smile" i18n-icon styleClass="p-button-text" i18n-styleClass pTooltip="Add emoji" i18n-pTooltip>
+            <p-button
+              icon="pi pi-smile"
+              i18n-icon
+              styleClass="p-button-text"
+              i18n-styleClass
+              pTooltip="Add emoji"
+              i18n-pTooltip
+            >
             </p-button>
-            <p-button icon="pi pi-send" i18n-icon [disabled]="!newMessage.trim()" (onClick)="sendMessage()">
+            <p-button
+              icon="pi pi-send"
+              i18n-icon
+              [disabled]="!newMessage.trim()"
+              (onClick)="sendMessage()"
+            >
             </p-button>
           </div>
         </span>
@@ -193,8 +500,50 @@
     <ng-template #noChat>
       <div class="no-chat-selected">
         <i class="pi pi-comments text-6xl text-color-secondary mb-3"></i>
-        <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Select a conversation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Choose a contact to start chatting</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <h3>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Select a conversation</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </h3>
+        <p>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              >Choose a contact to start chatting</ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
       </div>
     </ng-template>
   </div>
@@ -202,7 +551,8 @@
 
 <!-- New Message Dialog -->
 <p-dialog
-  header="New Message" i18n-header
+  header="New Message"
+  i18n-header
   [(visible)]="showNewMessageDialog"
   [style]="{ width: '450px' }"
   [modal]="true"
@@ -214,7 +564,8 @@
         pInputText
         class="w-full"
         [(ngModel)]="newMessageSearch"
-        placeholder="Search contacts..." i18n-placeholder
+        placeholder="Search contacts..."
+        i18n-placeholder
       />
     </span>
 
@@ -229,24 +580,68 @@
             [image]="contact.imageUrl"
             [label]="contact.name?.charAt(0)"
             [size]="'large'"
-            shape="circle" i18n-shape
+            shape="circle"
+            i18n-shape
           >
           </p-avatar>
-          <div class="contact-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ contact.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+          <div class="contact-name">
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>{{ contact.name }}</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </div>
         </div>
       </div>
 
       <div *ngIf="filteredNewMessageContacts.length === 0" class="no-contacts p-3 text-center">
-        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No contacts found</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <p>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>No contacts found</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
       </div>
     </div>
   </div>
   <ng-template pTemplate="footer">
     <p-button
-      label="Cancel" i18n-label
-      icon="pi pi-times" i18n-icon
+      label="Cancel"
+      i18n-label
+      icon="pi pi-times"
+      i18n-icon
       (onClick)="showNewMessageDialog = false"
-      styleClass="p-button-text" i18n-styleClass
+      styleClass="p-button-text"
+      i18n-styleClass
     ></p-button>
   </ng-template>
 </p-dialog>
@@ -260,20 +655,26 @@
   class="image-preview-dialog"
 >
   <div class="image-preview-container">
-    <img [src]="previewImage?.url" [alt]="previewImage?.type || 'Image'" class="preview-image" />
+    <Image [src]="previewImage?.url" [alt]="previewImage?.type || 'Image'" class="preview-image" />
 
     <div class="image-preview-actions">
       <p-button
-        icon="pi pi-download" i18n-icon
-        styleClass="p-button-text" i18n-styleClass
-        pTooltip="Download" i18n-pTooltip
+        icon="pi pi-download"
+        i18n-icon
+        styleClass="p-button-text"
+        i18n-styleClass
+        pTooltip="Download"
+        i18n-pTooltip
         (onClick)="downloadImage()"
       >
       </p-button>
       <p-button
-        icon="pi pi-share-alt" i18n-icon
-        styleClass="p-button-text" i18n-styleClass
-        pTooltip="Share" i18n-pTooltip
+        icon="pi pi-share-alt"
+        i18n-icon
+        styleClass="p-button-text"
+        i18n-styleClass
+        pTooltip="Share"
+        i18n-pTooltip
         (onClick)="shareImage()"
       >
       </p-button>
@@ -283,7 +684,8 @@
 
 <!-- Media Gallery Dialog -->
 <p-dialog
-  header="Media Gallery" i18n-header
+  header="Media Gallery"
+  i18n-header
   [(visible)]="showMediaGallery"
   [modal]="true"
   [style]="{ width: '70vw' }"
@@ -293,7 +695,7 @@
     <p-tabPanel header="Images" i18n-header>
       <div class="gallery-images grid">
         <div *ngFor="let image of galleryImages" class="col-4 sm:col-3 md:col-2 p-2">
-          <img
+          <Image
             [src]="image.url"
             [alt]="image.type || 'Image'"
             class="w-full cursor-pointer"
@@ -301,7 +703,29 @@
           />
         </div>
         <div *ngIf="galleryImages.length === 0" class="col-12 text-center p-4">
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No images shared in this conversation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >No images shared in this conversation</ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
       </div>
     </p-tabPanel>
@@ -312,20 +736,86 @@
             <div class="flex align-items-center gap-2">
               <i [class]="'pi ' + getFileIconClass(file)"></i>
               <div class="file-info">
-                <div class="file-name"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ file.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
-                <div class="text-sm text-color-secondary"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ file.size | fileSize }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+                <div class="file-name">
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{ file.name }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </div>
+                <div class="text-sm text-color-secondary">
+                  <ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    ><ng-container i18n>{{
+                                      file.size | fileSize
+                                    }}</ng-container></ng-container
+                                  ></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  >
+                </div>
               </div>
             </div>
             <p-button
-              icon="pi pi-download" i18n-icon
-              styleClass="p-button-text" i18n-styleClass
+              icon="pi pi-download"
+              i18n-icon
+              styleClass="p-button-text"
+              i18n-styleClass
               (onClick)="downloadAttachment(file)"
             >
             </p-button>
           </div>
         </div>
         <div *ngIf="galleryFiles.length === 0" class="text-center p-4">
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No files shared in this conversation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >No files shared in this conversation</ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
       </div>
     </p-tabPanel>
@@ -334,16 +824,80 @@
         <div *ngFor="let link of galleryLinks" class="link-item p-3 border-bottom-1 surface-border">
           <div class="flex align-items-center justify-content-between">
             <div class="flex-1">
-              <div class="link-title font-medium"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ link.title || link.url }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
-              <div class="link-url text-color-secondary text-sm"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ link.url }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+              <div class="link-title font-medium">
+                <ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n>{{
+                                    link.title || link.url
+                                  }}</ng-container></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                >
+              </div>
+              <div class="link-url text-color-secondary text-sm">
+                <ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n>{{ link.url }}</ng-container></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                >
+              </div>
             </div>
             <div class="flex align-items-center gap-2">
               <span class="text-sm text-color-secondary">
-                <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ link.timestamp | date: 'shortDate' }}
-              </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+                <ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  ><ng-container i18n
+                                    >{{ link.timestamp | date: 'shortDate' }}
+                                  </ng-container></ng-container
+                                ></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></span
+              >
               <p-button
-                icon="pi pi-external-link" i18n-icon
-                styleClass="p-button-text" i18n-styleClass
+                icon="pi pi-external-link"
+                i18n-icon
+                styleClass="p-button-text"
+                i18n-styleClass
                 (onClick)="openLink(link.url)"
               >
               </p-button>
@@ -351,7 +905,29 @@
           </div>
         </div>
         <div *ngIf="galleryLinks.length === 0" class="text-center p-4">
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No links shared in this conversation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >No links shared in this conversation</ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
       </div>
     </p-tabPanel>
@@ -362,23 +938,84 @@
   <!-- Sidebar -->
   <div class="chat-sidebar">
     <div class="chat-header">
-      <h2><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Messages</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h2>
+      <h2>
+        <ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>Messages</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        >
+      </h2>
       <p-button
-        icon="pi pi-plus" i18n-icon
+        icon="pi pi-plus"
+        i18n-icon
         (onClick)="openNewMessageDialog()"
-        pTooltip="New Message" i18n-pTooltip
-        tooltipPosition="bottom" i18n-tooltipPosition
+        pTooltip="New Message"
+        i18n-pTooltip
+        tooltipPosition="bottom"
+        i18n-tooltipPosition
       ></p-button>
     </div>
 
     <!-- Room List -->
     <div class="chat-rooms">
-      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2" i18n-styleClass></p-skeleton>
-      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2" i18n-styleClass></p-skeleton>
-      <p-skeleton *ngIf="loading" height="4rem" width="100%" styleClass="mb-2" i18n-styleClass></p-skeleton>
+      <p-skeleton
+        *ngIf="loading"
+        height="4rem"
+        width="100%"
+        styleClass="mb-2"
+        i18n-styleClass
+      ></p-skeleton>
+      <p-skeleton
+        *ngIf="loading"
+        height="4rem"
+        width="100%"
+        styleClass="mb-2"
+        i18n-styleClass
+      ></p-skeleton>
+      <p-skeleton
+        *ngIf="loading"
+        height="4rem"
+        width="100%"
+        styleClass="mb-2"
+        i18n-styleClass
+      ></p-skeleton>
 
       <div *ngIf="!loading && rooms.length === 0" class="no-chats">
-        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>No conversations yet</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <p>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>No conversations yet</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
         <p-button label="Start a Chat" i18n-label (onClick)="openNewMessageDialog()"></p-button>
       </div>
 
@@ -391,15 +1028,62 @@
         <p-avatar
           [image]="room.participants[0].profileImage"
           [label]="room.participants[0].name[0]"
-          styleClass="mr-2" i18n-styleClass
-          size="large" i18n-size
+          styleClass="mr-2"
+          i18n-styleClass
+          size="large"
+          i18n-size
           [pBadge]="room.unreadCount"
           [badgeDisabled]="room.unreadCount === 0"
-          severity="info" i18n-severity
+          severity="info"
+          i18n-severity
         ></p-avatar>
         <div class="chat-room-info">
-          <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ room.participants[0].name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-          <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ room.lastMessage?.content || 'No messages yet' }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+          <h3>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>{{
+                                room.participants[0].name
+                              }}</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </h3>
+          <p>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n>{{
+                                room.lastMessage?.content || 'No messages yet'
+                              }}</ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </p>
         </div>
       </div>
     </div>
@@ -410,8 +1094,51 @@
     <!-- Empty State -->
     <div *ngIf="!selectedRoomId" class="chat-empty-state">
       <p-card>
-        <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Select a conversation</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
-        <p><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Choose from your existing conversations or start a new one</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+        <h3>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>Select a conversation</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </h3>
+        <p>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              >Choose from your existing conversations or start a new
+                              one</ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </p>
         <p-button label="New Message" i18n-label (onClick)="openNewMessageDialog()"></p-button>
       </p-card>
     </div>
@@ -424,14 +1151,58 @@
           <p-avatar
             [image]="selectedContact.profileImage"
             [label]="selectedContact.name[0]"
-            size="large" i18n-size
-            styleClass="mr-2" i18n-styleClass
+            size="large"
+            i18n-size
+            styleClass="mr-2"
+            i18n-styleClass
           ></p-avatar>
           <div>
-            <h3><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ selectedContact.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+            <h3>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n>{{
+                                  selectedContact.name
+                                }}</ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </h3>
             <span class="status-badge" [class.online]="selectedContact.status === 'online'">
-              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ selectedContact.status }}
-            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >{{ selectedContact.status }}
+                                </ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></span
+            >
           </div>
         </div>
         <div class="chat-actions">
@@ -444,7 +1215,8 @@
       <div class="messages-container" #messageList>
         <p-progressSpinner
           *ngIf="loading"
-          styleClass="w-4rem h-4rem" i18n-styleClass
+          styleClass="w-4rem h-4rem"
+          i18n-styleClass
           strokeWidth="3"
         ></p-progressSpinner>
 
@@ -456,12 +1228,32 @@
           <div class="message-content" [ngSwitch]="message.type">
             <!-- Text Message -->
             <p *ngSwitchCase="'text'" class="message-text">
-              <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.content }}
-            </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+              <ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                ><ng-container i18n
+                                  >{{ message.content }}
+                                </ng-container></ng-container
+                              ></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              >
+            </p>
 
             <!-- Image Message -->
             <div *ngSwitchCase="'image'" class="message-image">
-              <img
+              <Image
                 [src]="message.fileUrl"
                 [alt]="message.fileName || 'Image'"
                 (click)="openImagePreview(message)"
@@ -479,14 +1271,54 @@
             </div>
           </div>
           <small class="message-time">
-            <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ message.timestamp | date: 'shortTime' }}
-          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></small>
+            <ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              ><ng-container i18n
+                                >{{ message.timestamp | date: 'shortTime' }}
+                              </ng-container></ng-container
+                            ></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></small
+          >
         </div>
 
         <!-- Typing Indicator -->
         <div *ngIf="isContactTyping" class="typing-indicator">
-          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ selectedContact?.name }} is typing...
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></div>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n
+                              >{{ selectedContact?.name }} is typing...
+                            </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          >
+        </div>
       </div>
 
       <!-- Message Input Area -->
@@ -494,14 +1326,17 @@
         <!-- File Upload -->
         <p-fileUpload
           #fileUpload
-          mode="basic" i18n-mode
+          mode="basic"
+          i18n-mode
           [auto]="true"
           [maxFileSize]="MAX_FILE_SIZE"
           [accept]="ALLOWED_TYPES.join(',')"
           (onSelect)="onFileUpload($event)"
           [customUpload]="true"
-          chooseLabel="Attach" i18n-chooseLabel
-          styleClass="p-button-outlined p-button-secondary" i18n-styleClass
+          chooseLabel="Attach"
+          i18n-chooseLabel
+          styleClass="p-button-outlined p-button-secondary"
+          i18n-styleClass
           [disabled]="loading"
         ></p-fileUpload>
 
@@ -511,7 +1346,8 @@
             pInputTextarea
             #messageInput
             [(ngModel)]="messageText"
-            placeholder="Type a message..." i18n-placeholder
+            placeholder="Type a message..."
+            i18n-placeholder
             (keydown.enter)="$event.preventDefault(); sendMessage()"
             (input)="onTyping()"
             [disabled]="loading"
@@ -523,10 +1359,12 @@
 
         <!-- Send Button -->
         <p-button
-          icon="pi pi-send" i18n-icon
+          icon="pi pi-send"
+          i18n-icon
           (onClick)="sendMessage()"
           [disabled]="!messageText.trim() || loading"
-          styleClass="p-button-rounded" i18n-styleClass
+          styleClass="p-button-rounded"
+          i18n-styleClass
         >
         </p-button>
       </div>
@@ -537,15 +1375,18 @@
 <!-- Confirm Dialog -->
 <p-confirmDialog
   [style]="{ width: '450px' }"
-  rejectButtonStyleClass="p-button-text" i18n-rejectButtonStyleClass
-  acceptButtonStyleClass="p-button-text" i18n-acceptButtonStyleClass
+  rejectButtonStyleClass="p-button-text"
+  i18n-rejectButtonStyleClass
+  acceptButtonStyleClass="p-button-text"
+  i18n-acceptButtonStyleClass
 >
 </p-confirmDialog>
 
 <!-- New Message Dialog -->
 <p-dialog
   [(visible)]="showNewMessageDialog"
-  header="New Message" i18n-header
+  header="New Message"
+  i18n-header
   [modal]="true"
   [style]="{ width: '500px' }"
   [draggable]="false"
@@ -559,7 +1400,8 @@
           pInputText
           [(ngModel)]="newMessageSearch"
           (ngModelChange)="filterNewMessageContacts()"
-          placeholder="Search contacts..." i18n-placeholder
+          placeholder="Search contacts..."
+          i18n-placeholder
           class="w-full"
         />
       </span>
@@ -573,9 +1415,30 @@
         <p-avatar
           [image]="contact.profileImage"
           [label]="contact.name[0]"
-          styleClass="mr-2" i18n-styleClass
+          styleClass="mr-2"
+          i18n-styleClass
         ></p-avatar>
-        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ contact.name }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+        <span
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>{{ contact.name }}</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></span
+        >
       </div>
     </div>
   </div>

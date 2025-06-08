@@ -18,7 +18,7 @@
   <!-- Card Media Section -->
   <div class="ad-card-media">
     <!-- Primary Image -->
-    <img
+    <Image
       [src]="getPrimaryImage()"
       [alt]="ad.title"
       class="ad-card-image"
@@ -28,49 +28,291 @@
     <!-- Image Count Badge -->
     <div class="image-count" *ngIf="getImageCount() > 1">
       <i class="pi pi-photo_library"></i>
-      <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getImageCount() }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{ getImageCount() }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
     </div>
 
     <!-- Status Badges -->
     <div class="status-badges" *ngIf="showBadges">
-      <span class="badge badge-featured" *ngIf="isFeatured"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Featured</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
-      <span class="badge badge-new" *ngIf="isNew"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>New</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
-      <span class="badge badge-trending" *ngIf="isTrending"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Trending</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
-      <span class="badge badge-touring" *ngIf="ad.isTouring"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>Touring</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span class="badge badge-featured" *ngIf="isFeatured"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>Featured</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
+      <span class="badge badge-new" *ngIf="isNew"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>New</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
+      <span class="badge badge-trending" *ngIf="isTrending"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>Trending</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
+      <span class="badge badge-touring" *ngIf="ad.isTouring"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>Touring</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
     </div>
 
     <!-- Category Badge -->
     <div class="category-badge" *ngIf="ad.category && showBadges">
-      <span class="badge"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.category }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span class="badge"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{ ad.category }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
     </div>
 
     <!-- Price Badge -->
     <div class="price-badge" *ngIf="ad.price">
-      <span class="badge badge-price"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ formatPrice(ad.price) }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span class="badge badge-price"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{
+                            formatPrice(ad.price)
+                          }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
     </div>
   </div>
 
   <!-- Card Content Section -->
   <div class="ad-card-content">
     <div class="ad-card-header">
-      <h3 class="ad-card-title"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.title }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></h3>
+      <h3 class="ad-card-title">
+        <ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{ ad.title }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        >
+      </h3>
 
       <!-- Location -->
       <p class="ad-card-location" *ngIf="ad.location && showLocation">
         <i class="pi pi-location_on"></i>
-        <span><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.location }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+        <span
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>{{ ad.location }}</ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></span
+        >
       </p>
     </div>
 
     <!-- Description -->
     <p class="ad-card-description" *ngIf="showDescription && ad.description">
-      <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getTruncatedDescription() }}
-    </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></p>
+      <ng-container i18n
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          >{{ getTruncatedDescription() }}
+                        </ng-container></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></ng-container
+      >
+    </p>
 
     <!-- Tags -->
     <div class="ad-card-tags" *ngIf="ad.tags && ad.tags.length > 0 && showDescription">
-      <span class="tag" *ngFor="let tag of ad.tags.slice(0, 3)"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ tag }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
-      <span class="tag more-tag" *ngIf="ad.tags.length > 3"><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>+{{ ad.tags.length - 3 }}</ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+      <span class="tag" *ngFor="let tag of ad.tags.slice(0, 3)"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>{{ tag }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
+      <span class="tag more-tag" *ngIf="ad.tags.length > 3"
+        ><ng-container i18n
+          ><ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n>+{{ ad.tags.length - 3 }}</ng-container></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></ng-container
+        ></span
+      >
     </div>
 
     <!-- Card Footer -->
@@ -79,13 +321,49 @@
       <div class="ad-card-meta">
         <span class="ad-card-date" *ngIf="ad.createdAt">
           <i class="pi pi-access_time"></i>
-          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ getTimeSince() }}
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>{{ getTimeSince() }} </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></span
+        >
 
         <span class="ad-card-views" *ngIf="ad.viewCount">
           <i class="pi pi-visibility"></i>
-          <ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n><ng-container i18n>{{ ad.viewCount }}
-        </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></span>
+          <ng-container i18n
+            ><ng-container i18n
+              ><ng-container i18n
+                ><ng-container i18n
+                  ><ng-container i18n
+                    ><ng-container i18n
+                      ><ng-container i18n
+                        ><ng-container i18n
+                          ><ng-container i18n
+                            ><ng-container i18n>{{ ad.viewCount }} </ng-container></ng-container
+                          ></ng-container
+                        ></ng-container
+                      ></ng-container
+                    ></ng-container
+                  ></ng-container
+                ></ng-container
+              ></ng-container
+            ></ng-container
+          ></span
+        >
       </div>
 
       <!-- Action Buttons -->

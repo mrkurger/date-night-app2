@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getRandomFemaleImage } from '@/lib/data';
@@ -36,10 +37,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
   return (
     <div className="relative w-full h-full aspect-[3/4] group">
       <div className="w-full h-full overflow-hidden rounded-lg">
-        <img
+        <Image
           src={images[currentIndex] || getRandomFemaleImage()}
           alt={`Gallery image ${currentIndex + 1}`}
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          fill
+          className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
         />
       </div>
 
@@ -85,10 +87,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                 index === currentIndex ? 'border-pink-500' : 'border-transparent',
               )}
             >
-              <img
+              <Image
                 src={image || getRandomFemaleImage()}
                 alt={`Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
           ))}

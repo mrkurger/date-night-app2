@@ -1,32 +1,32 @@
-"use client"
+'use client';
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { MessageCircle } from "lucide-react"
-import Link from "next/link"
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { MessageCircle } from 'lucide-react';
+import Link from 'next/link';
 
 interface Advertiser {
-  id: number
-  name: string
-  age: number
-  location: string
-  description: string
-  tags: string[]
-  image: string
-  rating: number
-  isVip: boolean
-  isOnline: boolean
+  id: number;
+  name: string;
+  age: number;
+  location: string;
+  description: string;
+  tags: string[];
+  image: string;
+  rating: number;
+  isVip: boolean;
+  isOnline: boolean;
 }
 
 interface PaidPlacementSidebarProps {
-  ads?: Advertiser[]
+  ads?: Advertiser[];
 }
 
 export default function PaidPlacementSidebar({ ads = [] }: PaidPlacementSidebarProps) {
   // If no ads are provided, return nothing
   if (ads.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -35,14 +35,21 @@ export default function PaidPlacementSidebar({ ads = [] }: PaidPlacementSidebarP
         <h3 className="text-lg font-semibold mb-2">Sponsored</h3>
       </div>
 
-      {ads.map((ad) => (
+      {ads.map(ad => (
         <Link href={`/advertiser/${ad.id}`} key={ad.id}>
           <Card className="overflow-hidden bg-gray-900 border-gray-800 hover:border-pink-500/50 transition-all duration-300">
             <div className="relative aspect-[3/4] overflow-hidden">
-              <img src={ad.image || "/placeholder.svg"} alt={ad.name} className="object-cover w-full h-full" />
+              <Image
+                src={ad.image || '/placeholder.svg'}
+                alt={ad.name}
+                className="object-cover w-full h-full"
+              />
               {ad.isOnline && (
                 <div className="absolute top-2 left-2">
-                  <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500">
+                  <Badge
+                    variant="outline"
+                    className="bg-green-500/20 text-green-400 border-green-500"
+                  >
                     Online
                   </Badge>
                 </div>
@@ -56,7 +63,11 @@ export default function PaidPlacementSidebar({ ads = [] }: PaidPlacementSidebarP
                 </h3>
               </div>
               <p className="text-xs text-gray-400 mb-2">{ad.location}</p>
-              <Button size="sm" variant="secondary" className="w-full bg-pink-600 hover:bg-pink-700 text-white mt-2">
+              <Button
+                size="sm"
+                variant="secondary"
+                className="w-full bg-pink-600 hover:bg-pink-700 text-white mt-2"
+              >
                 <MessageCircle className="mr-1 h-3 w-3" /> Chat Now
               </Button>
             </CardContent>
@@ -70,5 +81,5 @@ export default function PaidPlacementSidebar({ ads = [] }: PaidPlacementSidebarP
         </Link>
       </div>
     </div>
-  )
+  );
 }

@@ -70,10 +70,10 @@ function readTemplate() {
 /**
  * Converts Markdown content to HTML
  * @param {string} markdown - The Markdown content
- * @returns {string} The HTML content
+ * @returns {Promise<string>} The HTML content
  */
-function convertMarkdownToHtml(markdown) {
-  return marked.parse(markdown);
+async function convertMarkdownToHtml(markdown) {
+  return await marked.parse(markdown);
 }
 
 /**
@@ -102,7 +102,7 @@ function createFolderDocs(folderPath) {
       <li><a href="${config.docFiles.changelog}">Changelog</a> - History of changes to this module/component</li>
       <li><a href="${config.docFiles.ailessons}">AI Lessons</a> - Insights and patterns learned by AI</li>
       <li><a href="${config.docFiles.glossary}">Glossary</a> - Definitions of functions and methods</li>
-    </ul>`
+    </ul>`,
   );
 
   // Create CHANGELOG.html
@@ -115,7 +115,7 @@ function createFolderDocs(folderPath) {
     <h3>Added</h3>
     <ul>
       <li>Initial documentation structure</li>
-    </ul>`
+    </ul>`,
   );
 
   // Create AILESSONS.html
@@ -131,7 +131,7 @@ function createFolderDocs(folderPath) {
     <h2>Implementation Patterns</h2>
     <ul>
       <li>Add common implementation patterns used in this module/component</li>
-    </ul>`
+    </ul>`,
   );
 
   // Create GLOSSARY.html
@@ -143,7 +143,7 @@ function createFolderDocs(folderPath) {
     <p>This file is automatically updated by the documentation generation script.</p>
     <div class="glossary-entries">
       <!-- Glossary entries will be generated here -->
-    </div>`
+    </div>`,
   );
 
   console.log(`Created documentation files in ${absolutePath}`);
@@ -182,7 +182,7 @@ function createHtmlFile(folderPath, fileName, title, content) {
  * @param {string} markdownPath - The Markdown file path
  * @param {string} htmlPath - The output HTML file path
  */
-function convertMdFileToHtml(markdownPath, htmlPath) {
+async function convertMdFileToHtml(markdownPath, htmlPath) {
   const absoluteMarkdownPath = path.resolve(config.rootDir, markdownPath);
   const absoluteHtmlPath = path.resolve(config.rootDir, htmlPath);
 
@@ -192,7 +192,7 @@ function convertMdFileToHtml(markdownPath, htmlPath) {
   }
 
   const markdown = fs.readFileSync(absoluteMarkdownPath, 'utf8');
-  const html = convertMarkdownToHtml(markdown);
+  const html = await convertMarkdownToHtml(markdown);
 
   const title = path
     .basename(absoluteMarkdownPath, '.md')
@@ -228,19 +228,21 @@ function updateIndex() {
 }
 
 // Main execution
-if (command === '--create-folder-docs' && args[1]) {
-  createFolderDocs(args[1]);
-} else if (command === '--convert-md-to-html' && args[1] && args[2]) {
-  convertMdFileToHtml(args[1], args[2]);
-} else if (command === '--update-index') {
-  updateIndex();
-} else {
-  console.log(`
+(async () => {
+  if (command === '--create-folder-docs' && args[1]) {
+    createFolderDocs(args[1]);
+  } else if (command === '--convert-md-to-html' && args[1] && args[2]) {
+    await convertMdFileToHtml(args[1], args[2]);
+  } else if (command === '--update-index') {
+    updateIndex();
+  } else {
+    console.log(`
 Manual Documentation Migration Helper
 
 Usage:
   node manual_doc_migration.js --create-folder-docs <folder-path>
   node manual_doc_migration.js --convert-md-to-html <markdown-file> <output-html-file>
   node manual_doc_migration.js --update-index
-  `);
-}
+    `);
+  }
+})().catch(console.error);
