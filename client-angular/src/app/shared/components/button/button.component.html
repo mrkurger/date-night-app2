@@ -1,31 +1,29 @@
-<button
-  nbButton
+<p-button
   [type]="type"
-  [status]="status"
+  [severity]="severity"
   [size]="size"
-  [appearance]="appearance"
+  [text]="variant === 'text'"
+  [outlined]="variant === 'outlined'"
+  [raised]="variant === 'raised'"
   [disabled]="disabled || loading"
+  [loading]="loading"
   [attr.aria-label]="ariaLabel"
   [attr.aria-disabled]="disabled || loading"
-  [class.full-width]="fullWidth"
-  (click)="onClick($event)"
+  [ngClass]="buttonClasses"
+  (onClick)="onClick($event)"
 >
-  @if (loading) {
-    <nb-icon icon="loader-outline" class="spin"></nb-icon>
-  } @else {
-    <!-- Left Icon -->
-    @if (iconLeft) {
-      <nb-icon [icon]="iconLeft" class="button-icon button-icon-left"></nb-icon>
-    }
-
-    <!-- Button Text -->
-    <span class="button-content">
-      <ng-content></ng-content>
-    </span>
-
-    <!-- Right Icon -->
-    @if (iconRight) {
-      <nb-icon [icon]="iconRight" class="button-icon button-icon-right"></nb-icon>
-    }
+  <!-- Left Icon -->
+  @if (iconLeft && !loading) {
+    <i [class]="convertIcon(iconLeft)" slot="icon"></i>
   }
-</button>
+
+  <!-- Button Text -->
+  <span class="button-content">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Right Icon -->
+  @if (iconRight && !loading) {
+    <i [class]="convertIcon(iconRight)"></i>
+  }
+</p-button>

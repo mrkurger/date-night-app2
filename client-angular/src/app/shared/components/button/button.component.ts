@@ -9,25 +9,24 @@
 //   Related to: other_file.ts:OTHER_SETTING
 // ===================================================
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { _NebularModule } from '../../nebular.module';
-
 import { CommonModule } from '@angular/common';
-
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { IconComponent } from '../icon/icon.component';
 
 /**
  * Button Component
  *
  * A customizable button component that follows the DateNight.io design system.
- * Uses Nebular's button system with custom styling.
+ * Uses PrimeNG's button system with custom styling.
  */
 @Component({
   selector: 'app-button',
   standalone: true,
   imports: [
     CommonModule,
-    NbButtonModule,
-    NbIconModule,
+    ButtonModule,
+    ProgressSpinnerModule,
     IconComponent
   ],
   templateUrl: './button.component.html',
@@ -36,22 +35,22 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class ButtonComponent {
   /**
-   * The button status determines its visual style.
-   * Maps to Nebular's button status system.
+   * The button severity determines its visual style.
+   * Maps to PrimeNG's button severity system.
    */
-  @Input() status: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'basic' = 'primary';
+  @Input() severity: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help' | 'contrast' | null = null;
 
   /**
    * The button size.
-   * Maps directly to Nebular's size system.
+   * Maps to PrimeNG's size system.
    */
-  @Input() size: 'tiny' | 'small' | 'medium' | 'large' | 'giant' = 'medium';
+  @Input() size: 'small' | 'normal' | 'large' = 'normal';
 
   /**
-   * The button appearance.
-   * Maps to Nebular's button appearance system.
+   * The button variant.
+   * Maps to PrimeNG's button variants.
    */
-  @Input() appearance: 'filled' | 'outline' | 'ghost' | 'hero' = 'filled';
+  @Input() variant: 'text' | 'outlined' | 'raised' | null = null;
 
   /**
    * Whether the button is disabled.
@@ -112,11 +111,33 @@ export class ButtonComponent {
    */
   get buttonClasses(): Record<string, boolean> {
     return {
-      [`size-${this.size}`]: true,
-      'full-width': this.fullWidth,
-      'is-loading': this.loading,
-      [`appearance-${this.appearance}`]: true,
-      [`status-${this.status}`]: true,
+      [`p-button-${this.size}`]: this.size !== 'normal',
+      'w-full': this.fullWidth,
+      'p-button-loading': this.loading,
     };
+  }
+
+  /**
+   * Convert Nebular-style icon names to PrimeIcons
+   */
+  convertIcon(iconName?: string): string {
+    if (!iconName) return '';
+    
+    const iconMap: Record<string, string> = {
+      'plus-outline': 'pi pi-plus',
+      'edit-outline': 'pi pi-pencil',
+      'trash-outline': 'pi pi-trash',
+      'save-outline': 'pi pi-save',
+      'close-outline': 'pi pi-times',
+      'checkmark-outline': 'pi pi-check',
+      'arrow-right-outline': 'pi pi-arrow-right',
+      'arrow-left-outline': 'pi pi-arrow-left',
+      'download-outline': 'pi pi-download',
+      'upload-outline': 'pi pi-upload',
+      'search-outline': 'pi pi-search',
+      'refresh-outline': 'pi pi-refresh',
+    };
+
+    return iconMap[iconName] || `pi pi-${iconName}`;
   }
 }
