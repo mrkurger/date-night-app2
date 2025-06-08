@@ -1,0 +1,112 @@
+{
+  "name": "Date Night App - DeepScan Configuration",
+  "version": "1.0.0",
+  "description": "DeepScan configuration for monorepo with Angular and React/Next.js frontends",
+  "include": [
+    "client-angular/**/*.ts",
+    "client-angular/**/*.js", 
+    "client-angular/**/*.html",
+    "client_angular2/**/*.ts",
+    "client_angular2/**/*.js",
+    "client_angular2/**/*.tsx",
+    "client_angular2/**/*.jsx",
+    "scripts/**/*.js",
+    "scripts/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**", 
+    "**/.next/**",
+    "**/coverage/**",
+    "**/playwright-report/**",
+    "**/test-results/**"
+  ],
+  "eslintrc": {
+    "client-angular": "client-angular/.eslintrc.json",
+    "client_angular2": "client_angular2/.eslintrc.json",
+    "security": ".eslintrc.security.json"
+  },
+  "rules": {
+    "UNUSED_DECL": { "severity": "LOW" },
+    "UNUSED_IMPORT": { "severity": "LOW" },
+    "MEANINGLESS_VOID_OPERATOR": { "severity": "MEDIUM" },
+    "BAD_ASSIGN_TO_CONDITION": { "severity": "HIGH" },
+    "BAD_BITWISE_OPERATOR": { "severity": "MEDIUM" },
+    "BAD_CONSTRUCTOR_RETURN": { "severity": "HIGH" },
+    "BAD_OBJECT_LITERAL_COMPARISON": { "severity": "HIGH" },
+    "BAD_REPLACE_ALL_ARG": { "severity": "MEDIUM" },
+    "DUPLICATED_ARG": { "severity": "HIGH" },
+    "INCORRECT_PROPERTY_ACCESS": { "severity": "MEDIUM" },
+    "INVALID_ARRAY_LENGTH": { "severity": "HIGH" },
+    "INVALID_DATE": { "severity": "MEDIUM" },
+    "INVALID_FORMAT_STRING": { "severity": "MEDIUM" },
+    "INVALID_JSON_PARSE": { "severity": "HIGH" },
+    "INVALID_REGEXP": { "severity": "HIGH" },
+    "INVALID_TYPEOF": { "severity": "HIGH" },
+    "MISMATCHED_ITERATOR": { "severity": "HIGH" },
+    "MISMATCHED_TYPE": { "severity": "MEDIUM" },
+    "MISPLACED_ASYNC": { "severity": "MEDIUM" },
+    "MISSING_AWAIT": { "severity": "HIGH" },
+    "MISSING_CATCH_OR_FINALLY": { "severity": "HIGH" },
+    "MISSING_THROW": { "severity": "MEDIUM" },
+    "MISSING_YIELD": { "severity": "MEDIUM" },
+    "NOT_A_FUNCTION": { "severity": "HIGH" },
+    "NULL_POINTER": { "severity": "HIGH" },
+    "PROMISE_NOT_HANDLED": { "severity": "MEDIUM" },
+    "REACT_BAD_BOOLEAN_PROP": { "severity": "MEDIUM" },
+    "REACT_BAD_KEY": { "severity": "HIGH" },
+    "REACT_INCONSISTENT_BINDING": { "severity": "MEDIUM" },
+    "REACT_MISSING_COMPONENT_PROP": { "severity": "HIGH" },
+    "REACT_MISSING_PROP_VALIDATION": { "severity": "LOW" },
+    "REACT_REDUNDANT_BINDING": { "severity": "LOW" },
+    "REACT_USELESS_CONSTRUCTOR": { "severity": "LOW" },
+    "TYPESCRIPT_BAD_GENERIC": { "severity": "HIGH" },
+    "TYPESCRIPT_BAD_MODULE_IMPORT": { "severity": "HIGH" },
+    "TYPESCRIPT_BAD_PROP_ITERATION": { "severity": "MEDIUM" },
+    "TYPESCRIPT_MISMATCHED_TYPE": { "severity": "HIGH" },
+    "TYPESCRIPT_UNRESOLVED_REFERENCE": { "severity": "HIGH" },
+    "TYPESCRIPT_WRONG_GENERIC_USAGE": { "severity": "HIGH" },
+    "UNREACHABLE_CODE": { "severity": "MEDIUM" },
+    "XSS_RISKY_CALL": { "severity": "HIGH" },
+    "ANGULAR_BAD_LIFECYCLE_METHOD": { "severity": "HIGH" },
+    "ANGULAR_BAD_PIPE": { "severity": "MEDIUM" },
+    "ANGULAR_MISSING_DEPENDENCY": { "severity": "HIGH" },
+    "ANGULAR_REDUNDANT_DEPENDENCY": { "severity": "LOW" },
+    "ANGULAR_UNUSED_DECLARATION": { "severity": "LOW" },
+    "ANGULAR_WRONG_DIRECTIVE": { "severity": "HIGH" },
+    "NEXTJS_BAD_IMPORT": { "severity": "HIGH" },
+    "NEXTJS_MISSING_IMAGE_ALT": { "severity": "MEDIUM" },
+    "NEXTJS_UNSAFE_SERVER_ACTION": { "severity": "HIGH" }
+  },
+  "options": {
+    "react": {
+      "version": "18.3.1"
+    },
+    "typescript": {
+      "compilerOptions": "tsconfig.json"
+    },
+    "angular": {
+      "version": "19"
+    },
+    "nextjs": {
+      "version": "15.3.3"
+    }
+  },
+  "eslint": {
+    "enable": true,
+    "mergeRules": true,
+    "configs": [
+      {
+        "path": ".eslintrc.security.json",
+        "description": "Security-focused ESLint rules for vulnerability detection"
+      },
+      {
+        "path": "client_angular2/.eslintrc.json", 
+        "description": "Next.js specific ESLint rules from React frontend"
+      }
+    ]
+  }
+}

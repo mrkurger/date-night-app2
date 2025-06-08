@@ -1,0 +1,35 @@
+{
+  "github.copilot.settings": {
+    "maxFilesPerBatch": 20,
+    "batchProcessingTimeout": 30000,
+    "enableParallelProcessing": true,
+    "memoryLimit": 4096,
+    "advanced": {
+      "enableDeepAnalysis": true,
+      "maxContextFiles": 15,
+      "maxTokensPerFile": 5000
+    }
+  },
+  "mcp": {
+    "servers": {
+      "typescript-lsp": {
+        "command": "npx",
+        "args": ["lsp-mcp", "typescript", "typescript-language-server", "--stdio"]
+      },
+      "playwright": {
+        "command": "npx",
+        "args": ["@playwright/mcp@latest"]
+      },
+      "security-audit": {
+        "command": "node",
+        "args": ["./scripts/security-audit-mcp.js"]
+      },
+      "sequentialthinking": {
+        "maxConcurrentOperations": 5,
+        "timeout": 30000
+      }
+    }
+  },
+  "editor.maxTokenizationLineLength": 20000,
+  "files.maxMemoryForLargeFilesMB": 4096
+}

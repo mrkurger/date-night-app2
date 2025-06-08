@@ -1,5 +1,10 @@
 # DateNight.io Design System
 
+**Last Updated**: 2025-06-08T22:46:34.540Z
+
+> **📝 Update Notice**: This documentation was automatically updated to reflect the current codebase structure. Some references to legacy technologies have been updated. Please review for accuracy.
+
+
 This is the main documentation for the DateNight.io design system, which provides a consistent visual language and component library for the application.
 
 ## Overview
@@ -72,8 +77,8 @@ When contributing to the design system, please follow these guidelines:
 ## Resources
 
 - [Figma Design System](https://figma.com/file/design-system) - Figma file containing the design system components
-- [Component Templates](../../client-angular/src/app/shared/templates) - Templates for creating new components
-- [Design System Demo](../../client-angular/src/app/features/design-system-demo) - Demo page showcasing the design system
+- [Component Templates](../../client_Next.js2/src/app/shared/templates) - Templates for creating new components
+- [Design System Demo](../../client_Next.js2/client_angular2/app/design-system-demo) - Demo page showcasing the design system
 
 ---
 

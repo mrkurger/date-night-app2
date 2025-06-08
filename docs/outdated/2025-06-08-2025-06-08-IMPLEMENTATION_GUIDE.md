@@ -1,3 +1,25 @@
+> **🗄️ ARCHIVED DOCUMENTATION**
+> 
+> **Archived Date**: 2025-06-08T22:48:09.368Z
+> **Original Path**: `docs/outdated/2025-06-08-IMPLEMENTATION_GUIDE.md`
+> **Reason**: Contains outdated references to excluded client-angular/ directory and legacy technologies
+> 
+> This documentation has been archived as part of the documentation cleanup process.
+> If this content is still relevant, please create updated documentation that reflects the current codebase.
+
+---
+
+> **🗄️ ARCHIVED DOCUMENTATION**
+> 
+> **Archived Date**: 2025-06-08T22:46:34.542Z
+> **Original Path**: `docs/ui-docs/IMPLEMENTATION_GUIDE.md`
+> **Reason**: Contains outdated references to excluded client-angular/ directory and legacy technologies
+> 
+> This documentation has been archived as part of the documentation cleanup process.
+> If this content is still relevant, please create updated documentation that reflects the current codebase.
+
+---
+
 # UI Implementation Guide
 
 This guide provides step-by-step instructions for implementing the remaining UI fixes to make the web app styling follow the UI documentation guidelines 100%.

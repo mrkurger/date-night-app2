@@ -1,0 +1,26 @@
+{
+  "entryPoints": [
+    "./client-angular/src",
+    "./client_angular2/src"
+  ],
+  "out": "./docs/api",
+  "theme": "default",
+  "readme": "./README.md",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "categoryOrder": [
+    "Components",
+    "Services",
+    "Models",
+    "Utilities",
+    "*"
+  ],
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  }
+}
