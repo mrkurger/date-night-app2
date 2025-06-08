@@ -1,33 +1,40 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
-import {
-  NbMenuModule,
-  NbSidebarModule,
-  NbLayoutModule,
-  NbButtonModule,
-  NbIconModule,
-  NbContextMenuModule,
-  NbUserModule,
-  NbActionsModule,
-  NbMenuItem,
-  NbDialogService,
-} from '@nebular/theme';
+import { CommonModule } from '@angular/common';
+import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuItem } from 'primeng/api';
+
 import { AuthService } from '../../services/auth.service';
 import { MenuStateService } from '../../services/menu-state.service';
 import { SearchService } from '../../services/search.service';
 import { KeyboardShortcutsService } from '../../services/keyboard-shortcuts.service';
+import { DialogService } from '../../services/dialog.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppMenuItem } from '../../models/menu.model';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
-import { KeyboardShortcutsHelpComponent } from '../../../shared/components/keyboard-shortcuts-help/keyboard-shortcuts-help.component';
-import { NebularModule } from '../../../shared/nebular.module';
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [RouterModule, NebularModule, BreadcrumbsComponent, ThemeToggleComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MenubarModule,
+    SidebarModule,
+    ButtonModule,
+    AvatarModule,
+    MenuModule,
+    TooltipModule,
+    BreadcrumbsComponent,
+    ThemeToggleComponent
+  ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
@@ -105,16 +112,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
     },
   ];
 
-  sidebarState: 'expanded' | 'collapsed' | 'compacted' = 'expanded';
-
-  userItems = [
-    { title: 'Profile', icon: 'person-outline', link: '/profile' },
-    { title: 'Settings', icon: 'settings-2-outline', link: '/settings' },
-    { title: 'Notifications', icon: 'bell-outline', link: '/notifications' },
-    { title: 'Help', icon: 'question-mark-circle-outline', link: '/help' },
-    { title: 'Logout', icon: 'log-out-outline', data: { action: 'logout' } },
-  ];
-
   adminItems = [
     { title: 'Admin Dashboard', icon: 'shield-outline', link: '/admin', id: 'admin' },
     { title: 'Telemetry', icon: 'activity-outline', link: '/telemetry', id: 'telemetry' },
@@ -132,6 +129,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
     },
   ];
 
+  // Convert AppMenuItem to PrimeNG MenuItem format
+  menuItems: MenuItem[] = [];
+  userMenuItems: MenuItem[] = [];
+
+  sidebarVisible: boolean = true;
+  sidebarState: 'expanded' | 'collapsed' | 'compacted' = 'expanded';
+
   isLoggedIn = false;
   isAdmin = false;
   userProfile: {
@@ -145,34 +149,78 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private menuStateService: MenuStateService,
     private searchService: SearchService,
     private router: Router,
-    private dialogService: NbDialogService,
+    private dialogService: DialogService,
     private keyboardShortcuts: KeyboardShortcutsService,
-  ) {}
+  ) {
+    this.convertMenuItems();
+  }
+
+  /**
+   * Convert AppMenuItem to PrimeNG MenuItem format
+   */
+  private convertMenuItems() {
+    this.menuItems = this.items.map(item => this.convertAppMenuItemToPrimeNG(item));
+    
+    this.userMenuItems = [
+      { label: 'Profile', icon: 'pi pi-user', command: () => this.router.navigate(['/profile']) },
+      { label: 'Settings', icon: 'pi pi-cog', command: () => this.router.navigate(['/settings']) },
+      { label: 'Notifications', icon: 'pi pi-bell', command: () => this.router.navigate(['/notifications']) },
+      { label: 'Help', icon: 'pi pi-question-circle', command: () => this.router.navigate(['/help']) },
+      { separator: true },
+      { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.authService.logout() },
+    ];
+  }
+
+  /**
+   * Convert single AppMenuItem to PrimeNG MenuItem
+   */
+  private convertAppMenuItemToPrimeNG(item: AppMenuItem): MenuItem {
+    const menuItem: MenuItem = {
+      label: item.title,
+      icon: this.convertIconToPrimeNG(item.icon),
+      command: item.link ? () => this.router.navigate([item.link]) : undefined,
+    };
+
+    if (item.children && item.children.length > 0) {
+      menuItem.items = item.children.map(child => this.convertAppMenuItemToPrimeNG(child));
+    }
+
+    return menuItem;
+  }
+
+  /**
+   * Convert Nebular icons to PrimeIcons
+   */
+  private convertIconToPrimeNG(nebularIcon?: string): string {
+    const iconMap: Record<string, string> = {
+      'home-outline': 'pi pi-home',
+      'search-outline': 'pi pi-search',
+      'file-text-outline': 'pi pi-file-text',
+      'message-circle-outline': 'pi pi-comments',
+      'heart-outline': 'pi pi-heart',
+      'layers-outline': 'pi pi-clone',
+      'shield-outline': 'pi pi-shield',
+      'activity-outline': 'pi pi-chart-line',
+      'people-outline': 'pi pi-users',
+      'edit-2-outline': 'pi pi-pencil',
+      'menu-2-outline': 'pi pi-bars',
+      'menu-arrow-outline': 'pi pi-angle-left',
+      'keyboard-outline': 'pi pi-desktop',
+    };
+
+    return iconMap[nebularIcon || ''] || 'pi pi-circle';
+  }
 
   ngOnInit() {
     // Load saved menu state
     const savedState = this.menuStateService.getCurrentState();
     this.sidebarState = savedState.sidebarState;
-
-    // Restore expanded items
-    savedState.expandedItems.forEach((itemId) => {
-      const item = this.findMenuItem(this.items, itemId);
-      if (item) {
-        item.expanded = true;
-      }
-    });
-
-    // Set selected item if exists
-    if (savedState.selectedItem) {
-      const item = this.findMenuItem(this.items, savedState.selectedItem);
-      if (item) {
-        item.selected = true;
-      }
-    }
+    this.sidebarVisible = savedState.sidebarState !== 'collapsed';
 
     // Subscribe to menu item selections
     this.menuStateService.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       this.sidebarState = state.sidebarState;
+      this.sidebarVisible = state.sidebarState !== 'collapsed';
     });
 
     // Subscribe to auth state
@@ -187,6 +235,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
           // Add admin items if user is admin
           if (this.isAdmin) {
             this.items = [...this.items, ...this.adminItems];
+            this.convertMenuItems(); // Re-convert with admin items
           }
         });
       }
@@ -241,29 +290,17 @@ export class NavigationComponent implements OnInit, OnDestroy {
    * Toggle sidebar state
    */
   toggleSidebar() {
-    const newState =
-      this.sidebarState === 'expanded'
-        ? 'compacted'
-        : this.sidebarState === 'compacted'
-          ? 'collapsed'
-          : 'expanded';
-
+    this.sidebarVisible = !this.sidebarVisible;
+    const newState = this.sidebarVisible ? 'expanded' : 'collapsed';
     this.menuStateService.updateSidebarState(newState);
   }
 
   /**
-   * Handle menu item click
+   * Handle menu item click (for PrimeNG MenuItem)
    */
-  onMenuItemClick(item: AppMenuItem) {
-    if (item.id) {
-      // Update selected item
-      this.menuStateService.setSelectedItem(item.id);
-
-      // Update expanded state if item has children
-      if (item.children?.length) {
-        this.menuStateService.toggleMenuItem(item.id);
-      }
-    }
+  onMenuItemClick(event: any) {
+    // PrimeNG handles the command automatically
+    // Additional logic can be added here if needed
   }
 
   /**
@@ -275,6 +312,14 @@ export class NavigationComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl(result.link);
       }
     });
+  }
+
+  /**
+   * Show keyboard shortcuts help
+   */
+  showKeyboardShortcuts() {
+    // TODO: Implement with PrimeNG dialog service
+    console.log('Keyboard shortcuts help');
   }
 
   /**

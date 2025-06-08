@@ -1,78 +1,90 @@
-<nb-layout>
+<div class="app-layout">
   <!-- Sidebar -->
-  <nb-sidebar
-    [state]="sidebarState"
-    [responsive]="true"
-    [compacted]="sidebarState === 'compacted'"
-    class="menu-sidebar"
-  >
-    <nb-menu [items]="items" (itemClick)="onMenuItemClick($event)"></nb-menu>
-  </nb-sidebar>
-
-  <!-- Header -->
-  <nb-layout-header fixed>
-    <div class="header-container">
-      <!-- Sidebar Toggle -->
-      <button nbButton ghost (click)="toggleSidebar()" class="sidebar-toggle">
-        <nb-icon
-          [icon]="sidebarState === 'collapsed' ? 'menu-2-outline' : 'menu-arrow-outline'"
-        ></nb-icon>
-      </button>
-
-      <!-- Breadcrumbs -->
-      <app-breadcrumbs></app-breadcrumbs>
-
-      <!-- Right Actions -->
-      <div class="header-actions">
-        <!-- Search -->
-        <button nbButton ghost class="search-button" (click)="openSearch()">
-          <nb-icon icon="search-outline"></nb-icon>
-          <span class="search-shortcut">⌘K</span>
-        </button>
-
-        <!-- Keyboard Shortcuts -->
-        <button
-          nbButton
-          ghost
-          class="shortcuts-button"
-          (click)="showKeyboardShortcuts()"
-          nbTooltip="Show keyboard shortcuts"
-          nbTooltipPlacement="bottom"
-        >
-          <nb-icon icon="keyboard-outline"></nb-icon>
-          <span class="shortcuts-shortcut">?</span>
-        </button>
-
-        <!-- Theme Toggle -->
-        <app-theme-toggle></app-theme-toggle>
-
-        <!-- User Menu -->
-        <nb-user
-          *ngIf="isLoggedIn"
-          [nbContextMenu]="userItems"
-          [name]="userProfile?.username || 'User'"
-          [picture]="userProfile?.profileImage || 'assets/images/default-avatar.png'"
-          nbContextMenuTag="user-menu"
-          (nbContextMenuItemClick)="onUserMenuSelect($event)"
-        >
-        </nb-user>
-
-        <!-- Auth Actions -->
-        <ng-container *ngIf="!isLoggedIn">
-          <button nbButton ghost routerLink="/auth/login">Log In</button>
-          <button nbButton status="primary" routerLink="/auth/register">Sign Up</button>
-        </ng-container>
+  <p-sidebar [(visible)]="sidebarVisible" position="left" [baseZIndex]="1000" [modal]="false" styleClass="app-sidebar">
+    <div class="sidebar-content">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <h3>Date Night</h3>
       </div>
+      
+      <!-- Navigation Menu -->
+      <p-menu [model]="menuItems" styleClass="sidebar-menu"></p-menu>
     </div>
-  </nb-layout-header>
+  </p-sidebar>
 
-  <!-- Main Content -->
-  <nb-layout-column class="main-content">
-    <ng-content></ng-content>
-  </nb-layout-column>
+  <!-- Main Layout -->
+  <div class="main-layout" [class.sidebar-open]="sidebarVisible">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <!-- Sidebar Toggle -->
+        <p-button 
+          icon="pi pi-bars" 
+          [text]="true" 
+          [rounded]="true"
+          (onClick)="toggleSidebar()" 
+          pTooltip="Toggle menu"
+          tooltipPosition="bottom">
+        </p-button>
 
-  <!-- Footer -->
-  <nb-layout-footer fixed>
-    <span>&copy; 2025 Date Night App. All rights reserved.</span>
-  </nb-layout-footer>
-</nb-layout>
+        <!-- Breadcrumbs -->
+        <app-breadcrumbs></app-breadcrumbs>
+
+        <!-- Right Actions -->
+        <div class="header-actions">
+          <!-- Search -->
+          <p-button 
+            icon="pi pi-search" 
+            [text]="true" 
+            [rounded]="true"
+            (onClick)="openSearch()" 
+            pTooltip="Search (⌘K)"
+            tooltipPosition="bottom">
+          </p-button>
+
+          <!-- Keyboard Shortcuts -->
+          <p-button 
+            icon="pi pi-desktop" 
+            [text]="true" 
+            [rounded]="true"
+            (onClick)="showKeyboardShortcuts()" 
+            pTooltip="Show keyboard shortcuts (?)"
+            tooltipPosition="bottom">
+          </p-button>
+
+          <!-- Theme Toggle -->
+          <app-theme-toggle></app-theme-toggle>
+
+          <!-- User Menu -->
+          <div *ngIf="isLoggedIn" class="user-menu">
+            <p-avatar 
+              [image]="userProfile?.profileImage || 'assets/images/default-avatar.png'"
+              [label]="userProfile?.username?.charAt(0) || 'U'"
+              shape="circle"
+              size="normal"
+              [style]="{'cursor': 'pointer'}"
+              (click)="userMenu.toggle($event)">
+            </p-avatar>
+            <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+          </div>
+
+          <!-- Auth Actions -->
+          <ng-container *ngIf="!isLoggedIn">
+            <p-button label="Log In" [text]="true" routerLink="/auth/login"></p-button>
+            <p-button label="Sign Up" routerLink="/auth/register"></p-button>
+          </ng-container>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <ng-content></ng-content>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>&copy; 2025 Date Night App. All rights reserved.</span>
+    </footer>
+  </div>
+</div>

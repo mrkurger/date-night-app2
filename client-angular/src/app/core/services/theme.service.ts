@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export type ThemeName = 'default' | 'dark' | 'cosmic' | 'corporate' | 'system';
+export type ThemeName = 'light' | 'dark' | 'system';
 
 /**
  * Service for managing application theme
  * Handles theme switching, persistence, and system preference detection
+ * Updated to work with PrimeNG themes instead of Nebular
  */
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme = new BehaviorSubject<ThemeName>('default');
+  private currentTheme = new BehaviorSubject<ThemeName>('light');
   private darkMode = new BehaviorSubject<boolean>(false);
 
   /**
@@ -25,7 +25,7 @@ export class ThemeService {
    */
   public isDarkMode$: Observable<boolean> = this.darkMode.asObservable();
 
-  constructor(private nbThemeService: NbThemeService) {
+  constructor() {
     // Initialize theme from local storage
     const savedTheme = localStorage.getItem('theme') as ThemeName;
     if (savedTheme) {
@@ -70,9 +70,9 @@ export class ThemeService {
    * @param theme The theme to set ('light', 'dark', or 'system')
    */
   public setTheme(themeName: ThemeName): void {
-    this.nbThemeService.changeTheme(themeName);
     this.currentTheme.next(themeName);
     localStorage.setItem('theme', themeName);
+    this.applyPrimeNGTheme(themeName);
   }
 
   /**
@@ -91,42 +91,68 @@ export class ThemeService {
   public setDarkMode(isDark: boolean): void {
     this.darkMode.next(isDark);
     localStorage.setItem('darkMode', isDark.toString());
-    this.setTheme(isDark ? 'dark' : 'default');
+    this.setTheme(isDark ? 'dark' : 'light');
   }
 
-  // Custom theme configuration
+  /**
+   * Apply PrimeNG theme based on theme name
+   * @param themeName The theme to apply
+   */
+  private applyPrimeNGTheme(themeName: ThemeName): void {
+    // Remove existing theme links
+    const existingThemeLinks = document.querySelectorAll('link[data-theme]');
+    existingThemeLinks.forEach(link => link.remove());
+
+    // Create new theme link
+    const themeLink = document.createElement('link');
+    themeLink.rel = 'stylesheet';
+    themeLink.setAttribute('data-theme', themeName);
+    
+    // Set the theme CSS URL based on theme name
+    switch (themeName) {
+      case 'dark':
+        themeLink.href = 'https://unpkg.com/primeng/resources/themes/aura-dark-blue/theme.css';
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        break;
+      case 'light':
+      default:
+        themeLink.href = 'https://unpkg.com/primeng/resources/themes/aura-light-blue/theme.css';
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        break;
+    }
+
+    // Append the new theme link
+    document.head.appendChild(themeLink);
+    this.applyCustomTheme();
+  }
+
+  // Custom theme configuration for CSS variables
   private customThemeVariables = {
-    default: {
-      'color-primary-100': '#F2F6FF',
-      'color-primary-200': '#D9E4FF',
-      'color-primary-300': '#A6C1FF',
-      'color-primary-400': '#598BFF',
-      'color-primary-500': '#3366FF',
-      'color-primary-600': '#274BDB',
-      'color-primary-700': '#1A34B8',
-      'color-primary-800': '#102694',
-      'color-primary-900': '#091C7A',
+    light: {
+      'app-primary-color': '#3B82F6',
+      'app-surface-color': '#ffffff',
+      'app-text-color': '#1f2937',
+      'app-border-color': '#e5e7eb',
+      'app-hover-color': '#f3f4f6',
     },
     dark: {
-      'color-primary-100': '#1A1F33',
-      'color-primary-200': '#2A3154',
-      'color-primary-300': '#3B4475',
-      'color-primary-400': '#4C5696',
-      'color-primary-500': '#5D69B7',
-      'color-primary-600': '#6E7CD8',
-      'color-primary-700': '#7F8FF9',
-      'color-primary-800': '#90A2FF',
-      'color-primary-900': '#A1B5FF',
+      'app-primary-color': '#60A5FA',
+      'app-surface-color': '#1f2937',
+      'app-text-color': '#f9fafb',
+      'app-border-color': '#374151',
+      'app-hover-color': '#374151',
     },
   };
 
   /**
-   * Apply custom theme
+   * Apply custom theme variables
    */
   public applyCustomTheme(): void {
     const variables = this.darkMode.value
       ? this.customThemeVariables.dark
-      : this.customThemeVariables.default;
+      : this.customThemeVariables.light;
 
     Object.entries(variables).forEach(([key, value]) => {
       document.documentElement.style.setProperty(`--${key}`, value);

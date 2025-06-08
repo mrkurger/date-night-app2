@@ -11,7 +11,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { NbSecurityModule, NbRoleProvider, NbAclService } from '@nebular/security';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -129,8 +128,10 @@ const securityConfig = {
  * but they are listed here for documentation and clarity.
  *
  * Note: Order matters for interceptors - they are applied in the order listed.
+ * Security features previously provided by Nebular security module have been 
+ * replaced with custom implementations.
  */
-@NgModule({ imports: [CommonModule, NbSecurityModule.forRoot(securityConfig)], providers: [
+@NgModule({ imports: [CommonModule], providers: [
         // Core Services
         AuthService,
         UserService,
@@ -172,12 +173,6 @@ const securityConfig = {
             deps: [Router, NotificationService, TelemetryService, AuthService],
             multi: true,
         },
-        // Security Providers
-        {
-            provide: NbRoleProvider,
-            useClass: AuthService,
-        },
-        NbAclService,
         provideHttpClient(withInterceptorsFromDi()),
     ] })
 export class CoreModule {}
