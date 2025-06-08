@@ -1,0 +1,155 @@
+{
+  "folders": [
+    {
+      "name": "Date Night App (Root)",
+      "path": "."
+    },
+    {
+      "name": "Angular Frontend (Legacy)",
+      "path": "./client-angular"
+    },
+    {
+      "name": "React/Next.js Frontend (Current)",
+      "path": "./client_angular2"
+    }
+  ],
+  "settings": {
+    "CodeGPT.apiKey": "CodeGPT Plus Beta",
+    "zencoder.enableRepoIndexing": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.deepscan": "explicit"
+    },
+    "eslint.validate": ["javascript", "typescript", "html", "javascriptreact", "typescriptreact"],
+    "eslint.workingDirectories": [
+      ".",
+      "client-angular",
+      "client_angular2"
+    ],
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.printWidth": 100,
+    "prettier.tabWidth": 2,
+    "prettier.semi": true,
+    "prettier.bracketSpacing": true,
+    "prettier.arrowParens": "avoid",
+    "prettier.endOfLine": "lf",
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "deepscan.enable": true,
+    "deepscan.configFile": ".deepscan.json",
+    "deepscan.showDecorators": true,
+    "deepscan.ignoreConfirmResult": false,
+    "deepscan.eslint.enable": true,
+    "deepscan.eslint.merge": true,
+    "deepscan.serverUrl": "https://deepscan.io",
+    "terminal.integrated.scrollback": 5000,
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+      "Follow conventional commits format",
+      "Be specific about what files/features were changed",
+      "Mention if changes affect client-angular/ (Angular) or client_angular2/ (React/Next.js)"
+    ],
+    "github.copilot.settings": {
+      "maxFilesPerBatch": 20,
+      "batchProcessingTimeout": 30000,
+      "enableParallelProcessing": true,
+      "memoryLimit": 4096,
+      "advanced": {
+        "enableDeepAnalysis": true,
+        "maxContextFiles": 15,
+        "maxTokensPerFile": 5000
+      }
+    },
+    "mcp": {
+      "servers": {
+        "sequentialthinking": {
+          "maxConcurrentOperations": 5,
+          "timeout": 30000
+        },
+        "typescript-lsp": {
+          "maxConcurrentFiles": 10,
+          "timeout": 30000
+        }
+      }
+    },
+    "editor.maxTokenizationLineLength": 20000,
+    "files.maxMemoryForLargeFilesMB": 4096,
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "typescript.suggest.autoImports": true,
+    "files.associations": {
+      "*.tsx": "typescriptreact",
+      "*.jsx": "javascriptreact"
+    },
+    "emmet.includeLanguages": {
+      "typescriptreact": "html",
+      "javascriptreact": "html"
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/.next": true,
+      "**/coverage": true,
+      "**/playwright-report": true,
+      "**/test-results": true
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/.next": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+      "*.ts": "$(capture).js",
+      "*.tsx": "$(capture).js",
+      "*.jsx": "$(capture).js",
+      "package.json": "package-lock.json,yarn.lock,pnpm-lock.yaml"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "deepscan.vscode-deepscan",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-typescript-next",
+      "angular.ng-template",
+      "ms-playwright.playwright",
+      "ms-vscode.vscode-json",
+      "github.copilot",
+      "github.copilot-chat",
+      "modelcontextprotocol.mcp"
+    ]
+  }
+}
