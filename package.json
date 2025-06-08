@@ -16,7 +16,11 @@
     "docs:update": "npm run docs:ensure",
     "install-missing": "node scripts/install-missing-deps.js",
     "fix-tests": "node scripts/combine-test-reports.js",
-    "analyze:security": "npm audit"
+    "analyze:security": "npm audit",
+    "mcp:start": "node scripts/start-mcp-services.js",
+    "mcp:stop": "node scripts/mcp-memory-server.js stop",
+    "mcp:sync": "node scripts/mcp-knowledge-sync.js",
+    "mcp:status": "node scripts/mcp-memory-server.js status"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "20.0.0",
@@ -57,6 +61,8 @@
     "@fortawesome/angular-fontawesome": "1.0.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
+    "@modelcontextprotocol/server-memory": "2025.4.25",
+    "@modelcontextprotocol/sdk": "^1.12.1",
     "@nebular/theme": "11.0.1",
     "@next/third-parties": "15.3.3",
     "@radix-ui/react-select": "2.2.5",

@@ -69,6 +69,23 @@ jobs:
         run: |
           npm ci || npm install
           
+      - name: 🧠 Start MCP Services
+        id: mcp_start
+        run: |
+          echo "🚀 Starting MCP Memory server for knowledge synchronization..."
+          
+          # Start MCP services with CI environment detection
+          CI=true node scripts/start-mcp-services.js start
+          
+          # Check if MCP server started successfully
+          if node scripts/mcp-memory-server.js status; then
+            echo "mcp_server_running=true" >> $GITHUB_OUTPUT
+            echo "✅ MCP Memory server started successfully"
+          else
+            echo "mcp_server_running=false" >> $GITHUB_OUTPUT
+            echo "⚠️  MCP Memory server failed to start, continuing without MCP sync"
+          fi
+          
       - name: 🔍 Run Documentation Audit
         id: audit
         run: |
@@ -175,19 +192,35 @@ jobs:
         run: |
           echo "🧠 Updating knowledge graph..."
           
-          # Ensure knowledge graph exists and is up to date
+          # Run MCP knowledge synchronization
+          if [ "${{ steps.mcp_start.outputs.mcp_server_running }}" == "true" ]; then
+            echo "🔄 Running full MCP knowledge synchronization..."
+            node scripts/mcp-knowledge-sync.js full
+          else
+            echo "📊 Running knowledge extraction without MCP server..."
+            node scripts/mcp-knowledge-sync.js extract-only
+          fi
+          
+          # Ensure both knowledge graphs exist and are up to date
           if [ ! -f "docs/graph/ci_knowledge.md" ]; then
-            echo "Creating knowledge graph..."
+            echo "Creating ci_knowledge.md..."
             # The doc_sync.js script handles this
+          fi
+          
+          if [ ! -f "docs/graph/persistent_knowledge.md" ]; then
+            echo "Creating persistent_knowledge.md..."
+            node scripts/mcp-knowledge-sync.js extract-only
           fi
           
           # Update knowledge graph metadata
           node -e "
           const fs = require('fs');
-          const path = 'docs/graph/ci_knowledge.md';
-          if (fs.existsSync(path)) {
-            let content = fs.readFileSync(path, 'utf8');
-            const timestamp = new Date().toISOString();
+          const timestamp = new Date().toISOString();
+          
+          // Update ci_knowledge.md
+          const ciPath = 'docs/graph/ci_knowledge.md';
+          if (fs.existsSync(ciPath)) {
+            let content = fs.readFileSync(ciPath, 'utf8');
             content = content.replace(
               /\"last_updated\": \"[^\"]*\"/g,
               '\"last_updated\": \"' + timestamp + '\"'
@@ -196,8 +229,24 @@ jobs:
               /\*\*Last Updated\*\*: .+/g,
               '**Last Updated**: ' + timestamp
             );
-            fs.writeFileSync(path, content);
-            console.log('✅ Knowledge graph metadata updated');
+            fs.writeFileSync(ciPath, content);
+            console.log('✅ ci_knowledge.md metadata updated');
+          }
+          
+          // Update persistent_knowledge.md
+          const persistentPath = 'docs/graph/persistent_knowledge.md';
+          if (fs.existsSync(persistentPath)) {
+            let content = fs.readFileSync(persistentPath, 'utf8');
+            content = content.replace(
+              /\"last_updated\": \"[^\"]*\"/g,
+              '\"last_updated\": \"' + timestamp + '\"'
+            );
+            content = content.replace(
+              /\*Last synchronized: .+\*/g,
+              '*Last synchronized: ' + timestamp + '*'
+            );
+            fs.writeFileSync(persistentPath, content);
+            console.log('✅ persistent_knowledge.md metadata updated');
           }
           "
           
@@ -218,14 +267,16 @@ jobs:
           - **Outdated Documentation**: ${{ steps.audit.outputs.outdated_count }}
           - **Documentation Files Updated**: ${{ steps.sync.outputs.doc_changes_count || 0 }}
           - **Changes Detected**: ${{ steps.changes.outputs.changes_detected }}
+          - **MCP Server Running**: ${{ steps.mcp_start.outputs.mcp_server_running }}
           
           ## Actions Taken
           
           - ✅ Documentation audit completed
+          - ${{ steps.mcp_start.outputs.mcp_server_running == 'true' && '✅' || '⚠️' }} MCP Memory server startup
           - ${{ steps.changes.outputs.changes_detected == 'true' && '✅' || '⏭️' }} Code change detection
           - ${{ steps.sync.outputs.documentation_updated == 'true' && '✅' || '⏭️' }} Documentation synchronization
           - ${{ steps.audit.outputs.outdated_count > 50 && '✅' || '⏭️' }} Outdated documentation archival
-          - ✅ Knowledge graph update
+          - ✅ Knowledge graph update (both ci_knowledge.md and persistent_knowledge.md)
           
           ## Next Scheduled Run
           
@@ -355,3 +406,10 @@ jobs:
           echo "- [Audit Report](docs/DOCUMENTATION_DISCREPANCIES_REPORT.md)" >> $GITHUB_STEP_SUMMARY
           echo "- [Status Report](docs/DOCUMENTATION_STATUS.md)" >> $GITHUB_STEP_SUMMARY
           echo "- [Knowledge Graph](docs/graph/ci_knowledge.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Persistent Knowledge Graph](docs/graph/persistent_knowledge.md)" >> $GITHUB_STEP_SUMMARY
+          
+      - name: 🛑 Stop MCP Services
+        if: always() && steps.mcp_start.outputs.mcp_server_running == 'true'
+        run: |
+          echo "🛑 Stopping MCP services..."
+          node scripts/mcp-memory-server.js stop || echo "MCP server stop completed"
