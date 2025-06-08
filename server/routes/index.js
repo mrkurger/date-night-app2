@@ -79,8 +79,6 @@ import locationRoutes from '../routes/location.routes.js';
 import favoriteRoutes from '../routes/favorite.routes.js';
 import appointmentRoutes from './appointment.routes.js';
 import advertiserProfileRoutes from './advertiserProfile.routes.js';
-// Import MCP routes
-import mcpRoutes from '../mcp/routes.js';
 
 // CSRF token endpoint
 router.get('/csrf-token', csrfProtection, sendCsrfToken, (req, res) => {
@@ -103,8 +101,6 @@ safelyRegisterRoutes('/favorites', favoriteRoutes);
 safelyRegisterRoutes('/locations', locationRoutes);
 safelyRegisterRoutes('/appointments', appointmentRoutes);
 safelyRegisterRoutes('/advertiser-profiles', advertiserProfileRoutes);
-// Mount MCP routes
-safelyRegisterRoutes('/mcp', mcpRoutes);
 
 // API health check endpoint
 router.get('/health', (req, res) => {

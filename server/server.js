@@ -32,8 +32,6 @@ import swaggerSpecs from './config/swagger.js';
 import { mongoSanitize } from './middleware/mongo-sanitize.js';
 import client from 'prom-client';
 import { patchExpressRoute } from './middleware/url-validator.js';
-// Import MCP servers
-import { initializeMcpServers, shutdownMcpServers } from './mcp/index.js';
 
 const app = express();
 let server;
@@ -296,10 +294,6 @@ const shutdown = async signal => {
     await mongoose.connection.close();
     console.log('Database connections closed');
 
-    // Shutdown MCP servers
-    await shutdownMcpServers();
-    console.log('MCP servers shutdown complete');
-
     // Close server if it exists
     if (server) {
       await new Promise((resolve, reject) => {
@@ -373,10 +367,6 @@ process.on('unhandledRejection', error => {
 const startServer = async () => {
   try {
     await connectWithRetry();
-    
-    // Initialize MCP servers
-    await initializeMcpServers();
-    
     const PORT = process.env.PORT || 3000;
     server = app.listen(PORT, () => {
       // Assign to top-level server variable
