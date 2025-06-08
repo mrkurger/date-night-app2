@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Application Features - Glossary</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #1a1a1a;
+    }
+    .entry {
+      background-color: #f8f9fa;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .methods {
+      background-color: #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    code {
+      background-color: #f1f3f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enhanced Application Features - Glossary</h1>
+  
+  <div class="entry">
+    <h2 id="GitHubActionsService">GitHubActionsService</h2>
+    <p>Service for integrating with GitHub Actions API to monitor workflows, deployments, and CI/CD processes.</p>
+    
+    <div class="methods">
+      <h3>Methods</h3>
+      <ul>
+        <li><code>getWorkflowStatus()</code> - Retrieves current running workflows and their status</li>
+        <li><code>getRecentRuns(limit)</code> - Gets recent workflow run history with configurable limit</li>
+        <li><code>triggerWorkflow(workflowId, inputs)</code> - Triggers a workflow dispatch event</li>
+        <li><code>getDeploymentStatus()</code> - Retrieves deployment status and history</li>
+      </ul>
+    </div>
+    
+    <h3>Features</h3>
+    <ul>
+      <li>Real-time workflow monitoring</li>
+      <li>Deployment status tracking</li>
+      <li>Workflow dispatch triggering</li>
+      <li>Comprehensive error handling</li>
+    </ul>
+  </div>
+  
+  <div class="entry">
+    <h2 id="MobileService">MobileService</h2>
+    <p>Service providing mobile-specific functionality including PWA capabilities, responsive design validation, and device analytics.</p>
+    
+    <div class="methods">
+      <h3>Methods</h3>
+      <ul>
+        <li><code>getMobileAnalytics()</code> - Returns mobile usage analytics and device breakdown</li>
+        <li><code>validateResponsiveDesign(url, viewports)</code> - Tests responsive design across multiple viewport sizes</li>
+        <li><code>getPWAStatus()</code> - Checks PWA readiness and compliance</li>
+        <li><code>generatePWAManifest(config)</code> - Creates or updates PWA manifest file</li>
+        <li><code>getDeviceCapabilities(userAgent)</code> - Detects device capabilities and features</li>
+      </ul>
+    </div>
+    
+    <h3>Features</h3>
+    <ul>
+      <li>Progressive Web App implementation</li>
+      <li>Responsive design validation</li>
+      <li>Mobile analytics integration</li>
+      <li>Device capability detection</li>
+      <li>PWA manifest generation</li>
+    </ul>
+  </div>
+  
+  <div class="entry">
+    <h2 id="DevToolsService">DevToolsService</h2>
+    <p>Comprehensive developer tools service providing system monitoring, build automation, and development task management.</p>
+    
+    <div class="methods">
+      <h3>Methods</h3>
+      <ul>
+        <li><code>getSystemHealth()</code> - Monitors system health including Node.js, npm, memory, and disk usage</li>
+        <li><code>getBuildStatus()</code> - Returns build status and history</li>
+        <li><code>triggerBuild(target, clean)</code> - Initiates build process with optional clean flag</li>
+        <li><code>analyzeDependencies()</code> - Analyzes project dependencies and security vulnerabilities</li>
+        <li><code>getPerformanceMetrics()</code> - Retrieves system and build performance metrics</li>
+        <li><code>runTask(taskName, parameters)</code> - Executes development tasks like lint, test, clean</li>
+      </ul>
+    </div>
+    
+    <h3>Available Tasks</h3>
+    <ul>
+      <li><code>lint</code> - Code quality checking and formatting</li>
+      <li><code>test</code> - Test execution with optional coverage</li>
+      <li><code>clean</code> - Cleanup of build artifacts and dependencies</li>
+      <li><code>dependencies-check</code> - Security and outdated package analysis</li>
+    </ul>
+    
+    <h3>Features</h3>
+    <ul>
+      <li>System health monitoring</li>
+      <li>Build process automation</li>
+      <li>Performance metrics tracking</li>
+      <li>Dependency management</li>
+      <li>Security vulnerability scanning</li>
+      <li>Development task automation</li>
+    </ul>
+  </div>
+  
+  <div class="entry">
+    <h2 id="API-Endpoints">API Endpoints</h2>
+    
+    <h3>GitHub Actions Routes</h3>
+    <ul>
+      <li><code>GET /api/v1/github-actions/status</code> - Get workflow status</li>
+      <li><code>GET /api/v1/github-actions/runs</code> - Get recent workflow runs</li>
+      <li><code>POST /api/v1/github-actions/trigger</code> - Trigger workflow dispatch</li>
+      <li><code>GET /api/v1/github-actions/deployments</code> - Get deployment status</li>
+    </ul>
+    
+    <h3>Mobile/PWA Routes</h3>
+    <ul>
+      <li><code>GET /api/v1/mobile/analytics</code> - Get mobile analytics</li>
+      <li><code>POST /api/v1/mobile/validate-responsive</code> - Validate responsive design</li>
+      <li><code>GET /api/v1/mobile/pwa-status</code> - Get PWA status</li>
+      <li><code>POST /api/v1/mobile/generate-manifest</code> - Generate PWA manifest</li>
+      <li><code>GET /api/v1/mobile/device-capabilities</code> - Get device capabilities</li>
+    </ul>
+    
+    <h3>Developer Tools Routes</h3>
+    <ul>
+      <li><code>GET /api/v1/dev-tools/health</code> - Get system health</li>
+      <li><code>GET /api/v1/dev-tools/build-status</code> - Get build status</li>
+      <li><code>POST /api/v1/dev-tools/build</code> - Trigger build</li>
+      <li><code>GET /api/v1/dev-tools/dependencies</code> - Analyze dependencies</li>
+      <li><code>GET /api/v1/dev-tools/performance</code> - Get performance metrics</li>
+      <li><code>POST /api/v1/dev-tools/task</code> - Run development task</li>
+    </ul>
+  </div>
+</body>
+</html>
