@@ -1,15 +1,15 @@
 # Documentation Control & Synchronization Audit Report
 
-Generated: 2025-06-09T05:48:27.984Z
+Generated: 2025-06-09T12:10:35.288Z
 Scope: Entire repository excluding client-angular/ directory
 
 ## Executive Summary
 
 - **Total Code Elements Analyzed**: 230
-- **Total Documentation Files**: 526
-- **Documentation Coverage**: 169%
-- **Undocumented Elements**: 138
-- **Outdated Documentation**: 420
+- **Total Documentation Files**: 529
+- **Documentation Coverage**: 171%
+- **Undocumented Elements**: 135
+- **Outdated Documentation**: 422
 
 ## Undocumented Code Elements
 
@@ -38,7 +38,6 @@ These code elements lack proper documentation and should be prioritized:
 - `InfiniteScrollGrid`
 - `MasonryGrid`
 - `NetflixViewGrid`
-- `RankingsPage`
 - `TipFrenzy`
 - `achievement-showcase`
 - `charts-dashboard`
@@ -124,12 +123,10 @@ These code elements lack proper documentation and should be prioritized:
 - `use-mobile`
 - `use-toast`
 - `carousely-component.spec`
-- `demo-component-pages.spec`
 - `fix-angular-components`
 
 ### Services
 
-- `api-service`
 - `token-service`
 - `service-worker`
 - `pwa.service`
@@ -598,12 +595,14 @@ These documentation files reference excluded directories or outdated information
 - **docs/outdated/2025-06-08-2025-06-08-FEATURE-NAME.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-08-2025-06-08-IMPLEMENTATION_GUIDE.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-08-DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-09/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-09/README.md**: References excluded client-angular directory
 
 ## Recommendations
 
 ### Immediate Actions Required:
-1. Create documentation for 138 undocumented code elements
-2. Update or archive 420 outdated documentation files
+1. Create documentation for 135 undocumented code elements
+2. Update or archive 422 outdated documentation files
 3. Implement automated documentation synchronization
 
 ### Priority Order:
