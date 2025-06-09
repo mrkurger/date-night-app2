@@ -22,7 +22,7 @@ const __dirname = path.dirname(__filename);
  * Configuration object for the documentation audit
  */
 const config = {
-  rootDir: path.resolve(__dirname, '..'),
+  rootDir: process.env.WORKSPACE_ROOT || path.resolve(__dirname, '..'),
   
   // Directories to include in code analysis (excluding client-angular)
   includedCodeDirs: [

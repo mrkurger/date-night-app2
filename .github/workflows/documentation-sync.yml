@@ -69,8 +69,24 @@ jobs:
         run: |
           npm ci || npm install
           
+      - name: 🔧 Install MCP Servers
+        # Install Model Context Protocol servers needed for documentation scripts
+        # These packages enable advanced context management and AI assistance
+        run: |
+          npm install --no-save @modelcontextprotocol/server-memory @modelcontextprotocol/server-sequential-thinking @modelcontextprotocol/server-filesystem typescript typescript-language-server
+          
+      - name: 🌍 Setup Workspace Environment
+        # Set WORKSPACE_ROOT environment variable for scripts that need workspace context
+        # This ensures all MCP-enabled scripts can locate project files correctly
+        run: |
+          echo "WORKSPACE_ROOT=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+          
       - name: 🔍 Run Documentation Audit
         id: audit
+        # Execute documentation audit script with workspace context
+        # Uses MCP servers for enhanced code analysis and documentation generation
+        env:
+          WORKSPACE_ROOT: ${{ env.WORKSPACE_ROOT }}
         run: |
           echo "🚀 Running documentation audit..."
           node scripts/doc_control_audit.js
@@ -119,6 +135,10 @@ jobs:
       - name: 📝 Synchronize Documentation
         if: steps.changes.outputs.changes_detected == 'true' || github.event.inputs.force_full_sync == 'true'
         id: sync
+        # Run documentation synchronization with MCP context
+        # Leverages MCP servers for intelligent documentation updates
+        env:
+          WORKSPACE_ROOT: ${{ env.WORKSPACE_ROOT }}
         run: |
           echo "🚀 Running documentation synchronization..."
           
