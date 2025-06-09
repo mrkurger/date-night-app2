@@ -102,26 +102,79 @@ class SecurityAuditMCP {
         try {
           this.auditResults.npm = JSON.parse(result.stdout);
         } catch (parseError) {
-          // Handle non-JSON output
+          // Handle non-JSON output gracefully
+          console.warn('Failed to parse npm audit JSON output, attempting fallback parsing');
           this.auditResults.npm = {
             error: 'Failed to parse npm audit output',
-            rawOutput: result.stdout
+            rawOutput: result.stdout,
+            exitCode: result.code,
+            fallbackData: this.parseNpmAuditFallback(result.stdout)
           };
         }
       } else {
         this.auditResults.npm = {
           vulnerabilities: { total: 0 },
-          metadata: { vulnerabilities: { total: 0 } }
+          metadata: { vulnerabilities: { total: 0 } },
+          message: 'No npm audit output received'
         };
       }
       
+      // Add timestamp and execution info
+      this.auditResults.npm.executedAt = new Date().toISOString();
+      this.auditResults.npm.executionTime = Date.now() - (this.auditResults.startTime || Date.now());
+      
       return this.auditResults.npm;
     } catch (error) {
+      console.error('NPM audit execution failed:', error.message);
       this.auditResults.npm = {
-        error: `NPM audit failed: ${error.message}`
+        error: `NPM audit failed: ${error.message}`,
+        errorType: 'execution_failure',
+        executedAt: new Date().toISOString(),
+        suggestions: [
+          'Check if npm is installed and accessible',
+          'Verify package.json exists in the current directory',
+          'Check network connectivity for registry access',
+          'Try running npm install first'
+        ]
       };
       return this.auditResults.npm;
     }
+  }
+
+  /**
+   * Fallback parser for npm audit output when JSON parsing fails
+   */
+  parseNpmAuditFallback(output) {
+    const fallbackData = {
+      vulnerabilities: { total: 0, critical: 0, high: 0, moderate: 0, low: 0 },
+      packages: 0,
+      parsed: false
+    };
+
+    try {
+      // Try to extract basic vulnerability counts from text output
+      const vulnMatches = output.match(/(\d+)\s+vulnerabilities?/i);
+      if (vulnMatches) {
+        fallbackData.vulnerabilities.total = parseInt(vulnMatches[1], 10);
+        fallbackData.parsed = true;
+      }
+
+      // Look for severity breakdowns
+      const severityPattern = /(\d+)\s+(critical|high|moderate|low)/gi;
+      let match;
+      while ((match = severityPattern.exec(output)) !== null) {
+        const count = parseInt(match[1], 10);
+        const severity = match[2].toLowerCase();
+        if (fallbackData.vulnerabilities.hasOwnProperty(severity)) {
+          fallbackData.vulnerabilities[severity] = count;
+        }
+      }
+
+    } catch (parseError) {
+      console.warn('Fallback parsing also failed:', parseError.message);
+    }
+
+    return fallbackData;
   }
 
   async runSnykTest() {
@@ -347,16 +400,73 @@ class SecurityAuditMCP {
   }
 
   async generateFullReport() {
-    await this.generateProjectHash();
-    await this.runNpmAudit();
-    await this.runSnykTest();
-    await this.runCustomSecurityChecks();
-    this.generateSecuritySummary();
+    const startTime = Date.now();
+    this.auditResults.startTime = startTime;
     
-    const reportPath = join(process.cwd(), 'security-audit-report.json');
-    await writeFile(reportPath, JSON.stringify(this.auditResults, null, 2));
+    console.log('🔍 Starting comprehensive security audit...');
     
-    return this.auditResults;
+    try {
+      await this.generateProjectHash();
+      console.log('✅ Project hash generated');
+      
+      await this.runNpmAudit();
+      console.log('✅ NPM audit completed');
+      
+      await this.runSnykTest();
+      console.log('✅ Snyk test completed');
+      
+      await this.runCustomSecurityChecks();
+      console.log('✅ Custom security checks completed');
+      
+      this.generateSecuritySummary();
+      console.log('✅ Security summary generated');
+      
+      // Add execution metadata
+      const executionTime = Date.now() - startTime;
+      this.auditResults.executionMetadata = {
+        totalExecutionTime: executionTime,
+        completedSteps: [
+          'projectHash',
+          'npmAudit', 
+          'snykTest',
+          'customChecks',
+          'summary'
+        ],
+        success: true,
+        completedAt: new Date().toISOString()
+      };
+      
+      const reportPath = join(process.cwd(), 'security-audit-report.json');
+      await writeFile(reportPath, JSON.stringify(this.auditResults, null, 2));
+      console.log(`📊 Security audit report saved to: ${reportPath}`);
+      console.log(`⏱️  Total execution time: ${executionTime}ms`);
+      
+      return this.auditResults;
+      
+    } catch (error) {
+      console.error('❌ Security audit failed:', error.message);
+      
+      // Add error metadata
+      const executionTime = Date.now() - startTime;
+      this.auditResults.executionMetadata = {
+        totalExecutionTime: executionTime,
+        success: false,
+        error: error.message,
+        failedAt: new Date().toISOString(),
+        partialResults: true
+      };
+      
+      // Save partial results even on failure
+      try {
+        const reportPath = join(process.cwd(), 'security-audit-report-partial.json');
+        await writeFile(reportPath, JSON.stringify(this.auditResults, null, 2));
+        console.log(`📊 Partial security audit report saved to: ${reportPath}`);
+      } catch (saveError) {
+        console.error('Failed to save partial results:', saveError.message);
+      }
+      
+      throw error;
+    }
   }
 }
 

@@ -2,7 +2,7 @@
 name: "Security Dashboard"
 
 # This workflow creates a unified security dashboard combining Trivy and CodeQL results
-# Works with GitHub Pro+ by using artifacts and workflow summaries
+# Enhanced with robust error handling, validation, performance optimization, and monitoring
 
 on:
   # Run after other security workflows complete
@@ -15,413 +15,489 @@ on:
   schedule:
     - cron: '0 6 * * *'
   
-  # Manual trigger
+  # Manual trigger with options
   workflow_dispatch:
+    inputs:
+      skip_change_detection:
+        description: 'Skip change detection and force generation'
+        required: false
+        default: 'false'
+      notification_level:
+        description: 'Notification level for errors'
+        required: false
+        default: 'normal'
+        type: choice
+        options:
+          - 'minimal'
+          - 'normal'
+          - 'verbose'
 
 permissions:
   contents: read
   actions: read
   issues: write
 
+# Prevent multiple dashboard generations from running simultaneously
+concurrency:
+  group: security-dashboard-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-dashboard:
     name: Generate Security Dashboard
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     steps:
     # Step 1: Checkout for scripts
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Step 2: Setup Node.js
+    # Step 2: Setup Node.js with caching
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: '.github/scripts/package*.json'
 
-    # Step 3: Install dependencies
+    # Step 3: Cache dependencies for performance
+    - name: Cache security dashboard dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.npm
+          .github/scripts/node_modules
+        key: dashboard-deps-${{ runner.os }}-${{ hashFiles('.github/scripts/package*.json') }}
+        restore-keys: |
+          dashboard-deps-${{ runner.os }}-
+
+    # Step 4: Install dependencies with error handling
     - name: Install dependencies
       run: |
-        npm install @octokit/rest
+        echo "::group::Installing dashboard dependencies"
+        cd .github/scripts || mkdir -p .github/scripts && cd .github/scripts
+        
+        # Create package.json if it doesn't exist
+        if [ ! -f package.json ]; then
+          cat > package.json << 'EOF'
+        {
+          "name": "security-dashboard-scripts",
+          "version": "1.0.0",
+          "description": "Security dashboard generation scripts",
+          "private": true,
+          "dependencies": {
+            "@octokit/rest": "^20.0.0"
+          }
+        }
+        EOF
+        fi
+        
+        # Install with retry logic
+        for i in 1 2 3; do
+          if npm install --no-package-lock --no-save @octokit/rest; then
+            echo "Dependencies installed successfully on attempt $i"
+            break
+          else
+            echo "Installation attempt $i failed, retrying..."
+            sleep 5
+          fi
+          if [ $i -eq 3 ]; then
+            echo "Failed to install dependencies after 3 attempts"
+            exit 1
+          fi
+        done
+        echo "::endgroup::"
 
-    # Step 4: Generate comprehensive dashboard
+    # Step 5: Validate environment and permissions
+    - name: Validate environment
+      run: |
+        echo "::group::Environment validation"
+        
+        # Check GitHub token
+        if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
+          echo "ERROR: GitHub token not available"
+          exit 1
+        fi
+        
+        # Check required permissions
+        echo "Validating GitHub API access..."
+        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+             -H "Accept: application/vnd.github.v3+json" \
+             "https://api.github.com/repos/${{ github.repository }}" > /dev/null
+        
+        if [ $? -eq 0 ]; then
+          echo "✅ GitHub API access validated"
+        else
+          echo "❌ GitHub API access failed"
+          exit 1
+        fi
+        
+        # Validate script files exist
+        for script in security-workflow-utils.cjs generate-security-dashboard.cjs validate-dashboard-artifact.cjs; do
+          if [ ! -f ".github/scripts/$script" ]; then
+            echo "ERROR: Required script not found: $script"
+            exit 1
+          fi
+        done
+        
+        echo "✅ All required scripts found"
+        echo "::endgroup::"
+
+    # Step 6: Generate comprehensive dashboard with enhanced error handling
     - name: Generate Security Dashboard
-      uses: actions/github-script@v7
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        script: |
-          // Import Octokit for GitHub API access
-          const { Octokit } = require('@octokit/rest');
-          
-          // Initialize Octokit client
-          const octokit = new Octokit({
-            auth: process.env.GITHUB_TOKEN
-          });
-          
-          // Repository information
-          const owner = context.repo.owner;
-          const repo = context.repo.repo;
-          
-          console.log('📊 Generating security dashboard...');
-          
+        SKIP_CHANGE_DETECTION: ${{ github.event.inputs.skip_change_detection || 'false' }}
+        NOTIFICATION_LEVEL: ${{ github.event.inputs.notification_level || 'normal' }}
+      run: |
+        cd .github/scripts
+        node -e "
+        const SecurityDashboardGenerator = require('./generate-security-dashboard.cjs');
+        const { WorkflowLogger } = require('./security-workflow-utils.cjs');
+        
+        const logger = new WorkflowLogger('WorkflowExecution');
+        
+        async function main() {
           try {
-            // Fetch recent workflow runs
-            const { data: workflowRuns } = await octokit.actions.listWorkflowRunsForRepo({
-              owner,
-              repo,
-              per_page: 100,
-              status: 'completed'
-            });
+            logger.info('Starting security dashboard generation workflow');
             
-            // Filter security-related workflows
-            const trivyRuns = workflowRuns.workflow_runs.filter(run => 
-              run.name.includes('Trivy')
-            ).slice(0, 5);
+            const generator = new SecurityDashboardGenerator(
+              process.env.GITHUB_TOKEN,
+              {
+                repo: {
+                  owner: '${{ github.repository_owner }}',
+                  repo: '${{ github.event.repository.name }}'
+                },
+                runId: '${{ github.run_id }}',
+                runNumber: '${{ github.run_number }}',
+                ref: '${{ github.ref }}',
+                actor: '${{ github.actor }}',
+                eventName: '${{ github.event_name }}'
+              }
+            );
             
-            const codeqlRuns = workflowRuns.workflow_runs.filter(run => 
-              run.name.includes('CodeQL')
-            ).slice(0, 5);
+            const options = {
+              skipIfNoChanges: process.env.SKIP_CHANGE_DETECTION !== 'true'
+            };
             
-            // Create dashboard HTML
-            let dashboard = `<!DOCTYPE html>
-            <html>
-            <head>
-              <title>Security Dashboard - ${repo}</title>
-              <style>
-                body {
-                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                  max-width: 1200px;
-                  margin: 0 auto;
-                  padding: 20px;
-                  background: #f6f8fa;
-                }
-                .header {
-                  background: #24292e;
-                  color: white;
-                  padding: 20px;
-                  border-radius: 6px;
-                  margin-bottom: 20px;
-                }
-                .card {
-                  background: white;
-                  border: 1px solid #e1e4e8;
-                  border-radius: 6px;
-                  padding: 20px;
-                  margin-bottom: 20px;
-                  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-                }
-                .metrics {
-                  display: grid;
-                  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                  gap: 15px;
-                  margin-bottom: 20px;
-                }
-                .metric {
-                  background: #f6f8fa;
-                  padding: 15px;
-                  border-radius: 6px;
-                  text-align: center;
-                }
-                .metric-value {
-                  font-size: 2em;
-                  font-weight: bold;
-                  color: #0366d6;
-                }
-                .metric-label {
-                  color: #586069;
-                  font-size: 0.9em;
-                }
-                .status-badge {
-                  display: inline-block;
-                  padding: 3px 8px;
-                  border-radius: 3px;
-                  font-size: 0.85em;
-                  font-weight: 600;
-                }
-                .status-success { background: #28a745; color: white; }
-                .status-failure { background: #dc3545; color: white; }
-                .status-pending { background: #ffc107; color: #212529; }
-                table {
-                  width: 100%;
-                  border-collapse: collapse;
-                }
-                th, td {
-                  padding: 8px 12px;
-                  text-align: left;
-                  border-bottom: 1px solid #e1e4e8;
-                }
-                th {
-                  background: #f6f8fa;
-                  font-weight: 600;
-                }
-                .trend-up { color: #dc3545; }
-                .trend-down { color: #28a745; }
-                .trend-neutral { color: #6c757d; }
-              </style>
-            </head>
-            <body>
-              <div class="header">
-                <h1>🔐 Security Dashboard</h1>
-                <p>Repository: ${owner}/${repo}</p>
-                <p>Generated: ${new Date().toUTCString()}</p>
-              </div>
-              
-              <div class="card">
-                <h2>📊 Security Overview</h2>
-                <div class="metrics">
-                  <div class="metric">
-                    <div class="metric-value" id="total-scans">-</div>
-                    <div class="metric-label">Total Scans (24h)</div>
-                  </div>
-                  <div class="metric">
-                    <div class="metric-value" id="trivy-status">-</div>
-                    <div class="metric-label">Trivy Status</div>
-                  </div>
-                  <div class="metric">
-                    <div class="metric-value" id="codeql-status">-</div>
-                    <div class="metric-label">CodeQL Status</div>
-                  </div>
-                  <div class="metric">
-                    <div class="metric-value" id="last-scan">-</div>
-                    <div class="metric-label">Hours Since Last Scan</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card">
-                <h2>🔄 Recent Trivy Scans</h2>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Branch</th>
-                      <th>Status</th>
-                      <th>Duration</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="trivy-runs">
-                    ${trivyRuns.map(run => `
-                      <tr>
-                        <td>${new Date(run.created_at).toLocaleString()}</td>
-                        <td>${run.head_branch}</td>
-                        <td><span class="status-badge status-${run.conclusion}">${run.conclusion || 'pending'}</span></td>
-                        <td>${Math.floor((new Date(run.updated_at) - new Date(run.created_at)) / 60000)} min</td>
-                        <td><a href="${run.html_url}">View Run</a></td>
-                      </tr>
-                    `).join('') || '<tr><td colspan="5">No recent Trivy scans found</td></tr>'}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div class="card">
-                <h2>🔍 Recent CodeQL Analyses</h2>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Branch</th>
-                      <th>Status</th>
-                      <th>Duration</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="codeql-runs">
-                    ${codeqlRuns.map(run => `
-                      <tr>
-                        <td>${new Date(run.created_at).toLocaleString()}</td>
-                        <td>${run.head_branch}</td>
-                        <td><span class="status-badge status-${run.conclusion}">${run.conclusion || 'pending'}</span></td>
-                        <td>${Math.floor((new Date(run.updated_at) - new Date(run.created_at)) / 60000)} min</td>
-                        <td><a href="${run.html_url}">View Run</a></td>
-                      </tr>
-                    `).join('') || '<tr><td colspan="5">No recent CodeQL scans found</td></tr>'}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div class="card">
-                <h2>📈 Security Trends</h2>
-                <p>Security scanning trends over the past 7 days:</p>
-                <ul>
-                  <li>Total scans performed: <strong>${trivyRuns.length + codeqlRuns.length}</strong></li>
-                  <li>Average scan time: <strong>${
-                    Math.floor(
-                      [...trivyRuns, ...codeqlRuns]
-                        .map(run => (new Date(run.updated_at) - new Date(run.created_at)) / 60000)
-                        .reduce((a, b) => a + b, 0) / (trivyRuns.length + codeqlRuns.length || 1)
-                    )
-                  } minutes</strong></li>
-                  <li>Success rate: <strong>${
-                    Math.floor(
-                      [...trivyRuns, ...codeqlRuns]
-                        .filter(run => run.conclusion === 'success').length / 
-                      (trivyRuns.length + codeqlRuns.length || 1) * 100
-                    )
-                  }%</strong></li>
-                </ul>
-              </div>
-              
-              <div class="card">
-                <h2>🎯 Recommendations</h2>
-                <ul>
-                  <li>Enable branch protection rules to require security scans before merging</li>
-                  <li>Review security scan artifacts regularly</li>
-                  <li>Consider upgrading to GitHub Advanced Security for enhanced features</li>
-                  <li>Keep dependencies updated to minimize vulnerability exposure</li>
-                </ul>
-              </div>
-              
-              <script>
-                // Update metrics
-                document.getElementById('total-scans').textContent = '${trivyRuns.length + codeqlRuns.length}';
-                document.getElementById('trivy-status').textContent = '${trivyRuns[0]?.conclusion || 'No runs'}';
-                document.getElementById('codeql-status').textContent = '${codeqlRuns[0]?.conclusion || 'No runs'}';
-                
-                // Calculate hours since last scan
-                const lastScan = [...trivyRuns, ...codeqlRuns]
-                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
-                if (lastScan) {
-                  const hoursSince = Math.floor((new Date() - new Date(lastScan.created_at)) / 3600000);
-                  document.getElementById('last-scan').textContent = hoursSince;
-                } else {
-                  document.getElementById('last-scan').textContent = 'N/A';
-                }
-              </script>
-            </body>
-            </html>`;
+            const result = await generator.generateDashboard(options);
             
-            // Save dashboard as artifact
+            // Set outputs for subsequent steps
+            console.log('::set-output name=dashboard_generated::true');
+            console.log('::set-output name=generation_time::' + result.metrics.totalTime);
+            console.log('::set-output name=file_size::' + result.metrics.fileSize);
+            
+            // Write summary for job summary
             const fs = require('fs');
-            fs.mkdirSync('security-dashboard', { recursive: true });
-            fs.writeFileSync('security-dashboard/index.html', dashboard);
+            fs.writeFileSync('dashboard-summary.md', result.summary);
             
-            // Create markdown summary for job summary
-            let summary = `# 🔐 Security Dashboard Summary\n\n`;
-            summary += `**Generated:** ${new Date().toUTCString()}\n\n`;
-            summary += `## 📊 Quick Stats\n\n`;
-            summary += `- **Total Security Scans (24h):** ${trivyRuns.length + codeqlRuns.length}\n`;
-            summary += `- **Latest Trivy Scan:** ${trivyRuns[0]?.conclusion || 'No recent scans'}\n`;
-            summary += `- **Latest CodeQL Scan:** ${codeqlRuns[0]?.conclusion || 'No recent scans'}\n\n`;
-            
-            // Add scan history
-            summary += `## 🔄 Recent Scan Activity\n\n`;
-            summary += `### Trivy Scans\n`;
-            trivyRuns.slice(0, 3).forEach(run => {
-              summary += `- ${new Date(run.created_at).toLocaleString()} - ${run.head_branch} - ${run.conclusion}\n`;
-            });
-            
-            summary += `\n### CodeQL Analyses\n`;
-            codeqlRuns.slice(0, 3).forEach(run => {
-              summary += `- ${new Date(run.created_at).toLocaleString()} - ${run.head_branch} - ${run.conclusion}\n`;
-            });
-            
-            // Add recommendations based on scan results
-            summary += `\n## 🎯 Automated Recommendations\n\n`;
-            
-            const recentScans = [...trivyRuns, ...codeqlRuns]
-              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            
-            if (recentScans.length === 0) {
-              summary += `- ⚠️ No security scans found. Check workflow configurations.\n`;
-            } else {
-              const lastScanTime = new Date(recentScans[0].created_at);
-              const hoursSince = Math.floor((new Date() - lastScanTime) / 3600000);
-              
-              if (hoursSince > 24) {
-                summary += `- ⚠️ No scans in ${hoursSince} hours. Security scans might not be running properly.\n`;
-              }
-              
-              const failures = recentScans.filter(run => run.conclusion === 'failure').length;
-              if (failures > recentScans.length / 2) {
-                summary += `- 🔴 High failure rate (${Math.floor(failures / recentScans.length * 100)}%). Review scan configurations.\n`;
-              }
-              
-              if (!trivyRuns.length) {
-                summary += `- 📦 No recent Trivy scans. Dependency vulnerabilities might go undetected.\n`;
-              }
-              
-              if (!codeqlRuns.length) {
-                summary += `- 🔍 No recent CodeQL scans. Code vulnerabilities might go undetected.\n`;
-              }
-            }
-            
-            // Save summary
-            await core.summary.addRaw(summary).write();
-            
-            console.log('✅ Security dashboard generated successfully!');
+            logger.info('Dashboard generation completed successfully');
             
           } catch (error) {
-            console.error('❌ Error generating dashboard:', error);
-            core.setFailed(error.message);
+            if (error.message === 'SKIP_GENERATION: No changes detected') {
+              logger.info('Skipping dashboard generation - no changes detected');
+              console.log('::set-output name=dashboard_generated::false');
+              console.log('::set-output name=skip_reason::no_changes');
+              process.exit(0);
+            }
+            
+            logger.error('Dashboard generation failed', error);
+            
+            // Set error outputs
+            console.log('::set-output name=dashboard_generated::false');
+            console.log('::set-output name=error_message::' + error.message);
+            
+            throw error;
           }
+        }
+        
+        main().catch(error => {
+          console.error('Fatal error:', error.message);
+          process.exit(1);
+        });
+        "
 
-    # Step 5: Upload dashboard artifact
-    - name: Upload Security Dashboard
+    # Step 7: Validate generated artifacts
+    - name: Validate Dashboard Artifacts
+      if: steps.generate-dashboard.outputs.dashboard_generated == 'true'
+      run: |
+        cd .github/scripts
+        node -e "
+        const DashboardArtifactValidator = require('./validate-dashboard-artifact.cjs');
+        const { WorkflowLogger } = require('./security-workflow-utils.cjs');
+        
+        const logger = new WorkflowLogger('ArtifactValidation');
+        
+        async function main() {
+          try {
+            logger.info('Starting artifact validation');
+            
+            const validator = new DashboardArtifactValidator();
+            const results = await validator.validateArtifacts('../../security-dashboard');
+            
+            // Generate validation report
+            const report = validator.generateValidationReport(results);
+            const fs = require('fs');
+            fs.writeFileSync('validation-report.md', report);
+            
+            // Set outputs
+            console.log('::set-output name=validation_passed::' + results.success);
+            console.log('::set-output name=error_count::' + results.errors.length);
+            console.log('::set-output name=warning_count::' + results.warnings.length);
+            
+            if (!results.success) {
+              console.log('::error::Artifact validation failed with ' + results.errors.length + ' errors');
+              results.errors.forEach(error => {
+                console.log('::error::' + error);
+              });
+              process.exit(1);
+            }
+            
+            logger.info('Artifact validation passed');
+            
+          } catch (error) {
+            logger.error('Artifact validation failed', error);
+            console.log('::set-output name=validation_passed::false');
+            console.log('::error::Validation error: ' + error.message);
+            process.exit(1);
+          }
+        }
+        
+        main();
+        "
+
+    # Step 8: Create workflow job summary
+    - name: Create Job Summary
       if: always()
+      run: |
+        echo "# 🔐 Security Dashboard Generation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Workflow Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+        echo "**Repository:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Add generation results
+        if [ -f ".github/scripts/dashboard-summary.md" ]; then
+          cat .github/scripts/dashboard-summary.md >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # Add validation results
+        if [ -f ".github/scripts/validation-report.md" ]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          cat .github/scripts/validation-report.md >> $GITHUB_STEP_SUMMARY
+        fi
+
+    # Step 9: Upload dashboard artifact with validation
+    - name: Upload Security Dashboard
+      if: steps.validate-artifacts.outputs.validation_passed == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: security-dashboard-${{ github.run_number }}
         path: security-dashboard/
         retention-days: 30
+        if-no-files-found: error
 
-    # Step 6: Create/Update dashboard issue (optional)
+    # Step 10: Upload logs and reports for debugging
+    - name: Upload Debug Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: dashboard-logs-${{ github.run_number }}
+        path: |
+          .github/scripts/dashboard-summary.md
+          .github/scripts/validation-report.md
+        retention-days: 7
+        if-no-files-found: warn
+
+    # Step 11: Create/Update dashboard issue with enhanced notifications
     - name: Update Dashboard Issue
+      if: always()
       uses: actions/github-script@v7
       with:
         script: |
-          // Find existing dashboard issue
-          const { data: issues } = await github.rest.issues.listForRepo({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            labels: 'security-dashboard',
-            state: 'open'
-          });
+          const { WorkflowLogger, ErrorNotifier } = require('./.github/scripts/security-workflow-utils.cjs');
+          const logger = new WorkflowLogger('IssueUpdate');
+          const errorNotifier = new ErrorNotifier(github, context, logger);
           
-          const dashboardIssue = issues.find(issue => 
-            issue.title.includes('Security Dashboard')
-          );
-          
-          // Create issue body with link to latest dashboard
-          const issueBody = `## 🔐 Security Dashboard
-          
-          The latest security dashboard has been generated!
-          
-          ### 📊 View Dashboard
-          - [Latest Dashboard Artifact](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
-          - Download the \`security-dashboard-${context.runNumber}\` artifact to view the full HTML dashboard
-          
-          ### 🔄 Recent Activity
-          Check the [workflow summary](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for quick stats.
-          
-          ### 📅 Next Update
-          This dashboard updates:
-          - Daily at 6 AM UTC
-          - After each security scan completion
-          - On manual trigger
-          
-          ---
-          *Last updated: ${new Date().toUTCString()}*
-          *Workflow run: #${context.runNumber}*`;
-          
-          if (dashboardIssue) {
-            // Update existing issue
-            await github.rest.issues.update({
+          try {
+            // Find existing dashboard issue
+            const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: dashboardIssue.number,
-              body: issueBody
+              labels: 'security-dashboard',
+              state: 'open'
             });
-            console.log(`Updated dashboard issue #${dashboardIssue.number}`);
-          } else {
-            // Create new issue
-            const newIssue = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '🔐 Security Dashboard - Pro+ Edition',
-              body: issueBody,
-              labels: ['security-dashboard', 'automated']
-            });
-            console.log(`Created dashboard issue #${newIssue.data.number}`);
+            
+            const dashboardIssue = issues.find(issue => 
+              issue.title.includes('Security Dashboard')
+            );
+            
+            // Determine status and message
+            const dashboardGenerated = '${{ steps.generate-dashboard.outputs.dashboard_generated }}';
+            const validationPassed = '${{ steps.validate-artifacts.outputs.validation_passed }}';
+            const skipReason = '${{ steps.generate-dashboard.outputs.skip_reason }}';
+            
+            let statusEmoji = '✅';
+            let statusText = 'Success';
+            let statusColor = '#28a745';
+            
+            if (dashboardGenerated === 'false') {
+              if (skipReason === 'no_changes') {
+                statusEmoji = '⏭️';
+                statusText = 'Skipped - No Changes';
+                statusColor = '#6c757d';
+              } else {
+                statusEmoji = '❌';
+                statusText = 'Generation Failed';
+                statusColor = '#dc3545';
+              }
+            } else if (validationPassed === 'false') {
+              statusEmoji = '⚠️';
+              statusText = 'Validation Failed';
+              statusColor = '#ffc107';
+            }
+            
+            // Create issue body with enhanced information
+            const issueBody = `## 🔐 Security Dashboard
+            
+            ${statusEmoji} **Status:** ${statusText}
+            
+            ### 📊 Latest Dashboard Information
+            - **Run ID:** [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - **Generated:** ${new Date().toUTCString()}
+            - **Branch:** ${{ github.ref_name }}
+            - **Triggered by:** ${{ github.event_name }} (${context.actor})
+            
+            ${dashboardGenerated === 'true' && validationPassed === 'true' ? 
+              `### 📁 Download Dashboard
+              - [Latest Dashboard Artifact](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              - Download the \`security-dashboard-${{ github.run_number }}\` artifact to view the full HTML dashboard
+              - **File Size:** ${{ steps.generate-dashboard.outputs.file_size || 'Unknown' }} bytes
+              - **Generation Time:** ${{ steps.generate-dashboard.outputs.generation_time || 'Unknown' }}ms` 
+              :
+              dashboardGenerated === 'false' && skipReason === 'no_changes' ?
+              `### ℹ️ Dashboard Skipped
+              No new security scan results or configuration changes detected since the last dashboard generation.
+              This is normal behavior to avoid redundant dashboard updates.` 
+              :
+              `### ❌ Dashboard Generation Issues
+              The latest dashboard generation encountered problems. Check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
+              
+              **Error Count:** ${{ steps.validate-artifacts.outputs.error_count || 'Unknown' }}
+              **Warning Count:** ${{ steps.validate-artifacts.outputs.warning_count || 'Unknown' }}`
+            }
+            
+            ### 🔄 Dashboard Updates
+            This dashboard updates automatically:
+            - **Daily:** 6 AM UTC
+            - **After security scans:** When Trivy or CodeQL workflows complete
+            - **Manual trigger:** Available via workflow dispatch
+            
+            ### 📈 Recent Workflow Activity
+            Check the [workflow runs](https://github.com/${{ github.repository }}/actions/workflows/trivy-codeql-dashboard.yml) for historical dashboard generation data.
+            
+            ### 🎯 Quick Actions
+            - [View Security Workflows](https://github.com/${{ github.repository }}/actions)
+            - [Trigger Manual Dashboard](https://github.com/${{ github.repository }}/actions/workflows/trivy-codeql-dashboard.yml)
+            - [View Repository Security](https://github.com/${{ github.repository }}/security)
+            
+            ---
+            *Last updated: ${new Date().toUTCString()}*  
+            *Workflow: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) • Status: ${statusText}*`;
+            
+            if (dashboardIssue) {
+              // Update existing issue
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: dashboardIssue.number,
+                body: issueBody
+              });
+              logger.info(`Updated dashboard issue #${dashboardIssue.number}`);
+            } else {
+              // Create new issue
+              const newIssue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🔐 Security Dashboard - Enhanced Edition',
+                body: issueBody,
+                labels: ['security-dashboard', 'automated', 'enhancement']
+              });
+              logger.info(`Created dashboard issue #${newIssue.data.number}`);
+            }
+            
+          } catch (error) {
+            logger.error('Failed to update dashboard issue', error);
+            // Don't fail the workflow for issue update failures
           }
+
+    # Step 12: Error notification for failed workflows  
+    - name: Send Error Notifications
+      if: failure() && github.event.inputs.notification_level != 'minimal'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { ErrorNotifier, WorkflowLogger } = require('./.github/scripts/security-workflow-utils.cjs');
+          const logger = new WorkflowLogger('ErrorNotification');
+          const errorNotifier = new ErrorNotifier(github, context, logger);
+          
+          try {
+            const errorContext = {
+              workflowName: 'Security Dashboard Generation',
+              runId: context.runId,
+              runNumber: context.runNumber,
+              dashboardGenerated: '${{ steps.generate-dashboard.outputs.dashboard_generated }}',
+              validationPassed: '${{ steps.validate-artifacts.outputs.validation_passed }}',
+              errorMessage: '${{ steps.generate-dashboard.outputs.error_message }}',
+              notificationLevel: '${{ github.event.inputs.notification_level || "normal" }}'
+            };
+            
+            await errorNotifier.notifyError(
+              new Error('Security dashboard workflow failed'),
+              'Security Dashboard Generation',
+              errorContext
+            );
+            
+          } catch (notificationError) {
+            logger.error('Failed to send error notification', notificationError);
+          }
+
+    # Step 13: Performance monitoring and metrics collection
+    - name: Collect Performance Metrics
+      if: always()
+      run: |
+        echo "::group::Performance Metrics Collection"
+        
+        # Create metrics summary
+        cat > performance-metrics.json << EOF
+        {
+          "workflow_run_id": "${{ github.run_id }}",
+          "workflow_run_number": "${{ github.run_number }}",
+          "repository": "${{ github.repository }}",
+          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "event_type": "${{ github.event_name }}",
+          "dashboard_generated": "${{ steps.generate-dashboard.outputs.dashboard_generated }}",
+          "validation_passed": "${{ steps.validate-artifacts.outputs.validation_passed }}",
+          "generation_time_ms": "${{ steps.generate-dashboard.outputs.generation_time }}",
+          "file_size_bytes": "${{ steps.generate-dashboard.outputs.file_size }}",
+          "error_count": "${{ steps.validate-artifacts.outputs.error_count }}",
+          "warning_count": "${{ steps.validate-artifacts.outputs.warning_count }}",
+          "total_workflow_time_seconds": $SECONDS
+        }
+        EOF
+        
+        echo "Performance metrics collected:"
+        cat performance-metrics.json
+        echo "::endgroup::"
+
+    # Step 14: Upload performance metrics
+    - name: Upload Performance Metrics
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-metrics-${{ github.run_number }}
+        path: performance-metrics.json
+        retention-days: 90
