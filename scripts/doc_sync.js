@@ -28,7 +28,7 @@ const __dirname = path.dirname(__filename);
  * Configuration for the documentation synchronization system
  */
 const config = {
-  rootDir: path.resolve(__dirname, '..'),
+  rootDir: process.env.WORKSPACE_ROOT || path.resolve(__dirname, '..'),
   
   // Directories to monitor for changes (excluding client-angular)
   monitoredDirs: [
