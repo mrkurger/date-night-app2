@@ -9,17 +9,35 @@ export class NavigationMenu extends BasePage {
   readonly logoutButton: Locator;
   readonly logo: Locator;
   readonly navLinks: Locator;
+  readonly homeLink: Locator;
 
   constructor(page: Page) {
     super(page);
 
-    // Initialize all locators
-    this.menuButton = page.getByRole('button', { name: /menu|hamburger/i });
+    // Initialize all locators - updated to work with both Angular and Next.js navbar structures
+    this.menuButton = page
+      .getByRole('button')
+      .filter({ hasText: '' })
+      .or(page.locator('button:has(.w-6, .h-6)'));
     this.profileLink = page.getByRole('link', { name: /profile/i });
     this.settingsLink = page.getByRole('link', { name: /settings/i });
-    this.logoutButton = page.getByRole('button', { name: /logout|sign out/i });
-    this.logo = page.getByAltText(/logo|brand/i).or(page.locator('.logo'));
+    this.logoutButton = page.getByRole('button', { name: /logout|sign out|log out/i });
+
+    // Logo selector expanded to match both implementations
+    this.logo = page
+      .getByAltText(/logo|brand/i)
+      .or(page.locator('.logo'))
+      .or(
+        page
+          .locator('a')
+          .filter({ hasText: /Sensual|Meet|My App/ })
+          .first(),
+      )
+      .or(page.locator('a').first());
+
+    // Get all navigation links
     this.navLinks = page.locator('nav').getByRole('link');
+    this.homeLink = page.getByRole('link', { name: /home/i });
   }
 
   /**

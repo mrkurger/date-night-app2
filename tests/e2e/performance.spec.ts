@@ -8,7 +8,7 @@ test.describe('Performance Tests', () => {
     const startTime = Date.now();
 
     // Navigate to the page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // Wait for the page to be fully loaded
     await page.waitForLoadState('load');
@@ -28,7 +28,7 @@ test.describe('Performance Tests', () => {
     const { requests, responses } = await monitorApiCalls(page, /\/api\//);
 
     // Navigate to the page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // Interact with the page to trigger API calls
     await page.waitForLoadState('networkidle');
@@ -55,7 +55,7 @@ test.describe('Performance Tests', () => {
 
   test('should not have excessive DOM size', async ({ page }) => {
     // Navigate to the page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
     await waitForNetworkIdle(page);
 
     // Count DOM elements
@@ -82,7 +82,7 @@ test.describe('Performance Tests', () => {
     });
 
     // Navigate and wait for full page load
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
     await waitForNetworkIdle(page);
 
     // Interact with the page a bit

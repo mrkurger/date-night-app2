@@ -66,7 +66,7 @@ function RankedAdvertiserCard({
   };
 
   return (
-    <div className="bg-card border rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl flex flex-col">
+    <div className="bg-slate-800 border-slate-700 shadow-xl rounded-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-purple-500/40">
       <div className="relative h-56">
         <Link href={`/advertiser/${advertiser.id}`}>
           <Image
@@ -77,51 +77,60 @@ function RankedAdvertiserCard({
             className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </Link>
-        <Badge variant="secondary" className="absolute top-2 left-2 bg-black/70 text-white">
+        <Badge
+          variant="secondary"
+          className="absolute top-3 left-3 bg-black/70 text-white backdrop-blur-sm"
+        >
           #{rank} {rankingType !== 'overall' && `in ${rankingType}`}
         </Badge>
         {advertiser.isVip && (
-          <Badge variant="secondary" className="absolute top-2 right-2 bg-yellow-500 text-black">
+          <Badge
+            variant="secondary"
+            className="absolute top-3 right-3 bg-yellow-400 text-slate-900 font-bold px-2 py-1 text-xs rounded-full shadow-md"
+          >
             VIP
           </Badge>
         )}
         {advertiser.isOnline && (
-          <Badge
-            variant="secondary"
-            className="absolute bottom-2 left-2 bg-green-500/90 text-white"
-          >
-            Online
-          </Badge>
+          <div className="absolute bottom-3 left-3 flex items-center space-x-1.5 bg-green-500/80 text-white px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
+            <span className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></span>
+            <span>Online</span>
+          </div>
         )}
       </div>
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col flex-grow">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-xl font-semibold text-card-foreground">
-            <Link href={`/advertiser/${advertiser.id}`} className="hover:text-primary">
-              {advertiser.name}
-            </Link>
+          <h3 className="text-2xl font-semibold text-pink-400 hover:text-pink-300 transition-colors">
+            <Link href={`/advertiser/${advertiser.id}`}>{advertiser.name}</Link>
           </h3>
-          <div className="flex items-center text-sm text-muted-foreground">
+          <div className="flex items-center text-sm text-yellow-400">
             <Star className="w-4 h-4 mr-1 text-yellow-400 fill-current" />
             {advertiser.rating?.toFixed(1) || 'N/A'} ({advertiser.reviewsCount || 0})
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-1 truncate h-5">
-          {advertiser.headline || 'No headline'}
+        <p className="text-sm text-slate-400 mb-1">
+          {advertiser.city} - Age: {advertiser.age}
         </p>
-        <div className="text-xs text-muted-foreground mb-3">
-          {advertiser.city}, {advertiser.country || 'N/A'}
-        </div>
 
-        <div className="flex flex-wrap gap-1 mb-3 min-h-[26px]">
-          {advertiser.tags?.slice(0, 2).map((tag: string) => (
-            <Badge key={tag} variant="outline" className="text-xs px-2 py-0.5">
+        {advertiser.headline && (
+          <p className="text-md text-slate-300 italic mb-3 truncate" title={advertiser.headline}>
+            "{advertiser.headline}"
+          </p>
+        )}
+
+        <div className="flex flex-wrap gap-2 mb-4">
+          {advertiser.tags?.slice(0, 3).map((tag: string) => (
+            <Badge
+              key={tag}
+              variant="outline"
+              className="border-purple-400 text-purple-300 text-xs px-2.5 py-0.5"
+            >
               {tag}
             </Badge>
           ))}
         </div>
 
-        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+        <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
           <div className="flex items-center">
             <ThumbsUp className="w-4 h-4 mr-1" /> {advertiser.likes || 0}
           </div>
@@ -135,28 +144,39 @@ function RankedAdvertiserCard({
         </div>
 
         <div className="mt-auto">
-          {' '}
-          {/* Pushes buttons to the bottom */}
-          <div className="border-t pt-4">
-            <div className="text-sm font-semibold mb-2 text-foreground">{getRankingInfoText()}</div>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" asChild className="flex-grow">
-              <Link href={`/advertiser/${advertiser.id}`}>View Profile</Link>
-            </Button>
-            <Button
-              variant={isFavorite ? 'default' : 'outline'}
-              size="icon"
-              onClick={() => onFavorite(advertiser.id)}
-              aria-label="Favorite"
-            >
-              <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current text-red-500' : ''}`} />
-            </Button>
-            <Button variant="outline" size="icon" asChild aria-label="Message">
-              <Link href={`/messages?recipient=${advertiser.id}`}>
-                <MessageCircle className="w-4 h-4" />
-              </Link>
-            </Button>
+          <div className="text-sm font-semibold mb-3 text-slate-300">{getRankingInfoText()}</div>
+          <div className="p-5 bg-slate-800/50 border-t border-slate-700 mt-auto -mx-5 -mb-5">
+            <div className="flex gap-2 items-center justify-between">
+              <Button
+                variant="default"
+                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 w-2/3"
+                asChild
+              >
+                <Link href={`/advertiser/${advertiser.id}`}>View Profile</Link>
+              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => onFavorite(advertiser.id)}
+                  aria-label="Favorite"
+                  className="text-slate-400 border-slate-600 hover:bg-slate-700 hover:text-red-400 hover:border-red-500 transition-colors"
+                >
+                  <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current text-red-500' : ''}`} />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  asChild
+                  aria-label="Message"
+                  className="text-slate-400 border-slate-600 hover:bg-slate-700 hover:text-blue-400 hover:border-blue-500 transition-colors"
+                >
+                  <Link href={`/messages?recipient=${advertiser.id}`}>
+                    <MessageCircle className="w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -259,12 +279,12 @@ export default function RankingsPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-900 to-purple-900 text-white">
         <EnhancedNavbar />
         <main className="flex-grow container mx-auto px-4 py-8 flex justify-center items-center">
           {/* Basic spinner */}
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="ml-4 text-muted-foreground">Loading rankings...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+          <p className="ml-4 text-slate-300">Loading rankings...</p>
         </main>
         <Footer />
       </div>
@@ -273,13 +293,19 @@ export default function RankingsPage() {
 
   if (error) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-900 to-purple-900 text-white">
         <EnhancedNavbar />
         <main className="flex-grow container mx-auto px-4 py-8 flex flex-col justify-center items-center">
-          <SearchX className="h-16 w-16 text-destructive mb-4" />
-          <p className="text-xl text-destructive mb-2">Oops! Something went wrong.</p>
-          <p className="text-muted-foreground text-center mb-4">{error}</p>
-          <Button onClick={() => window.location.reload()}>Try Again</Button>
+          <SearchX className="h-16 w-16 text-pink-400 mb-4" />
+          <p className="text-xl text-pink-400 mb-2">Oops! Something went wrong.</p>
+          <p className="text-slate-300 text-center mb-4">{error}</p>
+          <Button
+            variant="default"
+            onClick={() => window.location.reload()}
+            className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold shadow-md hover:shadow-lg transition-all"
+          >
+            Try Again
+          </Button>
         </main>
         <Footer />
       </div>
@@ -287,38 +313,59 @@ export default function RankingsPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-900 to-purple-900 text-white">
       <EnhancedNavbar />
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-foreground">
-          Top Advertisers
-        </h1>
+      <main className="flex-grow container mx-auto px-4 py-12">
+        <header className="mb-10 text-center">
+          <h1 className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400">
+            Top Ranked Advertisers
+          </h1>
+          <p className="mt-3 text-xl text-slate-300">
+            Browse the highest rated and most popular profiles
+          </p>
+        </header>
 
         <div className="mb-8 flex flex-wrap justify-center items-center gap-2 sm:gap-4">
           <Button
             size="sm"
-            variant={rankingType === 'overall' ? 'default' : 'outline'}
+            className={
+              rankingType === 'overall'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold'
+                : 'bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/70 hover:text-white'
+            }
             onClick={() => setRankingType('overall')}
           >
             Overall
           </Button>
           <Button
             size="sm"
-            variant={rankingType === 'likes' ? 'default' : 'outline'}
+            className={
+              rankingType === 'likes'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold'
+                : 'bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/70 hover:text-white'
+            }
             onClick={() => setRankingType('likes')}
           >
             Most Liked
           </Button>
           <Button
             size="sm"
-            variant={rankingType === 'rating' ? 'default' : 'outline'}
+            className={
+              rankingType === 'rating'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold'
+                : 'bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/70 hover:text-white'
+            }
             onClick={() => setRankingType('rating')}
           >
             Top Rated
           </Button>
           <Button
             size="sm"
-            variant={rankingType === 'newest' ? 'default' : 'outline'}
+            className={
+              rankingType === 'newest'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold'
+                : 'bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/70 hover:text-white'
+            }
             onClick={() => setRankingType('newest')}
           >
             Newest
@@ -327,9 +374,9 @@ export default function RankingsPage() {
 
         {sortedAdvertisers.length === 0 ? (
           <div className="text-center py-10">
-            <SearchX className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-xl text-muted-foreground">No advertisers found.</p>
-            <p className="text-sm text-muted-foreground mt-2">
+            <SearchX className="mx-auto h-12 w-12 text-pink-400 mb-4" />
+            <p className="text-xl text-pink-400">No advertisers found.</p>
+            <p className="text-sm text-slate-300 mt-2">
               Try a different ranking or check back later.
             </p>
           </div>

@@ -4,7 +4,7 @@ import { test } from './fixtures/test-fixtures';
 test.describe('Accessibility Tests', () => {
   test('should have proper heading structure', async ({ page }) => {
     // Navigate to home page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // Check heading structure
     const headings = await page.evaluate(() => {
@@ -39,7 +39,7 @@ test.describe('Accessibility Tests', () => {
 
   test('should have proper alt text for images', async ({ page }) => {
     // Navigate to home page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // Check images for alt text
     const images = await page.evaluate(() => {
@@ -64,7 +64,7 @@ test.describe('Accessibility Tests', () => {
 
   test('should have proper color contrast', async ({ page }) => {
     // Navigate to home page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // This is a basic check just looking for extremely low contrast text
     // A proper accessibility audit would use more sophisticated tools
@@ -120,7 +120,7 @@ test.describe('Accessibility Tests', () => {
 
   test('should have focusable and properly labeled interactive elements', async ({ page }) => {
     // Navigate to home page
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
 
     // Check button and link labeling
     const interactiveElements = await page.evaluate(() => {

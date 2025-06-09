@@ -43,7 +43,7 @@ test.describe('Responsive Design Tests', () => {
 
       for (const path of testPaths) {
         try {
-          await page.goto(`http://localhost:3002${path}`);
+          await page.goto(path);
           await waitForNetworkIdle(page);
 
           // Take screenshot for documentation
@@ -65,7 +65,7 @@ test.describe('Responsive Design Tests', () => {
     await page.setViewportSize({ width: 375, height: 667 });
 
     // Go to homepage
-    await page.goto('http://localhost:3002');
+    await page.goto('/');
     await waitForNetworkIdle(page);
 
     // Find all clickable elements

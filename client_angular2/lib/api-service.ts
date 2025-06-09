@@ -1,7 +1,7 @@
 import { TokenService, type Tokens } from './token-service';
 
 // Base API URL
-const API_BASE_URL = 'http://localhost:3001/api/v1'; // Updated to use the correct server port
+const API_BASE_URL = 'http://localhost:3000/api/v1'; // Updated to match server port in .env
 
 // Mock API responses for demonstration
 const mockResponses = {
