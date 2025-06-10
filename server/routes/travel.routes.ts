@@ -1,11 +1,5 @@
 import express from 'express';
-import { prrouter.delete(
-  '/ad/:adId/itinerary/:itineraryId',
-  isAdvertiser,
-  adaptMiddleware(TravelValidator.validateAdId),
-  adaptMiddleware(TravelValidator.validateItineraryId),
-  wrapAsync(travelController.cancelItinerary)
-);s authenticate } from '../middleware/auth.js';
+import { authenticate } from '../middleware/auth.js';
 import { isAdvertiser } from '../middleware/roles.js';
 import travelController from '../controllers/travel.controller.js';
 import { TravelValidator } from '../middleware/validators/travel.validator.js';
@@ -22,8 +16,8 @@ router.use(authenticate);
 router.post(
   '/ad/:adId/itinerary',
   isAdvertiser,
-  TravelValidator.validateAdId,
-  TravelValidator.validateItineraryData,
+  adaptMiddleware(TravelValidator.validateAdId),
+  adaptMiddleware(TravelValidator.validateItineraryData),
   wrapAsync(travelController.addItinerary)
 );
 
@@ -31,7 +25,7 @@ router.post(
 router.get(
   '/ad/:adId/itineraries',
   isAdvertiser,
-  TravelValidator.validateAdId,
+  adaptMiddleware(TravelValidator.validateAdId),
   wrapAsync(travelController.getItineraries)
 );
 
@@ -39,9 +33,9 @@ router.get(
 router.put(
   '/ad/:adId/itinerary/:itineraryId',
   isAdvertiser,
-  TravelValidator.validateAdId,
-  TravelValidator.validateItineraryId,
-  TravelValidator.validateItineraryData,
+  adaptMiddleware(TravelValidator.validateAdId),
+  adaptMiddleware(TravelValidator.validateItineraryId),
+  adaptMiddleware(TravelValidator.validateItineraryData),
   wrapAsync(travelController.updateItinerary)
 );
 
@@ -58,26 +52,26 @@ router.delete(
 router.post(
   '/ad/:adId/location',
   isAdvertiser,
-  TravelValidator.validateAdId,
-  TravelValidator.validateLocationUpdate,
-  assertRequestHandler(travelController.updateLocation)
+  adaptMiddleware(TravelValidator.validateAdId),
+  adaptMiddleware(TravelValidator.validateLocationUpdate),
+  wrapAsync(travelController.updateLocation)
 );
 
 // Get advertisers currently touring
-router.get('/advertisers/touring', assertRequestHandler(travelController.getTouringAdvertisers));
+router.get('/advertisers/touring', wrapAsync(travelController.getTouringAdvertisers));
 
 // Get upcoming tours
 router.get(
   '/upcoming',
-  TravelValidator.validateUpcomingToursQuery,
-  assertRequestHandler(travelController.getUpcomingTours)
+  adaptMiddleware(TravelValidator.validateUpcomingToursQuery),
+  wrapAsync(travelController.getUpcomingTours)
 );
 
 // Get ads by location
 router.get(
   '/location',
-  TravelValidator.validateLocationQuery,
-  assertRequestHandler(travelController.getAdsByLocation)
+  adaptMiddleware(TravelValidator.validateLocationQuery),
+  wrapAsync(travelController.getAdsByLocation)
 );
 
 export default router;

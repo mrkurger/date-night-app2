@@ -1,10 +1,12 @@
-/* Netflix-style irregular grid layout */
+/* Netflix-style irregular grid layout - updated to match reference image */
 .masonry-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: 200px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(100px, auto);
   gap: 16px;
   align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Base masonry item */
@@ -12,100 +14,61 @@
   position: relative;
   overflow: hidden;
   border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  aspect-ratio: var(--card-aspect-ratio, 3/4);
+  height: 100%;
 }
 
-/* Different size variations */
+/* Different size variations - updated to match reference image layout */
 .masonry-item-regular {
-  grid-row: span 2; /* 400px height */
-  grid-column: span 1; /* 200px width */
+  grid-column: span 4;
+  grid-row: span 2;
+  --card-aspect-ratio: 3/4;
 }
 
 .masonry-item-medium {
-  grid-row: span 2; /* 400px height */
-  grid-column: span 1; /* 200px width */
+  grid-column: span 4;
+  grid-row: span 3;
+  --card-aspect-ratio: 3/4;
 }
 
 .masonry-item-tall {
-  grid-row: span 3; /* 600px height */
-  grid-column: span 1; /* 200px width */
+  grid-column: span 4;
+  grid-row: span 4;
+  --card-aspect-ratio: 2/3;
 }
 
 .masonry-item-extra-tall {
-  grid-row: span 4; /* 800px height */
-  grid-column: span 1; /* 200px width */
+  grid-column: span 6;
+  grid-row: span 4;
+  --card-aspect-ratio: 3/5;
 }
 
 .masonry-item-wide {
-  grid-row: span 2; /* 400px height */
-  grid-column: span 2; /* 400px width */
+  grid-column: span 8;
+  grid-row: span 3;
+  --card-aspect-ratio: 16/9;
 }
 
 .masonry-item-extra-wide {
-  grid-row: span 2; /* 400px height */
-  grid-column: span 3; /* 600px width */
+  grid-column: span 12;
+  grid-row: span 3;
+  --card-aspect-ratio: 21/9;
 }
 
 .masonry-item-large {
-  grid-row: span 3; /* 600px height */
-  grid-column: span 2; /* 400px width */
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .masonry-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-auto-rows: 150px;
-    gap: 12px;
-  }
-
-  /* On mobile, reduce some of the larger sizes */
-  .masonry-item-wide {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .masonry-item-extra-wide {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .masonry-item-large {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .masonry-item-extra-tall {
-    grid-column: span 1;
-    grid-row: span 3;
-  }
-}
-
-@media (min-width: 768px) {
-  .masonry-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-auto-rows: 180px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .masonry-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-auto-rows: 200px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .masonry-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    grid-auto-rows: 220px;
-  }
+  grid-column: span 6;
+  grid-row: span 3;
+  --card-aspect-ratio: 4/3;
 }
 
 /* Hover effects for better interactivity */
 .masonry-item:hover {
-  transform: scale(1.02);
-  transition: transform 0.2s ease-in-out;
+  transform: scale(1.03);
+  transition: all 0.3s ease;
   z-index: 10;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Ensure images fill their containers properly */
@@ -113,4 +76,125 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease-in-out;
+}
+
+.masonry-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Add overlay with location name similar to reference image */
+.location-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7) 50%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: flex-end;
+  height: 40%;
+}
+
+/* Arrow button for navigation like in reference */
+.arrow-nav {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.arrow-nav:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .masonry-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  /* On mobile, reduce some of the larger sizes */
+  .masonry-item-regular,
+  .masonry-item-medium {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  .masonry-item-tall {
+    grid-column: span 3;
+    grid-row: span 3;
+  }
+
+  .masonry-item-extra-tall,
+  .masonry-item-large {
+    grid-column: span 6;
+    grid-row: span 3;
+  }
+
+  .masonry-item-wide,
+  .masonry-item-extra-wide {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
+
+  .masonry-item .location-overlay {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .masonry-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  /* Tablet adjustments */
+  .masonry-item-regular {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+
+  .masonry-item-medium {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+
+  .masonry-item-tall {
+    grid-column: span 4;
+    grid-row: span 3;
+  }
+
+  .masonry-item-extra-tall {
+    grid-column: span 4;
+    grid-row: span 3;
+  }
+
+  .masonry-item-wide {
+    grid-column: span 8;
+    grid-row: span 2;
+  }
+
+  .masonry-item-extra-wide {
+    grid-column: span 8;
+    grid-row: span 2;
+  }
+
+  .masonry-item-large {
+    grid-column: span 4;
+    grid-row: span 3;
+  }
 }

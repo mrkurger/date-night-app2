@@ -32,48 +32,68 @@ interface AdvertiserCardProps {
 const AdvertiserCard: React.FC<AdvertiserCardProps> = ({ advertiser }) => {
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-lg shadow-lg bg-gray-800"
-      initial={{ opacity: 0, y: 50 }}
+      className="group relative overflow-hidden rounded-lg shadow-md transform transition-all duration-300 hover:scale-[1.03] hover:shadow-lg"
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
       layout
     >
-      <Image
-        src={getProfileImage(advertiser)}
-        alt={advertiser.name}
-        width={Number(advertiser.imageWidth) || 400}
-        height={Number(advertiser.imageHeight) || 600}
-        className="w-full h-auto object-cover"
-        priority={false}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      <div className="absolute bottom-0 left-0 p-3 w-full text-white">
-        <h3 className="text-md font-bold truncate">{advertiser.name}</h3>
-        <div className="flex items-center text-xs text-gray-300 mt-1">
-          <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
-          <span className="truncate">{advertiser.location}</span>
-          {advertiser.distance && <span className="mx-1">·</span>}
-          {advertiser.distance && <span className="truncate">{advertiser.distance}</span>}
-        </div>
-        {advertiser.isOnline !== undefined && (
-          <div className="absolute top-3 right-3 flex items-center">
-            <Circle
-              className={`w-3 h-3 ${
-                advertiser.isOnline // Changed from onlineStatus
-                  ? 'text-green-500 fill-green-500'
-                  : 'text-gray-500 fill-gray-500'
-              }`}
-            />
-            <span className="ml-1.5 text-xs text-white sr-only">
-              {advertiser.isOnline ? 'Online' : 'Offline'} {/* Changed from onlineStatus */}
-            </span>
-          </div>
-        )}
+      <div className="relative w-full h-full">
+        <Image
+          src={getProfileImage(advertiser)}
+          alt={advertiser.name}
+          fill={true}
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority={false}
+        />
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        {/* Status indicators - only show in compact view */}
         {advertiser.isVip && (
-          <div className="absolute top-3 left-3 bg-amber-500 text-amber-950 px-1.5 py-0.5 rounded-sm text-xs font-bold">
+          <div className="absolute top-3 right-3 bg-yellow-400 text-slate-900 font-bold px-2 py-1 text-xs rounded-full shadow-md">
             VIP
           </div>
         )}
+
+        {advertiser.isOnline && (
+          <div className="absolute top-3 left-3 flex items-center space-x-1.5 bg-green-500/80 text-white px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
+            <span className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></span>
+            <span>Online</span>
+          </div>
+        )}
+
+        {/* Location overlay similar to reference image */}
+        <div className="location-overlay">
+          <div>
+            <h3 className="text-lg font-semibold text-white">
+              {advertiser.name}
+              {advertiser.age ? `, ${advertiser.age}` : ''}
+            </h3>
+            <p className="text-sm text-gray-200 flex items-center">
+              <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+              {advertiser.location || 'Unknown Location'}
+            </p>
+          </div>
+        </div>
+
+        {/* Navigation circle button like in reference */}
+        <div className="arrow-nav opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              fillRule="evenodd"
+              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
       </div>
     </motion.div>
   );

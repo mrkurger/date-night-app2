@@ -571,11 +571,19 @@ export default function NetflixViewPage() {
   }, [inView, loadMoreAdvertisers]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-purple-900 text-white">
       <EnhancedNavbar />
-      <div className="px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container mx-auto px-4 py-12">
+        <header className="mb-10 text-center">
+          <h1 className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400">
+            Discover Profiles
+          </h1>
+          <p className="mt-3 text-xl text-slate-300">
+            Browse through our collection in a rich visual experience
+          </p>
+        </header>
         {displayedAdvertisers.length > 0 ? (
-          <div className="masonry-grid gap-4">
+          <div className="masonry-grid gap-6">
             {displayedAdvertisers.map((advertiser: AdvertiserCardType, index) => {
               // Determine card size based on image dimensions and index for variety
               const aspectRatio = (advertiser.imageWidth || 400) / (advertiser.imageHeight || 600);
@@ -621,18 +629,26 @@ export default function NetflixViewPage() {
             })}
           </div>
         ) : (
-          <p>Loading advertisers...</p>
+          <div className="flex justify-center items-center py-20">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="animate-spin h-10 w-10 rounded-full border-4 border-purple-400 border-t-transparent"></div>
+              <p className="text-xl text-slate-300">Loading advertisers...</p>
+            </div>
+          </div>
         )}
 
         {/* Load more trigger */}
         {loadedCount < initialAdvertisersData.length && (
-          <div ref={ref} className="flex justify-center items-center h-20">
-            <p>Loading more...</p>
+          <div ref={ref} className="flex justify-center items-center h-20 py-8">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="animate-spin h-6 w-6 rounded-full border-2 border-purple-400 border-t-transparent"></div>
+              <p className="text-slate-300">Loading more...</p>
+            </div>
           </div>
         )}
         {loadedCount >= initialAdvertisersData.length && displayedAdvertisers.length > 0 && (
-          <div className="text-center py-10 text-gray-500">
-            <p>You&apos;ve reached the end of the line!</p>
+          <div className="text-center py-10 text-slate-400">
+            <p>You&apos;ve reached the end of the collection!</p>
           </div>
         )}
       </div>
