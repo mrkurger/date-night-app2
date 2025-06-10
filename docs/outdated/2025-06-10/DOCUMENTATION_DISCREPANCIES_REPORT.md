@@ -1,0 +1,619 @@
+# Documentation Control & Synchronization Audit Report
+
+Generated: 2025-06-10T18:19:12.481Z
+Scope: Entire repository excluding client-angular/ directory
+
+## Executive Summary
+
+- **Total Code Elements Analyzed**: 228
+- **Total Documentation Files**: 531
+- **Documentation Coverage**: 175%
+- **Undocumented Elements**: 133
+- **Outdated Documentation**: 422
+
+## Undocumented Code Elements
+
+These code elements lack proper documentation and should be prioritized:
+
+### Components
+
+- `SCHEMA_REFACTOR_NEEDED.d`
+- `SCHEMA_REFACTOR_NEEDED`
+- `encryption.controller.d`
+- `encryption.controller`
+- `encryption.routes.d`
+- `encryption.routes`
+- `location.routes`
+- `location.schema`
+- `location.validator`
+- `travel.controller`
+- `travel.routes`
+- `travel.schema`
+- `verification.controller`
+- `verification.schema`
+- `verification.service`
+- `grid_v_2`
+- `GamifiedContentHub`
+- `InfiniteScrollGrid`
+- `MasonryGrid`
+- `NetflixViewGrid`
+- `TipFrenzy`
+- `achievement-showcase`
+- `charts-dashboard`
+- `event-details`
+- `misc-dashboard`
+- `panels-dashboard`
+- `service-card`
+- `vip-content`
+- `carousel-wheel`
+- `data-betting-interface`
+- `enhanced-casino-demo`
+- `group-gambling-session`
+- `interactive-game-overlay`
+- `live-casino-hub`
+- `love-casino-hub`
+- `social-gambling-hub`
+- `stream-casino-integration`
+- `tip-raffle-system`
+- `dashboard-widgets`
+- `debug-info`
+- `enhanced-carousel`
+- `enhanced-navbar`
+- `enhanced-navbar_old`
+- `error-boundary`
+- `footer`
+- `image-carousel`
+- `animated-beam`
+- `border-beam`
+- `confetti`
+- `magic-card`
+- `meteors`
+- `number-ticker`
+- `scratch-to-reveal`
+- `main-nav`
+- `masonry-grid`
+- `mobile-check`
+- `mobile-nav`
+- `money-rain`
+- `optimized-image`
+- `performance-monitor`
+- `pwa-init`
+- `pwa-installer`
+- `theme-provider 2`
+- `theme-provider`
+- `accordion`
+- `animated-shiny-text`
+- `aspect-ratio`
+- `blur-image`
+- `calendar`
+- `chart`
+- `collapsible`
+- `command`
+- `context-menu`
+- `drawer`
+- `dropdown-menu`
+- `hover-card`
+- `input-otp`
+- `menubar`
+- `navigation-menu`
+- `pagination`
+- `particles`
+- `popover`
+- `progress`
+- `resizable`
+- `retro-testimonial`
+- `ripple-button`
+- `scroll-area`
+- `separator`
+- `sheet`
+- `shimmer-button`
+- `sidebar`
+- `slider`
+- `sonner`
+- `sparkles-text`
+- `swiper`
+- `switch`
+- `table`
+- `tabs`
+- `textarea`
+- `toaster`
+- `toggle-group`
+- `tooltip`
+- `use-mobile`
+- `use-toast`
+- `carousely-component.spec`
+- `fix-angular-components`
+
+### Services
+
+- `token-service`
+- `service-worker`
+- `pwa.service`
+
+### Modules
+
+- `travel-module`
+
+### Routes
+
+- `route`
+
+### Controllers
+
+- `appointment.controller.d`
+- `appointment.controller`
+- `geocoding.controller.d`
+- `geocoding.controller`
+- `location.controller.d`
+- `location.controller`
+- `safety.controller.d`
+- `safety.controller`
+- `travel.controller.d`
+- `travel.controller`
+- `verification.controller`
+
+### Utilities
+
+- `utils`
+
+### Configurations
+
+- `babel.config`
+- `csp.config`
+- `eslint.config`
+- `.mcp-config`
+- `next.config`
+- `playwright.config`
+- `postcss.config`
+- `tailwind.config`
+- `tsconfig`
+- `update-eslint-config`
+
+## Outdated Documentation
+
+These documentation files reference excluded directories or outdated information:
+
+- **docs/AILESSONS.MD**: References excluded client-angular directory
+- **docs/ANGULAR_BUILD_OPTIMIZATION.MD**: References excluded client-angular directory
+- **docs/CHANGELOG.MD**: References excluded client-angular directory
+- **docs/CI_CD_GUIDE.MD**: References excluded client-angular directory
+- **docs/CODE_FORMATTING.MD**: References excluded client-angular directory
+- **docs/COMPONENT_LIBRARY.MD**: References excluded client-angular directory
+- **docs/CONFIG_INDEX.MD**: References excluded client-angular directory
+- **docs/CSP_CONFIGURATION.MD**: References excluded client-angular directory
+- **docs/CUSTOMIZATION_GUIDE.MD**: References excluded client-angular directory
+- **docs/DEPENDENCY_MANAGEMENT.MD**: References excluded client-angular directory
+- **docs/DEPLOYMENT.MD**: References excluded client-angular directory
+- **docs/DEPRECATED.MD**: References excluded client-angular directory
+- **docs/DESIGN_SYSTEM_USAGE_GUIDE.MD**: References excluded client-angular directory
+- **docs/DOCS_IMPROVEMENT_PLAN.MD**: References excluded client-angular directory
+- **docs/DOCUMENTATION_IMPROVEMENT_ACTION_PLAN.MD**: References excluded client-angular directory
+- **docs/DOCUMENTATION_IMPROVEMENT_CHECKLIST.MD**: References excluded client-angular directory
+- **docs/DOCUMENTATION_IMPROVEMENT_SUMMARY.MD**: References excluded client-angular directory
+- **docs/DOCUMENTATION_INDEX.MD**: References excluded client-angular directory
+- **docs/DOCUMENTATION_STATUS_REPORT.MD**: References excluded client-angular directory
+- **docs/DUPLICATES.MD**: References excluded client-angular directory
+- **docs/EMERALD_COMPONENTS.MD**: References excluded client-angular directory
+- **docs/FEATURE_DOCUMENTATION_TEMPLATE.MD**: References excluded client-angular directory
+- **docs/FIXES.MD**: References excluded client-angular directory
+- **docs/IMPLEMENTATION_STATUS.MD**: References excluded client-angular directory
+- **docs/MANUAL_MIGRATION_GUIDE.html**: References excluded client-angular directory
+- **docs/SETUP.MD**: References excluded client-angular directory
+- **docs/SNYK_WORKFLOW_IMPROVEMENTS.MD**: References excluded client-angular directory
+- **docs/TESTING_GUIDE.MD**: References excluded client-angular directory
+- **docs/THEME_SYSTEM.MD**: References excluded client-angular directory
+- **docs/THEME_TOGGLE_IMPLEMENTATION.MD**: References excluded client-angular directory
+- **docs/UI_COMPONENTS_TECHNICAL.MD**: References excluded client-angular directory
+- **docs/UI_UX_IMPLEMENTATION.MD**: References excluded client-angular directory
+- **docs/USER_PREFERENCES.MD**: References excluded client-angular directory
+- **docs/WORKFLOW_FIXES.MD**: References excluded client-angular directory
+- **docs/component-library/components/AdBrowserComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdCardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdCreateComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdDetailComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdDetailsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdFormComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdListComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/AdListComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdManagementComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdStatsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AddPaymentMethodDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AdvertiserProfileComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AlertFormDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AlertManagementComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AlertNotificationsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AppCardComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/AppCardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AppComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/AvatarComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/BreadcrumbsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/BrowseComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ButtonComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/CardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/CardGridComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/CardGridComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/CarouselComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ChatComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ChatListComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ChatMessageComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ChatRoomComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ChatSettingsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/CheckboxComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ComponentNameComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ContentModerationComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ContextualHelpComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/CreateErrorAlertComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/DebugInfoComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/DepositDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/DesignSystemDemoComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/EditProfileComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ErrorDashboardComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/ErrorDashboardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ErrorMessageComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FavoriteButtonComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FavoriteDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FavoritesComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FavoritesListComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FavoritesPageComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FeatureTourComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/FloatingActionButtonComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/GalleryComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/GalleryManagementComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/IconComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ImageGalleryComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/InfoPanelComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/InputComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/LabelComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ListViewComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/LoadingSpinnerComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/LocationMatchingComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/LoginComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/LoginComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/MainLayoutComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/MapComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/MockAppCardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/MockMainLayoutComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/MockSkeletonLoaderComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ModerationModalComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/NetflixViewComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/NotesDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/NotificationComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/OnboardingChecklistComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/OnboardingComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/OptimizedImageComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/PageHeaderComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/PagerComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/PaymentComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/PerformanceDashboardComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/PerformanceDashboardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/PreferencesDemoComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ProfileComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/RegisterComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/RegisterComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReportDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ResponseDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewDisplayComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewFormComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewFormComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewListComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewSummaryComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewsListComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ReviewsPageComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/SelectComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/SkeletonLoaderComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/StarRatingComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/SwipeViewComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TagsDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TelemetryDashboardComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/TelemetryDashboardComponent-2.html**: References excluded client-angular directory
+- **docs/component-library/components/TelemetryDashboardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ThemeToggleComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TinderCardComponent-1.html**: References excluded client-angular directory
+- **docs/component-library/components/TinderCardComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TinderComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/ToggleComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TouringComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TransactionDetailsDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TransferDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/TravelItineraryComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/UserSettingsComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/WalletComponent.html**: References excluded client-angular directory
+- **docs/component-library/components/WithdrawDialogComponent.html**: References excluded client-angular directory
+- **docs/component-library/coverage.html**: References excluded client-angular directory
+- **docs/component-library/dependencies.html**: References excluded client-angular directory
+- **docs/component-library/guards/AuthGuard.html**: References excluded client-angular directory
+- **docs/component-library/index.html**: References excluded client-angular directory
+- **docs/component-library/injectables/AdService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/AlertService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/AuthService-1.html**: References excluded client-angular directory
+- **docs/component-library/injectables/AuthService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/CachingService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ChatService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ContentSanitizerService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/CryptoService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/CsrfService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/DialogService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/EncryptionService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/FavoriteService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/GeocodingService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/GlobalErrorHandler.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ImageOptimizationService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/LocationService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/LoggingService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/MapMonitoringService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/MediaService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/MockTelemetryService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/NotificationService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/OnboardingService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/PaymentService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/PlatformService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ProfileService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/PwaService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ReviewService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ReviewsService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/RoleGuard.html**: References excluded client-angular directory
+- **docs/component-library/injectables/SafetyService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/SelectivePreloadingStrategy.html**: References excluded client-angular directory
+- **docs/component-library/injectables/SocketService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/TelemetryService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/TelemetrySocketService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ThemeService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/ThemeServiceMock.html**: References excluded client-angular directory
+- **docs/component-library/injectables/TravelService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/UserPreferencesService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/UserPreferencesServiceMock.html**: References excluded client-angular directory
+- **docs/component-library/injectables/UserService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/VerificationService.html**: References excluded client-angular directory
+- **docs/component-library/injectables/WalletService.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/AuthInterceptor.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/CSPInterceptor.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/CsrfInterceptor.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/ErrorInterceptor.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/HttpErrorInterceptor-1.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/HttpErrorInterceptor-2.html**: References excluded client-angular directory
+- **docs/component-library/interceptors/HttpErrorInterceptor.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Ad.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AdCreateDTO.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AdFilters.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AdStats.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AdUpdateDTO.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AddressVerificationData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AdvertiserRatings.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Alert.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AlertCondition.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AlertEvent.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AlertNotification.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Attachment-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Attachment.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AuthResponse-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/AuthResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/BoostAdResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Breadcrumb-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Breadcrumb.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/CachedResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/CardSize.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/CarouselItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Chainable.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ChatMessage-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ChatMessage.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ChatRoom.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ChatSettings.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/CheckInResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ChecklistItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Contact-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Contact.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ContentDensity.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/CryptoDepositAddress.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/DropdownItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EmailVerificationData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EmailVerificationResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EmergencyContact.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EmojiCategory.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EncryptedData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EncryptionKeys.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/EnhancedGeocodingResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ErrorTelemetry.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ExchangeRate.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Favorite-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Favorite-2.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Favorite.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteBatchResult-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteBatchResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteCreateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteDialogResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteFilterOptions-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteFilterOptions.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteTag-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteTag.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FavoriteUpdateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FeatureAdResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FilterItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/FilterPreset.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/GeocodingResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HammerManager.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HeaderAction-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HeaderAction.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HelpItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HttpErrorInterceptorConfig-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HttpErrorInterceptorConfig-2.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HttpErrorInterceptorConfig-3.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/HttpErrorInterceptorConfig.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/IdentityVerificationData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ImagePreview.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/InfoPanelItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/LocationMatchResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/LoginCredentials.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/LoginDTO.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/MapMarker.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Media.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/MessageExpirySettings.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/MessageGroup.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ModerationRequest.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/NorwayCity.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/NorwayCounty.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/NotesDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/OAuthProvider.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/OnboardingStep.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PaymentIntent.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PaymentMethod-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PaymentMethod.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PendingMedia.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PendingVerification.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PerformanceTelemetry.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PhoneVerificationData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PhoneVerificationResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PhotoVerificationData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Profile.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ProfileUpdateDTO.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/PublicProfile.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/RegisterDTO.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/RegisterData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReportDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ResponseDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReverseGeocodingResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Review-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Review-2.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Review.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewCreateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewReport.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewUpdateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ReviewsResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/RoomKeys.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SafetyCheckin.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SafetyCheckinCreateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SafetyCheckinUpdateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SafetySettings.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SafetySettingsUpdateData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SavedFilter.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SelectOption.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SortOption.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Subscription.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/SubscriptionPrice.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TagsDialogData.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TinderCardAction.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TinderCardMedia.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ToastNotification-1.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/ToastNotification.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TokenPayload.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TopRatedAdvertiser.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TourStep.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TouringAd.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TransactionFilters.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TransactionResponse.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TravelItinerary.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TravelPlanItem.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/TypingIndicator.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/User.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/UserPreferences.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/UserProfile.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/UserSearchResult.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/UserVerificationStatus.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/VerificationStatus.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/VerificationType.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Wallet.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/WalletBalance.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/WalletSettings.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/WalletTransaction.html**: References excluded client-angular directory
+- **docs/component-library/interfaces/Window.html**: References excluded client-angular directory
+- **docs/component-library/miscellaneous/enumerations.html**: References excluded client-angular directory
+- **docs/component-library/miscellaneous/functions.html**: References excluded client-angular directory
+- **docs/component-library/miscellaneous/typealiases.html**: References excluded client-angular directory
+- **docs/component-library/miscellaneous/variables.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdBrowserModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdDetailsModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdManagementModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdminModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdminRoutingModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AdsModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AppModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AppRoutingModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/AuthModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/ChatModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/CommonTestModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/ContentModerationModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/CoreModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/EmeraldModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/FavoritesModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/FavoritesRoutingModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/FeaturesModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/MaterialModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/MockTelemetryModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/PaymentModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/ProfileModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/QRCodeModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/ReviewModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/SharedModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/TouringModule.html**: References excluded client-angular directory
+- **docs/component-library/modules/WalletModule.html**: References excluded client-angular directory
+- **docs/component-library/modules.html**: References excluded client-angular directory
+- **docs/component-library/overview.html**: References excluded client-angular directory
+- **docs/component-library/pipes/FileSizePipe.html**: References excluded client-angular directory
+- **docs/component-library/pipes/LinkifyPipe.html**: References excluded client-angular directory
+- **docs/component-library/pipes/TimeAgoPipe.html**: References excluded client-angular directory
+- **docs/component-library/properties.html**: References excluded client-angular directory
+- **docs/features/AD-BROWSER.MD**: References excluded client-angular directory
+- **docs/features/AD-DETAILS.MD**: References excluded client-angular directory
+- **docs/features/AD-MANAGEMENT.MD**: References excluded client-angular directory
+- **docs/features/ADMIN.MD**: References excluded client-angular directory
+- **docs/features/ADS.MD**: References excluded client-angular directory
+- **docs/features/ADVERTISER-PROFILE.MD**: References excluded client-angular directory
+- **docs/features/AUTH.MD**: References excluded client-angular directory
+- **docs/features/BROWSE.MD**: References excluded client-angular directory
+- **docs/features/CHAT.MD**: References excluded client-angular directory
+- **docs/features/DESIGN-SYSTEM-DEMO.MD**: References excluded client-angular directory
+- **docs/features/FAVORITES.MD**: References excluded client-angular directory
+- **docs/features/GALLERY.MD**: References excluded client-angular directory
+- **docs/features/LIST-VIEW.MD**: References excluded client-angular directory
+- **docs/features/LOCATION-MATCHING.MD**: References excluded client-angular directory
+- **docs/features/NETFLIX-VIEW.MD**: References excluded client-angular directory
+- **docs/features/PAYMENT.MD**: References excluded client-angular directory
+- **docs/features/PREFERENCES-DEMO.MD**: References excluded client-angular directory
+- **docs/features/PROFILE.MD**: References excluded client-angular directory
+- **docs/features/REVIEWS.MD**: References excluded client-angular directory
+- **docs/features/TELEMETRY.MD**: References excluded client-angular directory
+- **docs/features/TINDER-CARD.MD**: References excluded client-angular directory
+- **docs/features/TINDER.MD**: References excluded client-angular directory
+- **docs/features/TOURING.MD**: References excluded client-angular directory
+- **docs/features/TRAVEL-ITINERARY.MD**: References excluded client-angular directory
+- **docs/features/USER-SETTINGS.MD**: References excluded client-angular directory
+- **docs/features/USERS.MD**: References excluded client-angular directory
+- **docs/features/USER_PREFS.MD**: References excluded client-angular directory
+- **docs/features/WALLET.MD**: References excluded client-angular directory
+- **docs/graph/ci_knowledge.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/CURRENT_AUDIT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08/README.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-DEEPSCAN_INTEGRATION.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-FEATURE-NAME.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-2025-06-08-IMPLEMENTATION_GUIDE.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-08-DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-09/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-09/README.md**: References excluded client-angular directory
+
+## Recommendations
+
+### Immediate Actions Required:
+1. Create documentation for 133 undocumented code elements
+2. Update or archive 422 outdated documentation files
+3. Implement automated documentation synchronization
+
+### Priority Order:
+1. **High Priority**: Services and Controllers (core business logic)
+2. **Medium Priority**: Components and Modules (user-facing functionality)  
+3. **Low Priority**: Utilities and Configurations (supporting infrastructure)
+
+## Implementation Plan
+
+- [ ] Phase 1: Update outdated documentation
+- [ ] Phase 2: Document high-priority undocumented elements
+- [ ] Phase 3: Implement knowledge graph system
+- [ ] Phase 4: Set up automated synchronization workflow
+
+---
+*This report was generated by the Documentation Control & Synchronization System*
