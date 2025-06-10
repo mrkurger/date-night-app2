@@ -114,7 +114,7 @@ function RankedAdvertiserCard({
 
         {advertiser.headline && (
           <p className="text-md text-slate-300 italic mb-3 truncate" title={advertiser.headline}>
-            "{advertiser.headline}"
+            &ldquo;{advertiser.headline}&rdquo;
           </p>
         )}
 
