@@ -1,0 +1,27 @@
+{
+  "name": "gcp-delete-old-cloudrun-services",
+  "version": "1.0.0",
+  "description": "Cloud Function to automatically delete old Cloud Run services based on DEPLOY_TIMESTAMP",
+  "type": "module",
+  "main": "gcp-delete-old-cloudrun-services.mjs",
+  "scripts": {
+    "start": "functions-framework --target=deleteOldCloudRunServices --source=gcp-delete-old-cloudrun-services.mjs",
+    "deploy": "gcloud functions deploy deleteOldCloudRunServices --runtime nodejs18 --trigger-http --allow-unauthenticated --source . --entry-point deleteOldCloudRunServices"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@google-cloud/run": "^0.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "google-cloud",
+    "cloud-run",
+    "cleanup",
+    "automation",
+    "serverless"
+  ],
+  "author": "Date Night App Team",
+  "license": "MIT"
+}

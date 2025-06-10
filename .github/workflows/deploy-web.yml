@@ -1,0 +1,185 @@
+# GitHub Actions workflow for deploying client_angular2/ to Google Cloud Run
+# Triggers on pushes to the 'web' branch
+
+name: Deploy client_angular2 to Cloud Run
+
+on:
+  push:
+    branches: [ web ]
+    paths:
+      - 'client_angular2/**'
+  workflow_dispatch:
+
+env:
+  # TODO: Replace with your Google Cloud project ID
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  # TODO: Replace with your desired Cloud Run service name
+  SERVICE_NAME: date-night-frontend
+  # TODO: Replace with your desired Google Cloud region
+  REGION: us-central1
+  # Generate deployment timestamp for service tracking
+  DEPLOY_TIMESTAMP: ${{ github.run_number }}-${{ github.run_attempt }}-$(date +%s)
+
+jobs:
+  deploy:
+    name: Build and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    
+    # Required permissions for Cloud Run deployment
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment for building the Next.js app
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: client_angular2/package-lock.json
+
+      # Install dependencies for the Next.js application
+      - name: Install dependencies
+        working-directory: ./client_angular2
+        run: npm ci
+
+      # Lint the code to ensure quality
+      - name: Lint code
+        working-directory: ./client_angular2
+        run: npm run lint
+
+      # Run type checking to catch TypeScript errors
+      - name: Type check
+        working-directory: ./client_angular2
+        run: npm run type-check
+
+      # Build the Next.js application in production mode
+      - name: Build application
+        working-directory: ./client_angular2
+        run: npm run build
+
+      # Authenticate with Google Cloud using Workload Identity Federation
+      # TODO: Configure Workload Identity Federation in your Google Cloud project
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # Configure Docker to use gcloud as a credential helper
+      - name: Configure Docker for Google Cloud
+        run: gcloud auth configure-docker
+
+      # Set up Cloud SDK
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      # Generate the deployment timestamp for tracking
+      - name: Generate deployment timestamp
+        id: timestamp
+        run: |
+          TIMESTAMP=$(date +%s)
+          echo "DEPLOY_TIMESTAMP=${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}-${TIMESTAMP}" >> $GITHUB_ENV
+          echo "timestamp=${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}-${TIMESTAMP}" >> $GITHUB_OUTPUT
+
+      # Build and push Docker image to Google Container Registry
+      - name: Build and push Docker image
+        working-directory: ./client_angular2
+        run: |
+          # Build the Docker image with deployment timestamp label
+          docker build \
+            --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$DEPLOY_TIMESTAMP \
+            --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:latest \
+            --label "deploy-timestamp=$DEPLOY_TIMESTAMP" \
+            --label "github-sha=$GITHUB_SHA" \
+            --label "github-run-id=$GITHUB_RUN_ID" \
+            .
+          
+          # Push both tags to Container Registry
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$DEPLOY_TIMESTAMP
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+
+      # Deploy to Cloud Run with deployment timestamp as environment variable
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$DEPLOY_TIMESTAMP \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 10 \
+            --timeout 300 \
+            --concurrency 80 \
+            --set-env-vars="DEPLOY_TIMESTAMP=$DEPLOY_TIMESTAMP,NODE_ENV=production,NEXT_TELEMETRY_DISABLED=1" \
+            --labels="app=date-night-frontend,deploy-timestamp=$DEPLOY_TIMESTAMP" \
+            --quiet
+
+      # Get and display the service URL
+      - name: Get service URL
+        id: service-url
+        run: |
+          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+          echo "Service deployed to: $SERVICE_URL"
+          echo "url=$SERVICE_URL" >> $GITHUB_OUTPUT
+
+      # Verify deployment by checking service health
+      - name: Verify deployment
+        run: |
+          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+          
+          # Wait for the service to be ready
+          echo "Waiting for service to be ready..."
+          sleep 30
+          
+          # Test the health endpoint
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SERVICE_URL/" || echo "000")
+          
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "✅ Deployment successful! Service is responding with HTTP 200"
+            echo "🌐 Service URL: $SERVICE_URL"
+            echo "⏰ Deployment timestamp: $DEPLOY_TIMESTAMP"
+          else
+            echo "❌ Deployment verification failed! HTTP status: $HTTP_STATUS"
+            exit 1
+          fi
+
+      # Clean up old container images (keep last 5 versions)
+      - name: Clean up old images
+        run: |
+          # Get list of image digests, excluding the 5 most recent
+          IMAGES_TO_DELETE=$(gcloud container images list-tags gcr.io/$PROJECT_ID/$SERVICE_NAME \
+            --limit=999 \
+            --sort-by=~TIMESTAMP \
+            --format="get(digest)" \
+            | tail -n +6)
+          
+          # Delete old images if any exist
+          if [ ! -z "$IMAGES_TO_DELETE" ]; then
+            echo "Cleaning up old container images..."
+            for digest in $IMAGES_TO_DELETE; do
+              gcloud container images delete "gcr.io/$PROJECT_ID/$SERVICE_NAME@$digest" --force-delete-tags --quiet
+            done
+            echo "✅ Old images cleaned up"
+          else
+            echo "ℹ️  No old images to clean up"
+          fi
+
+      # Output deployment summary
+      - name: Deployment summary
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service Name:** $SERVICE_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- **Region:** $REGION" >> $GITHUB_STEP_SUMMARY
+          echo "- **Image:** gcr.io/$PROJECT_ID/$SERVICE_NAME:$DEPLOY_TIMESTAMP" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployment Timestamp:** $DEPLOY_TIMESTAMP" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service URL:** ${{ steps.service-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **GitHub SHA:** $GITHUB_SHA" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** $GITHUB_ACTOR" >> $GITHUB_STEP_SUMMARY

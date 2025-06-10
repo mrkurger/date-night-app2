@@ -17,6 +17,9 @@ const nextConfig = {
   // React optimizations
   reactStrictMode: true,
 
+  // Output configuration for containerization
+  output: 'standalone',
+
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
