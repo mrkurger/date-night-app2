@@ -1,26 +1,13 @@
 # Dockerfile for client_angular2/ - Next.js application optimized for Google Cloud Run
 # Multi-stage build for efficient image size
 
-# Stage 1: Dependencies installation
-FROM node:18-alpine AS deps
-WORKDIR /app
-
-# Install curl for health checks
-RUN apk add --no-cache curl
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies with production optimizations
-RUN npm ci --only=production && npm cache clean --force
-
-# Stage 2: Build the application
+# Stage 1: Build the application
 FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy package files and install all dependencies (including dev)
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 # Copy source code
 COPY . .
@@ -32,7 +19,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Build the Next.js application
 RUN npm run build
 
-# Stage 3: Production runtime
+# Stage 2: Production runtime
 FROM node:18-alpine AS runner
 WORKDIR /app
 
