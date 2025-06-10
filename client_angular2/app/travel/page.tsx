@@ -58,8 +58,8 @@ export default function TravelPage() {
           <InfoIcon className="h-4 w-4 text-blue-500" />
           <AlertTitle className="text-blue-800">Travel Management</AlertTitle>
           <AlertDescription className="text-blue-700">
-            Create and manage your travel plans. Let potential clients know when you&apos;ll be in their
-            area.
+            Create and manage your travel plans. Let potential clients know when you&apos;ll be in
+            their area.
           </AlertDescription>
         </Alert>
 

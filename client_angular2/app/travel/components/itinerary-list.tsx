@@ -23,7 +23,6 @@ import {
   Trash2,
   CalendarCheck,
   Eye,
-  ArrowUpDown,
 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
@@ -33,7 +32,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { TravelService, Itinerary } from '@/services/travel-service';
+import { TravelService } from '@/services/travel-service';
+import type { TravelItinerary } from './travel-types.d';
 
 interface ItineraryListProps {
   isLoading?: boolean;
@@ -41,8 +41,8 @@ interface ItineraryListProps {
 }
 
 export default function ItineraryList({ isLoading = false, adId }: ItineraryListProps) {
-  const [itineraries, setItineraries] = useState<Itinerary[]>([]);
-  const [filteredItineraries, setFilteredItineraries] = useState<Itinerary[]>([]);
+  const [itineraries, setItineraries] = useState<TravelItinerary[]>([]);
+  const [filteredItineraries, setFilteredItineraries] = useState<TravelItinerary[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('date-asc');
@@ -50,7 +50,7 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
   const fetchItineraries = useCallback(async () => {
     try {
       setError(null);
-      let fetchedItineraries: Itinerary[] = [];
+      let fetchedItineraries: any[] = [];
 
       try {
         if (adId) {
@@ -61,13 +61,14 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
           fetchedItineraries = await TravelService.getAllItineraries();
         }
 
-        setItineraries(fetchedItineraries);
+        // Type assertion to ensure correct typing
+        setItineraries(fetchedItineraries as TravelItinerary[]);
       } catch (apiError) {
         console.error('API error:', apiError);
         setError('Failed to load itineraries from the server. Using mock data instead.');
 
         // Fallback to mock data if API call fails
-        const mockItineraries: Itinerary[] = [
+        const mockItineraries: TravelItinerary[] = [
           {
             id: '1',
             destination: {
@@ -147,6 +148,12 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
       case 'city-desc':
         filtered.sort((a, b) => b.destination.city.localeCompare(a.destination.city));
         break;
+      default:
+        // Default to date ascending
+        filtered.sort(
+          (a, b) => new Date(a.arrivalDate).getTime() - new Date(b.arrivalDate).getTime(),
+        );
+        break;
     }
 
     setFilteredItineraries(filtered);
@@ -160,7 +167,23 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
 
   useEffect(() => {
     filterAndSortItineraries();
-  }, [filterAndSortItineraries]);
+  }, [filterAndSortItineraries, itineraries, statusFilter, sortBy]);
+
+  const formatDateRange = (arrival: string, departure: string) => {
+    const arrivalDate = new Date(arrival);
+    const departureDate = new Date(departure);
+
+    return `${arrivalDate.toLocaleDateString()} - ${departureDate.toLocaleDateString()}`;
+  };
+
+  const calculateDuration = (arrival: string, departure: string) => {
+    const arrivalDate = new Date(arrival);
+    const departureDate = new Date(departure);
+    const diffTime = Math.abs(departureDate.getTime() - arrivalDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+  };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
@@ -177,25 +200,8 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
     }
   };
 
-  const formatDateRange = (arrival: string, departure: string) => {
-    const arrivalDate = new Date(arrival);
-    const departureDate = new Date(departure);
-    return `${arrivalDate.toLocaleDateString()} - ${departureDate.toLocaleDateString()}`;
-  };
-
-  const calculateDuration = (arrival: string, departure: string) => {
-    const arrivalDate = new Date(arrival);
-    const departureDate = new Date(departure);
-    const diffTime = Math.abs(departureDate.getTime() - arrivalDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
-  };
-
   const isUpcoming = (arrivalDate: string) => {
-    const today = new Date();
-    const arrival = new Date(arrivalDate);
-    return arrival > today;
+    return new Date(arrivalDate) > new Date();
   };
 
   const handleCancelItinerary = async (itineraryId: string) => {

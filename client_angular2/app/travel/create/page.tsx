@@ -439,7 +439,9 @@ export default function CreateItineraryPage() {
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
                         <FormLabel className="text-base">Include Accommodation Details</FormLabel>
-                        <FormDescription>Add details about where you&apos;ll be staying</FormDescription>
+                        <FormDescription>
+                          Add details about where you&apos;ll be staying
+                        </FormDescription>
                       </div>
                       <FormControl>
                         <Switch
