@@ -1,15 +1,15 @@
 # Documentation Control & Synchronization Audit Report
 
-Generated: 2025-06-10T18:19:12.481Z
+Generated: 2025-06-10T19:56:43.923Z
 Scope: Entire repository excluding client-angular/ directory
 
 ## Executive Summary
 
-- **Total Code Elements Analyzed**: 228
+- **Total Code Elements Analyzed**: 234
 - **Total Documentation Files**: 531
-- **Documentation Coverage**: 175%
-- **Undocumented Elements**: 133
-- **Outdated Documentation**: 422
+- **Documentation Coverage**: 168%
+- **Undocumented Elements**: 138
+- **Outdated Documentation**: 424
 
 ## Undocumented Code Elements
 
@@ -33,6 +33,9 @@ These code elements lack proper documentation and should be prioritized:
 - `verification.schema`
 - `verification.service`
 - `grid_v_2`
+- `itinerary-list`
+- `travel-map`
+- `travel-types.d`
 - `GamifiedContentHub`
 - `InfiniteScrollGrid`
 - `MasonryGrid`
@@ -128,7 +131,9 @@ These code elements lack proper documentation and should be prioritized:
 
 - `token-service`
 - `service-worker`
+- `geocoding-service`
 - `pwa.service`
+- `travel-service`
 
 ### Modules
 
@@ -595,12 +600,14 @@ These documentation files reference excluded directories or outdated information
 - **docs/outdated/2025-06-08-DOCUMENTATION_CLEANUP_REPORT.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-09/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
 - **docs/outdated/2025-06-09/README.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-10/DOCUMENTATION_DISCREPANCIES_REPORT.md**: References excluded client-angular directory
+- **docs/outdated/2025-06-10/README.md**: References excluded client-angular directory
 
 ## Recommendations
 
 ### Immediate Actions Required:
-1. Create documentation for 133 undocumented code elements
-2. Update or archive 422 outdated documentation files
+1. Create documentation for 138 undocumented code elements
+2. Update or archive 424 outdated documentation files
 3. Implement automated documentation synchronization
 
 ### Priority Order:
