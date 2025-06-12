@@ -32,8 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { TravelService } from '@/services/travel-service';
-import type { TravelItinerary } from './travel-types.d';
+import { TravelService, type Itinerary } from '@/services/travel-service';
 
 interface ItineraryListProps {
   isLoading?: boolean;
@@ -41,8 +40,8 @@ interface ItineraryListProps {
 }
 
 export default function ItineraryList({ isLoading = false, adId }: ItineraryListProps) {
-  const [itineraries, setItineraries] = useState<TravelItinerary[]>([]);
-  const [filteredItineraries, setFilteredItineraries] = useState<TravelItinerary[]>([]);
+  const [itineraries, setItineraries] = useState<Itinerary[]>([]);
+  const [filteredItineraries, setFilteredItineraries] = useState<Itinerary[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('date-asc');
@@ -62,13 +61,13 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
         }
 
         // Type assertion to ensure correct typing
-        setItineraries(fetchedItineraries as TravelItinerary[]);
+        setItineraries(fetchedItineraries as Itinerary[]);
       } catch (apiError) {
         console.error('API error:', apiError);
         setError('Failed to load itineraries from the server. Using mock data instead.');
 
         // Fallback to mock data if API call fails
-        const mockItineraries: TravelItinerary[] = [
+        const mockItineraries = [
           {
             id: '1',
             destination: {
@@ -115,7 +114,8 @@ export default function ItineraryList({ isLoading = false, adId }: ItineraryList
           },
         ];
 
-        setItineraries(mockItineraries);
+        // Cast the entire mock data array to ensure type compatibility
+        setItineraries(mockItineraries as unknown as Itinerary[]);
       }
     } catch (err) {
       console.error('Error fetching itineraries:', err);

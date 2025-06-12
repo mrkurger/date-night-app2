@@ -38,22 +38,17 @@ const SignupPage: React.FC = () => {
       return;
     }
 
-    if (!authContext) {
+    if (!authContext || !authContext.register) {
       setError('Authentication context is not available.');
       setIsLoading(false);
       return;
     }
 
     try {
-      // Replace with your actual signup logic using authContext.signup or similar
-      // await authContext.signup(email, password, name);
-      console.log('Signup attempt:', { name, email, password, agreeTerms });
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      // On successful signup:
-      // authContext.setUser({ id: 'temp-id', email, name }); // Example user, ID would come from backend
-      // router.push('/'); // Redirect to home or profile
-      alert('Signup successful (simulated)! Please check your email for verification.');
+      // Call register from auth context
+      await authContext.register(name, email, password);
+      // On successful signup, redirect to home page
+      window.location.href = '/'; // Using window.location to ensure a full page reload
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred during signup.');
     } finally {

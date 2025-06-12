@@ -3,8 +3,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { usePathname } from 'next/navigation';
 import {
   Crown,
   Trophy,
@@ -19,6 +18,7 @@ import {
   X,
   Users,
   LogIn,
+  LogOut,
   LayoutGrid,
   Film,
   Flame,
@@ -54,6 +54,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
 
 interface NavItem {
   href: string;
@@ -298,8 +300,9 @@ const moreNavItems: NavItem[] = [
 
 export default function EnhancedNavbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, isAuthenticated, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -310,9 +313,14 @@ export default function EnhancedNavbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // For demo purposes - toggle login state
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
@@ -454,7 +462,7 @@ export default function EnhancedNavbar() {
 
             {/* User Actions */}
             <div className="flex items-center gap-2">
-              {isLoggedIn ? (
+              {isAuthenticated ? (
                 <>
                   <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
                     <DollarSign className="w-4 h-4" />
@@ -471,7 +479,7 @@ export default function EnhancedNavbar() {
                         <Avatar>
                           <AvatarImage src="https://github.com/shadcn.png" alt="User" />
                           <AvatarFallback>
-                            <User className="h-4 w-4" />
+                            {user?.name?.charAt(0) || <User className="h-4 w-4" />}
                           </AvatarFallback>
                         </Avatar>
                         <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -500,8 +508,8 @@ export default function EnhancedNavbar() {
                         </DropdownMenuItem>
                       ))}
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={toggleLogin}>
-                        <LogIn className="w-4 h-4 mr-2" />
+                      <DropdownMenuItem onClick={handleLogout}>
+                        <LogOut className="w-4 h-4 mr-2" />
                         <span>Log out</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -517,10 +525,6 @@ export default function EnhancedNavbar() {
                       <UserPlus className="w-4 h-4 mr-2" />
                       Sign up
                     </Link>
-                  </Button>
-                  {/* For demo purposes */}
-                  <Button variant="outline" size="icon" className="md:hidden" onClick={toggleLogin}>
-                    <LogIn className="h-4 w-4" />
                   </Button>
                 </>
               )}
@@ -546,17 +550,17 @@ export default function EnhancedNavbar() {
                     </SheetTitle>
                   </SheetHeader>
                   <div className="py-6">
-                    {isLoggedIn && (
+                    {isAuthenticated && (
                       <div className="mb-6 flex items-center gap-4 pb-4 border-b">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src="https://github.com/shadcn.png" alt="User" />
                           <AvatarFallback>
-                            <User className="h-4 w-4" />
+                            {user?.name?.charAt(0) || <User className="h-4 w-4" />}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="text-sm font-medium">John Doe</p>
-                          <p className="text-xs text-muted-foreground">john.doe@example.com</p>
+                          <p className="text-sm font-medium">{user?.name || 'User'}</p>
+                          <p className="text-xs text-muted-foreground">{user?.email || ''}</p>
                         </div>
                       </div>
                     )}
@@ -621,7 +625,7 @@ export default function EnhancedNavbar() {
                         ))}
                       </div>
 
-                      {isLoggedIn && (
+                      {isAuthenticated && (
                         <div className="space-y-1">
                           <h3 className="text-sm font-medium text-muted-foreground px-2">
                             Account
@@ -671,7 +675,7 @@ export default function EnhancedNavbar() {
                         ))}
                       </div>
 
-                      {!isLoggedIn && (
+                      {!isAuthenticated && (
                         <div className="pt-4 border-t">
                           <div className="flex flex-col gap-2">
                             <Button asChild>
@@ -686,22 +690,18 @@ export default function EnhancedNavbar() {
                                 Log in
                               </Link>
                             </Button>
-                            {/* For demo purposes */}
-                            <Button variant="ghost" onClick={toggleLogin}>
-                              Demo: Toggle Login State
-                            </Button>
                           </div>
                         </div>
                       )}
 
-                      {isLoggedIn && (
+                      {isAuthenticated && (
                         <div className="pt-4 border-t">
                           <Button
                             variant="outline"
                             className="w-full justify-start"
-                            onClick={toggleLogin}
+                            onClick={handleLogout}
                           >
-                            <LogIn className="w-4 h-4 mr-2" />
+                            <LogOut className="w-4 h-4 mr-2" />
                             Log out
                           </Button>
                         </div>
