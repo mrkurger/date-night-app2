@@ -25,7 +25,7 @@
     "@angular/animations": "^19.2.13",
     "@angular/cdk": "^19.2.13",
     "@angular/service-worker": "^19.2.11",
-    "@fontsource/inter": "^5.2.5",
+    "@fontsource/inter": "^5.2.6",
     "@fontsource/poppins": "^5.2.6",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@primeng/themes": "^19.1.3",
