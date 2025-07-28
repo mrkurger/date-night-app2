@@ -96,7 +96,7 @@
     "eslint-plugin-rxjs": "^5.0.3",
     "eslint-plugin-rxjs-x": "^0.7.2",
     "eslint-plugin-sonarjs": "^3.0.2",
-    "globals": "^16.1.0",
+    "globals": "^16.3.0",
     "jasmine-core": "~5.1.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.4.2",
