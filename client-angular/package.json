@@ -82,7 +82,7 @@
     "angular-eslint": "19.4.0",
     "autoprefixer": "^10.4.19",
     "axe-core": "^4.9.1",
-    "cypress": "^13.13.1",
+    "cypress": "^14.5.3",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
