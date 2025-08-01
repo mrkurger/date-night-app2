@@ -20,7 +20,7 @@ jobs:
     steps:
       # Step 1: Checkout the branch where the commit was made
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
           submodules: recursive
